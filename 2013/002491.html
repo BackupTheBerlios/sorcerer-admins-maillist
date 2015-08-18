@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Augur man page and GCC optimization
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Augur%20man%20page%20and%20GCC%20optimization&In-Reply-To=%3CCAA_tkES5eEAvRU-N%2BRxitzJ28oWt%2BCidBJ09%3DGQH4mDL%3Dw%2BCSw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002490.html">
+   <LINK REL="Next"  HREF="002492.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Augur man page and GCC optimization</H1>
+    <B>chessmaster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Augur%20man%20page%20and%20GCC%20optimization&In-Reply-To=%3CCAA_tkES5eEAvRU-N%2BRxitzJ28oWt%2BCidBJ09%3DGQH4mDL%3Dw%2BCSw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Augur man page and GCC optimization">knowledgeispower80 at gmail.com
+       </A><BR>
+    <I>Sun Dec  8 06:06:42 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002490.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+        <LI>Next message: <A HREF="002492.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2491">[ date ]</a>
+              <a href="thread.html#2491">[ thread ]</a>
+              <a href="subject.html#2491">[ subject ]</a>
+              <a href="author.html#2491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Can I save 'export MAKEOPTS=&quot;-j8&quot;', in  /etc/sorcery/cpref/default safely
+without overwriting the defaults?  Enjoyed the installed and reading the
+excellent install/post-install docs. :)
+
+
+
+
+On Sat, Dec 7, 2013 at 9:29 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi there, and welcome to Sorcerer.
+</I>&gt;<i> augur does not have a manpage. Instead, just type &quot;augur&quot; on the
+</I>&gt;<i> command line, and it will tel you it's options.
+</I>&gt;<i> One of us might write a manpage someday...
+</I>&gt;<i>
+</I>&gt;<i> On your second question, the short answer is yes it does, but you
+</I>&gt;<i> don't want to mess with it.
+</I>&gt;<i>
+</I>&gt;<i> Longer answer:
+</I>&gt;<i> Because I know you want to mess with it, and it's your machine and
+</I>&gt;<i> your right, I'll explain the mechanism to you, but if you blow up your
+</I>&gt;<i> box, don't blame me.
+</I>&gt;<i>
+</I>&gt;<i> Sorcery will by default read:
+</I>&gt;<i> /etc/sorcery/cpref/default
+</I>&gt;<i>
+</I>&gt;<i> If that file does not exist, sorcery will pick sensible defaults,
+</I>&gt;<i> which you can fine-tune in the sorcery menu. You will basically get
+</I>&gt;<i> optimization -O0 for most small packages, and -O2 for stuff that makes
+</I>&gt;<i> sense to have optimized, and some esoteric flags for spells that needs
+</I>&gt;<i> them.
+</I>&gt;<i>
+</I>&gt;<i> In the Sorcery menu, under &quot;Toggle&quot; sorcerer features, you can select
+</I>&gt;<i> whether to compile for base architecture or not. This switches default
+</I>&gt;<i> between -mtune=native and -march=native.
+</I>&gt;<i> You can also switch on &quot;lto&quot; for link time optimizations. If you want,
+</I>&gt;<i> switch on the complementary -Os for spells that have the &quot;lto&quot;
+</I>&gt;<i> capability.
+</I>&gt;<i>
+</I>&gt;<i> Now, if that is not specific enough for you, and you want to specify a
+</I>&gt;<i> default that is different from what I described above, here is how:
+</I>&gt;<i>
+</I>&gt;<i> # mkdir -p /etc/sorcery/cpref
+</I>&gt;<i> # nano mtune-O2
+</I>&gt;<i>
+</I>&gt;<i> inside, put your CFLAGS, like so:
+</I>&gt;<i>
+</I>&gt;<i> export CFLAGS=&quot;$CFLAGS -march=native -O2 -pipe -fno-warnings &quot;
+</I>&gt;<i> export CXXFLAGS=&quot;$CFLAGS &quot;
+</I>&gt;<i>
+</I>&gt;<i> Or whatever you may like.
+</I>&gt;<i> To make sorcerer compile with those enabled,
+</I>&gt;<i> # ln -s /etc/sorcery/cpref/mtune-O2 /etc/sorcery/cpref/default
+</I>&gt;<i>
+</I>&gt;<i> Please let me re-iterate that this changes the defaults to whatever
+</I>&gt;<i> you put in that file, and can completely break your box. Also, it
+</I>&gt;<i> probably won't have the desired effect of making everything faster. I
+</I>&gt;<i> used to run with a default cpref pretty close to the one I described
+</I>&gt;<i> until very recently. Now I don't, and let sorcery pick the cflags for
+</I>&gt;<i> spells, and my desktop &quot;feels&quot; more responsive.
+</I>&gt;<i>
+</I>&gt;<i> However, there is some really useful application for when you want to
+</I>&gt;<i> mess with just one spell's cflags:
+</I>&gt;<i>
+</I>&gt;<i> # augur cpref $SPELL &lt;tab&gt; &lt;tab&gt;   &lt;- will list the files in
+</I>&gt;<i> /etc/sorcery/cpref
+</I>&gt;<i> # augur cpref $SPELL $CPREF_FILE    &lt;- will set that spell to utilize
+</I>&gt;<i> the cpref file that you make.
+</I>&gt;<i> # augur cpref $SPELL  &lt;- will clear the custom cpref for that file
+</I>&gt;<i> # augur cpref    &lt;- will just list the spells with custom cpref
+</I>&gt;<i>
+</I>&gt;<i> For instance, I have in i7 laptop. Current firefox segfaults when
+</I>&gt;<i> -march=native is passed to it, because it gcc gets the avx features of
+</I>&gt;<i> my CPU wrong. Just for firefox. strange, but I like compiling for my
+</I>&gt;<i> cpu type, so now I have the following file
+</I>&gt;<i> /etc/sorcery/cpref/firefox
+</I>&gt;<i>
+</I>&gt;<i> Contents of which:
+</I>&gt;<i> export CFLAGS=&quot; $CFLAGS -mno-avx &quot;
+</I>&gt;<i> export CXXFLAGS=&quot; $CXXFLAGS -mno-avx &quot;
+</I>&gt;<i>
+</I>&gt;<i> I issued the following command:
+</I>&gt;<i> augur cpref firefox firefox
+</I>&gt;<i>
+</I>&gt;<i> And now just firefox is compiled with the added -mno-avx
+</I>&gt;<i>
+</I>&gt;<i> The same mechanism can be applied to any single spell that you want to
+</I>&gt;<i> mess with, and limits the potential damage to the rest of your box.
+</I>&gt;<i>
+</I>&gt;<i> Have fun.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 7 December 2013 18:02, chessmaster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; Hello everyone! I was curious to ask if augur has a man page? Also, is
+</I>&gt;<i> there
+</I>&gt;<i> &gt; a configuration file that stores GCC optimization flags?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Regards,
+</I>&gt;<i> &gt; Roosevelt
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Evert Vorster
+</I>&gt;<i> Chief Observer
+</I>&gt;<i> WG Cook
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131208/e7b76ba7/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131208/e7b76ba7/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002490.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+	<LI>Next message: <A HREF="002492.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2491">[ date ]</a>
+              <a href="thread.html#2491">[ thread ]</a>
+              <a href="subject.html#2491">[ subject ]</a>
+              <a href="author.html#2491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTik8OJ%3DZfkdPiJzzoG-6b%2Bp_HdV_5o3rm9F3jCJK%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001870.html">
+   <LINK REL="Next"  HREF="001859.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTik8OJ%3DZfkdPiJzzoG-6b%2Bp_HdV_5o3rm9F3jCJK%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 26 05:37:16 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001870.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001859.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1851">[ date ]</a>
+              <a href="thread.html#1851">[ thread ]</a>
+              <a href="subject.html#1851">[ subject ]</a>
+              <a href="author.html#1851">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jul 25, 2010 at 2:55 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+
+&gt;<i> Having that stuff somehow retained in a 'bootlog' that shows the
+</I>&gt;<i> &quot;**console messages**&quot; as they actually appear in the console during the
+</I>&gt;<i> real boot sequence could be a real life saver :)
+</I>
+Good idea.
+Unfortunately, it is not so easy to accomplish.
+There is more than one way that a message can travel
+and eventually display on the console.
+Imagine a park with 4 different entrances.
+There is /dev/consle, kernel logger, system log,
+and output from a program that might be redirected
+to a TTY/virtual console.
+
+The kernel log is a ring buffer.
+If it is too small new data can overwrite old data.
+It is output using the dmesg command.
+Not everything that appears in the kernel log
+will necessarily be displayed on console.
+That is controlled by loglevel.
+I do not know if the kernel log can be displayed
+without dmesg or piped into another file or
+if I can pipe text into the kernel log.
+Some of the scroll that does not enter into
+/etc/init.d/log.d/{sysinit,runlevel.$RL} will
+go into /etc/init.d/log.d/dmesg
+
+The system log might be even less
+buffered than the kernel ring buffer.
+If a system logging program is not running
+then messages send to the system log are usually lost.
+System logging is usually done to files in /var/log/
+therefore the system logger starts late during boot.
+It probably starts during runlevels instead of sysinit.
+
+/dev/console might have a read/write mode.
+But can it be read and piped into a file?
+If so then what would show up?
+I have only written to /dev/console and that works.
+No luck with reading it nor knowing what to expect.
+Stuff that outputs on stdout or stderr from init-scripts
+I can easily redirect to a file and a virtual console
+or perhaps almost any suitable character device.
+However, integrating the other 3 types of output
+with the output of init-scripts into a single file
+is not something I already know how to accomplish.
+Is anyone doing that?
+
+Probably I could syslog some messages from init-scripts.
+However, that would not include the immediate stdout
+and stderr from services started.
+I do not have log_{warning,success,failure}_msg calls
+syslogged in init-scripts for two reasons.
+First, syslog starts late.
+Second, each line requires the overhead of
+running a process such as logger.
+
+Making it all play nice together in a single room
+probably requires considerable effort to accomplish.
+Yet surprisingly if sysinit and runlevel output
+is not redirected to a virtual console,
+but instead allowed to display on the console
+and booting was with console redirected to
+serial TTY, and the someone was connected
+to the booting computer though a serial port
+and using a communications program
+then that person could log everything displayed
+using their communications program.  :)
+Almost everything would be displayed
+expect warning and less trivial messages
+that are insufficient to meet the console loglevel.
+Those would go straight into the kernel log.
+
+Although I do not do this with Sorcerer's kernel
+output to each virtual console can be back buffered in RAM.
+That way even if one switched virtual consoles and back
+then one would be able to scroll up on the previously
+activated virtual console.
+It has a permanent cost in RAM.
+How much RAM I do not remember.
+How much scroll is saved I do not remember.
+
+I do not know if that is even useful to the discussion.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001870.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001859.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1851">[ date ]</a>
+              <a href="thread.html#1851">[ thread ]</a>
+              <a href="subject.html#1851">[ subject ]</a>
+              <a href="author.html#1851">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

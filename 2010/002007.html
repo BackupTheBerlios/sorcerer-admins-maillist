@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] rebuild whole box.... still things aren't	casting
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20rebuild%20whole%20box....%20still%20things%20aren%27t%0A%09casting&In-Reply-To=%3CAANLkTikq6_o7vwHbdgh_9vM8vNNaWrdMFUMRvACMUZ-8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002005.html">
+   <LINK REL="Next"  HREF="002006.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] rebuild whole box.... still things aren't	casting</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20rebuild%20whole%20box....%20still%20things%20aren%27t%0A%09casting&In-Reply-To=%3CAANLkTikq6_o7vwHbdgh_9vM8vNNaWrdMFUMRvACMUZ-8%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] rebuild whole box.... still things aren't	casting">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Nov  7 18:50:06 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002005.html">[Sorcerer-admins] rebuild whole box.... still things aren't	casting
+</A></li>
+        <LI>Next message: <A HREF="002006.html">[Sorcerer-admins] evince : launch error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2007">[ date ]</a>
+              <a href="thread.html#2007">[ thread ]</a>
+              <a href="subject.html#2007">[ subject ]</a>
+              <a href="author.html#2007">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry.
+I can not fix mass failures.
+I can only fix spells that are reported,
+and usually only when I can replicate the bug on the test box.
+
+As for &quot;gcc can't produce executable...&quot;
+Clues about that normally appear in the config.log
+in the discarded source tree saved to
+/var/tmp/failed/$SPELL/$SPELL-$VERSION/
+
+It could indicate a serious problem that must be
+fixed by using a gcc provided on the Install/Rescue disk.
+I would not know exactly what to do without
+reading the config.log and trying a few test compiles
+to see how/why the error is happening.
+
+As I reported previously autofailures work differently now.
+If software that was cast fails to compile
+then it can not become cause of an autofailure
+unless that software is not already installed
+and is required by a spell that is about to cast.
+
+Pass Cast  kde-v4                4.5.3           -   18:17
+Pass Cast  kdenetwork-v4         4.5.3           -   18:18
+Pass Cast  kdeutils-v4           4.5.3           -   19:38
+Pass Cast  kdeartwork-v4         4.5.3           -   21:05
+Pass Cast  kdegraphics-v4        4.5.3           -   21:19
+Pass Cast  kdebase-v4            4.5.3           -   22:17
+Pass Cast  kdeplasma-addons-v4   4.5.3           -   23:04
+Pass Cast  kdeaccessibility-v4   4.5.3           -   23:04
+Pass Cast  telepathy-qt4         0.3.13          -   23:14
+Pass Cast  kdetoys-v4            4.5.3           - 1:00:19
+Pass Cast  gpsd                  2.39            - 1:00:24
+Pass Cast  farsight2             0.0.22          - 1:00:29
+Pass Cast  kdeedu-v4             4.5.3           - 1:00:35
+Pass Cast  kdebase-workspace-v4  4.5.3           - 1:02:45
+Pass Cast  kdeadmin-v4           4.5.3           - 1:03:17
+Pass Cast  kdebase-runtime-v4    4.5.3           - 1:03:50
+Pass Cast  kdegames-v4           4.5.3           - 1:05:27
+FAIL Cast  kphotoalbum           4.1.1-kde4.4.0  - 1:08:56
+
+
+That is what augur scry looked like after my update of a laptop.
+The update went smooth.
+Some spells for old software like kphotoalbum did not compile,
+but that is because the source for those software projects require
+a much older version of KDE 4.x to be installed.
+
+I do both testing of new releases of software projects on a pentium 3 test box
+and then I actually do updates of that software on servers and workstations.
+Anything I gain from that experience I use to revise and improve the
+spells in the grimoire.
+During the last update I gave the broke attribute to 3 spells.
+Not much of an improvement, but at least it is as it should be
+since those software projects will no longer compile.
+
+The optimization for the gcc spell is -march=native
+and the spell has not changed version in a long time.
+I might not update the version of it until the last in the
+series of the next higher release of gcc is complete.
+That way we will receive mostly bug fixes and not bugs.
+Another benefit of delaying gcc updating is that saved
+tress of ccache generated object files remain usable for updates.
+Also software that compiles tends to continue to be compilable.
+Often an update of gcc can cause several software projects
+to have C and C++ syntax that is not acceptable to the newer gcc
+and therefore causes software projects to fail compilation.
+Therefore, the updating of gcc can be summarized by the word &quot;cautious.&quot;
+
+Please be careful of deviating from the CFLAGS that sorcery automatically sets.
+Such CFLAGS are expected to be safe and to create usable software.
+Even something as simple as custom CFLAGS
+could cause gcc to be unable to produce executable.
+
+About 95% or more of the software provided in the grimoire
+should compile without problems provided the SA tends to
+go with how sorcery wants to compile and install the software.
+However, since not every possible load out of software can be tested;
+scenarios exist where some software that did compile on the test box
+will not compile on someone else's box because installed software differs.
+That is rare, but it does sometimes happen.
+In such scenarios the SA must identify and fix the problem.
+If the problem is reported to the email list
+then the solution can be implemented distribution wide.
+Otherwise those potential problems silently await the exact
+load out of software which will cause it to happen.
+
+Generically speaking, that is about as much as I can say generically.
+But if we want to specifically debug some of these problems
+then please attach gziped compile logs and gziped config.logs
+and maybe that will provide a good area to hunt for clues.
+
+
+On Sun, Nov 7, 2010 at 4:13 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi thanks
+</I>&gt;<i> here is the log after retry
+</I>&gt;<i> most spells did fail after whole rebuild due to configure error saying that gcc can't produce executable....
+</I>&gt;<i>
+</I>&gt;<i> so there might be a flaw somewhere that cause mass failures after gcc is recasted.....
+</I>&gt;<i> thanks and regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Nov 6, 2010 at 8:30 PM, Richard Willard &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwillard_pcpro at yahoo.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My experience so far is, after casting and having mass failures I do augur retry and some (but not all) failed casts succeed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now that is just my experience after only one week.&#160; I know have nowhere near the experience with sorcerer that you do, just putting my two cents in.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --- On Sat, 11/6/10, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> From: jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> Subject: [Sorcerer-admins] rebuild whole box.... still things aren't casting
+</I>&gt;&gt;<i> To: &quot;sorcerer-admins&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>&gt;
+</I>&gt;&gt;<i> Date: Saturday, November 6, 2010, 2:29 PM
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> as you'll see in the attached log, after a whole box recast there are
+</I>&gt;&gt;<i> still lot of failures....
+</I>&gt;&gt;<i> I don't know yet what caused the spell to fail... it's not disk space
+</I>&gt;&gt;<i> nor tmpfs space... I suspect that some requirement did caused all the
+</I>&gt;&gt;<i> spells to cascade fail....
+</I>&gt;&gt;<i> thanks and regards
+</I>&gt;&gt;<i> JL
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002005.html">[Sorcerer-admins] rebuild whole box.... still things aren't	casting
+</A></li>
+	<LI>Next message: <A HREF="002006.html">[Sorcerer-admins] evince : launch error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2007">[ date ]</a>
+              <a href="thread.html#2007">[ thread ]</a>
+              <a href="subject.html#2007">[ subject ]</a>
+              <a href="author.html#2007">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

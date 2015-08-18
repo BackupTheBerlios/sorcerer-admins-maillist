@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Suggestions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Suggestions&In-Reply-To=%3C596b75860812121631k60e3c341rfa5895c670141656%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000932.html">
+   <LINK REL="Next"  HREF="000935.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Suggestions</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Suggestions&In-Reply-To=%3C596b75860812121631k60e3c341rfa5895c670141656%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Suggestions">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Dec 13 01:31:53 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000932.html">[Sorcerer-admins] Suggestions
+</A></li>
+        <LI>Next message: <A HREF="000935.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#933">[ date ]</a>
+              <a href="thread.html#933">[ thread ]</a>
+              <a href="subject.html#933">[ subject ]</a>
+              <a href="author.html#933">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Dec 12, 2008 at 4:49 AM, Mike Flanagan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">gentoo.mike at gmail.com</A>&gt; wrote:
+&gt;<i> What ever happened to that nice casting screen we had a few years back
+</I>
+What might that be?
+# augur scry
+# augur scry $SPELL
+
+Using screen with sorcery is completely optional now.
+Most of cast operates as a background daemon,
+and the same for leech.
+Only dispel runs entirely in the foreground.
+
+However, the logs of scroll that are generated when cast
+and leech are running can be viewed with the command
+# augur scry $SPELL
+
+And for an overview of what is happening simply issue:
+# augur scry
+
+
+&gt;<i> . Noticed it isn't there with the new installer I/R or did I miss
+</I>&gt;<i> something drastic .
+</I>
+I am uncertain about what is missing.
+
+
+&gt;<i> Also making a 1 gig boot partition fixed my lilo issue :) as suggested
+</I>&gt;<i> on one of the prompts in the install menu
+</I>
+Well 1G may be a bit much, but it can be useful and it allows room for growth.
+And spare space could be allocated for a swap if needed.
+Currently,
+$ du -sm /boot/*
+43      /boot/2.6.26
+46      /boot/2.6.26.5
+54      /boot/2.6.27.7
+
+As it demonstrate the amount of space required for booting a kernel
+is steadily increasing.
+If each image required 100M then 1G would allow up to 10 images.
+However, for legacy reasons Sorcerer only maintains up to 4,
+for the time being.
+
+Every convenience has a cost, of course.
+And gaining the maximum benefit for a modular kernel
+has a large cost in disk space that I had not fully anticipated
+since Sorcerer used monolithic kernels for so many years.
+
+Also if a kernel and modules were made that contained debug information
+then they would require a magnitude more space.
+A 500M kernel + initramfs is possible.
+Although I will try to keep that from happening.
+
+With those uncertainties a 1G /boot seems like a fair estimate.
+However, not all boxes will require it.
+Yet to run a box where the / is encrypted or has a RAID that
+is not merely a shadow then a /boot partition is necessary.
+Also it might be required when using LVM2 in some cases.
+
+Also with modern Sorcerer a much smaller /boot/fast
+can be generated automatically when appropriate.
+The initramfs for the fast boot image is precisely cut.
+Therefore, it is smaller, loads faster, uses less RAM,
+and less disk space.
+It is another method which increases Sorcerer boot speed.
+
+And for SAs that want it
+kexec-tools
+when installed allows for a software only reboot
+that loads the new initramfs and kernel into RAM
+and then executes it without a BIOS reboot and
+without running lilo.
+
+kexec rebooting is nice when it works,
+but may not work all the time
+due to bugs related to kexec.
+Therefore, I do not recommend it for production boxes.
+However, it will come pre-installed with the new I/Rs
+because it allows for a fancy new menu during boot
+that makes the I/R more helpful for rescuing a box.
+
+Even if a thing here and there may be tossed aside,
+overall quality and functionality is still on the rise.
+The benefit of booting using an initramfs comes with
+almost no added complexity to SAs since the regeneration
+of the initramfs and running of lilo is automatically handled
+by init scripts during shutdown.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000932.html">[Sorcerer-admins] Suggestions
+</A></li>
+	<LI>Next message: <A HREF="000935.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#933">[ date ]</a>
+              <a href="thread.html#933">[ thread ]</a>
+              <a href="subject.html#933">[ subject ]</a>
+              <a href="author.html#933">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] processing the complaint box again...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20processing%20the%20complaint%20box%20again...&In-Reply-To=%3CCA%2BT4wDgQisrbJmizKo0xoV62Dpz8_SYzVk9fqgi8e6G7L%3DMe4A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002253.html">
+   <LINK REL="Next"  HREF="002255.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] processing the complaint box again...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20processing%20the%20complaint%20box%20again...&In-Reply-To=%3CCA%2BT4wDgQisrbJmizKo0xoV62Dpz8_SYzVk9fqgi8e6G7L%3DMe4A%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] processing the complaint box again...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep 15 04:55:09 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002253.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+        <LI>Next message: <A HREF="002255.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2254">[ date ]</a>
+              <a href="thread.html#2254">[ thread ]</a>
+              <a href="subject.html#2254">[ subject ]</a>
+              <a href="author.html#2254">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Sep 14, 2011 at 8:55 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> On 14 September 2011 06:00, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>
+&gt;&gt;<i> And there is also too much scroll during sysinit.
+</I>&gt;&gt;<i> And it scrolls quickly.
+</I>&gt;<i> It's a pity that it's not all captured in /vat/log/console.
+</I>
+Preparation is required before bootlogd can be started.
+/dev is required, because /dev/pts is required, because /dev/ptmx is required.
+The order during sysinit is not exactly proper.
+/etc/init.d/ptmx should not start until after /etc/init.d/udevsettle completes.
+Yet if made proper then nearly half the init-scripts of sysinit
+run before /etc/init.d/bootlogd
+
+&gt;<i> Most of it is, though, and it was especially useful during my udev
+</I>&gt;<i> troubleshooting.
+</I>
+&gt;&gt;<i> However, there is almost no init-scripts in sysinit
+</I>&gt;&gt;<i> that can be moved to a runlevel
+</I>&gt;&gt;<i> that would not sacrifice something important.
+</I>&gt;<i> This is true. Pity that udev needs to be restarted later, though. Is
+</I>&gt;<i> there no way we can rebind the /dev to the real root?
+</I>
+Actually, /dev and all virtual file systems exist both
+on the initramfs file system and are also bound to
+the commensurate location in /media/root/
+where the real root file system exists.
+The reason for restarting udev during run levels
+is to have udev run on the real root file system.
+The reason udev must run on the real root file system
+is because some hot pluggable support is only available
+on the real root file system.
+
+For example /lib/udev/rules.d/97-bluetooth.rules
+is a rule for starting /usr/sbin/bluetoothd
+
+Obviously, /usr/sbin/ is not provided on the initramfs.
+And even if bluetoothd is moved to /sbin/
+and provided on the initramfs
+then bluetoothd still has an ELF library requirement
+on /usr/lib64/libdbus-1.so.3
+So even if /usr/lib64/libdbus-1.so.3 is moved to
+/lib64/ the rest of dbus must be moved and
+then dbus must be started on the initramfs.
+
+If we allow such chain reactions to cause the migration
+of software to the initramfs
+then eventually we will encounter some helper application
+or daemon started by udevd that required xorg libraries.
+And that might be solved by having that program statically
+link with the libraries that it requires.
+However, if success is eventually achieved
+then a serious amount of software must exist on the initramfs
+which makes the initramfs considerably larger,
+and requires additional init-scripts run during sysinit.
+
+If the goal of the initramfs is the mounting and transition to
+the real root file system
+then we must concede that the udev started on the initramfs
+and cold plug events that are re-triggered
+can properly run only most yet not all of the udev rules.
+
+&gt;&gt;<i> If someone has ideas about how the num lock light
+</I>&gt;&gt;<i> should indicate something useful during booting
+</I>&gt;<i> The numlock light should really indicate whether numlock is active.
+</I>&gt;<i> :)
+</I>
+Actually, it does.
+The init scripts really do enable and disable num lock
+rather than merely turn the led on.
+However, it can only do so for the virtual console
+that is running the init-script.
+Therefore, running an init-script in a terminal emulation program
+will not change the state of num lock for the terminal emulation program.
+Or more simply xorg's method for controlling the state of numlock and caplock
+differs from linux kernel virtual terminals.
+
+
+&gt;<i> However, you could make it flash if sysinit detects a hanging process?
+</I>
+Someone might confuse that with some sort of failure indicated by
+the BIOS of the motherboard.
+However, the idea is somewhat interesting and perhaps useful.
+
+The nice aspect about the Sorcerer sysinit which
+runs nearly exclusively only what is required to achieve
+the outcome of a successful mount of a real root file system
+is that sysinit appears to never hang on Sorcerer.
+However, SAs have reported that problems with udev
+can cause an udevsettle to run the entire length of the timeout.
+That would not be a hang, but rather merely an excessive delay.
+
+Due the unlikely potential that sysinit could hang
+a getty login is provided on virtual console #7.
+The SA can log in even before sysinit completes.
+Regular getty logins become available for login
+after sysinit completes and before runlevels begin.
+Consequently, there is almost no time when root login
+to a Sorcerer box becomes impossible.
+
+Rarely Sorcerer hangs during runlevel execution.
+Sometimes the hang goes unnoticed if enough
+of the runlevel init-scripts complete.
+Consequently, a hang during runlevel might only
+be noticed by &quot;prc&quot; remaining on the process list
+an hour after booting.
+
+Yet if hangs were to be automatically detected
+then what should be the outcome?
+I am voting against blinking the num lock or cap lock lights.
+That indicates too little and seems too similar
+to a motherboard indicated error.
+
+However, a message could be written to /dev/console.
+Automatic identification of the potentially hung process could be inaccurate.
+
+udevsettle might appear to hang.
+fsck might appear to hang.
+raid synchronization might appear to hang.
+password input for encrypted file systems might appear to hang.
+
+Consequently, any decision about whether to automatically kill
+a process must give consideration to the process being killed.
+Yet would automatic hang prevention enabled during sysinit/runlevel
+be a useful improvement?
+Or should merely a message be printed about
+what appears to be happening along with instructions
+that the SA can log in on virtual console #7 and investigate?
+And if an automatic kill is allowed
+then how long to wait?
+5 minutes, 10 minutes, 15 minutes?
+
+&gt;<i> During most of the boot process my USB keyboard is not even
+</I>&gt;<i> initialized, so I don't have anything to say about keys being pressed
+</I>&gt;<i> during the sysinit process.
+</I>
+Usually, within BIOS/CMOS exists an option for the BIOS
+to emulate a PS/2 style keyboard connection with a USB keyboard.
+That is useful to enable on laptops.
+That way the USB keyboard works even before udev
+has a chance to enable the USB subsystem and
+load the required modules.
+
+However, to regress to the previous topic...
+If hanging during boot is possible
+then an automatic method to detect and kill
+a process might be useful on boxes that are
+intended to reboot entirely without interaction.
+Better to have the box eventually permit
+sshd logins short while running without a few processes
+rather than to never complete booting.
+
+Technically, an enhancement to prevent indefinite hanging during booting
+can be added as a Sorcerer Sentinel rather
+than as a significant modification to the existing boot methods.
+Consequently, if we can all agree upon what is safe and desirable
+then running the implementation can be made optional.
+
+Thanks for the feedback Evert.
+Good way to keep the ball rolling.
+
+What programs aught to be excluded from an automatic kill
+when a potential hang situation is detected?
+/sbin/fsck
+/bin/mount
+and process tree with dialog when dialog was started with a timeout parameter?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002253.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+	<LI>Next message: <A HREF="002255.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2254">[ date ]</a>
+              <a href="thread.html#2254">[ thread ]</a>
+              <a href="subject.html#2254">[ subject ]</a>
+              <a href="author.html#2254">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

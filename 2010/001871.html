@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] auto ignore auto failures?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTi%3DuPaTXfYn0NJtg-qypgW_qvFq8bNJ9AZVQaByp%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001868.html">
+   <LINK REL="Next"  HREF="001860.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] auto ignore auto failures?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTi%3DuPaTXfYn0NJtg-qypgW_qvFq8bNJ9AZVQaByp%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] auto ignore auto failures?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 29 04:13:20 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001868.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+        <LI>Next message: <A HREF="001860.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1871">[ date ]</a>
+              <a href="thread.html#1871">[ thread ]</a>
+              <a href="subject.html#1871">[ subject ]</a>
+              <a href="author.html#1871">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jul 28, 2010 at 2:33 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> just a question.... what will be the result if a spell requiring a newer
+</I>&gt;<i> version of gtk+ is updated?
+</I>
+The probability is low, but not nill.
+gtk+ usually remains largely binary compatible.
+If gtk+ fails to compile
+then the SA will be informed of that
+through the usual log files.
+Even if an autofailure of other spells
+that require gtk+ do not happen
+the SA should fix spells according to their order.
+
+# echo -e &quot;firefox\ngtk+&quot; | augur order
+gtk+
+firefox
+
+augur can order a list of spells.
+
+If a spell that requires gtk+, such as firefox,
+fails to compile because
+the installed gtk+ does not have
+the functions that are expected
+then that problem would have to be deduced.
+One could not automatically assume
+that the installed version of gtk+
+is too high or too low without first hand examination.
+
+In the distant past there was a compile error involving firefox
+that happened only after gtk+ was updated to a newer version.
+In that instance firefox failed to compile because
+installed gtk+ had been successfully updated.
+
+An autofailure does not necessarily prevent a problem.
+In many cases a problem would not occur
+other than an autofailure generated problem.
+
+&gt;<i> autofaillure for me is a boon because I know exactly where is the root
+</I>&gt;<i> cause.
+</I>
+An autofailure only tells what triggered the autofailure.
+It does not indicate a problem.
+Potentially it prevents an SA from encountering problems
+that might happen if no autofailure happened
+and compilation continued.
+If a software project is installed
+and an update fails to compile
+then in almost all cases other software
+that will update will compile fine
+using the installed version
+of the software project that failed to compile.
+
+An autofailure does not prevent a problem.
+It causes a definite problem of autofailure.
+In most cases having a spell or two fail
+to compile during update would not trash
+the entire update if the spells that failed
+to compile did not cause an autofailure.
+
+Let us assume that during an update
+gtk+ and firefox both failed to compile.
+Which would you check first?
+I would check gtk+
+If firefox was autofailed by gtk+
+then the SA has no choice but to
+fix gtk+ or clear the failed queue
+in order to attempt the compilation of firefox.
+
+
+&gt;<i> if the spell isn't installed, ok then autofailure remain....
+</I>&gt;<i> if the spell is installed but newer version do fails.... with you scenario
+</I>&gt;<i> the spells that require it are still casted...
+</I>&gt;<i> 1) the spell is API compatible with the old version, then everything shall
+</I>&gt;<i> compile....&#160; ok
+</I>&gt;<i> 2) the spell require the new api
+</I>&gt;<i> 2-1) the configure is updated and detect the wrong version.... ok not so
+</I>&gt;<i> much overhead to detect
+</I>
+Some software explicitly fails and refuses to compile
+during the running of ./configure --prefix
+when it detects an installed requirement is too old.
+Normally that is easy to spot.
+The reason is listed in the compile log.
+
+&gt;<i> 2-2) the configure isn't updated and compilation fails in horrible way.....
+</I>&gt;<i> might take time to investigate
+</I>
+Maybe, but in that event
+please order the spells to check
+and check the spells that come first.
+
+# augur activity failed
+
+The listing of software in the failed log
+that is still current at the end is already
+in the correct order.
+If both gtk+ and firefox failed to compile
+then the attempt to compile gtk+ would come first.
+
+&gt;<i> but anyway this shall work....
+</I>&gt;<i> however I think that on start of compile log you should add some info lines
+</I>&gt;<i> saying what are the requirements, what is the current requirement version
+</I>&gt;<i> installed, and what is the lastest requirement version
+</I>
+That would seriously pump up the size of compile logs.
+
+# augur arof gedit | wc -l
+317
+
+At least an additional 300 lines at the start of gedit compile.
+And while I can list the installed version for a spell
+and also the available version for the spell
+I can not add to the compile log header
+information about what installed versions
+of software are required.
+In many situations, especially involving gcc,
+I can only tell that newer or older installed software
+is required after I have experienced a failed attempt
+at compilation.
+
+# ( augur arof gedit | augur available; augur version | sed p ) | sort | uniq -u
+
+If an inconsistency exists
+then output from the above command
+would show where that inconsistency is.
+
+&gt;<i> example :
+</I>&gt;<i> #### requirements info
+</I>&gt;<i> requirement&#160;&#160;&#160;&#160; current version&#160;&#160;&#160;&#160; available version
+</I>&gt;<i> gtk&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 2.4.0&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 2.4.0
+</I>&gt;<i> libtool&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 1.5.6&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; 2.0.0
+</I>&gt;<i> #### end requirement info
+</I>&gt;<i>
+</I>&gt;<i> &lt;lot of lines&gt;
+</I>&gt;<i> &lt;horrible death&gt;
+</I>
+Carefully eyeballing 300 lines is a strain.
+If I had to do it
+then I would at least pre-parse and color code the lines.
+
+However, I do not dislike the idea.
+I would implement it so that only lines
+where the current and available version differ.
+That way if the lines appear
+then it maybe worthy of investigation
+instead of carefully examining hundreds of lines.
+
+
+&gt;<i> like this you know looking at this section that you don't have the lastest
+</I>&gt;<i> versions of libtool but you're up to date for gtk and that the compilation
+</I>&gt;<i> failure might comes from that....
+</I>
+Thanks.
+It seems like an okay idea.
+Nothing directly can be inferred from those lines.
+But at least in the scenario of gtk+ firefox compile failure
+the SA would see the lines about the difference between
+the installed and available versions of gtk+
+at the start of the firefox compile log.
+If nothing else it acts as a
+&quot;you might want to start over there first&quot;
+type arrow.
+
+I wrote it in my todo list as:
+
+Check installed and available versions for requirements.
+If they differ when a spell starts to compile
+then list those differences at the start of a compile log.
+
+Thanks again for the feedback.
+Hopefully compile logs will not have the additional lines
+and everything will compile just fine.
+But if not then I hope the additional lines
+will be useful in guiding the SA in checking
+software that failed compilation in correct order.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001868.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+	<LI>Next message: <A HREF="001860.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1871">[ date ]</a>
+              <a href="thread.html#1871">[ thread ]</a>
+              <a href="subject.html#1871">[ subject ]</a>
+              <a href="author.html#1871">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

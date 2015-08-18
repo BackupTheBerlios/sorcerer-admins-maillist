@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] postfix does override configuration to default
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20postfix%20does%20override%20configuration%20to%20default&In-Reply-To=%3C596b75860708220018ve7846f8vc70dc867732d7a7e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000217.html">
+   <LINK REL="Next"  HREF="000219.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] postfix does override configuration to default</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20postfix%20does%20override%20configuration%20to%20default&In-Reply-To=%3C596b75860708220018ve7846f8vc70dc867732d7a7e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] postfix does override configuration to default">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Aug 22 09:18:01 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000217.html">[Sorcerer-admins] postfix does override configuration to default
+</A></li>
+        <LI>Next message: <A HREF="000219.html">[Sorcerer-admins] ati-driver-installer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#221">[ date ]</a>
+              <a href="thread.html#221">[ thread ]</a>
+              <a href="subject.html#221">[ subject ]</a>
+              <a href="author.html#221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 8/21/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+
+&gt;<i> Thats for bugfix. So what will happen now on machines which got installed
+</I>&gt;<i> lot of spells under this bug.
+</I>&gt;<i> If i now re-cast eg. postfix, does it still override my config if i earlier
+</I>&gt;<i> casted it on buggy version because there was no /etc -tracking?
+</I>
+Good question.
+The answer is probably not.
+Dispel will calculate the md5sum for configuration files.
+Then, it will try to find that file and md5sum in all the md5sum logs.
+If it does not occur then it assumes that the configuration file has
+been customized.
+Therefore, it will treat that configuration file as customized.
+
+Due to the spells that have been cast recently that do not have
+md5sums in their md5sum logs for the configuration files installed
+those configuration files will appear as customized to dispel whether
+or not they are indeed customized.
+However, upon a second cast of the spell or an update that
+installs the exact same configuration file as before
+then the new md5sum will match the md5sum for the previously
+installed file and the configuration file will no longer be detected as
+customized when it really is merely the default configuration file.
+
+More simply put...
+You will probably not loose any more customized configuration files
+to that bug which is now fixed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000217.html">[Sorcerer-admins] postfix does override configuration to default
+</A></li>
+	<LI>Next message: <A HREF="000219.html">[Sorcerer-admins] ati-driver-installer
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#221">[ date ]</a>
+              <a href="thread.html#221">[ thread ]</a>
+              <a href="subject.html#221">[ subject ]</a>
+              <a href="author.html#221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

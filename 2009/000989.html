@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Status report
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Status%20report&In-Reply-To=%3C596b75860901262012w3b96d59cu653271129b9a86b3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000988.html">
+   <LINK REL="Next"  HREF="000990.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Status report</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Status%20report&In-Reply-To=%3C596b75860901262012w3b96d59cu653271129b9a86b3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Status report">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jan 27 05:12:46 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000988.html">[Sorcerer-admins] Status report
+</A></li>
+        <LI>Next message: <A HREF="000990.html">[Sorcerer-admins] Status report
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#989">[ date ]</a>
+              <a href="thread.html#989">[ thread ]</a>
+              <a href="subject.html#989">[ subject ]</a>
+              <a href="author.html#989">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jan 26, 2009 at 2:20 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> personaly I don't like modifying the mbr and for various reasons like having
+</I>&gt;<i> muliple IDEPENDANTS Os (a sorcerer x86_64, a i586 version and a widows) I
+</I>&gt;<i> don't want to have it installed on mbr
+</I>&gt;<i> shoot the mbr and you shoot everything,
+</I>&gt;<i> shoot the bootloader and you can't even switch to another os without trouble
+</I>&gt;<i> in case the bootloader is in first sector of partition just change the
+</I>&gt;<i> active partition and it'll work just fine....
+</I>
+I remember setting up a dual boot 2 drive configuration.
+The box had windoze XP and Sorcerer IA32.
+For windoze XP to boot windoze XP had to own the MBR
+and start running from from the MBR.
+It could not simply be booted like windoze 98/95 from the partition.
+To do so would invoke the windoze XP resecue/repair program.
+
+The solution was to have the Sorcerer disk first in the boot sequence,
+have it load the ms-sys MBR, and then lilo in the boot block,
+and then have lilo switch the BIOS assignment of drives
+and load the MBR from the windoze disk if booting into windoze XP.
+
+Having Sorcerer's lilo installed into a boot block is very much
+a convenience for SAs so that if they happen to try to dual install
+Sorcerer and M$ on the same disk then it might not wreck the M$ installation.
+Perhaps M$'s XP or later bootloader can load a linux distro?
+
+
+&gt;<i> if you have several os installed then all are running race condition about
+</I>&gt;<i> whom will write the mbr..... either you have to maintain all the
+</I>&gt;<i> configuration of all os to be certains they will keep track of the other, or
+</I>&gt;<i> just install the bootloader on 1rst sector and let they live their lives....
+</I>
+Exactly.  Having Sorcerer's lilo install to a boot block of a partition
+instead of the MBR allows for something awesome like having
+separate x86_64 and IA32 installations of Sorcerer.
+Chaining from lilo in the x86_64 boot block to lilo in the IA32 boot
+block is trivial.
+However, it is not even required since the IA32 installation can be mounted
+within the x86_64 installations as /opt/ia32
+Then, it can be used concurrently by some additional lines added to
+/etc/ld.so.conf and additional PATH statements.
+Updating Sorcerer IA32 from an x86_64 installation is as easy as
+# chroot /opt/ia32
+And then doing all the regularly stuff.
+
+
+&gt;<i> I can even update a i586 sorcerer from the x86_64 one without bothering ;)
+</I>
+Right, without bothering to reboot into it.
+
+
+&gt;<i> anyway if grub has to be installed into mbr I will likely never use it....
+</I>
+If grub is installed into the MBR and that disk is in the boot sequence
+then you will probably have to use grub.
+However, I expect that grub can probably be configured to chain
+to running lilo in the boot block of a Sorcerer installation.
+In that way a SA could still run grub and yet still leave the decision
+of what kernel and initramfs to load to the configuration of lilo.
+
+
+&gt;<i> look at the &quot;rescue usb disk&quot; I made, without lilo it wouldn't even exist or
+</I>&gt;<i> you will have to waste a full usb drive for having a small rescue disk, on
+</I>&gt;<i> this you have a lilo installed on boot sector of the partition, allowing to
+</I>&gt;<i> move it anywhere you want... on a sdcard, on an usb drive, on flash, on a
+</I>&gt;<i> harddrive.... it's STANDALONE
+</I>&gt;<i>
+</I>&gt;<i> I think that lilo shall use 1rst partition block as default and optional mbr
+</I>&gt;<i> (for crapy filesystems that don't support having a boot sector) and shall
+</I>&gt;<i> use UUID by default (and not the old /dev/sd* or /dev/hd* or /dev/mmc*
+</I>&gt;<i> or.....) like this anywhere you go, whatever the physical medium of your
+</I>&gt;<i> drive, it will boot as expected
+</I>
+That just about summarizes my feelings about it also.
+However, the convenience of being able to install a boot loader
+into the MBR can not be underestimated for SAs.
+However, it might also be possible that &quot;BIOS enabled virus protection&quot;
+might inhibit writes to the MBR and might also fail an update of the MBR?
+Linux, however, probably will probably not use BIOS calls to write to a disk?
+But even so I feel more comfortable with a ms-sys MBR
+that works and does not change.
+
+grub setup to provide a selection to other bootloaders
+might also be a viable solution for the MBR because
+some types of grub installations,
+that would not involve actual selection of linux kernels and initramfs,
+would not have to be updated regularly.
+In that fashion grub could be installed once and then provide the
+selection of whether to boot Sorcerer x86_64, Sorcerer IA32, or
+some other POSIX or BSD style installations.
+However, chaining from lilo to lilo is just as easy.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000988.html">[Sorcerer-admins] Status report
+</A></li>
+	<LI>Next message: <A HREF="000990.html">[Sorcerer-admins] Status report
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#989">[ date ]</a>
+              <a href="thread.html#989">[ thread ]</a>
+              <a href="subject.html#989">[ subject ]</a>
+              <a href="author.html#989">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

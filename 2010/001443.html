@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] rush release...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20rush%20release...&In-Reply-To=%3C61f63af31002061240s27a52e78h2fe14925bc6ed10f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001440.html">
+   <LINK REL="Next"  HREF="001444.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] rush release...</H1>
+    <B>bent jakobsen</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20rush%20release...&In-Reply-To=%3C61f63af31002061240s27a52e78h2fe14925bc6ed10f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] rush release...">jakobsen.bent at gmail.com
+       </A><BR>
+    <I>Sat Feb  6 21:40:50 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001440.html">[Sorcerer-admins] rush release...
+</A></li>
+        <LI>Next message: <A HREF="001444.html">[Sorcerer-admins] rush release...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1443">[ date ]</a>
+              <a href="thread.html#1443">[ thread ]</a>
+              <a href="subject.html#1443">[ subject ]</a>
+              <a href="author.html#1443">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In short: The problem about not detecting the IR bootdevice disappears with
+this solution (at least for me).
+
+
+However there is some problem which seems a bit weird right now with
+sinstall:
+
+If I do the following:
+
+boot
+linux rdinit=/bin/bash
+nano /etc/init.d/find_ir - edit it
+exec /init
+select keyboard
+login as root
+
+everything is fine this far, then I do:
+
+/sbin/sinstall
+
+sinstall complain about trying to access fd0, and does not seems to get any
+further. It does however read different sectors - perhaps I'm to impatient?
+
+Does it to needs to go through 12 times? okay I'll try to ...
+
+Best regards
+
+Bent
+
+
+On Sat, Feb 6, 2010 at 7:31 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> After today's daily grimoire is rolled
+</I>&gt;<i> which happens at UTC 00:00
+</I>&gt;<i> I am going to update the I/R images and rush
+</I>&gt;<i> them to sorcerer.silverice.org for download
+</I>&gt;<i> in order to repair the problem with /etc/init.d/find_ir
+</I>&gt;<i> in the event that a floppy disk device is detected during boot.
+</I>&gt;<i>
+</I>&gt;<i> This bug might be possible for seeing later bugs appear
+</I>&gt;<i> during the menu driven installer such as the programs such as
+</I>&gt;<i> sort and uniq missing.
+</I>&gt;<i> It could explain unexpected weirdness with the menu driven installer.
+</I>&gt;<i>
+</I>&gt;<i> Here is the immediate solution to the problem...
+</I>&gt;<i>
+</I>&gt;<i> Start booting the I/R
+</I>&gt;<i> When isolinux asks for the command line type:
+</I>&gt;<i>
+</I>&gt;<i> linux rdinit=/bin/bash
+</I>&gt;<i>
+</I>&gt;<i> It will boot and immediate present a prompt
+</I>&gt;<i> now type:
+</I>&gt;<i>
+</I>&gt;<i> nano /etc/init.d/find_ir
+</I>&gt;<i>
+</I>&gt;<i>   try(){ while read  &amp;&amp;  mtest  &quot;$REPLY&quot; &amp;&amp; return; do :; done; false; }
+</I>&gt;<i>
+</I>&gt;<i> That function is incorrect
+</I>&gt;<i> Replace that entire line with
+</I>&gt;<i>
+</I>&gt;<i>   try(){ while read; do mtest   &quot;$REPLY&quot; &amp;&amp; return; done; false; }
+</I>&gt;<i>
+</I>&gt;<i> Now press ctrl-x y enter
+</I>&gt;<i> and the corrected file will be saved.
+</I>&gt;<i>
+</I>&gt;<i> Now enter the command at the prompt
+</I>&gt;<i> exec /init
+</I>&gt;<i>
+</I>&gt;<i> The I/R will now continue booting normal.
+</I>&gt;<i> Login as root with no password
+</I>&gt;<i> And start sinstall
+</I>&gt;<i>
+</I>&gt;<i> Hopefully, with this correction
+</I>&gt;<i> installation will work as smoothly as it does for me in qemu.  :)
+</I>&gt;<i>
+</I>&gt;<i> If this fix also corrects any weirdness encountered when running sinstall
+</I>&gt;<i> then we can safely assume that the bug that required fixing was not in
+</I>&gt;<i> the menu driven installer, but instead within the /etc/init.d/find_ir
+</I>&gt;<i> script.
+</I>&gt;<i>
+</I>&gt;<i> I will post another message to the list
+</I>&gt;<i> when the updated I/Rs are ready for download.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100206/6bba66a1/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100206/6bba66a1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001440.html">[Sorcerer-admins] rush release...
+</A></li>
+	<LI>Next message: <A HREF="001444.html">[Sorcerer-admins] rush release...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1443">[ date ]</a>
+              <a href="thread.html#1443">[ thread ]</a>
+              <a href="subject.html#1443">[ subject ]</a>
+              <a href="author.html#1443">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

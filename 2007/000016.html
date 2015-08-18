@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] libXau (from prior message)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXau%20%28from%20prior%20message%29&In-Reply-To=%3C596b75860701021528wfd678e8q4c596e91fbb7c08d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000011.html">
+   <LINK REL="Next"  HREF="000017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] libXau (from prior message)</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXau%20%28from%20prior%20message%29&In-Reply-To=%3C596b75860701021528wfd678e8q4c596e91fbb7c08d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] libXau (from prior message)">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jan  3 00:28:50 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000011.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+        <LI>Next message: <A HREF="000017.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You may end up with an unusual solution if you do not go entirely
+XFree86 or entirely xorg.
+
+You may first have to remove the appropriate provide logs...
+Perhaps something like:
+
+# grep  -rl  &quot;XFree86&quot;  /etc/sorcery/log/provide | xargs -l64 rm
+# augur index
+# cast xorg
+
+Even then the box may recast many spells,
+some that must be recast,
+others may be selected to recast temporarily while
+required libraries were not installed by XFree86 or
+xorg related spells.
+
+Incase your are curios,
+any spell that that goes with the xorg suite
+will have the attribute X11R7
+
+# augur attribute X11R7 | wc -l
+296
+
+There are about 300 of them.
+
+If you switch to xorg it uses
+/etc/X11/xorg.conf
+as the configuration file
+which has almost identical syntax
+as XFree86's configuration file.
+
+If you are looking at the old one
+running xorgconfig will probably
+help you create a new one that xorg can use.
+
+You can use XFree86, older version of XFree86 or xorg.
+However, the test box tests and adjusts software to compile with xorg.
+There is the possibility that by using XFree86 or older versions
+that you may encounter problems compiling some software.
+A version or two ago of qt-x11-free would not compile with the
+current version of XFree86.
+Whether that has been fixed I do not know.
+
+
+On 1/2/07, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Oh, I see there's a bunch of new libX??? spells... strangely when I typed
+</I>&gt;<i> 'cast libX&lt;tab&gt;&lt;tab&gt;' it just dropped the 'X' and wanted to list all 'lib*'
+</I>&gt;<i> spells available... I see there is a libXau package, which after casting,
+</I>&gt;<i> allowes libX11 to build successfully.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000011.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+	<LI>Next message: <A HREF="000017.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#16">[ date ]</a>
+              <a href="thread.html#16">[ thread ]</a>
+              <a href="subject.html#16">[ subject ]</a>
+              <a href="author.html#16">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

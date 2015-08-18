@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gdm compile issue due to gnome-doc-utils	installation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20compile%20issue%20due%20to%20gnome-doc-utils%0A%09installation&In-Reply-To=%3CAANLkTindk6vLbGPK21IJpD2PyMH_JdnInoila_L4182c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001674.html">
+   <LINK REL="Next"  HREF="001670.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gdm compile issue due to gnome-doc-utils	installation</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20compile%20issue%20due%20to%20gnome-doc-utils%0A%09installation&In-Reply-To=%3CAANLkTindk6vLbGPK21IJpD2PyMH_JdnInoila_L4182c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gdm compile issue due to gnome-doc-utils	installation">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Jun 21 23:47:58 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001674.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+        <LI>Next message: <A HREF="001670.html">[Sorcerer-admins] gdm compile issue due to gnome-doc-utils	installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1669">[ date ]</a>
+              <a href="thread.html#1669">[ thread ]</a>
+              <a href="subject.html#1669">[ subject ]</a>
+              <a href="author.html#1669">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+on my box gnome-doc-utils install it's pkg-config files into
+/usr/share/pkg-config (there are several .pc in this directory) thus when
+gdm try to compile, pkg-config don't find the .pc file and stop the
+configure....
+I solved this issue by moving the .pc into /usr/lib/pkg-config dir and doing
+a symlink to re-create the /usr/share/pkg-config dir.....
+I've no idea what caused the installation to not install the files into the
+usual pkg-config dir... however I think that /usr/share/pkg-config shall be
+a symlink to /usr/lib/pkg-config and I propose the pkg-config spell to
+create it at install step
+best regards
+JLM
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100621/8fecc82d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100621/8fecc82d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001674.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+	<LI>Next message: <A HREF="001670.html">[Sorcerer-admins] gdm compile issue due to gnome-doc-utils	installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1669">[ date ]</a>
+              <a href="thread.html#1669">[ thread ]</a>
+              <a href="subject.html#1669">[ subject ]</a>
+              <a href="author.html#1669">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] fun things...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20fun%20things...&In-Reply-To=%3CAANLkTikpimBryPd6HUQb-mk9gzd6MF%3DgbskYHbYJyYgz%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001930.html">
+   <LINK REL="Next"  HREF="001934.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] fun things...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20fun%20things...&In-Reply-To=%3CAANLkTikpimBryPd6HUQb-mk9gzd6MF%3DgbskYHbYJyYgz%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] fun things...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Oct  8 16:06:09 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001930.html">[Sorcerer-admins] fun things...
+</A></li>
+        <LI>Next message: <A HREF="001934.html">[Sorcerer-admins] fun things...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1932">[ date ]</a>
+              <a href="thread.html#1932">[ thread ]</a>
+              <a href="subject.html#1932">[ subject ]</a>
+              <a href="author.html#1932">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yore is something older than current.
+It shows that an event happened,
+however the state of the spell is no longer
+expected to be according to that event.
+
+For example,
+when installed software is dispelled for an update
+the event becomes Fore Pass Oust
+However, at the moment that the newer version of the software
+is installed then a previous Past Oust event is no longer a current state.
+Therefore, the previous Past Oust event becomes
+Yore Pass Oust
+And the new event becomes
+Fore Pass Cast
+
+The meaning seems a bit more clear
+when looking at the event for a single spell.
+For example:
+
+# augur event linux
+Sat 04 Sep 2010 02:56:20 AM MST  linux  2.6.34.2  Yore  Cast New
+Sun 05 Sep 2010 01:40:55 PM MST  linux  2.6.34.2  Yore  Cast New
+Tue 07 Sep 2010 11:14:47 PM MST  linux  2.6.34.6  Yore  Cast New
+Sun 12 Sep 2010 09:20:29 AM MST  linux  2.6.35.4  Yore  Pass Oust
+Sun 12 Sep 2010 09:29:19 AM MST  linux  2.6.35.4  Fore  Pass Cast
+Thu 07 Oct 2010 09:05:12 PM MST  linux  2.6.35.7  Fore  Cast New
+Thu 07 Oct 2010 10:36:08 PM MST  linux  2.6.35.7  Fore  Pass Load
+
+At the moment linux is casting on this box.
+The 3 most recent events are Fore events.
+linux previously cast on 2010-09-12.
+So that is a Fore Pass Cast
+linux was entered into the cast queue for an update on 2010-10-07.
+That is Fore Cast New
+linux source was downloaded 2010-10-07
+So that is a Fore Past Load.
+
+Just by looking at the current sequence of events
+we can guess that with good probability that
+linux is currently installed at version 2.6.35.4
+a newer version 2.6.35.7 entered into the cast queue recently
+and was downloaded.
+
+Currently, the events are not so complicated as to indicate
+that linux is currently casting or currently in the cast queue.
+However, most likely the next event for linux will either be
+Fore Pass Oust
+followed by
+Fore Pass Cast
+or
+Fore Fail Cast
+
+Either of those outcomes can turn previous events from Fore to Yore.
+Events that remain on the list with a status of Yore indicate that an event
+previously happened, but is not expected to be the current state of the spell.
+In this fashion the event logs can preserve a history
+for events that have happened for spells
+while at the same time helping the SA discern
+which events represent the current expected state of a spell.
+
+ # augur event kdelibs-v4
+Sat 04 Sep 2010 02:56:20 AM MST  kdelibs-v4  4.5.1  Yore  Cast New
+Sat 04 Sep 2010 12:23:52 PM MST  kdelibs-v4  4.5.1  Yore  Pass Oust
+Sat 04 Sep 2010 12:27:47 PM MST  kdelibs-v4  4.5.1  Yore  Pass Cast
+Fri 24 Sep 2010 02:32:50 PM MST  kdelibs-v4  4.5.1  Yore  Cast ELF
+Fri 24 Sep 2010 02:32:50 PM MST  kdelibs-v4  4.5.1  Yore  Miss ELF
+Sat 25 Sep 2010 04:37:43 PM MST  kdelibs-v4  4.5.1  Yore  Pass Oust
+Sat 25 Sep 2010 04:41:45 PM MST  kdelibs-v4  4.5.1  Fore  Pass Cast
+Thu 07 Oct 2010 09:05:11 PM MST  kdelibs-v4  4.5.2  Fore  Cast New
+
+Looks like a new kdelibs-v4 is queued for casting.
+I already checked it on my workstation rather than the
+nearly always busy test box.
+However, on the test box it looks a bit like this.
+This also shows a slight problem with event logs
+that I might have already fixed.
+Notice that a Yore Cast ELF and Yore Miss ELF
+occur at the same time, but the event that should
+have happened first is Miss ELF.
+An ELF was missing, therefore the spell entered into
+the cast queue as a Cast reason ELF
+As we can see it there was quite some time before it compiled,
+but eventually a Pass Oust happens and then a few minutes later
+the newer version is installed and that is logged as a Pass Cast event.
+
+&gt;<i>From the current events about kdelibs-v4 we
+</I>can guess that kdelibs-v4 version 4.5.1 is installed
+and that kdelibs-v4 for version 4.5.2 entered into the cast queue
+for the reason of being selected during a
+# augur newer
+
+However, there is no download event for it,
+because I copied the xz compressed source tarballs
+from my workstation to the test box.  :)
+
+Unfortunately, the event logs do not indicate why
+the KDE software team again did not include kdepim software.
+
+Now for one last example
+jump down to the end of this email.
+
+
+
+
+On Thu, Oct 7, 2010 at 11:56 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Thursday, September 16, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> If for nothing more than the &quot;Yore&quot; and &quot;Fore&quot; assignment to events
+</I>&gt;&gt;<i> then I would say that the event logs are an improvement.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I still don't understand the difference between Yore and Fore events. For
+</I>&gt;<i> example:
+</I>&gt;<i>
+</I>&gt;<i> $ augur activity pass | tail
+</I>&gt;<i> Mon 04 Oct 2010 04:14:04 PM EDT &#160;wireshark &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 1.2.11
+</I>&gt;<i> Yore &#160;Pass Oust
+</I>&gt;<i> Mon 04 Oct 2010 04:14:10 PM EDT &#160;wireshark &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 1.2.11
+</I>&gt;<i> Fore &#160;Pass Cast
+</I>&gt;<i> Mon 04 Oct 2010 04:33:15 PM EDT &#160;gwenhywfar &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;3.11.3
+</I>&gt;<i> Yore &#160;Pass Oust
+</I>&gt;<i> Mon 04 Oct 2010 04:33:20 PM EDT &#160;gwenhywfar &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;3.11.3
+</I>&gt;<i> Fore &#160;Pass Cast
+</I>&gt;<i> Thu 07 Oct 2010 02:42:12 PM EDT &#160;cups &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;1.4.4
+</I>&gt;<i> Yore &#160;Pass Oust
+</I>&gt;<i> Thu 07 Oct 2010 02:43:09 PM EDT &#160;cups &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;1.4.4
+</I>&gt;<i> Fore &#160;Pass Cast
+</I>&gt;<i> Thu 07 Oct 2010 02:44:08 PM EDT &#160;grimoire &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;2010-280
+</I>&gt;<i> Yore &#160;Pass Oust
+</I>&gt;<i> Thu 07 Oct 2010 02:44:23 PM EDT &#160;grimoire &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;2010-280
+</I>&gt;<i> Fore &#160;Pass Cast
+</I>&gt;<i> Thu 07 Oct 2010 02:47:50 PM EDT &#160;initramfs &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 20100923
+</I>&gt;<i> Yore &#160;Pass Oust
+</I>&gt;<i> Thu 07 Oct 2010 02:47:57 PM EDT &#160;initramfs &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 20100923
+</I>&gt;<i> Fore &#160;Pass Cast
+</I>&gt;<i>
+</I>&gt;<i> According to augur help event, 'Pass Oust' means software removed for upgrade
+</I>&gt;<i> and 'Pass Cast' means software installed from source. So far so good. But what
+</I>&gt;<i> is the 'Yore/Fore' telling me?
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>
+The last two events from the above event log indicate that
+initramfs was uninstalled for reason of update.
+That was once a Fore event, but is now a Yore event.
+It is Yore because 7 seconds later initramfs was installed.
+A Fore Pass Cast event will change all previous Fore Pass Oust
+events for a spell to Yore Pass Oust.
+That makes sense because software is not expected
+to be both concurrently installed while not installed.
+
+Simply by selecting only Fore events from an event summary
+then the SA can immediately gather more information about
+the expected state for a spell.
+
+# augur event linux | sed -n &quot;s:Fore  ::p&quot;
+Sun 12 Sep 2010 09:29:19 AM MST  linux  2.6.35.4  Pass Cast
+Thu 07 Oct 2010 09:05:12 PM MST  linux  2.6.35.7  Cast New
+Thu 07 Oct 2010 10:36:08 PM MST  linux  2.6.35.7  Pass Load
+
+Also in an event summary Yore events tend to come before Fore events.
+This is very obvious when viewing an event summary about a single spell.
+However, when viewing an event summary for an amount of days:
+
+# augur event 1 | wc -l
+124
+
+We find that visually this is much harder to recognize because
+the events will be ordered chronologically instead of by spell.
+
+# augur event 1 | sed -n &quot;s:Fore  ::p&quot; | wc -l
+81
+
+However, examination of only Fore events
+might be a bit faster, sometimes.
+
+# augur event 30 | wc -l; augur event 30 | sed -n &quot;s:Fore  ::p&quot; | wc -l
+3590
+1354
+
+Looking at events over a 30 day span
+eliminating Yore events from consideration
+could reduce the amount of events for consideration by half or more.
+However, it will not lower one's automobile insurance rates.
+:<i>)
+</I>But there is one other interesting aspect about events.
+However, I have not decided how to display the information.
+
+Some event logs will not be empty such as:
+
+Fail Auto
+Miss ELF
+Miss LA
+
+They might contain more information that tells
+exactly why an auto failure happened or why
+installed software failed the ELF or LA checks.
+Unfortunately, the extra information does not fit good into a column table.
+I am thinking about adding that extra information
+to the output of:
+
+# augur event $SPELL
+
+So that it is displayed for Fore events when available
+but only when event information is desired about a single spell.
+When I see that a spell did not install as expected
+then I tend to do a
+# augur event spell
+
+If I see &quot;Fail Auto&quot;
+then I tend to cat the event log to find the exact reason.
+It is a bit manual.
+
+This week I am testing changes to cast that
+should fix the mode of /tmp if some software changed
+the mode of /tmp during compilation or installation.
+It is too annoying when software does that.
+
+My hope for event logs is to be able to provide information
+about the most common events on a box in an output that
+has a clean appearance and is fast to visually parse or to
+dissect using sed, grep, perl or any such program.
+
+Currently, the terms for events used are a bit cryptic.
+They are actual English words.
+Words like Oust, Yore, and Fore have valid meanings
+that are congruent with their use by sorcery.
+But those words also do not commonly occur in modern spoken English.
+Therefore, they could add a tiny element of confusion that makes
+the output of events look like colorful but useless play-dough.
+Hopefully, after misunderstandings are spot and fixed
+then the output from event logs will make sense.
+
+Currently, the output for event log summary
+is not that much different than output for activity logs.
+The same sort of information is there and more.
+However, the information has not already been segregated
+according to whether an event was a Pass, Fail, or Load event.
+
+By using:
+# augur activity {fail,load,pass}
+
+the SA can have the event information displayed
+segregated according to those types of events.
+However, a SA could also segregate the information
+from the output out # augur event
+by using
+# augur event 3650 | sed ....
+where the sed command chews the information
+and regurgitates the desired lines.
+
+
+The current event system is in response to many SA requests.
+Some SAs wanted all the information to appear in a single file
+instead of having 3 separate files for activity logs.
+Others want sorcery events added to the system log,
+which is already has almost everything in it anyway.
+And I wanted an event system that preserves event history
+while at the same time making clear which events are expected
+to be history and which events are expected to be current.
+Obviously, this goes a bit beyond what can be easily done
+using a single file and is impossible to accomplish using the system log.
+However, as a compromise I decided upon very terse simple names
+to use for events and added some nice color coding to the tables.
+
+So nobody receives exactly what they want:
+no system log entries;no segregated activity logs.
+However, event logs have many boons such as:
+require very little disk space;
+store historical information;
+discern current information;
+have tiny logical names like &quot;Fail Cast&quot; instead of &quot;Compile Failure&quot;;
+can provide information output in columns;
+can provide tables of color coded information;
+and can be viewed in interesting ways using the ls command
+directly on /var/log/sorcery/event/
+
+One of the most compelling reasons for the overhaul of event logs
+was Evert's request that more lines be used in # augur scry
+to provide information about recent events.
+However, I did not want events to be displayed on those lines
+for which the event is no longer current.
+This makes sense to me.
+This way a Fail Cast or Miss ELF event
+shown on # augur scry immediately vanishes
+when the spell has a Pass Cast event.
+SAs will not end up chasing after an
+error or problem which has already vanished.
+
+I again added information not relevant to the question being asked.
+However, it does go to show that the event logs changed
+according to SA requests.
+Therefore, if the current method for event logs
+is not pleasing or inadequate
+then it would probably change again according to SA requests.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001930.html">[Sorcerer-admins] fun things...
+</A></li>
+	<LI>Next message: <A HREF="001934.html">[Sorcerer-admins] fun things...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1932">[ date ]</a>
+              <a href="thread.html#1932">[ thread ]</a>
+              <a href="subject.html#1932">[ subject ]</a>
+              <a href="author.html#1932">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

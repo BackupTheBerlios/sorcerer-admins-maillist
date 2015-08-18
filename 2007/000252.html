@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] bug in init-functions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20bug%20in%20init-functions&In-Reply-To=%3C596b75860709071828x37399617u243d809e26f9b83c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000253.html">
+   <LINK REL="Next"  HREF="000259.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] bug in init-functions</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20bug%20in%20init-functions&In-Reply-To=%3C596b75860709071828x37399617u243d809e26f9b83c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] bug in init-functions">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep  8 03:28:04 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000253.html">[Sorcerer-admins] Broken spells....
+</A></li>
+        <LI>Next message: <A HREF="000259.html">[Sorcerer-admins] bug in init-functions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#252">[ date ]</a>
+              <a href="thread.html#252">[ thread ]</a>
+              <a href="subject.html#252">[ subject ]</a>
+              <a href="author.html#252">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yup, he is right.
+As expected berlios goes down on the weekend.
+I was unable to commit the finsihed version for init-functions
+to the grimoire, because berlios was not accepting it.
+It was an accident when I commited it buged
+to the svn grimoire before along with some other spells earlier.
+Therefore, do not use init-functions 3.1.
+Wait until tomorrow and use init-functions 3.1.0
+If you do use init-functions 3.1 I can not say whether
+or not it will prevent the box from being able to boot normally.
+Chances are some services would not start and the usual
+messages during startup would not be seen.
+
+However, you can use init-functions 3.0 if you edit the
+/root/.sorcery/grimoire/init-functions.d/init-functions
+before casting it and remove the entire if statement
+that causes the bug.
+
+grimoire-2007-251 I removed from sorcerer.silverice.org
+and patches and copies of it at ppr.silverice.org
+Also to try to prevent this I am going to make the default
+lag, if not set on each box, 1 day.
+That way deployed boxes that have no specified lag set
+on their grimoires will lag one day behind and so will not
+be effected by a bug picked up in an early updated.
+
+Currently, boxes that updated only minutes after UTC 00:00
+have the greatest chance of picking up a problem.
+If a grimoire is unsuitable then that grimoire is removed
+from the server usually within an hour after it appears.
+However, the distribution policy of introducing the a daily
+lag should nearly eliminate the prospect of encountering
+those types of bugs for SAs doing the early update,
+unless they specify a lag of 0.
+
+
+On 9/7/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> Kyle,
+</I>&gt;<i>
+</I>&gt;<i> The 3.1 version of init-functions got a bug on line 108
+</I>&gt;<i> of /lib/lsb/init-functions. There is an extra &amp;&amp; or a subsequent line went
+</I>&gt;<i> missing.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000253.html">[Sorcerer-admins] Broken spells....
+</A></li>
+	<LI>Next message: <A HREF="000259.html">[Sorcerer-admins] bug in init-functions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#252">[ date ]</a>
+              <a href="thread.html#252">[ thread ]</a>
+              <a href="subject.html#252">[ subject ]</a>
+              <a href="author.html#252">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

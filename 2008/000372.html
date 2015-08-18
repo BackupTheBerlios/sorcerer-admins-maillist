@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery changes, and KDE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C479A5752.7020808%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000369.html">
+   <LINK REL="Next"  HREF="000373.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery changes, and KDE</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C479A5752.7020808%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery changes, and KDE">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Jan 25 22:40:34 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000369.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+        <LI>Next message: <A HREF="000373.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#372">[ date ]</a>
+              <a href="thread.html#372">[ thread ]</a>
+              <a href="subject.html#372">[ subject ]</a>
+              <a href="author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>this is just an idea...
+but may it possible to implement hooks like SCM software (svn, git...) do?
+something like
+precast_hook, pre_install_hook, post_install_hook....
+hooks are really interesting way to add functionality to sorcery without 
+having to modify it and then move out functions outside of sorcery... 
+for example there could be a mail_post_install_hook.sh that send some 
+information by mail (then remove the actual requirement of sorcery upon 
+mail) or an archive post install hook that will wait for all cast to 
+finish and then lock cast to prevent further fs modification and then 
+create an incremental tarball....
+such things like this
+Best Regards
+JLM
+
+Kyle Sallee wrote:
+&gt;<i> Soon you may notice that an update involving sorcery
+</I>&gt;<i> gives optionals for sorcery-immune and sorcery-bootblaze spells.
+</I>&gt;<i>
+</I>&gt;<i> Over time the functionality added to sorcery that
+</I>&gt;<i> does not belong in sorcery will be added as grimoire spells.
+</I>&gt;<i>
+</I>&gt;<i> Many such spells already exist:
+</I>&gt;<i>
+</I>&gt;<i> glibc-locales
+</I>&gt;<i> glibc-localetime
+</I>&gt;<i> init-scripts
+</I>&gt;<i> init-functions
+</I>&gt;<i> sorcery-immune
+</I>&gt;<i> sorcery-bootblaze
+</I>&gt;<i>
+</I>&gt;<i> In this fashion of adding additional spells the functionality of
+</I>&gt;<i> the administration of Sorcerer boxes is improved without
+</I>&gt;<i> increasing the complexity of sorcery.
+</I>&gt;<i> Furthermore, requests for new functionality to be added to sorcery
+</I>&gt;<i> that I would normally reject may now be implemented as separate spells.
+</I>&gt;<i>
+</I>&gt;<i> Probably due to the inefficient or simplistic way that
+</I>&gt;<i> sorcery's immune system did filesystem space monitoring
+</I>&gt;<i> I know one or more SAs are using separate programs to do that.
+</I>&gt;<i> Monitoring filesystems for free disk space is a good example
+</I>&gt;<i> of functionality that should never have been added to sorcery.
+</I>&gt;<i> However, having something that does free space monitoring is a good idea.
+</I>&gt;<i> But it should have been implemented as a separate spell.
+</I>&gt;<i>
+</I>&gt;<i> Consequently, the sorcery-immune spell now provides
+</I>&gt;<i> toggles for the 3 major types of immunity.
+</I>&gt;<i> The md5sum check, the neglect check, and the stall check.
+</I>&gt;<i>
+</I>&gt;<i> If someone wants a bash script to monitor disk space and report consumption
+</I>&gt;<i> then I recommend that that they write the script and have it added as a spell.
+</I>&gt;<i> It would be a good exercise in learning how to extend Sorcerer functionality
+</I>&gt;<i> through the use of spells.
+</I>&gt;<i>
+</I>&gt;<i> Adding functionality through spells has several nice benefits.
+</I>&gt;<i>
+</I>&gt;<i> 1. No approval to modify sorcery is required since sorcery is not modified.
+</I>&gt;<i> 2. Sorcery remains simple and therefore easier to maintain and less
+</I>&gt;<i> likely to break.
+</I>&gt;<i> 3. Useful functionality that does not belong in sorcery can be made as a spell.
+</I>&gt;<i>
+</I>&gt;<i> Most SAs know that I prevent sorcery from growing in complexity.
+</I>&gt;<i> Sorcery shall not become like a malignant tumor.
+</I>&gt;<i> However, neither do I want to hamper the creativity of generous SAs
+</I>&gt;<i> who have useful ideas to implement and share.
+</I>&gt;<i> Therefore, creating spells to enhance Sorcerer functionality is best for
+</I>&gt;<i> the development of Sorcerer because it encourages SAs to contribute
+</I>&gt;<i> ideas in the form of spells while keeping sorcery small and simple enough
+</I>&gt;<i> that beneficial changes can be made with a minimal risk of causing any breaks.
+</I>&gt;<i>
+</I>&gt;<i> Now onto discussion about KDE.
+</I>&gt;<i> Not everyone is happy with KDE 4.0.0
+</I>&gt;<i> nor the implementation of the kde*-v3 spells.
+</I>&gt;<i> Consequently, work continues on that.
+</I>&gt;<i> The goal is to have a complete KDE 4 in /opt/kde4
+</I>&gt;<i> and a complete KDE 3 in /opt/kde3.
+</I>&gt;<i> With this change each SA should be able to have
+</I>&gt;<i> the KDE version that they desire.
+</I>&gt;<i> The changes will probably not be complete until the last week of January.
+</I>&gt;<i> Sorry for the inconvenience.
+</I>&gt;<i> Until then, try best to manage with crash happy KDE 4.0
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000369.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+	<LI>Next message: <A HREF="000373.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#372">[ date ]</a>
+              <a href="thread.html#372">[ thread ]</a>
+              <a href="subject.html#372">[ subject ]</a>
+              <a href="author.html#372">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

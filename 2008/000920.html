@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] current I/R does not install bootloader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812101431n5351f7avf9ddaa70106c210b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000917.html">
+   <LINK REL="Next"  HREF="000921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] current I/R does not install bootloader</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812101431n5351f7avf9ddaa70106c210b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] current I/R does not install bootloader">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Dec 10 23:31:29 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000917.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+        <LI>Next message: <A HREF="000921.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#920">[ date ]</a>
+              <a href="thread.html#920">[ thread ]</a>
+              <a href="subject.html#920">[ subject ]</a>
+              <a href="author.html#920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Dec 9, 2008 at 3:37 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+
+&gt;<i> Actually, i cant install using latest .iso. I mean bootloader does not
+</I>&gt;<i> install thats first thing...  looking /sbin/sinstall i cant find actual code
+</I>&gt;<i> which runs lilo? I am pretty sure lilo installing does not work.
+</I>&gt;<i> And then by hand i managed to write lilo.conf and actually install it to MBR
+</I>&gt;<i> then loading goes to, i think, initramfs and stops there.
+</I>
+/sbin/sinstall does not run lilo.
+That is correct.
+When the initramfs is cast in the chrooted to the real root filesystem
+that creates the required initramfs images and installs lilo.
+lilo can not be installed without first generating initramfs images.
+/sbin/sinstall does not generate initramfs images.
+Instead it casts spells while chrooted to the real root filesystem
+and those spells do the work.
+Maintaining such code in more than one location is hazardous
+if they should go out of sync.
+
+&gt;<i> Could you look current I/R .iso, i mean this:
+</I>&gt;<i> <A HREF="http://sorcerer.silverice.org/download/iso9660/2008/sorcerer-ia32-20081006.iso">http://sorcerer.silverice.org/download/iso9660/2008/sorcerer-ia32-20081006.iso</A>
+</I>&gt;<i> that it actually can install sorcerer, tried now with 2 different machines,
+</I>&gt;<i> always lilo installation fails.
+</I>
+Sure, I am trying to prepare for a new I/R release in December.
+I will do full installation and boot testing on them as I usual do.
+The last I/Rs might have been merely updates and no fully tested.
+But I was feeling confident that they should have worked since
+I made not changes to the sinstall code.
+If a SA does not do the compilation step as part of the installation
+then the SA will have to manually chroot to /media/root/
+and fix /etc/lilo.conf.head /etc/lilo.conf and
+and then run init-scripts such as /etc/init.d/initramfs
+in order to generate the initramfs images and have lilo install
+to the boot block or MBR.
+
+Was it possible that some important step was skipped?
+Or does the target disk have an old lilo in the MBR and
+the new lilo in a partition boot block?
+Or does the new disk not have a bootable MBR installed
+and the SA did not select to have ms-sys install a bootable MBR?
+
+Many failures to boot after installation are due to something unexpected
+about the MBR or lilo location installation or that the boot sector that
+contains lilo is not properly marked as bootable in the partition table.
+There is probably between 6 and 12 small tiny little things that I almost
+never think about which could cause a new installation to be unbootable.
+And they are not directly related to any bugs in the sinstall program,
+but rather occur because the sinstall script permits SAs so much freedom
+about how Sorcerer can be installed instead of trying to do a
+&quot;no questions asked every box should be the same&quot; style installation.
+
+I might also add in that certain filesystems are unsuitable for use
+for installing lilo into the boot block of the partition because the file
+system will not automatically reserve that space.
+I tend to use only ext2 and ext3
+and therefore, do not know which filesystems to beware.
+
+Another possible solution is to try installing from older I/Rs
+Newer is usually better, but older are still available for download.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000917.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+	<LI>Next message: <A HREF="000921.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#920">[ date ]</a>
+              <a href="thread.html#920">[ thread ]</a>
+              <a href="subject.html#920">[ subject ]</a>
+              <a href="author.html#920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

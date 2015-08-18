@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] slight mode change for init-scripts...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20slight%20mode%20change%20for%20init-scripts...&In-Reply-To=%3CCA%2BT4wDgbVVpe%3DUk3wduOHsyYvvULysjb8htZar9cd3_evgnx0Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002212.html">
+   <LINK REL="Next"  HREF="002214.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] slight mode change for init-scripts...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20slight%20mode%20change%20for%20init-scripts...&In-Reply-To=%3CCA%2BT4wDgbVVpe%3DUk3wduOHsyYvvULysjb8htZar9cd3_evgnx0Q%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] slight mode change for init-scripts...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul  7 01:57:51 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002212.html">[Sorcerer-admins] Thunderstorm here at Kauhava couple days ago did cause sorcerer64 and ppr64 to crash
+</A></li>
+        <LI>Next message: <A HREF="002214.html">[Sorcerer-admins] help install problem at keyboard screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2213">[ date ]</a>
+              <a href="thread.html#2213">[ thread ]</a>
+              <a href="subject.html#2213">[ subject ]</a>
+              <a href="author.html#2213">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I want the mode for init-scripts to be less misleading.
+Therefore, the mode for an init-script that only
+runs during boot/shutdown is 500.
+init-scripts that also run during updates is mode 510.
+init-scripts that do not run are mode 400.
+
+So now init-scripts will not have the any of the write bit modes enabled.
+This makes sense because init-scripts
+are not customizable configuration files.
+Configuration files for init-scripts belong in /etc/init.d/conf.d/
+
+And previous the group read mode bit was used to indicate
+that an init-script should not be run during updates.
+Now the absence of the group executable mode bit indicates
+that the init-script will not run during updates.
+
+Additionally, I have expanded on the LSB comments.
+An init-script can exist in
+$GRIMOIRE/$SPELL.d/init.d/ or $GRIMORIE/$SPELL.d/init.d.on/
+However, &quot;# Default-Mode: 500&quot; in the init-script
+will indicate the init-script should have 500 as the default mode.
+Every init-script will have some default mode.
+Most will be mode 510.
+
+init-scripts will still retain the mode that the SA sets.
+For 6 months sorcery will attempt to mass translate
+the mode for existing init-scripts on boxes.
+So there might not be anything for a SA to do.
+However, if something runs during update that should not
+or something fails to run during boot or shutdown
+then first check the mode of the init-script.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002212.html">[Sorcerer-admins] Thunderstorm here at Kauhava couple days ago did cause sorcerer64 and ppr64 to crash
+</A></li>
+	<LI>Next message: <A HREF="002214.html">[Sorcerer-admins] help install problem at keyboard screen
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2213">[ date ]</a>
+              <a href="thread.html#2213">[ thread ]</a>
+              <a href="subject.html#2213">[ subject ]</a>
+              <a href="author.html#2213">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Finally!!!! New I/Rs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Finally%21%21%21%21%20New%20I/Rs&In-Reply-To=%3C596b75860805012108x3d1eeadfy23b78187dd12f137%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000411.html">
+   <LINK REL="Next"  HREF="000413.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Finally!!!! New I/Rs</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Finally%21%21%21%21%20New%20I/Rs&In-Reply-To=%3C596b75860805012108x3d1eeadfy23b78187dd12f137%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Finally!!!! New I/Rs">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May  2 06:08:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000411.html">[Sorcerer-admins] /dev/psaux -&gt; /dev/input/mice
+</A></li>
+        <LI>Next message: <A HREF="000413.html">[Sorcerer-admins] initramfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#412">[ date ]</a>
+              <a href="thread.html#412">[ thread ]</a>
+              <a href="subject.html#412">[ subject ]</a>
+              <a href="author.html#412">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>20080501 I/Rs are available for download.
+I did over 5 complete boot tests with them.
+The problem that Evert Vorster reported about the the previous I/Rs
+not properly detecting the I/R CDROM in an old slow CDROM drive has
+been circumvented.
+These new I/Rs should properly detect the disk,
+or spend more than a minute per removable drive trying to detect it.
+
+Also during boot of the I/R a catalog of files
+that will be transferred from CDROM to fixed disk is created.
+This will keep the CDROM spinning for a while.
+It may be a boon on some CDROMs and a bane on others.
+If the installer is not working properly while the catalog builds,
+simply wait for the catalog to finish before starting /install
+Most everyone should be able to immediately type:
+
+root
+&lt;enter&gt;
+# /install
+
+Because the amount to transfer from CDROM to fixed disk is large
+it now displays a percent completion and estimated time to completion.
+May be useful for determining how long to go on break. :)
+
+Remember that on the first exit of the disk menu, do not unmount file systems.
+Instead, exit to the main menu and enter the compile menu.
+This is essential for installing lilo.
+Omit the compile menu and the installed box will not boot from fixed disk.
+This has probably happened to a few SAs using the previous I/Rs.
+This information is also recorded in the readme.txt file which is now
+properly world readable.
+
+After answering a few questions during the compile menu execution it
+will proceed to cast a few spells.
+However, the first spell will take longer than expected to complete.
+That is because all of missing archive files for installed spells are
+created then.
+/var/cache/archive is then populated with *.tar.gz archive files.
+Do not try to remove them.
+They always come back when the archive feature is enabled.
+That may be useful if an update to newer software
+fails to provide expected adequate performance.
+
+Although the installer does not explicitly have menus for it
+the new installation using linux-modular and initramfs
+can allow for some more interesting installs if the SA selects
+to create a large enough /boot
+Since the initramfs and kernel load from the /boot parition during boot
+the root partition could be a logical device rather than physical device
+or it could be encrypted provided that the SA creates an init-script that
+executes in runlevel S that prompts for a password in order to mount
+the encrypted partition.
+
+At the linux documentation project TLDP, there are docs that describe
+how to do encrypted / partition and how to set up an encrypted key file
+so that the key to / never has to be changed, but the password for the
+key file can be easily adjusted in order to change the password the box
+uses for /
+This can be useful if the computer is a notebook that may be assigned
+to different people in the future.
+
+While the installer does not have menus for setting up encrypted and
+logical devices
+it will be able to use them if you set them up before entering the installer.
+In the future it may be different.
+
+Keep in mind that using an encrypted / partition consumes
+CPU for disk I/O not unlike running disks with DMA disabled.
+It does impact performance.
+Also using logical devices and RAIDs depending on
+how they are set up will probably also impact performance.
+Having / stretched over severals disks might not only degrade
+performance and consume additional memory, but may become
+a significant problem if one of those disks fails.
+Sorcerer on a regular partition still tends to provide the best fixed
+disk performance.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000411.html">[Sorcerer-admins] /dev/psaux -&gt; /dev/input/mice
+</A></li>
+	<LI>Next message: <A HREF="000413.html">[Sorcerer-admins] initramfs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#412">[ date ]</a>
+              <a href="thread.html#412">[ thread ]</a>
+              <a href="subject.html#412">[ subject ]</a>
+              <a href="author.html#412">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

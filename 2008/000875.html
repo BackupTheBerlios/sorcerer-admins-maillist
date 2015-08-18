@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] glibc 2.9
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc%202.9&In-Reply-To=%3C596b75860811291518t33f10c8dy7da05b33303179db%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000874.html">
+   <LINK REL="Next"  HREF="000876.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] glibc 2.9</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc%202.9&In-Reply-To=%3C596b75860811291518t33f10c8dy7da05b33303179db%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] glibc 2.9">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Nov 30 00:18:57 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000874.html">[Sorcerer-admins] glibc 2.9
+</A></li>
+        <LI>Next message: <A HREF="000876.html">[Sorcerer-admins] MySQL 5.1(.30) stable? no way...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#875">[ date ]</a>
+              <a href="thread.html#875">[ thread ]</a>
+              <a href="subject.html#875">[ subject ]</a>
+              <a href="author.html#875">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Interesting that you should ask.
+There are two types of backward compatibility with glibc.
+First, there is the limit to how far old a linux kernel it will support.
+Second, there is a limit to how far old it will support running an
+ELF executable that was linked with an older version of glibc.
+
+The second is easier to control.
+The first is more difficult.
+When compiling glibc I tried newer kernel headers.
+However the newer kernel headers have a problem
+that fails glibc compilation.
+I could try to fix the newer linux kernel headers,
+but for the moment it is easier to simply use the older headers that work.
+
+linux and glibc developers are not quite in agreement about
+the using of linux kernel headers.
+Obviously, gcc requires them.
+But linux developers do not want anyone writing software that
+relies upon linux kernel headers.
+
+However, to set the the glibc linux support to a require
+a more recent kernel also requires more recent linux kernel headers.
+So that will probably remain as is for a while until there are newer
+linux kernel headers that do not error glibc compilation.
+
+In order to reduce backward compatibility for old glibc ABI one would use
+
+  --enable-oldest-abi=ABI configure the oldest ABI supported [e.g. 2.2]
+                          [default=glibc default]
+
+The current glibc spell does not have that, for obvious reasons.
+However, a less obvious reason is that sometimes glibc does not
+finish compilation if that configure parameter is given.
+That may be a bug in older glibc.
+I do not know if it still exists.
+
+Oddly a glibc can be built without versioning information.
+It is described in the glibc FAQ as 1.17
+
+By omitting versioning information a very streamlined small glibc
+could be built.
+It would be a bit like uClibc which is designed to be small and not provide
+backward compatibility.
+Therefore, while good for uClibc, omitting versioning information from glibc
+would be bad, very bad.
+
+I investigated uClibc for a while because it is very fast and small.
+Yes it even supports i18n
+If it ever became a decent drop in replacement for glibc
+then it would be fun to use.
+Perhaps even a hybrid box that has both glibc and uClibc can be created.
+With a little extra work some software can be made to work with uClibc
+in order to gain the benefits of increased speed and reduced size.
+
+But most Sorcerer SAs are looking for stability and ease.
+With as entrenched as glibc is it is easier to use only glibc.
+
+In the past some people interested
+in performance used something called the Hurd kernel.
+Perhaps a port of Debian using the Hurd Mach kernel still exists.
+Of course do not expect to run anything on such a box unless
+it is properly patches for hurd and compiled for hurd.
+Other than that I know nothing more about hurd.
+
+As far as I can tell about C libraries.
+uClibc is among the fastest.
+glibc is not even a close comparison.
+However, buying a faster computer is easily faster than changing libc.
+
+One last note...
+If I had to today figure out what version of linux headers
+to use to compile glibc without my prior experience
+then I would probably upset myself over how
+complex and absurd it all is.
+
+
+On Sat, Nov 29, 2008 at 7:48 AM, evert vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Of course...
+</I>&gt;<i>
+</I>&gt;<i> I have no particular need to be moving to a newer glibc.
+</I>&gt;<i>
+</I>&gt;<i> What was that hing you mentioned that you can get some speed gains by
+</I>&gt;<i> turning off backwards compatibility in glibc?
+</I>&gt;<i> I have a computer with 100% free software, no binary blobs, no bins that
+</I>&gt;<i> were not compiled on that machine. In theory, I should be able to turn off
+</I>&gt;<i> _all_ glibc backwards compatibilty?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000874.html">[Sorcerer-admins] glibc 2.9
+</A></li>
+	<LI>Next message: <A HREF="000876.html">[Sorcerer-admins] MySQL 5.1(.30) stable? no way...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#875">[ date ]</a>
+              <a href="thread.html#875">[ thread ]</a>
+              <a href="subject.html#875">[ subject ]</a>
+              <a href="author.html#875">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

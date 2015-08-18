@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The new catalog download method...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20new%20catalog%20download%20method...&In-Reply-To=%3CCA%2BT4wDjE%3D%3D52JsR5jyKUS5DpD%3DLoHxLP4f2R9-4LqJ9PAG%2B4Kw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002464.html">
+   <LINK REL="Next"  HREF="002466.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The new catalog download method...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20new%20catalog%20download%20method...&In-Reply-To=%3CCA%2BT4wDjE%3D%3D52JsR5jyKUS5DpD%3DLoHxLP4f2R9-4LqJ9PAG%2B4Kw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The new catalog download method...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Sep 15 15:49:37 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002464.html">[Sorcerer-admins] time for an update yet?
+</A></li>
+        <LI>Next message: <A HREF="002466.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2465">[ date ]</a>
+              <a href="thread.html#2465">[ thread ]</a>
+              <a href="subject.html#2465">[ subject ]</a>
+              <a href="author.html#2465">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The old method was that the catalog was downloaded
+and installed by the grimoire spell.
+Either a xz compressed tarball was downloaded
+or an xz compressed sdelta3 patch was downloaded.
+However, this is not precisely how it works now.
+The grimoire spell was removed.
+
+sorcery tools has an augur module called catalog.
+It also can download an xz compressed tarball.
+It extracts the content to /aux/can/spell/
+If /aux/can/spell/ has content
+then instead augur catalog first checks
+for the existence of a smaller xz compressed tarball.
+The smaller tarball contains only the spells that
+changed since the time the catalog was previously updated.
+
+It is a simple method.
+A full catalog tarball is generated.
+90 days worth of partial catalogs are generated.
+Client computers decide which to download.
+
+If a updates derailed
+then first download and do a manual installation
+of the latest sorcery tarball.
+Then run augur catalog.
+I would also execute rm -f /usr/share/sorcery/grimoire.tar
+because the old catalog is no longer required.
+
+The transition is to restore the possibility of receiving
+smaller downloads when checking for software updates.
+Consequently, if recently updated
+then the tarball containing only recently modified spells
+might be very small maybe even less than a kilobyte to download.
+The sdelta3 method of creating source tarball patches
+has the limitation of providing patches for only the versions
+of software stored in the master source cache.
+Everything there is typically trimmed to no more than
+3 of the most current stable versions for a software project
+or less depending upon the age of the previously released files.
+
+The new catalog method grants efficient updating
+of a root file system's catalog without the delay
+of requesting and then waiting for the generation
+of an xz compressed sdelta3 patch file.
+Consequently, the compromise is worthy.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130915/9dfa3e5e/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130915/9dfa3e5e/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002464.html">[Sorcerer-admins] time for an update yet?
+</A></li>
+	<LI>Next message: <A HREF="002466.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2465">[ date ]</a>
+              <a href="thread.html#2465">[ thread ]</a>
+              <a href="subject.html#2465">[ subject ]</a>
+              <a href="author.html#2465">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

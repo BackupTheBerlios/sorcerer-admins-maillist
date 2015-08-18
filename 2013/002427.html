@@ -1,0 +1,651 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] summary of changes that require SA	interaction:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20summary%20of%20changes%20that%20require%20SA%0A%09interaction%3A&In-Reply-To=%3CCA%2BT4wDhZcTLP4v%2B9MZAf3fKTYAYYiGkNS3FAL5rE9DWTCp4-wg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002426.html">
+   <LINK REL="Next"  HREF="002428.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] summary of changes that require SA	interaction:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20summary%20of%20changes%20that%20require%20SA%0A%09interaction%3A&In-Reply-To=%3CCA%2BT4wDhZcTLP4v%2B9MZAf3fKTYAYYiGkNS3FAL5rE9DWTCp4-wg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] summary of changes that require SA	interaction:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May  1 19:17:40 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002426.html">[Sorcerer-admins] summary of changes that require SA	interaction:
+</A></li>
+        <LI>Next message: <A HREF="002428.html">[Sorcerer-admins] important bugs/omissions; definitely better fix boxes ASAP rather than chance encountering it on the next reboot.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2427">[ date ]</a>
+              <a href="thread.html#2427">[ thread ]</a>
+              <a href="subject.html#2427">[ subject ]</a>
+              <a href="author.html#2427">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, May 1, 2013 at 2:48 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Now that I am reading through this...
+</I>&gt;<i>
+</I>&gt;<i> So far every change to Sorcery was an optional one. When the kernel became
+</I>&gt;<i> modular, I used a monolithic kernel for a long time, and I am still tempted
+</I>&gt;<i> to roll my own every now and then...
+</I>&gt;<i> There is a similar story with tomoyo and paradigms...
+</I>
+Booting with an initramfs is no longer optional.
+Many of the changes were inevitable.
+Yet the changes were introduced at a rate
+where the additional benefits occluded the costs.
+
+A SA might as well ask why we now have a sorcery that
+is capable of performing efficiently on 8 and 16 processor boxes
+when the SA only has uniprocessor workstations.
+Or a SA might ask why the next I/R will require 2G of installed RAM
+when the POSIX installed fine on boxes with just 1G of RAM only
+5 years ago.
+However, the SAs that have the processing power and have the RAM
+will not be asking these questions.
+
+&gt;<i> So, since I use Sorcerer as a desktop OS, and don't really need multi root
+</I>&gt;<i> support, why do I have to jump through all these hoops?
+</I>
+SAs that require or benefit from multiple root file systems
+will not be asking why the functionality exists.
+The basis of what makes it possible are the changes available
+in recent versions of the Linux kernel
+that allow allows the use of unshared namespace.
+Should we ignore the boon of that added functionality?
+What if we ignored the many boons of control groups?
+
+Obviously, some of the answers are provided in retrospect.
+Other functionality SAs might never come to appreciate
+because it is used tacitly instead of intentionally.
+
+Another good questions is how come the default Linux kernel configs
+provide modules for nearly every task that can be accomplished with iptables.
+Modern Magic is not a POSIX with a niche as a firewall.
+Since firewalls are usually deployed on embedded systems or legacy computers
+a SA might expect that Modern Magic is the POSIX that is furthest removed
+from competing in the niche of firewalls.
+And yet the functionality existed.
+
+Now with the new root file systems running in unshared namespace
+each will be able to connect with the rootfs and use the rootfs
+as if it was a separate box acting as a NATing firewall or as a gateway.
+Fortuitous or intentional?
+No doubt beneficial.
+Yet again the SA must decide to utilize or ignore the functionality.
+
+The most recent changes require that SAs edit a few files such as
+/etc/rootname and /etc/inittab and perhaps /etc/hosts and/or /etc/port.receive.
+Of course I could have made all of that automatic.
+But I would also be guessing about what should go where.
+Better that the SA learns about those files and their function
+so that the SA can acclimate to the changes even
+when the additional functionality is not desired.
+
+
+&gt;<i> How will all of this affect my partitioning?
+</I>
+Time to repartition?
+Perhaps not.
+The deployment docent for the next I/R only provides
+instructions for how to accomplish GPT partitioning.
+That helps avoid confusion.
+However, tools for legacy partitioning are still available.
+As Evert already knows, my work station has something like
+12 partitions 6 root file systems 3 virtual computers.  :)
+Having that spread over 12 partitions increases performance.
+It could have been created all on a single partition if desired.
+Of course for booting disks larger than 2T
+then having a dedicated ext2 partition for the /boot file system
+could be a must for avoiding BIOS that might otherwise be unable
+to boot a kernel that exists beyond the first 2T.
+
+One of the benefits of GPT is being able to partition disks
+that are larger than 2T.
+So if one's disk is not larger than 2T
+then the SA decides if a compelling reason exists
+for redeployment onto GPT.
+If a disk is larger than 2T
+then that probably is a compelling reason.
+
+
+&gt;<i> One complication I can see straight off the bat is that I now have multiple
+</I>&gt;<i> roots to back up and keep up to date, where previously it was only one.
+</I>
+One of the easier methods for solving that problem
+is to have two fixed disks partitioned exactly the same
+with the same type of file systems in the same locations
+and then to use the rsync program to back up the data.
+Another method is use a RAID that makes two disks identical mirrors.
+Of course most people consider that sort of RAID to not be a backup.
+
+&gt;<i> So, I only had one root before, where are the others going to come from?
+</I>
+SAs will select a plan while following the recommendations
+of the deployment docent.
+Then the plan will be modified according to the SA's expectations.
+And finally the SA will partition the disk and create the root file systems.
+I recommend at least 2 root file systems.
+However, a SA could deploy with at least one root file system.
+I recommend at least 1 dedicated /boot/ partition.
+But a SA could deploy without and it just might work or maybe not,
+but the SA would discover that eventually.
+
+
+&gt;<i> How does one log in to the various roots?
+</I>
+Ah, that is the fun part.
+Each root file system runs it's own runlevel
+specified in it's own /etc/inittab during booting.
+And every runlevel starts the logind program.
+logind allocated an unallocated virtual console
+and presents a prompt where a person at the keyboard
+can press any key to run login that will wait up to 60s
+for the person at the keyboard to complete login.
+The challenging part is finding the virtual console
+that can provide the login to the desired root file system.
+
+With 1 root file system then one virtual console will log into
+the rootfs and another will log into the real root file system.
+Likewise the amount of virtual consoles where a logind is running
+is 1 + the amount of root file systems.
+That count extends up to about 62.
+And remember that each GUI login prompt for a root file system
+will launch an X on a virtual console.
+If a root file system login is tucked in between two X
+and higher than 12 on virtual consoles
+then reaching it could be very difficult.
+In that situation I would log into the obscured root file system
+not from a virtual console but instead by using ssh.
+
+Obviously, having each root file system launch gettys according
+to /etc/inittab is hectic.
+Two or more programs running on the same virtual console
+tend to negate effective input into both.
+Login can become impossible.
+So for the time being until a better method is suggested and implemented
+then each rot file system that should provide a method for login by a
+virtual console
+must run logind or whatever the SA implemented for it.
+
+I am trying to adhere as close as practical
+to the traditions of System V initialization.
+However, sysvinit was not originally designed
+with the concept of having multiple root file systems.
+Perhaps no current init method has that provision and planning.
+Yet with the help of logind the deviation to init system can be minimized.
+
+&gt;<i> Lastly, &quot;main&quot; for a name of the initial root filesystem might be a little
+</I>&gt;<i> confusing still.
+</I>
+Would have been even more confusing if I had suggested calling it boot.  :)
+However, if a main is not intended to hold everything
+then it is intended to hold nothing more than what is required
+for generating useful initramfs images that will populate the rootfs.
+
+&gt;<i> May I suggest &quot;core&quot; for the initial filesystem
+</I>
+I already considered that idea.
+However, the word &quot;core&quot; is already used to describe an important
+profile spell that helps ensure that a root file system whether it is
+/media/root/main/ or /media/root/work/ or /media/root/whatever/
+retains the proper loadout of installed software for updating
+and/or booting if it has a /boot/ directory.
+
+&gt;<i> &quot;desktop&quot; or
+</I>
+desktop could work for a root file system name.
+I would probably suggest shortening it to desk.
+
+&gt;<i> &quot;user&quot; for the filesystem
+</I>
+In the deployment docent documentation
+I suggested that &quot;user&quot; could be a name for
+a root file system on a mobile computer
+where the user of that computer can be granted
+the password for the root account and be allowed
+to control the software loadout for that file system.
+While at the same time the root account password
+for the /media/root/main/ and /media/root/work/
+root file systems would differ from the password
+for the /media/root/play/ file system.
+That way the system administrators of the box
+still retain the responsibility for controlling the
+work related software for the box and the software
+that is run during sysinit.
+A more simplistic approach is to combine
+/media/root/{main,work}/ into the single /media/root/main/
+root file system.
+That would not usually incur a significant disadvantage.
+
+In general I prefer to keep the word &quot;user&quot; confined to
+describing aspects that involve the actual user.
+The choice of the words &quot;user&quot; for a root file system
+could imply to someone who does not understand the phrase
+&quot;root file system&quot; that &quot;user&quot; should contain only the /usr
+and be mounted as /usr
+However, /usr is not a root file system, but only one component
+of a root file system that is used to store the programs and data
+files that are more frequently accessed by user accounts rather
+than begin used by the SA for administration duties.
+Of course that line is blurred considerably on a source based POSIX.
+
+&gt;<i> a user could be running graphical applications on, and then &quot;www&quot;
+</I>&gt;<i> and &quot;ftp&quot; and &quot;testing&quot; as suggestions for the other filesystems.
+</I>
+I concur with the use of /media/root/{ftp,www,test} and root file system names.
+Some of mine have a few more characters,
+but the idea is to make a recommendation short
+so that the SA can add elaboration.
+
+If the box provides several vhosts then each could be run using
+entirely different root file systems running httpd concurrently in each.
+In that event those additional root file systems might be the FQDN for
+the web servers.
+Something like /media/root/www.blue.berry/ and /media/root/www.rasp.berry/
+
+The important aspect of the name for a root file system
+is that it imparts clarity rather than confusion.
+
+&gt;<i> One serious concern from my side is also the space used. My current root
+</I>&gt;<i> uses 75% of the partition it's mounted on, and it's size is pretty constant.
+</I>
+Excellent estimation for deployment.
+A root file system that has a separate file system for /home
+is ideal when the usage is between 25% and 80%
+However, I do make exceptions such as a dedicated /tmp/ of 5G
+a dedicated /boot/ of 1G and a dedicated swap system of 4G.
+That adds to a total of 10G.
+And all root file systems I tend to create on partitions that
+are no less than 10G in size and tend to increase in size
+with multiples of 10G.
+The shared /aux/run/ is 20G.
+The shared /aux/can/ is 30G.
+And other root file systems are between 10G and 60G in size.
+That seems good to me.
+However, other SAs might prefer powers of 2 such as
+file systems of size 1, 2, 4, 8, 16, 32, 64G in size.
+That is also good.
+Trying to be too precise about a file system's size
+can sometimes create inadequacy when the necessity
+for capacity exceeds the file system's limit.
+Consequently, ideal performance requires
+an intentional waste of disk space.
+
+&gt;<i> The size of the partition was picked specifically to have the fs filled to
+</I>&gt;<i> it's most efficient level. If I wanted to test some games, etc, I would need
+</I>&gt;<i> that much space again, as I need literally everything that is on my desktop
+</I>&gt;<i> root to be there to test...
+</I>&gt;<i> So, for testing new spells, paradigm might be a better choice. However, that
+</I>&gt;<i> does not protect me from aliens.
+</I>
+Paradigms are cool.
+But they do not yet have the unshared namespace that root file systems have.
+Consequently, sorcery within a paradigm should not be run concurrently
+with the sorcery outside of a paradigm.
+If updating a paradigm, then the update should be done separately.
+
+I was recently hunting aliens using /etc/init.d/exam-alien deport.
+The only thing that it does not do, is that it does not report
+empty directories as as being aliens.
+So I hunted those separately using find and decided
+whether to allow or remove them.
+
+&gt;<i> As a way forward for me....
+</I>&gt;<i>
+</I>&gt;<i> I will probably try to keep my core root as small as possible, and only
+</I>&gt;<i> chroot to a desktop root, which will probably contain everything I have now,
+</I>&gt;<i> and where my users will be playing.  I might investigate unionfs for my
+</I>&gt;<i> particular needs.
+</I>
+Two root file systems?
+Sounds good.
+That will enable a near optimal loadout
+of software for the initramfs images.
+
+A unionfs could be used to redirect modifications
+of a root file system into a container directory.
+It might not only confound processes that would create aliens,
+but it could also confound the SA and the sorcery tools.
+The most common culprit of aliens
+would be a software project
+that does something that it should not
+during it's compilation.
+One way to protect against that is using tomoyo.
+However, that also might cause the software projects
+that are doing something improper to fail compilation.
+I have not yet allocated sufficient time to audit the grimoire,
+locate, and try to repair or circumvent that software.
+
+Running immune-security-tomoyo and having the domain_log
+feature enabled will cause tomoyo to be used to track access
+made to the root file system instead of blocking it when spells are moiling.
+And when immune-security-tomoyo is installed
+then all unauthorized modification of files in system installed areas
+are logged and DENIED.  :)
+So in contrast to unionfs that could sandbox changes
+or that could also be anticipated and circumvented;
+the diamond barrier of tomoyo becomes impossible
+to circumvent without being able to bind system installed
+areas of the root file system to somewhere else.
+Therefore, it is often far from flawless since the
+capability to mount is rarely abandoned.
+
+&gt;<i> I have some software installed that is not tracked by Sorcerer, and would
+</I>&gt;<i> have loved to be able to just load that software on request, and leave my
+</I>&gt;<i> Sorcerer installation pristine.
+</I>
+Oh, that is ideal.
+
+&gt;<i> In an ideal world, a spell would have been
+</I>&gt;<i> able to take care of all this, but this is not an ideal world.
+</I>
+Spells work for most software installation, but of course
+not for software installation that requires X
+nor for software installation that is interactive.
+
+&gt;<i> I was hunting down music duplicates with the beets music manager.... and
+</I>&gt;<i> installing that requires the pip utility, which downloads binaries to your
+</I>&gt;<i> root.
+</I>
+I probably would not allow it on my box.
+I would run pip using a user account if possible.
+If not possible I might run it within a paradigm
+or a test root file system to see exactly what it modifies and installs.
+
+&gt;<i> Kyle, don't take this the wrong way. Having multiple root support is a good
+</I>&gt;<i> thing, as it does provide an extra layer of security for web-facing servers.
+</I>&gt;<i> A desktop user like me just does not find a lot of utility from it,
+</I>&gt;<i> unfortunately.
+</I>
+Those were excellent questions.
+Thanks for asking them.
+As for utility...
+retrospect can sometimes provide more insight than foresight.
+
+I have been long saying that everywhere a single box is deployed
+then an additional box should be deployed for dev.
+And the dev box should be updated first so that problems
+can be observed, understood, and circumvented.
+That way production boxes suffer minimal downtime due to updates.
+
+With root file systems a single computer can have
+a /media/root/dev/ root file system.
+And /media/root/dev/ can run a web server or any other mission
+critical software.
+And since each root file system has it's own unshared net namespace
+that includes it's own private network stack
+then a web browser can connect to the web server running on
+/media/root/dev/ and observe the consequences of an update.
+
+Having a /media/root/dev/ root file system always provides the opportunity
+for trying new software or trying software that one might not necessarily
+want installed on their production root file system.
+Maybe what is being tested is turning back the installed version
+of a software project that provides a library.
+And the hope is that by doing so it will avoid a nasty bug
+that might exist in the current version of that library.
+However, if the software project receives custom version progress
+that regresses it to an earlier version
+then that could cause hundreds of installed software projects
+to experience a &quot;Miss Elf&quot; event.
+And so those spells for those software projects would remoil.
+
+Having all that activity happen on /media/root/dev/
+is preferred to having it happen on /media/root/work/
+or /media/root/www/
+The conjectured problem might be in error.
+In which case the custom version progress for the library
+will be reverted to stable version progress.
+Then it and hundreds of other spells will re-moil.
+
+Naturally, the same bug chasing can be done
+one /media/root/work/ or /media/root/production/ or /media/root/main/
+However, in general I prefer to confine testing to
+/media/root/test/ or /media/root/dev/
+That way any unintended consequences of the testing
+will not bring down services or cause other inconvenient
+bugs to manifest at the moment where I am attempting
+to do something important.
+
+Each work station out of hundreds can be configured
+with just /media/root/{main,work} root file systems.
+Any one of those work stations can be updated first
+and serve effectively as a developmental box.
+However, if just one workstation or one server exists
+then that computer should probably have it's own
+/media/root/dev/ or /media/root/test/
+where changes can be tested first.
+That way if any nasty surprises happen
+then those surprises can be observe without
+anguish in the test file system and
+then anticipated and circumvented
+in the production root file system.
+
+Obviously, no solution is perfect for achieving maximum robustness.
+Undetected bugs are a fact and not merely a supposition.
+Multiple root file systems can provide
+a layered approach to encountering bugs.
+Anticipated bugs are often better than unwanted surprises.
+
+Multiple root file system can provide  a method of
+partitioning performance and security.
+Some infiltrations of a computer could be confined
+to only a single root file system.
+
+Unlike a traditional computer's security
+which has a hard shell and chewy delicious inside;
+the current implementation offers a hard outer shell
+and slightly chewy walls that partition the center.
+However, with immune-security-tomoyo installed
+then that replaces some slightly chewy walls
+with diamond barriers.
+I feel certain that the security potential can continue to improve.
+
+Already, the control group implementation
+should be able to mitigate unreasonable resource usage
+by a root file system if the SA configures it to do so.
+The only aspect that remains is effectively keeping
+processes of each root file system locked in their own box.
+I am yet uncertain how to accomplish that
+short of dropping the mount capability.
+However, if an infiltration is EUID &gt; 0
+then the EUID 0 must still be acquired
+before acquiring the possibility
+of escaping the root file system.
+And that is why many services run using a user account
+or run as root after having dropped unnecessary capabilities.
+The main reason for starting a service using the root account
+is so that the service can bind/listen to a port
+that has a number less than 1024.
+And some services expect to be started using the root account
+and then soon switch to using a user account.
+gdm and kdm and postfix are examples of this.
+
+Consequently, the overall security situation
+is no worse for deploying Modern Magic
+as compared to any other POSIX
+that is chosen at random.
+However, the use of multiple root file systems
+and immune-security-tomoyo does give potential
+for making this POSIX a bit more hardened than average,
+without the headache of selinux.
+
+An English cliche goes something like,
+&quot;You should not put all your eggs into one basket.&quot;
+So why keep all files in one root file system?  :)
+
+Performing as the &quot;Devil's Advocate&quot; is difficult.
+However, I am glad that someone expressed concerns
+and inquiries about the changes.
+Thanks to Evert, excellent questions were presented.
+I tried to provide some good responses and conjectures.
+However, ultimately, whether to embrace and utilize
+multiple root file systems is a question that each SA must answer.
+
+For some SAs the correct answer is to embrace simplicity
+and go for the most simple deployment possible.
+Embracing new technology also requires enduring new bugs.
+Resisting the change might also circumvent some of those bugs.
+
+For a long time a tradition for this POSIX
+was to re-evaluate grub for use as the bootloader
+approximately once every two years.
+Ultimately, grub came up short on every evaluation.
+That was why we never transitioned from lilo to grub.
+
+However, Evert suggested evaluation of extlinux,
+from the syslinux project,
+for booting disk based file system.
+Extlinux passed on it's first evaluation.
+And so the POSIX transition from lilo to extlinux for booting.
+Odd that transition required years before that possibility was evaluated.
+Nearly from the inception bootable I/Rs
+were provided using isolinux from the syslinux project.
+Consequently, the possibility of using extlinux
+was long available before the potential was evaluated.
+
+The point of discussing boot loaders
+is to suggest that the first choice might not be the best
+and sometimes the best choice might not be apparent.
+
+The current implementation of multiple root file systems
+I have been testing and honing for a while.
+However, it has been running my workstation
+and other computers for even less time.
+One of the first workstations I deployed it on
+has only been running with new init-scripts
+for a couple of weeks or maybe a few weeks.
+Yet, I feel comfortable with it.
+I felt sufficiently comfortable to repartition
+and redeploy my workstation from backups.
+
+But with all things that are new
+the possibilities for bugs exist.
+I am not encouraging anyone
+to hastily do a backup, repartition and redeploy.
+That was only what I did because
+I require several root file systems.
+
+Provided that the small adjustments are made
+then everyone should be able to continue booting
+deployed boxes without repartitioning and redeployment.
+A single root file system
+will still run in an unshared namespace
+and therefore be separated from rootfs.
+All of the benefits and complexity are gained.
+However, this configuration is the most tested configuration and it works!
+So my recommendation is to go with it,
+until multiple root file systems are desired
+and an I/R is released with all the newer init-scripts
+and support for doing GUID Partition Tables.
+
+I did backups and repartitioned my workstations fixed disks
+without the benefit of current I/R images.
+As expected I did not use I/R images.
+I used only the software provided by initramfs extracted to the rootfs.
+The rootfs or what I previously called &quot;The Sorcerer's Keep.&quot;
+is a powerful file system that can be used
+for many types of administration tasks
+that other POSIX can accomplish only
+when booting with an Install or Rescue CD.
+
+After the new I/Rs are ready then everyone will be able
+to download those and use those for deploying new computers
+and for re-partitioning existing computers.
+It will have the utilities provided by gptfdisk and therefore
+be exactly what some SAs are eagerly anticipating.
+
+Progress on the new I/Rs is good.
+Testing is not yet complete.
+Changes to enhance the multiple root file system implementation
+to receive all the benefits of unshared namespace
+delayed the production of new I/Rs by a couple of months.
+I deemed that the delay was worthy because
+the unshared name space allows each root file system
+many of the benefits that would be gained if run as virtual computers,
+none of the drawbacks, and the additional benefits
+received for running as root file systems.
+
+So the big changes for 2013 will be:
+multiple root file systems;
+the deployment docent;
+and support for GPT.
+
+It might not seem like much.
+However, considerable thought, effort, implementation and testing was required.
+Even several of the the current implementations
+are beyond their 10th revision prior to entering the svn grimoire.
+That was why I was sitting on potential updates
+for weeks instead of committing updates for existing spells
+to the svn grimoire.
+
+Like everyone else I would have been pleased
+to have all the changes accomplished and received in January.
+That way I could have provided new I/Rs and established
+this POSIX as alive and current in 2013.
+Yet instead we wait, nearly half a year for all the recommendations,
+fixes, and new functionality to arrive.
+Thanks for the patience.
+Sorry for the inconvenience caused by the delay.
+Many SAs have stated a preference for quality over speed.
+Quality is what I intend to deliver.
+
+The top of my todo list is to complete
+the the implementation and documentation
+for the final steps for the deployment docent
+and to continue to roll and test I/R images
+until they are ready to be shared.
+That and the usual checking for software updates
+is how I intend to spend the first two weeks of May.
+And when it is done I will upload and announce.
+
+As previously mentioned quality counts.
+The time table has been slipping for months.
+Even with as eager as I feel about new I/Rs
+I can bear to wait while I do the testing.
+And the end result should be satisfaction
+for everyone with a worthy computer.
+
+I am anxiously anticipating new I/Rs
+as much as if not more than everyone else.
+My workstation's fixed disks are now GPT.
+They can not be read, repaired, nor booted by existing I/R images.
+So I also want new I/Rs ASAP.  :)
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002426.html">[Sorcerer-admins] summary of changes that require SA	interaction:
+</A></li>
+	<LI>Next message: <A HREF="002428.html">[Sorcerer-admins] important bugs/omissions; definitely better fix boxes ASAP rather than chance encountering it on the next reboot.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2427">[ date ]</a>
+              <a href="thread.html#2427">[ thread ]</a>
+              <a href="subject.html#2427">[ subject ]</a>
+              <a href="author.html#2427">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

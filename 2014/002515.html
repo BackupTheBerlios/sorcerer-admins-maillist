@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The hub can move.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2014/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20hub%20can%20move.&In-Reply-To=%3CCA%2BT4wDhH4VOSHKXw-DV8kyyDWdOK4pdJC9%3DCvTVsZp4662XJcQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="002516.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The hub can move.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20hub%20can%20move.&In-Reply-To=%3CCA%2BT4wDhH4VOSHKXw-DV8kyyDWdOK4pdJC9%3DCvTVsZp4662XJcQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The hub can move.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jan 30 03:14:11 CET 2014</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="002516.html">[Sorcerer-admins] changes to compiler optimization...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2515">[ date ]</a>
+              <a href="thread.html#2515">[ thread ]</a>
+              <a href="subject.html#2515">[ subject ]</a>
+              <a href="author.html#2515">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Most of us already realized that the realfs, or root file systems,
+of a computer all have a VETH.
+And the rootfs has many VETH.
+That makes the rootfs the hub.
+The VETH are network tunnels.
+And one end of a VETH tunnel is in the hub
+and the other is in another unshared net namespace.
+
+Evert expressed the desire for having
+actual network interfaces in a realfs net namespace.
+That way an interface can be configured with fluffy GUI programs.
+
+And while I expressed my dislike for moving the hub
+from the rootfs to a realfs; I admitted that it was possible.
+And so I coded it.
+
+# /etc/init.d/hub configure
+
+Running that will set the location of the hub.
+It can be rootfs or any realfs such as /+/base/
+If not specified the hub will remain the rootfs.
+
+While making the changes I realized something.
+Whenever the IP address of the actual network interface changes
+then the DNAT and SNAT rules must also change.
+The easiest way to accomplish that was a reboot.
+So I changed it.
+
+A NAT daemon now runs in rootfs.
+However, it configures the DNAT and SNAT rules
+for wherever the hub is located.
+Every 20s it awakes and checks the IP address
+for the actual network interface.
+If it changes then the former DNAT and SNAT rules
+are deleted and new DNAT and SNAT rules are input.
+The NAT daemon provides a convenience
+for a mobile computer sliding from network to network
+using wpa_supplicant.
+
+init-scripts for wpa_supplicant and immune-auto-network were adjusted.
+They run both during sysinit and runlevel.
+During runlevel they have no effect
+if an actual network interface
+is not present in the realfs.
+Therefore, if /etc/init.d/hub moves the hub into a realfs
+then it also moves the actual network interfaces also.
+Therefore, the actual network interfaces must be reconfigured
+during runlevel if moved from rootfs to a realfs.
+
+So can wpa_supplicant and wpa_cli and dhcpcd be restarted
+from /+/work/ if /+/work is the hub?
+The answer is yes.
+The only aspect about networking that does not support
+the moveable hub is /etc/init.d/networks which is more useful
+for static network configurations.
+
+The computer's network hub is similar to an airport hub.
+Packets destined to go out to the Internet leave a realfs
+and then travel to the hub and then from the hub have
+the address translated to the same as the actual network interface
+and then travel out that interface along the default route
+until reaching the next hop which exists outside of the computer.
+Likewise if someone wanted to fly from Texas to Nevada
+then a direct flight to Las Vegas might not be available.
+The person might fly first to Atlanta Georgia and then board
+an airplane destined for Las Vegas.
+The use of a hub conserves the amount of airplanes that must be utilized.
+Likewise a computer's network hub conserves the amount of
+VETH and IP address that must be utilized.
+
+Feel invited to inquire if more questions exist.
+I want to keep this email reasonably terse.
+The important aspect is that those who want
+the actual network interface available
+for fluffy configuration GUIs can move it.
+Yet be aware that the location of the hub suffers
+from weakened network security.
+Always better to have the hub in rootfs net namespace
+if no compelling reason exists for moving it elsewhere.
+
+This email describes changes that will be available
+soon within a day or two from the time this email was written.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20140129/2aa7455c/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20140129/2aa7455c/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="002516.html">[Sorcerer-admins] changes to compiler optimization...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2515">[ date ]</a>
+              <a href="thread.html#2515">[ thread ]</a>
+              <a href="subject.html#2515">[ subject ]</a>
+              <a href="author.html#2515">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

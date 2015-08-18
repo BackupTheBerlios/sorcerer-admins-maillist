@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] :) I love updating boxes that are far out of	date
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%3A%29%20I%20love%20updating%20boxes%20that%20are%20far%20out%20of%0A%09date&In-Reply-To=%3CBANLkTin957dRSmBJ0a_mWkQKnvmBt4VrTw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002110.html">
+   <LINK REL="Next"  HREF="002112.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] :) I love updating boxes that are far out of	date</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%3A%29%20I%20love%20updating%20boxes%20that%20are%20far%20out%20of%0A%09date&In-Reply-To=%3CBANLkTin957dRSmBJ0a_mWkQKnvmBt4VrTw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] :) I love updating boxes that are far out of	date">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Apr 15 21:11:16 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002110.html">[Sorcerer-admins] :) I love updating boxes that are far out of date
+</A></li>
+        <LI>Next message: <A HREF="002112.html">[Sorcerer-admins] :) I love updating boxes that are far out of	date
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2111">[ date ]</a>
+              <a href="thread.html#2111">[ thread ]</a>
+              <a href="subject.html#2111">[ subject ]</a>
+              <a href="author.html#2111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Apr 15, 2011 at 8:31 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> there's no /bin/setsid and I'm not sure where it should come from.
+</I>
+/bin/setsid comes from util-linux.
+I do not know which version of util-linux introduced it.
+
+&gt;<i> ...this is based from a iso 20100925 ia32 (oh, revisited, that's the
+</I>&gt;<i> lasted ia32 image too, on silverice)
+</I>
+No /bin/setsid on the I/R images?
+Hmm, that would make that first update an adventure.
+Guess I should make the devel to stable sorcery
+and new I/Rs a reality ASAP.
+
+
+&gt;<i> I had only just started installing this vmware image. &#160;(quite some time ago)
+</I>&gt;<i>
+</I>&gt;<i> today I learned I needed a linux box, so I started it up again and
+</I>&gt;<i> started to update.
+</I>&gt;<i>
+</I>&gt;<i> augur sync was ... confused a bit.
+</I>&gt;<i>
+</I>&gt;<i> I finally got the network up, and managed a cast grimoire - which then
+</I>&gt;<i> started puking becuase it didn't have several commands (version was
+</I>&gt;<i> one)...
+</I>
+Yes, the jump between that grimoire version
+and the required sorcery to process it is huge.
+However, the next spell to cast
+after the grimoire is the sorcery spell.
+The sorcery spell should not be a problem to cast.
+
+
+&gt;<i> I used lynx, grabbed the latest sorcery (since I know these often come
+</I>&gt;<i> in pairs), tried to extract it, but there's no 7za (thta's what I
+</I>&gt;<i> would run under windows) p7zip? &#160;ya no p7zip either. &#160;Oh is see it's
+</I>&gt;<i> xz, like the file extension - clever :)
+</I>
+Yes.  Probably there is an xz on the I/R.
+p7zip probably would not be of any use
+for extracting an xz file.
+I expect that xz does come on the I/R
+because the archive directory is full
+of xz compressed archives.
+So at least that should not be a problem.
+
+
+&gt;<i> This one had the correct modules fro the kernel, so I was able to
+</I>&gt;<i> mount my windows shares, copied it out, extracted to a
+</I>&gt;<i> 'sorcery(...).tar' ran the install, did a augur sync (was unfortunatly
+</I>&gt;<i> I was in in /root/.sorcery/grimoire looking for what 7zip was called,
+</I>&gt;<i> so that started a long chain of 'indexing.... indexing....
+</I>&gt;<i> indexing....' had to abort it (many ctrl-c's) moved out to /root and
+</I>&gt;<i> got the augur sync to index.
+</I>&gt;<i>
+</I>&gt;<i> augur scry is sitting with a bunch of perl-- modules in [wait] and
+</I>&gt;<i> bin86[wait] &#160;... there are 274 spells in ~/.sorcery/queue/cast waiting
+</I>&gt;<i> but no signs of motion
+</I>&gt;<i>
+</I>
+&gt;<i> Oh ya /usr/libexec/sorcery/leech can't find /bin/setsid &#160;nor can cast
+</I>&gt;<i> ... so I guess that's where I'm stuck.
+</I>
+It is inconvenient but not difficult to fix.
+Locate all /bin/setsid in /usr/libexec/sorcery/*
+and just remove the /bin/setsid and leave the
+remainder of the command.
+That should probably work for now
+until newer util-linux is installed.
+
+
+&gt;<i> okay I guess there is a download happening - but it's not appearing on
+</I>&gt;<i> augur scry &#160;(148 wait 1 download 132 aquire) 3 at the top are [wait]
+</I>&gt;<i> then a list of the last few events; but no idea what sort of progress
+</I>&gt;<i> the download is making.
+</I>&gt;<i>
+</I>&gt;<i> ... well whatever it was downloading that finished, so now I'm &#160;(147
+</I>&gt;<i> wait &#160;132 aquire ) no download... and nothing going.
+</I>&gt;<i>
+</I>&gt;<i> *shrug* I guess I can try and make some things go.... but I'm gone for now
+</I>
+
+Seems as if the I/R's util-linux installs setsid as:
+/usr/bin/setsid
+
+That also could be discovered by running:
+$ which setsid
+
+I suppose for now I can remove the absolute
+path name for invoking it in the utils and
+that should solve the problem.
+
+Thanks for the report.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002110.html">[Sorcerer-admins] :) I love updating boxes that are far out of date
+</A></li>
+	<LI>Next message: <A HREF="002112.html">[Sorcerer-admins] :) I love updating boxes that are far out of	date
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2111">[ date ]</a>
+              <a href="thread.html#2111">[ thread ]</a>
+              <a href="subject.html#2111">[ subject ]</a>
+              <a href="author.html#2111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

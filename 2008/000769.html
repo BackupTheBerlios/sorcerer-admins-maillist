@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Initfamfs issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Initfamfs%20issues&In-Reply-To=%3C596b75860809091839h23cfa5dfodd2052fa004d760b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000768.html">
+   <LINK REL="Next"  HREF="000770.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Initfamfs issues</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Initfamfs%20issues&In-Reply-To=%3C596b75860809091839h23cfa5dfodd2052fa004d760b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Initfamfs issues">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep 10 03:39:20 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000768.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+        <LI>Next message: <A HREF="000770.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#769">[ date ]</a>
+              <a href="thread.html#769">[ thread ]</a>
+              <a href="subject.html#769">[ subject ]</a>
+              <a href="author.html#769">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree about the clock skew.
+I will make it so that the time stamp of /boot/fast
+is not considered.
+Thanks for sharing that observation.
+
+Okay, the rest of my speculation is as follows:
+The initramfs images in /boot were rebuilt.
+That changed their start location on disk.
+Afterward /sbin/lilo was run.
+However, instead of properly updating the boot record
+it issued an error and exited.
+The box reboot.
+The lilo installed to the boot block tried to read the initramfs,
+but the newly installed initramfs began at different locations.
+Therefore, instead of booting lilo issued an error.
+The box must now be recovered by booting the I/R.
+
+After recovering the box, always run lilo before issuing the shutdown command.
+Eventually, what happened will become apparent
+because you will then see the lilo error.
+
+If for example two partitions have the same UUID
+and boot= in /etc/lilo.conf is specified by using
+/dev/disk/by-uuid/$SOMETHING
+then I have no idea what will happen.
+Symbolic links can only point to one destination.
+If two drives have the same UUID
+then I have no idea what that symbolic link will be
+or if it will even exist.
+
+Solution 1:
+
+Make UUIDs on all partitions unique since UUIDs should be unique.
+
+
+Solution 2:
+
+Adjust /etc/lilo.conf* so that every reference to /dev/disk/by-uuid
+instead uses regular device names like /dev/sda1
+
+UUIDs are supposed to be unique.
+If they are copied because a SA dd one partition to another
+then the SA must also fix the problems that occur from
+having non unique UUIDs.
+
+Sorry for the inconvenience.
+
+
+
+On Tue, Sep 9, 2008 at 3:54 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> I have this system that has been installed from the latest x86 I/R cd.
+</I>&gt;<i>
+</I>&gt;<i> I've been fighting this for the last few hours...
+</I>&gt;<i>
+</I>&gt;<i> there are two drives in this system... the second is formatted and
+</I>&gt;<i> partiioned exactly the same as the first.
+</I>&gt;<i>
+</I>&gt;<i> (these are probably needless details)
+</I>&gt;<i> /dev/hda1 256M ext2
+</I>&gt;<i> /dev/hda2 12000M ext3 ( root mount )
+</I>&gt;<i> /dev/hda3 2500M swap
+</I>&gt;<i> /dev/hda4 (whatever's left on drive) ext3 (/var/lib/mysql)
+</I>&gt;<i>
+</I>&gt;<i> 1) after shutting down (shutdown -r 0 or ctrl-alt-delete or shtudown
+</I>&gt;<i> -h 0) the initramfs says [checking] and [updating] like every time.
+</I>&gt;<i> Once the system boots, 'fast*' is added to lilo.  Shutdown again
+</I>&gt;<i> causes the initramfs to rebuild.  (sounds like a clock skew to me... )
+</I>&gt;<i>
+</I>&gt;<i> 2) the second disk at some point of shutting down, after the initramfs
+</I>&gt;<i> was checked and updated, the system would not boot, kernel complains
+</I>&gt;<i> 'bad gip magic number'... swapped the disks... re-copied the current
+</I>&gt;<i> initramfs to the bad drive, re-lilo, and shutdown... then the original
+</I>&gt;<i> drive was able to come up, but the second, in the process of shutdown,
+</I>&gt;<i> aquired the error 'bad gzip numbers'...
+</I>&gt;<i>
+</I>&gt;<i> 3) got error L 99 99 99 99 - booted from CD, mounted the drive, did a
+</I>&gt;<i> lilo mbr, and got it to boot again.... but then after shutting down,
+</I>&gt;<i> initramfs checked, and updated, and then had bad gzip magic numbers...
+</I>&gt;<i> I dunno if somehow the initramfs file is getting out of sync with
+</I>&gt;<i> lilo... or what the deal is.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> These are just observations, eventually I did get the system running,
+</I>&gt;<i> being able to boot from either drive  (with a cron task to clone
+</I>&gt;<i> parition 4)...
+</I>&gt;<i>
+</I>&gt;<i> but... one more thing I noticed
+</I>&gt;<i>
+</I>&gt;<i> after loading, and adding 'fast' as a lilo option, ctrl-alt-delete
+</I>&gt;<i> causes a remake of initramfs, and the fast option goes way... (though,
+</I>&gt;<i> this is probably some sort of clock skew)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000768.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+	<LI>Next message: <A HREF="000770.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#769">[ date ]</a>
+              <a href="thread.html#769">[ thread ]</a>
+              <a href="subject.html#769">[ subject ]</a>
+              <a href="author.html#769">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Happy Holidays,
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2006/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Happy%20Holidays%2C&In-Reply-To=%3C596b75860612230809x55437d1gfd4dea8b99bf478f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Happy Holidays,</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Happy%20Holidays%2C&In-Reply-To=%3C596b75860612230809x55437d1gfd4dea8b99bf478f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Happy Holidays,">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Dec 23 17:09:57 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[Sorcerer-admins] Linux-PAM, move command not found
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Wondering what I gift I have for you?
+The brave amongst you can be the first to try it.
+It is a transparent decompression fuse filesystem overlay.
+
+To put it simply when activated the kernel and processes can
+read gzip compressed files and will see only the uncompressed content.
+But it is a bit more complicated and technical than that.
+Fortunately, with full sorcery integration already available
+for it you will only need to cast the fuse.gunzip spell
+and then enable the feature and extended features for it.
+After that it is as automatic as the ccache archive.
+
+The more important question is not how, but why.
+Why goes all the way back to the discussion of why
+does it takes some programs a long time to start up.
+Some of us took the side that it is dynamic runtime
+linking that slows down program startup.
+Others of us took the side that it is slow disk
+performance that slows down program startup.
+Perhaps this program can help us decide.
+
+The idea is simple.
+CPU and RAM are fast.
+Disks are slow.
+It is even slower when files being read are fragmented.
+So why not offload some of the disk work to the processor?
+That way the disk does less work to read the file,
+the processor covers the difference and the file is read
+in 1/2 to 3/4 the time of reading the whole uncompressed file.
+Of course, the actual speed up depends on how slow the drives
+are and how fast the processor is.
+
+Probably one of the most obvious questions is am I going
+to answer all your questions about it in this email.
+No, there is a nice README file in the tarball.
+It is worth reading,
+but completely optional for the Sorcerer SA that only
+does the steps recommended above for activating it.
+
+The second most obvious question is does repeated
+decompression of the file each time it is read slow down a box.
+The answer to that is no.  That is because a file transparently
+decompressed hangs out in POSIX shared memory for a while.
+That way if it is required again it can be read from
+POSIX shared memory in usually between 1 to 7 nano seconds.
+
+But now back to configuring it in sorcery extended features.
+While a bit more complex than explained here to make it simple
+you will either want to go with the default selection of reducing
+files installed to /usr that are fragmented or the notebook
+selection for reducing any file installed to /usr that can be reduced.
+
+After it is installed and configured what happens?
+Nothing until spells are cast.
+When they are cast, files that are installed in /usr
+that meet the criteria for reduction are reduced.
+For example, some installed software may be updated.
+After the update the df -a free block count for / or /usr
+may be higher than it was before the update.
+Hence the box was on the brink of running out of space
+and moved /opt to /var and added a bind line for it in
+/etc/fstab like I did on a few of my boxes, then after
+some updates there may be enough space to move /opt back
+and release the bind.
+
+If you encounter anything strange
+please execute # uncache.
+Then, check if it solved the problem.
+Finally, email me all about it, please.
+I am probably being paranoid in telling you that,
+but you may feel more at ease that should a problem
+occur that you can probably fix it by running one
+program rather than rebooting the box.
+
+Also if an installed spell has reduced files and you
+want it unreduced then simply unarchive the
+archive file into /
+Files in archives would not be reduced.
+
+Lastly, there are some augur commands for reduction of spells
+that are already installed and also for inhibiting reducing
+of spells that you do not want reduced when they are cast.
+As expected it works on a spell by spell basis rather than
+a file by file basis.
+Therefore, if you want to reduce some installed software
+without recasting it then augur it.
+While you could run the reduce program directly,
+please do not do so without reading the README
+since you would not want to reduce files in directories
+such as /etc /bin /sbin /lib /lib64 /boot and so forth where
+transparent decompression will not be enabled.
+
+I hope you enjoy fuse.gunzip as much as I do.
+For some of you, maybe the ones sporting over 700 installed spells
+or the ones with slow disks, or a notebook loaded to the limit
+may benefit from the added speed or increased block counts.
+If anyone can gain a performance boost
+using SATA drives please let me know.
+While I have heard of outstanding throughput rates for SATA drives,
+I have no idea what the track to track seek times are.
+It might not make an improvement on those boxes.
+
+The oddest aspect about fuse.gunzip is that the reduce program
+creates sparse files where the block count is less than expected
+for the size of the file recorded in the inode.
+It should work with filesystems that support sparse files.
+fuse.gunzip has only been tested with ext3.
+reiserfs should not present a problem,
+but please let me know if it does.  :)
+
+Happy Holidays,
+Kyle
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[Sorcerer-admins] Linux-PAM, move command not found
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#8">[ date ]</a>
+              <a href="thread.html#8">[ thread ]</a>
+              <a href="subject.html#8">[ subject ]</a>
+              <a href="author.html#8">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

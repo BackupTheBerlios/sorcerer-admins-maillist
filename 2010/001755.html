@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W530175868B94B4AEA690AAEBA0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001752.html">
+   <LINK REL="Next"  HREF="001757.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W530175868B94B4AEA690AAEBA0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Wed Jul 14 10:14:58 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001752.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001757.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1755">[ date ]</a>
+              <a href="thread.html#1755">[ thread ]</a>
+              <a href="subject.html#1755">[ subject ]</a>
+              <a href="author.html#1755">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello, 
+
+ 
+
+Sorry but I don't see a unmount command in  /etc/init.d/mount so I can't try it.
+
+ 
+
+Roelof
+
+
+ 
+&gt;<i> Date: Tue, 13 Jul 2010 15:42:37 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> That is an excellent question.
+</I>&gt;<i> /etc/init.d/mount also handles the unmounting.
+</I>&gt;<i> Basically, it does a lazy umount
+</I>&gt;<i> or a umount -lr
+</I>&gt;<i> 
+</I>&gt;<i> &quot;
+</I>&gt;<i> -l Lazy unmount. Detach the filesystem from
+</I>&gt;<i> the filesystem hierarchy now, and cleanup all references
+</I>&gt;<i> to the filesystem as soon as it is not busy anymore.
+</I>&gt;<i> (Requires kernel 2.4.11 or later.)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -r In case unmounting fails, try to remount read-only.
+</I>&gt;<i> &quot;
+</I>&gt;<i> 
+</I>&gt;<i> sync is run before unmounting is attempted.
+</I>&gt;<i> Definitely, no filesytem information nor modified files are lost.
+</I>&gt;<i> If the umount command is insufficient
+</I>&gt;<i> then I am not certain why.
+</I>&gt;<i> Best guess is that the box might reboot
+</I>&gt;<i> before the kernel is able to finish off the partitions.
+</I>&gt;<i> If you have a moment to test it
+</I>&gt;<i> try adding a sleep 1 after the umount
+</I>&gt;<i> command in /etc/init.d/mount
+</I>&gt;<i> If that helps then we can try that change distribution wide.
+</I>&gt;<i> 
+</I>&gt;<i> One might expect that we would definitely want to wait
+</I>&gt;<i> for filesystems to unmount.
+</I>&gt;<i> However, a NFS mount or other problematic mount
+</I>&gt;<i> such as a filesystem through fuse
+</I>&gt;<i> could possibly hang shutdown/reboot indefinitely
+</I>&gt;<i> if we tried to wait for all umounting to finish.
+</I>&gt;<i> 
+</I>&gt;<i> Probably most SAs use a journaling filesystem on
+</I>&gt;<i> / and therefore the having it dirty is not a problem
+</I>&gt;<i> and does not cause a full fsck.
+</I>&gt;<i> 
+</I>&gt;<i> I have seen occasionally reboots where /
+</I>&gt;<i> is reported as not being unmounted properly.
+</I>&gt;<i> However, /boot always seems to umount okay.
+</I>&gt;<i> Completing umounting / is impossible, of course.
+</I>&gt;<i> init or some process would keep it busy.
+</I>&gt;<i> However, remounting / read only should be possible.
+</I>&gt;<i> Perhaps we just do not give the kernel enough time?
+</I>&gt;<i> Best to try to debug the problem on a box
+</I>&gt;<i> where it can be consistently repeated.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry about the inconvenience.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, Jul 13, 2010 at 5:29 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Problem solved.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; One question :
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; How can I stop the system the right way.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If I do shutdown -h now the system stops but on restart I allways get a not
+</I>&gt;<i> &gt; clear unmount of the disk.
+</I>&gt;<i> &gt; Shutdown -r now or reboot gives the same problem
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+De Nieuwste Internet Explorer speciaal voor Hotmail, download nu gratis
+<A HREF="http://www.microsoft.com/netherlands/ie8/hotmail.htm">http://www.microsoft.com/netherlands/ie8/hotmail.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100714/b827d418/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100714/b827d418/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001752.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001757.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1755">[ date ]</a>
+              <a href="thread.html#1755">[ thread ]</a>
+              <a href="subject.html#1755">[ subject ]</a>
+              <a href="author.html#1755">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

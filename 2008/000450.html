@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805181318q4c13d9awc8086843c2943a46%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000449.html">
+   <LINK REL="Next"  HREF="000434.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805181318q4c13d9awc8086843c2943a46%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May 18 22:18:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000449.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000434.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#450">[ date ]</a>
+              <a href="thread.html#450">[ thread ]</a>
+              <a href="subject.html#450">[ subject ]</a>
+              <a href="author.html#450">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the report.
+However, what broke?
+Was it rp-pppoe?
+Does some source require modification so that
+it can correctly locate the installed location of pppd?
+I am reasonably certain that I do not want to use
+a symbolic link for a distribution wide solution
+especially since a symbolic link in /usr/sbin
+would not be included on the initramfs because it is in /usr
+
+
+On Sun, May 18, 2008 at 12:44 PM, MALET Jean-Luc
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> having ppp installed in / broke pppoe
+</I>&gt;<i> I couldn' t connect after last upgrade. after lot of effort I guessed
+</I>&gt;<i> that pppoe try to execvp /usr/sbin/ppp and after creating a symlink it
+</I>&gt;<i> worked
+</I>&gt;<i> best regards
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000449.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000434.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#450">[ date ]</a>
+              <a href="thread.html#450">[ thread ]</a>
+              <a href="subject.html#450">[ subject ]</a>
+              <a href="author.html#450">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

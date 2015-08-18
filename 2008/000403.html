@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIDIA-Linux-x86 : failling?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20%3A%20failling%3F&In-Reply-To=%3C596b75860802171440i50849e75p195439a3fa7b0f66%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000402.html">
+   <LINK REL="Next"  HREF="000404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIDIA-Linux-x86 : failling?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20%3A%20failling%3F&In-Reply-To=%3C596b75860802171440i50849e75p195439a3fa7b0f66%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] NVIDIA-Linux-x86 : failling?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Feb 17 23:40:58 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000402.html">[Sorcerer-admins] NVIDIA-Linux-x86 : failling?
+</A></li>
+        <LI>Next message: <A HREF="000404.html">[Sorcerer-admins] /etc managing.... possible improvement?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#403">[ date ]</a>
+              <a href="thread.html#403">[ thread ]</a>
+              <a href="subject.html#403">[ subject ]</a>
+              <a href="author.html#403">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I will do a check of
+NVIDIA-Linux-x86
+also
+
+I have it installed on one of my boxes.
+And it is working.
+However, please check that:
+1. The spell you are using is exactly called NVIDIA-Linux-x86
+2. that it comes from the official grimoire
+
+NVIDIA-Linux-x86_64
+Will not cast.
+Maybe nothing will happen if you try it.
+ ATTRIBUTE='deprecated'
+Has no source either.
+If it installs then it would install like a profile.
+
+It has:
+
+current(){ echo NVIDIA-Linux-x86 | pipe_queue $CAST_QUEUE com; }
+
+Therefore, on an
+# augur newer
+The correct spell NVIDIA-Linux-x86 would be injected into the cast queue.
+
+The NVIDIA-Linux-x86 spell als provides
+/etc/init.d/{agpgart,nvidia,nvidiactl,nvidiafb}
+
+Those init scripts do:
+load the agpgart module
+load the nvidia module
+create the required device nodes in /dev
+unload the nvidiafb module
+
+Of course they should execute in proper order during boot
+instead of the order that I listed them above.
+
+The NVIDIA-Linux-x86 spell selects the correct source tarball to use
+based upon the $HOSTTYPE variable.
+That way it installs the x86_64 version on x86_64
+and the ia32 version on ia32.
+If your a checking the installation of it on a x86_64
+then you may want to search within any case and if statements
+involving $HOSTTYPE.
+It might only be broken for x86_64
+I have only tested it on ia32.
+But I expected that it should work on both architectures.
+
+
+I just visited:
+<A HREF="http://www.nvidia.com/object/unix.html">http://www.nvidia.com/object/unix.html</A>
+
+Oddly, it did not show version 169.09 or later being available.
+The site showed only version 169.07
+Did they retract version 169.09 release?
+If it can not be download then it will not cast.
+That is probably the case.
+I have NVIDIA-Linux-x86-169.09-pkg1.run
+But I do not have the x86_64 file.
+If you want I can send you what I have.
+Or you can try lower the version number on NVDIA-Linux-x86 to 169.07
+and cast it then.
+
+Sorry that I missed this.
+I am not entirely certain if I should lower the version for NVIDIA-Linux-x86
+in the grimoire.
+My tracking method only spots the occurrence of newer releases
+and not older releases.
+What they have done is very unexpected.
+
+
+
+On Feb 17, 2008 3:29 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> well nothing happens... no cast... nothing at all... just wait.... I
+</I>&gt;<i> suspected the archive to be corrupted and removed it without any
+</I>&gt;<i> success.... I'll try to debug the spell
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000402.html">[Sorcerer-admins] NVIDIA-Linux-x86 : failling?
+</A></li>
+	<LI>Next message: <A HREF="000404.html">[Sorcerer-admins] /etc managing.... possible improvement?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#403">[ date ]</a>
+              <a href="thread.html#403">[ thread ]</a>
+              <a href="subject.html#403">[ subject ]</a>
+              <a href="author.html#403">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

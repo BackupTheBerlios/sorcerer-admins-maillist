@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C9104f1fb0708252348w5a4b2e73laa4f61d7562d6d2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000163.html">
+   <LINK REL="Next"  HREF="000165.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt-x11-opensource</H1>
+    <B>John Locke</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C9104f1fb0708252348w5a4b2e73laa4f61d7562d6d2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt-x11-opensource">loki1725 at gmail.com
+       </A><BR>
+    <I>Sun Aug 26 08:48:00 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000163.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+        <LI>Next message: <A HREF="000165.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#241">[ date ]</a>
+              <a href="thread.html#241">[ thread ]</a>
+              <a href="subject.html#241">[ subject ]</a>
+              <a href="author.html#241">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I got the &quot;recompile with -fPIC&quot; error on qt-x11-opensource tonight still.
+No config.log is generated during this compile in /var/tmp/failed so here is
+the output to the screen piped to a text file. I copied just the last few
+lines that have the error.  If you need more, let me know.  I should
+mention, I did
+augur syncronize
+augur newer
+augur update
+
+just to clear my old problems with qt-x11-opensource from earlier today.
+Then,
+
+cast -c qt-x11-opensource
+
+rm -f libQtScript.so.4.3.1 libQtScript.so libQtScript.so.4
+libQtScript.so.4.3
+g++ -m64 -fno-exceptions -Wl,-rpath,/usr/lib -Wl,-rpath,/usr/lib -shared
+-Wl,-soname,libQtScript.so.4 -o
+libQtScript.so.4.3.1.obj/release-shared/qscriptasm.o
+.obj/release-shared/qscriptast.o
+.obj/release-shared/qscriptastvisitor.o
+.obj/release-shared/qscriptcompiler.o .obj/release-shared/qscriptecmaarray.o
+.obj/release-shared/qscriptecmaboolean.o
+.obj/release-shared/qscriptecmacore.o .obj/release-shared/qscriptecmadate.o
+.obj/release-shared/qscriptecmafunction.o
+.obj/release-shared/qscriptecmaglobal.o
+.obj/release-shared/qscriptecmamath.o
+.obj/release-shared/qscriptecmanumber.o
+.obj/release-shared/qscriptecmaobject.o
+.obj/release-shared/qscriptecmaregexp.o
+.obj/release-shared/qscriptecmastring.o
+.obj/release-shared/qscriptecmaerror.o
+.obj/release-shared/qscriptcontext_p.o .obj/release-shared/qscriptengine.o
+.obj/release-shared/qscriptengine_p.o
+.obj/release-shared/qscriptextenumeration.o
+.obj/release-shared/qscriptextvariant.o .obj/release-shared/qscriptcontext.o
+.obj/release-shared/qscriptfunction.o .obj/release-shared/qscriptgrammar.o
+.obj/release-shared/qscriptlexer.o .obj/release-shared/qscriptclassdata.o
+.obj/release-shared/qscriptparser.o
+.obj/release-shared/qscriptprettypretty.o
+.obj/release-shared/qscriptsyntaxchecker.o
+.obj/release-shared/qscriptvalueiterator.o
+.obj/release-shared/qscriptvalueimpl.o .obj/release-shared/qscriptvalue.o
+.obj/release-shared/qscriptextqobject.o .obj/release-shared/qscriptable.o
+.obj/release-shared/qscriptextensionplugin.o
+.obj/release-shared/moc_qscriptengine.o
+.obj/release-shared/moc_qscriptextensionplugin.o
+-L/usr/src/sorcery/qt-x11-opensource/qt-x11-opensource-src-4.3.1/lib
+-lQtCore -L/usr/src/sorcery/qt-x11-opensource/qt-x11-opensource-src-4.3.1/lib
+-lz -lm -pthread -lgthread-2.0 -lrt -lglib-2.0 -lpthread -ldl
+/usr/bin/ld: .obj/release-shared/qscriptecmaboolean.o: relocation
+R_X86_64_PC32 against `QList&lt;QScriptClassInfo*&gt;::append(QScriptClassInfo*
+const&amp;)' can not be used when making a shared object; recompile with -fPIC
+/usr/bin/ld: final link failed: Bad value
+collect2: ld returned 1 exit status
+make[1]: *** [../../lib/libQtScript.so.4.3.1] Error 1
+make[1]: Leaving directory `/usr/src/sorcery/qt-x11-opensource/qt-
+x11-opensource-src-4.3.1/src/script'
+make: *** [sub-script-make_default-ordered] Error 2
+[31m[1m! Problem Detected ![0m[0m
+Source moved to /var/tmp/failed/qt-x11-opensource-src-4.3.1
+Fail:    Sat Aug 25 19:55:06 CDT 2007    qt-x11-opensource    4.3.1
+build/compile error
+
+Thanks
+
+On 8/17/07, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 8/16/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Thursday 16 August 2007, J Decker wrote:
+</I>&gt;<i> &gt; &gt; Oh - I finally caught the error comping qt-x11-opensource - I'm
+</I>&gt;<i> &gt; building a
+</I>&gt;<i> &gt; &gt; 64 bit box, and it complains a certain relocation cant' be made -
+</I>&gt;<i> &gt; please
+</I>&gt;<i> &gt; &gt; make with -fPIC
+</I>&gt;<i> &gt; You need to identify which spell misses the -fPIC option and we will fix
+</I>&gt;<i> &gt; it.
+</I>&gt;<i> &gt; This is a problem usually for older projects.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> mpeg2 is definately one of them.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I know I keep asking - but isn't there like a ~/.grimoire to put
+</I>&gt;<i> &gt; new/custom
+</I>&gt;<i> &gt; &gt; spells in
+</I>&gt;<i> &gt; You can put something like
+</I>&gt;<i> &gt; LOCAL_GRIMOIRE=&quot;/var/lib/sorcery/grimoire.library/local&quot;
+</I>&gt;<i> &gt; into /etc/sorcery/local.config
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; to define your local grimoire. Of course, you must do augur merge; augur
+</I>&gt;<i> &gt; index
+</I>&gt;<i> &gt; before the changed local spell is available for casting.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Jan
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; On 8/15/07, Kyle Sallee &lt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; I noticed a newer version of qt-x11-opensource available.
+</I>&gt;<i> &gt; &gt; &gt; I am testing it now.
+</I>&gt;<i> &gt; &gt; &gt; I have not made time to check it since Jan repaired the spell.
+</I>&gt;<i> &gt; &gt; &gt; It downloaded okay, although it took a while.
+</I>&gt;<i> &gt; &gt; &gt; Compilation began fine.
+</I>&gt;<i> &gt; &gt; &gt; I am now waiting for it to complete.
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; But are you certain you have anything to install that
+</I>&gt;<i> &gt; &gt; &gt; requires qt-x11-opensource?
+</I>&gt;<i> &gt; &gt; &gt; Very little software requires the newer qt library which
+</I>&gt;<i> &gt; &gt; &gt; is not backward compatible with the older qt-x11-free.
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; On 8/15/07, J Decker &lt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; &gt; I have been building a new box, and ran across this spell.  It's a
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; x86-64
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; box, and I'm not sure that the particular qt-x11-opensource is the
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; issue
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; or
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; something more generic.  Cast just hangs.  I don't understand what
+</I>&gt;<i> &gt; it
+</I>&gt;<i> &gt; &gt; &gt; &gt; is waiting for.
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; On 6/19/07, Jan Merka &lt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Hi all,
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; What is the status of qt-x11-opensource? The spell attribute is
+</I>&gt;<i> &gt; set
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; to
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; broken
+</I>&gt;<i> &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; but a comment says it is not broken. Does it mean that casting
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; qt-x11-opensource will interfere with qt-x11-free?
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Thanks,
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; &gt; &gt; Jan
+</I>&gt;<i> &gt; &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070826/57e4691a/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070826/57e4691a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000163.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+	<LI>Next message: <A HREF="000165.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#241">[ date ]</a>
+              <a href="thread.html#241">[ thread ]</a>
+              <a href="subject.html#241">[ subject ]</a>
+              <a href="author.html#241">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

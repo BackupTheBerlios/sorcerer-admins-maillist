@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Minor changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Minor%20changes...&In-Reply-To=%3C596b75860804190556s6eb89b86i541bde1aa632f511%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000409.html">
+   <LINK REL="Next"  HREF="000411.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Minor changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Minor%20changes...&In-Reply-To=%3C596b75860804190556s6eb89b86i541bde1aa632f511%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Minor changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr 19 14:56:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000409.html">[Sorcerer-admins] qt-x11-opensource hang in compilation
+</A></li>
+        <LI>Next message: <A HREF="000411.html">[Sorcerer-admins] /dev/psaux -&gt; /dev/input/mice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I may be the only person who uses augur history?
+It is still available.
+It was a good idea, but perhaps too simple in the implementation.
+It was slow and required plenty of disk space.
+It used to be in /etc/sorcery/log/history/
+It is now safe to remove /etc/sorcery/log/history/
+
+History is now kept in /etc/sorcery/log/history.gz
+Requires less disk space and is faster to search.
+Likewise snapshot logs used to be made in /etc/sorcery/log/snappy/
+Or maybe it was named something else?
+However, it is now stored like history is.
+It is now /etc/sorcery/log/snap.gz
+It is now quicker to search and it uses less disk space.
+
+/etc/sorcery/log/snap/ is remaining as it is.
+Although it is not used by the sorcery tools
+it is useful to examine to discover what was
+installed the last time a certain spell cast.
+It is most useful when trying to discovery why
+software that used to compile no longer compiles
+and the error message dose not provide a good clue.
+
+
+/etc/sorcery/log/{snappy,history}  can be removed.
+They will not be automatically removed by sorcery
+which is why I am sending out this email.
+
+If I did remove them automatically someone might complain.
+Afterall, they may have been building up for months or years
+and provide some sort of useful information.
+The old logs that are no longer used will not be converted over to the
+new style.
+While they could be converted it is not essential because these logs
+are for SAs only
+and are not used directly by the sorcery tools.
+
+As usual all other changes are transparent
+and most often involve optimizing the sorcery tools performance.
+However, please report bugs as you find them.
+Jan discovered and reported
+an incredibly long lived bug involving &quot;always on&quot; and &quot;always off&quot;.
+Thanks to Jan it is now fixed.
+
+Lastly unless someone has a fix for ati-driver-installer
+then it is currently broken.
+Hope everyone's installed ati-driver-installer keeps working
+or it's back to the xorg drivers for those cards.
+The NVIDIA-Linux-x86 spell is fixed and working with the latest linux.
+To avoid bewilderment the NVIDIA-Linux-x86_64 spell does not exist.
+The NVIDIA-Linux-x86 spell downloads and installs
+the correct pre-compiled binaries based upon the $HOSTTYPE
+
+Good luck with your updates.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000409.html">[Sorcerer-admins] qt-x11-opensource hang in compilation
+</A></li>
+	<LI>Next message: <A HREF="000411.html">[Sorcerer-admins] /dev/psaux -&gt; /dev/input/mice
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#410">[ date ]</a>
+              <a href="thread.html#410">[ thread ]</a>
+              <a href="subject.html#410">[ subject ]</a>
+              <a href="author.html#410">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

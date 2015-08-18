@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Installation and User Manual... a work in progress developing all on its own.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Installation%20and%20User%20Manual...%20a%20work%20in%0A%20progress%20developing%20all%20on%20its%20own.&In-Reply-To=%3C388a5303442cd2653d24cb2d5bc2fa54.squirrel%40northtech.us%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001535.html">
+   <LINK REL="Next"  HREF="001543.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Installation and User Manual... a work in progress developing all on its own.</H1>
+    <B>bradley at northtech.us</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Installation%20and%20User%20Manual...%20a%20work%20in%0A%20progress%20developing%20all%20on%20its%20own.&In-Reply-To=%3C388a5303442cd2653d24cb2d5bc2fa54.squirrel%40northtech.us%3E"
+       TITLE="[Sorcerer-admins] Installation and User Manual... a work in progress developing all on its own.">bradley at northtech.us
+       </A><BR>
+    <I>Tue Mar 16 04:42:22 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001535.html">[Sorcerer-admins] Installation Manual w/screenshots - completed	/etc/fstab...
+</A></li>
+        <LI>Next message: <A HREF="001543.html">[Sorcerer-admins] Installation and User Manual... a work in	progress developing all on its own.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1541">[ date ]</a>
+              <a href="thread.html#1541">[ thread ]</a>
+              <a href="subject.html#1541">[ subject ]</a>
+              <a href="author.html#1541">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Kyle,
+
+pls see comments below...
+
+&gt;<i> The device entry at the top of the menu
+</I>&gt;<i> is only for SAs to use if they know that the device
+</I>&gt;<i> they want is not already listed on the menu
+</I>&gt;<i> and they are absolutely certain that they know
+</I>&gt;<i> what they want will work and not fail.
+</I>&gt;<i>
+</I>&gt;<i> Or it is to confuse SA.
+</I>&gt;<i>
+</I>&gt;<i> Take your pick.  :)
+</I>&gt;<i>
+</I>
+LOL!
+
+Well I guess it could be said that w/o an installation manual it serves to
+confuse the SA ;)
+
+I've got a pretty firm grip on it now, however. Thanks for the
+clarification, and I'll make sure to elaborate on the distinctive features
+in the installation manual.
+
+On that note, however, this little personal project of mine is indeed
+growing, and quickly becoming not just an installation manual, but a user
+manual as well.
+
+It's starting to take shape, if not yet form, but the gathering of
+important and crucial system features and the Sorcerer philosophy is
+indeed becoming a cohesive, yet not quite comprehensive document.
+
+How does it look so far?
+
+&lt;snip&gt;
+
+This file is the Sorcerer Notes doc that I use for assembling the Sorcerer
+manual.
+
+Many of these notes are gathered from dialogs with Kyle Sallee, his posts
+on the <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A> email discussion list or other
+contributors, as well as my own observations and discoveries.
+
+Eventually, this should become a comprehensive manual discussing the
+ins/outs of installing, operating, and maintaining Sorcerer.
+
+Who knows? perhaps Sorcerer will eventually even become a kernel
+independant OS in its own right, based on the Sorcerer philosopy, enabling
+the option of other really kewl kernels and filesystems, like HAMMER FS
+and DragonFly's kernel too!
+
+Okay enough ranting to myself...
+
+----------------------BeginDoc----------------------------------------------
+
+Concerning virtual RAM and Swap files, and partitions:
+
+I.)	RAM and SWAP space as it pertains to various Sorcerer Architectures:
+
+There are slight differences in swapping on IA32 and x86_64 boxes. the
+size of virtual memory pages (swap space) are significantly different
+between the 32 bit architecture and the 64 bit architecture.
+
+IA32 can swap at minimum 4K of memory to disk, while the x86_64
+architecture swaps a minimum of 64K sized pages of memory to disk.
+
+Therefore, swapping tends to be less fragmented and faster on x86_64
+boxes. However, x86_64 boxes under memory duress are not able to swap as
+much memory to disk as IA32 machines.
+
+Therefore, the recommendations are that only IA32 be configured with a
+small amount of RAM, and that x86_64 boxes have at least 3G or more RAM
+installed.
+
+Basic memory requirements for the server's role in the form 'RAM + 1G of
+swap space' typically provides excellent coverage for compiling all but
+the most demanding compile time applications without exhibitin any
+significant impact on system performance.
+
+To make it simple, we recommend the following virtual memory
+configurations as a general starting point:
+
+1 GigaBytes of swap space if the box has &gt; 4G of RAM
+2 GigaBytes of swap space if the box has &lt; 4G of RAM
+
+The Sorcerer SA must make allowances for some additional memory that will
+be required and used during updates, otherwise, the SA might need to
+change to runlevel S or 1 and terminate various services during updates in
+order to avoid performance degradation.
+
+Sorcerer machines are intended to maintain nearly uninterrupted up-time of
+services while updating. Therefore, it is important to have each
+particular Sorcerer installation configured with adequate memory in the
+form of RAM + SWAP.
+
+The following explains the basics of Sorcerer's virtual memory model,
+specifically in relation to the temp filesystems (tempfs).
+
+/root/.sorcery/ is tmpfs - It will normally have about 64M to 128M on it.
+It is swappable and thus can be freed from RAM when it is not in use.
+
+/usr/src/sorcery/ is tmpfs - It will normally have less than 128M of
+usage, but is allowed up to 3G of memory. The only time /usr/src/sorcery/
+requires a large amount of memory is for compiling software such as
+firefox, QT, X, etc.
+
+In such cases  additional system resources over that of normal operations
+is desirous to avoid impacting system performace. Remember, Sorcerer
+machines are designed to regularly perform system updates (including
+compile time of newly installed sources) without interuption of system
+services.
+
+II.)	Sorcerer System Boot
+
+  A.) 	Boot logs:
+
+Sorcer system bootlogs are not located in the typical location expected by
+systems administrators coming from other Linux distributions.
+
+Logfiles created during the boot sequence of a Sorcerer machine are
+written to /etc/init.d/log.d instead of /var/log. This is because
+/var/log/ doesn't exist on an initramfs (older distributions used initrd,
+the init RAM disk, instead of the newer initramfs, the init RAM file
+system, which has largely supplanted the use of initrd on modern Linux
+distributions).
+
+Following system boot and the mounting of of the filesystem on disk, the
+tempfs located at /etc/init.d/log.d is simply moved to the root filesystem
+&quot;/&quot; located on disk, which does not require additional actions by the
+system such as a copy or a write of those files to /.
+
+This saves both time and additional wear and tear on the disk as a result
+of the additional tasks required to write the logs to /var/log/.
+
+    B.) Sorcerer's /etc/.ori/ tree
+
+Also unique to Sorcerer is the /etc.ori/ tree, which is basically the same
+set of files one would expect in /etc/, except that the files in /etc.ori/
+remain unmodified from the files created during the original Sorcerer
+installation.
+
+/etc.ori/ uses only a nomimal amount of space, and allows the Sorcerer SA
+to easily &quot;un-customize&quot; system configuration files, reverting back to the
+state of the system during the original Sorcerer installation.
+
+The advantages are obvious to any systems administrator that has had to
+comb through archived backup images on tape searching for original and
+unmodified system files.
+
+The common practice of using rc or appending the original configuration
+files with, for example, '-orig', can be considered a deprecated practice
+on Sorcerer machines.
+
+    C.) Modification of Init Scripts and Configuration Files
+
+Consider for a moment that since Sorcerer is a source based operating
+system, and that regular updates to a running system require at times
+considerable changes to certain configuration files to accommodate system
+updates, many critical files in /etc/init.d are not treated as regular
+configuration files and manual editing methods are not allowed.
+
+This is not to say that you can't actually edit them, however, this can
+break a Sorcer system when an update occurs. What the SA needs to consider
+is that Sorcerer 'Spells' to update the system control the maintenance and
+modification of these configuration files and therefore, the SA needs to
+create a new spell to affect the modification to respective configuration
+files.
+
+This provides the original spell and also installs what the SA requires
+for his/her particular init-scripts.
+
+Such custom spells are stored in the local repsitory known as the
+&quot;Grimoire&quot; on the system.
+
+This extra effort required on the part of the SA insures that a Sorcerer
+system isn't accidentally broken as a result of directly modifying
+critical system files in /etc/init.d, since (modifications to) these files
+are likely to be automatically overwritten during system updates.
+
+In other words, modifications are to be affected by spells in the local
+grimoire, and through editing of the init scripts directly by hand.
+
+Enabling and disabling system daemons and services, however, can be
+accomplished directly by merely chmod'ing the files to 600 to disable the
+execution of the init script, or similary, to 700 to enable the execution
+of the init script.
+
+Unlike what most experienced administrators coming from other
+distributions tend to expect in /etc/init.d, Sorcerer systems  typically
+only install init-scripts for the software that has been installed, making
+for a cleaner, less cluttered directory that is easy to glean the
+installed software base from.
+
+&lt;/snip&gt;
+
+Kyle, please feel free to point out any inaccuracies.
+
+Kindest regards,
+
+Bradley
+
+
+.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001535.html">[Sorcerer-admins] Installation Manual w/screenshots - completed	/etc/fstab...
+</A></li>
+	<LI>Next message: <A HREF="001543.html">[Sorcerer-admins] Installation and User Manual... a work in	progress developing all on its own.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1541">[ date ]</a>
+              <a href="thread.html#1541">[ thread ]</a>
+              <a href="subject.html#1541">[ subject ]</a>
+              <a href="author.html#1541">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] howl
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howl&In-Reply-To=%3C200708100028.50115.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000208.html">
+   <LINK REL="Next"  HREF="000113.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] howl</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howl&In-Reply-To=%3C200708100028.50115.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] howl">merka at highsphere.net
+       </A><BR>
+    <I>Fri Aug 10 06:28:49 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000208.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+        <LI>Next message: <A HREF="000113.html">[Sorcerer-admins] Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#111">[ date ]</a>
+              <a href="thread.html#111">[ thread ]</a>
+              <a href="subject.html#111">[ subject ]</a>
+              <a href="author.html#111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Howl does not compile on gcc 4.2.1 and glibc 2.6.1: 
+
+gcc -DHAVE_CONFIG_H -I. -I. -I../../../include -I../../../include/ -I../ -march=pentium-m -Os -pipe -c 
+Posix/posix_interface.c -MT 
+posix_interface.lo -MD -MP -MF .deps/posix_interface.TPlo  -fPIC -DPIC -o .libs/posix_interface.lo
+In file included from Posix/posix_interface.c:46:
+/usr/include/linux/ethtool.h:18: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:35: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:52: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:60: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:66: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:74: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:83: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:179: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:201: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:226: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:239: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:248: error: expected specifier-qualifier-list 
+before '__u32'
+/usr/include/linux/ethtool.h:254: error: expected specifier-qualifier-list 
+before '__u32'
+Posix/posix_interface.c: In function 'sw_network_interface_link_status':
+Posix/posix_interface.c:291: error: 'struct ethtool_value' has no member 
+named 'cmd'
+Posix/posix_interface.c:298: error: 'struct ethtool_value' has no member 
+named 'data'
+make[4]: *** [posix_interface.lo] Error 1
+make[4]: Leaving directory `/usr/src/sorcery/howl/howl-1.0.0/src/lib/howl'
+make[3]: *** [all-recursive] Error 1
+make[3]: Leaving directory `/usr/src/sorcery/howl/howl-1.0.0/src/lib/howl'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/usr/src/sorcery/howl/howl-1.0.0/src/lib'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/usr/src/sorcery/howl/howl-1.0.0/src'
+make: *** [all-recursive] Error 1
+! Problem Detected !
+Source moved to /var/tmp/failed/howl-1.0.0
+
+The howl homepage says the project is dead and avahi should be used instead. I 
+believe we need to remove dependencies on this spell or at least make them 
+optional.
+
+Jan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000208.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+	<LI>Next message: <A HREF="000113.html">[Sorcerer-admins] Kernel Panic
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#111">[ date ]</a>
+              <a href="thread.html#111">[ thread ]</a>
+              <a href="subject.html#111">[ subject ]</a>
+              <a href="author.html#111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

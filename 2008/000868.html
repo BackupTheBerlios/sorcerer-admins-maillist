@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%09xorg&In-Reply-To=%3Ca8d8718f0811270121i7c9e7d60s323cc30b94eb7aaa%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000867.html">
+   <LINK REL="Next"  HREF="000869.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] up left rigth and down arrow don't work in	xorg</H1>
+    <B>Scruffy Poo</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%09xorg&In-Reply-To=%3Ca8d8718f0811270121i7c9e7d60s323cc30b94eb7aaa%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] up left rigth and down arrow don't work in	xorg">pooster at gmail.com
+       </A><BR>
+    <I>Thu Nov 27 10:21:25 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000867.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+        <LI>Next message: <A HREF="000869.html">[Sorcerer-admins] up left rigth and down arrow don't work	in	xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#868">[ date ]</a>
+              <a href="thread.html#868">[ thread ]</a>
+              <a href="subject.html#868">[ subject ]</a>
+              <a href="author.html#868">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>What, everybody's not using neural inputs now?
+
+:<i>-)
+</I>
+On Thu, Nov 27, 2008 at 3:14 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> How exciting.
+</I>&gt;<i> As usually I barely have a clue what is ongoing?
+</I>&gt;<i> However, now that two people have a good grasp of the situation
+</I>&gt;<i> is there anything that can be done distribution wide that will avoid
+</I>&gt;<i> this problem or improve support for non 101 qwerty keyboards?
+</I>&gt;<i> Although it may be a minor inconvenience it appears to be a significant
+</I>&gt;<i> rub against using linux glibc based distros if a SA has to research for a
+</I>&gt;<i> week in order to make most of the keyboard keys work properly.
+</I>&gt;<i> In a way it makes the auto-configuring X server that starts and runs
+</I>&gt;<i> without /etc/X11/xorg.conf a bit problematic if the keyboard or mouse
+</I>&gt;<i> is not working as expected.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Nov 26, 2008 at 5:49 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;&gt;<i> On Wednesday 26 November 2008, MALET Jean-Luc wrote:
+</I>&gt;&gt;&gt;<i> found!
+</I>&gt;&gt;&gt;<i> xkb_keymap {
+</I>&gt;&gt;&gt;<i>     xkb_keycodes  { include &quot;evdev&quot;    };
+</I>&gt;&gt;&gt;<i>     xkb_types     { include &quot;complete&quot;    };
+</I>&gt;&gt;&gt;<i>     xkb_compat    { include &quot;complete&quot;    };
+</I>&gt;&gt;&gt;<i>     xkb_symbols   { include &quot;pc(pc105)+us(intl)&quot;    };
+</I>&gt;&gt;&gt;<i>     xkb_geometry  { include &quot;pc(pc105)&quot;    };
+</I>&gt;&gt;&gt;<i> };
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> the culpit was xkb_keycodes  { include &quot;evdev&quot;    };
+</I>&gt;&gt;&gt;<i> ufff did annoyed me a lot, but now this is working
+</I>&gt;&gt;&gt;<i> thanks a lot for your help
+</I>&gt;&gt;<i> Great! I am glad we solved it. Now I know who to ask once I try setting up a
+</I>&gt;&gt;<i> multilingual keyboard again :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jan
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Best Regards
+</I>&gt;&gt;&gt;<i> JLM
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Jan Merka wrote:
+</I>&gt;&gt;&gt;<i> &gt; I suspect that X11 takes the keyboard configuration from HAL and your
+</I>&gt;&gt;&gt;<i> &gt; xorg.conf also tries to configure the same keyboard. Also the options
+</I>&gt;&gt;&gt;<i> &gt; asking for pc104 layout may be invalid for evdev contolled devices, not
+</I>&gt;&gt;&gt;<i> &gt; sure about that.
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Without knowing more details about your setup, I cannot give you a better
+</I>&gt;&gt;&gt;<i> &gt; answer.
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; It would be helpfull for me to see the /etc/X11/xorg.conf,
+</I>&gt;&gt;&gt;<i> &gt; /var/log/Xorg.0.log and output from lshal. Alternatively, send at least
+</I>&gt;&gt;&gt;<i> &gt; the following output:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;  grep -C2 -i -e xkb -e kbd -e keyb -e evdev /var/log/Xorg.0.log
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;  sections ServerLayout, InputDevice (keyboards only), ServerFlags from
+</I>&gt;&gt;&gt;<i> &gt; xorg.conf
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt;  lshal | grep -C15 -i keyb
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Thanks,
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Jan
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; On Wednesday 26 November 2008, MALET Jean-Luc wrote:
+</I>&gt;&gt;&gt;<i> &gt;&gt; Hi,
+</I>&gt;&gt;&gt;<i> &gt;&gt; so it seems that there is no hw issue....
+</I>&gt;&gt;&gt;<i> &gt;&gt; but I'm almost certain that the keyboard used is the keyboard1 (id=3)
+</I>&gt;&gt;&gt;<i> &gt;&gt; and not the 4
+</I>&gt;&gt;&gt;<i> &gt;&gt; however keyboard1 display keysyms while keyboard4 display key
+</I>&gt;&gt;&gt;<i> &gt;&gt; numbers.... the keycode to keysyms translation is done with the
+</I>&gt;&gt;&gt;<i> &gt;&gt; following rule : xkb_keymap {
+</I>&gt;&gt;&gt;<i> &gt;&gt;     xkb_keycodes  { include &quot;xfree86+aliases(qwerty)&quot;    };
+</I>&gt;&gt;&gt;<i> &gt;&gt;     xkb_types     { include &quot;complete&quot;    };
+</I>&gt;&gt;&gt;<i> &gt;&gt;     xkb_compat    { include &quot;complete&quot;    };
+</I>&gt;&gt;&gt;<i> &gt;&gt;     xkb_symbols   { include &quot;pc(pc105)+us(intl)&quot;    };
+</I>&gt;&gt;&gt;<i> &gt;&gt;     xkb_geometry  { include &quot;pc(pc105)&quot;    };
+</I>&gt;&gt;&gt;<i> &gt;&gt; };
+</I>&gt;&gt;&gt;<i> &gt;&gt; so what is appearing is that the arrow keys are working at keycode
+</I>&gt;&gt;&gt;<i> &gt;&gt; level, but not at keysyms level it seems
+</I>&gt;&gt;&gt;<i> &gt;&gt; the result is that the arrow keys are NOT WORKING
+</I>&gt;&gt;&gt;<i> &gt;&gt; any idea? maybe in xkb_symbols there miss something?
+</I>&gt;&gt;&gt;<i> &gt;&gt; thanks
+</I>&gt;&gt;&gt;<i> &gt;&gt; JLM
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+SO not teh 1337
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000867.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+	<LI>Next message: <A HREF="000869.html">[Sorcerer-admins] up left rigth and down arrow don't work	in	xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#868">[ date ]</a>
+              <a href="thread.html#868">[ thread ]</a>
+              <a href="subject.html#868">[ subject ]</a>
+              <a href="author.html#868">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer Install Guide ( The very basic stuff )
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20Install%20Guide%20%28%20The%20very%20basic%20stuff%20%29&In-Reply-To=%3C27f41a931002031226icdc647do826efd3967114971%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001412.html">
+   <LINK REL="Next"  HREF="001418.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer Install Guide ( The very basic stuff )</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20Install%20Guide%20%28%20The%20very%20basic%20stuff%20%29&In-Reply-To=%3C27f41a931002031226icdc647do826efd3967114971%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer Install Guide ( The very basic stuff )">evorster at gmail.com
+       </A><BR>
+    <I>Wed Feb  3 21:26:39 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001412.html">[Sorcerer-admins] Installation Instructions
+</A></li>
+        <LI>Next message: <A HREF="001418.html">[Sorcerer-admins] Sorcerer Install Guide ( The very basic stuff	)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1413">[ date ]</a>
+              <a href="thread.html#1413">[ thread ]</a>
+              <a href="subject.html#1413">[ subject ]</a>
+              <a href="author.html#1413">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I believe a bit of documentation is lacking from our distrobution, and this
+is my attempt to rectify that. Please use and redistribute as you see fit,
+this document is hereby in the public domain.
+
+Firstly, a car analogy:
+
+Getting windows is like getting a car that is beautifully made, but the
+bonnet is welded shut. And all the interesting bits are behind screws with
+funny heads.
+
+On the other hand, getting Linux from an outfit like Ubuntu or Suse is like
+getting a car that is beautifully made with all the trimmings, and all nuts
+and bolts are standard. You get an owner's manual and a free membership to a
+community that owns similar cars.
+
+Sorcerer is slightly different. You get a chassis, engine and all the spare
+parts for free, each with their own manual. Basically, you get a kit-car.
+Expect to painstakingly inspect each piece, figure out how it fits in the
+big picture, and you build your own car. So, expect to get your hands dirty,
+expect your car to blow up a few times and you won't be disappointed.
+
+After some time you will know a LOT more about how computers actually work,
+you will be able to repair ANY linux distro, and you will be able to mutter
+&quot;What the hell were these fools thinking when they did foo bar&quot; under your
+breath... Like any true Sorcerer. :)
+
+
+
+In the beginning....
+
+Computers stored stuff on punched cards, and all were happy. Progress being
+what it is, we got magnetic storage in tapes and soon after that on disks,
+both hard and soft. Storage areas increased exponentially, and some way of
+organizing this modern babel was needed.
+
+Enter the humble file system. A file system is nothing more than a index for
+a computer to store and retrieve information effectively.
+
+It is always a good idea to separate operating system and user data, and
+with the increase in file storage size, we devised a way of getting more
+than one file system on a storage device.
+
+Enter the humble partition and partition creating tools. These days you will
+be hard pressed to find a better command-line partition manager than cfdisk.
+
+
+Currently (2010) ext3 is the tried and tested file system for Linux, and not
+a bad place to start.
+
+---------------------------------------------------------------------------------
+
+So, without further ado, we can get the Sorcerer Install underway.
+
+I assume you already have downloaded and burned to CD-ROM an ISO of the
+Sorcerer Install/Rescue disk that is suited to your platform.
+Put this in your CD-ROM drive, and boot from it. You might have to modify
+the boot order in your computer's BIOS to do this.
+
+Once the Sorcerer disk has completed booting, you will be dropped at a
+command prompt with a short instruction on where the installer is.
+
+Step 1.)(Initial Setup)
+
+Run the installer, and go through the menus in order.
+
+Step 2.)(Partitioning)
+When you come to the partition disk menu, select cfdisk.
+
+In cfdisk, you will most likely be accessing your primary hard disk as
+/dev/sda
+
+Erase all the partitions that is there, and create a primary partition of
+about 30GB (30000 mb)
+Mark this partition as bootable. In this example it will be /dev/sda1 ( If
+you are using the older IDE interface, it will be /dev/hda1 )
+Then make a partition spanning the rest of the hard disk. This will be
+/dev/sda2
+Write the partitions to disk.
+If you deleted any windows partitions, I highly recommend a reboot at this
+time. ( Windows partitions mess with the BIOS more often than not )
+
+
+Step 3.)(Partition Table)
+
+Once you are back in the Sorcerer Installer, make a partition table.
+The mount point on /dev/sda1 should read: /
+(/ is the UNIX shortcut for root. There is no Windows analogy for this. Root
+is the highest up you can go in your system, and the rest of the world
+attaches to it somehow. It's your base, and it's where the operating system
+lives. )
+On the file system type you should have: ext3
+Leave the rest as default.
+Next define the mount point for /dev/sda2
+This should read: /home
+All your user data goes here. Same as the other file system , choose type
+ext3, leave the rest as defaults.
+
+Step 4.)(Formatting)
+Tell Sorcerer to format your partitions, and say yes to the questions about
+losing your data.
+
+Step 5.)(Mounting)
+Make sure Sorcerer has mounted your partitions where you specified.
+If this did not happen, something went wrong. Investigate... You might have
+to go to the command line, and format/mount yourself.
+You must have at least these two entries from the mount command.
+/            ext3 /dev/sda1
+/home   ext3 /dev/sda2
+
+
+Step 6.)(Transferring Files)
+Transfer the operating system to it's new root. This should be automatic via
+the installer.
+
+Step 7.)(Writing the MBR)
+Now you have the oppertunity to modify the fstab ( Don't ) and run lilo. The
+correct place to write the MBR to is /dev/sda
+
+Step8.)(Unmount Filesystems)
+Unmount your filesystems, and reboot. Remove the installer disk from the
+CD-ROM drive.
+
+Upon boot, you should now have the basic Sorcerer running. Connecting to a
+network and Fine tuning shall be covered in another Mail.
+---------------------------------------------------------------------------------------
+-Evert-
+Hmm...
+
+Kyle, do you think it may be worth our while to make an install guide that
+completely bypasses the installer script?
+ie: boot I/R
+
+cfdisk /dev/sda, (make partitions.)
+mkfs.ext3 /dev/sda1 (format partitions.)
+mount /dev/sda1 /media/root (Mount partitions)
+cp -vpdfR /media/cd-rom /media/root (Copy the filesystem)
+chroot /media/root (Change over to the new filesystem )
+ldconfig (Update the config )
+nano /etc/lilo.conf ( Make sure lilo is set up properly )
+lilo ( Run lilo, update the MBR)
+exit
+umount /media/root
+reboot
+
+Also... we need a troubleshooting guide. I remember having LOTS of fun
+trying to mount my CD-ROM drive because it was too slow to be recognized on
+boot, and making all those nodes, etc...
+
+---------------------------
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100203/823d6119/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100203/823d6119/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001412.html">[Sorcerer-admins] Installation Instructions
+</A></li>
+	<LI>Next message: <A HREF="001418.html">[Sorcerer-admins] Sorcerer Install Guide ( The very basic stuff	)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1413">[ date ]</a>
+              <a href="thread.html#1413">[ thread ]</a>
+              <a href="subject.html#1413">[ subject ]</a>
+              <a href="author.html#1413">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

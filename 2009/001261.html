@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] wifi issue : can't make dhcp work
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20wifi%20issue%20%3A%20can%27t%20make%20dhcp%20work&In-Reply-To=%3C1de9d39c0906171004n30edad97vad7169a2012c1a09%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001260.html">
+   <LINK REL="Next"  HREF="001262.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] wifi issue : can't make dhcp work</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20wifi%20issue%20%3A%20can%27t%20make%20dhcp%20work&In-Reply-To=%3C1de9d39c0906171004n30edad97vad7169a2012c1a09%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] wifi issue : can't make dhcp work">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Wed Jun 17 19:04:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001260.html">[Sorcerer-admins] wifi issue : can't make dhcp work
+</A></li>
+        <LI>Next message: <A HREF="001262.html">[Sorcerer-admins] wifi issue : can't make dhcp work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1261">[ date ]</a>
+              <a href="thread.html#1261">[ thread ]</a>
+              <a href="subject.html#1261">[ subject ]</a>
+              <a href="author.html#1261">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'll check but maybe it miss -d flag into kyle's functions for
+dhcp.... if yes it will be great...
+thanks
+JLM
+
+On Wed, Jun 17, 2009 at 3:16 PM, Jan Merka&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Wednesday 17 June 2009, jean-luc malet wrote:
+</I>&gt;&gt;<i> DHCP spell seems broken
+</I>&gt;<i> It does work, for example my scripts use the following:
+</I>&gt;<i>
+</I>&gt;<i> /sbin/dhcpcd -d $iface
+</I>&gt;<i>
+</I>&gt;<i> Note, that since dhcpcd version 5 the option '-i' does NOT work so if you are
+</I>&gt;<i> using it, remove it. My scripts used to have
+</I>&gt;<i> /sbin/dhcpcd -d -i $iface
+</I>&gt;<i>
+</I>&gt;<i> but that does NOT work anymore.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>&gt;&gt;<i> in network script please remove test of dhcpcd availability, this
+</I>&gt;&gt;<i> client don't work at all
+</I>&gt;&gt;<i> I managed to get my IP@ using dhclient, on the other hand dhcpcd don't
+</I>&gt;&gt;<i> get any <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">IP at ...</A>
+</I>&gt;&gt;<i> does anybody know another dhcp daemon? because I installed dhcp spell
+</I>&gt;&gt;<i> for running a dhcp server on my laptop and it appears that the client
+</I>&gt;&gt;<i> is borken...
+</I>&gt;&gt;<i> best regards
+</I>&gt;&gt;<i> JLM
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Jun 16, 2009 at 8:14 PM, jean-luc malet&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; hi,
+</I>&gt;&gt;<i> &gt; since I have some broadband modem/ligne issue, I wanted to connecr
+</I>&gt;&gt;<i> &gt; through wifi that my isp provide to me
+</I>&gt;&gt;<i> &gt; after some bug fixes due to my wifi card based on madwifi, I managed
+</I>&gt;&gt;<i> &gt; to create wireless network start script, one for setting the laptop
+</I>&gt;&gt;<i> &gt; into client and one to setup an AP for the pda I'm currently using to
+</I>&gt;&gt;<i> &gt; write this mail.
+</I>&gt;&gt;<i> &gt; the AP script work without problem.
+</I>&gt;&gt;<i> &gt; but the managed one don't work, iwlist ath0 scan does report me AP,
+</I>&gt;&gt;<i> &gt; including the one I want to connect to. But dhcp don't get an IP...
+</I>&gt;&gt;<i> &gt; I done approximatively this :
+</I>&gt;&gt;<i> &gt; installed my wifi module, setup in sta mode(managed for madwifi)
+</I>&gt;&gt;<i> &gt; modprobe wlan_ap_scan (or something like that)
+</I>&gt;&gt;<i> &gt; set the ESSID in sorcerer scripts
+</I>&gt;&gt;<i> &gt; no encryption
+</I>&gt;&gt;<i> &gt; tried specifying the AP mac@, without mire success
+</I>&gt;&gt;<i> &gt; but dhcpcd still run eendlessely
+</I>&gt;&gt;<i> &gt; ip addr rport the interface as in unknown state.... and gkrellm don't
+</I>&gt;&gt;<i> &gt; display anything
+</I>&gt;&gt;<i> &gt; how can I verify that I'm actually talking to the AP to get my IP?
+</I>&gt;&gt;<i> &gt; thanks,
+</I>&gt;&gt;<i> &gt; JLM
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; --
+</I>&gt;&gt;<i> &gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;&gt;<i> &gt; (garde le simple, imb&#233;cile!)
+</I>&gt;&gt;<i> &gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;&gt;<i> &gt; simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;&gt;<i> &gt; -----------------------------
+</I>&gt;&gt;<i> &gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;&gt;<i> &gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+</I>&gt;&gt;<i> &gt; Reese
+</I>&gt;&gt;<i> &gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001260.html">[Sorcerer-admins] wifi issue : can't make dhcp work
+</A></li>
+	<LI>Next message: <A HREF="001262.html">[Sorcerer-admins] wifi issue : can't make dhcp work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1261">[ date ]</a>
+              <a href="thread.html#1261">[ thread ]</a>
+              <a href="subject.html#1261">[ subject ]</a>
+              <a href="author.html#1261">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

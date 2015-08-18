@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] linux is it more stable or less stable?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Cs2r27f41a931004172230ze0941ab9s6071107be6d3812%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001570.html">
+   <LINK REL="Next"  HREF="001572.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] linux is it more stable or less stable?</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Cs2r27f41a931004172230ze0941ab9s6071107be6d3812%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] linux is it more stable or less stable?">evorster at gmail.com
+       </A><BR>
+    <I>Sun Apr 18 07:30:09 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001570.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+        <LI>Next message: <A HREF="001572.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm...
+
+I guess I am the only one that runs linux-custom, then, huh?
+
+Personally, I would have called it linux-monolithic, but that's only because
+it sounds better. :)
+
+I thought it was a script that updated the spell versions for most the
+spells?
+
+I will probably check and update my linux kernel versions myself, but I do
+have a suggestion for automatic kernel versions.
+
+latest would be the absolute newest that the kernel community has to offer.
+stable would be the highest patch number of the previous release.
+secure would be the highest patch number of the release before that.
+
+One day, I'll convince someone else that running monolithic is faster...
+
+-Evert-
+
+On Sat, Apr 17, 2010 at 10:46 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> According to <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+</I>&gt;<i> there are plenty of stable releases of linux to choose from.
+</I>&gt;<i> Let us say that the versions of kernels are represented by the variables
+</I>&gt;<i> w.x.y.z
+</I>&gt;<i> w is always 2
+</I>&gt;<i> x  should be 6
+</I>&gt;<i> y represents a branch where certain technology and new drivers are
+</I>&gt;<i> introduced
+</I>&gt;<i> z indicates bug fixes and security patches.
+</I>&gt;<i>
+</I>&gt;<i> So what does it mean?
+</I>&gt;<i> Well through retrospect I gather it means something like this...
+</I>&gt;<i> One of my workstations has a network device
+</I>&gt;<i> that can only be driven by linux 2.6.30.? kernels.
+</I>&gt;<i> When booting linux 2.6.31 and higher kernels
+</I>&gt;<i> I immediately noticed that I was unable to create a network connection.
+</I>&gt;<i> Yet when booting 2.6.30.? kernels making a network connection
+</I>&gt;<i> was possible without making any additional change.
+</I>&gt;<i>
+</I>&gt;<i> So if the stable versions of linux look like:
+</I>&gt;<i>
+</I>&gt;<i> stable:         2.6.33.2
+</I>&gt;<i> stable:         2.6.32.11
+</I>&gt;<i> stable:         2.6.31.13
+</I>&gt;<i> stable:         2.6.30.10
+</I>&gt;<i>
+</I>&gt;<i> then which is the best version to use?
+</I>&gt;<i> If one has extremely new hardware in their box
+</I>&gt;<i> and/or linux version 2.6.33.2 correctly drives the hardware
+</I>&gt;<i> then the version with the highest y value tends to be a good choice.
+</I>&gt;<i> Do I know what version you should use on your box?
+</I>&gt;<i> No, I have no clue.
+</I>&gt;<i> So instead I am trying to make the linux spell choices
+</I>&gt;<i> better represent what is offered according to <A HREF="http://www.kernel.org">http://www.kernel.org</A>
+</I>&gt;<i>
+</I>&gt;<i> Here are the new spells:
+</I>&gt;<i>
+</I>&gt;<i> linux
+</I>&gt;<i> linux-2.6.27
+</I>&gt;<i> linux-2.6.30
+</I>&gt;<i> linux-2.6.31
+</I>&gt;<i> linux-2.6.32
+</I>&gt;<i> linux-custom
+</I>&gt;<i>
+</I>&gt;<i> linux-custom is what the old linux spell used to be.
+</I>&gt;<i> The SA must provide a .config file to use.
+</I>&gt;<i> Also the version on linux-custom must be set by the SA
+</I>&gt;<i> using the # augur version linux-custom $VERSION
+</I>&gt;<i> If the SA is using custom configured kernels
+</I>&gt;<i> then the SA is responsible for updating the version number
+</I>&gt;<i> for that spell and updating it's configuration file as necessary.
+</I>&gt;<i> Fortunately, most Sorcerer SAs will not be using linux-custom
+</I>&gt;<i> So we can immediately forget about the linux-custom spell.
+</I>&gt;<i>
+</I>&gt;<i> linux
+</I>&gt;<i> linux-2.6.27
+</I>&gt;<i> linux-2.6.30
+</I>&gt;<i> linux-2.6.31
+</I>&gt;<i> linux-2.6.32
+</I>&gt;<i>
+</I>&gt;<i> Those spells all come with configuration files for IA32, IA32-SMP, and
+</I>&gt;<i> x86_64
+</I>&gt;<i> The SA need only decide upon which spell to cast.
+</I>&gt;<i> Deployed boxes will automatically switch over from
+</I>&gt;<i> having linux-modular installed to having linux installed
+</I>&gt;<i> linux will install the most current highest y value branch of linux
+</I>&gt;<i> available.
+</I>&gt;<i> I hope that linux will be a good choice for many boxes.
+</I>&gt;<i>
+</I>&gt;<i> However, for my workstation where the network device only works
+</I>&gt;<i> when driven by the 2.6.30.x kernels;
+</I>&gt;<i> on that box I will cast linux-2.6.30
+</I>&gt;<i> which will install linux version 2.6.30.13
+</I>&gt;<i>
+</I>&gt;<i> Are you confused yet?
+</I>&gt;<i> Well the topic is a bit confusing.
+</I>&gt;<i> We owe it to the linux developers who
+</I>&gt;<i> want to charge ahead with progress
+</I>&gt;<i> without doing much testing to see what breaks.
+</I>&gt;<i>
+</I>&gt;<i> I am not complaining.
+</I>&gt;<i> The situation would be worse.
+</I>&gt;<i> If the only stable branch of linux
+</I>&gt;<i> that can drives my old cheap network device becomes obsolete
+</I>&gt;<i> then I must buy a new network device to replace my paperweight.
+</I>&gt;<i>
+</I>&gt;<i> In the past linux used to be an excellent kernel
+</I>&gt;<i> for driving both new and old hardware.
+</I>&gt;<i> Hardware that became without drivers
+</I>&gt;<i> in modern commercial operating systems
+</I>&gt;<i> would still work like new with a modern linux kernel.
+</I>&gt;<i> However, modern linux kernel development
+</I>&gt;<i> seems to be pressured to grow.
+</I>&gt;<i> Therefore, our favorite pieces of legacy hardware
+</I>&gt;<i> will probably soon take up residence at the landfill.
+</I>&gt;<i> But if a device worked fine on a somewhat older stable branch of linux
+</I>&gt;<i> then there is still hope that one can continue riding that branch for as
+</I>&gt;<i> long
+</I>&gt;<i> as it is maintained.
+</I>&gt;<i>
+</I>&gt;<i> These new linux spells in the grimoire will
+</I>&gt;<i> change, update, and disappear roughly according
+</I>&gt;<i> to what appears to be stable on <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+</I>&gt;<i>
+</I>&gt;<i> Will I be checking each update of linux and linux-2.6.*
+</I>&gt;<i> to see if it compiles, installs, and runs?
+</I>&gt;<i> No, actually, I am just going to update the versions
+</I>&gt;<i> and assume that everything goes according to plan.
+</I>&gt;<i> Since new features and new drivers are not added
+</I>&gt;<i> when the kernel updates only the z value
+</I>&gt;<i> the kernel configurations that I created
+</I>&gt;<i> when I created the spell should be able to carry forward.
+</I>&gt;<i>
+</I>&gt;<i> If you notice a serious problem with a linux or linux-2.6.* spell
+</I>&gt;<i> then please report it.
+</I>&gt;<i> Otherwise if it is not a bug in the spell
+</I>&gt;<i> then the kernels will probably work as good
+</I>&gt;<i> as the linux kernel hackers could manage.
+</I>&gt;<i>
+</I>&gt;<i> Please do not blame me if your hardware does not work.
+</I>&gt;<i> Also please do not ask me if Sorcerer supports &quot;such and such&quot; hardware.
+</I>&gt;<i> Questions about the linux kernel should be directed
+</I>&gt;<i> at different email lists.
+</I>&gt;<i> I am not a linux kernel hacker.
+</I>&gt;<i> I can answer questions about the linux kernel
+</I>&gt;<i> at the knowledge level of a regular SA.
+</I>&gt;<i> To put it simply I am not the best person to ask.
+</I>&gt;<i>
+</I>&gt;<i> My goal is to create the spells that will give SAs
+</I>&gt;<i> as much convenience as possible
+</I>&gt;<i> while still providing as much selection as a SA
+</I>&gt;<i> would have if manually downloading, configuring,
+</I>&gt;<i> compiling, and installing a linux kernel.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, the question... why so many linux-2.6.* spells
+</I>&gt;<i> instead of a single spell with different version progresses.
+</I>&gt;<i> The answer is because linux is a bit different than other projects.
+</I>&gt;<i> The version progress currently supports selections of:
+</I>&gt;<i> a custom version;
+</I>&gt;<i> stable version;
+</I>&gt;<i> unstable version;
+</I>&gt;<i> legacy version;
+</I>&gt;<i> secure version.
+</I>&gt;<i> That selection works fine for many software projects.
+</I>&gt;<i> But with linux there is an arbitrary amount of stable versions.
+</I>&gt;<i>
+</I>&gt;<i> Can I do an augur progress linux $VERSION
+</I>&gt;<i> and set an arbitrary version for that spell?
+</I>&gt;<i> I advise against that.
+</I>&gt;<i> The linux and linux-2.6.* spells have configuration files
+</I>&gt;<i> that are only good for the series of versions specified
+</I>&gt;<i> in the stable version sequence for those spells.
+</I>&gt;<i>
+</I>&gt;<i> So if the current version of linux is 2.6.33.2
+</I>&gt;<i> and the SA does:
+</I>&gt;<i> # augur progress linux 2.6.34.1
+</I>&gt;<i> Because the SA is impatient to wait for me to update those spells
+</I>&gt;<i> then linux will compile without a .config file and create
+</I>&gt;<i> a kernel and modules that are unusable and unbootable.
+</I>&gt;<i>
+</I>&gt;<i> I might change the spells in the future so that setting version
+</I>&gt;<i> progress on linux works.
+</I>&gt;<i> But for now if a SA wants a custom linux version and custom config
+</I>&gt;<i> then use the linux-custom spell instead.
+</I>&gt;<i>
+</I>&gt;<i> Again I apologize for the complexity.
+</I>&gt;<i> I am still providing as much convenience as possible
+</I>&gt;<i> while matching the selection of kernels avaialble
+</I>&gt;<i> if one were to do a manual install after choosing
+</I>&gt;<i> a recommended kernel from <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100418/6d654130/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100418/6d654130/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001570.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+	<LI>Next message: <A HREF="001572.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1571">[ date ]</a>
+              <a href="thread.html#1571">[ thread ]</a>
+              <a href="subject.html#1571">[ subject ]</a>
+              <a href="author.html#1571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

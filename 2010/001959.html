@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTi%3DHeg70SfeB_r9HA_JG3_pK_QDmoH6L-r0H95ot%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001958.html">
+   <LINK REL="Next"  HREF="001964.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTi%3DHeg70SfeB_r9HA_JG3_pK_QDmoH6L-r0H95ot%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Oct 23 19:16:33 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001958.html">[Sorcerer-admins] network sometime up sometimes won't.....
+</A></li>
+        <LI>Next message: <A HREF="001964.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1959">[ date ]</a>
+              <a href="thread.html#1959">[ thread ]</a>
+              <a href="subject.html#1959">[ subject ]</a>
+              <a href="author.html#1959">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have had this on my todo list for a while,
+but I have been waffling about what to do about it.
+
+Until this change I prevented kdm from restarting during updates
+by hiding it's PID file in /var/run/hide/
+However, this only works if I remember to hide it.  :)
+
+Instead I have decided that the group mode should be used.
+However, my choice of how to use it might not seem intuitive.
+
+init-scripts with mode 700 are     run during boot and shutdown.
+init-scripts with mode 600 are not run during boot and shutdown.
+init-scripts with mode 700 are     restarted by cast following updates.
+init-scripts with mode 740 are not restarted by cast following updates.
+
+Mode 740 init-scripts are useful for services such as
+/etc/init.d/kdm-v4 /etc/init.d/gdm /etc/init.d/xdm.
+Sometimes restarting those services will immediately force
+the end of a X session for anyone logged in.
+
+Modes         of init-scripts are     retained across updates.
+Modifications to init-scripts are not retained across updates.
+
+
+cast will not install init-scripts mode 740 by default.
+However, SA can change the mode of an init-script
+and the new mode will be retained across updates.
+
+A more intuitive change would have been to have init-scripts
+installed mode 710 and allow SAs to remove the group
+executable bit to prevent cast from restarting.
+However, I do not want just anyone who belongs to group root
+to be able to run an init-script,
+although that probably would not work unless the init-script
+had also the group read bit set which is probably since SAs
+are used to typing 755 and 644 for common file modes.
+Therefore, using the group mode read bit seems safest.
+
+I considered 3 other ways to accomplish this.
+However, modes are easily viewable with ls -lah;
+find | grep is a simple way to determine if an init-script should be restarted;
+this method does not depend on any special file system features/support;
+and the modes are right there in /etc/init.d/ on the files
+instead of being hidden somewhere in /etc/sorcery/log/
+
+While not an important change
+I decided to announce it on the email list
+in addition to updating /etc/init.d/README
+Being able to disallow cast from restarting init-scripts
+is potentially useful and might go unnoticed.
+I am testing the change today
+therefore expect the new code
+to become available sometime next week.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001958.html">[Sorcerer-admins] network sometime up sometimes won't.....
+</A></li>
+	<LI>Next message: <A HREF="001964.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1959">[ date ]</a>
+              <a href="thread.html#1959">[ thread ]</a>
+              <a href="subject.html#1959">[ subject ]</a>
+              <a href="author.html#1959">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

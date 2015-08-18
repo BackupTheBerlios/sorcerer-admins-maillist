@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%5Bsolved%5D%20starting%20compiz%20on%20x86_64%2C%0A%09MAYBE%20A%20BIG%20ARCH%20MISTAKE%20please%20read%21&In-Reply-To=%3C596b75860808011619p26917c03xfed97a182be2bdf1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000684.html">
+   <LINK REL="Next"  HREF="000703.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%5Bsolved%5D%20starting%20compiz%20on%20x86_64%2C%0A%09MAYBE%20A%20BIG%20ARCH%20MISTAKE%20please%20read%21&In-Reply-To=%3C596b75860808011619p26917c03xfed97a182be2bdf1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug  2 01:19:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000684.html">[Sorcerer-admins] [solved] starting compiz on x86_64, MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+        <LI>Next message: <A HREF="000703.html">[Sorcerer-admins] [solved] starting compiz on x86_64, MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#689">[ date ]</a>
+              <a href="thread.html#689">[ thread ]</a>
+              <a href="subject.html#689">[ subject ]</a>
+              <a href="author.html#689">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The /lib64 and /usr/lib64 directories were a bad idea to begin with.
+The majority of free software authors do not support it.
+Some programs will not work when their files are moved */lib to */lib64
+Some libraries require adjustments to their libtool and pkgconfig
+files in order to be moved.
+Not every source supports --libdir=/usr/lib64
+
+Therefore, what you have for Sorcerer x86_64 is
+very much what the original software authors intended
+and not something where I am trying to force libraries
+to be installed in lib64 directories.
+
+Even today I am doing compilation in qemu-system-x86_64
+I might not have enough CPU cycles to keep the I/R current.
+It is currently compiling gcc-v4.2 with 6 more spells waiting.
+
+Because I do not run Sorcerer x86_64
+and do not do compile testing on x86_64
+I rely upon Jan to make x86_64 appropriate fixes to spells
+whether it be to make them compile or to install into lib64 directories.
+And I have not instructed anyone to try to force lib64 directories.
+
+If I had an x86_64 box
+then Sorcerer x86_64 would be a better port.
+For now, if you report problems
+then you will receive fixes.
+The fix that went out in yesterday's grimoire
+that has NVIDIA-Linux-x86 remove MesaLib libGL libraries
+should fix the OpenGL problem.
+I wish we had that fix the first moment
+I wrote the NVIDIA-Linux-x86 spell.
+But I have never cast that spell on x86_64, nor tested it on x86_64.
+I merely fix it according to bug reports.
+
+Without Jan's long hours that he spent on creating
+and fixing the x86_64 port
+I expect we would not have Sorcerer x86_64.
+And I want everyone to know that other people told me
+that they would create a Sorcerer port for xbox,
+a port for PowerPC, and a port for Alpha,
+and a port for Sparc.
+NOT EVEN ONE OF THOSE PEOPLE DELIVERED!
+A staggering majority of the people who said that
+they would help me with Sorcerer lied to me.
+Jan is beyond average, beyond exceptional!
+We are lucky to have Jan on the team.
+He does a great job.
+If I do something that seems questionable or bugged
+he is fast to find and fix it.
+Makes him darn close to being the guardian angle of Sorcerer.
+
+If you want to force lib64 directory installation for spells
+please test the adjust spells to make certain they do not break
+then report those findings on the email list or to Jan directory.
+If such changes are not done with testing and caution
+then the x86_64 port could break and crumble,
+and if the break was bad enough
+then I would not be able to fix it without
+at least a weeks worth of time while borrowing
+someone's x86_64 box.
+Let it not come to that please.
+
+P.S.
+
+&#31036;&#31036;&#31036; Jan!
+Hip-Hip-Hurray Jan!
+
+
+On Fri, Aug 1, 2008 at 2:00 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> ok I'll test that also this night
+</I>&gt;<i> however I don't feel good the fact that some 64 bits libs are installed
+</I>&gt;<i> elsewhere than in (/usr)/lib64
+</I>&gt;<i> Best Regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Jul 31, 2008 at 11:42 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Interesting.
+</I>&gt;&gt;<i> And /etc/ld.so.conf on x86_64 has lib64 always before lib
+</I>&gt;&gt;<i> I would just move the NVIDIA libraries
+</I>&gt;&gt;<i> if NVIDIA did not hard code paths into their programs.
+</I>&gt;&gt;<i> I tried moving it around before and found out the hard way.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> casting NVIDIA-Linux-x86 will remove /usr/lib64/libGL.so* on x86_64
+</I>&gt;&gt;<i> architecture.
+</I>&gt;&gt;<i> And also edit MesaLib's log files.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for reporting it.
+</I>&gt;&gt;<i> It is a non issue on ia32 since /usr/lib/libGL.so{,.1} symbolic links
+</I>&gt;&gt;<i> point
+</I>&gt;&gt;<i> to the NVIDIA installed library.
+</I>&gt;&gt;<i> Not sure if that would work on x86_64 since the symbolic links
+</I>&gt;&gt;<i> would point into another directory ldconfig might ?un fix?
+</I>&gt;&gt;<i> the symbolic links
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you would not mind, with both the MesaLib and NVIDIA installed
+</I>&gt;&gt;<i> OpenGL libraries still installed where they should be installed
+</I>&gt;&gt;<i> try adjusting the /usr/lib64/libGL.so{,.1} symbolic links to
+</I>&gt;&gt;<i> point to the NVIDIA installed OpenGL libraries and
+</I>&gt;&gt;<i> then run ldconfig and report whether ldconfig changes
+</I>&gt;&gt;<i> the symbolic links back to the OpenGL library installed in
+</I>&gt;&gt;<i> /usr/lib64/  please?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Jul 31, 2008 at 2:13 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; Hi,
+</I>&gt;&gt;<i> &gt; after long time I found some time to test again the compiz on x86_64
+</I>&gt;&gt;<i> &gt; sorcerer
+</I>&gt;&gt;<i> &gt; looking the forums I found several information that weren't usefull
+</I>&gt;&gt;<i> &gt; until I read somewhere that it might comme from compiz linking against
+</I>&gt;&gt;<i> &gt; mesa and not nvidia libGL....
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; ldd $(which compiz) told me that it was using the lib in /usr/lib64
+</I>&gt;&gt;<i> &gt; (looked good)
+</I>&gt;&gt;<i> &gt; augur install NVIDIA-Linux-x86 told me that driver install lib in
+</I>&gt;&gt;<i> &gt; /usr/lib
+</I>&gt;&gt;<i> &gt; ls -la /usr told me that /usr/lib isn't a symlink to /usr/lib64 and then
+</I>&gt;&gt;<i> &gt; a regular directory....
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; looking into /usr/lib makes me worry because it contains LOT of libs,
+</I>&gt;&gt;<i> &gt; all comming from spells (since It' s a scratch install)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I'm able to run compiz with :
+</I>&gt;&gt;<i> &gt; LD_PRELOAD=/usr/lib/libGL.so.1 compiz --replace ccp &amp;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; PROBLEMS :
+</I>&gt;&gt;<i> &gt; 1) /usr/lib and /usr/lib64 both exist, both store the same kind of files
+</I>&gt;&gt;<i> &gt; (64bits libs)
+</I>&gt;&gt;<i> &gt; 2) NVIDIA drivers install in /usr/lib.... not sure it's a good place....
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Best Regards,
+</I>&gt;&gt;<i> &gt; JLM
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000684.html">[Sorcerer-admins] [solved] starting compiz on x86_64, MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+	<LI>Next message: <A HREF="000703.html">[Sorcerer-admins] [solved] starting compiz on x86_64, MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#689">[ date ]</a>
+              <a href="thread.html#689">[ thread ]</a>
+              <a href="subject.html#689">[ subject ]</a>
+              <a href="author.html#689">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

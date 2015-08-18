@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C4897E92B.10401%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000700.html">
+   <LINK REL="Next"  HREF="000717.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C4897E92B.10401%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue Aug  5 07:46:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000700.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000717.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#716">[ date ]</a>
+              <a href="thread.html#716">[ thread ]</a>
+              <a href="subject.html#716">[ subject ]</a>
+              <a href="author.html#716">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>does someone has a small script or the like even as draft that can be 
+used to grenerate the image for a sdcard? I would like to try sdcard 
+booting on this laptop to give better feedback
+JL
+
+Kyle Sallee wrote:
+&gt;<i> On Fri, Aug 1, 2008 at 2:14 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> ok tooo much info at once ;) will take time to read the book but just for
+</I>&gt;&gt;<i> feedback :
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> 1) booting from usb is indeed a great idea
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> It works, but lilo using BIOS calls to read the initramfs
+</I>&gt;<i> and kernel from flash drive may be slower than fixed disk
+</I>&gt;<i> on some boxes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> 2) the boot MUST be machine independant (using either partition labels or
+</I>&gt;&gt;<i> UUID)
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> UUIDs are best.  They are more cryptic than labels,
+</I>&gt;<i> however UUIDs are unique and they appear in
+</I>&gt;<i> /dev/disk/by-uuid
+</I>&gt;<i> which allows /etc/lilo.conf to be compatible with UUIDs
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> this can be done through the initramfs (specifying extra lilo args like
+</I>&gt;&gt;<i> &quot;linux ROOT_LABEL=somelabel&quot; or &quot;linux ROOT_UUID=someuuid&quot; if I'm correct
+</I>&gt;&gt;<i> the extra parameter on lilo are passed as environment variables to init,
+</I>&gt;&gt;<i> maybe a mount root script could handle that in initramfs)
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> If root= is specified as a kernel parameter
+</I>&gt;<i> the /init that I provide will translate that into /etc/fstab
+</I>&gt;<i> However, it is intended only as an emergency provision.
+</I>&gt;<i> If / is not specified in /etc/fstab
+</I>&gt;<i> a menu of devices is presented for the SA to select
+</I>&gt;<i> the proper root device.
+</I>&gt;<i> That also comes from an init-script I wrote.
+</I>&gt;<i> However, writing a proper /etc/fstab is best.
+</I>&gt;<i> /etc/fstab need only contain real filesystems
+</I>&gt;<i> and perhaps swaps which makes it very easy.
+</I>&gt;<i>
+</I>&gt;<i> /dev/sr0        /media/cd       iso9660 ro,users,noauto 0 0
+</I>&gt;<i> /dev/dvd        /media/dvd      udf     ro,users,noauto 0 0
+</I>&gt;<i> /dev/fd0        /media/floppy   auto    rw,users,noauto 0 0
+</I>&gt;<i>
+</I>&gt;<i> /dev/sda1       /boot           ext2    defaults,noatime 0 1
+</I>&gt;<i> /dev/sda2       /               ext3    defaults,noatime,commit=600 0 1
+</I>&gt;<i>
+</I>&gt;<i> The above would work fine for a 2007 deployed box.
+</I>&gt;<i> With UUIDs it would look a bit messier like:
+</I>&gt;<i>
+</I>&gt;<i> /dev/mapper/luks-23cf0492-defc-4787-85a6-b5d0b5e68744 / ext2
+</I>&gt;<i> defaults,noatime 0 1
+</I>&gt;<i> UUID=7408b91f-ebf1-4be0-a1cb-eb6094ceafdf /boot ext2 defaults,noatime 0 1
+</I>&gt;<i>
+</I>&gt;<i> That would be the messy lines for a boot partition and LUKS encrypted
+</I>&gt;<i> partition installed on a flash drive.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> however : I would like to have a way to specify what goes into initramfs, I
+</I>&gt;&gt;<i> have no use of whole modules, just want the ones that are loaded and this
+</I>&gt;&gt;<i> will reduce the size of initramfs to few Mo which is acceptable for boot
+</I>&gt;&gt;<i> time
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> I have considered that from the very first day I created the initramfs.
+</I>&gt;<i> But I was flamed for leaving off networking modules.
+</I>&gt;<i> Pruning the module list down to what is exactly required is absurdly difficult,
+</I>&gt;<i> and dangerous because if a module required for booting is omitted
+</I>&gt;<i> then rescue requires an Install/Rescue CD.
+</I>&gt;<i> Removing modules by directory is less tedious,
+</I>&gt;<i> but also does not save very much.
+</I>&gt;<i>
+</I>&gt;<i> # du -sm /lib/modules/2.6.26/kernel/*
+</I>&gt;<i> 1       /lib/modules/2.6.26/kernel/arch
+</I>&gt;<i> 1       /lib/modules/2.6.26/kernel/block
+</I>&gt;<i> 1       /lib/modules/2.6.26/kernel/crypto
+</I>&gt;<i> 19      /lib/modules/2.6.26/kernel/drivers
+</I>&gt;<i> 4       /lib/modules/2.6.26/kernel/fs
+</I>&gt;<i> 1       /lib/modules/2.6.26/kernel/lib
+</I>&gt;<i> 3       /lib/modules/2.6.26/kernel/net
+</I>&gt;<i> 3       /lib/modules/2.6.26/kernel/sound
+</I>&gt;<i>
+</I>&gt;<i> So those directories except drivers we keep entirely.
+</I>&gt;<i> Then descending into drivers
+</I>&gt;<i>
+</I>&gt;<i> # du -sk /lib/modules/2.6.26/kernel/drivers/*
+</I>&gt;<i> 96      /lib/modules/2.6.26/kernel/drivers/acpi
+</I>&gt;<i> 444     /lib/modules/2.6.26/kernel/drivers/ata
+</I>&gt;<i> 220     /lib/modules/2.6.26/kernel/drivers/atm
+</I>&gt;<i> 16      /lib/modules/2.6.26/kernel/drivers/auxdisplay
+</I>&gt;<i> 12      /lib/modules/2.6.26/kernel/drivers/base
+</I>&gt;<i> 392     /lib/modules/2.6.26/kernel/drivers/block
+</I>&gt;<i> 84      /lib/modules/2.6.26/kernel/drivers/bluetooth
+</I>&gt;<i> 24      /lib/modules/2.6.26/kernel/drivers/cdrom
+</I>&gt;<i> 1072    /lib/modules/2.6.26/kernel/drivers/char
+</I>&gt;<i> 8       /lib/modules/2.6.26/kernel/drivers/clocksource
+</I>&gt;<i> 12      /lib/modules/2.6.26/kernel/drivers/connector
+</I>&gt;<i> 32      /lib/modules/2.6.26/kernel/drivers/cpufreq
+</I>&gt;<i> 28      /lib/modules/2.6.26/kernel/drivers/crypto
+</I>&gt;<i> 8       /lib/modules/2.6.26/kernel/drivers/dca
+</I>&gt;<i> 16      /lib/modules/2.6.26/kernel/drivers/dma
+</I>&gt;<i> 48      /lib/modules/2.6.26/kernel/drivers/edac
+</I>&gt;<i> 36      /lib/modules/2.6.26/kernel/drivers/firmware
+</I>&gt;<i> 68      /lib/modules/2.6.26/kernel/drivers/hid
+</I>&gt;<i> 592     /lib/modules/2.6.26/kernel/drivers/hwmon
+</I>&gt;<i> 196     /lib/modules/2.6.26/kernel/drivers/i2c
+</I>&gt;<i> 320     /lib/modules/2.6.26/kernel/drivers/ide
+</I>&gt;<i> 132     /lib/modules/2.6.26/kernel/drivers/ieee1394
+</I>&gt;<i> 504     /lib/modules/2.6.26/kernel/drivers/infiniband
+</I>&gt;<i> 460     /lib/modules/2.6.26/kernel/drivers/input
+</I>&gt;<i> 324     /lib/modules/2.6.26/kernel/drivers/isdn
+</I>&gt;<i> 24      /lib/modules/2.6.26/kernel/drivers/leds
+</I>&gt;<i> 328     /lib/modules/2.6.26/kernel/drivers/md
+</I>&gt;<i> 2696    /lib/modules/2.6.26/kernel/drivers/media
+</I>&gt;<i> 48      /lib/modules/2.6.26/kernel/drivers/memstick
+</I>&gt;<i> 180     /lib/modules/2.6.26/kernel/drivers/message
+</I>&gt;<i> 16      /lib/modules/2.6.26/kernel/drivers/mfd
+</I>&gt;<i> 144     /lib/modules/2.6.26/kernel/drivers/misc
+</I>&gt;<i> 92      /lib/modules/2.6.26/kernel/drivers/mmc
+</I>&gt;<i> 504     /lib/modules/2.6.26/kernel/drivers/mtd
+</I>&gt;<i> 4612    /lib/modules/2.6.26/kernel/drivers/net
+</I>&gt;<i> 52      /lib/modules/2.6.26/kernel/drivers/parport
+</I>&gt;<i> 180     /lib/modules/2.6.26/kernel/drivers/pci
+</I>&gt;<i> 104     /lib/modules/2.6.26/kernel/drivers/pcmcia
+</I>&gt;<i> 12      /lib/modules/2.6.26/kernel/drivers/power
+</I>&gt;<i> 132     /lib/modules/2.6.26/kernel/drivers/rtc
+</I>&gt;<i> 1736    /lib/modules/2.6.26/kernel/drivers/scsi
+</I>&gt;<i> 104     /lib/modules/2.6.26/kernel/drivers/serial
+</I>&gt;<i> 32      /lib/modules/2.6.26/kernel/drivers/spi
+</I>&gt;<i> 28      /lib/modules/2.6.26/kernel/drivers/ssb
+</I>&gt;<i> 60      /lib/modules/2.6.26/kernel/drivers/telephony
+</I>&gt;<i> 20      /lib/modules/2.6.26/kernel/drivers/uio
+</I>&gt;<i> 1264    /lib/modules/2.6.26/kernel/drivers/usb
+</I>&gt;<i> 880     /lib/modules/2.6.26/kernel/drivers/video
+</I>&gt;<i> 12      /lib/modules/2.6.26/kernel/drivers/virtio
+</I>&gt;<i> 56      /lib/modules/2.6.26/kernel/drivers/w1
+</I>&gt;<i> 176     /lib/modules/2.6.26/kernel/drivers/watchdog
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Eliminating some of those directories is not even worth the consideration.
+</I>&gt;<i> Do you want to consider eliminating real time clock modules that might not
+</I>&gt;<i> be required during boot in order to save a meager 132K?
+</I>&gt;<i> Do you even want to learn what the spi modules are for
+</I>&gt;<i> when their omission saves a meager 32K?
+</I>&gt;<i>
+</I>&gt;<i> 1264    /lib/modules/2.6.26/kernel/drivers/usb
+</I>&gt;<i> 1736    /lib/modules/2.6.26/kernel/drivers/scsi
+</I>&gt;<i> 2696    /lib/modules/2.6.26/kernel/drivers/media
+</I>&gt;<i> 4612    /lib/modules/2.6.26/kernel/drivers/net
+</I>&gt;<i>
+</I>&gt;<i> Are obviously the only 3 directories with enough meat to
+</I>&gt;<i> be considered for omission.
+</I>&gt;<i> Depending on how the kernel is compiled omitting all of net might not work.
+</I>&gt;<i>
+</I>&gt;<i> While 95% of kernel modules are not used,
+</I>&gt;<i> selecting what to omit is not as easy as one might first expect:
+</I>&gt;<i>
+</I>&gt;<i> # find /lib/modules/2.6.26/kernel/ -type f | wc -l
+</I>&gt;<i> 2059
+</I>&gt;<i>
+</I>&gt;<i> That is a lot of modules to manually consider.
+</I>&gt;<i> The largest are:
+</I>&gt;<i>
+</I>&gt;<i> # find /lib/modules/2.6.26/kernel/ -type f -printf &quot;%s %p\n&quot; | sort -g | tail
+</I>&gt;<i> 128489 /lib/modules/2.6.26/kernel/drivers/video/sis/sisfb.ko
+</I>&gt;<i> 128881 /lib/modules/2.6.26/kernel/fs/reiserfs/reiserfs.ko
+</I>&gt;<i> 130924 /lib/modules/2.6.26/kernel/drivers/scsi/lpfc/lpfc.ko
+</I>&gt;<i> 140854 /lib/modules/2.6.26/kernel/fs/nfs/nfs.ko
+</I>&gt;<i> 142380 /lib/modules/2.6.26/kernel/drivers/net/bnx2.ko
+</I>&gt;<i> 144135 /lib/modules/2.6.26/kernel/sound/pci/hda/snd-hda-intel.ko
+</I>&gt;<i> 144258 /lib/modules/2.6.26/kernel/net/ipv6/ipv6.ko
+</I>&gt;<i> 182188 /lib/modules/2.6.26/kernel/drivers/net/bnx2x.ko
+</I>&gt;<i> 189263 /lib/modules/2.6.26/kernel/fs/ocfs2/ocfs2.ko
+</I>&gt;<i> 321551 /lib/modules/2.6.26/kernel/fs/xfs/xfs.ko
+</I>&gt;<i>
+</I>&gt;<i> 3 megabyte savings alone for omission of xfs is by far
+</I>&gt;<i> the largest amount of savings that can easily be made
+</I>&gt;<i> by a single decision.
+</I>&gt;<i> But the pre-compiled module from NVIDIA is larger still.
+</I>&gt;<i>
+</I>&gt;<i> # du -sk /lib/modules/2.6.26/kernel
+</I>&gt;<i> 27484   /lib/modules/2.6.26/kernel
+</I>&gt;<i>
+</I>&gt;<i> The average module size is 27484 / 2059 or about 13K
+</I>&gt;<i> Separating and ordering 5 decks of playing cards by hand
+</I>&gt;<i> would be faster and easier than separating and understanding
+</I>&gt;<i> 2000 kernel modules.
+</I>&gt;<i>
+</I>&gt;<i> Since I had not decided on an efficient method for organizing
+</I>&gt;<i> the selection of modules by asking the SA, or by invoking tools
+</I>&gt;<i> such as lsmod, lspci, lsusb at most I may be inclined to allow
+</I>&gt;<i> SAs to specify a file that contains additional sed rules to allow
+</I>&gt;<i> files and directories to be added or removed.
+</I>&gt;<i> But the problem with that is if the SA makes even one small mistake
+</I>&gt;<i> either the initramfs will not generate at all or
+</I>&gt;<i> the kernel will be unable to use it during boot.
+</I>&gt;<i> The cost in probability of failure is too high compared
+</I>&gt;<i> to saving a few megabytes on the I/R
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> # du -sm /lib/modules/2.6.26/kernel/sound
+</I>&gt;<i> 3       /lib/modules/2.6.26/kernel/sound
+</I>&gt;<i>
+</I>&gt;<i> What if that was removed?
+</I>&gt;<i> Probably some error messages would print during sysinit when
+</I>&gt;<i> modules for sound cards could not be loaded.
+</I>&gt;<i> Then, udevadm trigger would have to run a second time
+</I>&gt;<i> during runlevel in order to load the modules that were
+</I>&gt;<i> not available during sysinit.
+</I>&gt;<i> And if udevadm trigger is run twice then so must
+</I>&gt;<i> udevadm settle also be run twice.
+</I>&gt;<i> Otherwise udev might not finish loading the sound card modules
+</I>&gt;<i> before something such as alsactl is invoked to set volume levels.
+</I>&gt;<i>
+</I>&gt;<i> Obviously, only modules never required should be omitted from
+</I>&gt;<i> the initramfs, and that might beg the question as to whether
+</I>&gt;<i> CPU cycles should be spent to compile those modules.
+</I>&gt;<i>
+</I>&gt;<i> The traditional linux spell can be used with initramfs
+</I>&gt;<i> if the configuration is proper.
+</I>&gt;<i> That way support for entire categories of hardware drivers
+</I>&gt;<i> can easily be disabled in the make menuconfig.
+</I>&gt;<i> For the moment it is the most sane and safe way to
+</I>&gt;<i> exclude modules from the initramfs.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, for the potential of installing Sorcerer on flash drives
+</I>&gt;<i> the entirely modular linux kernel with complete initramfs
+</I>&gt;<i> provides the best probability that the flash drive can be
+</I>&gt;<i> booted from any computer in which it is plugged in.
+</I>&gt;<i> That is why when all the boons and banes are weighed
+</I>&gt;<i> the best solution still appears to be to continue using
+</I>&gt;<i> linux-modular and endure the larger than necessary
+</I>&gt;<i> initramfs images.
+</I>&gt;<i>
+</I>&gt;<i> 10 minutes after a box is booted the content of the
+</I>&gt;<i> initramfs used to boot that is in memory is removed from memory.
+</I>&gt;<i> Therefore, while a larger initramfs does take a bit longer to boot,
+</I>&gt;<i> it does not have any further drain on system resources after a
+</I>&gt;<i> box has completed booting.
+</I>&gt;<i>
+</I>&gt;<i> This is probably not the only perspective for discussing
+</I>&gt;<i> the potential for optimizing the initramfs.
+</I>&gt;<i> I do not consider the matter closed.
+</I>&gt;<i> But over the last 7 months the facts have remained the same.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080805/b81fd8a2/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080805/b81fd8a2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000700.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000717.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#716">[ date ]</a>
+              <a href="thread.html#716">[ thread ]</a>
+              <a href="subject.html#716">[ subject ]</a>
+              <a href="author.html#716">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

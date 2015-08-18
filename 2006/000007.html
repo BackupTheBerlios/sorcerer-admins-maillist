@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Linux-PAM, move command not found
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2006/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux-PAM%2C%20move%20command%20not%20found&In-Reply-To=%3COFC883F455.1EDA9677-ONC2257245.0045C9CA-C2257245.0045F1F5%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000006.html">
+   <LINK REL="Next"  HREF="000008.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Linux-PAM, move command not found</H1>
+    <B>pekka.panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux-PAM%2C%20move%20command%20not%20found&In-Reply-To=%3COFC883F455.1EDA9677-ONC2257245.0045C9CA-C2257245.0045F1F5%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Linux-PAM, move command not found">pekka.panula at sofor.fi
+       </A><BR>
+    <I>Fri Dec 15 13:43:58 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000006.html">[Sorcerer-admins] Typo problem?
+</A></li>
+        <LI>Next message: <A HREF="000008.html">[Sorcerer-admins] Happy Holidays,
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi 
+
+During install - stage it says error:
+/root/.sorcery/grimoire/Linux-PAM: line 42: move: command not found
+
+Now looking augur details Linux-PAM and its build() function:
+
+build() {
+  unpack_docs() {
+    mkdir docs          &amp;&amp;
+    cd    docs          &amp;&amp;
+    unpack ${SOURCE[1]} &amp;&amp;
+    cd    -
+  }
+
+  move_la_files()  {
+    for              file  in  /lib{,64}/libpam{,c_misc}.la;  do
+      if    [   -f  $file  ]
+      then  mv  -v  $file  /usr/$file
+      fi
+    done
+  }
+
+  export HAVE_SGML2LATEX=no
+  sed  -i  &quot;s: doc examples::g&quot;      Makefile.in
+
+  for   DIR  in  $(  find  .  -type d  )
+  do    touch  $DIR/.ignore_age
+  done
+
+  unpack_docs    &amp;&amp;
+  default_build  &amp;&amp;
+  move la_files
+}
+
+
+Okay, it is typo: move la_files, should it be move_la_files ?-)
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20061215/b7a39a2c/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20061215/b7a39a2c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000006.html">[Sorcerer-admins] Typo problem?
+</A></li>
+	<LI>Next message: <A HREF="000008.html">[Sorcerer-admins] Happy Holidays,
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

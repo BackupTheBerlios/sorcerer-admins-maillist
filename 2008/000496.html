@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Moot%20bug%2C%20coreutils%206.12%2C%0A%09touch%3A%20setting%20times%20of%20%3Cfilename%3E%3A%20Function%20not%20implemented&In-Reply-To=%3C596b75860806101132o41a32ab3r7bec742e07ff5eff%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000495.html">
+   <LINK REL="Next"  HREF="000497.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Moot%20bug%2C%20coreutils%206.12%2C%0A%09touch%3A%20setting%20times%20of%20%3Cfilename%3E%3A%20Function%20not%20implemented&In-Reply-To=%3C596b75860806101132o41a32ab3r7bec742e07ff5eff%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jun 10 20:32:19 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000495.html">[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+</A></li>
+        <LI>Next message: <A HREF="000497.html">[Sorcerer-admins] Useful or useless conveniences?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#496">[ date ]</a>
+              <a href="thread.html#496">[ thread ]</a>
+              <a href="subject.html#496">[ subject ]</a>
+              <a href="author.html#496">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Both of you have excellent points.
+That is why the &quot;sold&quot; functionality exists.
+&quot;sold&quot; is short for &quot;secure hold&quot;
+It will hold installed software as long as the
+installed version is not a security risk
+and does not have to be recompiled in order
+to acclimate to library updates.
+
+# augur installed | while read; do augur sold $REPLY; done
+
+Puts an entire box on sold if no installed spells
+are already on sold, otherwise it toggles spell's sold state.
+
+As for downgrading an installed spell...
+There is:
+
+# dispel --unsafe $SPELL
+# cd /
+# 7za x -so /var/cache/archive/$SPELL-......tar.7z | tar -xf -
+
+Due to changes in logs made in /etc/sorcery/log/
+and other changes in spell formats
+I removed the
+# dispel --downgrade
+parameter to avoid granting SAs
+the opportunity of loading their box with old software
+where cast can not detect and fix ELF and LA errors.
+It may not be a welcome change,
+but it was the correct choice
+for best ensuring that Sorcerer boxes
+continue to function as expected.
+
+
+When SAs make command decisions
+to not update installed software,
+such as the linux kernel,
+yet to continue to update other installed software
+then any problem that comes of it is a problem
+that is caused by the SA and not the distribution maintainers.
+
+Not rebooting into newer linux kernels
+is nearly the same as having linux on hold.
+Consequently, none of the security benefits
+from having the newer linux installed are achieved
+if the box never reboots into the newer linux.
+
+If looking to assign blame to someone other than SAs
+why not blame the coreutils software authors for
+modifying their source to use features found only
+in kernels newer than linux 1.0
+
+Since the available versions of linux and linux-modular
+in the Sorcerer grimoire are compatible with
+the available versions of coreutils
+this bug is not a distribution wide problem.
+
+Better to request that the coreutils software authors
+adjust their source code than to expect that distribution
+maintainers would modify source code that they
+did not write that already compiles and executes
+properly on a box that is being properly updated.
+
+I understand and acknowledge
+becoming upset and inconvenienced
+by this change to coreutils source code
+that was made entirely by coreutils software authors.
+A probability exists that if enough people
+voice a contrary opinion on the coreutils email list
+then those software authors will include a check
+in the next release to decide whether to compile
+using legacy code or code only compatible with
+boxes running newer linux kernels.
+That is the best solution,
+because coreutils software authors understand
+their source code better than anyone else.
+That is why this discussion belong on the coreutils email list.
+
+
+Often I am amazed that free software and
+updates of free software work as good as they do.
+Baking a distro is not as easy
+making one's own custom pizza.
+
+For those who want their pizza without anchovies
+there is now a no_selinux spell.
+Before casting it I would recast
+libselinux just to ensure that libselinux logs are correct
+so that removal of libselinux will not cause unexpected problems.
+
+Upon casting no_selinux expect glibc coreutils
+and many other installed software to re-compile and re-install.
+Also expect that no_selinux is a one way ride.
+If no selinux components installed is desired
+and selinux will never be used
+then casting no_selinux is an easy way to
+exile, dispel, appropriate spells while
+properly re-compiling, re-linking, and re-installing
+effected installed software.
+
+Lastly, the no_selinux spell has never been tested.
+It may not accomplish the desired effect.
+I recommend only using it on developmental boxes and
+then reporting both success and bugs to the email list.
+
+selinux support will still remain half cocked for I/R development.
+Full support for selinux is no further along than
+it was about a month ago.
+Instead I wrote the no_selinux spell and finalized the
+2009 format for the I/R and rolled some for your pleasure.
+
+If anyone is feeling total displeasure then try
+the freshly available Sorcerer I/Rs and marvel
+their more compact design and faster and easier installation.
+Today, is not a rainy day on every part of the globe.
+
+
+
+On Tue, Jun 10, 2008 at 1:15 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On Mon, Jun 9, 2008 at 10:43 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Yeah i did go back to older coreutils, btw, downgrade spells is not anymore
+</I>&gt;&gt;<i> possible with Sorcerer?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Really not happy about this, atleast think about to add that patch which can
+</I>&gt;&gt;<i> be found under that Gentoo bugzilla.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> All kernels under version 2.6.22 have this problem and indeed that
+</I>&gt;&gt;<i> particular server is running v2.6.21.x kernel. Hey, i dont update kernels on
+</I>&gt;&gt;<i> my servers too often :) Anyway i really hope that we do not force to run
+</I>&gt;&gt;<i> always a newest kernel.
+</I>&gt;<i>
+</I>&gt;<i> I would second this motion... but then again ... I understand that the
+</I>&gt;<i> perumations of 'this works with that and that required whatever' it is
+</I>&gt;<i> a maintanence nightmare... might consider not upgrading anything at
+</I>&gt;<i> all instead of rejecting kernel upgrade.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 09.06.2008 16:28:43:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Fascinating.
+</I>&gt;&gt;&gt;<i> However, do not panic.
+</I>&gt;&gt;&gt;<i> The bug report is made by people who
+</I>&gt;&gt;&gt;<i> almost never boot to a new kernel.
+</I>&gt;&gt;&gt;<i> touch on ia32 and x86_64 architectures
+</I>&gt;&gt;&gt;<i> from coreutils 6.12 on Sorcerer booted with
+</I>&gt;&gt;&gt;<i> linux-modular version 2.6.25.5 works.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I am uncertain how old of a linux kernel one must run
+</I>&gt;&gt;&gt;<i> in order to encounter the error.
+</I>&gt;&gt;&gt;<i> The easy solution is to reboot boxes with outlandish
+</I>&gt;&gt;&gt;<i> uptimes before updating to the new coreutils.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I would expect that the coreutils authors
+</I>&gt;&gt;&gt;<i> would avoid using something
+</I>&gt;&gt;&gt;<i> that has been available in the kernel
+</I>&gt;&gt;&gt;<i> for less than 3 months.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> If you are not booted with a version +2.6.25
+</I>&gt;&gt;&gt;<i> please do so before updating coreutils.
+</I>&gt;&gt;&gt;<i> For such a rare bug I am not adjusting the spell.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Mon, Jun 9, 2008 at 3:09 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Hi
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Do not update coreutils 6.12 if you run older kernel, you get borked.
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Getting lots of:
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/services': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-alien':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-backup':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-clean':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-defrag':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-md5sum':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/talloc': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/index.d/tomorrow': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/Linux-HOWTOs': Function
+</I>&gt;&gt;&gt;<i> &gt; not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/grimoire': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/protocols': Function
+</I>&gt;&gt;&gt;<i> &gt; not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/services': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-alien':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-backup':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-clean':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-defrag':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-md5sum':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/talloc': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/index.d/tomorrow': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/Linux-HOWTOs': Function
+</I>&gt;&gt;&gt;<i> &gt; not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/grimoire': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/protocols': Function
+</I>&gt;&gt;&gt;<i> &gt; not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/services': Function not
+</I>&gt;&gt;&gt;<i> &gt; implemented
+</I>&gt;&gt;&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-alien':
+</I>&gt;&gt;&gt;<i> &gt; Function
+</I>&gt;&gt;&gt;<i> &gt; not implemented
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Eg. touch is not working, also couple more commands do not work.
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;<i> &gt; Here is nice bugreport from Gentoo:
+</I>&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> <A HREF="http://bugs.gentoo.org/show_bug.cgi?id=224483">http://bugs.gentoo.org/show_bug.cgi?id=224483</A> which says whats happening.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000495.html">[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+</A></li>
+	<LI>Next message: <A HREF="000497.html">[Sorcerer-admins] Useful or useless conveniences?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#496">[ date ]</a>
+              <a href="thread.html#496">[ thread ]</a>
+              <a href="subject.html#496">[ subject ]</a>
+              <a href="author.html#496">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

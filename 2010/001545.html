@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] next steps...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20next%20steps...&In-Reply-To=%3C596b75861003201202h79c89ff4sc30a68b796fab83e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001544.html">
+   <LINK REL="Next"  HREF="001540.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] next steps...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20next%20steps...&In-Reply-To=%3C596b75861003201202h79c89ff4sc30a68b796fab83e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] next steps...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Mar 20 20:02:43 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001544.html">[Sorcerer-admins] next steps...
+</A></li>
+        <LI>Next message: <A HREF="001540.html">[Sorcerer-admins] sorcerer installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1545">[ date ]</a>
+              <a href="thread.html#1545">[ thread ]</a>
+              <a href="subject.html#1545">[ subject ]</a>
+              <a href="author.html#1545">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Casting xorg-server might not install enough programs
+to actually start an X desktop.
+For that I recommend:
+
+cast xorg
+
+As for KDE-v4 that is fun.
+If KDE's graphical login-in prompt is desired during boot
+then edit /etc/inittab and set the default runlevel to 5
+instead of 3.
+
+For the most part Sorcerer boxes do not provide a whole lot
+of confusing layers of UI between the software and the SA.
+Sorcery tools are provided to assist the SA with installing software.
+However, configuring software and making it run is still up to the SA.
+Both gnome's gdm, KDE-v3's kdm and KDE-v4's kdm can
+be installed concurrently.
+However, what starts during boot depends upon how the SA
+sets permissions for the init-scripts in /etc/init.d/
+and also the default runlevel.
+
+Technically, there are spells to assist with this.
+But I never use those spells and so I forget their names.
+Perhaps I can find one...
+
+Okay, found one.
+Apparently, I either wrote or last edited this spell in 2008.
+It is called init-toggle
+If you do not want to set mode 600 or 700 on init-script files
+located in /etc/init.d/ manually
+then this little spell will assist the SA in selecting what init-scripts
+should run when a box boots.
+Please try to be careful to disable execution of only the init-scripts
+that are not critical for a box to boot.  :)
+Yes, knowing which ones those are is a bit tricky.
+
+Okay, I admit I created a number of convenience spells
+that are hiding in the grimoire.
+And they can provide a tiny little fluffy layer for assisting
+the SA with trivial configuration changes.
+However, for the most part manually executing chmod on a file
+in /etc/init.d/ is easier, faster, and safer than
+using the fluffed out method.
+
+Now, as for error messages printed by the kernel...
+Those I tend to grep in /usr/src/linux/
+to see if there is more information about them there.
+Also one can ask about those errors on some email
+list about the linux kernel.
+Also googling for an answer is sometimes useful.
+
+
+&gt;&gt;<i> kernel: piix4_smbus 0000:00:07.0: SMBus base address uninitialized -
+</I>&gt;&gt;<i> upgrade BIOS or use force_addr-0xaddr
+</I>
+At first glance I am prejudiced to think that the
+driver prefers that your motherboard have a newer BIOS
+or that you boot using kernel parameter
+or add that parameter to the module configuration.
+I am uncertain what the parameter is because
+force_addr-0xaddr does not look precisely correct
+for a kernel parameter.
+But if that is exactly what was printed
+then you can give it a try.
+A meaningless kernel parameter will not prevent a box
+from booting or working properly.
+So entering an invalid kernel parameter
+is much the same as having not entered the parameter.
+
+Most modern motherboards have a BIOS which is flashable.
+That means that the ROM can be re-programed.
+This tends to be much easier than the ancient method of
+popping the BIOS chip out of the motherboard
+and inserting a new chip.
+This way motherboard makers can release products that are
+partially defect due to bugs in the BIOS or in the hardware.
+Then, they expect that the consumer is smart enough to be able
+to visit the motherboard maker's homepage periodically
+and download BIOS upgrades which fix bugs.
+
+Is it a pain or is it a convenience?
+I do not know.
+However, before I buy new hardware I decide exactly what I want
+then I visit the maker's homepage and download all the BIOS,
+firmware, drivers, documentation and everything they have for it
+before I buy the hardware.
+That way I can look it over and make the final decision about
+whether I want it and whether it will work as I expect.
+
+In some cases the linux developers write drivers that
+work around some of the bugs that may be present in
+faulty BIOS and faulty firmware for devices.
+In some cases those work-a-rounds might not be entirely effective.
+Generally, updating firmware for devices
+and BIOS for motherboards is the best solution.
+In some cases using a motherboard with faulty BIOS
+can lead to corruption on fixed disks.
+The filesystem could become messed up,
+or file content corrupted and lost
+or the box just might lock up or reboot
+for no apparent reason from time to time
+Yes, bad BIOS is not something one should keep for a pet.
+
+However, if one were to flash their motherboard accidentally
+with the wrong BIOS then that might render the BIOS
+completely unsuable and the motherboard unbootable.
+In that situation there is not normally an undo.
+And the fix must come in the form of removing the bad BIOS chip
+and replacing it with a good BIOS chip.
+However, some people just throw the motherboard away
+and buy a new motherboard if that happens.
+If the motherboard is under warranty the one could remove
+the RAM, CPU, boards, etc... and send the motherboard back
+to the maker for RMA replacement/repairs.
+
+Or you can just take it to the outdoor gun range,
+tie and tape it to a target post,
+and blow big holes through it using a 12 gauge and .45
+That tends to make me feel better. :)
+But it does not really solve the immediate problem.
+
+The error message does not seem to indicate
+that the problem is dire.
+But then again the driver might not bother to report
+if that BIOS version has critical faults.
+So if it were me
+then I would visit the motherboard maker's homepage.
+Then I would try to download newer BIOS
+and flash the motherboard.
+Yet if that was not possible
+then I would try the parameter suggested by the driver.
+
+Computer hardware can be such a bummer.
+I have done enough RMAs to last a lifetime.
+I even had to RMA my air mattress last month
+and my air mattress is not even computerized.
+
+
+
+On Sat, Mar 20, 2010 at 10:36 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Congratulations....
+</I>&gt;<i>
+</I>&gt;<i> Seems that you are over the biggest hurdle in Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> Some commands for the root user:
+</I>&gt;<i> augur sync
+</I>&gt;<i> &#160;&#160;&#160; synchronizes the computer with the latest stuff.
+</I>&gt;<i>
+</I>&gt;<i> augur newer
+</I>&gt;<i> &#160;&#160; shows you newer versions of what you have installed.
+</I>&gt;<i>
+</I>&gt;<i> augur update actually updates your software.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> However, I have a suspicion that this is not what you are after.
+</I>&gt;<i>
+</I>&gt;<i> issuing:
+</I>&gt;<i>
+</I>&gt;<i> cast kde-v4
+</I>&gt;<i>
+</I>&gt;<i> should leech &amp; compile everything you need for a full fledged K-desktop on
+</I>&gt;<i> top of X11.
+</I>&gt;<i>
+</I>&gt;<i> I would not recommend it, though. ( As you noticed, Sorcerer is in heavy
+</I>&gt;<i> development, and may not work as expected )
+</I>&gt;<i>
+</I>&gt;<i> What I generally do in your cast, is:
+</I>&gt;<i>
+</I>&gt;<i> cast xorg-server
+</I>&gt;<i>
+</I>&gt;<i> Once you have X up and running, you can cast kde-v4, if you are interested
+</I>&gt;<i> in a K desktop.
+</I>&gt;<i>
+</I>&gt;<i> Otherwise, you can always type
+</I>&gt;<i> sorcery
+</I>&gt;<i> at the command line, and explore the menus....
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i> P.S. Good luck!
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Mar 15, 2010 at 10:32 AM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">bradley at northtech.us</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm receiving the following error on boot, and wondering if this is
+</I>&gt;&gt;<i> something that I need to put somewhere in lilo or something
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;snip&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> kernel: piix4_smbus 0000:00:07.0: SMBus base address uninitialized -
+</I>&gt;&gt;<i> upgrade BIOS or use force_addr-0xaddr
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;/snip&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I also didn't finish editing the startup files and ended up going into
+</I>&gt;&gt;<i> compile mode before setting up networking, so I did that by hand after
+</I>&gt;&gt;<i> umounting and rebooting into the working box.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I was looking at locale when I inadvertently somehow went into compile.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Anyway, I now have a working machine with basic networking, and I've
+</I>&gt;&gt;<i> downloaded the latest grimoire and sorcery tarballs, but don't know what
+</I>&gt;&gt;<i> to do with them, or the Sorcery way of installing X, etc...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Could I get a little guidance on that?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Bradley.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001544.html">[Sorcerer-admins] next steps...
+</A></li>
+	<LI>Next message: <A HREF="001540.html">[Sorcerer-admins] sorcerer installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1545">[ date ]</a>
+              <a href="thread.html#1545">[ thread ]</a>
+              <a href="subject.html#1545">[ subject ]</a>
+              <a href="author.html#1545">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

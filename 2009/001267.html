@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /boot size? initrd megasize 107MB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3C596b75860906180214i6377562eoeda1554a34770c1b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001266.html">
+   <LINK REL="Next"  HREF="001268.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /boot size? initrd megasize 107MB</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3C596b75860906180214i6377562eoeda1554a34770c1b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /boot size? initrd megasize 107MB">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jun 18 11:14:44 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001266.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+        <LI>Next message: <A HREF="001268.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1267">[ date ]</a>
+              <a href="thread.html#1267">[ thread ]</a>
+              <a href="subject.html#1267">[ subject ]</a>
+              <a href="author.html#1267">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># du -sm /boot/* | head -n 3
+85      /boot/2.6.29.1
+84      /boot/2.6.29.2
+85      /boot/2.6.30
+
+Hmm, does seem larger on my test box also.
+However, it is not yet +100M big.
+
+The initrd is composed of select files and directories
+archived into a cpio from the directories
+/etc /bin /sbin /lib /lib64
+
+Static archive libraries are not included in the archive.
+Nothing from /etc/sorcery/ is included.
+Many files in /etc/ are not included.
+However, if you did something like
+# cp -av /etc/sorcery /etc/sorcery.old
+then that would cause a large amount of files
+to be included in the cpio archive that are
+not essential for booting.
+
+Instead of trying to determine exactly
+what directories from /etc are worth
+including in the initramfs I tried to discover
+what directories in /etc/ could be installed by a spell
+yet would not be required during sysinit.
+I saved a considerable amount of space
+in the initramfs by excluding only that.
+However, a SA could still create directories
+in /etc/ that consume space on the initramfs
+yet are otherwise useless during booting.
+
+No doubt that a method for creating a more precise initramfs is possible.
+However, I expect it would also require almost constant revision.
+If something new is introduced that installs into /bin /sbin /lib or /lib64
+and would be required during sysinit
+then the initramfs script would require adjustment
+or at least some component sourced in by the initramfs
+would need to be changed.
+
+If you want a better/more precise initramfs script
+then spell complexity must be increased in order
+to specify precisely what should be inclined
+on an intiramfs if such directories as
+/bin /sbin /lib /lib64 and /etc are not included nearly as a whole.
+
+However, from /lib in each initramfs only the
+/lib/modules/$VERSION/ from the appropriate kernel version
+is included in that initramfs.
+Consequently, only modules to load
+that are appropriate for the running kernel
+are included on the initramfs.
+
+Originally, my design was to create merely one initramfs
+usable by all kernels installed in /boot
+A single initramfs is faster to generate.
+However, booting is a bit slower to load
+such a large initramfs, and of course more
+memory is required in order to store the entire
+content of /lib/modules in the initramfs instead
+of only modules required by the kernel being booted.
+
+I mentioned that old method that I obsoleted to demonstrate
+that there are potentially other ways of building the initramfs.
+Also the initramfs can be compressed in order to conserve maybe 30%.
+However, the initramfs is only compressed by default
+when it is provided on the Install/Rescue CD.
+
+So the fun options for making the initramfs
+require less disk space are: compression or redesign.
+
+I have accepted that initramfs will become larger in time.
+Eventually a 256M initramfs will not be absurd.
+Even a modern kernel and boot loader can handle it.
+Therefore, I am not overly worried about a 100M initramfs.
+However, I am not closed to discussion about
+what should be done to improve initramfs generation.
+
+Also I should mention that in the past I attempted to selectively
+exclude kernel modules and module directories that I expected
+would be unessential during sysinit.
+However, SAs complained.
+Consequently, each initrmafs has a complete set of modules
+that is appropriate for the kernel being boot.
+Yet it does consume considerable space.
+
+
+On Wed, Jun 17, 2009 at 11:00 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Big problem, i have run out of space. Why initrd is so big? 2.6.29.2 initrd
+</I>&gt;<i> size is amazingly 107MB!
+</I>&gt;<i> My /boot is only 139 MB partition so when casting new kernel it runs out of
+</I>&gt;<i> space....
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001266.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+	<LI>Next message: <A HREF="001268.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1267">[ date ]</a>
+              <a href="thread.html#1267">[ thread ]</a>
+              <a href="subject.html#1267">[ subject ]</a>
+              <a href="author.html#1267">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Should have mentioned it sooner...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Should%20have%20mentioned%20it%20sooner...&In-Reply-To=%3C596b75860810150242v21f01b4cm9961d8c58be8795a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000794.html">
+   <LINK REL="Next"  HREF="000796.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Should have mentioned it sooner...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Should%20have%20mentioned%20it%20sooner...&In-Reply-To=%3C596b75860810150242v21f01b4cm9961d8c58be8795a%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Should have mentioned it sooner...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Oct 15 11:42:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000794.html">[Sorcerer-admins] x86 spells on x86_64
+</A></li>
+        <LI>Next message: <A HREF="000796.html">[Sorcerer-admins] To dash or to bash?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#795">[ date ]</a>
+              <a href="thread.html#795">[ thread ]</a>
+              <a href="subject.html#795">[ subject ]</a>
+              <a href="author.html#795">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Although I mentioned that I was considering the possibility
+I did not mention that I eventually implemented more modular
+methods for cast and leech.
+And I leaked out a sorcery with modular cast before I made this announcement.
+
+Compile methods are now in /usr/libexec/sorcery/cast.d/
+and additional methods by SAs can be installed in
+/usr/local/libexec/sorcery/cast.d/
+
+Look at any 2 of the compile methods and the format will be understood.
+
+Similarly, for leech:
+
+/usr{,/local}/libexec/sorcery/leech.d/
+
+However, unlike compile methods leech methods can be set
+to run in a specific order from a sorcery menu.
+
+sorcery -&gt; Config -&gt; Extended Features -&gt; Leech Menu
+
+If the installed sorcery does not have the Leech Menu
+then it will gain it the next time sorcery is updated.
+
+
+Cast methods are simple.
+They examine the source tree.
+If it looks a certain way
+then it tries using that method for compilation.
+It can currently recognize:
+
+cmake  configure  make  perl-module  profile python-module
+
+And probably more methods in the future.
+
+
+leech methods are methods for acquiring sources.
+Leech methods do not execute merely because they exist in
+/usr/libexec/sorcery/leech.d/
+Also leech methods do not determine for themselves when to execute.
+sorcery has sane default leech method order list.
+However, feel free to change it.
+
+Now for the evaluation.
+
+Banes:
+
+1. Took time to hack
+2. May encounter bugs leeching
+3. Some sources which compiled previously with configure
+failed to compile when attempting compilation with cmake,
+because software authors porting their code to cmake
+introduced bugs or left the implementation incomplete.
+
+Boons:
+
+1. SAs can introduce their own compile and download methods in
+/usr/local/sorcery/{cast,leech}.d/ , respectively.
+2. Bugged methods will not cause cast or leech to crash.
+3. No modifications to cast nor leech are required to add new methods.
+
+The gains for the effort are marginal if any.
+However, it may yet bear good fruit in the long run.
+Overall it is a good decision because it grants SAs
+more direct control over sorcery while minimizing the risk of breaking the tool.
+And these changes do not increase the complexity of the sorcery tools.
+
+Please report bugs that you want squished.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000794.html">[Sorcerer-admins] x86 spells on x86_64
+</A></li>
+	<LI>Next message: <A HREF="000796.html">[Sorcerer-admins] To dash or to bash?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#795">[ date ]</a>
+              <a href="thread.html#795">[ thread ]</a>
+              <a href="subject.html#795">[ subject ]</a>
+              <a href="author.html#795">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

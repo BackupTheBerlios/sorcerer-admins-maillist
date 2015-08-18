@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] grimore-miffe questionaire and important	changes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grimore-miffe%20questionaire%20and%20important%0A%09changes&In-Reply-To=%3C596b75860807230235u628fd17bo69a214558466cd5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000627.html">
+   <LINK REL="Next"  HREF="000635.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] grimore-miffe questionaire and important	changes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grimore-miffe%20questionaire%20and%20important%0A%09changes&In-Reply-To=%3C596b75860807230235u628fd17bo69a214558466cd5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] grimore-miffe questionaire and important	changes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 23 11:35:25 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000627.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+        <LI>Next message: <A HREF="000635.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#632">[ date ]</a>
+              <a href="thread.html#632">[ thread ]</a>
+              <a href="subject.html#632">[ subject ]</a>
+              <a href="author.html#632">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> I fully agree that if indexing is slower using source(), then it should not
+</I>&gt;<i> be changed - we want maximum speed ;)
+</I>
+The expected difference is minimal &lt; 5% at most.
+Instead of 30 seconds for full indexing on an old Pentium 3,
+perhaps 32 to 34 seconds?
+
+However, for new and updated spells
+I recommend that the content of url be moved onto source:
+
+url $SOURCEFORGE_URL
+source something/something-VERSION.tar.bz2
+
+should become
+
+source $SOURCEFORGE_URL something/something-$VERSION.tar.bz2
+
+Proper use of &quot;&quot; enclosure often increases indexing speed.
+However, I prefer a grimoire with a minimal use of quotes.
+Every quote or double quote requires a pair.
+Therefore, if quotes rarely occur
+then the chance of unpaired quotes will also rarely occur.
+A reduction in probability of human error is worth
+a 20% reduction in indexing speed.
+
+The sorcery and grimoire with the next release is not maximum speed.
+More drastic measures would be used to achieve maximum indexing speed.
+A compromise between functionality, readability and speed is more desirable.
+
+Now spells are:
+1. more readable especially without all the ' &quot; = ;
+2. indexed faster than any prior sorcery release;
+3. run by bash for proper index generation;
+4. invulnerable to unpredictable variable bleeds resulting index abnormalities.
+
+
+&gt;<i> But you don't say that you will edit 3000 spells manually for such a change
+</I>&gt;<i> ? Why not just write a bash-script (or c++ or whatever language you choose)
+</I>&gt;<i> - it will be faster to make and execute than doing the change manually - and
+</I>&gt;<i> the time to ensure that there are no errors left will be a lot less.
+</I>
+That would work for most spells.
+But there are always strangely written spells.
+Automatic changes can produce unexpected and undesirable effects.
+I am very careful when doing any automatic editing of the grimoire.
+I do not want to break it horribly and not notice.
+Yet I still do that sometimes for a select group of spells.
+
+I am working towards creating a grimoire where
+one function invocation has all the parameters on the smae line.
+A very uniform grimoire would be easier
+to adjust with meager and fast sed commands.
+
+Manual editing takes hours upon hours of mundane work,
+but it allow me to discover and correct some very strange spells.
+
+I do sed -i the grimoire for some tasks.
+However, I first make certain that quality
+does not break for the sake of speed.
+
+
+When writing and updating spells please remember:
+
+The larger and more complex the spell is
+the better and more aligned it should look.
+If it looks bad and has many tabs in it
+and
+something tab tab tab tab tab tab tab tab tab tab tab &amp;&amp;
+in it
+then I will irritate myself when updating/correcting it.
+I will be pressing del while fixing the spell and
+send half of the next line to /dev/null without expecting it.
+Try not to use tabs
+Try not to have
+                                &amp;&amp;
+way out to the right.
+No need for a mockery of my style.
+Just try to make nice aligned columns so that the eyes can go up an down
+easily detecting typos and seeing where the same variable
+is used in different commands.
+
+If you write spells with syntax like:
+
+require${TAB}${TAB}something${TAB}something_else
+
+where you use tabs instead of spaces
+then I will be unable to detect and fix those spells using sed commands
+if I make macro changes to the grimoire.
+
+That is one of the many reasons why I request that tabs
+are not used in spells.
+They cause me to make mistakes when hand editing spells.
+They cause me to make mistakes when seditng spells.
+They cause me to make mistakes!
+Therefore, put tabs in spells only when the reason is unavoidable.
+
+Do not write spells with
+
+function build()
+
+I will never properly detect it with grep or sed.
+I grep for:
+
+^build()
+
+Just write your spells like the 2000+ other spells written the same way.
+
+The more unique that you make your spells
+that enter the official grimoire
+then the less likely I will be able to make changes
+by writing programs and/or sed commands.
+
+I am not asking for absolute compliance to a strict specification.
+Just tend to make spells like majority of the spells that already exist.
+I wrote most of them.
+View any 10 at random and you will realize the pattern to my madness.  :)
+
+Comments at the top.
+function calls to assign variables under the comments.
+The left column is right aligned.
+The right column is left aligned.
+There is even a general order that I use to invoke functions to assign
+variables.
+
+  stable
+unstable
+  secure
+
+Those above 3 functions almost always occur near the top.
+
+
+The current standard spell formula is not perfect nor perfectly pretty.
+But it is becoming better.
+For most spells it has almost the terse simplicity of a flat file.
+But the alignment is a clear indication that spells are written
+for humans to be able to easily read, check and modify them.
+
+If you keep in mind that at least 10 other people
+will look at a spell after you write it
+then you will not omit the extra minute
+required to make the spell look as good as it runs.
+
+
+P.S.
+
+Now that function calls are used to set variables
+mistyped function names will result in an error message.
+Previously, mistyped variables created no error message,
+because BASH does not warning about the use of undeclared variables.
+Therefore, this new format provides a better checking for spells.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000627.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+	<LI>Next message: <A HREF="000635.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#632">[ date ]</a>
+              <a href="thread.html#632">[ thread ]</a>
+              <a href="subject.html#632">[ subject ]</a>
+              <a href="author.html#632">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo does not compile - several problems with	it
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%20with%0A%09it&In-Reply-To=%3CAANLkTik9B3en9GDYoskaZ3JxxeETzKYYKW7NsGP-UXb1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001888.html">
+   <LINK REL="Next"  HREF="001891.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo does not compile - several problems with	it</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%20with%0A%09it&In-Reply-To=%3CAANLkTik9B3en9GDYoskaZ3JxxeETzKYYKW7NsGP-UXb1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lilo does not compile - several problems with	it">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug 26 03:44:19 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001888.html">[Sorcerer-admins] lilo does not compile - several problems with it
+</A></li>
+        <LI>Next message: <A HREF="001891.html">[Sorcerer-admins] lilo does not compile - several problems	with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1889">[ date ]</a>
+              <a href="thread.html#1889">[ thread ]</a>
+              <a href="subject.html#1889">[ subject ]</a>
+              <a href="author.html#1889">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Aug 25, 2010 at 12:22 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> One giant bug report here. I am updating one older server and noticed that
+</I>&gt;<i> lilo does not compile.
+</I>&gt;<i>
+</I>&gt;<i> 1. bug, does not discover gcc is installed if your locale is something else
+</I>&gt;<i> than english. Current lilo logic is brain dead and its grepping &quot;version&quot;
+</I>&gt;<i> word from gcc version output, put if you happen to use some other locale,
+</I>&gt;<i> like i am using Finnish locale, its not &quot;version&quot; anymore, its localiced to
+</I>&gt;<i> my local language (its versio in finnish). So first is to fix force locale
+</I>&gt;<i> eg to LANG=C before you cast it, then it finds your gcc (it has some wierd
+</I>&gt;<i> code to discover if you have gcc).
+</I>
+Thanks.
+I will add LC_ALL=C in front of the make commands.
+
+
+&gt;<i> 2. problem. I am not sure but on my older sorcerer installation lilo does
+</I>&gt;<i> want to use bcc command, but it should be recomended only, not sure whats
+</I>&gt;<i> different as i tested on sorcerer test server (its newer installation,
+</I>&gt;<i> installed on this year), it compiles fine without bcc, but on this other
+</I>&gt;<i> server i am getting compile time error because bcc is missing... lilo spell
+</I>&gt;<i> requires bin86, but bin86 does not provides bcc and those other binaries if
+</I>&gt;<i> bcc is installed - afaik then lilo needs dev86 not bin86.
+</I>
+# which bcc
+/usr/bin/bcc
+
+# augur from /usr/bin/bcc
+Dev86:/usr/bin/bcc
+
+# augur compile lilo | grep bcc | wc -l
+26
+
+Nice spot.
+
+&gt;<i> Good news is that grimoire does includes Dev86 (why its spell name got a
+</I>&gt;<i> capitalised D, should it be just dev86?), i founded it and casted it.
+</I>
+# grep source /root/.sorcery/grimoire/Dev86
+    source <A HREF="http://www.debath.co.uk/dev86/Dev86src-$VERSION.tar.gz">http://www.debath.co.uk/dev86/Dev86src-$VERSION.tar.gz</A>
+
+Why does the software author have capitalize the 'd' in the tarball name?
+
+
+&gt;<i> 3. problem. Then i noticed several problems with Dev86 spell. It does not
+</I>&gt;<i> install those required binaries, like bcc, bcc-cpp, bcc-cc1, copt and
+</I>&gt;<i> unproto what lilo is trying to use.
+</I>
+I will try recasting Dev86 to see what the problem might be.
+No problem.
+The install log for Dev86 was the same as before.
+# diff /etc/sorcery/log/install/Dev86 Dev86
+
+# augur install Dev86 | grep /usr/bin/bcc
+/usr/bin/bcc
+
+&gt;<i> If you manually compile dev86 and copy those needed binaries to
+</I>&gt;<i> /usr/local/bin you notice then that those missing binaries needs more files
+</I>&gt;<i> that current spell does also not install. Lots of files that should go to
+</I>&gt;<i> /usr/lib/bcc (i think), but current spell does not even make /usr/lib/bcc
+</I>&gt;<i> -dir.
+</I>&gt;<i> So you manully need to copy those missing files to:
+</I>&gt;<i> /usr/src/sorcery/.destdir/Dev86/usr/lib/bcc (wierd).
+</I>&gt;<i>
+</I>&gt;<i> I managed to compile newer lilo, but i haven't try to boot it yet, those
+</I>&gt;<i> pesky udev problems leaves usually /dev empty if udev version and linux
+</I>&gt;<i> kernel does not match, thats one big problem also when you have older
+</I>&gt;<i> installation like i have. Several servers installed many years ago, and when
+</I>&gt;<i> i needed to update it, because security problems and need for new features,
+</I>&gt;<i> etc. its big pain to update and nervous business to boot them if you need
+</I>&gt;<i> newer kernel, because many installations i have here has been bugged with
+</I>&gt;<i> udev problem. Has anyone else managed to get problems if you use older
+</I>&gt;<i> installation and you update your system and after reboot its boot goes
+</I>&gt;<i> broke, like almost all files are missing from /dev?
+</I>
+There might be a usable /etc/coldplug/dev/
+In which case a problem with udev could be circumvented by
+adding coldplug to the kernel command line.
+
+Also on boxes using the newer kernels that support
+devtmpfs then devtmpfs is mounted on /dev instead of merely tmpfs
+
+The docs about that in
+/usr/src/linux/drivers/base/Kconfig
+state:
+
+          This creates a tmpfs filesystem instance early at bootup.
+          In this filesystem, the kernel driver core maintains device
+          nodes with their default names and permissions for all
+          registered devices with an assigned major/minor number.
+          Userspace can modify the filesystem content as needed, add
+          symlinks, and apply needed permissions.
+          It provides a fully functional /dev directory, where usually
+          udev runs on top, managing permissions and adding meaningful
+          symlinks.
+          In very limited environments, it may provide a sufficient
+          functional /dev without any further help. It also allows simple
+          rescue systems, and reliably handles dynamic major/minor numbers.
+
+
+Therefore, it might be something like what we used before udev.
+What was that called?
+Was it also called devtmpfs no, mabe it was called devfs.
+Perhaps that might pop up 0600 root:root device nodes
+as kernel modules are loaded?
+But even so the loading of modules is normally done by udev
+except when the kernel parameter coldplug is given.
+
+If I am feeling exceptionally paranoid
+then I untar a previously working archive of udev
+into /etc/udev.sav/ so it is included on the initramfs
+and I can copy it and use it if necessary.
+Depending on how old it is it might not work.
+
+
+&gt;<i> Anyway, Is lilo even maintained anymore?
+</I>
+I sometimes wonder that about software.
+I remember checking a new version
+of it sometime this or last year.  :)
+Or maybe it was in 2007
+lilo-22.8.src.tar.gz            19-Feb-2007 13:18  427K
+According to ibiblio.org's HTTP server.
+
+For the most part lilo is very solid
+and it still compiles without patches.
+For lack of change who knows what problems
+were avoiding for using lilo for the last 3 years
+instead of original and new grub?
+
+
+&gt;<i> What i would like to see is that we
+</I>&gt;<i> switch over GRUB2, it looks promising and its what all major distros uses,
+</I>&gt;<i> it's been maintained and developed actively and it got more features than
+</I>&gt;<i> lilo can provide.
+</I>
+Last I looked the new grub was also considered unstable.
+It might also be a tad bit easier to mis-install it
+since it does not use /dev device names.
+grub can do one nifty thing that lilo does not.
+grub supports loading multiple initramfs per kernel image.
+Other than that, for the purpose of merely booting a box
+it has no significant advantages over lilo.
+Except for an invalid /etc/lilo.conf preventing re-installation
+grub is perhaps no safer than using lilo.
+However, grub is larger, more complex, requires
+itself to be installed in the MBR, can read ext2/ext3 filesystems,
+and can play a knockoff of space invaders.
+Might not be what everyone wants,
+especially someone who wants something
+other than grub installed in the MBR.
+
+My challenge about grub is still the same.
+I do not use it and so I do not know how to
+integrate it with sorcery's init-scripts.
+However, if someone writes decent init-scripts
+that work as good as those for lilo
+then it would be possible to add grub as an option.
+
+I suspect most Sorcerer SAs do not want me to
+switch Sorcerer over to grub and risk introducing bugs
+that will derail boxes from booting just because
+I want the support for loading simultaneously
+both a common and a kernel specific initramfs
+image during boot.
+
+The rewards for switching to grub should far outweigh the risks.
+If someone is making a list of boons and banes
+and writing init-scripts for it
+then it will probably happen.
+Otherwise if I leave it alone
+then it is one less thing I will break about Sorcerer this year.
+The transition away from using sentinel was plenty of headache.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001888.html">[Sorcerer-admins] lilo does not compile - several problems with it
+</A></li>
+	<LI>Next message: <A HREF="001891.html">[Sorcerer-admins] lilo does not compile - several problems	with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1889">[ date ]</a>
+              <a href="thread.html#1889">[ thread ]</a>
+              <a href="subject.html#1889">[ subject ]</a>
+              <a href="author.html#1889">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

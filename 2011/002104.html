@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Removing modules for current kernel...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTinNOe-hAtLNUw1f1%2Bt2qO3SHduwyg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002103.html">
+   <LINK REL="Next"  HREF="002105.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Removing modules for current kernel...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTinNOe-hAtLNUw1f1%2Bt2qO3SHduwyg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Removing modules for current kernel...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Apr 13 08:43:24 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002103.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+        <LI>Next message: <A HREF="002105.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2104">[ date ]</a>
+              <a href="thread.html#2104">[ thread ]</a>
+              <a href="subject.html#2104">[ subject ]</a>
+              <a href="author.html#2104">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree that rebooting should not be a problem.
+/etc/lilo.conf is a symbolic link to /etc/lilo/conf
+And /etc/lilo/conf is a file that is automatically reconstructed as required
+from the contents of /etc/lilo/{head,tail} and /boot/*/linux
+Then following reconstruction lilo is reinstalled to the boot block
+that is specified in /etc/lilo/head
+It should not be problematic.
+
+If /etc/lilo/head without the password= line is sent my way
+then perhaps I might be able to spot something about it which seems problematic.
+
+As for kernel and module removal...
+This is not done by sorcery.
+Instead it is done by /etc/init.d/lilo
+The last 4 installed kernels are kept.
+The most recently installed kernel becomes the default
+kernel unless a default is specified in /etc/lilo/head
+Specifying a default in /etc/lilo/head can become problematic
+eventually when that kernel is removed.
+
+Kernel updates are not too frequent.
+In most situations removal of the currently booted kernel, initramfs,
+and modules
+is not problematic because the box will have been up for a long time
+and any kernel
+module that would be required would have already been loaded.
+Obviously, this might not always be the situation.
+However, keeping more than 4 kernels begins a problematic situation for
+SAs that have /boot/ on a separate 2G file system,
+which is recommended for boxes that boot using LUKS encryption
+or use a file system for / that is not lilo compatible.
+
+So obviously, keeping an indefinite amount of legacy kernels and
+modules is not a solution.
+And lilo can store information for no more than approximately 16 labels.
+Therefore, the best solution is probably to fix the box
+so that it can reboot after a kernel update.
+
+It is not something to become upset about.
+15 years ago SAs were having lilo configuration and booting problems
+and even today it is possible to do so especially when the SA becomes
+confused about what lilo installed where runs first.
+
+My recommendation is to have lilo install to the boot block of the
+/boot/ partition
+and use ms-sys to install a bootable master boot record to the primary
+fixed disk.
+That way when the box boots it first runs ms-sys
+then ms-sys loads and runs the boot block of the first partition with
+the bootable flag.
+That should cause lilo to run.
+And lilo should load the initramfs and kernel image.
+Following that the kernel runs, mounts the initramfs on / and executes /init
+That is a tiny summary of what happens after the power on self test.
+
+The fdisk program can be used to toggle the bootable flag on a partition.
+Even if forgotten, the Sorcerer menu driven installer usually turns on
+the bootable flag for the /boot partition.
+So it should not be a problem.
+
+Some SAs want lilo installed in the MBR of a fixed disk.
+That is fine also.
+In the past I might have had reasons for not wanting that,
+but I can not remember any of the reasons now.
+Intentionally configuring lilo to install in the MBR solves the problem
+of what lilo runs first by potentially overwriting a stale lilo
+installed to the MBR.
+If a stale lilo is installed to the MBR and Sorcerer installs lilo
+fresh to the boot block of /boot or /
+then that would become a definite reason why the box would not boot.
+
+Hopefully, the box can be put into a state bootable from fixed disk.
+I only knew one SA that had a problem doing that more than a decade ago.
+*lol*
+He installed lilo to a floppy.
+So the linux operating system installed on the fix disk
+started it's initial booting from a floppy with lilo in the MBR.
+But perhaps to us it was not the strangest solution since
+we both started computing in the pre 80386 era
+before computers came with fixed disks installed.
+So we both had lots of experience with booting from floppy.
+
+However, there probably is not a modern computer which
+can not boot from fixed disk unless it has bad bugs in the BIOS.
+If so then it can usually be repaired by a flash upgrade of the
+motherboard BIOS to a newer version.
+It might be worth a check to see if a newer version exists.
+Good luck fixing the box.
+
+
+On Tue, Apr 12, 2011 at 10:58 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm usually of the opinion that if it's not broken, don't fix it...
+</I>&gt;&gt;<i> and this system has been steadily running for 97 days. &#160;I'm currently
+</I>&gt;&gt;<i> out of town, and if there is an issue if I cause the box to reboot, I
+</I>&gt;&gt;<i> won't be able to fix it - I have occasionally had to put a monitor on
+</I>&gt;&gt;<i> it and keyboard, and I'm not entirely sure I have all the startup
+</I>&gt;&gt;<i> working 100%.....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Yup, caused a reboot, and now the box is gone :)
+</I>&gt;<i> For some reason almost every time after a kernel update, I have to
+</I>&gt;<i> manually boot to a recovery CD and manually run lilo... should still
+</I>&gt;<i> be using GUIDs for file systems. &#160;There's only one hard drive in the
+</I>&gt;<i> system, with simple partitions, really shouldn't be such an issue.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002103.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+	<LI>Next message: <A HREF="002105.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2104">[ date ]</a>
+              <a href="thread.html#2104">[ thread ]</a>
+              <a href="subject.html#2104">[ subject ]</a>
+              <a href="author.html#2104">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

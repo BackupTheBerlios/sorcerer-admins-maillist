@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] current I/R does not install bootloader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812131352l66eeb99dw22318c5a1b18c720%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000934.html">
+   <LINK REL="Next"  HREF="000946.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] current I/R does not install bootloader</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812131352l66eeb99dw22318c5a1b18c720%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] current I/R does not install bootloader">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Dec 13 22:52:28 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000934.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+        <LI>Next message: <A HREF="000946.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#940">[ date ]</a>
+              <a href="thread.html#940">[ thread ]</a>
+              <a href="subject.html#940">[ subject ]</a>
+              <a href="author.html#940">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> At this point i think transfer routine is broken.
+</I>&gt;<i> For a next version of I/R ISO installer could you make a verify option
+</I>&gt;<i> available to check if transfer was ok or not. I think older versions did
+</I>&gt;<i> have verify but its gone from current versions?
+</I>
+According to your next email it broke in a way that I did not expect.
+
+
+&gt;<i> Also using compile menu and its chroot casting goes show so quickly errors
+</I>&gt;<i> so you dont have time to read what error message chroot is saying so also
+</I>&gt;<i> could you make some error checking if chroot was ok or not also and perhaps
+</I>&gt;<i> capture errors from chroot itself. It would help debugging where errors
+</I>&gt;<i> might lie.
+</I>
+Compile errors are not supposed to happen during installation.
+
+
+&gt;<i> Just make a chroot_cast shell script so if you are using shell to make some
+</I>&gt;<i> sort of manual install there is easy way to chroot_cast init-scripts,
+</I>&gt;<i> functions, etc...
+</I>
+I doubt SAs would find it if I created it.
+
+
+&gt;<i> BTW offtopic question: are we moving some day to use GRUB instead of LILO? I
+</I>&gt;<i> like GRUB more because it's boot loader has more flexibility than lilo has.
+</I>
+I like lilo.
+If someone who understands grub writes those code to properly
+integrate support for grub with the init-scripts, initramfs regeneration,
+proper grub re-installation, support for image passwords,
+support for device names or at least detection by UUID, etc
+then we can have grub.
+However each year that I check grub to see if it will do what I want
+I am disappointed that it does not.
+And unlike lilo grub must be installed into the MBR.
+Those who dual boot a box with another operating system might
+prefer that some other boot loader or MBR be installed in the MBR?
+
+
+&gt;<i> Except for encrypted root, other major distro's wizard like installers do
+</I>&gt;<i> support LVM2 and software raid (in a expert mode), they are actually basic
+</I>&gt;<i> stuff nowdays, not some advanced senior level stuff ;)
+</I>
+I have read about that also.
+However, the complexity of LVM2 is not standard
+even if some distros only support it.
+Boxes can still be deployed perfectly without LVM2.
+Even worse is that some of the distros that support mdadm and LVM2
+do so in a less optimal order than Sorcerer.
+It probably should be bottom to top md LUKS LVM2 as it is in Sorcerer.
+
+
+&gt;<i> Some distro's like Red Hat Enterprise distro and it's clones like CentOS are
+</I>&gt;<i> using LVM2 as default, so normal installer is actually doing LV root, etc.
+</I>
+That make sense.
+Redhat drives the development of LVM2
+If not for LVM2 we might be using evms by IBM.
+However, evms does not exactly work properly at the moment.
+Frankly, LVM2 is a more complex twist that uses the device mapper.
+A distro could do just fine using mdadm, LUKS and the device mapper.
+Initially I almost decided not to support LVM2
+
+
+&gt;<i> My point was that there are lot's of SSH scanners, i mean lots of them, who
+</I>&gt;<i> does scan port 22 and tries to login with some accounts and passwords,
+</I>&gt;<i> thousands and thoudands times in a day.
+</I>
+I suppose not having the port answer saves a little bandwidth.
+But still finding a ssh2 port is far from impossible.
+Also keeping it within the first 1024 ports is wise just to prevent
+a local nefarious user from getting the chance to somehow backdoor it.
+If any IP address is unreasonably opening connects to port 22
+a iptables rule can fix that.
+logging may be useful also to detect attack vectors.
+Lastly, one can always make a single designated method for
+entering a network that is not on port 22
+while still using port 22 as the default from inside the network
+especially if those boxes do not have globally route-able IP addresses
+or the firewall/router protects them.
+
+&gt;<i> So currently it helps to put ssh to different port than 22. And because they
+</I>&gt;<i> are using username + password so disabling normal password authentication
+</I>&gt;<i> scanners do not have any change to break in if someone is using bad
+</I>&gt;<i> password.
+</I>
+If someone really wants to crack their way into a network
+they would try each port in a semi random fashion over a log stretch
+of time until the proper ssh2 port can be identified.
+Having ssh2 on another port seems like a great deal of effort
+for a benefit that is almost too easily defeated.
+Do you use custom init scripts or custom /etc/services  ?
+Wait I do not need to know.
+Forget the question.
+It just seems like a lot of effort.
+
+
+&gt;<i> Yes, there are some cases where you take password out of private key, like
+</I>&gt;<i> if you use SSH connections in crontab etc.
+</I>&gt;<i> But anyway i dont see any major problem if using SSH keys instead of normal
+</I>&gt;<i> passwords, i dont see that any major security risk.
+</I>
+I did not expect that a key could have the password removed
+after it was initially created.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000934.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+	<LI>Next message: <A HREF="000946.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#940">[ date ]</a>
+              <a href="thread.html#940">[ thread ]</a>
+              <a href="subject.html#940">[ subject ]</a>
+              <a href="author.html#940">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

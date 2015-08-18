@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NFS mount problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NFS%20mount%20problem&In-Reply-To=%3C2945b1c29b548f9f049563bd107028f6.squirrel%40northtech.us%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001516.html">
+   <LINK REL="Next"  HREF="001518.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NFS mount problem</H1>
+    <B>bradley at northtech.us</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NFS%20mount%20problem&In-Reply-To=%3C2945b1c29b548f9f049563bd107028f6.squirrel%40northtech.us%3E"
+       TITLE="[Sorcerer-admins] NFS mount problem">bradley at northtech.us
+       </A><BR>
+    <I>Sat Mar 13 03:09:47 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001516.html">[Sorcerer-admins] NFS mount problem
+</A></li>
+        <LI>Next message: <A HREF="001518.html">[Sorcerer-admins] ISO Problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1519">[ date ]</a>
+              <a href="thread.html#1519">[ thread ]</a>
+              <a href="subject.html#1519">[ subject ]</a>
+              <a href="author.html#1519">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Interesting too, is that udp6 and tcp6 are being reported as rpcbind
+errors at the very beginning of the Sorcerer installation process too.
+
+See my earlier post regarding that.
+
+&gt;<i> On Thursday 11 March 2010, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+</I>&gt;&gt;<i> Interesting, i commented out from /etc/netconfig these lines:
+</I>&gt;&gt;<i> udp6       tpi_clts      v     inet6    udp     -       -
+</I>&gt;&gt;<i> tcp6       tpi_cots_ord  v     inet6    tcp     -       -
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Then restarted rpcbind, after that, rpc.statd did started! Problem
+</I>&gt;&gt;<i> solved.
+</I>&gt;<i> Interesting.
+</I>&gt;<i>
+</I>&gt;<i> I am using NFSv4 only so if you need any  help with that, I can share my
+</I>&gt;<i> config.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Terveisin/Regards,
+</I>&gt;&gt;<i>    Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 11.03.2010 12:10:58:
+</I>&gt;&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>
+</I>&gt;&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; Date: 11.03.2010 12:11
+</I>&gt;&gt;<i> &gt; Subject: [Sorcerer-admins] NFS mount problem
+</I>&gt;&gt;<i> &gt; Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Hi
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I am trying to mount a NFS mount from server and i am getting this
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> error:
+</I>&gt;&gt;<i> &gt; mount.nfs: rpc.statd is not running but is required for remote
+</I>&gt;&gt;<i> locking.
+</I>&gt;&gt;<i> &gt; mount.nfs: Either use '-o nolock' to keep locks local, or start statd.
+</I>&gt;&gt;<i> &gt; mount.nfs: an incorrect mount option was specified
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; But i cant start /etc/init.d/rpc.statd, it does not start, it says
+</I>&gt;&gt;<i> &gt; when trying to debug it:
+</I>&gt;&gt;<i> &gt; 03/11/2010 12:08:36 rpc.statd[3335]: Version 1.2.1 Starting
+</I>&gt;&gt;<i> &gt; 03/11/2010 12:08:36 rpc.statd[3335]: Flags: No-Daemon Log-STDERR
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; : unable to register (statd, 1, udp).
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Unable to register? I am using rpcbind, and i am tried to put stuff
+</I>&gt;&gt;<i> &gt; on /etc/hosts.allow, currently:
+</I>&gt;&gt;<i> &gt; cat /etc/hosts.allow
+</I>&gt;&gt;<i> &gt; rpcbind: ALL
+</I>&gt;&gt;<i> &gt; statd: ALL
+</I>&gt;&gt;<i> &gt; lockd: ALL
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Atleast those dont do nothing.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; So on Sorcerer, how should i proceed so i can mount NFS mounts from
+</I>&gt;&gt;<i> &gt; another server with locking on?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Terveisin/Regards,
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;   Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001516.html">[Sorcerer-admins] NFS mount problem
+</A></li>
+	<LI>Next message: <A HREF="001518.html">[Sorcerer-admins] ISO Problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1519">[ date ]</a>
+              <a href="thread.html#1519">[ thread ]</a>
+              <a href="subject.html#1519">[ subject ]</a>
+              <a href="author.html#1519">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

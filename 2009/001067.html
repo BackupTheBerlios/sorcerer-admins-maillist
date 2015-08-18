@@ -1,0 +1,271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C49E79A4C.2020908%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001066.html">
+   <LINK REL="Next"  HREF="001068.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lvm, suspend, raid, swap, encryption...</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C49E79A4C.2020908%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] lvm, suspend, raid, swap, encryption...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Apr 16 22:51:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001066.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+        <LI>Next message: <A HREF="001068.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1067">[ date ]</a>
+              <a href="thread.html#1067">[ thread ]</a>
+              <a href="subject.html#1067">[ subject ]</a>
+              <a href="author.html#1067">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>according to what I read :
+1) suspend/resume can't be done using a lvm swap partition : since the 
+swap partition shall be accessible directly from kernel boot (don't go 
+through init process)
+2) in sorcerer it's not possible to use software raid on top of lvm, 
+since lvm shall be activated first before raid is activated, however I'm 
+not sure that raid array can be dynimically updated like lvm allow
+3) encryption is the only thing that would work ;)
+so I'll drop the idea of using lvm, it's sure interesting to be more 
+flexible and allow fast resizing of partitions, however I don't change  
+my partition size every weekend and the actual size seems to fit me...
+I'll then simply activate my suspend (there are boons with suspend, 
+especially on laptops when you run out of battery and don't wanna loose 
+all your open applications...) and toy around with ext4....
+JLM
+
+Kyle Sallee wrote:
+&gt;<i> Looking at /etc/rc.d/rcS.d/ on an I/R's initramfs I see that..
+</I>&gt;<i> S08mdadm*
+</I>&gt;<i> S13vgchange
+</I>&gt;<i> S14cryptsetup
+</I>&gt;<i>
+</I>&gt;<i> Software raids start first,
+</I>&gt;<i> then logical volumes are started
+</I>&gt;<i> and finally encryption is started.
+</I>&gt;<i> So apparently service that starts later
+</I>&gt;<i> can encapsulate the service that starts earlier.
+</I>&gt;<i> Consequently, applying LUKS encryption to a
+</I>&gt;<i> logical volume should be possible.
+</I>&gt;<i>
+</I>&gt;<i> swap does not start until runlevels.
+</I>&gt;<i> It is often activated first when the runlevel begins.
+</I>&gt;<i> runlevels begin after sysinit finishes.
+</I>&gt;<i> Therefore, having swap on a software RAID, LVM, or encrypted
+</I>&gt;<i> should be possible if it is supported.
+</I>&gt;<i> If I remember correctly LVM is simply a front end,
+</I>&gt;<i> a complicated one at that, to the device mapper.
+</I>&gt;<i> And the device mapper is used to partition disks,
+</I>&gt;<i> but not in the traditional method of partitioning.
+</I>&gt;<i> Having an LUKS encrypted swap works.
+</I>&gt;<i> It is support in linux.
+</I>&gt;<i> The designated luks swap partition is initialized with
+</I>&gt;<i> a random key on each boot.
+</I>&gt;<i> Since LUKS can work ontop of LVM this combination should be possible.
+</I>&gt;<i> However, I do not recall testing if swap can be made directly
+</I>&gt;<i> on a LVM logical volume.
+</I>&gt;<i> Logically, I would expect it to be so.  :)
+</I>&gt;<i> But it does require testing.
+</I>&gt;<i>
+</I>&gt;<i> The order of software raids, LVM2, and LUKS on Sorcerer
+</I>&gt;<i> is probably different than any other distro.
+</I>&gt;<i> I selected this order so that if an encrypted filesystem
+</I>&gt;<i> were to span two or more physical volumes
+</I>&gt;<i> then each volume would not require a separate password prompt
+</I>&gt;<i> and/or separate password.
+</I>&gt;<i> However, it has not been extensively tested.
+</I>&gt;<i> I usually use either regular partitions, LUKS encrypted partitions,
+</I>&gt;<i> or LVM2, but not a combination of the above .
+</I>&gt;<i>
+</I>&gt;<i> However, if it is indeed set up correctly
+</I>&gt;<i> then Sorcerer should support any of the sophisticated
+</I>&gt;<i> partitioning, volume management, and encryption that
+</I>&gt;<i> is available on most any distribution.
+</I>&gt;<i> However, evms is not supported!
+</I>&gt;<i> Also, different encryption methods other than LUKS
+</I>&gt;<i> are not supported by the menu driven installer.
+</I>&gt;<i> However, you can use them if desired, such as using
+</I>&gt;<i> the cryptloop device to create a looped back encrypted
+</I>&gt;<i> filesystem out of a file, partition, or logical device.
+</I>&gt;<i>
+</I>&gt;<i> As with most things about POSIX systems,
+</I>&gt;<i> there is usually more than one way to do it,
+</I>&gt;<i> and not just one &quot;correct&quot; way.
+</I>&gt;<i> Also there is no good substitution for just playing
+</I>&gt;<i> with it to gain a feel for how it works.
+</I>&gt;<i> Even reading the manual pages for LVM2 is rather confusing.
+</I>&gt;<i> What's a logical group, logical volume, physical volume?
+</I>&gt;<i> I barely remember.
+</I>&gt;<i> But once one sets up a LVM2 style deployment a few times
+</I>&gt;<i> then it becomes almost intuitive.
+</I>&gt;<i>
+</I>&gt;<i> Encrypted root filesystem in conjunction with a CMOS password,
+</I>&gt;<i> and decent lilo password is a good combination for a notebook.
+</I>&gt;<i> For a secret or higher level notebook and/or workstation
+</I>&gt;<i> then I also recommend using an encrypted swap.
+</I>&gt;<i> Given sufficient RAM, 3G 4G, most Sorcerer boxes will do
+</I>&gt;<i> almost no swapping.
+</I>&gt;<i> Yet still disk caching and buffering can be improved on those boxes,
+</I>&gt;<i> by having some swap space so that RAM that remains nearly unused
+</I>&gt;<i> while a box is running can be swapped to disk and thus become available
+</I>&gt;<i> for other more important uses.
+</I>&gt;<i>
+</I>&gt;<i> On a dual core or quad core box
+</I>&gt;<i> the impact of an encrypted root filesystem is nearly negligible
+</I>&gt;<i> since there is almost always spare CPU available for handling the encryption.
+</I>&gt;<i> That is nice to know.
+</I>&gt;<i> Also it is nearly impossible to buy a new notebook computer
+</I>&gt;<i> that is not a SMP core.
+</I>&gt;<i> That is also why the x86_64 linux-modular configuration only
+</I>&gt;<i> has the SMP configuration and not a separate non SMP configuration.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer is a decent operating system to use in an environment where
+</I>&gt;<i> one's bytes must remain safe.
+</I>&gt;<i> However, it does not have completed support for selinux.
+</I>&gt;<i> However, not many SAs would be able to configure and deploy
+</I>&gt;<i> a selinux enabled box properly to maximize the security benefits.
+</I>&gt;<i>
+</I>&gt;<i> Jan might know the answers to the suspend/resume questions.
+</I>&gt;<i> I know nothing bout suspend/resume,
+</I>&gt;<i> except that a suspend/resume swap partition
+</I>&gt;<i> must not be an encrypted partition.
+</I>&gt;<i>
+</I>&gt;<i> Shutting down a Sorcerer box properly and restarting it,
+</I>&gt;<i> is not such a dangerous nor long process provided that
+</I>&gt;<i> the /boot partition did not run out of space while generating initramfs images.
+</I>&gt;<i> A full suspend to disk is not a necessity on a notebook,
+</I>&gt;<i> especially where security is paramount!
+</I>&gt;<i> A suspend to disk would write the entire contents of RAM
+</I>&gt;<i> unencrypted to the suspend/swap partition.
+</I>&gt;<i> This is counter-intuitive to having encrypted filesystems!
+</I>&gt;<i> Consequently, I recommend either:
+</I>&gt;<i> a non encrypted deployment that can suspend to disk;
+</I>&gt;<i> or an encrypted deployment that can not suspend to disk.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, remember that if a notebook goes out of one's possession
+</I>&gt;<i> that someone could tamper with the initramfs and linux kernel
+</I>&gt;<i> that reside on the unencrypted boot partition.
+</I>&gt;<i> There is one way to prevent that!
+</I>&gt;<i> Keep a separate USB drive key for booting that is only plugged
+</I>&gt;<i> into the notebook when the notebook is booted.
+</I>&gt;<i> Soon as the notebook is booted,
+</I>&gt;<i> and assuming no updates linux are required,
+</I>&gt;<i> umount /boot and remove the USB key.
+</I>&gt;<i> This way the entire contents of the notebook disk drives can be encrypted,
+</I>&gt;<i> while the only unencrypted bytes are store on the USB key which is kept
+</I>&gt;<i> normally separated from the notebook.
+</I>&gt;<i> This way if the notebook, but not USB key,
+</I>&gt;<i> go out of possession and then return
+</I>&gt;<i> the data on the notebook will have not been compromised
+</I>&gt;<i> nor adjusted so that the notebook can be rooted on the next boot.
+</I>&gt;<i> Fun huh?
+</I>&gt;<i>
+</I>&gt;<i> Yes users that share a notebook can have separate personal USB keys.
+</I>&gt;<i> But they would all have to know the LUKS password for the / partition
+</I>&gt;<i> unless each has separate encrypted partitions that they can use.
+</I>&gt;<i> However, I seriously doubt with the low expense of notebook computers
+</I>&gt;<i> that a company would share the deployment of notebooks among users.
+</I>&gt;<i>
+</I>&gt;<i> If one uses a separate USB key for booting a notebook,
+</I>&gt;<i> please make a dd backup of that key onto another key.
+</I>&gt;<i> We all know how having just one key tends tends to invite
+</I>&gt;<i> the problem of a key being lost or damaged.
+</I>&gt;<i> Also, with the Sorcerer method for LUKS encryption,
+</I>&gt;<i> LUKS encrypted filesystems receive their password from
+</I>&gt;<i> a prompt made to the SA during boot.
+</I>&gt;<i> Yes, the actual password key is not stored on disk in a file.
+</I>&gt;<i> Memorize the password and swallow the paper.  :)
+</I>&gt;<i> Just joking about eating the paper.
+</I>&gt;<i> However, it is good to know that the merely having
+</I>&gt;<i> an encrypted notebook and USB key to boot it is not
+</I>&gt;<i> enough to boot the box and gain access to the encrypted / filesystem.
+</I>&gt;<i> However, if anyone gains possession to the unencrypted USB key,
+</I>&gt;<i> that can be compromised so that on a future boot the notebook
+</I>&gt;<i> could be rooted while running.
+</I>&gt;<i>
+</I>&gt;<i> Someone might know about notebooks that have fixed disk encryption
+</I>&gt;<i> where a password is promoted for during the BIOS portion of boot.
+</I>&gt;<i> Those notebooks might be more secure than can be achieved using
+</I>&gt;<i> LUKS software encryption provided with Sorcerer.
+</I>&gt;<i> However, I do not know what notebooks come with
+</I>&gt;<i> hardware encryption for the fixed disks.
+</I>&gt;<i>
+</I>&gt;<i> I saw a cute tiny notebook with a solid state drive at the other day.
+</I>&gt;<i> Looks like a little toy.
+</I>&gt;<i> Has only meager 16G drive.
+</I>&gt;<i> But it is a step in the direction towards disk less portables.
+</I>&gt;<i> It would be usable by someone with eagle eyed vision and
+</I>&gt;<i> would not mind attaching a USB external drive,
+</I>&gt;<i> or as an email / websurfing box?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Apr 16, 2009 at 4:50 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i> I was looking about lvm and raid and I begun to think about mixing all
+</I>&gt;&gt;<i> stuff together....
+</I>&gt;&gt;<i> ie use lvm as a backend to manage virtual partitions on raw disks,
+</I>&gt;&gt;<i> putting some raid (optional but could be interesting) on it,
+</I>&gt;&gt;<i> creating following partitions :
+</I>&gt;&gt;<i> /dev/lvm1 : /boot : no raid on it, just lvm
+</I>&gt;&gt;<i> /dev/lvm2 : swap : no raid on it, just lvm, shall be suitable for
+</I>&gt;&gt;<i> suspend/resume on disk
+</I>&gt;&gt;<i> /dev/lvm3 : / : no raid, just lvm (or optional raid1)
+</I>&gt;&gt;<i> /dev/lvm4 : /home : raid3, with parity disk on /dev/lvm5
+</I>&gt;&gt;<i> /dev/lvm5 : parity disk : raid1 (duplication of parity disk)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1) is it possible to have a swap suitable for suspend/resume on lvm?
+</I>&gt;&gt;<i> 2) is it possible with sorcerer to have this configuration?
+</I>&gt;&gt;<i> 3) is it possible to encrypt /home on top of this?
+</I>&gt;&gt;<i> thanks
+</I>&gt;&gt;<i> JLM
+</I>&gt;&gt;<i>     
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090416/ad35a16a/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090416/ad35a16a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001066.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+	<LI>Next message: <A HREF="001068.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1067">[ date ]</a>
+              <a href="thread.html#1067">[ thread ]</a>
+              <a href="subject.html#1067">[ subject ]</a>
+              <a href="author.html#1067">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

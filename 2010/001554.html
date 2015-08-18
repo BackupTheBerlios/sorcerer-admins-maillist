@@ -1,0 +1,1015 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2046%2C%20Issue%202&In-Reply-To=%3C20100403.143142.19475.0%40webmail12.vgs.untd.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001553.html">
+   <LINK REL="Next"  HREF="001555.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 2</H1>
+    <B>nathan_allen1 at juno.com</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2046%2C%20Issue%202&In-Reply-To=%3C20100403.143142.19475.0%40webmail12.vgs.untd.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 2">nathan_allen1 at juno.com
+       </A><BR>
+    <I>Sat Apr  3 20:31:42 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001553.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 1
+</A></li>
+        <LI>Next message: <A HREF="001555.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1554">[ date ]</a>
+              <a href="thread.html#1554">[ thread ]</a>
+              <a href="subject.html#1554">[ subject ]</a>
+              <a href="author.html#1554">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>it says download failure for every file i try to install please advise.
+
+
+---------- Original Message ----------
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Sorcerer-admins Digest, Vol 46, Issue 2
+Date: Sat, 03 Apr 2010 20:06:25 +0200
+
+Send Sorcerer-admins mailing list submissions to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+or, via email, send a message with subject or body 'help' to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+
+You can reach the person managing the list at
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-owner at lists.berlios.de</A>
+
+When replying, please edit your Subject line so it is more specific
+than &quot;Re: Contents of Sorcerer-admins digest...&quot;
+
+
+Today's Topics:
+
+   1. Re: sorcerer gui and firefox question? (Kyle Sallee)
+   2. Re: Sorcerer-admins Digest, Vol 46, Issue 1
+      (<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>)
+   3. Re: Sorcerer-admins Digest, Vol 46, Issue 1 (Evert Vorster)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Sat, 3 Apr 2010 03:22:55 -0700
+From: Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Re: [Sorcerer-admins] sorcerer gui and firefox question?
+Message-ID:
+	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">r2x596b75861004030322ud9ef2f00w64a1b498fc71246f at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=UTF-8
+
+Good questions.
+They are not explained usually because the answers
+are considered general SA knowledge.
+More or less it is not distribution specific knowledge.
+Purty much it works the same on most distros.
+Basically, you probably want a X server
+and to be able to login using a graphic user interface
+and then be able to select programs to run from a menu, yes?
+Fortunately, it is not difficult to accomplish.
+
+# cast xorg firefox kde-v4
+# nano /etc/inittab
+Change the default runlevel from 3 to 5
+
+Now when the computer starts it will also start kde-v4
+and present a graphic logic prompt
+instead of the usual virtual consoles.
+But it will only do so if it can properly detect the installed
+graphics hardware and pointers automatically.
+Otherwise an /etc/X11/xorg.conf file is required.
+I use one anyway.
+
+A distribution such as Sorcerer, Debian, or Ubuntu is basically
+layers upon layers of software.
+At the very bottom or core is the linux kernel.
+The linux kernel provides drivers for interfacing with hardware,
+protocols, and filesystems.
+The kernel is also the gatekeeper to such devices
+and enforces security and determines how much of the CPU
+each running process should receive.
+
+The layer that is most directly above the kernel is the C library.
+Few programs talk to the kernel directly when they want to
+access filesystems, devices and protocols.
+Instead the very useful and basic functions for accomplishing
+those tasks are stored in the C library which is provided by glibc.
+
+Almost all software on a box that is compiled either links
+with the static or ELF libc libraries.
+Programs linked with static libraries have the code contained
+in the library copied directly into the program.
+Programs that link with ELF libraries instead have the library code
+loaded into memory as needed when the program starts.
+ELF libraries save disk space and allow for better updating,
+because if an installed ELF library is updated then any software
+linked with the ELF library immediately receives the benefits of
+the update without having to be recompiled, assuming that
+the new library is binary compatible with the old library.
+In contrast programs linked with static libraries must also
+be recompiled in order to receive the benefit of library updates.
+
+Other libraries sit a bit higher than C library
+and usually also link with the C library.
+An example of such a library is libX11.
+The X11 library is a library of functions that programs can link
+with in order to do graphic output to an X server.
+
+The X server is the really fun piece of software that is capable
+of putting the screen into graphics mode and having concurrently open
+different windows for different programs.
+However, using the X server bare is difficult to do because
+it does not provide for an easy method of resizing and moving
+windows around.
+
+A plain X server is usable.
+It is not very interesting.
+And typically it will close automatically when no
+open programs are connected with it.
+So generally, having at least one program connected to it
+becomes a good idea to avoid having to restart it each time.
+
+The one program that usually stays connected to the X server
+all the time is the window manager program.
+A window manager does just as it's name suggests.
+It allows for windows to be minimized, expanded, moved around
+and other fun things.
+If an X server was a potato
+then a window manger would bake it for you.
+
+Both GNOME and KDE are more than just window managers.
+KDE is the K desktop environment.
+Likewise GNOME is the gnome desktop environment.
+They provide all sorts of fancy programs, menus, eye candy,
+effects and other stuff to the experience of using the X server.
+
+Most of GNOME is in C, or at least it used to be.
+So it tended to be lighter on resource consumption.
+In the past it used to be a fast pleasant experience
+that was a good compromise between a desktop environment
+and a lightweight window manager.
+But I have not used gnome in a while.
+Instead I tend to prefer KDE version 4.
+
+KDE is entirely C++ and built upon the Q graphic toolkit
+that is provided by trolltech,
+and that library continues to change name.
+Currently, it is called qt-everywhere-opensource.
+KDE tends to be a bit slow, a memory hog,
+but some of the apps are useful and one can come
+to enjoy the KDE experience if their disk drive and
+memory are sufficient to avoid lengthy reads and swapping.
+
+There are other choices for window managers
+and also for desktop environments.
+However, KDE and GNOME tend to make other desktop
+environments look like little more than enhanced window managers.
+
+The most basic window manger that comes with xorg
+is called twm, which is short for &quot;the window manager&quot;
+Whether anyone uses twm, other than for testing,
+is curiosity question.
+Although it is a feature minimalistic window manager
+and it does work.
+However, twm is more of a demonstration program
+than a 1st choice window manager for any distribution.
+
+Programs such as firefox link with libX11 and also gtk+,
+the graphic toolkit used by gnome that was separated
+originally from the gimp project.
+Naturally, to enjoy that awesome web browsing experience
+with firefox one must be able to start an X session,
+and using at least a window manager is preferable.
+Yet X can be made to start with just firefox running.
+If done that way the X session ends when firefox closes.
+
+For a minimalistic window manager I tend to prefer yeahwm,
+although it is a bit buggy and will flake if run long enough.
+However, for an awesome experience I recommend running KDE.
+Yet KDE will seem slow as can be on anything less than an
+1 Ghz Athlon with 512M or more RAM installed.
+Probably KDE is not a good choice on low RAM boxes,
+and especially not while such a box is updating installed software.
+
+Although many Sorcerer SAs are irritated by how much
+installed software comes on the I/R
+it actually provides enough installed software in order to
+start an X session using twm as the window manager and
+to play a movie using xine.
+No, firefox does not come pre-installed,
+nor does KDE and gnome.
+
+An installed Sorcerer box can be stripped down to a console
+only installation with no libX11 or libraries from xorg installed.
+That only requires a little bit of effort.
+However, far more easily KDE and firefox can be
+installed on a new Sorcerer box.
+
+Also as a Sorcerer box updates the performance
+will gradually improve as the new software installed
+is tailored automatically to the available instruction set
+of the installed microprocessor.
+
+I hope that helps explain a little.
+Sorcerer only provides a means for useful common software.
+However, we do not train SAs in the use or configuration of software.
+To learn how to use it I would read
+the manual page for xorg.conf
+then the manual page for the desired graphic driver,
+then the web site documentation at <A HREF="http://x.org">http://x.org</A>
+and then perhaps a HowTo, Guide, or FAQ
+from <A HREF="http://www.tldp.org">http://www.tldp.org</A> which is the linux documentation project.
+
+Some distributions attempt to replicate the documentation
+available at the above URLs,
+yet the task becomes impossible because the software authors
+make changes and revision which each release and any
+3rd party documentation quickly becomes obsolete compared
+to the documentation that is available from the software authors.
+
+The manual pages that come with installed software along
+with any documentation for the software which might be found
+in /usr/doc/ or /usr/share/doc/ tends to be the most current source
+of information about the software.
+The next most current source of information is documentation
+that is available from the software author's homepage.
+The third and not usually current source of information
+is documentation provided at the linux documentation project.
+
+The further the documentation is from the installed software
+and the software author's documentation
+then the greater the probability that the information will be
+incorrect or obsolete.
+
+For example x.org that is currently standard on many distros
+was forked originally from the XFree86 project.
+One could learn something about using X from reading the
+documentation at the XFree86's project's homepage.
+However, the documentation would probably be describing
+something that is a bit different than what xorg current provides.
+
+The best thing about using a distro like Sorcerer
+is that it tends to provide nice new free software quickly.
+The bad aspect is that documentation for such software
+might be scattered across the fixed disk or across many
+websites on the Internet.
+Sorcerer could try to bring that documentation all into one place,
+but such a task is even more monumental than the task
+of providing the methods for downloading and installing new software.
+However, Sorcerer SAs are not at all abandoned.
+
+Typically, almost every spell has a homepage line in it.
+The homepage link is a URL to the software author's homepage
+and usually by following hyperlinks from that URL one can arrive
+at suitable documentation.
+
+# augur homepage firefox
+<A HREF="http://www.mozilla.com/en-US/firefox/firefox.html">http://www.mozilla.com/en-US/firefox/firefox.html</A>
+
+ # augur homepage xorg
+<A HREF="http://www.x.org">http://www.x.org</A>
+
+# augur homepage glibc
+<A HREF="http://www.gnu.org/software/libc">http://www.gnu.org/software/libc</A>
+
+Useful yes?
+
+A distribution basically is a gigsaw puzzle made from
+piecing together many other software projects in a way
+that is meaningful and usable.
+Sometimes pieces have to be rounded out.
+Sometimes they must be pounded into place.
+Consequently, each distribution contains nearly the same software,
+yet each distribution might also have a somewhat unique feel to it,
+and unique methods for using it.
+
+With Sorcerer the distribution layer that sits between the SA
+and the software installed is intended to be translucent
+and paper thin.
+Other distributions have such a thick feel to them that
+the SA is often prevented from directly configuring installed software.
+Such distributions try to relieve the SA of the task of having
+to configure installed software.
+However, with Sorcerer, software is installed by sorcery,
+but always configured by the SA.
+
+One might say that the aim of Sorcerer is to give SAs
+nearly all the power and configurability
+that could be achieved by manually installing software,
+yet without the headache and huge time commitment.
+That is because sorcery makes both installation and updating
+of software the dictionary definition of easy.
+However, configuration of installed software
+still remains dependent upon SA skill and knowledge.
+It is the type of compromise that senior level SAs enjoy,
+but could cause plenty of confusion for new SAs.
+
+There are also course, computer based training,
+and books that teach UNIX system administration
+and Linux glibc POSIX system administration.
+But to be perfectly honest about it
+there is no good substitution for visiting software
+author's homepages and also reading manual pages.
+Trying to learn the the technique from reading a single book
+has the problems of showing a point of view that will exclude
+potentially useful knowledge and will also present knowledge
+of no immediate use that could become confusing.
+
+I have seen people who try to learn
+a programming language by reading a book.
+Yet if one wants to learn a programming language
+then the best method is to write a program and learn
+along the way exactly what knowledge is required in order
+to complete the task.
+
+If one wants to increase SA skill
+then one of the better ways to do so is to write some
+useful shell scripts.
+All the knowledge required to do so is contained in
+the manual pages for the installed software such as:
+bash, coreutils, grep, find, sed
+And looking at a few example scripts helps also.
+
+Thanks to considerate software authors,
+and also the help of Debian maintainers,
+almost all installed software comes with documentation,
+manual pages, and info pages that are installed with the software.
+The answers to almost any SAs questions
+are already contained in some file already installed on their box.
+However, finding the desired files to read
+tends to be a bit easier for senior level SAs than new SAs.
+
+I do not wish to sound less than useful.
+However, to be perfectly honest about it
+when I want to know something about installed software,
+I tend to look at the install log, the installed manual pages,
+the installed info pages, the homepage, and sometimes
+I even extract the source tarball content and grep through
+the source tree.
+So basically, I do not do anything differently
+from what I advise others to do when seeking answers
+to questions about how to use and configure installed software.
+
+Definitely, the technique for learning how to learn how to
+compile, install, configure and run software is more important
+to a SA than how much a SA already knows.
+Although much of the basics remains the same
+software is constantly evolving.
+New features are added.
+For example at one time to edit a file using sed required
+that the file be piped through sed,
+written to a new file name and
+finally renamed back to the original filename.
+Now sed supports the -i parameter to instruct it to
+edit a file instead of a stream from stdin.
+Yes, it is a small change but it provides useful functionality.
+To me that seems to provide a good example of change.
+The sed found in distributions that provide the GNU implementation
+will support the -i parameter.
+However, sed provided by other UNIX might not.
+ls provides by the GNU implementation can accept switches
+at any point within the command line parameters.
+However, Solaris ls implementation only recognizes switches
+if such parameters come before any directory and/or filenames.
+
+Depending upon the implementation and version provided
+there are thousands of variations in commands and parameters
+support by commands.
+Utilities such as find, grep, sed, sort, uniq might be standard on
+all POSIX and UNIX implementations.
+However, there can be considerable difference
+in what command line parameters they support.
+
+Therefore, if knowing exactly what software one has
+and what it can do is important
+then that task can usually only be accomplished by the
+SA doing a first hand examination of the program's help screen,
+version, and manual pages.
+
+There is no all powerful tome that describes everything
+that can be done with the installed software on a box.
+I definitely understand how it could seem like an appealing idea.
+However, the task is far greater than a small group of people
+could accomplish.
+Even many of the HowTos at the Linux Documentation
+project website are half a decade or more older.
+
+If any such group of people could amass and track so much
+information about free software projects and present it in
+a useful form to SAs
+then such a website would easily obsolete OSDN's freshmeat.
+And OSDN's freshmeat is hardly a gathering point for documentation
+although sometimes change logs snips are provided with
+information about new releases of software that freshmeat
+attempts to track.
+Yet even freshmeat is usually not able to provide announcements
+about all new available software unless freshmeat users inform
+freshmeat staff that new releases are available,
+which is often accomplished using a freshmeat account
+and their website CGI forms.
+More simply put even freshmeat is not an all-seeing-eyeball
+upon free software.
+
+The way software sources and documentation are provided
+has so much variation in it that currently even information providers
+such as freshmeat, distrowatch,
+and even distribution maintainers tend to be blind
+to a some portion of updates that are potentially available.
+
+If a distribution can keep aware of 70% or more of software
+updates over the course of a year
+then that tends to be a considerably maintained distribution.
+freshmeat tracks more software than any distribution does,
+and I dare to speculate that their awareness of updates
+might be less than 20%
+Of course when tracking as many projects as freshmeat does
+they are bound to show updates from many software projects
+each day.
+However, they are still not the all-seeing-eye of software evolution.
+
+That probably provides too much information.
+SAs might not be aware of all the effort required
+in order for distribution maintainers to keep abreast of
+both the availability of software and the changes in software
+in order to keep distributions working properly.
+
+Currently, the lack of consensus among how software and
+documentation should be distributed makes for an interesting
+challenge as distribution maintainers continually try to
+pound the puzzle pieces together.
+Some distributions might provide some fancy documentation
+that make them look like they have it all going on in the right way.
+But in truth every distribution has blind spots
+and the best distributions will tend not to be the one's
+with the best presentation, but rather the ones concentrate
+on doing what a distribution should do best
+which is providing software for easy installation.
+And that is why Sorcerer SAs tend to stay with Sorcerer.
+
+Sorcerer is not trying to bring the sun moon and stars.
+It is just a daily tide upon which new software floats in.
+And it is not intended to be any more complex than that.
+
+
+On Fri, Apr 2, 2010 at 1:48 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> I just installed finally sorcerer linux and now my two fold question is how to cast firefox because it always says waiting for download to begin then after a while says it neither downloaded or compiled then quits and my second question is how to get to the gui of sorcerer linux like it is portrayed in the screenshots page on your website. please advise. Nathan Jeffrey Allen. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Penny Stock Jumping 2000%
+</I>&gt;<i> Sign up to the #1 voted penny stock newsletter for free today!
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+------------------------------
+
+Message: 2
+Date: Sat, 3 Apr 2010 17:42:52 GMT
+From: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Re: [Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 1
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">20100403.134252.9208.0 at webmail13.vgs.untd.com</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1
+
+i went to the augar activity failed and it says download failed next to every file but does not give an explanation why. i am using sorcerer 2009 because the 2010 iso wont burn properly. i wonder if this could be it because recently kyle redid the web address for sorcerer linux home page. please advise
+
+---------- Original Message ----------
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Sorcerer-admins Digest, Vol 46, Issue 1
+Date: Sat, 03 Apr 2010 12:00:03 +0200
+
+Send Sorcerer-admins mailing list submissions to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+or, via email, send a message with subject or body 'help' to
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+
+You can reach the person managing the list at
+	<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-owner at lists.berlios.de</A>
+
+When replying, please edit your Subject line so it is more specific
+than &quot;Re: Contents of Sorcerer-admins digest...&quot;
+
+
+Today's Topics:
+
+   1. sorcerer gui and firefox question? (<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>)
+   2. Re: sorcerer gui and firefox question? (Evert Vorster)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Fri, 2 Apr 2010 20:48:36 GMT
+From: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: [Sorcerer-admins] sorcerer gui and firefox question?
+Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">20100402.164836.14639.1 at webmail13.vgs.untd.com</A>&gt;
+Content-Type: text/plain; charset=ISO-8859-1
+
+I just installed finally sorcerer linux and now my two fold question is how to cast firefox because it always says waiting for download to begin then after a while says it neither downloaded or compiled then quits and my second question is how to get to the gui of sorcerer linux like it is portrayed in the screenshots page on your website. please advise. Nathan Jeffrey Allen. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+
+____________________________________________________________
+Penny Stock Jumping 2000%
+Sign up to the #1 voted penny stock newsletter for free today!
+<A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc</A>
+
+
+------------------------------
+
+Message: 2
+Date: Sat, 3 Apr 2010 04:03:47 +0000
+From: Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Re: [Sorcerer-admins] sorcerer gui and firefox question?
+Message-ID:
+	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">t2h27f41a931004022103i2c07a591p289b5fcab38f2243 at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+
+Hi there.
+
+I thought you had Sorcerer installed some time ago.
+
+
+Do you mean you got X11 and KDE installed?
+
+The sources not downloading, while highly unusual, does sometimes happen.
+You got the sources for everything else so far, so I assume that your
+network connection works properly.
+
+Every time I had this same thing, I was aborting spells while they were
+casting, etc.
+
+Just about the quickest way to see what is happening, is to reboot.
+
+Once you are back up, type:
+*augur clear*
+
+Then, type :
+*cast firefox*
+
+When it shows you that it is waiting to cast firefox, press *q*
+You will now be back at the command line. Issue:
+
+*augur scry*
+
+Now you will see what Sorcerer is doing.
+I highly suspect that there is a dependency of firefox that is not casting
+properly, making firefox autofail.
+
+If the same thing happens again, type
+
+*augur activity failed*
+
+Go to the bottom of the list... It should say firefox autofailed because of
+blablabla
+
+Once we isolate what is not working on your box, we can get to get that
+source compiling.
+
+
+Check to see if the firefox sources are available:
+*cd  /var/cache/sources/firefox*
+Check to see if there is a directory under there with the latest available
+version number of firefox, and that that directory contains a tarball.
+
+*<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:~# augur available firefox
+Indexing Complete
+3.6.2
+
+Sat Apr 03 03:54:25
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:~# cd /var/cache/sources/firefox/3.6.2
+
+Sat Apr 03 03:54:42
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:/var/cache/sources/firefox/3.6.2# ls
+firefox-3.6.2.source.tar.xz
+
+Sat Apr 03 03:54:44
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:/var/cache/sources/firefox/3.6.2#
+*
+Lastly, remove any half-leeched sources from /var/tmp/leech
+
+rm -r /var/tmp/leech
+
+Then try again to get firefox.
+
+cast firefox.
+
+
+
+In /root/.sorcery/grimoire should be all the spells that are currently
+available in your system.
+If you were to inspect the firefox spell, you can see where it's trying to
+download the sources from, and as a last resort try to download the sources
+yourself, and place them in the source cache.
+
+Lastly, I don't believe Sorcerer has a gui.
+I think what you are referring to as a gui is &quot;augur scry&quot; in a terminal
+with a transparent background. I also like to run gkrellm, as I like to see
+what my computer is up to while compiling.
+
+Hope some of this helps!
+
+-Evert-
+
+
+On Fri, Apr 2, 2010 at 8:48 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A> &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+
+&gt;<i> I just installed finally sorcerer linux and now my two fold question is how
+</I>&gt;<i> to cast firefox because it always says waiting for download to begin then
+</I>&gt;<i> after a while says it neither downloaded or compiled then quits and my
+</I>&gt;<i> second question is how to get to the gui of sorcerer linux like it is
+</I>&gt;<i> portrayed in the screenshots page on your website. please advise. Nathan
+</I>&gt;<i> Jeffrey Allen. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Penny Stock Jumping 2000%
+</I>&gt;<i> Sign up to the #1 voted penny stock newsletter for free today!
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100403/02f7d062/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100403/02f7d062/attachment-0001.html</A>&gt;
+
+------------------------------
+
+_______________________________________________
+Sorcerer-admins mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+
+
+End of Sorcerer-admins Digest, Vol 46, Issue 1
+**********************************************
+
+
+____________________________________________________________
+Penny Stock Jumping 2000%
+Sign up to the #1 voted penny stock newsletter for free today!
+<A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb77e6f7052293aadst04vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb77e6f7052293aadst04vuc</A>
+
+
+------------------------------
+
+Message: 3
+Date: Sat, 3 Apr 2010 18:06:24 +0000
+From: Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Re: [Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 1
+Message-ID:
+	&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">y2j27f41a931004031106n461c5983qfa3e505e25e7deae at mail.gmail.com</A>&gt;
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+
+Ah...
+
+Yes, that might do it.
+
+Ok..
+
+Go to:
+
+<A HREF="http://sorcerer.silverice.org/download/grimoire/">http://sorcerer.silverice.org/download/grimoire/</A>
+
+Get the latest grimoire, and save it in the proper subdirectory in
+/var/cache/sources
+
+for instance... latest one I have is:
+grimoire-2010-92.tar.xz
+in the directory
+/var/cache/sources/grimoire/2010-92
+
+
+I would highly recommend downloading the bz2 tarball, instead of the .xz
+tarball until.
+
+
+Now, issue
+
+cast grimoire
+
+
+This should give you the new grimoire installed.
+Next:
+
+cast sorcery
+
+
+then you should be able to issue
+
+augur sync
+
+
+after which
+
+augur newer
+
+should work...
+
+
+after which
+
+augur update
+
+will get your system up to date.
+
+-----------------------
+
+Hope some of this helps?
+-Evert-
+P.S. Thanks for including the bit about which Sorcerer you have installed.
+On Sat, Apr 3, 2010 at 12:42 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A> &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+
+&gt;<i> i went to the augar activity failed and it says download failed next to
+</I>&gt;<i> every file but does not give an explanation why. i am using sorcerer 2009
+</I>&gt;<i> because the 2010 iso wont burn properly. i wonder if this could be it
+</I>&gt;<i> because recently kyle redid the web address for sorcerer linux home page.
+</I>&gt;<i> please advise
+</I>&gt;<i>
+</I>&gt;<i> ---------- Original Message ----------
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Sorcerer-admins Digest, Vol 46, Issue 1
+</I>&gt;<i> Date: Sat, 03 Apr 2010 12:00:03 +0200
+</I>&gt;<i>
+</I>&gt;<i> Send Sorcerer-admins mailing list submissions to
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-owner at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific
+</I>&gt;<i> than &quot;Re: Contents of Sorcerer-admins digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>   1. sorcerer gui and firefox question? (<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>)
+</I>&gt;<i>   2. Re: sorcerer gui and firefox question? (Evert Vorster)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Fri, 2 Apr 2010 20:48:36 GMT
+</I>&gt;<i> From: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: [Sorcerer-admins] sorcerer gui and firefox question?
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">20100402.164836.14639.1 at webmail13.vgs.untd.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1
+</I>&gt;<i>
+</I>&gt;<i> I just installed finally sorcerer linux and now my two fold question is how
+</I>&gt;<i> to cast firefox because it always says waiting for download to begin then
+</I>&gt;<i> after a while says it neither downloaded or compiled then quits and my
+</I>&gt;<i> second question is how to get to the gui of sorcerer linux like it is
+</I>&gt;<i> portrayed in the screenshots page on your website. please advise. Nathan
+</I>&gt;<i> Jeffrey Allen. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Penny Stock Jumping 2000%
+</I>&gt;<i> Sign up to the #1 voted penny stock newsletter for free today!
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 2
+</I>&gt;<i> Date: Sat, 3 Apr 2010 04:03:47 +0000
+</I>&gt;<i> From: Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] sorcerer gui and firefox question?
+</I>&gt;<i> Message-ID:
+</I>&gt;<i>        &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">t2h27f41a931004022103i2c07a591p289b5fcab38f2243 at mail.gmail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hi there.
+</I>&gt;<i>
+</I>&gt;<i> I thought you had Sorcerer installed some time ago.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Do you mean you got X11 and KDE installed?
+</I>&gt;<i>
+</I>&gt;<i> The sources not downloading, while highly unusual, does sometimes happen.
+</I>&gt;<i> You got the sources for everything else so far, so I assume that your
+</I>&gt;<i> network connection works properly.
+</I>&gt;<i>
+</I>&gt;<i> Every time I had this same thing, I was aborting spells while they were
+</I>&gt;<i> casting, etc.
+</I>&gt;<i>
+</I>&gt;<i> Just about the quickest way to see what is happening, is to reboot.
+</I>&gt;<i>
+</I>&gt;<i> Once you are back up, type:
+</I>&gt;<i> *augur clear*
+</I>&gt;<i>
+</I>&gt;<i> Then, type :
+</I>&gt;<i> *cast firefox*
+</I>&gt;<i>
+</I>&gt;<i> When it shows you that it is waiting to cast firefox, press *q*
+</I>&gt;<i> You will now be back at the command line. Issue:
+</I>&gt;<i>
+</I>&gt;<i> *augur scry*
+</I>&gt;<i>
+</I>&gt;<i> Now you will see what Sorcerer is doing.
+</I>&gt;<i> I highly suspect that there is a dependency of firefox that is not casting
+</I>&gt;<i> properly, making firefox autofail.
+</I>&gt;<i>
+</I>&gt;<i> If the same thing happens again, type
+</I>&gt;<i>
+</I>&gt;<i> *augur activity failed*
+</I>&gt;<i>
+</I>&gt;<i> Go to the bottom of the list... It should say firefox autofailed because of
+</I>&gt;<i> blablabla
+</I>&gt;<i>
+</I>&gt;<i> Once we isolate what is not working on your box, we can get to get that
+</I>&gt;<i> source compiling.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Check to see if the firefox sources are available:
+</I>&gt;<i> *cd  /var/cache/sources/firefox*
+</I>&gt;<i> Check to see if there is a directory under there with the latest available
+</I>&gt;<i> version number of firefox, and that that directory contains a tarball.
+</I>&gt;<i>
+</I>&gt;<i> *<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:~# augur available firefox
+</I>&gt;<i> Indexing Complete
+</I>&gt;<i> 3.6.2
+</I>&gt;<i>
+</I>&gt;<i> Sat Apr 03 03:54:25
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:~# cd /var/cache/sources/firefox/3.6.2
+</I>&gt;<i>
+</I>&gt;<i> Sat Apr 03 03:54:42
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:/var/cache/sources/firefox/3.6.2# ls
+</I>&gt;<i> firefox-3.6.2.source.tar.xz
+</I>&gt;<i>
+</I>&gt;<i> Sat Apr 03 03:54:44
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at dora</A>:/var/cache/sources/firefox/3.6.2#
+</I>&gt;<i> *
+</I>&gt;<i> Lastly, remove any half-leeched sources from /var/tmp/leech
+</I>&gt;<i>
+</I>&gt;<i> rm -r /var/tmp/leech
+</I>&gt;<i>
+</I>&gt;<i> Then try again to get firefox.
+</I>&gt;<i>
+</I>&gt;<i> cast firefox.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> In /root/.sorcery/grimoire should be all the spells that are currently
+</I>&gt;<i> available in your system.
+</I>&gt;<i> If you were to inspect the firefox spell, you can see where it's trying to
+</I>&gt;<i> download the sources from, and as a last resort try to download the sources
+</I>&gt;<i> yourself, and place them in the source cache.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, I don't believe Sorcerer has a gui.
+</I>&gt;<i> I think what you are referring to as a gui is &quot;augur scry&quot; in a terminal
+</I>&gt;<i> with a transparent background. I also like to run gkrellm, as I like to see
+</I>&gt;<i> what my computer is up to while compiling.
+</I>&gt;<i>
+</I>&gt;<i> Hope some of this helps!
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Apr 2, 2010 at 8:48 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A> &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; I just installed finally sorcerer linux and now my two fold question is
+</I>&gt;<i> how
+</I>&gt;<i> &gt; to cast firefox because it always says waiting for download to begin then
+</I>&gt;<i> &gt; after a while says it neither downloaded or compiled then quits and my
+</I>&gt;<i> &gt; second question is how to get to the gui of sorcerer linux like it is
+</I>&gt;<i> &gt; portrayed in the screenshots page on your website. please advise. Nathan
+</I>&gt;<i> &gt; Jeffrey Allen. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ____________________________________________________________
+</I>&gt;<i> &gt; Penny Stock Jumping 2000%
+</I>&gt;<i> &gt; Sign up to the #1 voted penny stock newsletter for free today!
+</I>&gt;<i> &gt; <A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc</A>
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL: &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100403/02f7d062/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100403/02f7d062/attachment-0001.html</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> End of Sorcerer-admins Digest, Vol 46, Issue 1
+</I>&gt;<i> **********************************************
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Penny Stock Jumping 2000%
+</I>&gt;<i> Sign up to the #1 voted penny stock newsletter for free today!
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb77e6f7052293aadst04vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb77e6f7052293aadst04vuc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100403/61ec70dd/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100403/61ec70dd/attachment.html</A>&gt;
+
+------------------------------
+
+_______________________________________________
+Sorcerer-admins mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+
+
+End of Sorcerer-admins Digest, Vol 46, Issue 2
+**********************************************
+
+
+____________________________________________________________
+Refi - Low as 3.32% APR
+Homeowners: Refi before rates rise. $300k for $1,306/mo. No SSN req'd
+<A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb789d6137219416dst06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb789d6137219416dst06vuc</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001553.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 1
+</A></li>
+	<LI>Next message: <A HREF="001555.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1554">[ date ]</a>
+              <a href="thread.html#1554">[ thread ]</a>
+              <a href="subject.html#1554">[ subject ]</a>
+              <a href="author.html#1554">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

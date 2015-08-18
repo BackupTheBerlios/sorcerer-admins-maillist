@@ -1,0 +1,406 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] git support
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20git%20support&In-Reply-To=%3CCA%2BT4wDjTTe1r5WBVANYvMqsAXp5Qe7tKg_jr3D9aeaXqSeKC1w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002387.html">
+   <LINK REL="Next"  HREF="002389.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] git support</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20git%20support&In-Reply-To=%3CCA%2BT4wDjTTe1r5WBVANYvMqsAXp5Qe7tKg_jr3D9aeaXqSeKC1w%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] git support">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 28 22:54:46 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002387.html">[Sorcerer-admins] Collating Sorcerer specific directories into the /aux/ hierarchy
+</A></li>
+        <LI>Next message: <A HREF="002389.html">[Sorcerer-admins] immune-security-tomoyo...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2388">[ date ]</a>
+              <a href="thread.html#2388">[ thread ]</a>
+              <a href="subject.html#2388">[ subject ]</a>
+              <a href="author.html#2388">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Last week Evert introduced the topic of better git support for sorcery.
+
+Of course my preference is for downloading source tarballs
+or xz compressed sdelta3 patches created from source tarballs.
+The xz compressed sdelta3 patches conserve more bandwidth
+than source acquisition by rsync, xdelta patches, cvs, svn, etc...
+However, at least one project, the linux-firmware project,
+which I do not want to drop from the grimoire
+ceased providing convenient tarballs for downloading.
+Therefore, a notion for improving repository support
+was not far from mind.
+
+The previous implementation involved setting an array variable called
+REPOSITORY.
+And naturally, a single spell could only download from a single repository.
+It was a rough and limited implementation.
+
+However, for git support I added the changes directly into the current
+implementation
+and avoided the use of the REPOSITORY variable.
+
+Copied below from the linux-firmware spell is an example of how it works.
+
+    source stable linux-firmware-$VERSION.tar master
+<A HREF="git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git">git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git</A>
+
+What follows is an explanation of the parameters to the source() function.
+
+The first parameter is optional except when downloading from git.
+It specifies the &quot;version progress&quot;
+If an explicit version progress is not specified
+then the version progress is assumed to be &quot;stable.&quot;
+
+Second parameter is optional, except for when
+the tarball name is not a portion of the final parameter.
+Also the second parameter can only be specified when the first
+parameter was specified.
+If version progress is specified
+then the tarball name can be specified.
+This could also be useful when downloading from a script.
+
+The third parameter is optional except for when downloading from git.
+The third parameter can only be specified when the second parameter
+was specified.
+The third parameter specifies a tag or branch.
+
+The forth and final parameter is the git URL.
+
+Easy yes?
+
+sane-backends made a source tarball release yesterday.
+It was a .tar.gz split into 3 fragments.
+That seemed odd.
+
+leech can not download fragments of a gzipped file.
+leech identifies the first file fragment as a gzipped file,
+checks it, discovers that the download is incomplete,
+and attempts to resume the file transfer.
+The server denies byte range support and the file download completes.
+However, because the first file is obviously incomplete
+it will not be copied into the source cache.
+Therefore, update of sane-backends is impossible, yes?
+
+Actually, sane-backends spell mitigates the difficulty
+by source acquisition from git.
+And here is how the source line appears:
+
+    source stable sane-backends-$VERSION.tar RELEASE_${VERSION//./_}
+<A HREF="git://git.debian.org/sane/sane-backends.git">git://git.debian.org/sane/sane-backends.git</A>
+
+This example shows how the tag can differ from the version.
+This invocation to the source function transmutes the VERSION into the tag.
+Simple, yes?
+
+And for the third example is the spell StuntRally.
+
+    source   stable StuntRally-$VERSION.tar        $VERSION
+<A HREF="git://github.com/stuntrally/stuntrally.git">git://github.com/stuntrally/stuntrally.git</A>
+    source   stable StuntRally-tracks-$VERSION.tar $VERSION
+<A HREF="git://github.com/stuntrally/tracks.git">git://github.com/stuntrally/tracks.git</A>
+
+This demonstrates how a spell can have sources from two or more git
+repositories.
+The REPOSITORY variable lacked this functionality.
+
+Seems as if git is becoming a popular choice for open source software
+developers.
+Therefore, I intend to deprecate the $REPOSITORY variable.
+If anyone requires support for source acquisition from svn or cvs
+then I can probably code that similar to git.
+If desired then please make the request.
+
+The above examples do git support with stable version progress.
+This final example shows how git support can be easily added to a spell
+as an optionally selected version progress.
+
+   version &quot;git 3.2.y&quot;  3.2.28          3.2.27          3.2.26
+    source &quot;git 3.2.y&quot;  linux-v$VERSION.tar v$VERSION
+<A HREF="git://git.kernel.org/pub/scm/linux/kernel/git/bwh/linux-3.2.y.git">git://git.kernel.org/pub/scm/linux/kernel/git/bwh/linux-3.2.y.git</A>
+
+Version progress can contain multiple words separated by a space
+provided that they are enclosed with single or double quotes.
+
+This final example is hypothetical since I have not tried it.
+However, in theory augur can provide overrides to a spell
+that allow acquisition from git even when not part of the spell definition:
+
+# augur source git $SPELL-$VERSION.tar $TAG $REPOSITORY
+# augur progress $SPELL git $VERSION
+
+Of course the SA must substitute appropriate values from $SPELL
+$VERSION $TAG $REPOSITORY
+However, creating an override would be approximately that easy.
+
+However, if the build function is not suitable for source acquired from git
+then that would require the creation of a ${SPELL}-cusom type spell
+that will exclusively provide the original spell by using an invocation
+of the eprovides function.
+
+The gain of this functionality seemed reasonably important
+for further delay of the new Install/Rescue images.
+I should have begun implementing git support
+the moment that I decided to update the linux-firmware spell.
+However, for just one spell
+I could tolerate using the git web interface for requesting a tarball
+and then uploading that tarball to the master source cache.
+However, since Evert wants git support for acquisition of sources
+directly from the head of repositories
+to assist with debugging and reporting of errors to software developers
+I decided to provide a decent implementation.
+
+BTW, implicit inheritance of sources defined for stable version
+progress is deprecated.
+Therefore, alternate version progress such as unstable version progress
+must also have an invocation to the source function that begins:
+source unstable ...
+However, implicit inheritance of sources defined for stable version progress
+is provided when the selected version progress is &quot;custom.&quot;
+Therefore, selecting a custom version progress such as:
+# augur progress bash 4.3
+will inherit the line:
+
+    source <A HREF="ftp://ftp.cwru.edu/pub/bash/">ftp://ftp.cwru.edu/pub/bash/</A>
+<A HREF="ftp://ftp.gnu.org/pub/gnu/bash/">ftp://ftp.gnu.org/pub/gnu/bash/</A> bash-${VERSION:0:3}.tar.gz
+
+that implicitly defines the source for the stable version progress of bash.
+However, the SA can also override the source by using
+# augur source ...
+
+Consequently, almost no convenience is lost
+while at the same time less confusion is created concerning
+whether a spell with non stable version progress inherits the sources
+for the stable version progress if sources for the non stable version
+progress are not defined.
+And the answer is no.
+Consequently, a spell such as sound-juicer,
+which defines both stable and unstable version progress,
+also defines both stable and unstable sources.
+
+Therefore, if a unstable source tarball releases for a spell
+exist in a separate download directory or on a separate server
+then that creates no problems.
+
+I hope this helps demystify a spells source function.
+It provides a good bit of functionality for a modest amount of complexity.
+Understanding of the source function depends on understanding version progress.
+Therefore, if confusion still exists
+then please read:
+# augur help progress
+
+The following provides additional information about version progress
+and Sorcerer.
+
+The opportunity for selecting unstable version progress
+exists for nearly 500 spells.
+However, by default Sorcerer spells install the sources
+that are defined by stable version progress.
+And most often stable version progress
+acquires the most recently released source tarball
+that the software author declared to be stable.
+SAs can nudge that towards more development/unstable releases if the
+SA so desires.
+
+If the quality of free software tends to be good
+then Sorcerer looks good.
+However, the converse is also true.
+
+The current versions of firefox leak memory.
+With moderate usage
+firefox can consume several gigabytes of memory.
+Immune system counter measures
+can automatically activate additional swap files.
+On demand swap file activation prevents swap locking.
+However, the swapping that firefox causes
+creates I/O lag on a workstation.
+Be aware that this is not &quot;Sorcerer sucks,&quot;
+but rather &quot;Firefox sucks memory issue.&quot;
+The solution is to periodically restart firefox
+or try selecting a version progress for firefox
+that was released prior to firefox becoming insatiably hungry for memory.
+
+I do not guarantee that any of the installed software works properly.
+The provided software probably has more bugs than a garden.
+However, free software authors do not make guarantees
+about the fitness of the software that they provide.
+
+Ultimately, whether a deployed box works properly or not
+is the sole responsibility of the SA.
+If a bug exists in a spell then please report that on this email list.
+If a bug exists in the source tarball and manifests as a runtime error
+then please report that to that software project's email list or forum.
+When I discover that a runtime bug exists
+then I might attempt to circumvent that bug by presenting
+a different version of the software.
+That is why make version 3.82 has existed since 20100728
+and yet the version provided by the make spell remains at version 3.81.
+While I will try to avoid runtime errors
+I typically will not try to debug runtime errors in other people's software.
+
+Vanilla source is what Sorcerer offers.
+I focus on making a decent sorcery and decent spells.
+I avoid allocating time to forking free software projects
+in order to provide improvements that I want.
+Any spell with custom patches to provide what I want stays in my local grimoire.
+The patches provided in the grimoire and
+applied to specific versions of sources before compilation
+are provided in order to circumvent or repair problems
+that would cause an error with compilation or linking of the source.
+
+To state that Sorcerer is a moving target is accurate.
+The goal remains to deploy a box
+that can be seamlessly upgraded
+from past to present to future.
+However, to state that Sorcerer is unstable is inaccurate.
+With almost no exceptions,
+Sorcerer provides the release versions of software
+that software authors have declared as stable.
+
+Hypothetically speaking, if Sorcerer was unstable
+then the stable releases of thousands of software projects
+must also be unstable.
+And since nearly all distros are built from the same selections of
+software projects
+then the obvious conclusion is that nearly all distros must be unstable.
+Such reasoning is confusing and inaccurate.
+
+Both stable software and unstable software have bugs.
+Unstable software is expected to have more bugs.
+The presence of bugs does not make software unstable.
+However, a sufficiently inconvenient bug
+might be sufficient reason for making a version available
+as unstable version progress rather than promoting it to stable.
+
+A Sorcerer box is not less stable than other distros in general.
+However, it might provide software that is newer than what other
+distros provide.
+This is because Sorcerer box automatically adapt to the changes
+in the shared object names of installed ELF libraries.
+And that is why Sorcerer SAs do not do a mandatory re-installation
+from fresh Install/Rescue images per year or per every 2 years.
+The boxes update seamlessly from past to present to future.
+
+Because the software on Sorcerer boxes updates
+nearly as fast as software projects make new releases
+the provided software will differ from other distros.
+Perhaps it will contain more bug fixes.
+Perhaps it will contain more security fixes.
+Perhaps it will contain more and newer functionality.
+Nobody knows what the future brings.
+However, after a decade of retrospect
+I feel certain when stating that
+Sorcerer boxes have a better than average chance
+of surmounting the challenges of transitioning.
+
+Historically, SAs complain when the change to a newer branch of Apache httpd
+renders their customized configuration files incompatible.
+Fortunately, nobody sent flame email this time.  :)
+And that is good, because such a problem is not a deficiency with Sorcerer,
+but rather the defined duty of the SA to upgrade and verify configuration files.
+Therefore, httpd not restarting after an update is not &quot;instability.&quot;
+It is a the consequence of a box lacking a SA
+that is actively participating and performing the SA's role.
+
+Words such as &quot;unstable&quot; and &quot;rapidly changing&quot;
+tend to have negative connotation.
+However, they are not necessarily undesirable.
+Sometimes the stable release of software is ancient and no longer compiles,
+and yet the unstable release can compile and be provided instead.
+When that occurs then a spell's stable version progress
+might refer to the software author's unstable release.
+Doing so is not undesirable.
+Sorcerer boxes adapt the less acknowledge desirable characteristic
+of &quot;unstable&quot; and &quot;rapidly changing&quot; software
+to provide SAs with a desirable outcome.
+
+Admittedly a paradigm exists
+where software is not acknowledge as stable
+unless the software author released it 2 or more years ago.
+Therefore, SAs with that paradigm prefer deploying distributions
+that provides software that is a year or more behind
+what a software author provides as a current stable release.
+I am fine with that.
+But it is not do-able on a Sorcerer box.
+Sorcerer box can be lagged behind the current grimoire for about 3 months.
+If lagged too far behind
+then grimoire and sorcery tarballs will not be available for download.
+
+I do not concur with the paradigm that ancient == stable.
+The older installed software becomes
+then the more likely that someone has discovered an exploitable vulnerability.
+Surfing the wave of free software provides better protection
+than hoping that distribution maintainers
+find and back-port security patches to ancient releases.
+And that is why Sorcerer is always on the leading edge of stable software.
+
+By &quot;leading&quot; I am not implying &quot;bleeding.&quot;
+Anyone who wants &quot;bleeding&quot; can select unstable version progress.
+Or even better, specify a git version progress and source override
+and download and compile software directly from the head of the master.
+
+Sorcerer is not unstable.
+Sorcerer is not bleeding.
+Sorcerer provides the versions of software that software authors
+define as stable.
+
+Being able to install &quot;unstable software&quot; and select &quot;unstable version progress&quot;
+are confusing aspects about Sorcerer.
+The rapidly updating loadout of software and the amazing functionality
+also gives cause for people to wonder if Sorcerer is stable.
+And the answer to that question is, &quot;Yes Sorcerer is stable.&quot;
+Does that mean that Sorcerer contains no bugs?
+And the answer to that question is, &quot;Yes Sorcerer contains bugs.&quot;
+A day would not feel complete without squishing at least one bug.
+But that is a good thing.
+Until computers program themselves then bugs will be unavoidable.
+Therefore, better to squish them sooner rather than later.
+
+The goal of Sorcerer remains the same.
+Consequently, the addition of git support
+does not imply a desire to provide installed software
+that comes directly from the daily head of software authors' git repositories.
+Sorcerer continues to provide the software that software authors
+declared stable;
+complete with all the bugs that the software authors allowed through.
+Please enjoy responsibly.  :)
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002387.html">[Sorcerer-admins] Collating Sorcerer specific directories into the /aux/ hierarchy
+</A></li>
+	<LI>Next message: <A HREF="002389.html">[Sorcerer-admins] immune-security-tomoyo...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2388">[ date ]</a>
+              <a href="thread.html#2388">[ thread ]</a>
+              <a href="subject.html#2388">[ subject ]</a>
+              <a href="author.html#2388">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Dying boxes ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dying%20boxes%20...&In-Reply-To=%3C27f41a930810241445w701d5edk335f2ba5354eada9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000803.html">
+   <LINK REL="Next"  HREF="000805.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Dying boxes ...</H1>
+    <B>evert vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dying%20boxes%20...&In-Reply-To=%3C27f41a930810241445w701d5edk335f2ba5354eada9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Dying boxes ...">evorster at gmail.com
+       </A><BR>
+    <I>Fri Oct 24 23:45:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000803.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+        <LI>Next message: <A HREF="000805.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#804">[ date ]</a>
+              <a href="thread.html#804">[ thread ]</a>
+              <a href="subject.html#804">[ subject ]</a>
+              <a href="author.html#804">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+I have noticed some funny things with udev and the permissions of devices it
+creates.
+Check to see if the udev rules are there and uncorrupted.
+
+Hope this helps.
+-Evert-
+
+On Fri, Oct 24, 2008 at 8:33 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> uhmm... I see... I don't know exactly how to fix it, X -configure,
+</I>&gt;<i> then using that file seemed to work okay. was going to try something
+</I>&gt;<i> like
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-09/msg02190.html">http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-09/msg02190.html</A>
+</I>&gt;<i>
+</I>&gt;<i> Adding the ServerFlag mentioned...
+</I>&gt;<i>
+</I>&gt;<i> Well.. I had the same no mouse device, no keyboard device, HAL
+</I>&gt;<i> autoconfigure mentioned in that article, since it's working now, I
+</I>&gt;<i> don't have the log.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Oct 24, 2008 at 11:12 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; On Friday 24 October 2008, J Decker wrote:
+</I>&gt;<i> &gt;&gt; I have two boxes that recently started failing... failing in that they
+</I>&gt;<i> &gt;&gt; have no keyboard/mouse support in X.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; One box, I specifically saw 'will restart dbus soon' and after that
+</I>&gt;<i> &gt;&gt; everything stopped working.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I had to remove a few lines from system.conf for hal to work with the
+</I>&gt;<i> latest
+</I>&gt;<i> &gt; dbus (the *.bak file is what was installed by dbus):
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at lepjmlap</A> dbus-1]$ diff -u system.conf system.conf.bak
+</I>&gt;<i> &gt; --- system.conf 2008-10-17 10:49:07.000000000 -0400
+</I>&gt;<i> &gt; +++ system.conf.bak     2008-10-16 02:28:16.000000000 -0400
+</I>&gt;<i> &gt; @@ -53,6 +53,10 @@
+</I>&gt;<i> &gt;     &lt;!-- valid replies are always allowed --&gt;
+</I>&gt;<i> &gt;     &lt;allow send_requested_reply=&quot;true&quot;/&gt;
+</I>&gt;<i> &gt;     &lt;allow receive_requested_reply=&quot;true&quot;/&gt;
+</I>&gt;<i> &gt; +    &lt;!-- disallow changing the activation environment of system services
+</I>&gt;<i> --&gt;
+</I>&gt;<i> &gt; +    &lt;deny send_destination=&quot;org.freedesktop.DBus&quot;
+</I>&gt;<i> &gt; +          send_interface=&quot;org.freedesktop.DBus&quot;
+</I>&gt;<i> &gt; +          send_member=&quot;UpdateActivationEnvironment&quot;/&gt;
+</I>&gt;<i> &gt;   &lt;/policy&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;   &lt;!-- Config files are placed here that among other things, punch
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On the other box, all I can tell is that X says cannot load keymap
+</I>&gt;<i> &gt;&gt; file from /usr/share/X11/xkb in which there is nothing...
+</I>&gt;<i> &gt; Install xkeyboard-config.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I'm still on the recovery path - can only spend a little time here and
+</I>&gt;<i> &gt;&gt; there on these...
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Time flies like an arrow, fruit flies like a banana.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081024/259878d6/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081024/259878d6/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000803.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+	<LI>Next message: <A HREF="000805.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#804">[ date ]</a>
+              <a href="thread.html#804">[ thread ]</a>
+              <a href="subject.html#804">[ subject ]</a>
+              <a href="author.html#804">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

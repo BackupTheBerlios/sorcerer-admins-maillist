@@ -1,0 +1,467 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcerer gui and firefox question?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcerer%20gui%20and%20firefox%20question%3F&In-Reply-To=%3Cr2x596b75861004030322ud9ef2f00w64a1b498fc71246f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001550.html">
+   <LINK REL="Next"  HREF="001552.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcerer gui and firefox question?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcerer%20gui%20and%20firefox%20question%3F&In-Reply-To=%3Cr2x596b75861004030322ud9ef2f00w64a1b498fc71246f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcerer gui and firefox question?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr  3 12:22:55 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001550.html">[Sorcerer-admins] sorcerer gui and firefox question?
+</A></li>
+        <LI>Next message: <A HREF="001552.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1551">[ date ]</a>
+              <a href="thread.html#1551">[ thread ]</a>
+              <a href="subject.html#1551">[ subject ]</a>
+              <a href="author.html#1551">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good questions.
+They are not explained usually because the answers
+are considered general SA knowledge.
+More or less it is not distribution specific knowledge.
+Purty much it works the same on most distros.
+Basically, you probably want a X server
+and to be able to login using a graphic user interface
+and then be able to select programs to run from a menu, yes?
+Fortunately, it is not difficult to accomplish.
+
+# cast xorg firefox kde-v4
+# nano /etc/inittab
+Change the default runlevel from 3 to 5
+
+Now when the computer starts it will also start kde-v4
+and present a graphic logic prompt
+instead of the usual virtual consoles.
+But it will only do so if it can properly detect the installed
+graphics hardware and pointers automatically.
+Otherwise an /etc/X11/xorg.conf file is required.
+I use one anyway.
+
+A distribution such as Sorcerer, Debian, or Ubuntu is basically
+layers upon layers of software.
+At the very bottom or core is the linux kernel.
+The linux kernel provides drivers for interfacing with hardware,
+protocols, and filesystems.
+The kernel is also the gatekeeper to such devices
+and enforces security and determines how much of the CPU
+each running process should receive.
+
+The layer that is most directly above the kernel is the C library.
+Few programs talk to the kernel directly when they want to
+access filesystems, devices and protocols.
+Instead the very useful and basic functions for accomplishing
+those tasks are stored in the C library which is provided by glibc.
+
+Almost all software on a box that is compiled either links
+with the static or ELF libc libraries.
+Programs linked with static libraries have the code contained
+in the library copied directly into the program.
+Programs that link with ELF libraries instead have the library code
+loaded into memory as needed when the program starts.
+ELF libraries save disk space and allow for better updating,
+because if an installed ELF library is updated then any software
+linked with the ELF library immediately receives the benefits of
+the update without having to be recompiled, assuming that
+the new library is binary compatible with the old library.
+In contrast programs linked with static libraries must also
+be recompiled in order to receive the benefit of library updates.
+
+Other libraries sit a bit higher than C library
+and usually also link with the C library.
+An example of such a library is libX11.
+The X11 library is a library of functions that programs can link
+with in order to do graphic output to an X server.
+
+The X server is the really fun piece of software that is capable
+of putting the screen into graphics mode and having concurrently open
+different windows for different programs.
+However, using the X server bare is difficult to do because
+it does not provide for an easy method of resizing and moving
+windows around.
+
+A plain X server is usable.
+It is not very interesting.
+And typically it will close automatically when no
+open programs are connected with it.
+So generally, having at least one program connected to it
+becomes a good idea to avoid having to restart it each time.
+
+The one program that usually stays connected to the X server
+all the time is the window manager program.
+A window manager does just as it's name suggests.
+It allows for windows to be minimized, expanded, moved around
+and other fun things.
+If an X server was a potato
+then a window manger would bake it for you.
+
+Both GNOME and KDE are more than just window managers.
+KDE is the K desktop environment.
+Likewise GNOME is the gnome desktop environment.
+They provide all sorts of fancy programs, menus, eye candy,
+effects and other stuff to the experience of using the X server.
+
+Most of GNOME is in C, or at least it used to be.
+So it tended to be lighter on resource consumption.
+In the past it used to be a fast pleasant experience
+that was a good compromise between a desktop environment
+and a lightweight window manager.
+But I have not used gnome in a while.
+Instead I tend to prefer KDE version 4.
+
+KDE is entirely C++ and built upon the Q graphic toolkit
+that is provided by trolltech,
+and that library continues to change name.
+Currently, it is called qt-everywhere-opensource.
+KDE tends to be a bit slow, a memory hog,
+but some of the apps are useful and one can come
+to enjoy the KDE experience if their disk drive and
+memory are sufficient to avoid lengthy reads and swapping.
+
+There are other choices for window managers
+and also for desktop environments.
+However, KDE and GNOME tend to make other desktop
+environments look like little more than enhanced window managers.
+
+The most basic window manger that comes with xorg
+is called twm, which is short for &quot;the window manager&quot;
+Whether anyone uses twm, other than for testing,
+is curiosity question.
+Although it is a feature minimalistic window manager
+and it does work.
+However, twm is more of a demonstration program
+than a 1st choice window manager for any distribution.
+
+Programs such as firefox link with libX11 and also gtk+,
+the graphic toolkit used by gnome that was separated
+originally from the gimp project.
+Naturally, to enjoy that awesome web browsing experience
+with firefox one must be able to start an X session,
+and using at least a window manager is preferable.
+Yet X can be made to start with just firefox running.
+If done that way the X session ends when firefox closes.
+
+For a minimalistic window manager I tend to prefer yeahwm,
+although it is a bit buggy and will flake if run long enough.
+However, for an awesome experience I recommend running KDE.
+Yet KDE will seem slow as can be on anything less than an
+1 Ghz Athlon with 512M or more RAM installed.
+Probably KDE is not a good choice on low RAM boxes,
+and especially not while such a box is updating installed software.
+
+Although many Sorcerer SAs are irritated by how much
+installed software comes on the I/R
+it actually provides enough installed software in order to
+start an X session using twm as the window manager and
+to play a movie using xine.
+No, firefox does not come pre-installed,
+nor does KDE and gnome.
+
+An installed Sorcerer box can be stripped down to a console
+only installation with no libX11 or libraries from xorg installed.
+That only requires a little bit of effort.
+However, far more easily KDE and firefox can be
+installed on a new Sorcerer box.
+
+Also as a Sorcerer box updates the performance
+will gradually improve as the new software installed
+is tailored automatically to the available instruction set
+of the installed microprocessor.
+
+I hope that helps explain a little.
+Sorcerer only provides a means for useful common software.
+However, we do not train SAs in the use or configuration of software.
+To learn how to use it I would read
+the manual page for xorg.conf
+then the manual page for the desired graphic driver,
+then the web site documentation at <A HREF="http://x.org">http://x.org</A>
+and then perhaps a HowTo, Guide, or FAQ
+from <A HREF="http://www.tldp.org">http://www.tldp.org</A> which is the linux documentation project.
+
+Some distributions attempt to replicate the documentation
+available at the above URLs,
+yet the task becomes impossible because the software authors
+make changes and revision which each release and any
+3rd party documentation quickly becomes obsolete compared
+to the documentation that is available from the software authors.
+
+The manual pages that come with installed software along
+with any documentation for the software which might be found
+in /usr/doc/ or /usr/share/doc/ tends to be the most current source
+of information about the software.
+The next most current source of information is documentation
+that is available from the software author's homepage.
+The third and not usually current source of information
+is documentation provided at the linux documentation project.
+
+The further the documentation is from the installed software
+and the software author's documentation
+then the greater the probability that the information will be
+incorrect or obsolete.
+
+For example x.org that is currently standard on many distros
+was forked originally from the XFree86 project.
+One could learn something about using X from reading the
+documentation at the XFree86's project's homepage.
+However, the documentation would probably be describing
+something that is a bit different than what xorg current provides.
+
+The best thing about using a distro like Sorcerer
+is that it tends to provide nice new free software quickly.
+The bad aspect is that documentation for such software
+might be scattered across the fixed disk or across many
+websites on the Internet.
+Sorcerer could try to bring that documentation all into one place,
+but such a task is even more monumental than the task
+of providing the methods for downloading and installing new software.
+However, Sorcerer SAs are not at all abandoned.
+
+Typically, almost every spell has a homepage line in it.
+The homepage link is a URL to the software author's homepage
+and usually by following hyperlinks from that URL one can arrive
+at suitable documentation.
+
+# augur homepage firefox
+<A HREF="http://www.mozilla.com/en-US/firefox/firefox.html">http://www.mozilla.com/en-US/firefox/firefox.html</A>
+
+ # augur homepage xorg
+<A HREF="http://www.x.org">http://www.x.org</A>
+
+# augur homepage glibc
+<A HREF="http://www.gnu.org/software/libc">http://www.gnu.org/software/libc</A>
+
+Useful yes?
+
+A distribution basically is a gigsaw puzzle made from
+piecing together many other software projects in a way
+that is meaningful and usable.
+Sometimes pieces have to be rounded out.
+Sometimes they must be pounded into place.
+Consequently, each distribution contains nearly the same software,
+yet each distribution might also have a somewhat unique feel to it,
+and unique methods for using it.
+
+With Sorcerer the distribution layer that sits between the SA
+and the software installed is intended to be translucent
+and paper thin.
+Other distributions have such a thick feel to them that
+the SA is often prevented from directly configuring installed software.
+Such distributions try to relieve the SA of the task of having
+to configure installed software.
+However, with Sorcerer, software is installed by sorcery,
+but always configured by the SA.
+
+One might say that the aim of Sorcerer is to give SAs
+nearly all the power and configurability
+that could be achieved by manually installing software,
+yet without the headache and huge time commitment.
+That is because sorcery makes both installation and updating
+of software the dictionary definition of easy.
+However, configuration of installed software
+still remains dependent upon SA skill and knowledge.
+It is the type of compromise that senior level SAs enjoy,
+but could cause plenty of confusion for new SAs.
+
+There are also course, computer based training,
+and books that teach UNIX system administration
+and Linux glibc POSIX system administration.
+But to be perfectly honest about it
+there is no good substitution for visiting software
+author's homepages and also reading manual pages.
+Trying to learn the the technique from reading a single book
+has the problems of showing a point of view that will exclude
+potentially useful knowledge and will also present knowledge
+of no immediate use that could become confusing.
+
+I have seen people who try to learn
+a programming language by reading a book.
+Yet if one wants to learn a programming language
+then the best method is to write a program and learn
+along the way exactly what knowledge is required in order
+to complete the task.
+
+If one wants to increase SA skill
+then one of the better ways to do so is to write some
+useful shell scripts.
+All the knowledge required to do so is contained in
+the manual pages for the installed software such as:
+bash, coreutils, grep, find, sed
+And looking at a few example scripts helps also.
+
+Thanks to considerate software authors,
+and also the help of Debian maintainers,
+almost all installed software comes with documentation,
+manual pages, and info pages that are installed with the software.
+The answers to almost any SAs questions
+are already contained in some file already installed on their box.
+However, finding the desired files to read
+tends to be a bit easier for senior level SAs than new SAs.
+
+I do not wish to sound less than useful.
+However, to be perfectly honest about it
+when I want to know something about installed software,
+I tend to look at the install log, the installed manual pages,
+the installed info pages, the homepage, and sometimes
+I even extract the source tarball content and grep through
+the source tree.
+So basically, I do not do anything differently
+from what I advise others to do when seeking answers
+to questions about how to use and configure installed software.
+
+Definitely, the technique for learning how to learn how to
+compile, install, configure and run software is more important
+to a SA than how much a SA already knows.
+Although much of the basics remains the same
+software is constantly evolving.
+New features are added.
+For example at one time to edit a file using sed required
+that the file be piped through sed,
+written to a new file name and
+finally renamed back to the original filename.
+Now sed supports the -i parameter to instruct it to
+edit a file instead of a stream from stdin.
+Yes, it is a small change but it provides useful functionality.
+To me that seems to provide a good example of change.
+The sed found in distributions that provide the GNU implementation
+will support the -i parameter.
+However, sed provided by other UNIX might not.
+ls provides by the GNU implementation can accept switches
+at any point within the command line parameters.
+However, Solaris ls implementation only recognizes switches
+if such parameters come before any directory and/or filenames.
+
+Depending upon the implementation and version provided
+there are thousands of variations in commands and parameters
+support by commands.
+Utilities such as find, grep, sed, sort, uniq might be standard on
+all POSIX and UNIX implementations.
+However, there can be considerable difference
+in what command line parameters they support.
+
+Therefore, if knowing exactly what software one has
+and what it can do is important
+then that task can usually only be accomplished by the
+SA doing a first hand examination of the program's help screen,
+version, and manual pages.
+
+There is no all powerful tome that describes everything
+that can be done with the installed software on a box.
+I definitely understand how it could seem like an appealing idea.
+However, the task is far greater than a small group of people
+could accomplish.
+Even many of the HowTos at the Linux Documentation
+project website are half a decade or more older.
+
+If any such group of people could amass and track so much
+information about free software projects and present it in
+a useful form to SAs
+then such a website would easily obsolete OSDN's freshmeat.
+And OSDN's freshmeat is hardly a gathering point for documentation
+although sometimes change logs snips are provided with
+information about new releases of software that freshmeat
+attempts to track.
+Yet even freshmeat is usually not able to provide announcements
+about all new available software unless freshmeat users inform
+freshmeat staff that new releases are available,
+which is often accomplished using a freshmeat account
+and their website CGI forms.
+More simply put even freshmeat is not an all-seeing-eyeball
+upon free software.
+
+The way software sources and documentation are provided
+has so much variation in it that currently even information providers
+such as freshmeat, distrowatch,
+and even distribution maintainers tend to be blind
+to a some portion of updates that are potentially available.
+
+If a distribution can keep aware of 70% or more of software
+updates over the course of a year
+then that tends to be a considerably maintained distribution.
+freshmeat tracks more software than any distribution does,
+and I dare to speculate that their awareness of updates
+might be less than 20%
+Of course when tracking as many projects as freshmeat does
+they are bound to show updates from many software projects
+each day.
+However, they are still not the all-seeing-eye of software evolution.
+
+That probably provides too much information.
+SAs might not be aware of all the effort required
+in order for distribution maintainers to keep abreast of
+both the availability of software and the changes in software
+in order to keep distributions working properly.
+
+Currently, the lack of consensus among how software and
+documentation should be distributed makes for an interesting
+challenge as distribution maintainers continually try to
+pound the puzzle pieces together.
+Some distributions might provide some fancy documentation
+that make them look like they have it all going on in the right way.
+But in truth every distribution has blind spots
+and the best distributions will tend not to be the one's
+with the best presentation, but rather the ones concentrate
+on doing what a distribution should do best
+which is providing software for easy installation.
+And that is why Sorcerer SAs tend to stay with Sorcerer.
+
+Sorcerer is not trying to bring the sun moon and stars.
+It is just a daily tide upon which new software floats in.
+And it is not intended to be any more complex than that.
+
+
+On Fri, Apr 2, 2010 at 1:48 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> I just installed finally sorcerer linux and now my two fold question is how to cast firefox because it always says waiting for download to begin then after a while says it neither downloaded or compiled then quits and my second question is how to get to the gui of sorcerer linux like it is portrayed in the screenshots page on your website. please advise. Nathan Jeffrey Allen. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Penny Stock Jumping 2000%
+</I>&gt;<i> Sign up to the #1 voted penny stock newsletter for free today!
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc">http://thirdpartyoffers.juno.com/TGL3131/4bb6585e3eb867625est06vuc</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001550.html">[Sorcerer-admins] sorcerer gui and firefox question?
+</A></li>
+	<LI>Next message: <A HREF="001552.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 46, Issue 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1551">[ date ]</a>
+              <a href="thread.html#1551">[ thread ]</a>
+              <a href="subject.html#1551">[ subject ]</a>
+              <a href="author.html#1551">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

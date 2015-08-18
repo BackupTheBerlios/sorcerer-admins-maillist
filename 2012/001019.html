@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.7.1331738365.12121.sorcerer-admins%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001017.html">
+   <LINK REL="Next"  HREF="001097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.7.1331738365.12121.sorcerer-admins%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:19:14 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001017.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="001097.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1019">[ date ]</a>
+              <a href="thread.html#1019">[ thread ]</a>
+              <a href="subject.html#1019">[ subject ]</a>
+              <a href="author.html#1019">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>spell in Sorcerer. However I like the idea that sorcerer should be able to
+install, and run within VirtualBox, so that if some want to test-drive
+Sorcerer within VirtualBox it do work. But the main work with this is not
+sorcerers but Sun's.
+
+We could make the task a bit more easy (I think) if we could provide the
+option in the I/R to install grub as the bootloader instead of lilo.
+
+So if I where to decide, I would say based upon this, that I would rather
+prefer that we used the time to implement grub in the I/R (which could be of
+value in other situations too) - and then either use qemu or perhaps VMware
+as the Virtual Host Application (VMWare server can you download for free.
+Eventhough it is closed source, but it is - in my view - almost as fast, as
+VirtualBox)
+
+Best regards
+
+Bent Jakobsen
+
+
+
+On Fri, Feb 20, 2009 at 3:33 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> From <A HREF="http://www.virtualbox.org/wiki/Developer_FAQ">http://www.virtualbox.org/wiki/Developer_FAQ</A>
+</I>&gt;<i> &quot;    * Q: How does VirtualBox relate to QEMU? I have seen some source
+</I>&gt;<i> files that appear to be related to his project.
+</I>&gt;<i>
+</I>&gt;<i>    A: VirtualBox makes use of QEMU in two ways: first of all, some of
+</I>&gt;<i> our virtual hardware devices have their origin in the QEMU project. We
+</I>&gt;<i> have found them to be very useful and took them as a starting point.
+</I>&gt;<i> Secondly, we have incorporated the recompiler of QEMU as a fallback
+</I>&gt;<i> mechanism for situations where our Virtual Machine Manager (VMM)
+</I>&gt;<i> cannot correctly handle a certain situation. This holds true for guest
+</I>&gt;<i> code that executes in real mode (such as bootup) and some rare
+</I>&gt;<i> scenarios at runtime. See VirtualBox architecture for details. QEMU
+</I>&gt;<i> saved us a lot of work and we are very grateful to be able to rely on
+</I>&gt;<i> it.
+</I>&gt;<i> &quot;
+</I>&gt;<i>
+</I>&gt;<i> According to the above URL,
+</I>&gt;<i> VirtualBox forked from qemu what might be the most essential code for
+</I>&gt;<i> a virtual machine emulator.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Also VirtualBox requires qt-x11-free.
+</I>&gt;<i> However, since VirtualBox must be compiled with ancient gcc
+</I>&gt;<i> so must also the version of qt-x11-free that VirtualBox uses
+</I>&gt;<i> also be compiled with ancient gcc.
+</I>&gt;<i> Consequently, this is requiring longer to test/write than expected.
+</I>&gt;<i> Compiling an entire version of qt-x11-free just to compile VirtualBox
+</I>&gt;<i> seems to be heavy requirement.
+</I>&gt;<i>
+</I>&gt;<i> Could someone please remind me why we would want to use VirtualBox
+</I>&gt;<i> instead of qemu?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+--001485f64560e35cda04635e975d
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+Hi.&lt;br&gt;&lt;br&gt;If we want to use it or not, I shall not decide.&lt;br&gt;&lt;br&gt;The only=
+ real reason I know of is:&lt;br&gt;&lt;br&gt;* It is faster than qemu when it is runni=
+ng. However the &quot;price tag&quot; is less freedom (to chose the emulati=
+ng guest architecture). &lt;br&gt;
+&lt;br&gt;But if this is good enough... I do not know. Because I do not know if h=
+aving VirtualBox in Sorcerer is adding sufficiently value, to justify the w=
+ork-load of first creating the spells (for VirtualBox and the requirements)=
+ and afterwards maintaining them.&lt;br&gt;
+&lt;br&gt;From my point of view... I can live happily without having VirtualBox a=
+s a spell in Sorcerer. However I like the idea that sorcerer should be able=
+ to install, and run within VirtualBox, so that if some want to test-drive =
+Sorcerer within VirtualBox it do work. But the main work with this is not s=
+orcerers but Sun&#39;s. &lt;br&gt;
+&lt;br&gt;We could make the task a bit more easy (I think) if we could provide th=
+e option in the I/R to install grub as the bootloader instead of lilo.&lt;br&gt;&lt;=
+br&gt;So if I where to decide, I would say based upon this, that I would rathe=
+r prefer that we used the time to implement grub in the I/R (which could be=
+ of value in other situations too) - and then either use qemu or perhaps VM=
+ware as the Virtual Host Application (VMWare server can you download for fr=
+ee. Eventhough it is closed source, but it is - in my view - almost as fast=
+, as VirtualBox)&lt;br&gt;
+&lt;br&gt;Best regards&lt;br&gt;&lt;br&gt;Bent Jakobsen&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div class=3D&quot;gmail_qu=
+ote&quot;&gt;On Fri, Feb 20, 2009 at 3:33 PM, Kyle Sallee &lt;span dir=3D&quot;ltr&quot;&gt;&lt;&lt;a =
+href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&lt;/a&gt;&gt;&lt;/span&gt; =
+wrote:&lt;br&gt;
+&lt;blockquote class=3D&quot;gmail_quote&quot; style=3D&quot;border-left: 1px solid rgb(204, =
+204, 204); margin: 0pt 0pt 0pt 0.8ex; padding-left: 1ex;&quot;&gt;From &lt;a href=3D&quot;h=
+<A HREF="ttp://www.virtualbox.org/wiki/Developer_FAQ">ttp://www.virtualbox.org/wiki/Developer_FAQ</A>&quot; target=3D&quot;_blank&quot;&gt;<A HREF="http://www.v=">http://www.v=</A>
+irtualbox.org/wiki/Developer_FAQ&lt;/a&gt;&lt;br&gt;
+
+&quot; &nbsp; &nbsp;* Q: How does VirtualBox relate to QEMU? I have seen so=
+me source&lt;br&gt;
+files that appear to be related to his project.&lt;br&gt;
+&lt;br&gt;
+ &nbsp; &nbsp;A: VirtualBox makes use of QEMU in two ways: first of all, so=
+me of&lt;br&gt;
+our virtual hardware devices have their origin in the QEMU project. We&lt;br&gt;
+have found them to be very useful and took them as a starting point.&lt;br&gt;
+Secondly, we have incorporated the recompiler of QEMU as a fallback&lt;br&gt;
+mechanism for situations where our Virtual Machine Manager (VMM)&lt;br&gt;
+cannot correctly handle a certain situation. This holds true for guest&lt;br&gt;
+code that executes in real mode (such as bootup) and some rare&lt;br&gt;
+scenarios at runtime. See VirtualBox architecture for details. QEMU&lt;br&gt;
+saved us a lot of work and we are very grateful to be able to rely on&lt;br&gt;
+it.&lt;br&gt;
+&quot;&lt;br&gt;
+&lt;br&gt;
+According to the above URL,&lt;br&gt;
+VirtualBox forked from qemu what might be the most essential code for&lt;br&gt;
+a virtual machine emulator.&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+Also VirtualBox requires qt-x11-free.&lt;br&gt;
+However, since VirtualBox must be compiled with ancient gcc&lt;br&gt;
+so must also the version of qt-x11-free that VirtualBox uses&lt;br&gt;
+also be compiled with ancient gcc.&lt;br&gt;
+Consequently, this is requiring longer to test/write than expected.&lt;br&gt;
+Compiling an entire version of qt-x11-free just to compile VirtualBox&lt;br&gt;
+seems to be heavy requirement.&lt;br&gt;
+&lt;br&gt;
+Could someone please remind me why we would want to use VirtualBox&lt;br&gt;
+instead of qemu?&lt;br&gt;
+_______________________________________________&lt;br&gt;
+Sorcerer-admins mailing list&lt;br&gt;
+&lt;a href=3D&quot;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.b</A>=
+erlios.de&lt;/a&gt;&lt;br&gt;
+&lt;a href=3D&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>&quot; targe=
+t=3D&quot;_blank&quot;&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins&lt;/a">https://lists.berlios.de/mailman/listinfo/sorcerer-admins&lt;/a</A>&gt;&lt;=
+br&gt;
+&lt;/blockquote&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;
+
+--001485f64560e35cda04635e975d--
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001017.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="001097.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1019">[ date ]</a>
+              <a href="thread.html#1019">[ thread ]</a>
+              <a href="subject.html#1019">[ subject ]</a>
+              <a href="author.html#1019">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

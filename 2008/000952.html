@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New user
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20user&In-Reply-To=%3C596b75860812181907t6e89ab98r833f7a84bd77a332%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000951.html">
+   <LINK REL="Next"  HREF="000953.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New user</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20user&In-Reply-To=%3C596b75860812181907t6e89ab98r833f7a84bd77a332%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New user">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Dec 19 04:07:45 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000951.html">[Sorcerer-admins] New user
+</A></li>
+        <LI>Next message: <A HREF="000953.html">[Sorcerer-admins] New user
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#952">[ date ]</a>
+              <a href="thread.html#952">[ thread ]</a>
+              <a href="subject.html#952">[ subject ]</a>
+              <a href="author.html#952">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually, I remember the sort of confusion Mr. Antonie Chassagnard is feeling.
+Sorcerer has over 3000 software programs and someone new
+to this side of free software would not know which one to install or why.
+
+One of the best places to get started is at
+<A HREF="http://tldp.org">http://tldp.org</A>
+When we want to know how to do something
+we all go read a how to at the linux documentation project website.
+
+One of the first two things you will want to do is probably to install
+X and proper video drivers,
+configure X,
+and be able to start it using a window manager such as
+kde-v4 or gnome.
+
+Otherwise you will be using the linux consoles mostly.
+And using consoles only makes for a boring workstation.
+Besides, there are few if any good games that can be played on the
+linux console.
+Installing X and and a window manager such as KDE will
+an experience that is more like the M$ Windoze GUI experience.
+
+Sorcerer only supports one X server at the moment.
+It is called xorg.
+
+To install xorg and kde-v4
+simply:
+
+# cast xorg kde-v4
+
+It will ask menu after menu after menu of questions.
+Generally, if something is omitted from being installed
+then it can be installed later.
+
+Executing lshw will tell a bit about what hardware is installed.
+lspci will print a list of pci devices and probably also the graphics card.
+Unless you prefer the svga graphics then selecting the optimal
+graphics drivers for X is advise.
+If confused, just select and install all of them.
+
+There are a few ways to create
+/etc/X11/xorg.conf
+That is the configuration file for the X server.
+The X server provides the graphic desktop.
+Configuring the X server enables selecting of
+video resolution modes, color depth, input devices, etc...
+I definitely advise finding a howto about it at the tldp.
+However, if all those video drivers are installed then
+# X -configure
+will probe for devices and write a xorg.conf file.
+It will probably have to be moved to to /etc/X11/
+and edited before it can be used.
+
+Due to recent changes in xorg-server
+it may be worth adding to the section of
+&quot;ServerFlags&quot;
+the line:
+Option &quot;AllowEmptyInput&quot; &quot;false&quot;
+
+That way it will probably properly detect keyboard and mouse.
+
+If you have a NVIDIA or ATI based graphics then
+both the pre-compiled drivers by those companies
+are supplied  by additional spells:
+NVIDIA-Linux-x86
+ati-driver-installer
+Install them using cast.
+However, they must be properly configured for use in /etc/X11/xorg.conf
+
+I will not joke about how difficult it is for someone new to create
+a decent /etc/X11/xorg.conf
+
+Attached is a sample xorg.conf one I use on a box with i810 graphics.
+
+manual pages describe plenty.
+# man xorg.conf
+
+That explains a considerable amount about xorg.conf
+
+# man X
+
+That explains command line parameters for X which
+might be useful or might not.
+
+Each individual spell for graphics drivers also installs manual pages.
+Here is an easy way to find them...
+
+# augur installed | grep xf86-video | while read; do augur install
+$REPLY; done | grep /man/
+
+/usr/share/man/man4
+/usr/share/man/man4/i810.4
+/usr/share/man/man4/intel.4
+/usr/share/man/man4
+/usr/share/man/man4/vesa.4
+
+On my test box I currently, only have xf86-video-intel and
+xf86-video-vesa installed.
+And that provides a couple of manual pages:
+
+i810
+intel
+
+As you can see from the above command that
+I typed in order to display the manual pages
+a SAs ability to write BASH commands is very
+useful with Sorcerer.
+
+Okay, so setting up X is no fun.
+But the compilation of it will be fast.
+
+On the other hand setting up kde-v4 is fun.
+However, the compilation of kde-v4 is very slow.
+It is also a very large download.
+
+Once the X server is set up properly and works
+then I definitely recommend starting the box
+with a graphical login provided by kdm-v4.
+
+chmod 700 /etc/init.d/kdm-v4
+
+Then edit /etc/inittab and set the default runlevel to 5
+The first line probably reads:
+
+id:3:initdefault:
+Change it to
+id:5:initdefault:
+
+# Runlevels
+# 0: halt
+# 1: sequential init
+# 2: parallel   init + multi-user + networking
+# 3: sequential init + multi-user + networking
+# 4: parallel   init + multi-user + networking + GUI login
+# 5: sequential init + multi-user + networking + GUI login
+# 6: reboot
+
+That basically describes runlevels.
+runlevels 1 through 5 are valid selections for default runlevels.
+
+If X is not working properly and the box reboots to runlevel 5
+you may have to ssh into the box to repair it unless
+it responds to ctrl-alt-F1 or ctrl-alt-backspace
+in order to return to a virtual console.
+
+Rumor has it that X might start and work properly without
+a /etc/X11/xorg.conf
+I have not tested it.
+Even if it does work /etc/X11/xorg.conf is required to use
+factory supplied pre-compiled drivers for ATI and NVIDIA graphics cards.
+
+After X is working.
+And after KDE or some other window manager is installed
+then select plenty of fun software to install and run.
+The select and add menus in sorcery are good for starters.
+Or you can find spells using augur.
+
+First, please read the augur help screen
+
+# augur
+
+Then for additional help on a command type
+
+# augur help command_name
+
+and replace command_name with the name of the command to display help for.
+
+
+Each distro has thousands of software available to install.
+However, unlike many distros Sorcerer starts out with
+nearly the minimal amount of software installed.
+Uhm, actually, in recent years that has changed a little.
+Your base installation of Sorcerer probably includes xorg
+and all the xorg video drivers, but does not include
+/etc/X11/xorg.conf
+That still has to be generated appropriately for the installed
+graphics hardware and desired video resolution mode.
+
+However, to regress to what I started to say before...
+Many other distros come with a tremendous amount of
+pre-compiled software installed and ready for you to use.
+Sorcerer comes with a more minimal loadout primarily because
+senior level SAs will know what additional software that they
+want installed and would not want to have to untangle and
+uninstall a mount of software they do not require first.
+
+However, in recent years Sorcerer base installation has become a compromise.
+It has a nearly complete xorg, but no window big desktop environment.
+The default window manager that comes with xorg is twm
+Yes that is short for The Window Manager.
+Ha, I did not even bother to include it on the I/R
+I just checked.
+Anyway, nobody actually uses twm except for testing.
+But if you wanted a very light weight window manager just to test
+then you could install twm.
+
+Although I can not say the following with confidence.
+But since Sorcerer is designed for senior level SAs
+Sorcerer might be the worst distribution for someone
+new to Linux/POSIX/UNIX to try first.
+But even so you would not be the first person to have
+their first and successful POSIX experience using Sorcerer.
+
+Once you get the hang of it, you might decide it is fun.
+But like I mentioned previously...
+There are no wizards in Sorcerer.
+Therefore, figuring out how to do something depends
+largely on a SA's BASH skill,
+willingness to find and read manual and info pages,
+and willingness to find and read HowTos and FAQs
+at the linux documentation project
+
+But since you did manage to get Sorcerer installed and booted
+that demonstrates that you already seem to have the required
+amounts of skill and tenacity.
+What person lacks in one can always be suplemented  by the other.  :)
+
+After you have X set up and a window manager such as
+gnome or kde-v3 or kde-v4 installed and usable
+then you may want to tell us what the box is for on the
+email list and SAs can tell you about their favorite software for doing that.
+Even thought the grimoire contains over 3000 spells
+we probably only use about 1000 spells per box.
+Less than 5% of the spells in the grimoire are currently
+broke and will not compile and we are unaware of them.
+If you encounter something that you want and need fixed
+please post it on the email list.
+The more you can tell us about it the faster we can fix it.  :)
+
+Because Sorcerer seamlessly migrates from past to present to future
+we encounter a few ripples of instability that cause a few breaks
+from time to time.
+Therefore, it is often easier to maintain
+a deployed Sorcerer box than it is to initially deploy it.
+But with a bit of luck hopefully you will be able to install
+the first 800 so spells without encountering a single compile error.
+Good luck.
+
+
+On Thu, Dec 18, 2008 at 4:08 PM, Antoine Chassagnard
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">tacredips at gmail.com</A>&gt; wrote:
+&gt;<i> Hello everyone.
+</I>&gt;<i> I have just installed Sorcerer on my MSI Wind. It took several tries to get
+</I>&gt;<i> it right (probably because I am very much a Linux newbie). For the time
+</I>&gt;<i> being, what I really missed was a 'what to do next' message, or at least a
+</I>&gt;<i> rough guideline on what the proper order of operations was. If you want, I
+</I>&gt;<i> can supply a more extensive log of what I did (who knows - it might help
+</I>&gt;<i> writing a hypothetical installation guide).
+</I>&gt;<i> At this point, I'm still learning about Linux in general, but this kind of
+</I>&gt;<i> relatively free-form, flexible distro is exactly what I had in mind when I
+</I>&gt;<i> decided to switch from The Other OS.
+</I>&gt;<i> Cheers, Tony
+</I>-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: xorg.conf
+Type: application/octet-stream
+Size: 15528 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081218/7086aacd/attachment.obj">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081218/7086aacd/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000951.html">[Sorcerer-admins] New user
+</A></li>
+	<LI>Next message: <A HREF="000953.html">[Sorcerer-admins] New user
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#952">[ date ]</a>
+              <a href="thread.html#952">[ thread ]</a>
+              <a href="subject.html#952">[ subject ]</a>
+              <a href="author.html#952">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

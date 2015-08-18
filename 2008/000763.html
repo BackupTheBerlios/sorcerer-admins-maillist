@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Crontab fails to install new jobs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Crontab%20fails%20to%20install%20new%20jobs&In-Reply-To=%3C8596d02a0809051510v4101cd22s83b55f71bd6ab9d1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000762.html">
+   <LINK REL="Next"  HREF="000764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Crontab fails to install new jobs</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Crontab%20fails%20to%20install%20new%20jobs&In-Reply-To=%3C8596d02a0809051510v4101cd22s83b55f71bd6ab9d1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Crontab fails to install new jobs">d3ck0r at gmail.com
+       </A><BR>
+    <I>Sat Sep  6 00:10:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000762.html">[Sorcerer-admins] Crontab fails to install new jobs
+</A></li>
+        <LI>Next message: <A HREF="000764.html">[Sorcerer-admins] Crontab fails to install new jobs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#763">[ date ]</a>
+              <a href="thread.html#763">[ thread ]</a>
+              <a href="subject.html#763">[ subject ]</a>
+              <a href="author.html#763">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Uhmm... I see that mcron is installed... 1.0.4 is the latest (if I
+manually run ./configure on this... it fails, desiring a guile 1.8.0
+or more, and only guild 1.6.8 is there?)
+
+I tried just cast mcron, which it built and installed, still fails the same way.
+dispelled and recast (which just resurrected it) ...
+
+it's some sort of scheme program really... but I'm not having any good
+luck finding what it's config-spool-dir is supposed to be
+
+
+On Fri, Sep 5, 2008 at 2:35 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Then the additional directories that should have been created,
+</I>&gt;<i> but were not created when cron was installed do not exist.
+</I>&gt;<i> recast the cron program that you want to use
+</I>&gt;<i> and those missing directories will probably be created.
+</I>&gt;<i> Sorry for the inconvenience.
+</I>&gt;<i> Thanks for the report.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Sep 5, 2008 at 2:18 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> crontab -e
+</I>&gt;&gt;<i> (brings up editor, insert file)
+</I>&gt;&gt;<i> ERROR: in procedure copy-file
+</I>&gt;&gt;<i> ERROR: no such file or directory
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> this is on a fresh install both 64 and 32 bit.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Sep 5, 2008 at 2:16 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Location of cronjob files depends on cron being used.
+</I>&gt;&gt;&gt;<i> However,
+</I>&gt;&gt;&gt;<i> $ crontab -e
+</I>&gt;&gt;&gt;<i> may be proper invocation for editing cronjobs.
+</I>&gt;&gt;&gt;<i> exporting EDITOR first is a good idea unless you prefer vi.
+</I>&gt;&gt;&gt;<i> If all else fails read the manual page
+</I>&gt;&gt;&gt;<i> and cron program's source.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Fri, Sep 5, 2008 at 12:32 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> I have a file cron.tab
+</I>&gt;&gt;&gt;&gt;<i> I am trying to do 'crontab cron.tab'
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> crontab results with
+</I>&gt;&gt;&gt;&gt;<i> error: in procedure copy-file
+</I>&gt;&gt;&gt;&gt;<i> error: no such directory
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> where does crontab keep its stuff?  /var/spool/cron?
+</I>&gt;&gt;&gt;&gt;<i> /var/spool/atspool ?
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000762.html">[Sorcerer-admins] Crontab fails to install new jobs
+</A></li>
+	<LI>Next message: <A HREF="000764.html">[Sorcerer-admins] Crontab fails to install new jobs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#763">[ date ]</a>
+              <a href="thread.html#763">[ thread ]</a>
+              <a href="subject.html#763">[ subject ]</a>
+              <a href="author.html#763">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

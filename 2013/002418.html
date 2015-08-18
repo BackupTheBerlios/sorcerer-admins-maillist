@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] GPT Disk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3C51238DE7.1030707%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002416.html">
+   <LINK REL="Next"  HREF="002417.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] GPT Disk</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3C51238DE7.1030707%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] GPT Disk">Bradley at NorthTech.US
+       </A><BR>
+    <I>Tue Feb 19 15:36:23 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002416.html">[Sorcerer-admins] GPT Disk
+</A></li>
+        <LI>Next message: <A HREF="002417.html">[Sorcerer-admins] GPT Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2418">[ date ]</a>
+              <a href="thread.html#2418">[ thread ]</a>
+              <a href="subject.html#2418">[ subject ]</a>
+              <a href="author.html#2418">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+
+
+On 02/18/2013 11:45 AM, Kyle Sallee wrote:
+
+
+&gt;<i> I have not built any new boxes in a few years,
+</I>&gt;<i> Consequently, I am woefully ignorant of newer things like GPT.
+</I>
+Yes, the only two issues moving things in this direction are large HDDs
+or partitions and UEFI. Other than that no one needs it. Grub2 works
+well with this gpt and Lilo can too, but one must mind the partition
+sizes of / and or in combination with /boot.
+
+It's actually exceedingly easy to do, but going from gpt to ms-dos type
+MBR is kind of a pain unless you know the secret, LOL. It's only three
+or four commands in parted but no intuitive.
+
+Here's the docs I tend to follow when preparing formatting a drive
+w/gdisk as gpt:
+<A HREF="https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#Create_an_UEFI_System_Partition_in_Linux">https://wiki.archlinux.org/index.php/Unified_Extensible_Firmware_Interface#Create_an_UEFI_System_Partition_in_Linux</A>
+
+The new wave of laptops and workstations bastardized by mACROsF0t
+require a basic understanding of this. I've done it a few times with
+Arch and once w/Slackware.
+
+Again, if the box isn't a UEFI box then you don't have to use gpt disks
+- - you shouldn't have any sort of need to mount / on partitions not
+accessable by Lilo or fdisk.
+
+
+
+
+&gt;<i> Thanks for making a report about it.
+</I>&gt;<i> 
+</I>&gt;<i> Sharing of any additional suggestions, experiences, insights
+</I>&gt;<i> concerning GPT would be appreciated if possible.
+</I>&gt;<i> I have no bias against GPT.
+</I>&gt;<i> Typical of functionality might not be introduced
+</I>&gt;<i> until a Sorcerer SA requests support for it.
+</I>&gt;<i> That was true of tools and firmware in the past.
+</I>&gt;<i> However, these days firmware is less of a problem because
+</I>&gt;<i> a large collection of firmware for use with the linux kernel
+</I>&gt;<i> is downloaded monthly from a git repository.
+</I>&gt;<i> 
+</I>&gt;<i> I hope we can collaborate so that the next Sorcerer I/R
+</I>&gt;<i> is plenty adequate for installing on GPT partitioned disks.
+</I>&gt;<i> But otherwise I will try to give it a decent shot
+</I>&gt;<i> and at the very least provide the gptfdisk software tools.
+</I>&gt;<i> Sorry for the inconvenience.
+</I>&gt;<i> Thanks again for the report.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Feb 18, 2013 at 11:43 AM, Marc Grondin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">marcfgrondin at gmail.com</A>&gt;wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i> I am interested in trying Sorcerer my only problem is that the installer
+</I>&gt;&gt;<i> does not see the partitions on my 2TB GPT drive. How can i install sorcerer
+</I>&gt;&gt;<i> on this drive?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you
+</I>&gt;&gt;<i> Marc Grondin
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.310.388.9469  (US)
+TEL: +44.203.318.2755 (UK)
+TEL: +41.43.508.05.10 (CH)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+
+iQEcBAEBAwAGBQJRI43nAAoJEE1wgkIhr9j3n40H/1NyV57J4yecxBa2a28n+1c9
+RVqOF8EPJMffXnetKuClYFZd3n4fqoFlf80DtiiD09q5P97DHWpjX7M34iIgoMsc
+tAiZRCNFG1d4Oqmi0behn5HXRznZ+0LJn6/dT+PrzGxuGho4TdReGL208wGGBMPy
+YRKJWuQr1g+AS1eUZhdKMdtbH2mo3n+QNZ2bdAPeWOPDIDzDtCBn5bQTcW6Z9wZt
+6sPXuYWL984VPsMfY9rYAXA45auPc/pwPfc2xRvj/nuoDjTveFERY5dDvmVwVzoT
+WFfG7ALqAoPTKgSn0FKu/CXsb8qvp0anPzhs3wbT3DXEYkuoIaTiTQJwfUMuAkY=
+=vVqE
+-----END PGP SIGNATURE-----
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002416.html">[Sorcerer-admins] GPT Disk
+</A></li>
+	<LI>Next message: <A HREF="002417.html">[Sorcerer-admins] GPT Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2418">[ date ]</a>
+              <a href="thread.html#2418">[ thread ]</a>
+              <a href="subject.html#2418">[ subject ]</a>
+              <a href="author.html#2418">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

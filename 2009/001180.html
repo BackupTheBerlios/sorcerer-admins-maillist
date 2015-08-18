@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] useless jdk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C596b75860905131628m8fc07b1ia7858b172c150500%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001176.html">
+   <LINK REL="Next"  HREF="001182.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] useless jdk</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C596b75860905131628m8fc07b1ia7858b172c150500%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] useless jdk">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 14 01:28:49 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001176.html">[Sorcerer-admins] useless jdk
+</A></li>
+        <LI>Next message: <A HREF="001182.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1180">[ date ]</a>
+              <a href="thread.html#1180">[ thread ]</a>
+              <a href="subject.html#1180">[ subject ]</a>
+              <a href="author.html#1180">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There are 3 things we should remember.
+
+More memory consumed = more page faulting = slower programs.
+Something that I discovered with the sdelta series of programs
+was that it was faster to repeatedly calculate as required a block size
+using a subtraction of offsets rather than to store block sizes
+using additional memory.
+An x86_64 operating system uses by default
+64 bit integers instead of 32 bit integers.
+64 bit are twice as large and therefore use twice as much memory.
+The x86_64 instruction set is also a bit larger.
+Consequently, x86_64 will use more memory.
+Using more memory = slower execution.
+
+Almost all programs used today are written for 32 bit architecture,
+and some would still work on 16 bit architecture.
+Programs designed for 32 bit architecture run no faster for
+being compiled on 64 bit architecture.
+Some programs do use 64 bit integers explicitly,
+such as the programs that I write.
+However, the compiler can still handle 64 bit integer math using
+32 bit registers by using additional instructions.
+
+While 64 bit architecture does allow addressing nearly 64G of memory,
+few programs address more than 1G of memory,
+mostly by design, but a few respect the limitations of
+being run on 32 bit operating systems.
+
+So will running a 64 bit operating system grant better program performance?
+Probably not.
+It uses a bit more memory and a bit more disk space than IA32.
+However, there are some instances where a 64 bit operating system
+would be good for the task:
+a dedicated high a capacity database server;
+a top level domain name server.
+
+When there is a great deal of data that is needed
+and must be accessed quickly,
+and have as much stored in RAM as possible
+then those roles are better suited to 64 bit architecture
+than 32 bit architecture,
+and a box fully loaded with RAM.
+
+So with that said, no Sorcerer SA need be sad
+about running Sorcerer IA32 on their x86_64 boxes
+instead of Sorcerer x86_64.
+With delayed bus writes and half sized integers
+performance of an IA32 operating system on an x86_64 box
+aught to be excellent.
+
+
+On Wed, May 13, 2009 at 1:22 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> That, and flash support are the two main reasons I have decided to run 32bit
+</I>&gt;<i> on my Core2.
+</I>&gt;<i>
+</I>&gt;<i> :(
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001176.html">[Sorcerer-admins] useless jdk
+</A></li>
+	<LI>Next message: <A HREF="001182.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1180">[ date ]</a>
+              <a href="thread.html#1180">[ thread ]</a>
+              <a href="subject.html#1180">[ subject ]</a>
+              <a href="author.html#1180">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

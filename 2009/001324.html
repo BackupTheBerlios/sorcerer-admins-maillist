@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kde v3 related spells fail to compile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%20v3%20related%20spells%20fail%20to%20compile&In-Reply-To=%3C200909281201.19437.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001320.html">
+   <LINK REL="Next"  HREF="001325.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kde v3 related spells fail to compile</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%20v3%20related%20spells%20fail%20to%20compile&In-Reply-To=%3C200909281201.19437.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] kde v3 related spells fail to compile">merka at highsphere.net
+       </A><BR>
+    <I>Mon Sep 28 18:01:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001320.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+        <LI>Next message: <A HREF="001325.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1324">[ date ]</a>
+              <a href="thread.html#1324">[ thread ]</a>
+              <a href="subject.html#1324">[ subject ]</a>
+              <a href="author.html#1324">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have managed to get both qt-x11-free and kdelibs-v3 to compile while *some* 
+kde v3 spells also compiled. The trick was to compile both qt and kdelibs with 
+the same gcc version. Gcc 4.3 did not work on the qt spell so I forced 4.2 on 
+both.
+
+Now however, some kde v3 spells still do not compile. For example, the 
+kdebase-v3 spell fails as
+
+-W -Wpointer-arith -DNDEBUG -DNO_DEBUG -O2 -march=native -Os -Wformat-security 
+-Wmissing-format-attribute -Wno-non-virtual-dtor -fno-exceptions -fno-check-
+new -fno-common -DQT_CLEAN_NAMESPACE -DQT_NO_ASCII_CAST -DQT_NO_STL -
+DQT_NO_COMPAT -DQT_NO_TRANSLATION -D_GNU_SOURCE  -L/opt/kde3/lib     -R 
+/opt/kde3/lib -R /opt/kde3/lib -R /opt/kde3/lib -Wl,-s -L/opt/kde3/lib -
+L/opt/kde3/lib64 -o ksysguard SensorBrowser.o WorkSheet.o WorkSheetSettings.o 
+Workspace.o ksysguard.o ksysguard_skel.o ksgrd/libksgrd.la 
+SensorDisplayLib/libsensordisplays.la -lkdeui -lkio -lkdnssd 
+libtool: link: cannot find the library `/usr/lib/libxcb-xlib.la'
+make[4]: *** [ksysguard] Error 1
+make[4]: Leaving directory `/usr/src/sorcery/kdebase-
+v3/kdebase-3.5.10/ksysguard/gui'
+make[3]: *** [all-recursive] Error 1
+make[3]: Leaving directory `/usr/src/sorcery/kdebase-
+v3/kdebase-3.5.10/ksysguard/gui'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/usr/src/sorcery/kdebase-
+v3/kdebase-3.5.10/ksysguard'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/usr/src/sorcery/kdebase-v3/kdebase-3.5.10'
+make: *** [all] Error 2
+! Problem Detected !
+Source moved to /var/tmp/failed/kdebase-v3
+
+
+On Friday 25 September 2009, Jan Merka wrote:
+&gt;<i> On Thursday 17 September 2009, Kyle Sallee wrote:
+</I>&gt;<i> &gt; I wonder if that is related to the libxcb update somehow?
+</I>&gt;<i> &gt; I would try recompiling qt-x11-free
+</I>&gt;<i> 
+</I>&gt;<i> I can recompile qt-x11-free. I can even recompile kdelibs-v3. Then however,
+</I>&gt;<i> the uic command is segfaulting and all seems point to the use of different
+</I>&gt;<i> compiler versions for qt and kdelibs (4.2 and 4.3).
+</I>&gt;<i> 
+</I>&gt;<i> I have unsuccessfully tried to patch qt-x11-free to compile with gcc 4.3 to
+</I>&gt;<i>  no avail.
+</I>&gt;<i> 
+</I>&gt;<i> Can anybody test to compile qt-x11-free, kdelibs-v3 and kdnssd-avahi in
+</I>&gt;<i>  this order? If that succeeds, I would like to see what spell versions are
+</I>&gt;<i>  installed on the box and compile logs for qt and kdelibs.
+</I>&gt;<i> 
+</I>&gt;<i> Thank you,
+</I>&gt;<i> 
+</I>&gt;<i> Jan
+</I>&gt;<i> 
+</I>&gt;<i> &gt; and also to ensure that nothing else is being
+</I>&gt;<i> &gt; prevented from recompiling due to an ELF or LA failure.
+</I>&gt;<i> &gt; Also I would trying issuing:
+</I>&gt;<i> &gt; # mv /lib.old /lib.older
+</I>&gt;<i> &gt; # ldconfig
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Then check to see if uic is still segfaulting.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; kde-v3 is still working on my boxes and still compiling.
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001320.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+	<LI>Next message: <A HREF="001325.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1324">[ date ]</a>
+              <a href="thread.html#1324">[ thread ]</a>
+              <a href="subject.html#1324">[ subject ]</a>
+              <a href="author.html#1324">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

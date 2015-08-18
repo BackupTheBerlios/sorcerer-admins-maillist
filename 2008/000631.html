@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MPlayer skins leech issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MPlayer%20skins%20leech%20issue&In-Reply-To=%3C596b75860807230149sf95aae4w84105fc29f642690%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000628.html">
+   <LINK REL="Next"  HREF="000626.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MPlayer skins leech issue</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MPlayer%20skins%20leech%20issue&In-Reply-To=%3C596b75860807230149sf95aae4w84105fc29f642690%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MPlayer skins leech issue">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 23 10:49:04 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000628.html">[Sorcerer-admins] MPlayer skins leech issue
+</A></li>
+        <LI>Next message: <A HREF="000626.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#631">[ date ]</a>
+              <a href="thread.html#631">[ thread ]</a>
+              <a href="subject.html#631">[ subject ]</a>
+              <a href="author.html#631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actions that use a repository use the REPOSITORY variable.
+$REPOSITORY is independent of stable(), unstable(), secure()
+They are more different than apples and oranges.
+
+For now for a spell to use a repository
+then that spell must have the REPOSITORY=( ... ... ... ) variable.
+
+Current REPOSITORY support is for cvs and svn.
+I suppose git would work someone wrote the proper
+commands inside the REPOSITORY variable definition.
+
+Take for example, the REPOSITORY variable for ffmpeg:
+
+REPOSITORY=( &quot;&quot;
+             &quot;svn co -r {$VERSION} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A> ffmpeg&quot;
+             &quot;svn up -r {$VERSION} <A HREF="svn://svn.mplayerhq.hu/ffmpeg/trunk">svn://svn.mplayerhq.hu/ffmpeg/trunk</A>&quot; )
+
+As you can see leech merely executes the proper commands.
+It does not have those commands hard coded.
+
+If this should work differently
+then I require someone to write a verbose draft
+explaining how it should work.
+
+What you suggested thus far is merely 10%
+The other 90% is still in the shadows unseen.
+I have no idea how it will work.
+As for the adding a progress repository command, great.
+Yes, but what server?
+What shell commands to access it?
+So much is still missing.
+It may yet be better to modify such spells
+rather than to write an extensive overhaul
+making the definition of spells more complex.
+
+However, if the draft is good and the benefits
+far outweigh the complexity
+then a change would be a good solution.
+
+
+For now REPOSITORY might seem like a quick hack.
+And maybe it is:
+
+# grep REPOSITORY *
+ffmpeg:REPOSITORY=( &quot;&quot;
+talloc:REPOSITORY=( &quot;&quot;
+
+Only 2 spells in the official grimoire use it.
+Yet CPU cycles are spent each time a spell is leeched
+in order to check if REPOSITORY is definied.
+
+I would expect that we require at least 8 or maybe 16 spells
+that use REPOSITORY before we gain a clear idea of what
+will be required to adequately support this functionality in leech.
+Functionality for just 2 spells I am amazed if it works at all.  :)
+
+The idea seems good.
+But it requires yet more definition before we sculpt it into sorcery.
+
+
+On Wed, Jul 23, 2008 at 12:07 AM, MALET Jean-Luc
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> hummm so this is a knew issue... ok
+</I>&gt;<i> btw since you are on making a new sorcery an new grimoire in route,
+</I>&gt;<i> can you extend the stable/unstable mechanism to subversion/cvs/git?
+</I>&gt;<i> ie doing
+</I>&gt;<i> #augur progress somespell repository
+</I>&gt;<i> and in the spell : repository &lt;repository_type&gt; &lt;url&gt;
+</I>&gt;<i>
+</I>&gt;<i> will activate special leech features and index generation (based on days for
+</I>&gt;<i> example for update)
+</I>&gt;<i> this would be a good idea since some spells aren't available outside
+</I>&gt;<i> repository (ok there a few) and sometimes when you run into a bug and
+</I>&gt;<i> contact the maintainer he ask you to test a new version commited on
+</I>&gt;<i> repository...
+</I>&gt;<i>
+</I>&gt;<i> thanks and regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> Kyle Sallee wrote:
+</I>&gt;<i>
+</I>&gt;<i> Sorry about that.
+</I>&gt;<i>
+</I>&gt;<i> I have an entirely new grimoire
+</I>&gt;<i> and entirely new sorcery soon to be in route.
+</I>&gt;<i> I am still testing.
+</I>&gt;<i> It should fix that problem.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jul 22, 2008 at 1:41 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> hi,
+</I>&gt;<i> I can't download any mplayer skin.... I tried various leech options like
+</I>&gt;<i> -w and only got a countdown... no log event if verbose loging is activated
+</I>&gt;<i> any idea?
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000628.html">[Sorcerer-admins] MPlayer skins leech issue
+</A></li>
+	<LI>Next message: <A HREF="000626.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#631">[ date ]</a>
+              <a href="thread.html#631">[ thread ]</a>
+              <a href="subject.html#631">[ subject ]</a>
+              <a href="author.html#631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

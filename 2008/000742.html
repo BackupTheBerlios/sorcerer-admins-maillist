@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Subtle Error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Subtle%20Error&In-Reply-To=%3C27f41a930808311512o79997cb3g660d1e7007028291%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000741.html">
+   <LINK REL="Next"  HREF="000747.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Subtle Error</H1>
+    <B>evert vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Subtle%20Error&In-Reply-To=%3C27f41a930808311512o79997cb3g660d1e7007028291%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Subtle Error">evorster at gmail.com
+       </A><BR>
+    <I>Mon Sep  1 00:12:38 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000741.html">[Sorcerer-admins] Subtle Error
+</A></li>
+        <LI>Next message: <A HREF="000747.html">[Sorcerer-admins] Subtle Error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#742">[ date ]</a>
+              <a href="thread.html#742">[ thread ]</a>
+              <a href="subject.html#742">[ subject ]</a>
+              <a href="author.html#742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there.
+
+So, you use Core2 too? Good! Do you still use cpref in Sorcery? What I
+mean to ask, do you pass -march=core2 to gcc when compiling your
+spells?
+
+
+On Sun, Aug 31, 2008 at 8:55 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Sunday 31 August 2008, evert vorster wrote:
+</I>&gt;&gt;<i> Hello all Sorcerer System Admins...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am hunting down a subtle error here, and would like a bit of help.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Has anyone with a fast box issued a complete recompile after the 12th of
+</I>&gt;&gt;<i> July?
+</I>&gt;<i>
+</I>&gt;<i> I did install gstreamer and gst-plugins-base right now without problems on
+</I>&gt;<i> Core2. Don't use swig though.
+</I>
+Thanks for the info. I did a clean install on a laptop of a very
+recent Sorcerer I/R.
+
+I was able to cast swig without a problem. It was only after I added
+my cpref file and sources that I moved the laptop over to a monolithic
+kernel.
+( I get massive speed gains when running code tuned especially for the Core2 )
+Then I started a sorcery rebuild. About halfway through the process,
+swig, gstreamer and gst-plugins-base stopped compiling.
+To be honest, they do not even make it through the ./configure script,
+failing on what looks like bash not properly recognising pairs of
+backticks.
+I had the same problem with ncurses, and actually hacked the sources,
+replacing the ticks with $() to make it work, as a box without ncurses
+is not a linux box.
+
+:<i>)
+</I>
+Kyle and me have been looking at all sorts of bits of the computer,
+and we still cannot figure out exactly what is happening.
+
+I first thought it could be my locale settings, but on the laptop
+install my locale and LANG setting was en_US only, and still this
+error crept in.
+
+It looks like it only rears it head when I do a rebuild, which would
+point to some source compiling differently now than what it had done
+before. I guess.
+
+My CFLAGS and CXXFLAGS compiler flags are now most conservative, at
+-march=core2 -O1 -pipe, and LDFLAGS are -Wl, -O1.
+
+Basically, I was able to do a full rebuild on the 28 Jun, 2 Jul. Then
+I travelled around the world a little, and built a quad Core2 for my
+home use.
+on the 29 Jul I was having this problem with bash not doing the
+expected thing, it might be thinking it is getting invoked as /bin/sh,
+which has less functionality.
+
+Most recently I was beginning to think that there might be a backtick
+floating around in Sorcerer, but even calling ./configure from the
+command line still produces the same error on swig and gstreamer. So,
+Sorcerery is innocent. :)
+
+When the same error occured on a clean install of Sorcerer I was
+baffled, but sure that it is not my weird setup...
+
+-EVert-
+
+&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ever since that date I am unable to successfully recompile any of my
+</I>&gt;&gt;<i> Sorcerer boxen, with swig, gstreamer and gst-plugins-base not going
+</I>&gt;&gt;<i> past the ./configure script.
+</I>&gt;&gt;<i> I tried reinstalling from a very recent I/R, but as soon as I was
+</I>&gt;&gt;<i> starting to recompile for my arch ( Core2 ) these spells started
+</I>&gt;&gt;<i> failing to compile with the same error.
+</I>&gt;<i>
+</I>&gt;<i> What error?
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Am I the only one with gremlins in my boxen?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+You are the gardener in your own life. Be careful what you sow...
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000741.html">[Sorcerer-admins] Subtle Error
+</A></li>
+	<LI>Next message: <A HREF="000747.html">[Sorcerer-admins] Subtle Error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#742">[ date ]</a>
+              <a href="thread.html#742">[ thread ]</a>
+              <a href="subject.html#742">[ subject ]</a>
+              <a href="author.html#742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

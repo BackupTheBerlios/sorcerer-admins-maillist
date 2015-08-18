@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTilKyNmjKg4Fj-w_b8WuRRNUbwCpEXzN7-LHho-n%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001659.html">
+   <LINK REL="Next"  HREF="001664.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTilKyNmjKg4Fj-w_b8WuRRNUbwCpEXzN7-LHho-n%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun 19 03:27:55 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001659.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001664.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1661">[ date ]</a>
+              <a href="thread.html#1661">[ thread ]</a>
+              <a href="subject.html#1661">[ subject ]</a>
+              <a href="author.html#1661">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The init-script PID/SID problem is not entirely solved yet.
+Partially that is because I am using a fast method
+for checking that a PID in a PID file is owned by
+the expected server and that check might not
+always work properly for a SID when
+the SID differs from the PID.
+But that might only happen if gdm-binary
+restarts itself and receives a new PID.
+It will probably keep the same SID.
+But the check is wrong.
+
+As for killing I substituted pkill -s for kills,
+because the session leaders SID #
+is usually also the session leaders PID #.
+
+I can fix it, but want to do so without a performance hit.
+
+
+Something interesting recently is a request by Evert.
+He wanted a dispel command that could bowl over
+several spells at once when just the head pin is aimed for.
+That way he could issue something like
+# dispel xfce
+and everything xfce and
+that which only xfce requires can be dispelled.
+To me that seemed more like uprooting a weed
+than bowling so I created the
+# augur uproot $SPELL
+command.
+
+Okay here is the example:
+
+# time augur uproot xfce
+Queued for dispel in directory: /root/.sorcery/queue/dispel
+libxfce4util
+xfconf
+libxfcegui4
+libxfce4mcs
+xfce-mcs-manager
+exo
+xfce4-panel
+libxfce4menu
+gtk-xfce-engine
+fortune
+Thunar
+xfwm4
+xfdesktop
+xfce4-settings
+xfce4-session
+xfce4-dev-tools
+xfce4-appfinder
+xfce-utils
+orage
+mousepad
+Terminal
+xfce
+
+real    0m4.148s
+user    0m1.320s
+sys     0m2.150s
+
+Sure, it takes a little bit of time on a Pentium 3 to run,
+but it correctly identified what can be safely removed
+and added it to the dispel queue.
+Now I can remove spells from the dispel queue,
+add more to the spell queue by another invocation of
+# augur uproot $SPELL1 $SPELL2 $SPELL3
+Or I can issue
+# dispel
+and have dispel goto work at removing the software
+that is specified in the dispel queue.
+
+Like most augur commands
+the uproot command can accept spell names as input
+as either command line parameters
+or as stdin to the augur program
+# echo &quot;$SPELL1
+$SPELL2
+$SPELL3&quot; | augur uproot
+
+When input comes on stdin the spell names
+must be listed no more than one per line.
+
+Another good example of that is one of my favorite commands.
+
+# augur lone | augur size | sort -g | tee /tmp/piggy.txt
+
+That creates the piggy list which shows
+which spells can be removed and orders them
+so that the spells hogging more disk space
+show at the bottom of the list.
+
+Most augur commands can be connected in pipes
+like the above example which might be useful
+depending on what the SA wants to do.
+
+Sorry, I digressed.
+My point was that you can thank Evert for making the request.
+He had a good idea for selecting software for removal
+but without having to invoke augur lone repeatedly
+and without having to use the sorcery dispel menu.
+
+I will probably be using the
+# augur uproot $SPELL
+command often instead of specifying spell names
+directly as parameters to dispel.
+
+
+On Fri, Jun 18, 2010 at 2:33 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> maybe /var/run/sid? ;)
+</I>&gt;<i> &quot;other information about the system that is valid...&quot;
+</I>&gt;<i> SID isn't &quot;other information&quot;
+</I>&gt;<i> nothing force the SA to fill the PIDs files....
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001659.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001664.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1661">[ date ]</a>
+              <a href="thread.html#1661">[ thread ]</a>
+              <a href="subject.html#1661">[ subject ]</a>
+              <a href="author.html#1661">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

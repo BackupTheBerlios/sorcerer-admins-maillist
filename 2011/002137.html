@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /run away
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/run%20away&In-Reply-To=%3CBANLkTika88Kn%2BZYPkmVpYqQSKq7N5nHqCQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002136.html">
+   <LINK REL="Next"  HREF="002138.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /run away</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/run%20away&In-Reply-To=%3CBANLkTika88Kn%2BZYPkmVpYqQSKq7N5nHqCQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /run away">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Apr 27 06:26:33 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002136.html">[Sorcerer-admins] /run away /run away!
+</A></li>
+        <LI>Next message: <A HREF="002138.html">[Sorcerer-admins] upstart anyone?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2137">[ date ]</a>
+              <a href="thread.html#2137">[ thread ]</a>
+              <a href="subject.html#2137">[ subject ]</a>
+              <a href="author.html#2137">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Apr 26, 2011 at 5:56 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there...
+</I>&gt;<i>
+</I>&gt;<i> I read something about this some time ago.
+</I>&gt;<i>
+</I>&gt;<i> From what I could gather from the explanation was that /run makes for
+</I>&gt;<i> a cleaner file system, as stuff that needs a directory to write to
+</I>&gt;<i> early in boot were writing in to /dev, and since what they were
+</I>&gt;<i> writing were not strictly device nodes things were becoming messy.
+</I>&gt;<i>
+</I>&gt;<i> Having another top level directory was not a decision that was taken
+</I>&gt;<i> lightly. Times have moved on enough to where we need files that just
+</I>&gt;<i> did not fit in to any of the other subdirectories.
+</I>
+Something similar is mentioned at:
+<A HREF="http://lists.fedoraproject.org/pipermail/devel/2011-March/150031.html">http://lists.fedoraproject.org/pipermail/devel/2011-March/150031.html</A>
+
+Providing tmpfs on /var/lock/ and /var/run/
+was never an issue on Sorcerer.
+I would not expect that any distribution had that problem.
+Yet apparently that insurmountable problem
+is the reason why at least 4 distributions
+are switching to providing tmpfs on /run/
+
+Sorcerer's reason for capitulating
+with udev software developers
+is to avoid the potential of future problems
+involving udev and perhaps other software projects
+that expect tmpfs on /run/
+Sorcerer policy typically yields power
+to both software developers and SAs
+rather than creating and enforcing
+contrary distribution wide policies.
+
+The reason for providing information about /run/
+is so that Sorcerer SAs do not surmise that /run/
+was created for no apparent benefit
+by the introduction of a bug in an init-scripts.
+If I did not know about the change
+then I would suspect a bug.
+Because after decades of using /var/run/
+this change seems entirely unexpected.
+
+Fortunately, /var/run and /var/lock continue to exist
+as symbolic links that point into /run/
+Therefore, SAs will not be left wondering where
+process identification files are vacationing.
+It is the only reasonable solution since
+/var/run/ and /var/lock/ can not be immediately deprecated
+since thousands of software projects
+use /var/run/ to store their PID files.
+
+LSB authors want to their way.
+Software developers want their way.
+Distribution maintainers want their way.
+The Japanese language has a word for this.
+&#19977;&#12388;&#12393;&#12418;&#12360;&#12398;&#25126;&#12356;.
+In English it sounds like mitsu domoe no tatakai.
+It would a sumou battle with three wrestlers.
+Or in a less specific sense it is a 3 way fight/battle/struggle.
+Discovering which group wields the most power
+might yet become entertaining.
+
+The introduction of /run/
+solves no problems on Sorcerer.
+Therefore, the new policy has 0 boons.
+
+However, the introducing /run/
+while providing symbolic links for /var/lock and /var/run
+hints that the ultimate goal is to depreciate the legacy directories.
+Removal of the legacy directories would cause problems
+for 1000+ of software projects that are designed to have
+their PID files in /var/run/
+Therefore, the new policy has at least 1000 potential banes.
+
+0 boons to 1000 of banes makes the /run/ policy illogical.
+I wonder if the LSB committee will see it that way?
+I wonder what software project after udev will next expect and use /run/ ?
+
+I am surprised that udev authors did not entirely
+remove support for their legacy method of using /dev/.udev/
+In the past udev software authors make changes
+then all boxes that do not comply with the new methods
+have udev fail during boot
+and become unable to mount the root filesystem.
+So I am surprised that my dev box did not jump chest first
+onto the pointy tipped sword of udev development.
+Historically, failure to comply with udev developers had harsh consequences.
+Therefore, better to read the udev change log and do as suggested.
+
+To bluntly end the discussion /run/ might be a blunder.
+It should probably be rejected by the LSB.
+However, it's appearance is not a bug.
+Instead it is capitulation with what udev software authors want.
+
+Since /run/ grants no additional boons on Sorcerer
+we do not have a stake in the outcome of the LSB's decision.
+Sorcerer will probably do what udev software authors want.
+
+However, this moment is of potential interest.
+Requesting that the LSB rename /var/run/ to /run/
+and /var/lock/ to /run/lock is tantamount to
+requesting that the LSB rename /usr/ to /user/
+When LSB makes a decision about it
+please feel free to continue the thread
+and post further information.
+
+Since Sorcerer's SA email list is low volume
+with an average of less than 1 email per day
+this is not something of sufficient importance
+to warrant our own private flame war.
+I apologize for being overly verbose about the change.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002136.html">[Sorcerer-admins] /run away /run away!
+</A></li>
+	<LI>Next message: <A HREF="002138.html">[Sorcerer-admins] upstart anyone?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2137">[ date ]</a>
+              <a href="thread.html#2137">[ thread ]</a>
+              <a href="subject.html#2137">[ subject ]</a>
+              <a href="author.html#2137">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

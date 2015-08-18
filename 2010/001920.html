@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt-everywhere-opensource documentation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-everywhere-opensource%20documentation&In-Reply-To=%3CAANLkTinDwVnp%2BurOBdf55zuAeVpKJy5Nx7Q3F5V5pMnB%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001919.html">
+   <LINK REL="Next"  HREF="001922.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt-everywhere-opensource documentation</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-everywhere-opensource%20documentation&In-Reply-To=%3CAANLkTinDwVnp%2BurOBdf55zuAeVpKJy5Nx7Q3F5V5pMnB%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt-everywhere-opensource documentation">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep  8 07:23:56 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001919.html">[Sorcerer-admins] qt-everywhere-opensource documentation
+</A></li>
+        <LI>Next message: <A HREF="001922.html">[Sorcerer-admins] fun things...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1920">[ date ]</a>
+              <a href="thread.html#1920">[ thread ]</a>
+              <a href="subject.html#1920">[ subject ]</a>
+              <a href="author.html#1920">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That would probably be the docs feature toggle.
+sorcery -&gt; Config -&gt; Toggle Features
+
+It does not have a smart yet CPU intensive way to
+decide if docs were installed elsewhere.
+So according to some rules
+it gathers up anything that might be a document
+and places them in /usr/doc/$SPELL/
+This feature was requested by SAs
+that noticed that the make install
+of several sources would not include documentation.
+So this feature provides a convenience,
+but also wastes disk space.
+
+The most recent revision to that feature is the feature
+to install documentation into /usr/doc/$SPELL.tar.bz2
+or something like that.
+Saves a little bit of space while preserving part of the convenience.
+
+However, when I want to read some docs that
+are included in a source tarball but not included in the install
+then I usually untar the source tarball and start grepping.
+I expect that this is best since
+Sorcerer boxes normally retain
+source tarballs for installed spells
+in /var/cache/source/
+/var/cache/source is cleaned of debris regularly
+by the sorcery-clean spell.
+Costs about 2 to 3G of worthy amount of space on an average workstation
+when sorcery-bxz is installed.
+
+Please be careful of which features are set.
+They often make changes to how sorcery works
+that are much less than subtle.
+Some like the &quot;retry&quot; feature can even become problematic.
+
+The default feature set is color and scavenge.
+sorcery will work fine with no features enabled,
+but it will look less colorful.
+
+
+
+On Tue, Sep 7, 2010 at 4:48 AM, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+&gt;<i> &#160;Hello,
+</I>&gt;<i>
+</I>&gt;<i> on my boxes qt-everywhere-opensource installs documentation into two places:
+</I>&gt;<i> /opt/kde4/doc and /usr/doc/qt-everywhere-opensource. Each of them about 170
+</I>&gt;<i> MB.
+</I>&gt;<i> # du -s -b /opt/kde4/doc/
+</I>&gt;<i> 170227579 &#160; &#160; &#160; /opt/kde4/doc/
+</I>&gt;<i>
+</I>&gt;<i> # du -s -b /usr/doc/qt-everywhere-opensource/
+</I>&gt;<i> 179323924 &#160; &#160; &#160; /usr/doc/qt-everywhere-opensource/
+</I>&gt;<i>
+</I>&gt;<i> I would like to have only one copy of doc, is it possible? How can I achieve
+</I>&gt;<i> this?
+</I>&gt;<i>
+</I>&gt;<i> Thank You!
+</I>&gt;<i> madar
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001919.html">[Sorcerer-admins] qt-everywhere-opensource documentation
+</A></li>
+	<LI>Next message: <A HREF="001922.html">[Sorcerer-admins] fun things...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1920">[ date ]</a>
+              <a href="thread.html#1920">[ thread ]</a>
+              <a href="subject.html#1920">[ subject ]</a>
+              <a href="author.html#1920">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

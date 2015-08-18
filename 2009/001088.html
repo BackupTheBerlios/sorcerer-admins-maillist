@@ -1,0 +1,644 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] run requirements vs build requirements
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C596b75860904281031v79720365w9cad1723d451dee1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001087.html">
+   <LINK REL="Next"  HREF="001089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] run requirements vs build requirements</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C596b75860904281031v79720365w9cad1723d451dee1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] run requirements vs build requirements">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Apr 28 19:31:55 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001087.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+        <LI>Next message: <A HREF="001089.html">[Sorcerer-admins] qt fails compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1088">[ date ]</a>
+              <a href="thread.html#1088">[ thread ]</a>
+              <a href="subject.html#1088">[ subject ]</a>
+              <a href="author.html#1088">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Apr 27, 2009 at 5:29 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> I don't understand the aim of having soooo long argument for a
+</I>&gt;<i> functionality that will cost sorcery adding a function to setup an
+</I>&gt;<i> alias... I ask for a minor modification on spell format
+</I>&gt;<i> ie beeing able to add &quot;build_requirement&quot;
+</I>&gt;<i> and a minor modification in sorcery ie adding a function that do an
+</I>&gt;<i> alias build_requirement=requirement...
+</I>&gt;<i> does this worth a so long discussion and arguing?
+</I>&gt;<i> see other answers inline
+</I>
+The interesting thing about it is that it seems like a minor modification,
+but in fact requires a very thorough rewrite of sorcery.
+Take a look at sorcery's support for optional requirements.
+Look at all the additional functions that are required for it.
+See how it requires separate
+$REQ_INDEX $OPT_INDEX and separate $OPT_ON_INDEX
+And that is decent code after years of honing.
+Now square the complexity and that is what you are requesting.
+
+
+&gt;&gt;<i> Why does that to me seem that it would make something
+</I>&gt;&gt;<i> that is larger than the current I/R?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> on the other hand current I/R lacks some mandatory spells that make it
+</I>&gt;<i> less usable to recover a damaged system... small isn't always a
+</I>&gt;<i> target, functionality is....
+</I>&gt;<i> and I'm not sure since it will be able to drop X11 from the rescue image...
+</I>
+As I mentioned before.
+Because of the night tight 2009 format
+the I/R has room for improvement
+and room to provide more installed spells.
+Yet someone must recommend that those spells should be.
+
+Using LZMA with the higher level of compression is nice for the I/R
+In the near future we may even switch to lzip's implementation of LZMA.
+lzip is becoming faster and even more efficient than p7zip.
+Also, I should be able to pipe all the archive tarballs through it using
+only a single invocation.
+The catch that has already been reported,
+is that Installing a Sorcerer box requires more RAM.
+Of course, all deployed Sorcerer boxes are expect to have at least 512M
+of RAM which is not absurd considering one can hardly buy a new box
+that comes with less than 2G.
+My IA32 test box has 384M of RAM, and it swaps, plenty.
+It would probably be just enough RAM to install without
+having to create and activate swaps before running
+the menu driven installer.
+But one could do that as a last resort.
+
+
+&gt;&gt;<i> Although Sorcerer boxes could be made to delete files
+</I>&gt;&gt;<i> that are not used that solution might not be best.
+</I>&gt;&gt;<i> For example, manual pages might not normally be used.
+</I>&gt;&gt;<i> But when one wants to read one, it is good to have them installed. &#160;:)
+</I>&gt;<i>
+</I>&gt;<i> this is aside the main topic, I don't want obligatory to have a system
+</I>&gt;<i> that install all the build tool just for the build and then discard
+</I>&gt;<i> them after build (although it could be interesting for the chroot
+</I>&gt;<i> install)
+</I>&gt;<i> but rather to allow me to go further with crosscompile and
+</I>&gt;<i> autocreation of rescue disk
+</I>
+On the contrary it seems exactly what was requested.
+If a SA does not want build_requirements installed
+then the SA would be uninstalling them after they are
+determined to be no longer necessary.
+
+
+&gt;&gt;<i> At first Python, perl, ruby, java, etc... seem unessential.
+</I>&gt;&gt;<i> However, sometimes tools such as those are used for
+</I>&gt;&gt;<i> even trival tasks such as reading manual pages.
+</I>&gt;&gt;<i> Perl might still be required for reading manual pages.
+</I>&gt;&gt;<i> Who know what Python might be used for?
+</I>&gt;&gt;<i> Before Debian boxes switched to dash all their init-scripts were perl.
+</I>&gt;<i>
+</I>&gt;<i> yes, and that's not because one use perl and we don't that it make it
+</I>&gt;<i> worth beeing inside
+</I>&gt;<i> no embedded linux target as perl nor python buildin... some 3rd
+</I>&gt;<i> parties do provide them after... my nokia N800 don't have perl nor
+</I>&gt;<i> python installed...
+</I>
+I doubt many embedded systems do compilation.
+Also they might lack standard utilities such as udev.
+I suspect an embedded system using uClibc and busybox can be created.
+It will boot.
+But it will operate differently than the current system using glibc and udev.
+The cost of having such fluffed out boxes is perl and Python
+and other stuff that we do not know if we use or do not use.
+However, as I mentioned before, atimes could indicate usage.
+Sorcery however uses entirely bash,
+and the init-scripts use either bash or dash.
+sorcery is not burdening SAs with having perl and Python installed.
+If that is not desired then discover what software requires it
+and email those software developers about not using it.
+Also I can be told for which spells it is truly optional.
+With such changes it may be possible to create Sorcerer boxes
+that do not have to have certain spells such as perl and Python installed.
+But it will come at the cost of a more limited selection of installed software.
+
+As a distribution maintainer,
+I do not make the rules about what software is required.
+I try to detect what those rules are and implement them in spells.
+That way required software is installed and thus avoids failed compilation.
+
+The first few versions of sorcery rough draft
+did not have optionals nor requirements.
+It was entirely up to the SA to select what software to install
+and also the order to install it in.
+However, software requirements became so complex so quickly
+that I revised spells and sorcery to support a requirement system.
+And I have tried to keep it as fast and simple as possible.
+Sorcery's method for requirements should not at all seem
+similar to a pre-compiled binary based distros.
+Yet it should normally be adequate for the task of ensuring
+that required software is installed prior to compiling and updating.
+
+
+&gt;&gt;<i> I do not know what LinuxFromScratch as evolved into,
+</I>&gt;&gt;<i> but originally it was a tiny document that described how
+</I>&gt;&gt;<i> to install some very old versions of about 30 software projects.
+</I>&gt;&gt;<i> According to some reports from other SAs who tried LFS,
+</I>&gt;&gt;<i> putting together a box that way requires months of effort and work.
+</I>&gt;&gt;<i> And then it would only boot.
+</I>&gt;<i>
+</I>&gt;<i> indeed... but you know at this time writing, there is no tool that
+</I>&gt;<i> track dependencies and keep receipes of build.... very few sources
+</I>&gt;<i> based distro has support for crosscompilation and system disk
+</I>&gt;<i> creation.
+</I>
+Cross-compilation I expect would be niche based distro,
+because of the complexity and difficulty of the task.
+Boot disks went out of style because a modern modular linux kernel
+requires more than 1.44M without even the modules.
+This is why the Sorcerer I/R is both an Install and Rescue CD.
+
+
+&gt;<i> however I don't like the way the binary distro behave, splitting a
+</I>&gt;<i> package into runtime and build, I don't wan't that, I just want to
+</I>&gt;<i> have a whole package and after if I want to strip it from unrequired
+</I>&gt;<i> files I prefer this rather than the other option of having 2 packages
+</I>&gt;<i> per spells... let's keep it what it is : a source based distribution.
+</I>&gt;<i> but have the full power of sources
+</I>
+Yup.  I agree.  But why modify the archive?
+Afterall the installation of the spell causes
+files to be installed in /usr/include/, for example.
+Consequently, those files, if not desired,
+must be removed from /usr/include/
+Either way it is a rm /usr/include/
+That is because sorcery is a not a package manager.
+
+
+&gt;&gt;&gt;<i> sorcery won't ever prevent me to do that...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Should it?
+</I>&gt;<i>
+</I>&gt;<i> no, sorcery is a build tool that allow to install even on a running
+</I>&gt;<i> system no more no less.
+</I>
+There are reasonable limits to the amount of holes that
+are allowed to be blown into the / filesystem.
+If you want me to make a utility
+that can recovery from any problem without the I/R
+then it requires:
+1. some time for me to write it.
+2. compiling it and statically linking it so it does not require glibc
+3. Have the menu driven installer copy the installed base system
+to /repair/
+4. a vote of consensus that this would be a good idea and
+worth the disk space that is required.
+
+Basically, recovery would involve moving the installed system to
+/broke and the original installation from /repair to /
+And of course user, password, and group files would still
+be the ones used from the installed system and not the repaired.
+This is a bit faster than doing a fresh install with an I/R,
+but it is nearly the same thing.
+And it also neglects using a the latest available I/R
+which is why it is not a good method.
+Having installed sorcery and installed grimoire that
+is a year older than available makes for difficult updating.
+
+For these considerations I currently make the requirement
+of a full and complicated repair a manual SA procedure.
+However, short of filesystem corruptions I know of no
+instances where SAs must do a full repair.
+However, Evert is baking one at the moment
+with some strange segmentation faulting problems.
+
+Short of a filesystem corruption I have not encountered
+a problem severe enough to warrant an re-installation.
+However, it might happen.
+And in such situations it is probably best to use both
+a fresh filesystem and a fresh I/R
+We should not forget that Sorcerer is a moving target.
+There are now Sorcerer release 6.1 nonsense that
+pre-compiled binary based distros do.
+Sorcerer I/Rs have a date on them.
+That way SAs know exactly how old they are.
+Knowing how old an I/R is, and if a newer is available
+are the most important questions, yes?
+
+
+&gt;&gt;<i> I do not have to speculate about cross-compiling.
+</I>&gt;&gt;<i> I have done enough cross-compiling to know exactly
+</I>&gt;&gt;<i> why I would rather wait for qemu to do it instead of
+</I>&gt;&gt;<i> cross-compiling software.
+</I>&gt;&gt;<i> And yes I do probably still have archived cross-compile
+</I>&gt;&gt;<i> tool chains for x86_64 architecture.
+</I>&gt;<i>
+</I>&gt;<i> and I wonder why embedded programmers still use crosscompilers...
+</I>
+Because of a Faustian deal.  :)
+For some software it is easier and faster to cross compile
+especially when the target is statically linked, does not use NLS,
+does not use libstdc++ or create libstdc++ libraries.
+
+
+&gt;&gt;<i> It is actually easier than that.
+</I>&gt;&gt;<i> Simply create a union fileystem using fuse
+</I>&gt;&gt;<i> Make the all the files in the / filesystem appear within the chroot
+</I>&gt;&gt;<i> filesystem without them actually being there.
+</I>&gt;&gt;<i> That way there is no copying involved.
+</I>&gt;&gt;<i> Yet why do I not do that?
+</I>&gt;&gt;<i> Because dispel has to executed outside of the chroot.
+</I>&gt;&gt;<i> Some sources will not install properly until
+</I>&gt;&gt;<i> the previously installed files are removed.
+</I>&gt;<i>
+</I>&gt;<i> that's non sens and even won't obviously work in a crosscompile env.
+</I>
+Not nonsense.
+Using older versions of plasticfs I found it possible to re-direct
+installed files so that they would not go directly into /,
+but instead into a subdirectory.
+Debian's fakeroot library preload makes the user creating packages
+appear to be root, and make the installed files appear to go into
+the real filesystem when in fact neither happens.
+As far as library preloads go sentinel is one of the least complex.
+It does not modify what happens nor fake anything.
+It simply logs important transactions that describe what files
+should be owned by a spell that is installing.
+Obviously sentinel would be less than ideal since cross compiled
+software should not be installed within the main filesystem.
+However, many other types of library pre-loads and fuse filesystems
+would fit the task.
+Of course I find it easier to modify the Makefile to make
+the software install somewhere else or to use DESTDIR
+or whatever method seems convenient.
+My methods are probably ancient.
+I have done no cross compilation since the earliest releases
+of the Sorcerer I/R for x86_64.
+
+
+&gt;<i> and the last point you mentionned about sources that have to be
+</I>&gt;<i> removed before installation is again a point in favor of build
+</I>&gt;<i> requirement vs runtime requirements...
+</I>&gt;<i> and look, with such system of chroot like env, you won't have to use
+</I>&gt;<i> the preserve trick used in some spells... which is an even more dirty
+</I>&gt;<i> trick....
+</I>
+I am not understanding what you are communicating.
+With the exception of init-scripts which are init-scripts
+and not configuration files, all configuration files in /etc/
+are preserved.
+Current default configuration files are available in /etc.ori/
+I consider it to be a convenience for SAs rather than a dirty trick.
+
+
+&gt;&gt;<i> Currently, sorcery dispels previously installed software
+</I>&gt;&gt;<i> just before the newly compiled software is installed.
+</I>&gt;&gt;<i> This is a great boon/convenience that we take for granted.
+</I>&gt;&gt;<i> It minimizes the amount of time and probability that a program
+</I>&gt;&gt;<i> will be executed and fail execution.
+</I>&gt;<i>
+</I>&gt;<i> well... I don't care that the install is done first in a temporary
+</I>&gt;<i> place and then dispel occurs and after that install is performed....
+</I>
+It is the converse of how it works now.
+And if it were easier I would have done it that way.
+But software authors write Makefiles and scripts
+that check the real root filesystem for things such
+as configuration files and do not always check
+the location for specified for installation.
+Also some things might accept a more specific installation location,
+yet still throw their configuration files into /etc/ instead.
+
+Because software authors tend to be sloppy I try to make Sorcerer
+appear to be exactly the box that they expect where no previous
+version of their software can be detected as installed after
+the command to install has been issued.
+
+
+&gt;<i> or that we use the current scheme that require dispell to be done
+</I>&gt;<i> before installing... actually the current scheme is less robust:
+</I>
+In theory yes.
+In practice it works great.
+I have tried both, of course.
+The current Sorcerer method
+is the method that avoids
+the majority of headaches for spell authors.
+Using a &quot;more robust&quot; method requires more complex spells.
+Therefore, it requires more effort from spell authors
+to compensate for the problems created by the software authors.
+
+
+&gt;<i> 1) if a disk space goes low, it can happen that a spell might fail
+</I>&gt;<i> during install step, thus leaving a partial install
+</I>
+Not normally.
+cast checks for a certain minimum amount of free space
+before starting compilation of spells.
+Therefore, if insufficient space is available
+then the spell to be compiled is automatically failed
+and saves both wasted CPU cycles and also avoids
+the problem described as 1)
+
+
+&gt;<i> 2) there is no way to detect before the actual install step on disk
+</I>&gt;<i> that you'll run out of space
+</I>
+In practice it is sufficient to detect if sufficient free space is available
+before compilation begins.
+However, that does not prevent a SA from running a filesystem out
+of space prior to a spell's installation or even during.
+However, by reserving a small percent of filesystem to root's usage
+will usually keep any user run app from running a filesystem to bare
+while sorcery is compiling and installing softare.
+
+
+&gt;<i> 3) there is no way to do a test build without modifying your env
+</I>
+We do not do test builds.
+If something compiles then it installs.
+However, dispel could be made to refuse to do upgrade dispels
+if disk space appeared to be too low.
+And then sorcery could fail spell compilations before executing
+make install and thus keep the previously installed version.
+I do not have it do this for obvious reasons.
+I prefer that compilation be aborted before it begins
+if disk space appears to be too low.
+
+
+&gt;<i> 4) for some critical software you have to leave some file as is (the
+</I>&gt;<i> protected files) increasing the risk of destroying the box per partial
+</I>&gt;<i> install (ok the risk is minim but it exist)
+</I>
+sorcery allows for omitted and immutable files.
+
+
+&gt;<i> 5) you have to rely on a third party library that consume cpu and have
+</I>&gt;<i> to be ported to the target environment before beeing able to use
+</I>&gt;<i> sorcery
+</I>
+Please elaborate.
+What is required?
+Do you mean sentinel?
+Only a sentinel compiled for the host architecture is required
+when cross compiling.
+When native compiling a sentinel compiled for the host architecture
+is also required.
+It is the same thing.
+If you want a sentinel for non IA32 and non x86_64 architecture
+then provided it runs glibc then creating that sentinel is not problematic.
+Cross compile it.  :)
+sentinel is a simple program.
+
+
+&gt;<i> yes but on the other hand you could have :
+</I>&gt;<i> run firefox during all the configure/build/install time, make it
+</I>&gt;<i> unavailable just during the time of a cp -a from tmpfs to disk (at
+</I>&gt;<i> 50MB/s it takes... 1s) or even more fast during the time of a 7za x
+</I>&gt;<i> -so.....
+</I>&gt;<i> you also won't make it unavailable for a long time if the install step
+</I>&gt;<i> fails for some reason....
+</I>&gt;<i> it is even more fast... secure....
+</I>
+It can be done.
+And it can be done without using the &quot;more robust&quot; method.
+Simply copy the firefox from / to some subdirectory
+then join it to the / filesystem with a union to make it appear in it
+Then enable that union for users,
+but disable it for root.
+Why disable it for root?
+Two reasons.
+First root should never run firefox.
+Second, root is installing firefox and thus we want
+/ to not appear to already have firefox installed.
+
+For the moment the amount of time required to install software,
+even firefox, is so tiny that it is hardly worth the effort of
+trying to make the software appear available 99.9% of that time.
+
+However, I have tried the DESTDIR method of compilation.
+And it is a pain.
+Things happen differently depending upon the source.
+gtk+ installation with DESTDIR was very different than
+what normally happens without it.
+I do not want to have to detect and fix these unexpected
+and undesirable breaks.
+That is why we continue to use sentinel for sorcery.
+
+
+&gt;&gt;<i> As far as I recall no SA has complained about software
+</I>&gt;&gt;<i> being unavailable and not starting during updates.
+</I>&gt;&gt;<i> There is a probability for problems to happen.
+</I>&gt;&gt;<i> But in actuality they rarely happen.
+</I>&gt;<i>
+</I>&gt;<i> well I never complained, but it happend more than once that I didn't
+</I>&gt;<i> had firefox for 2 or 3 days until I fix a partial install.... and well
+</I>&gt;<i> I didn't ran augur alien for long time but I remember that the last
+</I>&gt;<i> time I done it it was reporting lot of files that were previously
+</I>&gt;<i> installed and not tracked anymore.... install step error don't occurs
+</I>&gt;<i> often, but they do.
+</I>
+Partial install of firefox?
+Ran out of space?
+How unexpected.
+aliens?
+aliens are most often created by SAs,
+yet they do occur sometimes for other reasons.
+That is why there is a sorcery-alien spell
+to help SAs locate alien files.
+
+
+&gt;&gt;<i> Obviously, if a cut down embedded
+</I>&gt;&gt;<i> installation of Sorcerer suitable only for runtime is desired
+</I>&gt;&gt;<i> then the easiest way is still to start with a proper and full Sorcerer
+</I>&gt;&gt;<i> installation,
+</I>&gt;&gt;<i> copy it, and then delete the files that would not be required such as
+</I>&gt;&gt;<i> /usr/lib/*.a and /usr/include/
+</I>&gt;<i>
+</I>&gt;<i> lol... no comments... this would never work in an embedded env...
+</I>&gt;<i> actually unless you have exactly the same hardware on host and target
+</I>
+Using the same architecture for compilation as running is ideal.
+It is the easier method for creating an embedded target,
+easier than cross compiling.
+
+
+&gt;<i> it would never work... sorry but I didn't found an x86_64 with 2G ram
+</I>&gt;<i> on my store...
+</I>
+How much RAM did they have?
+
+
+&gt;&gt;<i> If someone runs that cut down box for a time with atimes enabled
+</I>&gt;&gt;<i> then it would probably be possible to eliminate another 90% of files
+</I>&gt;&gt;<i> that are not used during normal operations.
+</I>&gt;<i>
+</I>&gt;<i> and the day you run the software you use 1% of the time it won't
+</I>&gt;<i> because the statics you gathered at this time are no more accurate.
+</I>
+Of course atimes only show files that were accessed previously.
+It can in no way predict future access of files.
+Yet if only the same files were used repeatedly,
+such as in the process of running sysinit from an initramfs,
+then atimes do provide a good prediction of exactly what
+files should be kept and what can be discarded.
+
+
+&gt;&gt;<i> cross-compilation is not normally performed chrooted.
+</I>&gt;&gt;<i> Merely the target of installation is changed so that
+</I>&gt;&gt;<i> the installed files do not go into / nor /usr
+</I>&gt;<i>
+</I>&gt;<i> wrong, because some package use the --prefix to hardcode the path of
+</I>&gt;<i> some configuration files...
+</I>&gt;<i> in fact most crosscompile env use the DESTDIR variables to perform the
+</I>&gt;<i> installation...
+</I>
+The only confirms what I wrote above.
+If not using DESTDIR
+then modify the Makefile.
+In either situation compilation does not have to be done while chrooted.
+However, if you are concerned about the use of include files
+and linking of library files
+then this can be handled with additional CFLAGS and LDFLAGS.
+
+
+&gt;&gt;<i> glibc can not be installed ontop of a running glibc.
+</I>&gt;&gt;<i> That is why the library cache is present so that installed libraries
+</I>&gt;&gt;<i> can be moved out of their normal installed positions, yet be made
+</I>&gt;&gt;<i> available for use while newer libraries are installed.
+</I>&gt;<i>
+</I>&gt;<i> you are speaking to someone that had lot of issues with readline which
+</I>&gt;<i> has the same protection... how many time (hopefully less lately) did I
+</I>&gt;<i> fixed that using the rescue disk? too many! most of the time it was
+</I>&gt;<i> due to partial install, some time due to outofspace install that
+</I>&gt;<i> prevented the install log to be created or lot of others reasons....
+</I>
+Alien glibc, readline, and ncurses libraries are a serious problem.
+Please be extra careful about eliminating aliens
+from /lib/ and /lib64/
+Concurrent and not tracked installations of glibc is not supported.
+
+
+&gt;&gt;<i> As for chrooting...
+</I>&gt;&gt;<i> Any program running with the root account can break free of a chroot,
+</I>&gt;&gt;<i> if it was programmed to do so.
+</I>&gt;&gt;<i> That is why services that run inside a chroot also switch
+</I>&gt;&gt;<i> the user and group away from root after it is started.
+</I>&gt;<i>
+</I>&gt;<i> WRONG! this was true some long time ago with a security issue fixed
+</I>&gt;<i> that allowed it... now if the chroot is correctly setup (/dev/ not
+</I>&gt;<i> containing mountable partition for example) there is no way that a
+</I>&gt;<i> system break a chroot jail...
+</I>
+Would it not be possible for a root process to simply
+create a device node for whatever device it wants?
+What about then new mount options?
+The linux kernel supports some very interesting mount methods
+that, for example, can allow for a filesystem to appear to be mounted
+to multiple points concurrently.
+
+
+&gt;&gt;<i> Interesting ideas.
+</I>&gt;&gt;<i> I would like to summarize.
+</I>&gt;&gt;<i> Yes, a Sorcerer box can be chopped down into what is absolutely necessary.
+</I>&gt;&gt;<i> But do not expect to be able to easily repair and update it that way.
+</I>&gt;&gt;<i> Cut it back if desired,
+</I>&gt;<i>
+</I>&gt;<i> this out of my scope and idea, my purpose isn't to chop down a
+</I>&gt;<i> sorcerer box, my goal is to have the requirement handled correctly
+</I>&gt;<i>
+</I>&gt;<i> Best Regards
+</I>&gt;<i> JLM
+</I>
+Okay, I am not fully understanding.
+How are the requirements not being handled correctly, please?
+Simply saying that some requirements should be build_only requirements
+is not a matter of correctness, because obviously spells the way
+they are currently written compile and install fine.
+The goal of sorcery is not to do things correct,
+but to make compilation of software very easy for SAs.
+
+What is defined as correct changes over time anyway.
+Since /etc.ori/ is not officially defined as a place for
+original unmodified configuration files
+then having sorcery install files to /etc.ori/
+maybe interpreted as doing something that is incorrect.
+Even so I do not mind doing something incorrect
+if the boons outweigh the costs.
+Take sorcery init-scripts.
+Most of them will not work on a LSB init-script system.
+They are super small and super concise and designed
+for Sorcerer's implementation of LSB style init-script.
+However, Sorcerer will run LSB style compliant init-scripts.
+In effect Sorcerer is doing something incorrect by not
+making Sorcerer init-scripts LSB style compliant.
+But there is a decent gain for doing it this way
+while still providing backward compatibility.
+
+Doing something correctly only provides an implementation
+that is as good as the norm.
+Sometimes doing things incorrectly yields greater boons
+while still achieving the same overall desired outcome.
+
+There are plenty of things that sorcery does incorrectly.
+Yet we gain a good amount of speed and inconvenience
+for doing incorrect things.
+The benefits - the costs matters more for evaluation than correctness.
+
+The correct way of doing requirements would probably be
+&quot;the pre-compiled binary based distro method&quot; where specific
+versions and version ranges can be specified and that the
+installed software does not have the exact versions given
+by software authors but have an additional distribution version
+appended onto it such as a -1 , -2 or .1,  .2,  .3
+However, Sorcerer SAs, and especially me, would loathe sorcery
+if it handled requirements &quot;correctly&quot; like a pre-compiled binary based distro.
+I enjoy the convenience of
+# augur snapshot
+telling me the exact versions that I would expect to see
+if I visited the software author's websites for the installed software.
+There is no nonsense with distribution specific versions to complicate
+my understanding of the installed software.
+
+One might even be able to argue that the Sorcerer method for
+handling requirements is not only correct,
+but also less complicated than pre-compiled binary based distro methods.
+In that respect correctness is merely a &quot;point of view&quot; or an arbitrary idea.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001087.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+	<LI>Next message: <A HREF="001089.html">[Sorcerer-admins] qt fails compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1088">[ date ]</a>
+              <a href="thread.html#1088">[ thread ]</a>
+              <a href="subject.html#1088">[ subject ]</a>
+              <a href="author.html#1088">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

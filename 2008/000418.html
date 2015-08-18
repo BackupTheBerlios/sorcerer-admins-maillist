@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Problem during installation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Problem%20during%20installation&In-Reply-To=%3C596b75860805070910w49e95dd4v36658ed25688ab31%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000417.html">
+   <LINK REL="Next"  HREF="000420.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Problem during installation</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Problem%20during%20installation&In-Reply-To=%3C596b75860805070910w49e95dd4v36658ed25688ab31%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Problem during installation">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May  7 18:10:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000417.html">[Sorcerer-admins] Problem during installation
+</A></li>
+        <LI>Next message: <A HREF="000420.html">[Sorcerer-admins] libgcrypt problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#418">[ date ]</a>
+              <a href="thread.html#418">[ thread ]</a>
+              <a href="subject.html#418">[ subject ]</a>
+              <a href="author.html#418">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry.
+This is probably my mistake.
+On the 200805001 ia32 I/R I accidentally compiled
+about 60 software components with -march=native
+which gave them optimizations for athlon-xp.
+
+The problem may not have occurred on the 20080301 CDs.
+It may be worth trying.
+
+As for now I am nearly ready to release another CD
+to fix my 20080501 CD mistake.
+
+The newer I/R will support:
+LVM2, cryptfs LUKS encrypted devices, mdadm software RAID.
+
+LVM2 support 100% complete, 5% tested, installer supported
+cryptsetup LUKS 100% complete, 5% tested, installer supported
+mdadm           75% complete, 5% tested, not in installer yet
+selinux support 50% complete, 0% tested, not in installer yet.
+
+I will hold off on finishing selinux support for the next I/R
+I will complete the mdadm support for the menu driven installer.
+Then, I will do testing.
+1 install test deployment with cryptsetup LUKS and reboot test.
+1 install test with mdadm RAID and reboot test.
+1 install test with LVM2 and reboot test.
+
+Sorry for the delay.
+Except for miscompiling the installed software to athlon-xp
+architecture the 20080501 ia32 I/R is probably nearly bug free.
+It passed 3 complete installs and reboot tests.
+
+Thanks for the bug reports.
+
+The next ia32 I/R is already completely recompiled to avoid
+any potential of lurking athlon-xp only executables.
+If you want it urgently I can roll a beta of it after
+completing the mdadm support in the installer.
+cryptsetup, mdadm, LVM2 will work,
+but the menu driven installer might not.
+
+Soon I will get my i586 back that I loaned to someone
+and will be able to use it also for I/R testing.
+I would have caught this problem before releasing the I/Rs
+had I tested it on non athlon hardware.
+Feels like I was burned by &quot;Murphy's Law&quot;
+The one thing that could go wrong did go wrong.
+
+
+
+On Wed, May 7, 2008 at 8:39 AM, Vavrinec, Karol
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">karol.vavrinec at delphi.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>  Hi,
+</I>&gt;<i>
+</I>&gt;<i>  I downloaded latest install CD (2.5.2008), and tried to install sorcerer, but CD freezed just after keyboard layout selection. After about 30-60 seconds I got this message:
+</I>&gt;<i>  -------------------------------
+</I>&gt;<i>  hostname.unknown kernel: intel_rng: FWH not detected
+</I>&gt;<i>  8139cp 0000:02:02.0 This (id 10ec:8139 rev 10) is not nan 8139c+ compatible chip
+</I>&gt;<i>  8139cp Try the &quot;8139too&quot; driver instead
+</I>&gt;<i>  smartd[1807] Problem creating device name scan list
+</I>&gt;<i>  -------------------------------
+</I>&gt;<i>
+</I>&gt;<i>  My hardware:
+</I>&gt;<i>  Pentium 4 2000 MHz, MSI 845PE Max, 786 MB (DDR SDRAM), Nvidia [NV17] GeForce4 MX 440, WDC 80GB, WDC 160GB, net.card Realtek RTL 8139/810x
+</I>&gt;<i>
+</I>&gt;<i>  lspci:
+</I>&gt;<i>  00:00.0 Host bridge: Intel Corporation 82845G/GL[Brookdale-G]/GE/PE DRAM Controller/Host-Hub Interface (rev 02)
+</I>&gt;<i>  00:01.0 PCI bridge: Intel Corporation 82845G/GL[Brookdale-G]/GE/PE Host-to-AGP Bridge (rev 02)
+</I>&gt;<i>  00:1d.0 USB Controller: Intel Corporation 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) USB UHCI Controller #1 (rev 02)
+</I>&gt;<i>  00:1d.1 USB Controller: Intel Corporation 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) USB UHCI Controller #2 (rev 02)
+</I>&gt;<i>  00:1d.2 USB Controller: Intel Corporation 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) USB UHCI Controller #3 (rev 02)
+</I>&gt;<i>  00:1d.7 USB Controller: Intel Corporation 82801DB/DBM (ICH4/ICH4-M) USB2 EHCI Controller (rev 02)
+</I>&gt;<i>  00:1e.0 PCI bridge: Intel Corporation 82801 PCI Bridge (rev 82)
+</I>&gt;<i>  00:1f.0 ISA bridge: Intel Corporation 82801DB/DBL (ICH4/ICH4-L) LPC Interface Bridge (rev 02)
+</I>&gt;<i>  00:1f.1 IDE interface: Intel Corporation 82801DB (ICH4) IDE Controller (rev 02)
+</I>&gt;<i>  00:1f.3 SMBus: Intel Corporation 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) SMBus Controller (rev 02)
+</I>&gt;<i>  00:1f.5 Multimedia audio controller: Intel Corporation 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) AC'97 Audio Controller (rev 02)
+</I>&gt;<i>  01:00.0 VGA compatible controller: nVidia Corporation NV17 [GeForce4 MX 440] (rev a3)
+</I>&gt;<i>  02:02.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL-8139/8139C/8139C+ (rev 10)
+</I>&gt;<i>  02:08.0 Ethernet controller: Intel Corporation 82801DB PRO/100 VE (CNR) Ethernet Controller (rev 82)
+</I>&gt;<i>  -------------------------------
+</I>&gt;<i>
+</I>&gt;<i>  Do you have an idea what could be wrong?
+</I>&gt;<i>  Thank you
+</I>&gt;<i>
+</I>&gt;<i>  Karol
+</I>&gt;<i>
+</I>&gt;<i>  ****************************************************************************************
+</I>&gt;<i>
+</I>&gt;<i>  Note:  If the reader of this message is not the intended recipient, or an employee or agent responsible for delivering this message to the intended recipient, you are hereby notified that any dissemination, distribution or copying of this communication is strictly prohibited. If you have received this communication in error, please notify us immediately by replying to the message and deleting it from your computer. Thank you.
+</I>&gt;<i>
+</I>&gt;<i>  ****************************************************************************************
+</I>&gt;<i>  _______________________________________________
+</I>&gt;<i>  Sorcerer-admins mailing list
+</I>&gt;<i>  <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>  <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000417.html">[Sorcerer-admins] Problem during installation
+</A></li>
+	<LI>Next message: <A HREF="000420.html">[Sorcerer-admins] libgcrypt problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#418">[ date ]</a>
+              <a href="thread.html#418">[ thread ]</a>
+              <a href="subject.html#418">[ subject ]</a>
+              <a href="author.html#418">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

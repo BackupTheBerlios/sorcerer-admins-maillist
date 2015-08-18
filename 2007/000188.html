@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] compile failure on gcc 4.2.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C596b75860708200654m30ced0aeq8dce1577f3e2db65%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000183.html">
+   <LINK REL="Next"  HREF="000187.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] compile failure on gcc 4.2.1</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C596b75860708200654m30ced0aeq8dce1577f3e2db65%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] compile failure on gcc 4.2.1">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Aug 20 15:54:43 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000183.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+        <LI>Next message: <A HREF="000187.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#188">[ date ]</a>
+              <a href="thread.html#188">[ thread ]</a>
+              <a href="subject.html#188">[ subject ]</a>
+              <a href="author.html#188">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hopefully, copying binutils from the Install/Rescue CD
+has repaired the problem with binutils?
+Almost any of the core spells can be repaired that way.
+The loadout of the Install/Rescue CDROM is intentionally uncomplicated
+in order to make repair of deployed Sorcerer boxes both apparent and easy.
+Afterall it is both an Install disk and a RESCUE disk.  :)
+If any other core spells are broken you can simply
+copy them from the I/R to the hard disk and in most
+cases that should fix it.
+
+After copying binutils from cdrom to hard drive
+the sorcery tools should be able to identify that
+it is installed.
+
+# augur version binutils
+2.17
+
+Should print a version number for binutils such as 2.17
+But it may be an early version.
+
+If it printed:
+&quot;binutils inactive&quot;
+then perhaps I mistyped the command to copy it?
+
+Another method might be to try:
+
+# mount /media/cdrom
+# cat  /media/cdrom/etc/sorcery/log/install/binutils  |
+tar  --no-recursion   -C /media/cd -cPT - |
+tar -C / -xvpf -
+
+A bit more eloquent, but also a bit more complicated.
+If I typed that incorrectly then who knows what might happen, right?  ;)
+
+
+After repairing binutils you may want to try:
+
+# find {/media/cdrom,,}/etc/sorcery/log/install -type f -printf &quot;%P\n&quot; |
+sort | uniq -u
+
+That will tell you what spells are installed on the I/R
+that are not installed on the hard disk filesystem.
+If you are not certain if the spells printed are important to have
+installed or not
+then feel free to ask us.
+Since it is odd that binutils was not installed
+it seems probably that there may be other important spells
+that are also not installed.
+
+After all the important software is re-installed
+I advise casting core
+# cast core
+
+core is a profile spell.
+It keeps the spells that it requires installed.
+Therefore, in the dispel menu you will see core listed.
+Consequently, you will not be presented with the selection
+of spells to dispel that core requires as long as you do not
+select to dispel core.
+That way you will only have to remember that core should
+never be dispelled when you are selecting installed spells
+to remove from sorcery's dispel menu.
+
+There used to be another way of protecting
+core spells from accidental SA removal.
+But it was easy enough for a SA to accidentally turn off that feature.
+Therefore, I switched to using the core profile spell.
+
+The first line of core's description is:
+&quot;core profile spell keeps important software installed&quot;
+
+That would show up on the status line when the SA
+moves the highlight bar over the core spell and
+ponders whether to select it to be removed.
+Hopefully the SA would read that and decide,
+&quot;Wait, I should not select core for removal.&quot;
+And the box would be saved from a bad break.
+
+However, nothing about the operation
+of any Sorcerer box is beyond the SA's control.
+Nor is the SA hindered from doing whatever they want.
+A SA can dispel core if they want.
+
+Previously, you might have expected that there was
+a database that had to be updated
+after re-installing binutils from the I/R?
+There is not.
+The sorcery tools identifies the state of the box
+by looking at the log files that are kept in /etc/sorcery/log/
+Log files are very simple.
+
+As you would expect the command:
+
+# cat /etc/sorcery/log/version/binutils
+
+prints the version of the installed binutils.
+
+Likewise the following command:
+
+# cat /etc/sorcery/log/install/binutils
+
+prints the files and sometimes directories that were
+created or modified during the installation of binutils.
+
+Taking a look inside the install log for binutils you will see:
+
+# grep &quot;/etc/sorcery/log&quot; /etc/sorcery/log/install/binutils
+/etc/sorcery/log/compile/binutils
+/etc/sorcery/log/id/binutils
+/etc/sorcery/log/install/binutils
+/etc/sorcery/log/ldd/binutils
+/etc/sorcery/log/md5sum/binutils
+/etc/sorcery/log/snap/binutils
+/etc/sorcery/log/stat/binutils
+/etc/sorcery/log/version/binutils
+
+As the above command shows,
+the install log for binutils also lists the other logs
+about binutils that the sorcery tools use to precisely
+identify the state of the installed binutils and identify
+and correct problems with it.
+
+However, if the problem is that binutils is not installed
+then sorcery will not repair that type of problem since
+sorcery is not authorized to do that type of repair.
+To do so could create additional problems if the SA
+intentionally dispelled binutils and has something else
+installed in it's place but has not fully informed sorcery about it.
+
+However, explaining about how to inform sorcery of the
+custom and irregular situations of spell providing is too
+much information for this email, yes.  :)
+
+Hopefully you gained:
+an understand where the sorcery log files are located;
+a basic idea of what they contain.
+Now you will be better prepared to fix any similar type of problem
+in the very rare event that you encounter it again.
+
+Even if learning the trick required a couple of days
+in the future you will not perspire one drop in the mere
+minute required to identify and fix that type of problem.
+A mere 5 or even 15 minutes to identify
+and repair problems on a Sorcerer box
+requires far less time than to completely re-installation
+and update from an Install/Rescue CD
+that is over 6 months old,
+not to mention re-installing
+the rest of the software required
+for the role the box performs.
+
+You can feel pleased that you stuck it out and learned something.
+This is why I encourage Sorcerer SAs to confront problems and learn.
+
+Sorcerer is designed to be powerful, adaptable and simple.
+With an extremely tiny learning curve not much time elapses
+before a SA realize that nearly every system administration
+task involving a Sorcerer box is trivially simple to accomplish.
+No packages,
+no package manager,
+and no database for installed package information exist.
+Every aspect about the sorcery tools is within the SA's grasp.
+Both the sorcery tools and the information about installed
+spells can be easily modified with any text editor.
+Even with all that convenience the sorcery tools
+are still adequately fast at performing nearly any task.
+
+The box is probably not far from being in perfect working order
+now that you have identified and fixed some problems.
+
+After you are certain all the core software
+and important software is installed please
+run the command:
+
+# augur alien  | tee /tmp/aliens.txt
+
+That does a limited search in areas where spells
+should have installed files and directories.
+Files and directories in those areas that do not belong to spells are aliens.
+The augur alien command finds aliens and prints their location.
+
+An alien file or directory can indicate many potential situations.
+An alien may indicate a spell should be installed.
+It might indicate intrusion.
+It might indicate that the SA mistyped a tar or cp command.
+It might be left over intentionally from a spell.
+For example, the strace spell requires that the SA
+manually remove the file /usr/bin/strace
+if strace is to be dispelled.
+
+A review of any aliens may help spot any loose ends
+on a box that is nearly repaired.
+When you are certain an alien is not required and should not be installed
+then you can either remove it or do something like:
+
+# mkdir -p /root/aliens
+# chmod 0700 /root/aliens
+# mv $ALIEN /root/aliens/
+
+That way you can save it in a place where normal users
+can not execute, modify or read it.
+If it turns out to be important you can put it back later.
+However, with an exception of aliens found in /etc
+which might be configuration files,
+most aliens are safe to remove.
+
+Good luck and have fun at bringing your box
+back to full speed and performance.
+Even if you start to feel and understand the reason why
+Sorcerer is called an distribution for senior level SAs
+your ability will soon rise up to meet the challenge
+as long as you have the required tenacity.
+
+Merely two traits define senior level SAs.
+Neither trait is knowledge nor experience.
+The foremost trait for a senior level SA is tenacity.
+The second and less important trait is the ability to teach oneself.
+Those who lack the tenacity can never become senor SA.
+Those who have the tenacity can not fail to become senior SA
+when that level of ability is required.
+And the best way to hone tenacity is to ride out the problems.
+
+If the trend continues it will probably be another 3 or 4 years
+before another SA reports a problem about a core or very important
+spell not being installed.
+This sort of repair is rare.
+Lucky you, right?  :)
+
+
+
+On 8/19/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+&gt;<i> That's a handy little script for copying.  Thanks.  Right now I am copying
+</I>&gt;<i> the binutils from the cd onto my box.  My question is, do I have to do
+</I>&gt;<i> something to make sorcery know about the binutils?  I'm pretty sure the
+</I>&gt;<i> version of binutils on the cd is not the most current one in the grimoire.
+</I>&gt;<i> I would like to try and update it.  Should I just to a an
+</I>&gt;<i> augur synch
+</I>&gt;<i> cast -c binutils
+</I>&gt;<i>
+</I>&gt;<i> Or do I have to do something first to get binutils version information in
+</I>&gt;<i> augur?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000183.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+	<LI>Next message: <A HREF="000187.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#188">[ date ]</a>
+              <a href="thread.html#188">[ thread ]</a>
+              <a href="subject.html#188">[ subject ]</a>
+              <a href="author.html#188">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

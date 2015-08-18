@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt fails compilation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt%20fails%20compilation&In-Reply-To=%3C49FA0FFA.4050307%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001088.html">
+   <LINK REL="Next"  HREF="001292.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt fails compilation</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt%20fails%20compilation&In-Reply-To=%3C49FA0FFA.4050307%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt fails compilation">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Apr 30 22:54:18 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001088.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+        <LI>Next message: <A HREF="001292.html">[Sorcerer-admins] qt fails compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1089">[ date ]</a>
+              <a href="thread.html#1089">[ thread ]</a>
+              <a href="subject.html#1089">[ subject ]</a>
+              <a href="author.html#1089">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>qt fail compilation with the following log.... any idea?
+
+make[3]: entrant dans le r&#233;pertoire &#171; 
+/usr/src/sorcery/qt-x11-opensource/qt-x11-opensource-src-4.5.0/src/plugins/sqldrivers/odbc 
+&#187;
+g++ -c -march=athlon64 -O2 -fPIC -fno-exceptions -O2 -fvisibility=hidden 
+-fvisibility-inlines-hidden -D_REENTRANT -Wall -W -fPIC 
+-DQT_NO_CAST_TO_ASCII -DQT_NO_CAST_FROM_ASCII -DQT_NO_DEBUG -DQT_PLUGIN 
+-DQT_SQL_LIB -DQT_CORE_LIB -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE 
+-DQT_SHARED -I../../../../mkspecs/linux-g++-64 -I. 
+-I../../../../include/QtCore -I../../../../include/QtSql 
+-I../../../../include -I.moc/release-shared -I.uic/release-shared -o 
+.obj/release-shared/main.o main.cpp
+g++ -c -march=athlon64 -O2 -fPIC -fno-exceptions -O2 -fvisibility=hidden 
+-fvisibility-inlines-hidden -D_REENTRANT -Wall -W -fPIC 
+-DQT_NO_CAST_TO_ASCII -DQT_NO_CAST_FROM_ASCII -DQT_NO_DEBUG -DQT_PLUGIN 
+-DQT_SQL_LIB -DQT_CORE_LIB -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE 
+-DQT_SHARED -I../../../../mkspecs/linux-g++-64 -I. 
+-I../../../../include/QtCore -I../../../../include/QtSql 
+-I../../../../include -I.moc/release-shared -I.uic/release-shared -o 
+.obj/release-shared/qsql_odbc.o ../../../sql/drivers/odbc/qsql_odbc.cpp
+../../../sql/drivers/odbc/qsql_odbc.cpp: In function &#8216;QString 
+qGetStringData(void*, int, int, bool)&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:336: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In function &#8216;QVariant 
+qGetBinaryData(void*, int)&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:389: erreur: cannot convert 
+&#8216;SQLUINTEGER*&#8217; to &#8216;SQLULEN*&#8217; for argument &#8216;7&#8217; to &#8216;SQLRETURN 
+SQLDescribeCol(void*, SQLUSMALLINT, SQLCHAR*, SQLSMALLINT, SQLSMALLINT*, 
+SQLSMALLINT*, SQLULEN*, SQLSMALLINT*, SQLSMALLINT*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:405: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In function &#8216;QVariant 
+qGetIntData(void*, int, bool)&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:434: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In function &#8216;QVariant 
+qGetBigIntData(void*, int, bool)&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:454: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In function &#8216;QSqlField 
+qMakeFieldInfo(const QODBCPrivate*, int)&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:505: erreur: cannot convert 
+&#8216;SQLUINTEGER*&#8217; to &#8216;SQLULEN*&#8217; for argument &#8216;7&#8217; to &#8216;SQLRETURN 
+SQLDescribeCol(void*, SQLUSMALLINT, SQLCHAR*, SQLSMALLINT, SQLSMALLINT*, 
+SQLSMALLINT*, SQLULEN*, SQLSMALLINT*, SQLSMALLINT*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:519: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;7&#8217; to &#8216;SQLRETURN 
+SQLColAttribute(void*, SQLUSMALLINT, SQLUSMALLINT, void*, SQLSMALLINT, 
+SQLSMALLINT*, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In member function &#8216;virtual 
+QVariant QODBCResult::data(int)&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:989: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1002: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1015: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;6&#8217; to &#8216;SQLRETURN 
+SQLGetData(void*, SQLUSMALLINT, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In member function &#8216;virtual int 
+QODBCResult::numRowsAffected()&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:1082: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;2&#8217; to &#8216;SQLRETURN 
+SQLRowCount(void*, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp: In member function &#8216;virtual 
+bool QODBCResult::exec()&#8217;:
+../../../sql/drivers/odbc/qsql_odbc.cpp:1200: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1220: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1244: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1257: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1269: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1281: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1293: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1305: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1320: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1332: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1354: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1368: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1388: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+../../../sql/drivers/odbc/qsql_odbc.cpp:1406: erreur: cannot convert 
+&#8216;SQLINTEGER*&#8217; to &#8216;SQLLEN*&#8217; for argument &#8216;10&#8217; to &#8216;SQLRETURN 
+SQLBindParameter(void*, SQLUSMALLINT, SQLSMALLINT, SQLSMALLINT, 
+SQLSMALLINT, SQLULEN, SQLSMALLINT, void*, SQLLEN, SQLLEN*)&#8217;
+make[3]: *** [.obj/release-shared/qsql_odbc.o] Erreur 1
+make[3]: quittant le r&#233;pertoire &#171; 
+/usr/src/sorcery/qt-x11-opensource/qt-x11-opensource-src-4.5.0/src/plugins/sqldrivers/odbc 
+&#187;
+make[2]: *** [sub-odbc-make_default] Erreur 2
+make[2]: quittant le r&#233;pertoire &#171; 
+/usr/src/sorcery/qt-x11-opensource/qt-x11-opensource-src-4.5.0/src/plugins/sqldrivers 
+&#187;
+make[1]: *** [sub-sqldrivers-make_default] Erreur 2
+make[1]: quittant le r&#233;pertoire &#171; 
+/usr/src/sorcery/qt-x11-opensource/qt-x11-opensource-src-4.5.0/src/plugins &#187;
+make: *** [sub-plugins-make_default-ordered] Erreur 2
+! Problem Detected !
+Source tree discarded.
+Fail: jeu avr 30 22:25:09 CEST 2009 qt-x11-opensource 4.5.0 
+build/compile error
+
+jeu avr 30 22:25:20
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:/tmp#
+
+thanks
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001088.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+	<LI>Next message: <A HREF="001292.html">[Sorcerer-admins] qt fails compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1089">[ date ]</a>
+              <a href="thread.html#1089">[ thread ]</a>
+              <a href="subject.html#1089">[ subject ]</a>
+              <a href="author.html#1089">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

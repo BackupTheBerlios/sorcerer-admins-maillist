@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Probable bug in LVM2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Probable%20bug%20in%20LVM2&In-Reply-To=%3CAANLkTi%3DyGymgfC8AQ2zZUOfDok75iN3Zr6ThOELgN_jr%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001924.html">
+   <LINK REL="Next"  HREF="001931.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Probable bug in LVM2</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Probable%20bug%20in%20LVM2&In-Reply-To=%3CAANLkTi%3DyGymgfC8AQ2zZUOfDok75iN3Zr6ThOELgN_jr%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Probable bug in LVM2">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Sep 24 07:53:45 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001924.html">[Sorcerer-admins] /init from initramfs
+</A></li>
+        <LI>Next message: <A HREF="001931.html">[Sorcerer-admins] Probable bug in LVM2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1928">[ date ]</a>
+              <a href="thread.html#1928">[ thread ]</a>
+              <a href="subject.html#1928">[ subject ]</a>
+              <a href="author.html#1928">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While I am pounding out improvements for a new Install/Rescue image
+Evert investigated my suspicions about LVM2 and wrote:
+
+&gt;<i> I did a fresh install. The system was able to reboot just fine.
+</I>&gt;<i> Then I did an augur update, and let the thing run it's course. After
+</I>&gt;<i> that, the new install became unbootable because of the locked file
+</I>&gt;<i> system.
+</I>&gt;<i> Once I dispelled LVM2, I am once more able to boot that box.
+</I>&gt;<i> Literally nothing else was done to that system.
+</I>
+I recommend
+# chmod 600 /etc/init.d/vgchange
+in order to avoid the problem or
+to hold the installed version of LVM2
+at the same version as provided on the Install/Rescue CD.
+
+My guess about this problem is that
+vchange is locking partitions that were initialized as &quot;physical volumes&quot;
+even when those physical volumes were not added to a &quot;volume group.&quot;
+
+In a way this is sort of like racial profiling.
+If vgchange was a cop
+then it would be arresting people
+for looking as if they have the ability to commit a crime.
+It would arrest body builders for expecting that could consume illegal steroids.
+It would arrest pretty people for expecting that they could provide
+prostitution.
+While not the most tasteful analogy;
+LVM2 is arresting devices initialized as &quot;physical volumes,&quot;
+even when those devices are not part of a &quot;volume group.&quot;
+A partition that was initialized by pvcreate as a &quot;physical volume&quot;
+aught not to be locked during boot unless it is part of a &quot;volume group.&quot;
+However, LVM2 authors seem to disagree?
+
+The menu driven installer
+on the new Install/Rescue Images
+will not provide SAs with the convenience
+of automatically running pvcreate on partitions.
+Instead if a SA wants to create a &quot;volume group&quot;
+and allocate &quot;logical volumes&quot; from it
+then the SA must first select partitions to
+transform into &quot;physical volumes.&quot;
+Confusing?
+Yes, LVM2 is a bit confusing.
+Maybe an overuse of the word &quot;volume.&quot;
+
+Progress on the new I/R is going smoothly.
+I am testing many complicated installation types.
+And I will be adding support for being able to
+partition MDRAIDs, yes with fdisk even,
+instead of having to slice them apart with LVM2
+or create separate MDRAIDs for each file system.
+
+Partitions, MDRAIDS, LVM2, LUKS, can all be used together
+provided that SAs understand the order.
+Disk device nodes and partition device nodes appear first.
+MDRAID starts.
+A MDRAID device can be created from disks and/or partition devices.
+LVM2 starts next.
+Therefore logical volume management can be applied
+to both MDRAIDS and partitions to slice and dice.
+LUKS starts after MDRAIDS and LVM2.
+Because LUKS starts very late almost any device can be LUKS encrypted.
+LUKS encryption can be applied to partitions, MDRAIDs, partitions of a
+MDRAID device,
+and LVM2's &quot;logical volumes.&quot;
+Finally, the last few steps of sysinit during booting
+is to check file systems and mount file systems.
+
+After a device has a file system or swap area initialized on it
+then it is complete.
+So in brief the proper order to combine, slice, and dice block devices is:
+Disks -&gt; Partitions -&gt; MDRAID -&gt; LVM2 -&gt; LUKS -&gt; File system or swap area.
+
+Yes, it all makes perfect sense, but it is so easy to forget.
+So some excellent diagrams will be included in the next menu driven installer.
+The new menu driven installer will have two main menus.
+One main menu will lack options required for MDRAID and LVM2
+and some other tasks.
+That is the main menu force novice mode installation.
+It grants a very good probability for a new SA to make a successful
+installation.
+
+The second main menu is the expert main menu.
+It has more than an eye full of menu options.
+Probably only SAs wanting to do a complicated installation
+that involves MDRAID, LVM2, or LUKS
+will want to activate the expert mode.
+
+On each menu is one menu option for changing the mode.
+Selecting that option not only presents a query to change mode,
+but also presents a nice help screen with something a bit like
+a diagram in order to help remind the SA about what is doable and usable.
+
+A discussion occurred about the boons and banes of
+having an install wizard type installation process
+as compared to having a menu with options in logical order.
+I still do not want an install wizard type installation that
+forces a SA to go through 30 pages or more
+most of which would not contain information
+that is relevant to the type of installation the SA wants to do.
+
+However, as a compromise I am giving the menu driven installer
+the ability to dissuade the SA from making choices that will not work.
+Also the menu driven installer will try to provide some sensible defaults
+It will even try to guess which partitions might be /boot / and /home
+It will probably be incorrect.
+So please help it by correcting those missed guesses.
+So yes, visiting the fstab menu is still necessary
+
+
+The current bug from LVM2 effecting some deployed Sorcerer boxes is severe.
+There is not a good distribution wide fix for it since my above
+recommended solution
+would not work booting boxes that have file systems on &quot;logical volumes.&quot;
+Regressing the installed version of LVM2 to an older version would work,
+but then exactly how long would we keep it there?  Forever?
+Not upgrading installed software would be bad for a distribution wide policy.
+Consequently, I am encouraging all SAs
+to download and burn the 20100925 Install/Rescue images
+and not to use earlier Install/Rescue images.
+The 20100925 Install/Rescue images will appear at:
+
+<A HREF="http://sorcerer.silverice.org/download/iso9660/2010/">http://sorcerer.silverice.org/download/iso9660/2010/</A>
+
+Sometime following Sat Sep 25 00:00:01 UTC 2010
+As expected:
+$ date -u
+should print the box's idea of UTC time.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001924.html">[Sorcerer-admins] /init from initramfs
+</A></li>
+	<LI>Next message: <A HREF="001931.html">[Sorcerer-admins] Probable bug in LVM2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1928">[ date ]</a>
+              <a href="thread.html#1928">[ thread ]</a>
+              <a href="subject.html#1928">[ subject ]</a>
+              <a href="author.html#1928">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] IRC becoming more popular...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20IRC%20becoming%20more%20popular...&In-Reply-To=%3CCA%2BT4wDiznDb97q%2BZBBadPPApE3S72Lueq-x1LnOBQHjMDMp5BQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002307.html">
+   <LINK REL="Next"  HREF="002309.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] IRC becoming more popular...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20IRC%20becoming%20more%20popular...&In-Reply-To=%3CCA%2BT4wDiznDb97q%2BZBBadPPApE3S72Lueq-x1LnOBQHjMDMp5BQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] IRC becoming more popular...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 16 06:35:56 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002307.html">[Sorcerer-admins] IRC becoming more popular...
+</A></li>
+        <LI>Next message: <A HREF="002309.html">[Sorcerer-admins] IRC becoming more popular...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2308">[ date ]</a>
+              <a href="thread.html#2308">[ thread ]</a>
+              <a href="subject.html#2308">[ subject ]</a>
+              <a href="author.html#2308">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for inviting everyone to the IRC channel.
+However, I already spent most of the day pounding wpa_supplicant.
+And now my head is pounding me back.  :)
+
+Development on the project continues even in 2012, apparently.
+But it's all dev/unstable in git and not rolled into tarballs.
+I did a git checkout to see if some bugs still persist.
+And they do.
+
+Anyway, I wrote an init-script to start wpa_supplicant
+for all wireless interfaces during boot.
+That seems good, works even.
+wpa-psk works on my new wireless router and Sorcerer boxes.
+However, wpa_cli does not seem to communicate with wpa_supplicant.
+Does anyone immediately know why?
+I expect someone with more experience using wpa_supplicant
+might have already encountered and fixed the problem on their box.
+Might be a bug in wpa_supplicant.
+
+Speaking of bugs...
+kdm might not at boot in runlevel 4.
+Saw that happen.
+Have not had time to investigate.
+Anyone already know why?
+I suspect it had something to do with /etc/init.d/depmod,
+but maybe not, in either case I rewrote that because
+depmod -A does not work as expected.
+
+Oh, both the proprietary ?packages? for installing
+NVIDIA and ATI graphics drivers aught to work.
+I check and repair of them recently.
+ati-driver-installer is now renamed to amd-driver-installer.
+And I did find and fix the reason for why it was not
+compiling and installing a kernel module.
+It was not actually a spell problem, but appears
+to be a problem with the package.
+However, I was able to circumvent the problem with the spell.
+
+I updated the wpa_supplicant and networks spells.
+Those aught to work a little bit better.
+However, if wpa_cli is unable to communicate with wpa_supplicant
+then perhaps the only way to make wpa_supplicant perform
+is to have a proper config file for it.
+So I eventually want to fix that.
+
+Thanks for answering questions on the IRC channel.
+I do not make much time to chat.
+I tend to answer inquiries by email,
+and then often too verbosely.
+
+I spent the past few weeks doing debugging stuff.
+I fixed a massive amount of spells, tossed some old ones,
+improved some existing ones, etc...
+
+Oh speaking about bugs again...
+Something that installs after gdk-pixbuf is capable of breaking it.
+Then other programs like gimp will encounter a compile error
+until gdk-pixbuf is cast again.
+The problem might only occur on some boxes.
+I have yet to identify the culprit.
+Anyone have a hunch about it?
+
+Although I intend to roll new I/Rs sometimes this month
+I still have much on my todo list that gives cause for
+irritation if I roll I/Rs the way that they currently are.
+
+I realize that Sorcerer Sentient boxes have some bugs.
+If any are too annoying might want to consider
+transitioning the box to Sorcerer Modern Magic.
+I only update Sorcerer Sentient's grimoire
+when I roll new I/Rs.
+That is when I estimate that the grimoire
+spells and installed software are most optimal.
+
+Anyone who wants to pursue and squish any
+of the bugs listed above please be my guest
+and report the outcome.
+If anyone idling in the channel awaiting conversation feels disappointed
+then please wield a bug swatter and smite the bugs.
+The sooner these bugs are smote the sooner we can enjoy new I/Rs.
+
+P.S. I want to deprecate lilo
+and totally have any Sorcerer boxes with lilo installed
+automatically transition to extlinux.
+Yet, the automatic transition has a small probability of breaking,
+and definitely will not import customized lilo head and tail files.
+Overall I feel very pleased with extlinux, with just one
+bug presently causing irritation.
+But I already reported it on their email list
+and so maybe they will slay it sometime soon.
+Does anyone have objects concerning a
+forced automatic transition to extlinux?
+I forgot how long we have been using extlinux now,
+at least 6 months if not a year.
+Decent is it not?
+
+I did not know if extlinux would be suitable at first.
+However, hindsight is better than leaping before looking.
+So now I feel satisfied.
+Please voice contrary opinions.
+
+
+On Fri, Apr 13, 2012 at 11:05 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> Just a status report on our IRC chan here :)
+</I>&gt;<i>
+</I>&gt;<i> We've experienced more folks idling and asking questions in chan and
+</I>&gt;<i> anyone who is not aware that we have our own chan should stop by and say hi!
+</I>&gt;<i>
+</I>&gt;<i> Network = <A HREF="irc://irc.freenode.net">irc://irc.freenode.net</A>
+</I>&gt;<i>
+</I>&gt;<i> Chan = #Sorcerer
+</I>&gt;<i>
+</I>&gt;<i> I hope that helps :)
+</I>&gt;<i>
+</I>&gt;<i> Kindest regards,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.310.388.9469 &#160;(US)
+</I>&gt;<i> TEL: +44.203.318.2755 (UK)
+</I>&gt;<i> TEL: +41.43.508.05.10 (CH)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.10 (GNU/Linux)
+</I>&gt;<i> Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJPiRONAAoJEE1wgkIhr9j3DIsH/1fxbepKmcbdaXb+gwDaRvr/
+</I>&gt;<i> 8kaVeAuNx3cuVsAcC2dKm7slgTK3HIH6FbGh+gS3jINHe04nHfK/LzoJnQm/p0B5
+</I>&gt;<i> Ftp2H8TvU/65X3bfiaPTbWRfoHWDZ2Uhi63Ir7Amade+Xm64AgXIKEKqpGooS0/C
+</I>&gt;<i> +LjTXFhre48kUb3twtwKn3iJkNQJMyBPqCJtWiTpjLHDfja105Q1YEOkh4kAkGwf
+</I>&gt;<i> oNECk/WRFit/0pMeKsPizXG4ggojcBr6BuepQrnP+uuCw09B9hPFmh4Qia4vt2e4
+</I>&gt;<i> 1+lv5LUdTbFA7gJtp+/4ROJ8el1BpgNFh+gg/HjniS/lh2iFR7Ebmp+UgFNzHG4=
+</I>&gt;<i> =ryK8
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002307.html">[Sorcerer-admins] IRC becoming more popular...
+</A></li>
+	<LI>Next message: <A HREF="002309.html">[Sorcerer-admins] IRC becoming more popular...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2308">[ date ]</a>
+              <a href="thread.html#2308">[ thread ]</a>
+              <a href="subject.html#2308">[ subject ]</a>
+              <a href="author.html#2308">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

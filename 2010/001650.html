@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTinBWofhfGV8hk8X-rZvorTqZHIiuiU_g0ymI9ZB%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001647.html">
+   <LINK REL="Next"  HREF="001653.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTinBWofhfGV8hk8X-rZvorTqZHIiuiU_g0ymI9ZB%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jun  1 20:25:22 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001647.html">[Sorcerer-admins] unreliable way of starting/stoping init processes
+</A></li>
+        <LI>Next message: <A HREF="001653.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1650">[ date ]</a>
+              <a href="thread.html#1650">[ thread ]</a>
+              <a href="subject.html#1650">[ subject ]</a>
+              <a href="author.html#1650">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jun 1, 2010 at 6:49 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> Hi!
+</I>&gt;<i> I noticed something while re-installing sorcerer and while trying to switch
+</I>&gt;<i> from init(4) to init(3), most of stop command does fails
+</I>&gt;<i> 1) the pid file might contain a pid that is assigned to a process that
+</I>&gt;<i> changed it's name (for example /etc/init.d/gdm start stop, the file
+</I>&gt;<i> containing the pid has the pid number of a process gdm-binary)
+</I>
+That might be something strange having to do with gdm.
+Perhaps after a user logs out gdm quits
+then restarts with a new PID?
+
+
+&gt;<i> 2) the process might have spawned a child and exited (ie the main executable
+</I>&gt;<i> is only a wrapper that spawn the real server) (I've no exemple but I
+</I>&gt;<i> remember something like that)
+</I>&gt;<i> 3) a service that has crashed but spawned childs (who are then now attached
+</I>&gt;<i> to the init process) (exemple if you pkill -9 gdm-binary, then X that is the
+</I>&gt;<i> child of gdm-simple-slave remains alive)
+</I>&gt;<i>
+</I>
+&gt;<i> I've no solution to propose,
+</I>
+We could quit using a PID file for gdm
+and instead query the PID as needed.
+That method is only good as long as processes
+called gdm are really the gdm we expect.
+
+&gt;<i> but is there a way to kill all a tree? ie kill the process and all it's
+</I>&gt;<i> childs?
+</I>
+Yes.
+However, I would not normally do that,
+especially if the parent PID is already dead.
+Instead I tend to use pkill.
+Given a command such as
+# pkill -u root &quot;^gdm$&quot;
+That would precisely kill processes that are called exactly gdm.
+
+&gt;<i> is there a way to assign a group id or something like that that remains for
+</I>&gt;<i> all childs of the process? if yes we could set it, and then kill all the
+</I>&gt;<i> process of the group....
+</I>
+Yes, but startup would be somewhat more complex.
+Something would have to run before gdm
+to switch the group to a non root group such as gdm.
+And of course a gdm group must exist.
+And if a gdm group exists then so should a user gdm
+just to keep the numbers lined up.
+Yet gdm could not run as user gdm,
+because after someone logs in it must switch
+to the user that logged in.
+
+Hmm, gdm is rather strange for a daemon.
+It does not background itself.
+Overall it is almost like a full gnome session
+when it runs instead of merely a login manager.
+And it does have it's own user and group.
+killing /usr/sbin/gdm-binary
+seems to bring it down okay or not
+since it did not return to console.
+
+The gdm-restart shell script is funny.
+It check for a PID file and errors 1 if it is not found.
+And if a PID file is found it writes &quot;Not supported&quot;
+and does not restart gdm.
+*lol*
+
+Perhaps the gdm authors are aware that gdm
+is not a daemon that behaves appropriately?
+Although gdm does not background itself
+it does write it's own PID file.
+If it's PID file is incorrect
+then that would be because of a bug with gdm.
+
+The /usr/sbin/gdm-stop provided with gdm
+basically kills off the the PID specified in gdm's PID file.
+
+Hmm...
+And of course there are your observations
+about the remaining child PIDs of gdm
+that fortunately have the UID of gdm.
+
+I can avoid this problem
+that is to say make the init-script incorrect
+and have it kill gdm-binary and every processes
+owned by gdm and X.
+But that is a bit messy.
+Hmm, gdm is a bit tricky to kill off.
+And using kill -9 does leave that
+gdm-simple-slave alive.
+
+How do you want to stop and restart gdm?
+&gt;<i>From the look of it gdm is not intended
+</I>to be stopped or restarted.
+It does not behave like a normal daemon.
+My guess is that it is intended to be started
+directly by init at runlevel 5 as if gdm were a getty.
+But that would not be possible on Sorcerer.
+
+The docs differ a bit from the actual scripts.
+For example part of the docs for gdm states
+
+&quot;          &lt;command&gt;gdm-restart&lt;/command&gt; stops and restarts GDM by sending
+          the GDM daemon a HUP signal.  This command will immediately terminate
+          all sessions and log out users currently logged in with GDM.
+&quot;
+
+Actually, the script does not do that.
+Nor does the gdm-safe-restart
+
+&quot;          &lt;command&gt;gdm-stop&lt;/command&gt; stops GDM by sending the GDM daemon
+          a TERM signal.&quot;
+
+According to the docs
+the Sorcerer init-script is doing the correct action
+by trying to send TERM to the PID specified in gdm's PID file.
+
+I was reading gdm-2.30.2/docs/C/gdm.xml
+After a quick glance I did not notice anything
+about gdm's configuration on Sorcerer that is
+incorrect or faulty.
+
+My best guess is that current gdm is buggy or incomplete.
+If the Sorcerer's gdm init-script invoked gdm-stop
+the result would be the same.
+I guess that sometimes gdm must be manually stopped
+by the SA by selectively killing associated processes.
+
+While not a command I normally use
+see the pstree command for a way to show
+all spawned children processes.
+
+I am open to suggestions for what you want to do with gdm.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001647.html">[Sorcerer-admins] unreliable way of starting/stoping init processes
+</A></li>
+	<LI>Next message: <A HREF="001653.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1650">[ date ]</a>
+              <a href="thread.html#1650">[ thread ]</a>
+              <a href="subject.html#1650">[ subject ]</a>
+              <a href="author.html#1650">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

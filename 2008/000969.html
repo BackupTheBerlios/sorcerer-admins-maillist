@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhclient%20%3A%20route%20and%20resolv.conf%20aren%27t%20set%0A%09correctly&In-Reply-To=%3C596b75860812261258j30c4e35bo304eaeb869afc0f9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000968.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhclient%20%3A%20route%20and%20resolv.conf%20aren%27t%20set%0A%09correctly&In-Reply-To=%3C596b75860812261258j30c4e35bo304eaeb869afc0f9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Dec 26 21:58:14 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000968.html">[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#969">[ date ]</a>
+              <a href="thread.html#969">[ thread ]</a>
+              <a href="subject.html#969">[ subject ]</a>
+              <a href="author.html#969">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmmm...
+Maybe dhcpcd will work better?
+I apologize but I do not test dhclient.
+I only test dhcpcd which I use from
+qemu on the x86_64 I/R
+
+When you discover the fix for dhclient
+please let me know so that I can make
+appropriate changes to the networking
+functions and template and the dhcp spell.
+
+There appears to be a manual page
+# man dhclient-script
+That might explain it.
+that missing script might be optional or SA supplied?
+
+The manual page for dhclient-script
+also has references to /etc/resolv.conf
+Looks complicated.
+Maybe there is a sample script in the source tarball?
+Or perhaps not.
+Oh wait there it is.
+Not at all the name that I expected.
+That is a bit of a mess.
+Ouch.
+It uses the old net-tools stuff.
+
+Assuming that you unpack the source as I did.
+The file that you want is:
+
+/tmp/open/dhcp-4.0.0/client/scripts/linux
+
+But it should probably be modified to use iproute2
+Chances  are we should create a custom file for
+that and add it to svn/grimoire/dhcp.d/ and have it install.
+But someone would have to constantly babysit it for updates
+since if dhcp changed the old /etc/dhclient-script
+may become useless or obsolete or not work correctly.
+
+So what should we do about this?
+Should we not support dhcp for client use and require dhcpcd?
+Or does someone want to take the sample script and rewrite
+it so that it should work properly using iproute2's tools?
+
+
+On Fri, Dec 26, 2008 at 2:10 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> hello!
+</I>&gt;<i> I have an issue with sorcerer network script using dhcp.
+</I>&gt;<i> I used the template that kyle made (nice work!) and achieved that it use
+</I>&gt;<i> dhclient fast, but after it ran with success, I have strange things :
+</I>&gt;<i> 1) ip isn't changed
+</I>&gt;<i> 2) default route isn't set
+</I>&gt;<i> 3) resolv.conf isn't changed
+</I>&gt;<i>
+</I>&gt;<i> I ran dhclient by hand in verbose and it outputed the following :
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# dhclient -v eth1
+</I>&gt;<i> Internet Systems Consortium DHCP Client 4.0.0
+</I>&gt;<i> Copyright 2004-2007 Internet Systems Consortium.
+</I>&gt;<i> All rights reserved.
+</I>&gt;<i> For info, please visit <A HREF="http://www.isc.org/sw/dhcp/">http://www.isc.org/sw/dhcp/</A>
+</I>&gt;<i>
+</I>&gt;<i> execve (/etc/dhclient-script, ...): No such file or directory
+</I>&gt;<i> Listening on LPF/eth1/00:16:d3:56:7d:12
+</I>&gt;<i> Sending on   LPF/eth1/00:16:d3:56:7d:12
+</I>&gt;<i> Sending on   Socket/fallback
+</I>&gt;<i> Trying medium &quot;-link0 -link1 -link2&quot; 1
+</I>&gt;<i> execve (/etc/dhclient-script, ...): No such file or directory
+</I>&gt;<i> DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 2
+</I>&gt;<i> Trying medium &quot;link0 link1&quot; 0
+</I>&gt;<i> execve (/etc/dhclient-script, ...): No such file or directory
+</I>&gt;<i> DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 2
+</I>&gt;<i> DHCPOFFER from 192.168.1.1
+</I>&gt;<i> DHCPOFFER from 192.168.1.1: already seen.
+</I>&gt;<i> DHCPREQUEST on eth1 to 255.255.255.255 port 67
+</I>&gt;<i> DHCPACK from 192.168.1.1
+</I>&gt;<i> execve (/etc/dhclient-script, ...): No such file or directory
+</I>&gt;<i> bound to 192.168.1.11 -- renewal in 1695 seconds.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> so for me dhcp has worked and gave me the 192.168.1.11
+</I>&gt;<i> but it seems that /etc/dhclient-script hasn't been installed on this pc
+</I>&gt;<i> and that this script is in charge of updating the information
+</I>&gt;<i> I didn't found any spell providing this script
+</I>&gt;<i> any idea?
+</I>&gt;<i> thanks
+</I>&gt;<i> JLM
+</I>&gt;<i> best wishes for this new year
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000968.html">[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#969">[ date ]</a>
+              <a href="thread.html#969">[ thread ]</a>
+              <a href="subject.html#969">[ subject ]</a>
+              <a href="author.html#969">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

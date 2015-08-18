@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] holding your breath while waiting for updates?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTil7eEdcU5mRN1mfSLQblX222qklk4SxglfR2rkR%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001663.html">
+   <LINK REL="Next"  HREF="001667.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] holding your breath while waiting for updates?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTil7eEdcU5mRN1mfSLQblX222qklk4SxglfR2rkR%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] holding your breath while waiting for updates?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun 19 17:36:02 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001663.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+        <LI>Next message: <A HREF="001667.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1665">[ date ]</a>
+              <a href="thread.html#1665">[ thread ]</a>
+              <a href="subject.html#1665">[ subject ]</a>
+              <a href="author.html#1665">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Do you like milk?
+Do you like orange juice?
+Ever mix them together?
+I would not recommend it.
+
+Likewise I do not recommend mixing
+an x86_64 and IA32 install.
+However, a box can have a x86_64 installation
+of Sorcerer and still run IA32 apps.
+How is that possible?
+It is easy and not any different
+than one would expect.
+
+The solution is to have an IA32 installation of Sorcerer
+installed in a directory and chrooted into and updated
+as necessary.
+
+Then the binary PATHs from the IA32 installation
+are joined at the end of the $PATH statement.
+And the the libraries containing ELF32 libraries
+are joined to /etc/ld.so.conf by adding files
+containing those directories within
+/etc/ld.so.conf.d/
+
+Will all ELF32 software be runnable this way?
+No, there is some that might require components
+that that it would expect to find somewhere under
+/usr/, but be unable to find it because it was compiled
+chrooted and therefore exists somewhere such as
+/opt/IA32/usr/
+However, much software should work okay.
+
+Software that does not work great that way
+can still work by having the SA chroot into the
+IA32 install, su - to the user account
+and be sure that X user cookie-auth file
+or whatever it is is properly symbolic linked
+so that the user in the chroot can run X11 programs.
+
+Another possibility is if the problematic software
+does not overwrite anything ELF64
+then the archive from the ELF32 installation
+can be extracted into the ELF64 installation.
+For example that could cause an ELF32 wine
+to be installed in the /usr of an ELF64 box.
+It would probably work, although I have not tested it.
+Of course ld.so must be able to find the required
+ELF32 libraries in /etc/ld.so.conf in order to
+run an ELF32.
+Otherwise additional library PATHs must be specified
+in a colon separated list exported as the varaible
+LD_LIBRARY_PATH
+
+As far as I know at this moment wine is
+an IA32 app and not an x86_64 app.
+So I am not expecting wine to compile on x86_64.
+
+Having ELF64 libraries in lib64 directories
+and ELF32 libraries in lib directories is a bit problematic.
+First, many software authors do not have their software
+install their ELF64 libraries into lib64 directories.
+Secondly, Sorcerer, and distros like Sorcerer such as Debian,
+use a preloadable library in order to track software installation.
+If the preloaded library is an ELF64
+then it will only work if the programs being run are ELF64.
+Running an ELF64 preload with ELF32 programs invariably segfaults.
+The same is true of running an ELF32 preload with ELF64 programs.
+
+I expect that having ELF32 libraries in lib directories
+and ELF64 libraries in lib64 directories is less problematic
+on pre-compiled binary based distros.
+Generally, software on such boxes
+is not compiled in a mixed environment.
+Such software can be compiled and packed on pure architectures
+and then installed as packages to create a mixed architecture box.
+
+Currently, pkg-config does not have separate directories
+for storing .pc files depending upon ELF32/ELF64 architecture.
+Likewise there is a similar problem for libtool .la files.
+
+Consequently, making an installation of Sorcerer
+that has both IA32 and x86_64 installed into /
+is currently on the verge of impossible.
+While not impossible it is clearly not worth the effort.
+Separate pure installations of Sorcerer can be
+installed and maintained.
+And IA32 Sorcerer can be installed and maintained
+in a subdirectory such as /opt/ia32/
+To maintain/update it the SA would merely
+have to mount --bind directories /dev /proc /sys
+then chroot into /opt/ia32
+of course mounting additional virtual filesystems
+such as /opt/ia32/root/.sorcery would be useful
+and could be accomplished after chrooting into
+/opt/ia32 by running
+# /etc/init.d/sorcery start
+# /etc/init.d/usr_src_sorcery_tmpfs start
+# /etc/init.d/tmp start
+
+Due to the linux kernel an x86_64 kernel can run ELF32.
+So the outer most installation of Sorcerer must be x86_64
+However, keeping a chrooted x86_64 installation
+would not be possible if the main Sorcerer installation is
+IA32, because it would boot an IA32 only kernel.
+
+I apologize if this seems a bit complicated.
+I am experienced with using/updating chrooted installs
+and therefore this is easy for me.
+But at first it might be confusing to some SAs.
+
+If Sorcerer IA32 is like orange juice
+and Sorcerer x86_64 is like milk
+then sipping from each glass alternately is possible.
+But I would not advise trying to mix the content in a single glass.
+Importing the archive of a single spell or two that
+is normally only installed on IA32 should work.
+Libraries that would exist in both installations
+such as ncurses and readline should be kept
+separate and specific to each installation.
+
+Having the lines in /etc/ld.so.conf to specify
+directories containing ELF32 libraries
+allows /lib/ld-linux*.so to be able to select the proper
+libraries to load depending upon whether the
+executable being run is ELF32 or ELF64.
+Having ELF64 libraries in /usr/lib64/
+and ELF32 libraries in /usr/lib/
+is not at all required in order to run ELF32 executables
+on an ELF64 installation.
+It was just a trend of convenience that
+was not fully adopted by all software authors.
+
+
+
+On Sat, Jun 19, 2010 at 12:59 AM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> Kyle,
+</I>&gt;<i>
+</I>&gt;<i> I have a question regarding Sorcerer x64 installations and multi-lib
+</I>&gt;<i> support.
+</I>&gt;<i>
+</I>&gt;<i> It increasingly makes less sense to install x86 versions of distros -
+</I>&gt;<i> heck, there haven't been any 32 bit boxes for years now, except for
+</I>&gt;<i> those we dust off from the dung heap to use for firewalls or specific
+</I>&gt;<i> purpose built machines with simple jobs to do.
+</I>&gt;<i>
+</I>&gt;<i> We might also use those old boxes to install old versions of distros
+</I>&gt;<i> that we can or want (for whatever reason) to run w/minimal system resources.
+</I>&gt;<i>
+</I>&gt;<i> Now, I'm traditionally a Slackware stalwart - and I prolly always will
+</I>&gt;<i> be, but there are some nagging issues at this time wrt enabling Slackare
+</I>&gt;<i> for multi-lib support when installing Slackware64. i.e.,
+</I>&gt;<i> Slackware-current, for example, when you might break things temporarily
+</I>&gt;<i> when installing new packages or more specifically, libs.
+</I>&gt;<i>
+</I>&gt;<i> Even Patrick was extremely reluctant to release an official Slackware64
+</I>&gt;<i> version until (Either Robby or Eric) continually urged him to do so and
+</I>&gt;<i> provided benchmarks showing the potential.
+</I>&gt;<i>
+</I>&gt;<i> Considering that there are plenty of apps which are not, and may not be
+</I>&gt;<i> for a very long time to come, updated as 64bit ready, how does Sorcerer
+</I>&gt;<i> deal with this issue?
+</I>&gt;<i>
+</I>&gt;<i> I haven't had any issues, and was wondering what lies in the 'magic' of
+</I>&gt;<i> Sorcerer ensuring that we don't experience any of the issues I've
+</I>&gt;<i> mentioned above.
+</I>&gt;<i>
+</I>&gt;<i> BTW, I'm still working on the Sorcerer install docs/manual for us too :)
+</I>&gt;<i>
+</I>&gt;<i> Kindest regards,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703 &#160;(US)
+</I>&gt;<i> TEL: +44.702.405.1909 (UK)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJMHHjdAAoJEE1wgkIhr9j3vgAH/1zck8ntAUybsZN5gQ2Vo9aF
+</I>&gt;<i> cTC5G5B7XkoyBS33ybT9I3Yaw7Lu4fT5Q0J+2+jSsuseUxLlSnljJVA4GcOXo/da
+</I>&gt;<i> yzvpLKHy46r9Zb5CYL2WTs1DSG9IlCLDQ9K/NFqQ+Ax6hiKKjnr5MuoxfaArj1L4
+</I>&gt;<i> rZsqBnGNVWaJyVWlm4jpoLa3D0ZRso3G1Bxjgfc0+uTeiFKiTZH5+ATgn/JcrH4G
+</I>&gt;<i> gqd4tJ7itgcQud9mhUPE7CYe83ktxlJ0j0yCpo42XLg2DVPEnf0yQa02d5y+c/PX
+</I>&gt;<i> emXhClndiOOJKlHqvaFqbCUajLNUargPkqU6mBQ1+rgOtpsaBiTrrYRm94EXfGQ=
+</I>&gt;<i> =VHQ/
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001663.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+	<LI>Next message: <A HREF="001667.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1665">[ date ]</a>
+              <a href="thread.html#1665">[ thread ]</a>
+              <a href="subject.html#1665">[ subject ]</a>
+              <a href="author.html#1665">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

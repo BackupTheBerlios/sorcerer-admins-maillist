@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] udev does not create sda, sdb and md0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20does%20not%20create%20sda%2C%20sdb%20and%20md0&In-Reply-To=%3C596b75861002091133w4693f265h1d7e3dd8df44a5a3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001461.html">
+   <LINK REL="Next"  HREF="001465.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] udev does not create sda, sdb and md0</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20does%20not%20create%20sda%2C%20sdb%20and%20md0&In-Reply-To=%3C596b75861002091133w4693f265h1d7e3dd8df44a5a3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] udev does not create sda, sdb and md0">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Feb  9 20:33:20 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001461.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+        <LI>Next message: <A HREF="001465.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1463">[ date ]</a>
+              <a href="thread.html#1463">[ thread ]</a>
+              <a href="subject.html#1463">[ subject ]</a>
+              <a href="author.html#1463">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Feb 9, 2010 at 9:25 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Ah, I use the monolithic kernel as well.
+</I>&gt;<i>
+</I>&gt;<i> It really is faster... faster to compile, faster to run...
+</I>
+These days I would probably prefer the convenience
+of a modular kernel over a percent or two of speed.
+Besides after years of boycotting USB,
+I finally have some USB devices.
+I do not know if hotplugging works as good
+without udev and modules.
+It might.
+
+&gt;<i> Saying it receives no testing is a little unfair. It just gets more
+</I>&gt;<i> difficult to switch between linux-modular and linux with every release of
+</I>
+Well, to clarify the meaning, I have no boxes deployed
+with a monolthic kernel and therefore I do not test that configuration.
+The last bug I remember someone spotting and fixing
+had something to do with /dev,
+because the install /dev was being used too soon
+before the udev populated /dev was made available.
+Jan was the person who discovered the problem,
+reported it, and recommended a fix.
+If I remember correctly, which is iffy at best,
+the problem did not effect boxes that booted
+using linux-modular and initramfs
+There was almost no chance that I would have spotted the problem.
+Therefore, if there are problems that effect
+the monolthic linux installation
+then I will probably not be the first person to spot those problems.
+
+&gt;<i> I see the need for a modular kernel on an I/R, but once installed, and an SA
+</I>&gt;<i> knows how to roll his own kernel, the overhead of making a new initramfs
+</I>&gt;<i> seems superfluous.
+</I>
+Lack of initramfs in /boot also makes for more disk savings.
+
+
+&gt;<i> Also, there is less to go wrong, as there is less
+</I>&gt;<i> complexity with a monolithic kernel.
+</I>
+Actually, some drivers might fail.
+If that happens then rebooting is the only solution.
+However, with a modular kernel I can merely rmmod
+the misbehaving modules and then modprobe them in.
+I have a USB wireless NIC on one computer where
+that fix is necessary for when uhci_hcd starts misbehaving.
+However, I do not know if that problem still exists.
+
+&gt;<i> Which kernel version, and which udev version are you using?
+</I>&gt;<i>
+</I>&gt;<i> Did you recently &quot;tweak&quot; the kernel a bit?
+</I>
+Even if he did compile a kernel with devtmpfs enabled,
+my previous trials did not show that it was a problem
+to use that with udev.
+I was half tempted to modify /etc/init.d/dev
+to mount devtmpfs instead of tmpfs.
+However, the devtmpfs is only available in some very newer kernels.
+So I did not change the init-script.
+Definitely /dev must be a mounted filesystem that
+can be mounted from /dev to /media/root/dev
+when booting from initramfs.
+Otherwise a problem would happen.
+I could have created a /etc/init.d/devtmpfs script that
+runs before /etc/init.d/dev and tries to mount devtmpfs on /dev
+That might be a plausible solution.
+/dev would be unable to mount tmpfs on /dev
+if some other filesystem is already mounted on /dev before it runs.
+But that would also generate a red failure error message during sysinit.
+Then again I could create
+a more complex /etc/init.d/dev script that checks
+/proc/filesystems to decide if devtmpfs can be mounted on /dev
+That might be a good solution, perhaps.
+But what I do not yet know is if devtmpfs is on /dev
+then will udev properly set ownership and mode of device nodes
+that are created in /dev by devtmpfs.
+Also how long before devtmpfs is dropped from the kernel
+like what happened with devfs?
+And lastly could devtmpfs or using devtmpfs with udev create
+a possible security risk?
+What I ready about devtmpfs thus far
+suggested that it always creates
+root owned mode 600 device nodes.
+Hmm, where is the good docs for it.
+
+ABI/removed/devfs:What:         devfs
+ABI/removed/devfs:      devfs has been unmaintained for a number of
+years, has unfixable
+ABI/removed/devfs:      The files fs/devfs/*,
+include/linux/devfs_fs*.h were removed,
+ABI/removed/devfs:      along with the assorted devfs function calls
+throughout the
+
+The stuff I grepped in /usr/src/linux/Documentation is old.
+
+From: drivers/base/Kconfig
+
+config DEVTMPFS
+        bool &quot;Create a kernel maintained /dev tmpfs (EXPERIMENTAL)&quot;
+        depends on HOTPLUG &amp;&amp; SHMEM &amp;&amp; TMPFS
+        help
+          This creates a tmpfs filesystem, and mounts it at bootup
+          and mounts it at /dev. The kernel driver core creates device
+          nodes for all registered devices in that filesystem. All device
+          nodes are owned by root and have the default mode of 0600.
+          Userspace can add and delete the nodes as needed. This is
+          intended to simplify bootup, and make it possible to delay
+          the initial coldplug at bootup done by udev in userspace.
+          It should also provide a simpler way for rescue systems
+          to bring up a kernel with dynamic major/minor numbers.
+          Meaningful symlinks, permissions and device ownership must
+          still be handled by userspace.
+          If unsure, say N here.
+
+config DEVTMPFS_MOUNT
+        bool &quot;Automount devtmpfs at /dev&quot;
+        depends on DEVTMPFS
+        help
+          This will mount devtmpfs at /dev if the kernel mounts the root
+          filesystem. It will not affect initramfs based mounting.
+          If unsure, say N here.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001461.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+	<LI>Next message: <A HREF="001465.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1463">[ date ]</a>
+              <a href="thread.html#1463">[ thread ]</a>
+              <a href="subject.html#1463">[ subject ]</a>
+              <a href="author.html#1463">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

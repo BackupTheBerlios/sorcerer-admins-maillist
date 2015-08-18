@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gsasl - multiple definition of `xrealloc'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gsasl%20-%20multiple%20definition%20of%20%60xrealloc%27&In-Reply-To=%3CAANLkTimr5so94%3DEaUg8hjq22zURai_pPhp9Jw2YtSx7A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001913.html">
+   <LINK REL="Next"  HREF="001914.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gsasl - multiple definition of `xrealloc'</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gsasl%20-%20multiple%20definition%20of%20%60xrealloc%27&In-Reply-To=%3CAANLkTimr5so94%3DEaUg8hjq22zURai_pPhp9Jw2YtSx7A%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gsasl - multiple definition of `xrealloc'">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Sep  5 04:52:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001913.html">[Sorcerer-admins] gsasl - multiple definition of `xrealloc'
+</A></li>
+        <LI>Next message: <A HREF="001914.html">[Sorcerer-admins] partitions?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1918">[ date ]</a>
+              <a href="thread.html#1918">[ thread ]</a>
+              <a href="subject.html#1918">[ subject ]</a>
+              <a href="author.html#1918">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That sort of problem was due to some sources that
+were not so cleverly written as to continue checking
+all lib directories for an ELF library
+after discovering /usr/lib/libreadline.a
+
+A few sources exist that require readline
+yet are unable to link using the static ar version
+of the readline library.
+gsasl is one of them.
+
+I suppose this goes to show that
+I should not bother trying to segregate the
+so libraries from the ar libraries even when
+the so libraries are required during sysinit
+and the ar libraries are almost never required
+except sometimes during compilation.
+
+With some exceptions, some of which might
+be because the SA or myself decided that
+an ar library should be used,
+ar libraries are not used during compilation
+and merely waste disk space.
+For several spells I enforce the compilation
+and installation of only SO, shared object ELF libraries.
+That tends to save disk space and is usually possible
+to accomplish with most software.
+And the additional benefit of SO libraries is that when
+the installed library is updated
+then all installed software linked with that library
+receives the bugs and benefits of the newly installed
+version of that library.
+
+Thanks for reporting the problem.
+This fix went out in the most recent LAG=0 grimoire
+along with updates, new spells, and newer kde-v4.
+Those who are not receiving it now will surely
+be able to download it by Monday
+since the default on a Sorcerer box is to use
+the LAG=1 grimoire.
+
+
+
+On Tue, Aug 31, 2010 at 6:55 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Couple spells do not compile, gsasl is one of them, multiple definition of
+</I>&gt;<i> `xrealloc' is the error here.
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------8&lt;------------------------------------
+</I>&gt;<i> Compile log for gsasl 1.4.4
+</I>&gt;<i> Built with sorcery kame-20100805-0 and gcc 4.4.3
+</I>&gt;<i> Built on ti 31.8.2010 16.35.42 +0300
+</I>&gt;<i> Required Spell &#160;Available Version &#160;Installed Version &#160; Recent Failed Cast
+</I>&gt;<i> mpfr &#160; &#160; &#160; &#160; &#160; &#160;3.0.0 &#160; &#160; &#160; &#160; &#160; &#160; &#160;2.4.1
+</I>&gt;<i> Method: configure
+</I>&gt;<i> checking for a BSD-compatible install... /usr/bin/install -c
+</I>&gt;<i> checking whether build environment is sane... yes
+</I>&gt;<i> checking for a thread-safe mkdir -p... /bin/mkdir -p
+</I>&gt;<i> checking for gawk... gawk
+</I>&gt;<i> checking whether make sets $(MAKE)... yes
+</I>&gt;<i> checking for gcc... gcc
+</I>&gt;<i> checking whether the C compiler works... yes
+</I>&gt;<i> checking for C compiler default output file name... a.out
+</I>&gt;<i> checking for suffix of executables...
+</I>&gt;<i> checking whether we are cross compiling... no
+</I>&gt;<i> checking for suffix of object files... o
+</I>&gt;<i> checking whether we are using the GNU C compiler... yes
+</I>&gt;<i> checking whether gcc accepts -g... yes
+</I>&gt;<i> checking for gcc option to accept ISO C89... none needed
+</I>&gt;<i> checking for style of include used by make... GNU
+</I>&gt;<i> checking dependency style of gcc... gcc3
+</I>&gt;<i> checking for ranlib... ranlib
+</I>&gt;<i> checking build system type... i686-pc-linux-gnu
+</I>&gt;<i> checking host system type... i686-pc-linux-gnu
+</I>&gt;<i> checking how to run the C preprocessor... gcc -E
+</I>&gt;<i> checking for grep that handles long lines and -e... /bin/grep
+</I>&gt;<i> checking for egrep... /bin/grep -E
+</I>&gt;<i> checking for ANSI C header files... yes
+</I>&gt;<i> checking for sys/types.h... yes
+</I>&gt;<i> checking for sys/stat.h... yes
+</I>&gt;<i>
+</I>&gt;<i> ....
+</I>&gt;<i>
+</I>&gt;<i> /bin/sh ../libtool --tag=CC &#160; --mode=link gcc -std=gnu99 &#160; -march=pentium4
+</I>&gt;<i> -O2 -fomit-frame-pointer -pipe &#160; -Wl,-s -o gsasl gsasl.o imap.o smtp.o
+</I>&gt;<i> callbacks.o ../lib/src/libgsasl.la ../gl/libgl.la -L/usr/lib -lreadline
+</I>&gt;<i> -lncurses -L/usr/lib -lgnutls -L/usr/lib -ltasn1 -L/usr/lib -lz -lgcrypt
+</I>&gt;<i> -L/usr/lib -lgpg-error &#160; libgsasl_cmd.la
+</I>&gt;<i> libtool: link: gcc -std=gnu99 -march=pentium4 -O2 -fomit-frame-pointer -pipe
+</I>&gt;<i> -Wl,-s -o .libs/gsasl gsasl.o imap.o smtp.o callbacks.o
+</I>&gt;<i> &#160;../lib/src/.libs/libgsasl.so ../gl/.libs/libgl.a -L/usr/lib -lreadline
+</I>&gt;<i> -lncurses /usr/lib/libgnutls.so /usr/lib/libtasn1.so -lz /lib/libgcrypt.so
+</I>&gt;<i> /lib/libgpg-error.so ./.libs/libgsasl_cmd.a
+</I>&gt;<i> /usr/lib/libreadline.a(xmalloc.o): In function `xrealloc':
+</I>&gt;<i> xmalloc.c:(.text+0x3f): multiple definition of `xrealloc'
+</I>&gt;<i> ../gl/.libs/libgl.a(xmalloc.o):xmalloc.c:(.text+0x35): first defined here
+</I>&gt;<i> /usr/lib/libreadline.a(xmalloc.o): In function `xmalloc':
+</I>&gt;<i> xmalloc.c:(.text+0x87): multiple definition of `xmalloc'
+</I>&gt;<i> ../gl/.libs/libgl.a(xmalloc.o):xmalloc.c:(.text+0xbd): first defined here
+</I>&gt;<i> collect2: ld returned 1 exit status
+</I>&gt;<i> make[3]: *** [gsasl] Error 1
+</I>&gt;<i> make[3]: Leaving directory `/usr/src/sorcery/gsasl/gsasl-1.4.4/src'
+</I>&gt;<i> make[2]: *** [all] Error 2
+</I>&gt;<i> make[2]: Leaving directory `/usr/src/sorcery/gsasl/gsasl-1.4.4/src'
+</I>&gt;<i> make[1]: *** [all-recursive] Error 1
+</I>&gt;<i> make[1]: Leaving directory `/usr/src/sorcery/gsasl/gsasl-1.4.4'
+</I>&gt;<i> make: *** [all] Virhe 2
+</I>&gt;<i> ----------------------------------8&lt;------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i> &#160; Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001913.html">[Sorcerer-admins] gsasl - multiple definition of `xrealloc'
+</A></li>
+	<LI>Next message: <A HREF="001914.html">[Sorcerer-admins] partitions?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1918">[ date ]</a>
+              <a href="thread.html#1918">[ thread ]</a>
+              <a href="subject.html#1918">[ subject ]</a>
+              <a href="author.html#1918">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] -O3 optimizations...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCA%2BT4wDjGjAy8cFtsgebuO6KmXG7Xusy1WAR8OAYnSn0BLopQXg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002223.html">
+   <LINK REL="Next"  HREF="002226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] -O3 optimizations...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCA%2BT4wDjGjAy8cFtsgebuO6KmXG7Xusy1WAR8OAYnSn0BLopQXg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] -O3 optimizations...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug  2 01:25:34 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002223.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+        <LI>Next message: <A HREF="002226.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2225">[ date ]</a>
+              <a href="thread.html#2225">[ thread ]</a>
+              <a href="subject.html#2225">[ subject ]</a>
+              <a href="author.html#2225">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That is a good point.
+-O2 is part of the Sorcerer's default optimization.
+It has long been a reliable stable optimization.
+It is not as fast as compilation with -O or -O0
+
+I feel reasonably safe using -O3 on software
+that I use regularly and have tested and expect
+that it can entirely use a core.
+However, I do not mind discontinuing the use of -O3
+if that is the consensus.
+The two main reasons for -O3 is performance and
+to deter SAs from trying -O3 on spells that do not have it.
+However, if we want to ban the use of -O3 distribution wide
+then sorcery can be made to check and replace -O[3-9] with -O2.
+
+If going in the direction of less optimization for preferred stability
+then another question that might be worth asking is which software
+aught to be compiled -O0?
+-O0 is produced no optimization with minimal compile time.
+How much of KDE benefits from -O2 or firefox?
+
+Possibly, we may want to reconsider Sorcerer default optimization?
+Why not use -O0 -march=native for default optimization
+and use -O2 on source that is expected to be capable of
+running a core full bore?
+
+&gt;<i>From the gcc manual page:
+</I>
+       -O3 Optimize yet more.  -O3 turns on all optimizations specified by -O2
+           and also turns on the -finline-functions, -funswitch-loops,
+           -fpredictive-commoning, -fgcse-after-reload, -ftree-vectorize and
+           -fipa-cp-clone options.
+
+If someone has a source for which -O3 is unusable
+then a good exercise might be to compile it with -O2
+and enable each of the above optimizations and try
+the outcome to see which optimization makes the code
+segfault or the program not run properly.
+
+The reason we use -O2 on everything is basically the same
+reason that noob SAs would want to try -O3 on everything.
+But I have long known -O2 is overkill because most processes
+do not hog the CPU.
+
+So how about -O2 for CPU intensive software
+such as glibc, gcc, xz, bash, coreutils, MesaLib, etc...
+and -O0 for everything else that runs gently
+or spends most of it's time sleeping?
+And sorcery can prohibit the SA from setting -O3,
+because those additional optimizations can specified
+individually if desired.
+
+
+
+On Sun, Jul 31, 2011 at 10:53 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Ah, gcc optimizations. I have used -O3 and always there is some things that
+</I>&gt;<i> go broke.
+</I>&gt;<i> Maybe you do not notice it right a away but years ago when i played cflags i
+</I>&gt;<i> learned that do not bother to use -O3 because it brokes more than it make
+</I>&gt;<i> things go faster.
+</I>&gt;<i> I havent study newer GCC versions if there has been any improvements but i
+</I>&gt;<i> think -march=native is good option (or you could also use -mtune=native) if
+</I>&gt;<i> you are doing local builds and also -fpmath=sse (on 32-bit compiler this
+</I>&gt;<i> needs also -msse or -msse2) should be usefull option.
+</I>&gt;<i>
+</I>&gt;<i> I vote for -O2 anytime, -Os is also not usefull anymore. I think there was
+</I>&gt;<i> also a message that Linux kernel removed -Os from its flags because it did
+</I>&gt;<i> not made sense anymore with current CPUs. There was some test runs that
+</I>&gt;<i> showed -O2 and -Os produced about same amount cache misses, but O2 was about
+</I>&gt;<i> 8-10 % faster (on some one benchmark) &#160;than Os...In that light O2 wins by
+</I>&gt;<i> default.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002223.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+	<LI>Next message: <A HREF="002226.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2225">[ date ]</a>
+              <a href="thread.html#2225">[ thread ]</a>
+              <a href="subject.html#2225">[ subject ]</a>
+              <a href="author.html#2225">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] missing dependency on pppoe?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20missing%20dependency%20on%20pppoe%3F&In-Reply-To=%3CAANLkTi%3DZQr6BJ%2BV6Y8TkAshZedEm9-wUi97cyvjzihFO%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001960.html">
+   <LINK REL="Next"  HREF="001962.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] missing dependency on pppoe?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20missing%20dependency%20on%20pppoe%3F&In-Reply-To=%3CAANLkTi%3DZQr6BJ%2BV6Y8TkAshZedEm9-wUi97cyvjzihFO%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] missing dependency on pppoe?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Oct 25 21:13:30 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001960.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+        <LI>Next message: <A HREF="001962.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1961">[ date ]</a>
+              <a href="thread.html#1961">[ thread ]</a>
+              <a href="subject.html#1961">[ subject ]</a>
+              <a href="author.html#1961">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>execvp
+is a function for executing a program from disk.
+Strange that it should print an error,
+yet not include anything about the file trying to be executed?
+If rp-pppoe is installed and being used
+then perhaps running strings on all of it's files
+piped through sort -u
+might show a file or more that might be executed
+but would not be on the initramfs.
+
+The directory
+/etc/ppp/
+is excluded from the initramfs
+would that be causing a problem?
+That line can be edited out of /etc/init.d/initramfs
+and new initramfs images generated and tried
+to see if that helps.
+What directory holds the configuration files, please?
+
+What software is being used for the pppoe connection?
+When is the network connection attempting to start and failing?
+Please elaborate on &quot;connecting through a 3rd party using pppoe does works&quot;
+How does one connect through a 3rd party, please?
+
+
+
+On Mon, Oct 25, 2010 at 12:18 AM, jean-luc malet
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> I've an issue after whole recompilation of my home server
+</I>&gt;<i> pppoe don't connect anymore,
+</I>&gt;<i> config files are ok
+</I>&gt;<i> connection through a 3rd party using pppoe does works
+</I>&gt;<i> adsl connection is ok and alive....
+</I>&gt;<i> I tried to launch pppoe-connect and I saw several lines saying that execvp can't find a program.... what program? no idea.....
+</I>&gt;<i> any idea?
+</I>&gt;<i> thanks
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001960.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+	<LI>Next message: <A HREF="001962.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1961">[ date ]</a>
+              <a href="thread.html#1961">[ thread ]</a>
+              <a href="subject.html#1961">[ subject ]</a>
+              <a href="author.html#1961">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] run requirements vs build requirements
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C49EC2DAC.9090505%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001084.html">
+   <LINK REL="Next"  HREF="001083.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] run requirements vs build requirements</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C49EC2DAC.9090505%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] run requirements vs build requirements">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Apr 20 10:09:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001084.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+        <LI>Next message: <A HREF="001083.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1081">[ date ]</a>
+              <a href="thread.html#1081">[ thread ]</a>
+              <a href="subject.html#1081">[ subject ]</a>
+              <a href="author.html#1081">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+that's not so easy
+some spell have runtime dependencies on tools usually used for compilation
+this is the case of enblend that require make to run.... although 
+enblend is only doing photo stiching... but it use make to perform the 
+tasks.
+
+however there is a small an efficient way :
+
+discard_req() { return 0; }
+
+if [ -n ${ARCH} ]; then
+    alias build_requirement=discard_req
+else
+    alias build_requirement=requirement
+fi
+
+
+I assume that a user that is cross compiling has all the build 
+requirement installed and that sorcery hasn't to track them, a command 
+augur build_req can be implemented easely to display build requirements
+this imply that if crosscompiling or creating a rescue disc, the 
+buildrequirements are simply droped.
+
+best regards
+JLM
+
+
+
+
+evert vorster wrote:
+&gt;<i> Hi.
+</I>&gt;<i>
+</I>&gt;<i> I would like to add my .2
+</I>&gt;<i>
+</I>&gt;<i> How about just having an attribute in spells that says compile or 
+</I>&gt;<i> run-time?
+</I>&gt;<i> That way an SA could dispel $(augur attribute $ATTRIBUTE) and in this 
+</I>&gt;<i> case, get rid of all the spells that are needed for compiling, but not 
+</I>&gt;<i> needed for running.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Apr 20, 2009 at 3:54 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A> 
+</I>&gt;<i> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>     On Sun, Apr 19, 2009 at 3:15 PM, MALET Jean-Luc
+</I>&gt;<i>     &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A> &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i>     &gt; Hi,
+</I>&gt;<i>     &gt; long time ago I discussed about that.... I know that some of you
+</I>&gt;<i>     don't
+</I>&gt;<i>     &gt; see difference between both... I see lot of differences and
+</I>&gt;<i>     would like
+</I>&gt;<i>     &gt; to have 2 requirements in spells :
+</I>&gt;<i>     &gt;  - build requirements are what is mandatory to build the spell,
+</I>&gt;<i>     not to
+</I>&gt;<i>     &gt; run it, a build requirement can be removed from the system without
+</I>&gt;<i>     &gt; causing a crash, however it has to be present on build
+</I>&gt;<i>     &gt;  - run requirements is what is mandatory to run without a crash
+</I>&gt;<i>     &gt;
+</I>&gt;<i>     &gt; why do I come back?
+</I>&gt;<i>     &gt; I want to use core spell to build automaticaly and usb rescue drive
+</I>&gt;<i>     &gt; using what is on drive, looking at the graph I provided I saw lot of
+</I>&gt;<i>     &gt; spells that aren't mandatory for running the rescue disc, like cmake
+</I>&gt;<i>     &gt; that cause gcc-v4.1 to be installed as well.
+</I>&gt;<i>
+</I>&gt;<i>     cmake has no requirement on gcc-v4.1!
+</I>&gt;<i>     I edited that out of the spell and put a comment in it
+</I>&gt;<i>     to prevent anyone from adding that to cmake.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     &gt; ... AFAIK gcc-v4.1 and cmake
+</I>&gt;<i>     &gt; can be rebuild from gcc... so they don't have to be on the
+</I>&gt;<i>     rescue disk
+</I>&gt;<i>     &gt; as well there is a difference when doing crosscompiling (and
+</I>&gt;<i>     this is one
+</I>&gt;<i>     &gt; of the reason I couldn't go further on crosscompiling) because a
+</I>&gt;<i>     build
+</I>&gt;<i>     &gt; requirement is a software that have to be run on host, then have
+</I>&gt;<i>     to be
+</I>&gt;<i>     &gt; compiled for host arch and then should not be put on target FS....
+</I>&gt;<i>
+</I>&gt;<i>     If anything did require something that required something
+</I>&gt;<i>     that required something that required cmake and cmake required
+</I>&gt;<i>     gcc-v4.1
+</I>&gt;<i>     then the compilation of that end something would also require gcc-v4.1
+</I>&gt;<i>     to be installed.
+</I>&gt;<i>     Therefore, the requirement chains must be without broken links
+</I>&gt;<i>     when it comes to having installed software.
+</I>&gt;<i>     This is especially important when it comes to doing any compilation
+</I>&gt;<i>     of software during the installation of the I/R.
+</I>&gt;<i>     Since the network is not yet configured by the SA
+</I>&gt;<i>     new source tarballs can not simply be downloaded as required.
+</I>&gt;<i>     All that are available on the I/R is all that can be compiled.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     &gt; as well I find strange that some spell have dependencies upon
+</I>&gt;<i>     autotools
+</I>&gt;<i>     &gt; (automake and autoconf) since all autotooled package have a pecular
+</I>&gt;<i>     &gt; version of autotools built-in.... thoses spells are only
+</I>&gt;<i>     required if you
+</I>&gt;<i>     &gt; want to create a software that use autotools, else you don't require
+</I>&gt;<i>     &gt; them normaly
+</I>&gt;<i>
+</I>&gt;<i>     Some sources do require libtool or autoconf or automake installed.
+</I>&gt;<i>     Many sources have enough in their tree to compile without having
+</I>&gt;<i>     the above 3 spells installed.
+</I>&gt;<i>
+</I>&gt;<i>     There are two reasons that Sorcerer has only required and optional
+</I>&gt;<i>     spells
+</I>&gt;<i>     and not build required and run-time required spells.
+</I>&gt;<i>     The first reason is simplicity.
+</I>&gt;<i>     The current system is simple and fast.
+</I>&gt;<i>     Because it does not try to do anything complicated
+</I>&gt;<i>     it tends to work properly.
+</I>&gt;<i>     If it were to do fancy stuff
+</I>&gt;<i>     then unanticipated problems could occur.
+</I>&gt;<i>
+</I>&gt;<i>     The second reason is that Sorcerer boxes must update.
+</I>&gt;<i>     Because Sorcerer boxes update there is a good chance
+</I>&gt;<i>     that over time every installed spell will recompile.
+</I>&gt;<i>     If nearly all the installed software will recompile
+</I>&gt;<i>     then the build requirements will be needed again.
+</I>&gt;<i>
+</I>&gt;<i>     There is not normally a good reason to have
+</I>&gt;<i>     spells required only for compilation to not be installed.
+</I>&gt;<i>     Let us examine gcc and make for examples.
+</I>&gt;<i>     Feel free to dispel them.
+</I>&gt;<i>     A box does not require thme to run.
+</I>&gt;<i>     But if a box lacks archives for them
+</I>&gt;<i>     then what will will be required when it is time to update?
+</I>&gt;<i>     Almost nothing can cast without gcc installed.
+</I>&gt;<i>     What can parase makefiles if make is not installed?
+</I>&gt;<i>     Allowing SAs to dispel gcc and make is not a convenience.
+</I>&gt;<i>     It is a delayed super head-ache!
+</I>&gt;<i>
+</I>&gt;<i>     They day will come when they say,
+</I>&gt;<i>     &quot;Oh that was dumb, why did I dispel gcc?
+</I>&gt;<i>     I require it now for updates.
+</I>&gt;<i>     I have to manually install it from the I/R
+</I>&gt;<i>     Oh wait, that is an older gcc.
+</I>&gt;<i>     Now I have to compile it again.
+</I>&gt;<i>     At least my c++ programs did not quit starting,
+</I>&gt;<i>     thanks to the libstdc++ libraries stored in the library cache.
+</I>&gt;<i>     Ah, I installed the older gcc provided on the I/R.
+</I>&gt;<i>     Great.
+</I>&gt;<i>     But now my c++ program will not run due to missing symbols.
+</I>&gt;<i>     They require the newer libstdc++ provided by the newer gcc.
+</I>&gt;<i>     Ah, I have to compile gcc first before I can do anything.
+</I>&gt;<i>     I wish I had just left it installed to begin with.&quot;
+</I>&gt;<i>
+</I>&gt;<i>     Even if SAs could save 300M on a installed system
+</I>&gt;<i>     by being able to dispel build only requirements
+</I>&gt;<i>     they would soon come to regret the decision
+</I>&gt;<i>     for blowing big holes that must be repaired
+</I>&gt;<i>     before the box can update properly again.
+</I>&gt;<i>
+</I>&gt;<i>     Sorcerer is about going seamlessly from the past,
+</I>&gt;<i>     to the present, to the future.
+</I>&gt;<i>     We do not redeploy our boxes every other year.
+</I>&gt;<i>     We simply update them on a regular basis
+</I>&gt;<i>     and deal with the tiny inconveniences that happen
+</I>&gt;<i>     instead of a giant headache when a new release
+</I>&gt;<i>     of a pre-compiled binary based distro can not install
+</I>&gt;<i>     or can not run properly.
+</I>&gt;<i>
+</I>&gt;<i>     Do you not hate when you backup your box,
+</I>&gt;<i>     wipe your filesystems, go to re-install a new distro release
+</I>&gt;<i>     and then realize that the boot floppies are useless
+</I>&gt;<i>     and that a week elapses before the distro maintainers
+</I>&gt;<i>     announce the problem and provide fixed floppies
+</I>&gt;<i>     while all that time you wondered if it was your lack of ability?
+</I>&gt;<i>     Or what about having finished installing the new release of a distro
+</I>&gt;<i>     and then suddenly discovering that ppp front-end program
+</I>&gt;<i>     segmentation faults and so you are uncertain how to establish
+</I>&gt;<i>     a modem connection to the Internet Service Provide to obtain a fix
+</I>&gt;<i>     for it.
+</I>&gt;<i>     A decade ago when I was more or less a regular SA
+</I>&gt;<i>     stuff like that happened and I did not like it.
+</I>&gt;<i>     If anyone thought Sorcerer had some bad bugs...
+</I>&gt;<i>     Major distros were major pains back then.
+</I>&gt;<i>     Any bad thing you can imagine happening and more
+</I>&gt;<i>     has already happened in distros such as Debian and RedHat.
+</I>&gt;<i>     Oh yes, they also have derail boxes
+</I>&gt;<i>     causing them to be unable to update.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>     Sorcerer is not perfect.
+</I>&gt;<i>     But I try to provide quick fixes
+</I>&gt;<i>     and minimize the impact of problems,
+</I>&gt;<i>     even when the problems are being caused
+</I>&gt;<i>     by other software authors and not me.
+</I>&gt;<i>
+</I>&gt;<i>     The question about having build-only requirements is
+</I>&gt;<i>     not &quot;Can we do it?&quot;  The question is &quot;Should we do it?&quot;
+</I>&gt;<i>     Sorcerer offers SAs too much freedom already.
+</I>&gt;<i>     SAs that do not understand the select menu in sorcery
+</I>&gt;<i>     have uninstalled a large portion of installed software
+</I>&gt;<i>     breaking their boxes bad and
+</I>&gt;<i>     then they blame me for it.
+</I>&gt;<i>     I still have not thought of a solution for the select menu
+</I>&gt;<i>     that offers the same amount of power, but with a margin for safety.
+</I>&gt;<i>     Instead I figure that for the time being a portion of SAs
+</I>&gt;<i>     will wreck their boxes using the select menu in sorcery.
+</I>&gt;<i>     Oh well.
+</I>&gt;<i>
+</I>&gt;<i>     But my point is that Sorcerer should be helping SAs
+</I>&gt;<i>     properly load their box with software
+</I>&gt;<i>     and not providing new methods for creating
+</I>&gt;<i>     problematic holes in the installed software.
+</I>&gt;<i>
+</I>&gt;<i>     I hate to seem so uncompromising about it.
+</I>&gt;<i>     However, having separate concepts of build and
+</I>&gt;<i>     runtime requirements is something borrowed from
+</I>&gt;<i>     pre-compiled binary based distros.
+</I>&gt;<i>     They even have dev packages that must be installed
+</I>&gt;<i>     in order to provide required header files for compilation.
+</I>&gt;<i>     It is too annoying!
+</I>&gt;<i>     Yet my point is that Sorcerer should never have the
+</I>&gt;<i>     same benefits as a pre-compiled binary based distro does,
+</I>&gt;<i>     because Sorcerer would have to sacrifice too much
+</I>&gt;<i>     of what makes Sorcerer an excellent source based distribution.
+</I>&gt;<i>
+</I>&gt;<i>     Sorcerer, as it is, fits the paradigm of a source based distro.
+</I>&gt;<i>     To add support for build-only requirements adds elements
+</I>&gt;<i>     of a pre-compiled binary based distro to Sorcerer.
+</I>&gt;<i>     That also forces sorcery to change to fit the hybrid paradigm.
+</I>&gt;<i>     Ultimately sorcery becomes slower, more complex, and more problematic.
+</I>&gt;<i>
+</I>&gt;<i>     I take a stand against the hybridization of Sorcerer
+</I>&gt;<i>     only to keep Sorcerer excellent at what Sorcerer does.
+</I>&gt;<i>     A dog that goes &quot;meow&quot; just is not the same thing as a dog or a cat.
+</I>&gt;<i>     Who wants a  duck that goes &quot;moo?&quot;
+</I>&gt;<i>     Sorcerer is like a duck that goes quack.
+</I>&gt;<i>     SAs know what to expect.
+</I>&gt;<i>     It soars in the air.
+</I>&gt;<i>     It floats in the water.
+</I>&gt;<i>     But it is not a ground sprinter like a road runner.
+</I>&gt;<i>
+</I>&gt;<i>     Some SAs like Sorcerer, but simply can not part with
+</I>&gt;<i>     the awesome conveniences provided by pre-compiled binary base distros.
+</I>&gt;<i>     Some demand that nearly instant download and installation of
+</I>&gt;<i>     pre-compiled binary packages that require practically no CPU cylces
+</I>&gt;<i>     as compared to compiling software.
+</I>&gt;<i>     The request for me to provide pre-compiled binary packages
+</I>&gt;<i>     for download has crossed the Sorcerer email list several times.
+</I>&gt;<i>     My answer to that was that SAs which want Sorcerer,
+</I>&gt;<i>     yet want that instant gratification should install
+</I>&gt;<i>     zero-install-injector.
+</I>&gt;<i>     In recent years I have switched to providing more pre-installed
+</I>&gt;<i>     spells on the Install/Rescue disks.
+</I>&gt;<i>     It is still just a minor fraction compared to what Sorcerer can offer,
+</I>&gt;<i>     yet it provides at least a small head start towards achieving
+</I>&gt;<i>     the fully deployed box that the SA desires.
+</I>&gt;<i>
+</I>&gt;<i>     Some concessions are permitted as long as Sorcerer
+</I>&gt;<i>     continues to follow the paradigm of a source based distro.
+</I>&gt;<i>
+</I>&gt;<i>     My guess-timation is that most SAs that use Sorcerer
+</I>&gt;<i>     will not want build-only requirements and have no use
+</I>&gt;<i>     for such a distinction.
+</I>&gt;<i>     And they would be considerable upset with me if
+</I>&gt;<i>     I break sorcery trying to hack a more complicated
+</I>&gt;<i>     implementation to provide build-only requirements.
+</I>&gt;<i>     The current sorcery tools are mostly reliable and
+</I>&gt;<i>     already extremely fast.
+</I>&gt;<i>     It's the &quot;good-stuff&quot; that we have been waiting to use for years.
+</I>&gt;<i>     Now is a good time to enjoy it instead of trying to graft on a 3rd
+</I>&gt;<i>     arm.
+</I>&gt;<i>
+</I>&gt;<i>     However, that said you can still blow holes in your installation.
+</I>&gt;<i>     Simply use the prohibited --unsafe parameter when issuing a dispel
+</I>&gt;<i>     command.
+</I>&gt;<i>     However, I can not guarantee that when it comes time to update the box
+</I>&gt;<i>     that sorcery will not try to restore spells that were remove which
+</I>&gt;<i>     should have been installed.
+</I>&gt;<i>     Also there could be big problems if something like gcc and make
+</I>&gt;<i>     are dispelled.
+</I>&gt;<i>     Thanks to the library cache those problems will not appear
+</I>&gt;<i>     immediately.
+</I>&gt;<i>     But they might happen when update time comes.
+</I>&gt;<i>
+</I>&gt;<i>     Given the current load-out of the I/R
+</I>&gt;<i>     it is possible to create suitable Install/Rescue images
+</I>&gt;<i>     on memory sticks of size 512M and greater.
+</I>&gt;<i>     Might be difficult to buy one that is less than 1G these days.
+</I>&gt;<i>     There is no need to shrink Sorcerer down to embedded size.
+</I>&gt;<i>     If that were required then a
+</I>&gt;<i>     pre-compiled distro based on uClibc and busybox would be better.
+</I>&gt;<i>     I have played with uClibc and busybox before.
+</I>&gt;<i>     They are fun and fast.
+</I>&gt;<i>     Building embedded systems is fun and interesting.
+</I>&gt;<i>     Perhaps one could use a mach kernel instead of linux.
+</I>&gt;<i>     linux, especially modern linux, is a bit heavy and large.
+</I>&gt;<i>
+</I>&gt;<i>     Sorcerer is like a big beautiful full sized duck,
+</I>&gt;<i>     and not a tiny bathtub rubber ducky.
+</I>&gt;<i>     Sorcerer evolves and grows and sometimes quacks.
+</I>&gt;<i>     Overall I like it.
+</I>&gt;<i>     But trying to make it like a bathtub ducky will
+</I>&gt;<i>     probably only make it a dead duck.
+</I>&gt;<i>
+</I>&gt;<i>     In the future some hybridization of Sorcerer may be possible.
+</I>&gt;<i>     For example there is no benefit for having linux-modular compiled
+</I>&gt;<i>     on a box.
+</I>&gt;<i>     Any IA32 compiled linux-modular aught to work on any IA32 box.
+</I>&gt;<i>     The same goes for the x86_64 linux-modular.
+</I>&gt;<i>     It has no ELF requirements to complicate it.
+</I>&gt;<i>     And a long time is required to compile linux-modular.
+</I>&gt;<i>     Therefore, if enough SAs reported that they wanted
+</I>&gt;<i>     an additional spell such as linux-modular-bin
+</I>&gt;<i>     then I would consider it.
+</I>&gt;<i>
+</I>&gt;<i>     There are a few spells already such as jdk and OOo-bin
+</I>&gt;<i>     where we use pre-compiled binaries instead of compiling it.
+</I>&gt;<i>     Complete hybridization of Sorcerer would be bad.
+</I>&gt;<i>     However, some areas can be compromised.
+</I>&gt;<i>     Sometimes imperfect solutions work best in this imperfect world.
+</I>&gt;<i>     But still we must be careful to not make changes that
+</I>&gt;<i>     become future problems.
+</I>&gt;<i>     _______________________________________________
+</I>&gt;<i>     Sorcerer-admins mailing list
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>     &lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>&gt;
+</I>&gt;<i>     <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -- 
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090420/09a41728/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090420/09a41728/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001084.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+	<LI>Next message: <A HREF="001083.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1081">[ date ]</a>
+              <a href="thread.html#1081">[ thread ]</a>
+              <a href="subject.html#1081">[ subject ]</a>
+              <a href="author.html#1081">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

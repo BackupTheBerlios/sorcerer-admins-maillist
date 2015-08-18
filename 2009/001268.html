@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /boot size? initrd megasize 107MB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3COF01E52957.B2F7D326-ONC22575D9.0033DDAE-C22575D9.0034F2D6%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001267.html">
+   <LINK REL="Next"  HREF="001270.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /boot size? initrd megasize 107MB</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3COF01E52957.B2F7D326-ONC22575D9.0033DDAE-C22575D9.0034F2D6%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] /boot size? initrd megasize 107MB">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu Jun 18 11:38:19 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001267.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+        <LI>Next message: <A HREF="001270.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1268">[ date ]</a>
+              <a href="thread.html#1268">[ thread ]</a>
+              <a href="subject.html#1268">[ subject ]</a>
+              <a href="author.html#1268">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay, this might be actually be a bug, as why is it when i extract initrf 
+i get its size as 37MB? Does it include also something that you can't 
+extract with cpio?
+
+Otherwise if its not a bug, make it somehow it smaller, way too big now, 
+because initrd jobs is to make system boot, and if other distros can do 
+couple megabytes initrd thats makes all sorts of stuff, then what 107MB 
+initrd does, i just wonder.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 18.06.2009 12:14:44:
+
+&gt;<i> From:
+</I>&gt;<i> 
+</I>&gt;<i> Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> To:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> 
+</I>&gt;<i> Date:
+</I>&gt;<i> 
+</I>&gt;<i> 18.06.2009 12:20
+</I>&gt;<i> 
+</I>&gt;<i> Subject:
+</I>&gt;<i> 
+</I>&gt;<i> Re: [Sorcerer-admins] /boot size? initrd megasize 107MB
+</I>&gt;<i> 
+</I>&gt;<i> Sent by:
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> 
+</I>&gt;<i> # du -sm /boot/* | head -n 3
+</I>&gt;<i> 85      /boot/2.6.29.1
+</I>&gt;<i> 84      /boot/2.6.29.2
+</I>&gt;<i> 85      /boot/2.6.30
+</I>&gt;<i> 
+</I>&gt;<i> Hmm, does seem larger on my test box also.
+</I>&gt;<i> However, it is not yet +100M big.
+</I>&gt;<i> 
+</I>&gt;<i> The initrd is composed of select files and directories
+</I>&gt;<i> archived into a cpio from the directories
+</I>&gt;<i> /etc /bin /sbin /lib /lib64
+</I>&gt;<i> 
+</I>&gt;<i> Static archive libraries are not included in the archive.
+</I>&gt;<i> Nothing from /etc/sorcery/ is included.
+</I>&gt;<i> Many files in /etc/ are not included.
+</I>&gt;<i> However, if you did something like
+</I>&gt;<i> # cp -av /etc/sorcery /etc/sorcery.old
+</I>&gt;<i> then that would cause a large amount of files
+</I>&gt;<i> to be included in the cpio archive that are
+</I>&gt;<i> not essential for booting.
+</I>&gt;<i> 
+</I>&gt;<i> Instead of trying to determine exactly
+</I>&gt;<i> what directories from /etc are worth
+</I>&gt;<i> including in the initramfs I tried to discover
+</I>&gt;<i> what directories in /etc/ could be installed by a spell
+</I>&gt;<i> yet would not be required during sysinit.
+</I>&gt;<i> I saved a considerable amount of space
+</I>&gt;<i> in the initramfs by excluding only that.
+</I>&gt;<i> However, a SA could still create directories
+</I>&gt;<i> in /etc/ that consume space on the initramfs
+</I>&gt;<i> yet are otherwise useless during booting.
+</I>&gt;<i> 
+</I>&gt;<i> No doubt that a method for creating a more precise initramfs is 
+</I>possible.
+&gt;<i> However, I expect it would also require almost constant revision.
+</I>&gt;<i> If something new is introduced that installs into /bin /sbin /lib or 
+</I>/lib64
+&gt;<i> and would be required during sysinit
+</I>&gt;<i> then the initramfs script would require adjustment
+</I>&gt;<i> or at least some component sourced in by the initramfs
+</I>&gt;<i> would need to be changed.
+</I>&gt;<i> 
+</I>&gt;<i> If you want a better/more precise initramfs script
+</I>&gt;<i> then spell complexity must be increased in order
+</I>&gt;<i> to specify precisely what should be inclined
+</I>&gt;<i> on an intiramfs if such directories as
+</I>&gt;<i> /bin /sbin /lib /lib64 and /etc are not included nearly as a whole.
+</I>&gt;<i> 
+</I>&gt;<i> However, from /lib in each initramfs only the
+</I>&gt;<i> /lib/modules/$VERSION/ from the appropriate kernel version
+</I>&gt;<i> is included in that initramfs.
+</I>&gt;<i> Consequently, only modules to load
+</I>&gt;<i> that are appropriate for the running kernel
+</I>&gt;<i> are included on the initramfs.
+</I>&gt;<i> 
+</I>&gt;<i> Originally, my design was to create merely one initramfs
+</I>&gt;<i> usable by all kernels installed in /boot
+</I>&gt;<i> A single initramfs is faster to generate.
+</I>&gt;<i> However, booting is a bit slower to load
+</I>&gt;<i> such a large initramfs, and of course more
+</I>&gt;<i> memory is required in order to store the entire
+</I>&gt;<i> content of /lib/modules in the initramfs instead
+</I>&gt;<i> of only modules required by the kernel being booted.
+</I>&gt;<i> 
+</I>&gt;<i> I mentioned that old method that I obsoleted to demonstrate
+</I>&gt;<i> that there are potentially other ways of building the initramfs.
+</I>&gt;<i> Also the initramfs can be compressed in order to conserve maybe 30%.
+</I>&gt;<i> However, the initramfs is only compressed by default
+</I>&gt;<i> when it is provided on the Install/Rescue CD.
+</I>&gt;<i> 
+</I>&gt;<i> So the fun options for making the initramfs
+</I>&gt;<i> require less disk space are: compression or redesign.
+</I>&gt;<i> 
+</I>&gt;<i> I have accepted that initramfs will become larger in time.
+</I>&gt;<i> Eventually a 256M initramfs will not be absurd.
+</I>&gt;<i> Even a modern kernel and boot loader can handle it.
+</I>&gt;<i> Therefore, I am not overly worried about a 100M initramfs.
+</I>&gt;<i> However, I am not closed to discussion about
+</I>&gt;<i> what should be done to improve initramfs generation.
+</I>&gt;<i> 
+</I>&gt;<i> Also I should mention that in the past I attempted to selectively
+</I>&gt;<i> exclude kernel modules and module directories that I expected
+</I>&gt;<i> would be unessential during sysinit.
+</I>&gt;<i> However, SAs complained.
+</I>&gt;<i> Consequently, each initrmafs has a complete set of modules
+</I>&gt;<i> that is appropriate for the kernel being boot.
+</I>&gt;<i> Yet it does consume considerable space.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Wed, Jun 17, 2009 at 11:00 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> &gt; Big problem, i have run out of space. Why initrd is so big? 2.6.29.2 
+</I>initrd
+&gt;<i> &gt; size is amazingly 107MB!
+</I>&gt;<i> &gt; My /boot is only 139 MB partition so when casting new kernel it runs 
+</I>out of
+&gt;<i> &gt; space....
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090618/0e540d7f/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090618/0e540d7f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001267.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+	<LI>Next message: <A HREF="001270.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1268">[ date ]</a>
+              <a href="thread.html#1268">[ thread ]</a>
+              <a href="subject.html#1268">[ subject ]</a>
+              <a href="author.html#1268">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

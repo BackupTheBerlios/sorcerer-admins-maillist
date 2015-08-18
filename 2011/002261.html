@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Thanks for the quality feedback.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Thanks%20for%20the%20quality%20feedback.&In-Reply-To=%3CCA%2BT4wDhE8ZH2m-dCuUUELc-8sQO3PK4NNLTwHzJUJj9MK7N71g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002260.html">
+   <LINK REL="Next"  HREF="002262.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Thanks for the quality feedback.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Thanks%20for%20the%20quality%20feedback.&In-Reply-To=%3CCA%2BT4wDhE8ZH2m-dCuUUELc-8sQO3PK4NNLTwHzJUJj9MK7N71g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Thanks for the quality feedback.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep 24 12:28:53 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002260.html">[Sorcerer-admins] enhanced security...
+</A></li>
+        <LI>Next message: <A HREF="002262.html">[Sorcerer-admins] BerliOS goes down december 31
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2261">[ date ]</a>
+              <a href="thread.html#2261">[ thread ]</a>
+              <a href="subject.html#2261">[ subject ]</a>
+              <a href="author.html#2261">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Evert gave feedback concerning recent changes.
+
+Evert's requests were:
+fewer init-scripts running during sysinit;
+ability to create top level control groups;
+ability to set any value in a control group;
+ability to set control group memory limits with bytes instead of percents.
+
+My response was:
+yes;
+yes;
+yes;
+yes.
+
+:<i>)
+</I>
+Since I am doing revisions and improvements to cgroup
+I also decided to return to the original implementation of
+having one cgroup with multiple subsystems enabled
+mount on /sys/fs/cgroup/
+It is faster and easier that way.
+It has the obvious advantage that any limitation inherit in one
+subsystem becomes a limitation
+for all control groups when mounted his way.
+Fortunately, by default I am not enabling subsystems
+that restrict migration.
+
+All the previous
+/etc/init.d/cgroup_*
+init-scripts are replaced by a single
+/etc/init.d/cgroup
+The configuration menu is accessed by
+# /etc/init.d/cgroup configure
+It is rough at the moment, but it works.
+
+Values to be set for the controls of top level cgroups
+are saved in /etc/cgroup/
+It has the same layout as /sys/fs/cgroup/
+Consequently, adjustment is by using
+# /etc/init.d/cgroup configure
+or by editing it directly as if setting values
+in /sys/fs/cgroup/
+
+The current top level control groups are called:
+daemon; idle, realtime; sorcery; user.
+I am considering adding another top level cgroup,
+but have yet to decide the name.
+
+After the new cgroup spell is installed
+then boxes should be rebooted so that
+control groups work as expected.
+Otherwise control groups will not work as expected
+until after the box is reboot.
+
+Revision #1 was a good start and very usable.
+#2 was the scenic route because it was slow
+and we gained a chance to observe the terrain better.
+This is the third and perhaps final revision which has
+a good compromise with respect to complexity, functionality, and speed.
+Now that I have experienced both ways
+I will not have a nagging lingering inclination to revert.
+cgroup almost feels good to go as is.
+
+Eventually, I will probably add some helper scripts
+to allow user and SAs achieve certain feats easily
+such as creating a user owned idle sub-cgroup
+or running a process with specified affinity.
+Such feats and more can be accomplished when a user
+adjusts directories and files in /sys/fs/cgroup/user/$USER/ directly.
+But the effort is more involved than typing a command name
+which tends to be on par with the POSIX style and level of convenience.
+
+Sorry for the inconvenience
+I caused by being fickle about
+how to mount the cgroup file system.
+As usual hindsight is 20/20.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002260.html">[Sorcerer-admins] enhanced security...
+</A></li>
+	<LI>Next message: <A HREF="002262.html">[Sorcerer-admins] BerliOS goes down december 31
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2261">[ date ]</a>
+              <a href="thread.html#2261">[ thread ]</a>
+              <a href="subject.html#2261">[ subject ]</a>
+              <a href="author.html#2261">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

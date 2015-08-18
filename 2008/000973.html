@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more pbzip2 tests
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20pbzip2%20tests&In-Reply-To=%3C596b75860812290521j91c12bfv3763bbd1b8831fd8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000972.html">
+   <LINK REL="Next"  HREF="000974.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more pbzip2 tests</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20pbzip2%20tests&In-Reply-To=%3C596b75860812290521j91c12bfv3763bbd1b8831fd8%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more pbzip2 tests">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Dec 29 14:21:06 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000972.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+        <LI>Next message: <A HREF="000974.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#973">[ date ]</a>
+              <a href="thread.html#973">[ thread ]</a>
+              <a href="subject.html#973">[ subject ]</a>
+              <a href="author.html#973">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you for the results.
+However, it is important to consider the file size.
+How large of a file is being compressed?
+How many 900K blocks please?
+For such a large compression time I am expecting
+the file must be close to the linux or firefox source tarball sizes?
+
+I am surprised if pbzip2 must be used as the compression program
+in order to gain a commensurate speedup for decompression.
+However, if results show it to be so then it is so.
+In that case staying with bzip2 may be better.
+Chances are we will encounter few if any source tarballs
+that were compressed with pbzip2.
+
+
+On Mon, Dec 29, 2008 at 12:49 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> There is a major drawback using pbzip2 as decompression program if
+</I>&gt;<i> sourcefile is compressed with a bzip2 in beginning.
+</I>&gt;<i> It's not fast at all. Decompression is only fast if it's compressed with
+</I>&gt;<i> pbzip2, it organizes compressed file so it can be decompressed fast way, but
+</I>&gt;<i> if it was compressed using bzip2 there is no speedup to decompress with
+</I>&gt;<i> pbzip2.
+</I>&gt;<i>
+</I>&gt;<i> Same test environment as in last message, but this time source file was
+</I>&gt;<i> compressed using bzip2:
+</I>&gt;<i>
+</I>&gt;<i> pbzip2 decompress, 2 core, bzip2 created source
+</I>&gt;<i> real        0m20.371s
+</I>&gt;<i> user        0m19.005s
+</I>&gt;<i> sys        0m0.672s
+</I>&gt;<i>
+</I>&gt;<i> pbzip2 decompress, 4 core, bzip2 created source
+</I>&gt;<i> real        0m19.598s
+</I>&gt;<i> user        0m18.865s
+</I>&gt;<i> sys        0m0.640s
+</I>&gt;<i>
+</I>&gt;<i> And what if source file is compressed with pbzip2:
+</I>&gt;<i> pbzip2 decompress, 2 core, pbzip2 created source
+</I>&gt;<i> real        0m5.991s
+</I>&gt;<i> user        0m11.277s
+</I>&gt;<i> sys        0m0.272s
+</I>&gt;<i>
+</I>&gt;<i> pbzip2 decompress, 4 core, pbzip2 created souce
+</I>&gt;<i> real        0m3.961s
+</I>&gt;<i> user        0m13.849s
+</I>&gt;<i> sys        0m0.376s
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>   Pekka Panula, Net Servant Oy
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000972.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+	<LI>Next message: <A HREF="000974.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#973">[ date ]</a>
+              <a href="thread.html#973">[ thread ]</a>
+              <a href="subject.html#973">[ subject ]</a>
+              <a href="author.html#973">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

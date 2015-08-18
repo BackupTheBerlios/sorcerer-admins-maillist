@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] extlinux-update
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20extlinux-update&In-Reply-To=%3CCA%2BT4wDhTyEOM8_yxrfwaBH5g%3Ds8vKKim1hSWSYxWycNi30xXmQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002505.html">
+   <LINK REL="Next"  HREF="002507.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] extlinux-update</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20extlinux-update&In-Reply-To=%3CCA%2BT4wDhTyEOM8_yxrfwaBH5g%3Ds8vKKim1hSWSYxWycNi30xXmQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] extlinux-update">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Dec  9 21:47:10 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002505.html">[Sorcerer-admins] extlinux-update
+</A></li>
+        <LI>Next message: <A HREF="002507.html">[Sorcerer-admins] Log level Selection blue screen when booting up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2508">[ date ]</a>
+              <a href="thread.html#2508">[ thread ]</a>
+              <a href="subject.html#2508">[ subject ]</a>
+              <a href="author.html#2508">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First,
+extlinux bootloader installed to the boot block of /boot/
+should only happen when a newer version of extlinux is installed.
+The most recently installed version of extlinux is recorded in
+/boot/extlinux/version/
+
+Secondly, extlinux differs from lilo in two important ways.
+First, lilo creates a map of the kernel and initramfs and reads
+the map from disk to know what blocks to read the kernel and initramfs.
+extlinux can read files and symbolic links from ext2 file systems
+and load the files that way which is why extlinux does not require
+re-installation to the boot block after changing the configuration file.
+
+Second, extlinux supports loading of more than one initramfs image,
+while lilo only supports one.
+Loading multiple initramfs images was a major factor for changing
+from lilo to extlinux.
+Having multiple initramfs images mitigates the duplication of data
+and therefore allows more labels for less space which is why
+the size recommendation for /boot/ dropped from 2G to 1G
+when the POSIX switched to using extlinux as the bootloader.
+
+
+/etc/init.d/extlinux is the init-script which is responsible
+for generating the extlinux configuration file.
+/etc/init.d/initramfs is the init-script which launches the init-scripts
+that are responsible for generating initramfs images.
+If running them then always run
+/etc/init.d/initramfs before /etc/init.d/extlinux
+However, they only require running during deployment.
+
+When the sorcery tools update installed software
+then the final stage of post involves running init-scripts.
+If the new initramfs images are required then they are generated.
+If a new bootloader configuration is required then it is generated.
+Both /etc/init.d/{initramfs,extlinux} also run during shutdown and reboot.
+That further guarantees that the initramfs and bootloader configuration
+should both be proper prior to the following boot.
+
+Generating the bootloader configuration file and generating
+the initramfs images is a trivial task unworthy of a SA's attention.
+Therefore, such actions happen automatically,
+because it is a computer.
+The computer serves the SA and user.
+The SA is not to serve the computer typically beyond
+what is required to maintain desired software manifest,
+selecting when to update installed software,
+configuring installed software,
+and detecting and replacing faulty hardware.
+In many instances default configuration files work fine.
+So unless deploying a server what is expected from the SA
+is rather minimal post deployment.
+
+Do not all POSIX automate trivial tasks?
+After we complete deployment we purty much sit back
+and watch our computers drive along in auto pilot.
+However, instances of interaction exist.
+
+If important software fails to moil
+then it is something the SA should investigate.
+Backups should be done prior to updates.
+Updates should be done on a test computer
+or test root file system first.
+All root file systems should be updated before rebooting.
+Always update /+/base/ last.
+If desired for a computer with significant uptime
+then all non /+/base/ root file systems can be updated
+more frequently than /+/base/
+All root file systems should be updated at least quarterly.
+A root file system that goes 6 months to a year without an update
+is not expected to properly update and will probably require
+SA intervention.
+
+New Deployment Images, i.e. the iso9660 images,
+are provided every 6 months to a year.
+Downloading is recommended.
+For deploying new computers using current DI are mandatory!
+The SA can also deploy from DIR, Deployment Image Rescue,
+which are USB SSD that the SA crafts from the /+/base/
+of a deployed computer.
+
+Most pre-compiled binary based POSIX, at least traditionally
+if not still currently, require a complete redeployment
+from new Deployment Images every other year.
+That was always cause for headache.
+Therefore, redeployment is not required with this POSIX.
+Typical deployments often exceed 2 years,
+for as long as the computer is still fit for the role.
+However, the catch is that updating must happen
+as rarely as quarterly.
+Root file systems neglected for 6 months might not smoothly transition.
+A considerable amount can change with this POSIX
+in merely the span of 6 months.
+
+As I previously mentioned; the prejudice of a source based POSIX
+requiring micromanagement and extreme effort from a SA
+is merely a prejudice and not grounded in fact.
+SAs of this POSIX often cite it as preferred because,
+&quot;it is fun,&quot; or because it requires minimal time from a SA.
+The SA is often the most capable person in the office
+and therefore might wear many hats to include web designer,
+CGI author, DBA, or whatever else is lacking.
+That tends to be because whatever lore the SA is lacking
+can be quickly acquired from the Internet.
+Consequently, the SA can not afford
+to be indefinitely troubled by the tedium of micromanagement;
+even if the capability for such micromanagement is provided.
+
+Deployment probably imparts the impression
+that the SA's tasks will be endless.
+In fact far from it.
+Be certain to explore the help pages
+for each augur parameter by utilizing:
+# au help $PARAMETER
+augur is a crude tool, but immensely powerful
+when wielded by a skilled SA that can chain commands together.
+Here is a classic example:
+
+Space running low on a root file system
+and want to decide what should go?
+
+# au lone
+
+Hmm, but if there is much on the list
+then can it be ordered by size?
+
+# au lone | au size | sort -g
+
+What about having that in a file to examine?
+
+# au lone | au size | sort -g | tee /tmp/lone-piggy.txt
+
+And the one listed at the bottom is the fattest hog of them all.
+On my root file system for entertainment
+the county fair #1 fattest hog prize goes speed-dreams
+2267510671      speed-dreams
+
+I can not actually say if it is worth 2G of space.
+It does not seem that fancy.
+But it consumes the space never the less.
+That root file system looks like:
+
+# df /
+Filesystem     1K-blocks     Used Available Use% Mounted on
+-               30832636 17704084  11539304  61% /
+
+Therefore, plenty of space yet remains.
+I can keep the prize winning hog for now.
+But something in the future might require slaughter.
+
+If I was feeling bold I could execute a command such as:
+
+# au lone | sed 's:^:reap/mull/:' | au queue
+
+Then that queues the output from au lone.
+And I could view the queue with
+# au queue | grep reap
+Anything I want to spare I can remove from the queue with
+# au queue -$SPELL
+where $SPELL is the name of the spell
+and it is prefixed with a hyphen.
+
+I can specify the precise queue to remove the spell from
+or allow the tools to remove the spell from every queue.
+
+Then when satisfied with the queue I can execute
+# au begin
+
+Understanding queue manipulation is essential.
+Each queue is owned by a utility.
+Each task is delegated to a specific utility.
+Each utility is allowed to execute at specific times.
+This allows near optimal utilization of system resources.
+
+The queues themselves have a physical location on disk
+/aux/run/queue/
+The directory hierarchy for queues is exactly
+as the help page suggests.
+queues and sub-queues are directories.
+That which occupies a queue are files.
+In some queues the files are empty.
+In other queues the files contain PIDs.
+And a file in a queue that has a future time stamp
+is ignored until the time stamp is no longer in the future.
+Therefore, the utilities can be instructed
+to delay processing of queues until the computer
+is no longer busy performing a primary role
+such as a workstation.
+
+Acquire the lore of BASH scripting
+and the lore of augur
+and the task of administration becomes simple.
+I dare say that it might even be boring
+if we did not have other aspects to be excited about
+such as having multiple root file systems to admin.
+Something entertaining always lurks just over the horizon.
+
+Most workstations could do fine with just 2 root file systems.
+A SA's workstation will probably have more.
+Servers may have 2 or more root file systems depending
+upon the amount of roles the server preforms.
+So even while the limit is approximately 60
+maybe nobody has actually deployed a computer
+with 60 root file systems.
+GPT provides a maximum of 128 partitions.
+Carving a volume group into logical volumes
+might not encounter a limit.
+
+I realize that some people might want something
+where an unlimited amount of root file systems is supported.
+However, the main problem with that is eventually
+system resources could be divided too thin.
+No doubt such monstrous computers exist
+with massive amounts of RAM, disk space,
+and even more than 64 processors.
+However, it was not part of my original design
+to support monstrous computing power.
+The amount of Linux virtual consoles is limited to 64
+unless the Linux source is modified and re-compiled.
+Therefore, I went with 64.
+However, with implementation changes involving networking
+then the possibility for more root file systems becomes.
+reboot, shutdown, and booting will require longer.
+Bugs in Linux could become intolerably annoying.
+So it might not be ideal.
+
+mrgetty is launched by the shift alt a key sequence.
+Because it can be used to log into nearly any root file system
+and the rootfs; that eliminates all reason to have each
+root file system run it's own getty on a virtual console.
+And so that is one limitation that was already surmounted.
+
+The last thing to say about multi-root is why.
+The answer is that a single Linux kernel can manage
+resource provisioning for multiple roots far better
+than any type of memory ballooning system involving
+para-virtual and hardware virtual machines.
+Or succinctly stated superior performance
+and resource allocation is provided by multi-root.
+
+Pre-compiled binary package based POSIX
+are ideal for virtual computing especially the
+ones which boot using a single small initramfs
+or an initramfs image compiled into the Linux kernel.
+However, those still do not make for more efficient
+resource utilization than a multi-root source based POSIX
+when comparing an equal amount of virtual computers
+with an equal amount of root file systems.
+And since we can do something different in this respect
+we dove into this niche because it is simply too useful to omit.
+
+multi-root has been available to every POSIX for about 1 year.
+A few that pioneered the methods have probably
+provided multi-root like capabilities for nearly 2 years.
+It primarily depends upon the unshared namespace capability
+that the Linux kernel provides which is a relatively new functionality.
+I am not expecting all POSIX to become multi-root.
+Many SAs loathe the additional complexity
+and the traditions for files within /etc/
+lack consideration for many of the aspects we do
+which are considered essential for multi-root
+which is to retain and utilize the rootfs as
+if it were the host operating system or a hyper visor.
+
+Ah, but that is probably too much information.
+Remember to explore augur.
+The POSIX will do almost everything for itself,
+except update itself.
+It used to do that also,
+but the code was torn out because
+headless SAs are an abomination.  :)
+
+
+On Sun, Dec 8, 2013 at 1:42 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Yes, but you also have to point that command at the directory where
+</I>&gt;<i> your boot partition is mounted.
+</I>&gt;<i>
+</I>&gt;<i> extlinux --update /boot
+</I>&gt;<i>
+</I>&gt;<i> However, Sorcery runs this command when it re-creates the boot menu.
+</I>&gt;<i>
+</I>&gt;<i> On 8 December 2013 15:38, chessmaster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; I read the man pages of extlinux and saw &quot;extlinux --update&quot;. Thats the
+</I>&gt;<i> same
+</I>&gt;<i> &gt; command to install the boot loader during install. Thanks!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Dec 8, 2013 2:34 PM, &quot;Evert Vorster&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; /etc/init.d/initramfs force-reload
+</I>&gt;<i> &gt;&gt; /etc/init.d/extlinux force-reload
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I don't think the sequence matters much, but extlinux builds the boot
+</I>&gt;<i> &gt;&gt; bit, and the initramfs one rebuilds what is loaded after boot.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On 8 December 2013 13:31, chessmaster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt;  I haven't updated my kernel yet as I never used extlinux before. But,
+</I>&gt;<i> &gt;&gt; &gt; after
+</I>&gt;<i> &gt;&gt; &gt; the kernel is update does the SA have to run the &quot;extlinux --update&quot;
+</I>&gt;<i> &gt;&gt; &gt; command
+</I>&gt;<i> &gt;&gt; &gt; to update the configuration file to boot the new kernel?
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; Evert Vorster
+</I>&gt;<i> &gt;&gt; Chief Observer
+</I>&gt;<i> &gt;&gt; WG Cook
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Evert Vorster
+</I>&gt;<i> Chief Observer
+</I>&gt;<i> WG Cook
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131209/570e5f31/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131209/570e5f31/attachment-0001.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002505.html">[Sorcerer-admins] extlinux-update
+</A></li>
+	<LI>Next message: <A HREF="002507.html">[Sorcerer-admins] Log level Selection blue screen when booting up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2508">[ date ]</a>
+              <a href="thread.html#2508">[ thread ]</a>
+              <a href="subject.html#2508">[ subject ]</a>
+              <a href="author.html#2508">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

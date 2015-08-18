@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3C201010261337.44183.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001966.html">
+   <LINK REL="Next"  HREF="001973.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3C201010261337.44183.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">merka at highsphere.net
+       </A><BR>
+    <I>Tue Oct 26 19:37:44 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001966.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+        <LI>Next message: <A HREF="001973.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1968">[ date ]</a>
+              <a href="thread.html#1968">[ thread ]</a>
+              <a href="subject.html#1968">[ subject ]</a>
+              <a href="author.html#1968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tuesday, October 26, 2010, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+&gt;<i> Regarding init-scripts, i am asking how we are handling that point that
+</I>&gt;<i> almost all daemons has some sort of options required when they are
+</I>&gt;<i> started, i am right?
+</I>
+Some of the init.d scripts specify a CONF option which often points to /etc/* 
+configuration file. This works fine **if** the daemon can read configuration 
+from a config file.
+
+I believe there is at least one service where the options are sourced from a 
+config file, i.e. the daemon does not read the configuration options. But I 
+can't find it at the moment.
+
+Maybe there should be a standard variable, e.g. 
+LOCAL_OPTS=/etc/daemon.local.conf, which would be then sourced for additional 
+service start up options.
+
+J.
+ 
+&gt;<i> 
+</I>&gt;<i> It's almost always needed to modify eg. httpd (apache) startup parameters,
+</I>&gt;<i> eg. define -D&lt;variable&gt;, etc, SSL startup options, etc. How do we
+</I>&gt;<i> customize them if we cant modify init-scripts.
+</I>&gt;<i> 
+</I>&gt;<i> If we cant touch init-scripts directly then IMHO we need some (other) way
+</I>&gt;<i> to easily and fast to modify those startup options. Usually Red Hat
+</I>&gt;<i> related has /etc/sysconfig/&lt;daemon&gt; (or similar) file and init-scripts
+</I>&gt;<i> reads options from there, this sort of system is used in other distros
+</I>&gt;<i> too.
+</I>&gt;<i> 
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>    Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001966.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+	<LI>Next message: <A HREF="001973.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1968">[ date ]</a>
+              <a href="thread.html#1968">[ thread ]</a>
+              <a href="subject.html#1968">[ subject ]</a>
+              <a href="author.html#1968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

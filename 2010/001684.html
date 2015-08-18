@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTikrCzLn3t75jEeBxPITHGhkpHkva2I_7Uu8eQGn%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001683.html">
+   <LINK REL="Next"  HREF="001648.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTikrCzLn3t75jEeBxPITHGhkpHkva2I_7Uu8eQGn%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jun 27 05:34:09 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001683.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001648.html">[Sorcerer-admins] svn ending with SIGTERM (15)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1684">[ date ]</a>
+              <a href="thread.html#1684">[ thread ]</a>
+              <a href="subject.html#1684">[ subject ]</a>
+              <a href="author.html#1684">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm...
+Anything started by /etc/init.d/networks
+is probably within it's session or maybe not.
+There might not be a session type solution
+to this problem unless dhcpcd is started using
+a wrapper that writes it's PID to a file.
+If dhcpcd is started by it's own init-script
+instead of through /etc/init.d/networks
+then that seems possible.
+Or the template or library used by the template
+used to invoke dhcpcd should use the wrapper
+script provided by init-functions to grab the PID
+of dhcpcd, assuming dhcpcd does not write it's own PID file.
+The PID will probably also be the SID
+and is worth keeping if intending to treat it as a SID.
+
+However, not all the time should dhcpcd be started first.
+For example, in order to use dhcpcd over wireless
+first the wireless must be configured along with
+the key or other program such as wpa_supplicant.
+Perhaps in some cases wpa_supplicant can probably
+invoke dhcpcd as needed depending upon when
+it changes and/or reconnects to a base.
+
+Networking is a bit of a complicated subject since
+there is only a nearly infinite amount of right ways
+to configure it.
+
+I am still of the opinion that networking configuration
+should be improved on Sorcerer.
+Yet I have no clear idea of what an improved
+state should look like or how to achieve it.
+Technically, networking configuration can even be
+configured to work hot-pluggable with udev
+so that networks can be configured when a device
+is present at boot or plugged/unplugged during running.
+
+Networking devices can be configured through
+wireless tools, partially, statically configured by ip,
+dynamically configured by dhcp, and/or a combination
+of static/dynamic configuration by wpa_supplicant,
+and/or some combination of the above initiated by udev,
+and/or started and controlled by init-scripts.
+
+I am a bit bewildered.
+Maybe udev is the way to go,
+however not all networking devices are hot-pluggable.
+And then udev might hand off to wireless tools,
+ip, or dhcp.
+But the problem with udev is that udev is runlevel insensitive.
+Maybe the scripts can be designed to be aware of the runlevel.
+Yet definitely, some runlevels are not for networking.
+So in some sense having networking controlled by runlevel
+might make sense.
+However, in some cases, such as a box with /usr or /
+mounted from NFS, networking must be started during
+sysinit.
+Should networking start during sysinit?
+Maybe it does normally, or sometimes, I do not know.
+
+Obviously, having networking set up as soon as possible
+enables the best possibility of being able to rescue a box.
+Not that outside connections are permitted in,
+but the SA on a box that can only boot initramfs
+might be able to scp some useful software into
+the broke box from some other box.
+If I did not have a method
+of continuation of booting should udev fail
+then a SA might have to scp in an older version
+of a udev archive from a different box
+in order to continue booting.
+And since networking configuration does not
+have to be handled by udev
+then perhaps better if udev is not involved.
+That way if udev is flaking or the rules are broke
+then networking can be started directly or by an init-script.
+
+If all that read as a bit confusing
+then it successfully conveys my confusion
+about the best way to handle network configuration.
+
+I want to change/improve networking.
+But at the same time I am reluctant to change it
+without realizing what is better.
+I recognize that udev can be part of the network
+configuration process,
+yet I have entirely avoided writing any rules
+or scripts to make that possible.
+
+With the exception of networking
+almost everything else about booting a box
+seems very obvious in both how to accomplish
+and when to accomplish the task.
+
+Possibly if networking is divided separate init-scripts
+that execute in an order such as:
+wireless configuration;
+tunnel configuration;
+wpa_supplicant configuration;
+PPPOE configuration;
+static configuration;
+dynamic configuration.
+
+Then, perhaps that might just work.
+There is probably more to networking
+than I know about.
+But in general that order above seems correct.
+
+Does have a drawback...
+If the SA unplugs and plugins the wireless network device
+then the SA must run again the wireless configuration
+and then the static/dynamic and/or wpa_supplicant configuration
+Basically, everything except an always plugged in
+wired network device might require more than
+one init-script to be run in proper order
+in order to set up networking.
+
+Is trying to create a properly ordered division of labor
+with individual init-scripts as suggested above
+better than having a single /etc/init.d/networks
+that can start networking based upon templates
+that a SA fills out?
+
+What about the potential loss of convenience
+of having a networking device configured automatically
+if it is unplugged and then replugged?
+
+The current implementation of networking configuration
+on Sorcerer is far less than what it could be.
+But it could also be more of a pain.
+
+
+On Sat, Jun 26, 2010 at 3:18 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> dhcpcd dors try once then if succeed fork to background
+</I>&gt;<i>
+</I>&gt;<i> by the way maybe dhcp spell shall be improved, because it compile both the
+</I>&gt;<i> server and the client.... however the client don't work on all my networks
+</I>&gt;<i> and I need the server when the box is used as gateway (ie most of the time)
+</I>&gt;<i> but by default the network scripts are trying first dhclient.... maybe
+</I>&gt;<i> another option in the configuration file? something like
+</I>&gt;<i> DHCLIENT=/sbin/dhcpcd
+</I>&gt;<i>
+</I>&gt;<i> maybe there shall be another protection :
+</I>&gt;<i> at the begin of the network start, setsid a network start session, at the
+</I>&gt;<i> end of the network start session script, check if there are still process
+</I>&gt;<i> sharing the SID, if yes wait for them to finish, if no then simply exit....
+</I>&gt;<i>
+</I>&gt;<i> like this we protect the network scripts from orphaning processes
+</I>&gt;<i> what do you think of that?
+</I>&gt;<i> thanks and regards
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001683.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001648.html">[Sorcerer-admins] svn ending with SIGTERM (15)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1684">[ date ]</a>
+              <a href="thread.html#1684">[ thread ]</a>
+              <a href="subject.html#1684">[ subject ]</a>
+              <a href="author.html#1684">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,532 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Manual?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Manual%3F&In-Reply-To=%3CAANLkTikH%2BymQuA8GzPC48i1ujbsq55Zk8%2BmY6jSWC5LG%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001897.html">
+   <LINK REL="Next"  HREF="001904.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Manual?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Manual%3F&In-Reply-To=%3CAANLkTikH%2BymQuA8GzPC48i1ujbsq55Zk8%2BmY6jSWC5LG%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Manual?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Aug 29 05:47:09 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001897.html">[Sorcerer-admins] Manual?
+</A></li>
+        <LI>Next message: <A HREF="001904.html">[Sorcerer-admins] Manual?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1903">[ date ]</a>
+              <a href="thread.html#1903">[ thread ]</a>
+              <a href="subject.html#1903">[ subject ]</a>
+              <a href="author.html#1903">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It is not so scary.
+
+<A HREF="http://www.tldp.org">http://www.tldp.org</A>
+
+Just doing something like re-configuring Linux-PAM
+could be a scary daunting chore if we did not have
+HowTos to help explain it.
+And there is probably also might documentation,
+manual pages, and info pages to read as installed
+by most software projects on a Sorcerer box.
+
+Likewise there is interesting documentation in directories such as:
+
+/usr/src/linux/Documentation
+/usr/doc
+/usr/share/doc
+
+Sorcerer, like most any distro, is comprised of software
+from many different projects and people.
+And their software is constantly updating.
+Therefore, the only way to gain the know about
+the current situation of programs such as bind, udev, php, C
+is to visit the software authors home pages and
+read the documentation provided there.
+That is why spells usually contain a homepage.
+
+# augur homepage gcc-core
+<A HREF="http://gcc.gnu.org">http://gcc.gnu.org</A>
+
+Eventually, from clicking hyperlinks from there
+one should be able to arrive at documentation
+that is accurate for the version of gcc they want to use.
+gcc's C and C++ compiler changes syntax when it updates.
+Often this causes problems and sources that used to compile
+no longer compile because they contain deprecated syntax
+that is no longer supported or that gcc refuses to understand
+even when older versions of gcc could compile it.
+
+The guidelines for how the distribution should keep software
+glued together is something different.
+
+<A HREF="http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/book1.html">http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/book1.html</A>
+
+That should provide a good read and help someone
+gain familiarity about what to expect.
+Please keep in mind that the parts that pertain only
+to pre-compiled binary based distros do not pertain to Sorcerer.
+There are NO packages and NO package manager in Sorcerer.
+
+The way software is loaded onto boxes
+and the choice of directories is not entirely random,
+however is often too random for my liking.  :)
+
+<A HREF="http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/">http://tldp.org/LDP/Linux-Filesystem-Hierarchy/html/</A>
+
+This is what is followed for Sorcerer.
+It is also why I become pissy at spell writers
+that allow their spell installed software to
+go into /usr/local/
+
+The /lib/ /lib64/ thing on x86_64 is entirely up
+to software authors to follow or not to follow.
+There is no attempt to force the issue by spell authors.
+
+Of course there are a few things installed by Sorcerer
+that are Sorcerer specific.
+And usually documentation for it appears very close
+to where one would expect to look.
+
+/etc/networks.d/templates/README
+/etc/init.d/README
+
+# augur help
+# augur help progress
+
+The last part two lines demonstrate the augur help system.
+There is both a generic one line per command help screen.
+However, asking for help on a specific augur command
+can sometimes provide pages more of additional information.
+
+Most of Sorcerer's documentation is
+where the SA would expect to find it.
+The docs for augur are part of the program.
+Makes it easier to keep current.
+No searching the WWW to find it.
+However, the docs for software that
+is maintained outside of Sorcerer
+is found usually at or or near the respective
+software author's homepage.
+
+Anyone running a Sorcerer box sees
+how often installed software is updated.
+By the time anyone could manually concatenate
+all the documentation information
+such information would gradually becoming obsolete.
+That can often be the case with docs available at
+The Linux Documentation Project, <A HREF="http://tldp.org">http://tldp.org</A>
+The docs there tend to be verbose, useful,
+and provide a quick start at understanding.
+However, to totally understand and be able
+to effectively wield some software often
+requires visiting the software authors' project page
+to find current documentation.
+
+Some of those most useful utilities on a Sorcerer box
+are bash, man, grep, sed, findutils,
+and everything installed by coreutils.
+And all that awesome software has manual pages.
+
+$ man bash
+
+The bash manual page is long, informative,
+and essential for understanding how to gain
+the most when writing BASH shell scripts.
+The other software mentioned,
+such as: sed; grep; find; sort; uniq; and xargs,
+become very useful in shell scripts for
+processing data quickly through pipes.
+
+I used to teach Unix System Administration,
+and I will tell you that Sorcerer does not teach
+nor does it provide documentation that will
+teach someone to become a Unix SA.
+However, I can tell you the most important information,
+about being a SA.
+
+First, SA must be tenacious.
+Second, SA must know how to learn what is needed to be known.
+
+So what did I do for my students?
+Mostly, I provided them with URLs and told them to go read,
+and I provided them with tasks to accomplish.
+
+POSIX, Portable Operating System for Unix,
+is what we use.
+That enables us to compile sources intended
+to be run on UNIX, yet instead run them on our
+boxes that use a linux kernel and glibc.
+Much source today contains glibc-ism and gcc-ism
+that make successful compilation a chore on anything that differs.
+
+I encounter that sort of problem.
+Often software that compiles fine on a glibc based installation
+will not compile on a uClibc based installation.
+That is one of the reasons I am not sharing my uClibc port of Sorcerer.
+Writing all the required patch files to make software work
+is such a chore for uClibc.
+
+However, my point in discussing that is to show
+that POSIX, and especially, glibc + gcc + linux
+implementations are becoming more common than UNIX.
+So that said you can rest easily knowing that
+the choice of glibc + gcc + linux is a good combination,
+and yes there are other combinations available.
+
+Wanting documentation is great.
+Knowing where to find it is even better.
+Knowing what Sorcerer is or what any distribution is
+helps explain why not much documentation need be
+provided except for that which describes the init-system
+and the package or source management tools.
+
+If a distribution were a toy it might most likely be something
+like a building block set, like leggos for example.
+The individual software components are the building blocks.
+The distribution helps the SA snap together software
+in an arrangement that makes sense
+and should be durable and not topple over.
+
+# augur installed
+
+A typical box will have 300 to 1000 spell installed software projects.
+My workstation has nearly 600.
+Locating and reading the documentation for all that installed software
+would considerable advance a person's understanding of their box.
+Most already have installed manual + info pages + docs.
+To learn more visit the homepage with a web browser.
+Homepages are easy to discover:
+
+# augur homepage bind
+<A HREF="http://www.isc.org/products/BIND">http://www.isc.org/products/BIND</A>
+
+The distribution specific tool for Sorcerer is called sorcery
+and the catalog for software available for immediate installation
+is called the grimoire.
+grimoire means book written in Latin,
+but it really is not that difficult to read.
+Spell format is mostly intuitive,
+but there are over 3000+ examples to take a look at.
+
+The major program tools for sorcery are:
+augur; cast; dispel; leech; sorcery.
+Rarely does a SA invoke leech,
+but leech is for downloading
+what is necessary for installing software.
+
+augur is an informational tool.
+cast installs software
+dispel makes installed software go away
+and sorcery provides some nice menus
+for configuration of sorcery features,
+many of which can be merely toggled on or off.
+
+The choice of words for sorcery tools might seem odd,
+but they make perfect sense if one looks the word up
+in a dictionary.
+The overall theme of the distro is magic,
+because we wish our boxes did work easily like magic,
+but of course they require effort instead.
+However, the magical theme should help make
+remembering the names of the tools easier for
+English speakers while also making the names
+of such tools unique.
+Having the names of the tools collide with
+the names of other software which could be installed
+would be problematic.
+
+There is a program called moc, music on console.
+And originally the software wrote and named the
+command line utility for moc, moc.
+Makes sense, yes?
+But he did not know that KDE was already using
+moc and installing a moc program.
+So having both moc and kde installed concurrently was problematic.
+Now moc installs it's program with a slightly different name.
+
+This is important because most software is run
+without specifying exactly where it is installed in the filesystem.
+Instead the environment variable PATH is used to describe
+the directories where executable programs should be searched
+when running programs.
+Therefore, two moc could be installed in separate directories.
+But since moc would normally be run via the PATH
+knowing how to when to set which directory first
+in the PATH would be a PAIN.  :)
+And no PAIN is not an environment variable.
+
+Lastly, Sorcerer contrasts with many distros in
+deciding what type of SA to appeal to.
+Some distros are very fluffy with many menus
+and interfaces and stuff to guide SAs into doing
+things a certain way and/or asking the SA for
+info and then doing something with the info
+without really telling the SA what is happening.
+That is why we have SAs that do not know how
+to do stuff like set up networking
+unless there is some ultra fluffy bunny slipper front-end
+program to help them &quot;make it so.&quot;
+
+Sorcerer is not a distro designed to attract inexperienced SAs.
+Such distros are like being trapped
+in a installation menu that never ends.
+Not everyone wants that stuffy experience.
+
+Instead Sorcerer is designed for the experienced SA
+that wants to have software compiled and installed exactly
+the way that they decide is essential and proper.
+
+Yes, the Install/Rescue disk is a pre-packages starter kit,
+but after that each Sorcerer box can become their own universe.
+With few exceptions all the installed software is compiled
+on the box and therefore can be modified, configured,
+and customized by the SA.
+To a reasonable extent Sorcerer boxes are self-healing
+and adjust automatically to the transition of newer libraries
+without having installed software come unglued and
+refusing to run.
+
+Sometimes I say that Sorcerer is like using
+&quot;Linux from Scratch,&quot; but with having your own junior SA
+to order around to do mundane stuff.
+However, Sorcerer is way more advanced that that.
+I conjecture that a SA who tries the &quot;Linux from Scratch&quot; experience
+will already have obsolete software installed before
+completing the installation of all the software that is desired.
+Probably completing a &quot;Linux from Scratch&quot; book
+could require a week's worth of serious effort, or perhaps a month.
+However, in contrast to Sorcerer,
+following the &quot;Linux from Scratch,&quot; experience will
+grant a SA a very good understanding of how installed
+software fits together and works together
+and exactly what would be required for a minimally useful
+loadout of installed software.
+
+<A HREF="http://www.linuxfromscratch.org/">http://www.linuxfromscratch.org/</A>
+
+Although SAs report that they learned lots with Sorcerer,
+statements such as,
+&quot;I learned more using Sorcerer in 2 months
+than I learned using XYZ distro for 2 years!&quot;
+Such SAs would fall off their chair by what
+would be learned by doing the &quot;Linux from Scratch&quot; experience.
+It is much like a workbook with some explanation.
+To progress meaningfully and gain skill and knowledge
+the SA will type all of the commands and await the outcomes.
+It is not like Sorcerer where a SA types
+# cast bash
+And then bash source is downloaded, configured, compiled, installed.
+
+With &quot;Linux From Scratch&quot;
+the SA will download software, unarchive tarballs,
+configure sources, make, and make install them
+write init-scripts and configuration files, etc...
+Forgo the awesome comfortable easy experience of Sorcerer
+and try the raw, slice and dice, dirt under the fingernails,
+sweat pouring down the neck experience of &quot;Linux From Scratch.&quot;
+That will make a SA out of a SA.  *lol*
+And it will require much tenacity and effort to complete.
+
+I conjecture that if someone read the HowTos
+at the Linux Documentation Project, all installed manual pages,
+info pages, and installed documentation, and remote documentation
+available at or near a software authors homepage,
+and did Linux From Scratch
+then that would make a SA out of anyone with sufficient tenacity.
+
+Although I have not checked in more than a decade
+some book stores used to sell somewhat thick and expensive
+books that would supposedly teach someone how to be a SA.
+But it is basically concatenated documentation about software
+projects that would commonly be installed on a distro.
+It provides a nut-shell type experience.
+But any book like that depreciates faster than a new car.
+It is 5% to 10% incorrect to being with
+and after a year or two becomes about 20% to 30% obsolete.
+I discourage learning from those types of books
+when one has an actual awesome Sorcerer box to learn from.
+Nothing nutshell book is better than learning
+about the actual software installed and available for use.
+
+To be perfectly straight and honest about that
+I wasted plenty of money in the 80s buying expensive
+books on programming languages and by buying
+Compilers from Borland, and Assemblers from Microsoft.
+The amazing amount of information provided for free
+on the world wide web obsoletes expensive book learning
+for the purpose of gaining IT ability and knowledge.
+The amazing amount of free software and free docs
+is as mind blowing as a linux based POSIX.
+Sure even in the 80s we could see the foundation
+of free software growing, but it would have been
+difficult for almost anyone in the 80s
+to imagine that it would have turned out this awesome!
+The proof of that is shown by how many people are
+still ignorant of POSIX and
+are using commercial operating systems.
+They still do not know.
+
+Well, sorry for being verbose there.
+Sorcerer is basically a distro for SAs that know.
+Since it lacks fluff SAs that do not know wonder how.
+However, for example, all the same command line
+utilities that would be used network configuration on
+some other distro are available also on Sorcerer.
+Sorcerer merely lacks a distribution specific fluffy
+bunny slipper menu to gently ask SA questions
+and then automatically do all the work for setting up networking.
+
+However, since each Sorcerer box is intended to be like
+an individual universe at the command of a SA
+the sorcery tools might be more powerful and
+have more functionality than a SA will fully use.
+
+So Sorcerer is power for the SA
+and no fluffy bunny slippers for wimps.
+*chuckle*
+
+# augur forget etc; cast etc
+
+That provides a little bit of fluffy comfort mostly
+for those that might not know what files are
+important in /etc/
+And that is just about all the fluffiness provided.
+However, KDE, GNOME, and some of the
+other software that can be installed have
+their own fluffed out configuration menus
+that might be useful for configuring things
+on a Sorcerer box.
+I do not know exactly.
+I tend to edit files in /etc/ using nano.
+That is my preference.
+
+Oh lastly, I want to add in the information that....
+Sorcerer boxes do not tend to brand nor do
+any unnecessary modification to software before installation.
+&gt;<i>From remote examination a Sorcerer box can not be easily identified,
+</I>except that it would appear to be running a linux 2.6 kernel.
+The constantly updating and changing software,
+combined with no branding,
+and combined with SA implemented stealth techniques
+can make Sorcerer boxes both a daunting and discouraging
+target for attacks.
+It might not be a whole lot of extra protection,
+but sometimes it might just be enough.
+
+It is not coincidental or by chance that Sorcerer is a stealthy distribution.
+Although we make no over-the-top attempt at it
+providing vanilla software tends to be sufficient
+in contrast to the excessive branding some distros do.
+Typically, senior level SAs might not want others to be able
+to know or identify the hardware and/or software of a server.
+In the past bind running on TLD name servers was modified
+to not provide information about which version of bind it was.
+Basically, the fewer clues provided from running services
+then the less likely successful conjectures can be made about
+installed software, versions, vulnerabilities, and choice of attack.
+
+I almost never discuss that and take it entirely for granted.
+I am not promoting Sorcerer for glory and recognition.
+I am trying to provide a distro that senior level SAs
+would want to use and contribute to.
+I would not want to run some gaudy shitty distro
+that makes me pay for security updates or
+so I have to manually check a directory for RPMs and
+remember if I downloaded and installed the updated RPMs.
+And then by the time the box is finally good to go
+and there are no more runtime errors and security vulnerabilities,
+the distro maintainers announce that installed disto version is
+obsolete, no longer maintained, and I must buy new
+installation CDs to entirely re-install a deployed box
+instead of updating it!
+
+Sure Sorcerer requires a SA actually have to read manual pages
+and browse the world wide web searching for documentation,
+but we do not give SAs the rash and itch that comes from using
+a pre-compiled binary based distros.
+
+In my opinion distros are a matter of preference.
+Some distros are what one would see if one wanted
+to rape the wallets of SAs while providing mostly free software.
+Others are the type of distro that appeals to experienced SAs
+who want current, free software, with no fees,
+with no flaming banners advertising what their box is,
+and without a pathetic complete re-installation every year or two.
+
+To fully appreciate Sorcerer a SA should have a few years
+of running pre-compiled binary based distros and some
+experience with &quot;Linux From Scratch.&quot;
+Then one can see that while Sorcerer lacks fluff
+it does provide excessive convenience and power
+that is lacking from both the paid experience
+and the raw experience.
+There might be not more than a handful of SAs
+that began their POSIX experience with Sorcerer and enjoyed it.
+It is far from impossible, but it is like a 4 year old person
+learning to solo ride on a 10 speed bicycle that lacks training wheels.
+
+
+
+On Sat, Aug 28, 2010 at 2:07 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> what sort of thing are you seeking in a manual? &#160;It's a generic linux
+</I>&gt;<i> that relies mostly on documentation of original packages.
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Aug 28, 2010 at 12:48 PM, Nathan Allen
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_jeffrey_allen at yahoo.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Can someone please send me the manual for Sorcerer?
+</I>&gt;&gt;<i> Thanks.
+</I>&gt;&gt;<i> Nathan Jeffrey Allen.
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Nathan_Jeffrey_Allen at yahoo.com</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001897.html">[Sorcerer-admins] Manual?
+</A></li>
+	<LI>Next message: <A HREF="001904.html">[Sorcerer-admins] Manual?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1903">[ date ]</a>
+              <a href="thread.html#1903">[ thread ]</a>
+              <a href="subject.html#1903">[ subject ]</a>
+              <a href="author.html#1903">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

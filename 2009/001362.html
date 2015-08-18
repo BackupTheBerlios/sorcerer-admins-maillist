@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] redland, kdebase-runtime-v4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20redland%2C%20kdebase-runtime-v4&In-Reply-To=%3C596b75860911152131n42de2ad7l886b4ba10f6e83cb%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001361.html">
+   <LINK REL="Next"  HREF="001363.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] redland, kdebase-runtime-v4</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20redland%2C%20kdebase-runtime-v4&In-Reply-To=%3C596b75860911152131n42de2ad7l886b4ba10f6e83cb%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] redland, kdebase-runtime-v4">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Nov 16 06:31:51 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001361.html">[Sorcerer-admins] redland, kdebase-runtime-v4
+</A></li>
+        <LI>Next message: <A HREF="001363.html">[Sorcerer-admins] redland, kdebase-runtime-v4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1362">[ date ]</a>
+              <a href="thread.html#1362">[ thread ]</a>
+              <a href="subject.html#1362">[ subject ]</a>
+              <a href="author.html#1362">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># augur snapshot | grep &quot;redland\|soprano\|kdebase-runtime-v4&quot;
+kdebase-runtime-v4             4.3.3
+redland                        1.0.9
+soprano                        2.3.1
+
+
+I will try recompiling all 3.
+At the moment it looks good.
+Could it be a problem with the installed mysql?
+I have mysql 5.1.40 installed.
+
+
+On Sun, Nov 15, 2009 at 9:19 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Hi there.
+</I>&gt;<i>
+</I>&gt;<i> Yup, I ran into this one too.
+</I>&gt;<i>
+</I>&gt;<i> cast redland 1.0.8
+</I>&gt;<i> cast soprano
+</I>&gt;<i> cast&#160; kdebase-runtime-v4
+</I>&gt;<i>
+</I>&gt;<i> Of course, redland compiles on my system.....
+</I>&gt;<i> It might be worth it to recompile all your packages while you take a nap or
+</I>&gt;<i> so. I have seen some pretty weird errors cleared up after doing a rebuild.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Nov 16, 2009 at 3:32 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can't update kde4 because kdebase-runtime-v4 fails
+</I>&gt;&gt;<i> [ 12%] Built target sopranobackend_automoc
+</I>&gt;&gt;<i> [ 12%] Generating nie.h, nie.cpp
+</I>&gt;&gt;<i> (Soprano::Redland::BackendPlugin) creating model of type &quot;hashes&quot; with
+</I>&gt;&gt;<i> options
+</I>&gt;&gt;<i> &quot;hash-type='memory',contexts='yes'&quot;
+</I>&gt;&gt;<i> onto2vocabularyclass: symbol lookup error:
+</I>&gt;&gt;<i> /usr/lib/redland/librdf_storage_mysql.so: undefined symbol:
+</I>&gt;&gt;<i> librdf_storage_register_factory
+</I>&gt;&gt;<i> make[2]: *** [nepomuk/strigibackend/nie.h] Error 127
+</I>&gt;&gt;<i> make[1]: *** [nepomuk/strigibackend/CMakeFiles/sopranobackend.dir/all]
+</I>&gt;&gt;<i> Error 2
+</I>&gt;&gt;<i> make: *** [all] Error 2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Googling suggested that redland 1.0.9 doesn't work well for soprano but
+</I>&gt;&gt;<i> attempting to cast redland 1.0.8 ended with an error too:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> redland 1.0.8:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> gcc -DLIBRDF_INTERNAL=1 -march=native -Os -DLIBRDF_INTERNAL=1
+</I>&gt;&gt;<i> -march=native -
+</I>&gt;&gt;<i> Os -o .libs/redland-db-upgrade db_upgrade.o -Wl,-s
+</I>&gt;&gt;<i> &#160;../librdf/.libs/librdf.so
+</I>&gt;&gt;<i> ../librdf/.libs/librdf.so: undefined reference to `db_strerror'
+</I>&gt;&gt;<i> collect2: ld returned 1 exit status
+</I>&gt;&gt;<i> make[1]: *** [redland-db-upgrade] Error 1
+</I>&gt;&gt;<i> make[1]: Leaving directory `/usr/src/sorcery/redland/redland-1.0.8/utils'
+</I>&gt;&gt;<i> make: *** [all-recursive] Error 1
+</I>&gt;&gt;<i> ! Problem Detected !
+</I>&gt;&gt;<i> Source moved to /var/tmp/failed/redland
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And I haven't been able to find any solution, not even a discussion of why
+</I>&gt;&gt;<i> is
+</I>&gt;&gt;<i> this error showing up.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jan
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001361.html">[Sorcerer-admins] redland, kdebase-runtime-v4
+</A></li>
+	<LI>Next message: <A HREF="001363.html">[Sorcerer-admins] redland, kdebase-runtime-v4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1362">[ date ]</a>
+              <a href="thread.html#1362">[ thread ]</a>
+              <a href="subject.html#1362">[ subject ]</a>
+              <a href="author.html#1362">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

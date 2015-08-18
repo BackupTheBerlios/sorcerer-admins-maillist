@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] ext4?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ext4%3F&In-Reply-To=%3C596b75860902132252k7b8fd632n53d6e16d7ca1317f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000997.html">
+   <LINK REL="Next"  HREF="000999.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] ext4?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ext4%3F&In-Reply-To=%3C596b75860902132252k7b8fd632n53d6e16d7ca1317f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] ext4?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb 14 07:52:32 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000997.html">[Sorcerer-admins] ext4?
+</A></li>
+        <LI>Next message: <A HREF="000999.html">[Sorcerer-admins] ext4?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#998">[ date ]</a>
+              <a href="thread.html#998">[ thread ]</a>
+              <a href="subject.html#998">[ subject ]</a>
+              <a href="author.html#998">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If they are already loaded
+then they will show in
+
+# cat /proc/filesystems | grep ext4
+        ext4
+        ext4dev
+
+# find /lib/modules | grep ext4
+/lib/modules/2.6.27.8/kernel/fs/ext4
+/lib/modules/2.6.27.8/kernel/fs/ext4/ext4dev.ko
+/lib/modules/2.6.28.3/kernel/fs/ext4
+/lib/modules/2.6.28.3/kernel/fs/ext4/ext4.ko
+/lib/modules/2.6.27.9/kernel/fs/ext4
+/lib/modules/2.6.27.9/kernel/fs/ext4/ext4dev.ko
+
+
+
+On Fri, Feb 13, 2009 at 1:43 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> does online defragmentation feature has been implemented on ext4, I know
+</I>&gt;<i> that with those new flash drive soon this will be simply a nonsens... but
+</I>&gt;<i> well I still have a regular drive :)
+</I>&gt;<i> anyway I'll check it
+</I>&gt;<i> humm I have some issue
+</I>&gt;<i> CONFIG_EXT4DEV_FS=m
+</I>&gt;<i> CONFIG_EXT4DEV_FS_XATTR=y
+</I>&gt;<i> CONFIG_EXT4DEV_FS_POSIX_ACL=y
+</I>&gt;<i> CONFIG_EXT4DEV_FS_SECURITY=y
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> find /lib/modules/2.6.28.3/ -name &quot;*ext*&quot;
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext2
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext2/ext2.ko
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext3
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext3/ext3.ko
+</I>&gt;<i>
+</I>&gt;<i> so don't know why but on the config file provided with linux-modular (on
+</I>&gt;<i> x86_64) has support for ext4 but no modules are installed
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>&gt;<i> Scruffy Poo wrote:
+</I>&gt;<i>
+</I>&gt;<i> Been playing with ext4 in general on my laptop for the past few weeks.
+</I>&gt;<i>  Thus far, no complaints.  Speed is comparable to JFS, at the least.
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Feb 13, 2009 at 3:47 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Yes, I already included support for EXT4 in the sorcerer menu driven
+</I>&gt;<i> installer.
+</I>&gt;<i> The changes were committed to svn recently.
+</I>&gt;<i>
+</I>&gt;<i> # grep EXT4 /root/.sorcery/grimoire/linux-modular.d/*
+</I>&gt;<i>
+</I>&gt;<i> And it will show that modular EXT4 support is enabled.
+</I>&gt;<i>
+</I>&gt;<i> I will soon be making some changes to the way linux config
+</I>&gt;<i> files are kept in linux-modular.d/ so that SA can more easily
+</I>&gt;<i> select an older version for linux-modular if they want and still
+</I>&gt;<i> have a proper config file for it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The next release of the Sorcerer I/R will have full EXT4 support.
+</I>&gt;<i>
+</I>&gt;<i> Assuming that an installed kernel is new enough
+</I>&gt;<i> ext4 support should be available already on boxes.
+</I>&gt;<i> ext3 filesystems can be migrated or converted to EXT4
+</I>&gt;<i> which might have disadvantages.
+</I>&gt;<i> The one disadvantage that I already know of is
+</I>&gt;<i> being unable to revert to EXT3 again.
+</I>&gt;<i>
+</I>&gt;<i> I have not tested EXT4 yet.
+</I>&gt;<i> I have merely read a little about it.
+</I>&gt;<i> However, Evert probably has a head start using EXT4.
+</I>&gt;<i> I hope the final implementation of EXT4 was compatible
+</I>&gt;<i> with the development versions otherwise some boxes
+</I>&gt;<i> may require new filesystems to upgrade to the newer kernel.
+</I>&gt;<i>
+</I>&gt;<i> The reason I did not include EXT4 support in the installer
+</I>&gt;<i> was to avoid SAs the inconvenience of the possibility of
+</I>&gt;<i> it breaking when the implementation was finalized.
+</I>&gt;<i> Doing a backup and restore of filesystems
+</I>&gt;<i> is not a fun day Sunday.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Feb 12, 2009 at 2:55 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> is there any support for ext4 on sorcerer?
+</I>&gt;<i> even modular kernel seems to not build it
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000997.html">[Sorcerer-admins] ext4?
+</A></li>
+	<LI>Next message: <A HREF="000999.html">[Sorcerer-admins] ext4?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#998">[ date ]</a>
+              <a href="thread.html#998">[ thread ]</a>
+              <a href="subject.html#998">[ subject ]</a>
+              <a href="author.html#998">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

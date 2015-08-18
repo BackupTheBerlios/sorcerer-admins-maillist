@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091901v4a14a834od9d61b333881e576%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001105.html">
+   <LINK REL="Next"  HREF="001106.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091901v4a14a834od9d61b333881e576%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May 10 04:01:01 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001105.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001106.html">[Sorcerer-admins] Recent Sorcerer 20090101 install 32bit...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1111">[ date ]</a>
+              <a href="thread.html#1111">[ thread ]</a>
+              <a href="subject.html#1111">[ subject ]</a>
+              <a href="author.html#1111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good point.
+I read about that also.
+Apparently laziness is something that can be selected
+as on or off when it comes to uClibc.
+And while it does provide some benefits
+I expect it is still not as good as having
+the code directly linked in at compile time.
+Also when using uClibc with ELF libc
+we can also enjoy the benefit of laziness.
+So in a way if X is laziness
+and both glibc and uClibc's ld.so have it.
+Then it can be divided out on both sides of the equation.
+And consequently, uClibc still has the boon
+of being considerably smaller when statically linked,
+yet should have glibc commensurate start up times
+when dynamically linked.
+
+
+On Sat, May 9, 2009 at 2:14 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> you have another side that you have to take into account when making
+</I>&gt;<i> tests.... the lazyness of the ld.so.... ld.so can resolve symbols at runtime
+</I>&gt;<i> (lazy) or at loadtime (now), it can be set by an env variable if i'm correct
+</I>&gt;<i> lazy resolv is usefull if you won't likely have to resolv lot of fuctions,
+</I>&gt;<i> for example :
+</I>&gt;<i> if (choice ==1)
+</I>&gt;<i> {
+</I>&gt;<i> &#160;&#160;&#160;&#160; functionA();
+</I>&gt;<i> &#160;&#160;&#160;&#160; functionB();
+</I>&gt;<i> }
+</I>&gt;<i> else
+</I>&gt;<i> {
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160; functionC();
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160; functionD();
+</I>&gt;<i> }
+</I>&gt;<i> if we are in the case choice ==1 then resolving C and D is only a waste of
+</I>&gt;<i> time..... that's why lazy is the default, however lazy resolving has a lot
+</I>&gt;<i> overhead on runtime....
+</I>&gt;<i> I never made bench with thoses 2 resolv.... maybe it's a good idea
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001105.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001106.html">[Sorcerer-admins] Recent Sorcerer 20090101 install 32bit...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1111">[ date ]</a>
+              <a href="thread.html#1111">[ thread ]</a>
+              <a href="subject.html#1111">[ subject ]</a>
+              <a href="author.html#1111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

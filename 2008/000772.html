@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/lib explained, please read.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/lib%20explained%2C%20please%20read.&In-Reply-To=%3C596b75860809092058n5f609581p9f2802631341fe5f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000771.html">
+   <LINK REL="Next"  HREF="000773.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/lib explained, please read.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/lib%20explained%2C%20please%20read.&In-Reply-To=%3C596b75860809092058n5f609581p9f2802631341fe5f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/lib explained, please read.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep 10 05:58:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000771.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+        <LI>Next message: <A HREF="000773.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#772">[ date ]</a>
+              <a href="thread.html#772">[ thread ]</a>
+              <a href="subject.html#772">[ subject ]</a>
+              <a href="author.html#772">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Some changes are scheduled for /usr/lib and /usr/lib64 please read.
+
+Looked inside of /usr/lib recently?
+Looks like a garbage can does it not?
+Really, is that not too much content for a single directory?
+What is all that stuff?
+
+There are directories.
+There are symbolic links to ELF libraries
+There are ELF libraries with .so as part of their filename.
+There are static link libraries ending in .a
+There are libtool archive files ending with .la
+
+When programs are loaded and run
+only ELF libraries and some symbolic links to ELF libraries are
+required and used.
+Only when compiling are static link libraries, pkgconfig files, and
+libtool archive files used.
+
+Therefore, /usr/lib and /usr/lib64 will be reorganized.
+
+/usr/lib/pkgconfig will become  /usr/lib.pc and /usr/lib64.pc
+/usr/lib/*.la becomes /usr/lib.la/* and /usr/lib64.la/*
+
+Already on my test box this has moved about 1000 files out from /usr/lib
+
+Now here is a good question.
+Why /usr/lib.la and /usr/lib.pc
+Why not /usr/lib/la and /usr/lib/pkgconfig ?
+
+To find a file in /usr/lib/pkgconfig first all of /usr/lib must be searched
+to locate directory pkgconfig.
+Using instead /usr/lib.pc reduces the previous search to all of /usr.
+/usr has far fewer entries in it than /usr/lib
+Consequently, the same is true of /usr/lib.la
+Locating .la files in /usr/lib.la is faster.
+However, even if /usr/lib is searched first, which will probably happen,
+not having .la files in /usr/lib expedites the start of ELF executable processes
+that require libraries in /usr/lib
+
+As you already know I am crusading to eliminate
+.a static link library archive files
+from /usr/lib.
+About 200 more to go for that.
+But still many will be kept.
+
+Even after these changes are complete some 200 directories
+still exist within /usr/lib/
+Move them?
+Probably not.
+There might not be a significant benefit to moving them.
+Afterall they must exist somewhere
+therefore they must pollute some directory.
+Moving them out of /usr/lib would probably
+require more effort than the boon gains.
+
+I intend to release the changes concurrently with the next release of gcc.
+Boxes will soon after have many installed spells recompiling.
+
+During testing I recast 300+ spells.
+Only 1 spell had a related problem.
+Fixing that problem was trivial.
+Still there is more that I want to test.
+Do not expect the change in the next grimoire release.
+However, please be aware that it will happen .
+
+I carefully weighed benefits of this change with the potential
+consequences of deviating from the LFS.
+However, the LFS is written in XML and not stone and consequently
+intended for change.
+Just as pkgconfig designers expected /usr/lib/pkgconfig/ was an
+improvement to dumping
+all the .pc files directly into /usr/lib I expect that /usr/lib.pc and
+/usr/lib.la should be the next
+evolutionary improvement to follow.
+Categorization of files based upon when they are used
+into separate quickly accessible directories makes sense.
+
+While I do not have a total solution for /usr/lib turning into a dumpster
+at least these recycles bins will reduce the stench by about 1000 files.
+
+Sorry for the inconvenience.
+But we might as well get this change started now
+rather than wait until the future while doing nothing about it.
+Over time boxes tend to gain more installed libraries.
+So either way /usr/lib keeps growing.
+Better the change came sooner than now,
+but /usr/lib was not always as crowded as it is today.
+I have been itching and *tching about this for a while now.
+Time to scratch.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000771.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+	<LI>Next message: <A HREF="000773.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#772">[ date ]</a>
+              <a href="thread.html#772">[ thread ]</a>
+              <a href="subject.html#772">[ subject ]</a>
+              <a href="author.html#772">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

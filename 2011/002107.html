@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Removing modules for current kernel...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTimMVTEygdfDnPZyB-dN%3DKWr5E9uew%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002106.html">
+   <LINK REL="Next"  HREF="002108.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Removing modules for current kernel...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTimMVTEygdfDnPZyB-dN%3DKWr5E9uew%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Removing modules for current kernel...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Apr 13 22:56:24 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002106.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+        <LI>Next message: <A HREF="002108.html">[Sorcerer-admins] gnome 3.0.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2107">[ date ]</a>
+              <a href="thread.html#2107">[ thread ]</a>
+              <a href="subject.html#2107">[ subject ]</a>
+              <a href="author.html#2107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Changes made to /etc/init.d/lilo
+
+As requested /etc/init.d/lilo
+no longer removes the modules, initramfs, nor kernel image
+for the $( uname -r ) kernel.
+Instead the $( uname -r ) kernel becomes the second label.
+However, if the $( uname -r ) kernel is also the most recently installed kernel
+then it becomes the primary label as would be expected.
+
+Since the most recently installed kernel and the running kernel
+are the most logical choices for booting those become the first and
+second labels.
+If sorcerer-rescue is installed
+then that with mandatory password entry becomes the 5th label.
+And labels or tables defined in /etc/lilo/tail are added last.
+
+After booting the fast image label may become available.
+When that happens then fast is the primary label.
+So mostly it works nearly the same but with the modifications
+that Jim Decker suggested.
+Thanks for the useful feedback.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002106.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+	<LI>Next message: <A HREF="002108.html">[Sorcerer-admins] gnome 3.0.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2107">[ date ]</a>
+              <a href="thread.html#2107">[ thread ]</a>
+              <a href="subject.html#2107">[ subject ]</a>
+              <a href="author.html#2107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

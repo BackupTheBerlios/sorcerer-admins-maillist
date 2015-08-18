@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] glibc..... cast issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3C596b75860703121530g3fdd75b6ud2ba9041c45b2e2a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000051.html">
+   <LINK REL="Next"  HREF="000052.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] glibc..... cast issue</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3C596b75860703121530g3fdd75b6ud2ba9041c45b2e2a%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] glibc..... cast issue">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 12 23:30:43 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000051.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+        <LI>Next message: <A HREF="000052.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> it works on mine.... it dispell glibc and I can still run stuff
+</I>&gt;<i> did you noticed that my install log for glibc is empty? can it
+</I>&gt;<i> come from that?
+</I>
+If the install log for glibc is empty
+then then the install log for glibc is incorrect.
+# dispel glibc
+can not remove files installed by glibc
+nor transfer ELF libraries installed by glibc
+from /lib and /usr/lib to /usr/lib.old
+
+If you make modifications to /etc/sorcery/log/install/glibc
+then also make modifications to /etc/sorcery/log/id/glibc
+When dispelling glibc the ID log is used to determine what
+files are ELF libraries to be saved in /usr/lib.old
+Consequently, if the ID log for glibc is also incorrect
+then dispel glibc will probably break the box severely
+since important glibc shared libraries will be deleted
+outright instead of being saved in the library cache, /usr/lib.old
+
+If you want to construct an install and ID logs for the installed
+version of glibc then I recommend using the one's provided on
+the I/R for reference.  Many of the files will not have exactly
+the same name if for example the installed glibc is 2.3.5 and
+the glibc from the I/R is 2.3.6.  The names of some symbolic
+links may also differ.  Simply having a populated, but inaccurate,
+install and ID log for glibc will also not work when it comes time to
+cast and dispel glibc.
+
+You can make an archive
+from the glibc installed on the I/R.
+Then, that archive can be installed on the fixed disk filesystem.
+However, the left over glibc files installed on the fixed disk
+from previous installs of glibc that are now untracked
+must be removed manually because they are alien files which
+may prevent a successful dispel or cast of glibc.
+
+glibc is not the same as any other
+software component of an operating system.
+For glibc to dispel and cast correctly
+glibc must be cleanly installed and accurately tracked.
+
+If I wanted to make an archive for the glibc
+installed on an IR I might do the following:
+
+# mount /media/cd
+# cat /media/cd/etc/sorcery/log/install/glibc  |
+sed  &quot;s:^/media/cd::&quot;  |
+tar  --no-recursion -cPT -  &gt;  /tmp/glibc-archive-$(&lt;
+/media/cd/etc/sorcery/log/version/glibc ).tar
+
+The about would then created /tmp/glibc-archive-$VERSION.tar
+which could be extract by executing:
+
+# cd /
+# tar --overwrite --overwrite-dir -xf /tmp/glibc-archive-*.tar
+# /sbin/ldconfig
+
+Then, I would weed out aliens from /lib and /usr/lib using
+instructions similar to those provided in previous messages.
+
+However, my first choice would be to repair the install and
+ID logs to properly track the installed version of glibc rather
+than trying to blindly overwrite whatever is installed by
+using an archive created from the I/R.
+There may be unwanted consequences for having tar
+try to overwrite files that are in use.
+They files once written may have size 0
+which could cause an immediate break.
+If that happened then the file would have to be removed
+first using rm and then copied using cp or re-extracted
+fro mthe archive.
+
+Here is another easy way of looking at it....
+Probably any file directly installed in /lib that is not tracked
+was probably installed by glibc.
+Once you have that list is easy enough to weed
+those that are from gblic from those that are not.
+Then, if you have an install log for glibc creating an ID log for glibc is easy:
+
+# su -
+# . /etc/sorcery/config
+# fileid  &lt;  /etc/sorcery/log/install/glibc &gt; /etc/sorcery/log/id/glibc
+# exit
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000051.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+	<LI>Next message: <A HREF="000052.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

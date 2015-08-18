@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W40240795B729034ED1C559AEBD0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001773.html">
+   <LINK REL="Next"  HREF="001775.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W40240795B729034ED1C559AEBD0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Sat Jul 17 12:31:10 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001773.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001775.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1774">[ date ]</a>
+              <a href="thread.html#1774">[ thread ]</a>
+              <a href="subject.html#1774">[ subject ]</a>
+              <a href="author.html#1774">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello, 
+
+ 
+
+I know why the root is empty.
+
+Because of a reinstall I made the partitions again and the file system again.
+
+ 
+
+But still it seems that the installer can't find it and fdisk can find it.
+
+I find it wierd that I cannot put any value in the device section of the installer.
+
+ 
+
+Roelof
+
+ 
+
+
+ 
+&gt;<i> Date: Sat, 17 Jul 2010 03:25:11 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> Hmm...
+</I>&gt;<i> That is hard to surmise the reason without exploring.
+</I>&gt;<i> However, generally, there are several /dev
+</I>&gt;<i> On the / partition a /dev from the time
+</I>&gt;<i> of installation exists.
+</I>&gt;<i> However, when a box is normally booted
+</I>&gt;<i> a /dev created part from devtmpfs and part from
+</I>&gt;<i> udev is provided on a tmpfs like filesystem
+</I>&gt;<i> and mounted on /dev
+</I>&gt;<i> What you see may depend upon
+</I>&gt;<i> which /dev is mounted on /dev
+</I>&gt;<i> or /media/root/dev
+</I>&gt;<i> 
+</I>&gt;<i> If mounting /dev/hdc2 on /media/root is successful
+</I>&gt;<i> and /dev/hdc2 shows as mounted in /proc/mounts
+</I>&gt;<i> and /media/root is examined
+</I>&gt;<i> and only lost+found exists
+</I>&gt;<i> then that is probably a newly initialized filesystem.
+</I>&gt;<i> I do not know how to undo the initialization of a filesystem.
+</I>&gt;<i> 
+</I>&gt;<i> If the filesystem is empty
+</I>&gt;<i> then there is nothing to rescue.
+</I>&gt;<i> In that situation I would restore from backups.
+</I>&gt;<i> If there are no backups then re-installation is an option.
+</I>&gt;<i> If the filesystem was re-initialized through no fault of my own
+</I>&gt;<i> then I would feel tempted to perform a disk scan.
+</I>&gt;<i> It scrapes some life off a disk and often requires
+</I>&gt;<i> a few hours to complete,
+</I>&gt;<i> but it should provide a good idea if the disk
+</I>&gt;<i> is becoming Swiss cheese.
+</I>&gt;<i> Another possibility is to check the SMART tape
+</I>&gt;<i> provided one has SMART disks and smartmontools.
+</I>&gt;<i> 
+</I>&gt;<i> If the filesystem that once was the root filesystem
+</I>&gt;<i> is totally empty now then there might be no
+</I>&gt;<i> better option than re-installation.
+</I>&gt;<i> Maybe someone else has a better hunch or
+</I>&gt;<i> guess at what is going on?
+</I>&gt;<i> 
+</I>&gt;<i> Normal install time is about 30 mins to an hour.
+</I>&gt;<i> A fully installed box requires between 1 and 8 hours.
+</I>&gt;<i> I am guessing about 16 hours of effort lost
+</I>&gt;<i> for having lost the root filesystem.
+</I>&gt;<i> However, some useful experience might be
+</I>&gt;<i> retained from a few of those hours.
+</I>&gt;<i> So it is not a total loss.
+</I>&gt;<i> 
+</I>&gt;<i> If you happen to remember what caused the
+</I>&gt;<i> loss of the root filesystem
+</I>&gt;<i> then I am eager to learn.
+</I>&gt;<i> Thus far no reports of ghosts devouring
+</I>&gt;<i> their root filesystem like a pitiful pacman.
+</I>&gt;<i> Therefore, I am not inclined to expect
+</I>&gt;<i> the cause was a Sorcerer bug.
+</I>&gt;<i> But if it was a distribution wide bug
+</I>&gt;<i> then I very much want to squish it, please.
+</I>&gt;<i> 
+</I>&gt;<i> Just to be on the safe side...
+</I>&gt;<i> Many SAs rest easier at night knowing that
+</I>&gt;<i> their data is on the tested and reliable ext3 filesystem.
+</I>&gt;<i> Some of us would not want to put our files on anything else.
+</I>&gt;<i> And some of the filesystems available in linux
+</I>&gt;<i> are developmental and/or not bug free filesystems.
+</I>&gt;<i> However, ext2 for /boot and ext3 for root
+</I>&gt;<i> are a proven winning combination.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Sat, Jul 17, 2010 at 1:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Date: Fri, 16 Jul 2010 14:32:13 -0700
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Fri, Jul 16, 2010 at 4:40 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Hello Kyle.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; That did not work.
+</I>&gt;<i> &gt;&gt; &gt; I think too big mess.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The initial Sorcerer install is more complex
+</I>&gt;<i> &gt;&gt; and has a greater chance for error than
+</I>&gt;<i> &gt;&gt; usually doing a simple direct fix for a problem.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt; So I'm going for a reinstall
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; That should work also.
+</I>&gt;<i> &gt;&gt; But without backups you may lose the benefit
+</I>&gt;<i> &gt;&gt; of /var/cache/{sources,ccache,archive}
+</I>&gt;<i> &gt;&gt; Re-installation of Sorcerer should be done
+</I>&gt;<i> &gt;&gt; to a clean initialized filesystem.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt; But now another problem arise.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; I have two partitions for sorcerer.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; /dev/hdc1 is swap of 2G.
+</I>&gt;<i> &gt;&gt; &gt; /dev/hdc2 is / is the rest of a 60G disk.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; That will work for a modern box with an
+</I>&gt;<i> &gt;&gt; ext2 or ext3 filesystem for /
+</I>&gt;<i> &gt;&gt; Not all filesystem types have a reserved boot sector
+</I>&gt;<i> &gt;&gt; so if uncertain about the filesystem
+</I>&gt;<i> &gt;&gt; then install lilo to the MBR
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt; So I boot from the dvd I burned.
+</I>&gt;<i> &gt;&gt; &gt; Started up the install programm.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; With the corrections to avoid the floppy problem, yes?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt; Goto adjusting fstab
+</I>&gt;<i> &gt;&gt; &gt; And now I only see the swap partition.
+</I>&gt;<i> &gt;&gt; &gt; And when I choose for device , I get another screen but never can I say
+</I>&gt;<i> &gt;&gt; &gt; the
+</I>&gt;<i> &gt;&gt; &gt; installer must look for /dev/hdc2
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Then does /dev/hdc2 exists?
+</I>&gt;<i> &gt;&gt; I recommend doing also
+</I>&gt;<i> &gt;&gt; # ls -lah /dev/hd*
+</I>&gt;<i> &gt;&gt; And seeing what partitions are detected on which devices.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Output of ls -lah /dev/hd*
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; /dev/hda
+</I>&gt;<i> &gt; /dev/hda1
+</I>&gt;<i> &gt; /dev/hdb
+</I>&gt;<i> &gt; /dev/hdc
+</I>&gt;<i> &gt; /dev/hdc1
+</I>&gt;<i> &gt; /dev/hdc2
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt; Can it be that I first must format it or do i something wrong here.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Modern fixed disks require no formatting at any time
+</I>&gt;<i> &gt;&gt; and doing so might ruin them.
+</I>&gt;<i> &gt;&gt; However, they do require partitioning.
+</I>&gt;<i> &gt;&gt; To partition or check the partitions of /dev/hdc run:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # fdisk /dev/hdc
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If the partition table was merely modified by something
+</I>&gt;<i> &gt;&gt; and if the partitions can be made exactly how they were before
+</I>&gt;<i> &gt;&gt; then the filesystems might be salvage-able.
+</I>&gt;<i> &gt;&gt; I suspect that the partition table for a disk
+</I>&gt;<i> &gt;&gt; is just slightly after the MBR or maybe a little bit before.
+</I>&gt;<i> &gt;&gt; But it is up there.
+</I>&gt;<i> &gt;&gt; Nulling enough sectors at the front of a disk
+</I>&gt;<i> &gt;&gt; will wipe both the partition table and MBR.
+</I>&gt;<i> &gt;&gt; In some cases that might be useful,
+</I>&gt;<i> &gt;&gt; but in your case probably not.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If the /dev/hdc2 partition exists
+</I>&gt;<i> &gt;&gt; then it shows up as a block device node /dev/hdc2
+</I>&gt;<i> &gt;&gt; A partition must only exist on a disk to receive
+</I>&gt;<i> &gt;&gt; a device node in /dev/
+</I>&gt;<i> &gt;&gt; There is no requirement that the partition be
+</I>&gt;<i> &gt;&gt; readable, valid, or mountable.
+</I>&gt;<i> &gt;&gt; If /dev/hdc has crashed or became defective
+</I>&gt;<i> &gt;&gt; then an entire entry for the disk device will
+</I>&gt;<i> &gt;&gt; probably not be created in /dev/ rather that
+</I>&gt;<i> &gt;&gt; an omission of a partition.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hello, /dev/hdc2 exist.
+</I>&gt;<i> &gt; When a do a mount /dev/hdc2 /media , I can see only a lost+found directory.
+</I>&gt;<i> &gt; When I do a mount after the choice mount in the installer, I only see
+</I>&gt;<i> &gt; /dev/hdb  , the burner/player
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; For the mapping of disk devices to device node names
+</I>&gt;<i> &gt;&gt; linux usually goes by what BIOS suggests.
+</I>&gt;<i> &gt;&gt; Therefore, if a bootloader switches BIOS's primary
+</I>&gt;<i> &gt;&gt; and secondary disk devices
+</I>&gt;<i> &gt;&gt; then to linux they will appear switched also.
+</I>&gt;<i> &gt;&gt; That can be a useful trick for booting a bootable
+</I>&gt;<i> &gt;&gt; backup with lilo instead of having to actually open
+</I>&gt;<i> &gt;&gt; a box and remove/adjust jumpers on disk devices
+</I>&gt;<i> &gt;&gt; to reselect the former slave drive as a master.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If /dev/hdc does not have the expected partitioning
+</I>&gt;<i> &gt;&gt; then at least check the size and become somewhat
+</I>&gt;<i> &gt;&gt; certain that it is the disk that it is expected.
+</I>&gt;<i> &gt;&gt; Also if it has a valid partition on it
+</I>&gt;<i> &gt;&gt; check that partition either with the file command
+</I>&gt;<i> &gt;&gt; or by mounting it to see that it is as expected.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Almost a decade ago and before I began using qemu for testing
+</I>&gt;<i> &gt;&gt; I wiped out a partition that I had windoze installed on.
+</I>&gt;<i> &gt;&gt; I only booted windoze in order
+</I>&gt;<i> &gt;&gt; to flash update firmware in hardware devices.
+</I>&gt;<i> &gt;&gt; But that hard lesson learned shows that one can never
+</I>&gt;<i> &gt;&gt; be too careful when fdisking and modifying partitions.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If one repartitions a disk, creates new file systems,
+</I>&gt;<i> &gt;&gt; starts installing to them
+</I>&gt;<i> &gt;&gt; then after all that recovery of previously installed
+</I>&gt;<i> &gt;&gt; filesystems and data becomes hopeless.
+</I>&gt;<i> &gt;&gt; Please make backups of important files and/or filesystems.
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; De nieuwste Internet Explorer: snel, eenvoudig en veilig. Download nu!
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+De Nieuwste Internet Explorer speciaal voor Hotmail, download nu gratis
+<A HREF="http://www.microsoft.com/netherlands/ie8/hotmail.htm">http://www.microsoft.com/netherlands/ie8/hotmail.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100717/9946b944/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100717/9946b944/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001773.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001775.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1774">[ date ]</a>
+              <a href="thread.html#1774">[ thread ]</a>
+              <a href="subject.html#1774">[ subject ]</a>
+              <a href="author.html#1774">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

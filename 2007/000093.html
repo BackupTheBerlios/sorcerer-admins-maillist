@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Linux kernels
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%20kernels&In-Reply-To=%3C200706021234.38365.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000092.html">
+   <LINK REL="Next"  HREF="000094.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Linux kernels</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%20kernels&In-Reply-To=%3C200706021234.38365.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] Linux kernels">merka at highsphere.net
+       </A><BR>
+    <I>Sat Jun  2 18:34:38 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000092.html">[Sorcerer-admins] Linux kernels
+</A></li>
+        <LI>Next message: <A HREF="000094.html">[Sorcerer-admins] Linux kernels
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 02 June 2007, J Decker wrote:
+&gt;<i> Latest kernel, seems I can no longer SSH to my box :)
+</I>&gt;<i>
+</I>&gt;<i> 2.16.21.2 (?)
+</I>&gt;<i>
+</I>&gt;<i> some notes in changelog about in-place kernel CRC doing - so they're
+</I>&gt;<i> mucking about with some nasty junk.
+</I>I haven't tried 2.16.21.2 but my box runs 2.16.21.1 just fine. One thing bit 
+me though: There were some changes in iptables configuration options and so 
+my old config was not good enough to set all necessary drivers. Upon boot, 
+some iptable rules failed to load and it took me some time to figure out why 
+I sort of had network but could not do anything sensible (like ssh :).
+&gt;<i>
+</I>&gt;<i> I went in to see what there was to be seen about hotplug, it seems that
+</I>&gt;<i> since I instaleld that, as I copy and propagate clones, the ETH list goes
+</I>&gt;<i> higher and higher, the newest starts with first ether module as ETH3 (which
+</I>&gt;<i> makes my 00-eth0 configuration not work)... also, my editor makes backup
+</I>&gt;<i> files of 00-eth0 with a ~ (00-eth0~) which ends up getting invoked with
+</I>&gt;<i> default network startup script, any chance someone could tweak this to
+</I>&gt;<i> ignore files with ~ suffixes on them? (especially if not executable)
+</I>
+You could use iftab (see man page installed by wireless_tools) to create 
+network interface mappings in /etc/iftab. Then your interfaces will always 
+have the same name. Alternatively, create udev rules to always assign the 
+same names to the network interfaces.
+
+
+&gt;<i>
+</I>&gt;<i> Any idea how to easily reset hotplug status?  (the original box after
+</I>I generally ignore hotplug and rather create udev rules to obtain reliable 
+node names every time a device is plugged in.
+
+J.
+
+&gt;<i> installing hotplug moved its devices to eth1 and eth2, eth0 doesn't load,
+</I>&gt;<i> and I had to change the 00-eth0 interface spec (probably should ahve
+</I>&gt;<i> renamed the file also)
+</I>&gt;<i>
+</I>&gt;<i> /sys/class/net/* indeed lists eth1, eth2 on the parent clone (originally
+</I>&gt;<i> having installed hotplug on it) this box has two nics.
+</I>&gt;<i>
+</I>&gt;<i> /sys/class/net/* lists eth3 only on the cloned box (with 1 interface)
+</I>&gt;<i>
+</I>&gt;<i> Jim
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000092.html">[Sorcerer-admins] Linux kernels
+</A></li>
+	<LI>Next message: <A HREF="000094.html">[Sorcerer-admins] Linux kernels
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

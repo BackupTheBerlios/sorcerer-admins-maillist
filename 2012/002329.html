@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDjx03HMHiMv14tHK3Ug2Tr%3DV8f96pAWNQbg%3D_XvcmXbow%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002328.html">
+   <LINK REL="Next"  HREF="002331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDjx03HMHiMv14tHK3Ug2Tr%3DV8f96pAWNQbg%3D_XvcmXbow%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 21 18:51:52 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002328.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+        <LI>Next message: <A HREF="002331.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2329">[ date ]</a>
+              <a href="thread.html#2329">[ thread ]</a>
+              <a href="subject.html#2329">[ subject ]</a>
+              <a href="author.html#2329">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jul 20, 2012 at 7:33 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 07/20/2012 03:12 PM, Kyle Sallee wrote:
+</I>&gt;&gt;<i> Someone reported being unable to properly modify
+</I>&gt;&gt;<i> /etc/wpa_supplicant/wpa_supplicant.conf
+</I>&gt;&gt;<i> after reading the wpa_supplicant.conf manual page.
+</I>&gt;&gt;<i> The person insistently requested that I present menu driven fluff
+</I>&gt;&gt;<i> to assist with the generation of /etc/wpa_supplicant/wpa_supplicant.conf
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I didnt' see that here. Nor did this occur in our IRC chan or I would
+</I>&gt;<i> have seen it there. More interesting too, is that I would have seen you
+</I>&gt;<i> enter the channel ;)
+</I>
+Some people flame me directly
+rather than by using usual discussion methods
+such as this email list or IRC.
+
+&gt;<i> Anyway, since it didn't happen here or in chan:
+</I>&gt;<i> <A HREF="irc://chat.freenode.net/#sorcerer">irc://chat.freenode.net/#sorcerer</A> is there some other forum or mailing
+</I>&gt;<i> list that I don't know about?
+</I>
+Probably. I also do not know where it is.
+
+I have not visited the Sorcerer IRC channel in ages.
+First, xchat is broke.
+I might try fixing it again,
+but the software authors have not released a new tarball
+since 20100529 which is just over 2 years ago.
+I wonder if the software authors are not interested
+in providing maintenance for it?
+It may be suffering from more crushing bugs rather than merely
+being incompatible with current glib headers.
+
+Secondly, if I am distracted by someone wanting to chat
+then my efficiency drops and the probability of me creating a bug rises.
+That also is the reason why I remain constantly logged out of gmail's
+chat applet unless someone first requests a chat by email.
+
+I do not intend to cast the impression of a snob.
+But since I am the one who writing code, updating spells, rolling I/Rs, etc...
+then everyone might prefer that I create adequate implementations
+the first time rather than endure a bug at a potentially inconvenient time.
+
+For example, the final bug that I fixed during the modifications of
+/etc/init.d/wpa_supplicant was to include a line that I forgot.
+Without that line, attempts to start the wpa_supplicant daemon
+via the init-script failed.
+I did the final portion of the test, discovered and fixed that bug
+within the 30 minutes before UTC 00:00
+However, if someone had interrupted
+then I probably would have failed detect, fix, and commit the bug fixes
+to svn prior to the daily grimoire tarball roll.
+Instead boxes would receive the slightly bugged
+wpa_supplicant init-script that would be unable
+to start the daemon.
+Then boxes that required that to connect to their network or Internet
+would remain offline on their next boot.
+
+Sometimes what seems to be a simple change/modification
+might require longer than anticipated to properly implement.
+Then, almost without my realization time slips away
+and I am looking at the daily deadline UTC 00:00 fast approaching.
+Daily that is always 17:00 for me, which might seem like a boon,
+as if my work-day could always end at 17:00.
+Yet instead that deadline tends to encourage me to often start work
+on a modification late in the day and hack the bugs from it
+until late at night.
+That way if I feel uncertain about the end result
+then I can sleep for 8 hours, awake
+and still have ample time for further testing and bug fixing.
+
+Sometimes when I have not stepped in it,
+by already making a commit,
+then I sometimes delay commits involving hundreds of file modifications
+until the next UTC 00:00 merely to ensure
+that the changes progress smoothly as anticipated.
+Sometimes I test changes on multiple boxes
+using both IA32 and x86_64 architecture.
+This ensures I have not fixed/circumvented a bug on one architecture
+merely to allow it to persist on another.
+Sometimes that might require a bit longer than I anticipate,
+because IA32 boxes are not rip-roaring fast.
+But my point is that I maintain some attention on those tasks
+so that I do not accidentally cast the impression
+of an absent minder professor,
+by introducing new bugs where none previously existed.
+
+Some people are fond of saying, &quot;If it is not broke then do not fix it.&quot;
+But that is exactly what I did with /etc/init.d/wpa_supplicant.
+And hopefully I did not break it for adding the potential improvement.
+Please report if it is not working properly.
+
+BTW, although obvious by now, starting the WPA supplicant daemon
+is not controlled by /etc/init.d/networks
+nor the network templates and functions.
+I separated it, because what appeared in the network functions seemed buggy.
+Nobody ever indicate if they used it.
+Jan reported that he started the wpa_supplicant daemon as a user.
+I also had another good 2 or 3 reasons at the time,
+but have already forgot what they were.
+But this way I can have some faith that the code
+involving wpa_supplicant is working and usable.
+
+Sorcerer boxes have a few different init-script based methods
+for helping themselves onto a network.
+immune-auto-network provides an init-script that is mostly ideal
+for SAs that prefer that their routers instruct boxes to network
+configure using a DHCP client.
+This might actually help some boxes hop onto their network
+without any fancy configuration file edits by the SA.
+While I know that it works for wired interfaces
+I do not know if it properly works fore wireless devices.
+Naturally, nobody automatically hops onto a WPA encrypted network,
+because a certificate or key is required.
+And of course /etc/init.d/networks might be an adequate method
+for most SAs to configure a box for networking provided that the
+networking is desired from time of boot.
+
+A SA can always create their own init-script to configure networking.
+In the distant past this was the preferred method on Sorcerer,
+because we lacked consensus concerning what would
+constitute a distribution wide adequate implementation.
+
+Although I have not investigated the possibility
+I am aware that udev rules can be used to configure networking.
+I suppose by this method networking becomes active
+and the interface configured from the moment that the
+coldplug or hotplug event is processed.
+Does give cause to wonder if udev could also load iptables firewall rules,
+although that also can be accomplished by init-script.
+
+The multiple methods for accomplishing
+network configuration may seem half-baked
+and creates potential for confusion.
+However, I realize that SAs do not want for me to deprecate existing methods
+without offering something that is at least twice as beautiful as a replacement.
+So it came to be this way by me listening to
+SA suggestions and implementing them.
+
+However, I vaguely recall that the templates method
+was entirely envisioned and the initial implementation contributed.
+I only made bug fixing and improvements on that method.
+
+My current position about network configuration is the same as always.
+The way the SA makes networking work is the proper method.
+Preferably if it can be configured once and run without adjustment
+for 3 to 5 years then that seems adequate.
+
+Since networking is a one-shot event of extremely limited duration
+almost nobody offers constructive criticism concerning it.
+So I was pleased that someone offered a suggestion concerning
+wpa_supplicant configuration.
+
+With new I/Rs on the horizon now is the time to offer suggestions.
+Suggestions that arrive too late for discussion and evaluation will likely
+have their potential implementation and testing suspend until the next cycle.
+Too much ambition in too short a span of time creates too many bugs.  :)
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002328.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+	<LI>Next message: <A HREF="002331.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2329">[ date ]</a>
+              <a href="thread.html#2329">[ thread ]</a>
+              <a href="subject.html#2329">[ subject ]</a>
+              <a href="author.html#2329">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

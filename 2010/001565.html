@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer installation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20installation&In-Reply-To=%3Cy2l596b75861004171047t73c37e60n33ef0d4dd8bf0860%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001568.html">
+   <LINK REL="Next"  HREF="001566.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer installation</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20installation&In-Reply-To=%3Cy2l596b75861004171047t73c37e60n33ef0d4dd8bf0860%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer installation">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr 17 19:47:58 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001568.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+        <LI>Next message: <A HREF="001566.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1565">[ date ]</a>
+              <a href="thread.html#1565">[ thread ]</a>
+              <a href="subject.html#1565">[ subject ]</a>
+              <a href="author.html#1565">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry about the slow email responses.
+I have been busy.
+However, I am making good progress.
+Coming soon to a grimoire near you,
+I plan to have ready the new spells:
+
+gcc-core
+gcc-fortran
+gcc-g++
+gcc-java
+gcc-objc
+
+As usual there is no coincidence that these spells
+have the same names as the source tarballs.
+gcc-core provides C
+gcc-g++ provides C++ and libstdc++-v3
+And the rest are easily guessed, yes?
+
+Using these spells provides some simple advantages.
+First, there is no more menu on a single gcc spell to allow
+the SA to select which compilers and libraries to create.
+Instead if a source requires a fortran compiler to compile
+then that spell can require gcc-fortran.
+Likewise if a source requires and objective C compiler
+then that spell can require gcc-objc.
+
+Unfortunately, gcc is not as clean cut as that.
+The other language compilers are built on top of gcc-core.
+Therefore, compiling each new language also requires
+the re-compilation of a gcc.
+However, the spells prevent overlapping file installation.
+Therefore, for example gcc-g++ requires gcc-core
+and does not install the same files as gcc-core.
+
+I realize that in some ways this is slightly annoying
+like what a pre-compiled binary based distro would do.
+However, a pre-compiled binary based distro would provide
+a package for libstdc++-v3 ELF libraries,
+a package for libstdc++-v3 ar libraries
+a package for libstdc++-v3 header files,
+a package for c++ executables.
+And maybe even more packages than that
+just pertaining to the handling of gcc's c++?
+The outcome, as usual, would look as if
+the packagers force-fed the gcc tarball
+a metal pineapple and pulled the pin.
+
+However, the new additional spells for gcc
+in the Sorcerer grimoire follow the natural division
+that the gcc software authors decided would be
+useful for precise downloading and compilation.
+So this is far from the package insanity of a pre-compiled
+binary based distro with it's gazillions of installed packages.
+
+Most boxes will probably only install gcc-core and gcc-g++
+
+26336901 gcc-core-4.4.3.tar.bz2
+ 5945033 gcc-g++-4.4.3.tar.bz2
+62944934 gcc-4.4.3.tar.bz2
+
+That is approximately half the download as
+compared to downloading a full gcc-4.4.3.tar.bz2
+The bad news is that for updates
+no automatic patching from
+gcc-4.3.3.tar to gcc-core-4.4.3.tar
+will happen.
+
+Most boxes will do the full 30M download for the update,
+unless the SA wants to modify the spells first,
+download, then undo the modifications.
+Such as changing the source for
+gcc-core-$VERSION.tar.bz2 to
+gcc-$VERSION.tar.bz2
+and changing it's versions to
+stable core-4.4.3 4.3.3
+And then re-merging the grimoire after downloads complete.
+I do not recommend using the SPR in this fashion
+unless one is comfortable with modifying the spells.
+Since most source tarballs only change the version portion
+of a source tarball's filename
+sorcery's support for arbitrary source tarball
+translation was removed a long time ago.
+
+Lastly, the gcc spells are lagging behind the currently
+available version of gcc.
+Why?
+The most obvious reason is that I am too lazy
+to detect compile problems
+and write patches to make 3000+ existing software
+project's sources compile with gcc released just a week ago.
+Secondly, one would hope that gcc version 4.4.3
+would have fewer bugs than gcc version 4.4.0 and
+fewer bugs than gcc version 4.5.0.
+
+Everyone tends to expect that the newest gcc is so much
+faster at compilation and creates faster code and has better
+optimization, etc...
+However, over the course of a decade
+gcc has become larger and slower.
+
+12,911,721 Mar 22  2001 gcc-2.95.3.tar.gz
+82,047,480 Jan 21 13:32 gcc-4.4.3.tar.gz
+
+See?
+The only thing missed by hanging back a few versions
+is bugs and compile errors.
+
+Recently, someone asked me.
+&quot;Is there support for use of development versions
+of gcc with Sorcerer?&quot;
+
+Many spells do support the easy installation
+of developmental versions.
+However, spells like gcc will not support
+developmental versions.
+gcc also takes a good step backwards
+and away from the edge of stability
+in order to avoid the introduction of new compile errors
+to software that previously tested okay
+and also to avoid the potential of runtime errors
+that could be caused by bugs in gcc's compiler.
+
+gcc version 4.5.0 has become available.
+And in my way of thinking that indicates that
+now is a good time to try the update to version 4.4.3
+which might be the last of the version 4.4.x releases of gcc.
+
+In the past some people with little or no experience with Sorcerer
+have criticized Sorcerer for being a
+&quot;bleeding edge distro&quot; or &quot;unstable distro.&quot;
+That is entirely untrue.
+By default the software installed on Sorcerer boxes
+are almost entirely stable releases
+except when a stable release
+is deprecated and no longer compiles.
+
+And until recent years,
+Sorcerer did not back away from providing the most current
+stable release of gcc.
+However, after a decade of headaches caused by gcc updates
+we now make the concession that avoiding the
+x.y.0 version is best.
+And we might start doing that with both gnome and KDE releases,
+because of the careless errors and omissions in their .0 releases
+that cause additional effort required to create spells that
+fix those problems and are able to compile the software.
+
+For example: eel version 2.26.0 would not compile.
+ell version 2.26.0 was the most recently available version of eel
+at the time of the gnome 2.30.0 update.
+The eel software author removed prototypes for functions
+that he no longer wanted included in eel because the functions
+that those function relied upon are no longer included in
+libgnomeui
+However, the eel software author
+left the actual functions in source files.
+And therefore, I had to realize this problem and write a patch
+to remove the stale functions
+thereby fixing the eel source so it would compile.
+
+For example when KDE 4.4.0 was released.
+KDE 4.4.0 required phonon version 4.3.80
+Where was the phonon 4.3.80 source tarball provided for download?
+Not on their ftp server.
+After realizing that newer version of phonon was required
+I fetched the source from svn and
+then created a diff style patch
+to translate the 4.3.0 source tree into the 4.4.0 source tree.
+
+Yes, handling of such bugs seem like trivial changes.
+But such adjustments are only quick and easy to accomplish
+only if one already knows what must be done.
+Figuring out the problems and deciding upon the solution
+can take minutes or even hours of additional effort.
+If I had not been doing those updates for Sorcerer
+then as a regular SA I would have skipped those updates entirely.
+
+Do I seem to be complaining?
+I am not complaining.
+I am making a point that sometimes avoiding the *.0 releases
+might avoid having to put forth extra effort to compensate
+for the bugs that the software authors left intact.
+
+So in the future if Sorcerer omits providing *.0 releases of
+gcc, glibc, kde, or gnome
+then please remember that
+I do not have an unlimited amount of time
+to detect and fix the bugs and omissions
+in these software projects.
+Also the bug-fixed *.1 releases are often
+not far behind the *.0 releases.
+
+The time elapse between kde 4.4.0 and kde 4.4.1 release
+was approximately 17 days.
+That was well worth the wait because the kde screen locking
+program in kde 4.4.0 would crash and unlock the screen
+after an incorrect password was supplied a second time.
+With that consideration in hindsight
+I wish that I had avoided the kde 4.4.0 release.
+The thrill of new software lasts for an hour,
+but the bugs last for about 0.5 to 1.5 months.
+
+So in the future please do not be surprised
+if Sorcerer takes a more conservative approach to updating
+and skips some *.0 stable releases.
+We are not trying to second guess
+the software author about what is stable.
+Rather from years of hindsight the *.0 stable releases
+often turn out to be less stable than expected.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001568.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+	<LI>Next message: <A HREF="001566.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1565">[ date ]</a>
+              <a href="thread.html#1565">[ thread ]</a>
+              <a href="subject.html#1565">[ subject ]</a>
+              <a href="author.html#1565">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

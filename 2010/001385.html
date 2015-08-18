@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20xf86-input-evdev%20xf86-input-keyboard%0A%09xf86-input-mouse%20hal&In-Reply-To=%3C596b75861001012104k302f6966q388b9c8637923382%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="001386.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20xf86-input-evdev%20xf86-input-keyboard%0A%09xf86-input-mouse%20hal&In-Reply-To=%3C596b75861001012104k302f6966q388b9c8637923382%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jan  2 06:04:09 CET 2010</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="001386.html">[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1385">[ date ]</a>
+              <a href="thread.html#1385">[ thread ]</a>
+              <a href="subject.html#1385">[ subject ]</a>
+              <a href="author.html#1385">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Look as if the best method of input in X11R7.5 is moving towards evdev.
+In general either the combination of
+( xf86-input-keyboard + xf86-input-mouse ) should be used or
+( xf86-input-evdev )
+Having both installed can cause problems,
+such as the right arrow and page up acting strangely.
+
+However, that seems to be fixable..
+I edited /etc/X11/xorg.conf
+And I made certain sections look like this:
+
+Section &quot;ServerLayout&quot;
+    Identifier     &quot;Layout0&quot;
+    Screen      0  &quot;Screen0&quot; 0 0
+    InputDevice    &quot;Keyboard0&quot; &quot;CoreKeyboard&quot;
+    InputDevice    &quot;Mouse0&quot; &quot;CorePointer&quot;
+EndSection
+
+Naturally, the Identifier and Screen will vary, but the two important lines
+are the InputDevice lines
+
+And for those sections I have declared:
+
+Section &quot;InputDevice&quot;
+    Identifier     &quot;Mouse0&quot;
+    Driver         &quot;evdev&quot;
+EndSection
+
+Section &quot;InputDevice&quot;
+    Identifier     &quot;Keyboard0&quot;
+    Driver         &quot;evdev&quot;
+EndSection
+
+
+Yes, correct, basically, it is practically no information at all.
+Why?
+Because xf86-input-evdev gathers information about those devices from hal
+So naturally, for this to be able to work
+then hal must be installed and running.
+Seems to work good on my box.
+The keyboard works good the mouse works good, even the scroll wheel works.
+
+Now that I have /etc/X11/xorg.conf properly adjusted
+I was able to
+# dispel --unsafe xf86-input-mouse xf86-input-keyboard
+And after that I was able to restart kdm without a problem.
+
+Now those are installed I do not have to specify
+CoreKeyboard nor CorePointer in ServerLayout Section.
+
+Having to adjust /etc/X11/xorg.conf
+or even knowing that is the solution to making the keyboard
+work properly and stop acting as if it is possessed is tricky.
+But overall having a more plug-n-play style detection and use
+of keyboard and pointers seems a bit easier.
+
+I am adjusting xf86-input to
+have a mandatory requirement on xf86-input-evdev
+xf86-input-mouse and xf86-input-keyboard are optionals.
+Therefore, if a SA wants to stick with the old methods,
+either dispel xf86-input, which might require also dispelling xorg
+since both spells are profiles.
+Or xf86-input-evdev can be exiled first and then dispelled.
+
+To help out there is an evdev manual page installed
+if xf86-input-evdev is installed.
+Also some parts of the xorg.conf manual page might also apply.
+The evdev manual page seems a bit sparse.
+And if making evdev work properly still seems to be a lost cause
+then xf86-input-keyboard and xf86-input-mouse are still available,
+at least for as long as the xorg team continues making releases for
+them which are compatible with the overall xorg release.
+
+Happy 2010 everyone.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="001386.html">[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1385">[ date ]</a>
+              <a href="thread.html#1385">[ thread ]</a>
+              <a href="subject.html#1385">[ subject ]</a>
+              <a href="author.html#1385">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] syslinux's extlinux
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20syslinux%27s%20extlinux&In-Reply-To=%3CBANLkTimEQ241G8z2di-GgYG0%2Ba9_X6C5vw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002198.html">
+   <LINK REL="Next"  HREF="002201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] syslinux's extlinux</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20syslinux%27s%20extlinux&In-Reply-To=%3CBANLkTimEQ241G8z2di-GgYG0%2Ba9_X6C5vw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] syslinux's extlinux">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jun 15 01:05:20 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002198.html">[Sorcerer-admins] # augur req with more examples for alternate	methods of invocation.
+</A></li>
+        <LI>Next message: <A HREF="002201.html">[Sorcerer-admins] libmobiledevice 1.0.4 fail to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2200">[ date ]</a>
+              <a href="thread.html#2200">[ thread ]</a>
+              <a href="subject.html#2200">[ subject ]</a>
+              <a href="author.html#2200">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Last year Evert expressed an interest in using extlinux for booting.
+If I remember correctly
+then he wrote that extlinux can boot BTRFS
+without a dedicated ext2 /boot.
+I kept that at the bottom of my todo list for almost forever,
+but then he mentioned it again about a month ago.
+And today I finally made time to research extlinux.
+
+extlinux appears to be able to boot on ext2 ext3 and ext4 file systems.
+In some respects it is a little less complicated than lilo to configure.
+extlinux does not require to be told where to install.
+Instead when providing the command line parameter /boot/extlinux
+then extlinux will install to the boot sector of the partition that holds
+/boot/extlinux
+That level of simplicity surmounts both lilo and grub.
+
+As long as a kernel image or initramfs is not partially in a file
+system's journal
+then extlinux has a better chance of booting a label than lilo.
+In some extreme situations a box must be booted
+with an I/R CD in order to recover from a lilo error.
+However, the rescue label should be
+almost without a doubt remain bootable by extlinux.
+
+My motivation for considering extlinux as an alternative to lilo
+has nothing to do with improved robustness.
+extlinux supports loading multiple initramfs images for each kernel.
+By using that I can further reduce space consumption on /boot
+when multiple kernels are installed.
+That is why I want extlinux.
+That way the 2G /boot might endure longer.
+Even 1G /boot might be manageable with 4 or 5 boot labels.
+
+Maybe the next obvious question is,
+&quot;Is Sorcerer switching over to extlinux for booting?&quot;
+The answer is yes and no.
+Boxes deployed with the 20110701 I/R will use extlinux.
+However, boxes already deployed will continue using lilo
+unless syslinux is installed.
+
+Boxes with syslinux already installed
+might be able to reboot after the transition.
+That is because I can not test every installation configuration
+to ensure that it is syslinux compatible
+Also extlinux will receive the default master password of sorcerer.
+Therefore, the SA should adjust that in /etc/extlinux/head
+in order to prevent people with physical access from
+booting with additional parameters such as rdinit=/bin/bash
+in order to gain unauthorized root access.
+I recommend checking and uninstalling syslinux
+unless the SA wants to be among the first to try the new implementation.
+
+The implementation for using extlinux on Sorcerer
+is the same as lilo's implementation.
+However, instead of /etc/lilo/{head,conf,tail}
+extlinux configuration files are /etc/extlinux/{head,conf,tail}
+The true extlinux configuration file is actually
+/boot/extlinux/extlinux.conf
+But there is no symbolic link joining
+/etc/extlinux/conf  and /boot/extlinux/extlinux.conf
+The config files are created from the combination of:
+/etc/extlinux/head /boot/ and /etc/extlinux/tail
+Therefore, customization involves the same familiar
+method that we use for lilo.
+
+extlinux's configuration file and menu system differs from lilo.
+The style and syntax is somewhat similar.
+The syslinux manual page provides sufficient information
+to familiarize someone already familiar with lilo's configuration file.
+
+extlinux prints more dots than lilo
+while loading the linux and initramfs files.
+However, I am uncertain if it is actual slower.
+On virtual computer boot speed tests
+I was astonished to discover that loading
+the kernel and initramfs required
+approximately 10 seconds for both extlinux and lilo.
+
+My two main reasons for wanting to switch to extlinux
+is because extlinux is actively maintained
+and extlinux supports loading multiple initramfs images per kernel.
+I have no less favor for lilo.
+However, SAs that manage the transition to syslinux
+might save headache and effort on some dreadful day
+when one must search for the I/R CD to circumvent a lilo error.
+Therefore, I am expecting that extlinux + a rescue label
+should be enough to boot any box that is unable to
+boot the default label.
+
+SAs eager to try the change are advised to wait
+until 20110617 rather than use what I already added to the grimoire.
+The grimoire contents will require at least 1 day to reach LAG=1 boxes.
+And I have yet to discover how to mandate a password
+in order to boot the rescue label.
+Until I do then the presence of an installed rescue label
+presents an opportunity for someone with local physical access
+to gain unauthorized access to the root partition by booting the rescue label.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002198.html">[Sorcerer-admins] # augur req with more examples for alternate	methods of invocation.
+</A></li>
+	<LI>Next message: <A HREF="002201.html">[Sorcerer-admins] libmobiledevice 1.0.4 fail to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2200">[ date ]</a>
+              <a href="thread.html#2200">[ thread ]</a>
+              <a href="subject.html#2200">[ subject ]</a>
+              <a href="author.html#2200">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

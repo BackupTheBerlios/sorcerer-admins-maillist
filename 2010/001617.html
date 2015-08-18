@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo warning too big kernel
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20warning%20too%20big%20kernel&In-Reply-To=%3CAANLkTimNDCF6m8-H-9qnK_JgAmM9F2aCE4KHtghK5NrQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001613.html">
+   <LINK REL="Next"  HREF="001618.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo warning too big kernel</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20warning%20too%20big%20kernel&In-Reply-To=%3CAANLkTimNDCF6m8-H-9qnK_JgAmM9F2aCE4KHtghK5NrQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lilo warning too big kernel">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 14 16:55:18 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001613.html">[Sorcerer-admins] lilo warning too big kernel
+</A></li>
+        <LI>Next message: <A HREF="001618.html">[Sorcerer-admins] libacl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1617">[ date ]</a>
+              <a href="thread.html#1617">[ thread ]</a>
+              <a href="subject.html#1617">[ subject ]</a>
+              <a href="author.html#1617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Odd.
+Anyway, copy the library to /var/cache/old/lib/
+That should circumvent the problem.
+Normally when a spell is dispelled it's entire
+installed contents are copied to /var/cache/old/
+That way old libraries remain available
+and also the spell can be restored
+if the version being compiled fails during install.
+sorcery should be able to handle this automatically
+instead of ending in a situation where
+ld.so can not locate a libacl library.
+
+
+On Fri, May 14, 2010 at 3:26 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>&gt; wrote:
+&gt;&gt;<i> # cast sorcery-alien
+</I>&gt;&gt;<i> And then look at the compile log for sorcery-alien
+</I>&gt;&gt;<i> and move all the aliens to somewhere safe
+</I>&gt;&gt;<i> where they can cause no strange behavior.
+</I>&gt;<i>
+</I>&gt;<i> Looking sorcery-alien compile log i noticed libacl was one of them.
+</I>&gt;<i>
+</I>&gt;<i> Problem: acl compile goes wrong on install stage, because it's dispells
+</I>&gt;<i> libacl.so.1 and then all hell brokes loose.
+</I>&gt;<i>
+</I>&gt;<i> Compile log for acl 2.2.47-1
+</I>&gt;<i> Built with sorcery kame-20100505-0 and gcc 4.4.3
+</I>&gt;<i> Built on Fri May 14 13:20:05 EEST 2010
+</I>&gt;<i> make: `configure' is up to date.
+</I>&gt;<i> autoconf
+</I>&gt;<i> ./configure \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --prefix=/ \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --exec-prefix=/ \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --sbindir=/bin \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --bindir=/usr/bin \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --libdir=/lib \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --libexecdir=/usr/lib \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --enable-lib64=yes \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --includedir=/usr/include \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --mandir=/usr/share/man \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; --datadir=/usr/share \
+</I>&gt;<i> &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; $LOCAL_CONFIGURE_OPTIONS
+</I>&gt;<i> checking for gcc... gcc
+</I>&gt;<i> checking whether the C compiler works... yes
+</I>&gt;<i> checking for C compiler default output file name... a.out
+</I>&gt;<i> checking for suffix of executables...
+</I>&gt;<i> checking whether we are cross compiling... no
+</I>&gt;<i> checking for suffix of object files... o
+</I>&gt;<i> checking whether we are using the GNU C compiler... yes
+</I>&gt;<i> checking whether gcc accepts -g... yes
+</I>&gt;<i> checking for gcc option to accept ISO C89... none needed
+</I>&gt;<i> checking for gmake... no
+</I>&gt;<i> checking for make... /usr/bin/make
+</I>&gt;<i> checking for glibtool... no
+</I>&gt;<i> checking for libtool... /usr/bin/libtool
+</I>&gt;<i> checking for tar... /bin/tar
+</I>&gt;<i> checking for gzip... /bin/gzip
+</I>&gt;<i> checking for makedepend... /usr/bin/makedepend
+</I>&gt;<i> checking for awk... /usr/bin/awk
+</I>&gt;<i> ...
+</I>&gt;<i> === libacl ===
+</I>&gt;<i> make[1]: Nothing to be done for `install'.
+</I>&gt;<i> === getfacl ===
+</I>&gt;<i> ../install-sh -o root -g root -m 755 -d /usr/bin
+</I>&gt;<i> /usr/bin/libtool --mode=install ../install-sh -o root -g root -m 755 getfacl
+</I>&gt;<i> /usr/bin
+</I>&gt;<i> libtool: install: ../install-sh -o root -g root -m 755 getfacl
+</I>&gt;<i> /usr/bin/getfacl
+</I>&gt;<i> cp: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> make[1]: *** [install] Error 127
+</I>&gt;<i> make: *** [install] Error 2
+</I>&gt;<i> ESC[31mESC[1m! Problem Detected !ESC[0mESC[0m
+</I>&gt;<i> Source tree discarded.
+</I>&gt;<i> mv: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> cat: cannot open /usr/src/sorcery/.meta/acl-failed.sentinel: No such file or
+</I>&gt;<i> directory
+</I>&gt;<i> rm: cannot remove `/usr/src/sorcery/.meta/acl-failed.sentinel': No such file
+</I>&gt;<i> or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> ESC[35mESC[1mDispelled: ESC[37mESC[1mESC[40macl-failedESC[0mESC[0m
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i> sed: error while loading shared libraries: libacl.so.1: cannot open shared
+</I>&gt;<i> object file: No such file or directory
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> How to fix this?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i> &#160; Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001613.html">[Sorcerer-admins] lilo warning too big kernel
+</A></li>
+	<LI>Next message: <A HREF="001618.html">[Sorcerer-admins] libacl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1617">[ date ]</a>
+              <a href="thread.html#1617">[ thread ]</a>
+              <a href="subject.html#1617">[ subject ]</a>
+              <a href="author.html#1617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

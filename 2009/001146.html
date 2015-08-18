@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] useless jdk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C20090512215635.48c023e4%40jlmport.sorcerer%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001144.html">
+   <LINK REL="Next"  HREF="001173.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] useless jdk</H1>
+    <B>MALET</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C20090512215635.48c023e4%40jlmport.sorcerer%3E"
+       TITLE="[Sorcerer-admins] useless jdk">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue May 12 21:56:35 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001144.html">[Sorcerer-admins] useless jdk
+</A></li>
+        <LI>Next message: <A HREF="001173.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1146">[ date ]</a>
+              <a href="thread.html#1146">[ thread ]</a>
+              <a href="subject.html#1146">[ subject ]</a>
+              <a href="author.html#1146">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Le Tue, 12 May 2009 10:20:44 -0700,
+Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; a &#233;crit :
+
+&gt;<i> Ok.
+</I>&gt;<i> That is news to me.
+</I>&gt;<i> Thanks for reporting it.
+</I>&gt;<i> Since I do not have jdk installed on any 64 bit architectures
+</I>&gt;<i> I was unaware that it was missing.
+</I>&gt;<i> 
+</I>&gt;<i> It seems unclear why a whole 64 bit jdk would be provided,
+</I>&gt;<i> yet be without the 64 bit plugin.
+</I>&gt;<i> Perhaps there are other java implementations we should consider?
+</I>&gt;<i> Could perhaps gcc's java be used as a plugin?
+</I>&gt;<i> Nobody is probably eager to try and compile jdk from source,
+</I>&gt;<i> but it could be attempted if one has a few weeks to try it.
+</I>
+is there a good tutorial about? lol
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Currently, I am in the process of creating an i586-linux-uclibc
+</I>&gt;<i> port of Sorcerer.
+</I>&gt;<i> Of course jdk will not run on it.
+</I>&gt;<i> Consequently, we could use some alternatives.
+</I>&gt;<i> 
+</I>&gt;<i> For the moment I have a long way to go before the port is complete.
+</I>&gt;<i> I am doing much manual compilation merely because sentinel is
+</I>&gt;<i> unusable as a preload in a mixed target environment.
+</I>
+that's also what I was complaining about in a previous mail... great
+spirits always gather ;)
+I was looking into unionfs-fuse code some time ago and it would'nt be
+that difficult to have it modified so that it can filter the content of
+the filesystem... imagine you create an unionfs with compile tools as
+RO part and tmpfs as RW part and set a filter so that the only files
+seable from RO part are the ones provided by the augur arof...
+then compile it into a chroot jail on top of the unionfs... and you 
+likely have one of the best way to compile a software... more 
+relyable than sentinel, suitable for crosscompilation or even
+test compilation... allowing to double check the compile requirements...
+well loooooot of boons....
+in fact it require another thing beside filtering : providing native
+tools into a separate tree like /opt/ but this can be achieved by a
+mount --bind easely
+the filtered unionfs would have been there only for replacing sentinel
+
+&gt;<i> &lt;....&gt;
+</I>well if I could complete the ARCH feature of sorcery instead of speaking
+long time about a minor change into spell format (merly just adding 
+build_requirement function as an alias to requirement into main sorcery
+when ARCH isn't set...) it wouldn't have been pain in the ass to test
+uclibc....
+ARCH feature was meant for crosscompiling... however the mechanism
+bellow is much more versatile... it was meant to allow compiling into a
+safe chroot jail... allowing to make any test as if you were into an
+emulated env but without the trouble of emulated env... anyway a dream 
+remain a dream sometime
+
+best regards
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001144.html">[Sorcerer-admins] useless jdk
+</A></li>
+	<LI>Next message: <A HREF="001173.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1146">[ date ]</a>
+              <a href="thread.html#1146">[ thread ]</a>
+              <a href="subject.html#1146">[ subject ]</a>
+              <a href="author.html#1146">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

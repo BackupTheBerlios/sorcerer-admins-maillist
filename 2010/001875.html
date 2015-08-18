@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTikeRgtuLOJOkXDRFEf3677jRfiPGio34FqxRyPG%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001872.html">
+   <LINK REL="Next"  HREF="001856.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTikeRgtuLOJOkXDRFEf3677jRfiPGio34FqxRyPG%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 30 05:17:48 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001872.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001856.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1875">[ date ]</a>
+              <a href="thread.html#1875">[ thread ]</a>
+              <a href="subject.html#1875">[ subject ]</a>
+              <a href="author.html#1875">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jul 29, 2010 at 6:24 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Wednesday, July 28, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> An init-script execution method that is backward
+</I>&gt;&gt;<i> compatible with LSB and can use LSB style init-scripts
+</I>&gt;&gt;<i> without requiring additional information added to
+</I>&gt;&gt;<i> the comments section is a boon worth keeping.
+</I>&gt;<i>
+</I>&gt;<i> Amen to that. Please keep this feature.
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>
+
+I concur not merely because of the ease at which a
+LSB style init-script can be dropped into /etc/init.d/ and activated.
+I concur due to the ease of which a LSB style init-script
+can be created.
+
+Some sources do provide LSB compatible init-scripts.
+Some of the init-scripts or sample init-scripts
+provided by software authors look like 20 pages of garbage.
+In those situations I read the init-script,
+make sense out of what it does,
+and then write a LSB compatible init-script.
+Learning enough to understand and write
+a LSB compatible init-script only requires
+reading only one tiny webpage.
+
+<A HREF="http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/initscrcomconv.html">http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/initscrcomconv.html</A>
+
+The web-page even has a new note in yellow at the bottom.
+However at the time I began providing LSB compatible init-scripts
+and introduced parallel execution of init-scripts during runlevels
+the LSB documentation provided nothing to suggest
+that parallel execution was possible or intended.
+But to an extent parallel execution is possible.
+
+With time the LSB specification for init-scripts
+has become the long wide middle road.
+It is more advanced than what was originally used in Sorcerer.
+Yet it is not so advanced that it requires a replacement
+for the System V style /sbin/init program.
+This method lacks lightening speed
+and my implementation is not high on lockfiles.
+However, traveling the wide large well paved middle road
+for init-script execution is not without benefits
+with almost no sacrifice in simplicity.
+The LSB method requires the exact same knowledge
+of ordering as would required for the original method,
+but without the headache of having to decide
+init-script symbolic link numbers manually.
+
+A method best suited to replace the current simple method
+should also probably be able to execute LSB
+compatible init-scripts without requiring modification
+of the init-script nor additional information about the
+init-script or services than what is provided in the init-script.
+Basically, an ideal replacement would be a drop-in replacement.
+That way we do not sacrifice the boon
+of having a system for execution of init-scripts
+that is backwards compatible with LSB.
+
+Unfortunately, the LSB comments probably do not
+provide enough information to be able to create
+an ideal method of parallel execution.
+Therefore, after a length amount of consideration
+and honing we end up with a method for executing
+init-scripts that not unlike what we already have.
+
+Therefore, if a better more robust booting of boxes is desired
+then the means to achieve that would be to create better
+init-scripts that can anticipate and check for problems
+then provide solutions and circumvention of those problems
+automatically without having to provide a BASH prompt
+to the SA without a clue about what to do.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001872.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001856.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1875">[ date ]</a>
+              <a href="thread.html#1875">[ thread ]</a>
+              <a href="subject.html#1875">[ subject ]</a>
+              <a href="author.html#1875">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

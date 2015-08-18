@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20prohibits%20ctrl-alt-F%23%20%3F&In-Reply-To=%3C8596d02a0806181348j6038c1a5if987c372f1856cba%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000522.html">
+   <LINK REL="Next"  HREF="000517.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20prohibits%20ctrl-alt-F%23%20%3F&In-Reply-To=%3C8596d02a0806181348j6038c1a5if987c372f1856cba%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?">d3ck0r at gmail.com
+       </A><BR>
+    <I>Wed Jun 18 22:48:57 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000522.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+        <LI>Next message: <A HREF="000517.html">[Sorcerer-admins] Changes to augur!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#523">[ date ]</a>
+              <a href="thread.html#523">[ thread ]</a>
+              <a href="subject.html#523">[ subject ]</a>
+              <a href="author.html#523">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hrm... is there some other place other than /etc/X11/xorg.conf that
+that file is?
+I removed it (cause I haven't had one to date, and X has been working ok )
+
+but now X isn't starting at all...
+
+Oh I mvoed it to /root an it still read it (okay that's gone)
+
+
+The driver chosen in the result of /etc/init.d/xorg.conf  is &quot;vga&quot;
+
+Uhmm the dirver should be &quot;vmware&quot;
+
+but there appears to not be a vmware driver
+
+is there a command to show the history of cast spells?
+
+well ls -latr /etc/sorcery/log/compile indicates that xorg-server was
+rebuilt during this whole process of updating.... guess some option
+fell off?
+
+maybe there was stuff from the I/R cd (modules) which were removed,
+cause in compile logs I see no sign of xf86-video-vmware ....
+
+with vmware driver now installed and available xorg.conf completes.
+(well I am in framebuffer mode already)
+
+and now X starts again... (in a tiny screen less than 1024x768) nice
+thing about 1920x1200, 1024 screens fit really well :) almost 3x2
+
+
+
+gdm(gnome?) does thow an error &quot;error activating XKB configuration .
+It can ahppen under various circumstatnces - a bug in libxklavier
+library - a bug in X server (kdbcomp, xmodmap utilties)
+
+blah... gies more info like xprop -root | grep XKB  hrm... I dunno
+doesn't look wrong or inaccurate... well maybe it's msising modules
+now - maybe that goes back to my failure to open XIM ...
+
+screen resolution utility now has 800x600, 640x480 choices :)  there
+aren't really any mode specifications in xorg.conf right now
+
+
+
+
+
+On Wed, Jun 18, 2008 at 12:14 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Wed, Jun 18, 2008 at 9:45 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Tried running /etc/init.d/xorg.conf start.
+</I>&gt;<i>
+</I>&gt;<i> That may create a /etc/X11/xorg.conf
+</I>&gt;<i> that is usable for starting X.
+</I>&gt;<i> However, I would not expect it to
+</I>&gt;<i> contain explicit display modes to use.
+</I>&gt;<i>
+</I>&gt;<i> It still reads as either a problem with
+</I>&gt;<i> an xorg graphics driver or a problem
+</I>&gt;<i> with the /etc/X11/xorg.conf
+</I>&gt;<i>
+</I>&gt;<i> If the /etc/X11/xorg.conf provided by
+</I>&gt;<i> /etc/init.d/xorg.conf is not a good start
+</I>&gt;<i> then either import your own xorg.conf
+</I>&gt;<i> or perhaps try creating a new one using
+</I>&gt;<i> /usr/bin/xorgconfig.
+</I>&gt;<i>
+</I>&gt;<i> With some xorg drivers, like the intel one,
+</I>&gt;<i> merely killing the X server may or may not
+</I>&gt;<i> return to a virtual console.
+</I>&gt;<i> It may create a black screen or a very
+</I>&gt;<i> strange looking screen with oddly colored lines.
+</I>&gt;<i> If that happens I usually simply kill -9 X and
+</I>&gt;<i> whatever GUI login program is running
+</I>&gt;<i> and then start a GUI login program.
+</I>&gt;<i>
+</I>&gt;<i> To more precisely conjecture the problem
+</I>&gt;<i> I would require a verbose description
+</I>&gt;<i> including a listing of loaded modules,
+</I>&gt;<i> the /etc/X11/xorg.conf file being used,
+</I>&gt;<i> and the output of lspci -v
+</I>&gt;<i>
+</I>&gt;<i> That way I could check that the expected modules
+</I>&gt;<i> are loaded, that the graphic hardware and
+</I>&gt;<i> /etc/X11/xorg.conf are compatible,
+</I>&gt;<i> that /etc/X11/xorg.conf is adequate.
+</I>&gt;<i> As for the stability of the xorg graphics driver
+</I>&gt;<i> that can not be determined without doing the
+</I>&gt;<i> testing on the same hardware that you have.
+</I>&gt;<i>
+</I>&gt;<i> As usual, you can always try the newest driver
+</I>&gt;<i> available for download from x.org.
+</I>&gt;<i> However, it might or might not compile.
+</I>&gt;<i> It might or might not run.
+</I>&gt;<i> In the case of an integrated savage video chipset
+</I>&gt;<i> I discovered that the newer xorg driver avoided
+</I>&gt;<i> bugs that were in the xorg graphics driver at
+</I>&gt;<i> the time of the xorg release.
+</I>&gt;<i>
+</I>&gt;<i> However, newer versions of xorg sources do not
+</I>&gt;<i> all fit together as nicely as gnome sources.
+</I>&gt;<i> Apparently, after trying gnome's gdm 2.22.0
+</I>&gt;<i> even newer gnome sources do not always
+</I>&gt;<i> work as expected.
+</I>&gt;<i>
+</I>&gt;<i> I am still inclined to expect that /etc/X11/xorg.conf
+</I>&gt;<i> is not yet complete enough to allow changing resolutions.
+</I>&gt;<i> And that not returning to console when killed is due
+</I>&gt;<i> to bugs in the xorg drivers.
+</I>&gt;<i> Also running /etc/init.d/xorg.conf will accomplish nothing
+</I>&gt;<i> if /etc/X11/xorg.conf already exists.
+</I>&gt;<i> It will not create a new /etc/X11/xorg.conf
+</I>&gt;<i> nor replace the old one.
+</I>&gt;<i>
+</I>&gt;<i> If using NVIDIA-Linux-x86
+</I>&gt;<i> then a proper /etc/X11/xorg.conf
+</I>&gt;<i> is even more important.
+</I>&gt;<i> And the NVIDIA-Linux-x86 documentation
+</I>&gt;<i> describe how to do so and also provide a
+</I>&gt;<i> program to assist with generating that config file.
+</I>&gt;<i> /etc/init.d/xorg.conf would not generate an appropriate
+</I>&gt;<i> /etc/X11/xorg.conf file to use with
+</I>&gt;<i> NVIDIA-Linux-x86
+</I>&gt;<i>
+</I>&gt;<i> As for ati-driver-installer may luck be on your side.
+</I>&gt;<i> version 8-4-x86.x86_64 would not compile.
+</I>&gt;<i> Version 8-5-x86.x86_64 does compile.
+</I>&gt;<i> Does it work?
+</I>&gt;<i> I have no idea.
+</I>&gt;<i> Each time I put an ATI card in a computer
+</I>&gt;<i> it spot welds the fan, it overheats, and flakes.
+</I>&gt;<i> Usually one can hear a fan going bad,
+</I>&gt;<i> but not if it melts into a fixed position
+</I>&gt;<i> and never turns again.
+</I>&gt;<i>
+</I>&gt;<i> In most cases the xorg VESA drivers can be used
+</I>&gt;<i> in order to control the graphics card.
+</I>&gt;<i> It is not fast, the cursor may look strange,
+</I>&gt;<i> the font size and/or appearance may look strange,
+</I>&gt;<i> but it will probably work.
+</I>&gt;<i> If you enjoy 648x480x16 graphics then the
+</I>&gt;<i> xorg VGA driver can provide that.
+</I>&gt;<i> But I can not stand looking at that
+</I>&gt;<i> for more than 30 minutes at a time.
+</I>&gt;<i>
+</I>&gt;<i> If maximum X server performance is not an issue
+</I>&gt;<i> then trying the VESA driver may provide a useful
+</I>&gt;<i> baseline comparison.
+</I>&gt;<i>
+</I>&gt;<i> On one card I had the choice between using:
+</I>&gt;<i> s3virge s3 vesa and vga.
+</I>&gt;<i> But the order I liked best was
+</I>&gt;<i> s3 s3virge vesa vga.
+</I>&gt;<i> Or was vesa before s3virge?
+</I>&gt;<i> Do not remember exactly now.
+</I>&gt;<i> But it does demonstrate that
+</I>&gt;<i> there may be more than one
+</I>&gt;<i> driver that can be used with the a card.
+</I>&gt;<i>
+</I>&gt;<i> Looks like someone restored the xf86-video-i810 driver.
+</I>&gt;<i> For i810 it will probably work better than the
+</I>&gt;<i> xf86-video-intel driver.
+</I>&gt;<i> But I do not know if that is necessarily so.
+</I>&gt;<i> At one time I thought the xf86-video-intel driver
+</I>&gt;<i> replaced the xf86-video-i810 driver because
+</I>&gt;<i> the xf86-video-i810 driver was suspiciously
+</I>&gt;<i> absent from that xorg release.
+</I>&gt;<i>
+</I>&gt;<i> Of course I still have no idea what graphics
+</I>&gt;<i> chipset is used in that box which is not changing
+</I>&gt;<i> resolution modes from the gnome control panel.
+</I>&gt;<i> Hopefully, the above information will be of some use?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Result is - no resolution change and a black screen.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> connect with ssh... I don't know what else to grab
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>  1749 tty1     S+     0:01 -bash
+</I>&gt;&gt;<i>  3556 ?        S      0:00 /usr/libexec/gconfd-2 6
+</I>&gt;&gt;<i>  3561 ?        Ss     0:00 dbus-daemon --fork --print-address 18
+</I>&gt;&gt;<i> --print-pid 20 --session
+</I>&gt;&gt;<i>  3582 ?        Ssl    0:00 /usr/libexec/bonobo-activation-server
+</I>&gt;&gt;<i> --ac-activate --ior-output-fd=16
+</I>&gt;&gt;<i>  3602 tty2     S+     0:00 -bash
+</I>&gt;&gt;<i>  3783 ?        Ss     0:00 sshd: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at pts</A>/0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> nothing in 'top'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> killing 3556, 3561, 3582 have no effect.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The main console is still black and dead.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000522.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+	<LI>Next message: <A HREF="000517.html">[Sorcerer-admins] Changes to augur!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#523">[ date ]</a>
+              <a href="thread.html#523">[ thread ]</a>
+              <a href="subject.html#523">[ subject ]</a>
+              <a href="author.html#523">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

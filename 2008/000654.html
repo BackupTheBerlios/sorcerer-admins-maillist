@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807280602p65825ccbl7ddb8d0b6919338f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000653.html">
+   <LINK REL="Next"  HREF="000662.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807280602p65825ccbl7ddb8d0b6919338f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 28 15:02:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000653.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000662.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#654">[ date ]</a>
+              <a href="thread.html#654">[ thread ]</a>
+              <a href="subject.html#654">[ subject ]</a>
+              <a href="author.html#654">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Because this write wearing is Sorcery a good choice for usb memory?
+</I>
+Jan says that it is fine.
+It was one of my initial concerns.
+Although Sorcerer updates more frequently than other distros
+most of the action happens on /usr/src/sorcery and /tmp
+which are normally both tmpfs.
+However, when linux compiles it compiles in /usr/src
+That is the one exception.
+
+Of course /var/cache/sources and /var/tmp receive use.
+However, /var/cache/ccache can be turned off
+and /var/cache/archive/ can be turned off,
+and /var/tmp can have tmpfs mounted upon it.
+
+
+&gt;<i> but speed might be
+</I>&gt;<i> problem as usb disks are not so fast and if you want compile whole sorcerer
+</I>&gt;<i> that might take some time todo using external usb disks.
+</I>
+Tests on my USB flash drives suggest that they perform better
+for compilation than fixed disks since there is no head seek time.
+Most of the files read during compilation are small,
+such as header files.
+They are entirely read from flash drive faster
+than they can be read from fixed disk.
+
+
+&gt;<i> I am myself waiting for real flash drives, SSD drives, using MLC cells, like
+</I>&gt;<i> OCZ Core drives, for my main gaming machine, thinking to put like 2 * 64GB
+</I>&gt;<i> using RAID1 (or 0) as C-drive would be pretty fast, queiet and low power
+</I>&gt;<i> etc. and put my main storage to my new SAN storage server. I am using iSCSI
+</I>&gt;<i> to distribute storage.
+</I>
+We all dream of that day.  :)
+
+
+&gt;<i> Anyway i am thinking that might it possible to design some sort of
+</I>&gt;<i> pre-compiled binaries system to sorcerer, because i dont see very wise move
+</I>&gt;<i> to can install sorcerer to usb memory if you need to compile whole system. I
+</I>&gt;<i> know there is this dependencies hell that will make it difficult but anyway
+</I>&gt;<i> just make compiled binaries with good choice of options turned on.
+</I>
+The I/Rs are about as pre-compiled as Sorcerer becomes.
+And it is a good start.
+It does contain a usable xorg installation with video drivers.
+
+Around the end of 2007 I wanted an I/R with KDE installed.
+But that is not likely to happen unless I have an x86_64 box.
+
+
+&gt;<i> Or what if some kind of remote compiling sorcerer farm that will compile
+</I>&gt;<i> your sources with your optional options turned on/off, some kind of
+</I>&gt;<i> chrootet, etc system? That would be certainly a very cool system.
+</I>
+That is easy and less useful than you might expect.
+But a number of Sorcerer SAs already share /var/cache/archive/
+among boxes and use sorcery features to be able to reuse
+archives for updates instead of recompiling.
+However, at least one box, which is updated first
+and probably the developmental box,
+must not re-use archives.
+
+If deploying flash drives for notebooks
+one could always build the initial loadout on a fixed disk
+and then transfer it to as many flash drives as desired.
+However, I still recommend updating those flash drive
+installations since they, like any deployed box,
+become more vulnerable over time as bugs and exploits
+in software become known.
+
+However, if the notebooks are not usually network connected
+and the installations on USB flash drives have encrypted root
+and those flash drives never leave take a trip away from their owner
+then that may be reasonably safe to let age for 6 months and
+then completely dispose of.
+
+With current technology and 32G flash drives
+I expect that holds enough space and life in order
+to deploy a box for 2 years with updates.
+Jan expects more than a 10 year lifespan.
+Perhaps the more accurate estimate is somewhere in between?
+I would still expect a 2 year life span to be sufficient.
+
+Given how sorcery-md5sum can check files
+there may be a way to determine when is a good time
+to backup, restore to a new flash drive and snap the old one in two?
+But of course md5sums on files do not always change
+due to corruption.
+Or rather they rarely change due to file corruption.
+
+With fixed disk sometimes they turn to Swiss cheese,
+sometimes they flake a little in usual locations,
+and sometimes they fail entirely.
+However, I would expect with flash drive technology
+there aught to be a more graceful way to tell when they are failing.
+If they support smart drive diagnostics
+then that might provide information
+to suggest when the flash drive should be replaced?
+I should test a flash drive with smartmontools,
+but I have not done so yet.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000653.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000662.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#654">[ date ]</a>
+              <a href="thread.html#654">[ thread ]</a>
+              <a href="subject.html#654">[ subject ]</a>
+              <a href="author.html#654">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

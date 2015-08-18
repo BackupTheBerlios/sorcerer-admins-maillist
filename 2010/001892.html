@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo does not compile - several problems with	it
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%20with%0A%09it&In-Reply-To=%3CAANLkTikt11VcmGF7zFMKqUYLis6CC2fJX_14RvQKFvcg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001891.html">
+   <LINK REL="Next"  HREF="001893.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo does not compile - several problems with	it</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%20with%0A%09it&In-Reply-To=%3CAANLkTikt11VcmGF7zFMKqUYLis6CC2fJX_14RvQKFvcg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lilo does not compile - several problems with	it">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug 26 14:01:18 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001891.html">[Sorcerer-admins] lilo does not compile - several problems	with	it
+</A></li>
+        <LI>Next message: <A HREF="001893.html">[Sorcerer-admins] lilo does not compile - several problems	with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1892">[ date ]</a>
+              <a href="thread.html#1892">[ thread ]</a>
+              <a href="subject.html#1892">[ subject ]</a>
+              <a href="author.html#1892">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Aug 25, 2010 at 11:57 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;&gt;<i> Why does the software author have capitalize the 'd' in the tarball name?
+</I>&gt;<i>
+</I>&gt;<i> No idea. Some uses dev86 and some people calls its Dev86.
+</I>&gt;<i> Its difficult to say because its homepage does not tell much about it.
+</I>
+Traditionally, I use spell names that mimic the source tarball filename.
+That is why Sorcerer has esound
+instead of esd or libesd.
+esound-0.2.41.tar.bz2 is the name of the source tarball
+for downloading the enlightenment sound daemon.
+Sometimes I create new spells
+when the software author changes the name
+of the source tarball.
+
+
+&gt;<i> I think problem is newer DESTDIR based compile. I think Dev86 sets some
+</I>&gt;<i> prefixes that it uses to wrong location, based on DESTDIR, so after we
+</I>&gt;<i> install Dev86, it still assumes those are located at
+</I>&gt;<i> /usr/src/sorcery/.destdir/... and so on...
+</I>
+I would have expected that problem also with DESTDIR
+had it installed any different on the i686 test box.
+Fortunately, or maybe unfortunately, it installed from a new cast
+the same way it had installed on a previous cast.
+I do not understand why.
+But I am yet unable to correct a problem
+that I can not create.
+
+
+
+&gt;<i> lilo compile log tells me:
+</I>&gt;<i> ------------8&lt;------------
+</I>&gt;<i> bcc -Md -ansi -I.. -I/usr/lib/bcc/include -c -O -DHAS_VERSION_H
+</I>&gt;<i> -DHAS_LIBDEVMAPPER_H -DLILO=0xbb920890 -DLCF_BDATA -DLCF_DSECS=3 -DLCF_EVMS
+</I>&gt;<i> -DLCF_IGNORECASE -DLCF_LVM -DLCF_NOKEYBOARD -DLCF_ONE_SHOT -DLCF_PASS160
+</I>&gt;<i> -DLCF_REISERFS -DLCF_REWRITE_TABLE -DLCF_SOLO_CHAIN -DLCF_VERSION
+</I>&gt;<i> -DLCF_VIRTUAL -DLCF_MDPRAID -DLCF_DEVMAPPER -o lilo.o &#160;../lilo.c
+</I>&gt;<i> Unable to execute bcc-cpp.
+</I>&gt;<i> ------------8&lt;------------
+</I>
+I can grep that:
+
+# augur compile lilo | grep bcc-cpp
+/usr/lib/bcc/bcc-cpp bios.c -o /tmp/$$000011730 -D__ELKS__ -D__unix__
+-DL_bios_start -D__AS386_16__ -D__STANDALONE__ -D__HAS_NO_FLOATS__
+-D__BCC_VERSION__=0x001011L -I/usr/lib/bcc/include -0
+
+# augur from bcc-cpp
+Dev86:/usr/lib/bcc/bcc-cpp
+
+Also happens to be installed.
+That seems useful to me.
+
+
+&gt;<i> Nowdays its a default on eg. Ubuntu, which is widely used distro, also
+</I>&gt;<i> Debian (Squeeze) is switching to use it too.
+</I>
+I am not so much concerned with whether other distros use it.
+I am concerned with how it would work on Sorcerer.
+So far, no support for it.
+That would be a problem.
+
+
+&gt;<i> Its been actively developed and maintained, which lilo nor legacy-grub is.
+</I>&gt;<i> That's a default win for GRUB2 :-)
+</I>
+I also have surmised that the active development
+on the new grub might bring it out as a winner in the long run.
+But I also anticipated that probability with DESTDIR.
+The support is good, but not unanimous.
+The question then becomes when to switch
+in order to reap the benefits and abstain the
+cost from bugs and problems.
+I have a high confidence when testing new versions of lilo.
+That is different from udev.
+And confidence in grub is yet untested.
+
+
+&gt;<i> It has some features that are missing and maybe its not tested yet so much
+</I>&gt;<i> as legacy-grub but you cant deny thats the road to go.
+</I>
+Oh, I do not deny it.
+The question remains when to switch.
+Better a little late than a bit too soon.
+lilo still remains reliable.
+And we can not have a system that has
+both grub and lilo.
+A choice must be made.
+
+
+&gt;<i> Take a look this page: <A HREF="https://help.ubuntu.com/community/Grub2">https://help.ubuntu.com/community/Grub2</A> it has some
+</I>&gt;<i> info about it.
+</I>
+That is impressive.
+However, I am uncertain about how much of it
+is specific to additions made by Debian
+above that which grub2 provides.
+Cross referencing the above URL with
+<A HREF="http://grub.enbug.org/Manual">http://grub.enbug.org/Manual</A>
+seems to suggest that Debain maintainers
+put a lot of effort into making grub work
+a lot like lilo does for Sorcerer.
+Even update-grub or something similar must
+be run following a kernel update.
+
+
+&gt;&gt;<i> It might also be a tad bit easier to mis-install it
+</I>&gt;&gt;<i> since it does not use /dev device names.
+</I>&gt;<i>
+</I>&gt;<i> It uses UUIDs. I think there is still some uses disk+partition scheme too,
+</I>&gt;<i> which is confusing.
+</I>
+Not entirely.
+It still uses those unusual grub designations for disks.
+set root=(hd0,1)
+according to <A HREF="https://help.ubuntu.com/community/Grub2">https://help.ubuntu.com/community/Grub2</A>
+And it gives 1 to the first partition instead of 0 as old grub would.
+
+As far as I know filesystems can have UUIDs,
+but disks can not.
+UUIDs are not stored in the MBR of a disk?
+
+
+&gt;<i> Indeed, its not a easy task to handle GRUB2 configuration scripts, because
+</I>&gt;<i> if you do it wrong, your box does not boot anymore.
+</I>
+Yup, that would be a significant concern.
+
+
+&gt;<i> Anyway, as lilo developments is kinda dead nowdays, its just matter of time
+</I>&gt;<i> we have to switch some other bootloader.
+</I>
+I expected as much since people first started hyping grub.
+However, much to my surprise lilo is still a viable alternative.
+
+
+&gt;<i> One big reason is that uEFI BIOSes are coming, i mean, on server side, uEFI
+</I>&gt;<i> is _standard_ nowdays, has been year ot two, atleast on IBM stuff.
+</I>&gt;<i>
+</I>&gt;<i> Since GPT is also part of uEFI specs, you cant use LILO there, so, we are
+</I>&gt;<i> actually not even supporting todays servers fully. We are using their legacy
+</I>&gt;<i> boot modes nowdays.
+</I>
+Yeah, I tried to write some spells to help with EFI booting.
+Can not find those spells now.
+I vaguely recall one of them being called elilo.
+Anyway, I have no experience with EFI booting
+so I do not have a good idea of what is required for it to work.
+
+
+&gt;<i> Legacy modes works, not a problem for now, but we are steadily making old
+</I>&gt;<i> BIOS obsolete and switch over to uEFI completely and thats scenario where
+</I>&gt;<i> you can't use LILO because its missing support. afaik if you have over 2TB
+</I>&gt;<i> drives you need to use GPT.
+</I>
+Yes, a transition from lilo or improvement to lilo seems necessary.
+<A HREF="http://freshmeat.net/projects/elilo">http://freshmeat.net/projects/elilo</A>
+That is the freshmeat page for elilo.
+Whether we can use it as a drop-in-replacement for lilo
+or not on EFI boxes I do not know.
+Unless someone grants me an EFI box to play with
+then someone with some experience should code it.
+
+&gt;<i> I dont have a clue what lilo does if you have
+</I>&gt;<i> more than 2TB drive?
+</I>
+Me neither, except I do not expect that loading a kernel
+or initramfs image from beyond the 1024 cylinder would be a problem.
+*lol*
+
+
+&gt;<i> Not saying GRUB2 works perfectly on uEFI systems, but it has GPT support,
+</I>&gt;<i> LILO does not have (?).
+</I>
+I am clueless.
+
+These are good questions to ask.
+Even if the transition to grub2 should be fated
+then who is willing to put forth the effort to make
+it work as smoothly and transparently on Sorcerer
+as lilo currently does?
+Having used only lilo, syslinux, and isolinux for over a decade
+does not grant me any great qualification.
+I do not consider myself an expert in everything.  *lol*
+Given a choice I am likely to continue using lilo
+until SAs submit honed contributions that will
+enable grub to be used instead.
+
+Could elilo be the future of lilo on EFI enabled boxes instead of grub?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001891.html">[Sorcerer-admins] lilo does not compile - several problems	with	it
+</A></li>
+	<LI>Next message: <A HREF="001893.html">[Sorcerer-admins] lilo does not compile - several problems	with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1892">[ date ]</a>
+              <a href="thread.html#1892">[ thread ]</a>
+              <a href="subject.html#1892">[ subject ]</a>
+              <a href="author.html#1892">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

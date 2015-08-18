@@ -1,0 +1,287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CAANLkTikmsHxgJvBqHMRbMu-tPmls9VxhkZ_tkhU1eUkx%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001755.html">
+   <LINK REL="Next"  HREF="001759.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CAANLkTikmsHxgJvBqHMRbMu-tPmls9VxhkZ_tkhU1eUkx%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 14 21:53:57 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001755.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001759.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1757">[ date ]</a>
+              <a href="thread.html#1757">[ thread ]</a>
+              <a href="subject.html#1757">[ subject ]</a>
+              <a href="author.html#1757">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>POSIX command names like UNIX command names
+often differ slightly than what they probably aught to be.
+The command to search for us umount.
+The line looks like:
+
+LC_ALL=C sort -ur | xargs -r --max-lines=1024 umount -lr
+
+After that line and before the
+
+ }
+
+Try inserting
+
+sleep 1
+
+The full command being used to umount filesystems is
+
+cut -d ' ' -f2 /proc/mounts |
+  LC_ALL=C sort -ur | xargs -r --max-lines=1024 umount -lr
+
+That means:
+
+Using space as a delimiter cut everything from /proc/mounts
+except the second column
+then sort that list into reverse order and eliminate duplicates,
+and finally provide that list as parameters to the umount
+command followed by parameter -lr and with an additional
+list of parameters no greater than 1024 parameters in length.
+
+Shell programming differs from any other type of programming
+that I tried before and in many ways is fun and easy.
+The '|' pipe, the character in between the quotes,
+is a very useful for shell scripts.
+The pipe connects the standard output from the
+program executing in front of the pipe
+to the standard input of the program that
+executes after the pipe.
+The pipe becomes like a bucket brigade.
+But since we are dealing with computers instead of water
+it is a bit bucket brigade.  :)
+
+If augur is run without parameters
+then it prints a general help screen where
+in one column called Stdin some of the
+parameters have an asterisk *.
+All augur commands support input as
+additional command line parameters.
+However, some of them also will read
+input from stdin.
+In that fashion augur commands can easily
+be joined together using a pipe.
+One of my favorite examples is:
+
+# augur lone | augur size | sort -g | tee /tmp/piggy.txt
+
+That creates the piggy list and saves it to file /tmp/piggy.txt
+while also displaying it as scroll on the screen.
+If a box is low on space or I just want to clean
+wipe away some programs not being used,
+which tends to happen on my test box,
+then I use the piggy list to help decide.
+
+A more menu driven method for removing software
+is to use sorcery's dispel menu.
+That helps the SA select software for removal
+using the same logic used while undressing.
+When undressing could a person remove their
+socks before their shoes?
+Crazy idea yes?
+
+The sorcery's dispel menu also ensures that
+shoes must be selected for removal
+before socks become eligible for removal.
+It is a layered approaching to software removal
+where the outer most layers must be removed first
+in order to unlock installed software that is being kept
+installed because it is required by other installed software.
+Sorcerer boxes have more layers of software than
+a fancy pastry cake and less layers than
+an authentic folded steel Japanese sword.
+Fortunately, sorcery is there to help.
+Therefore, the SA does not have to recognize each layer.
+
+Knowing about pipes is useful.
+Knowing about a Sorcerer box's layers of software is useful.
+Sorcerer requirements are always recursive rather than absolute.
+And that is what creates a layered effect.
+Additionally, I would want to know about all the software
+installed by the coreutils spell by reading their manual pages.
+After that I would read the manual pages for sed, grep, find, xargs.
+And finally, I would read the manual page for BASH.
+
+# augur install coreutils sed grep findutils bash |
+grep /man/ |
+xargs man
+
+Just press q to progress to the next manual page.
+
+Yes, that is a lot of reading 101 manual pages,
+and the bash manual page is very long!
+But why all the reading?
+Sorcerer SAs' skill is proportional to their SA skills
+and almost directly proportional to BASH scripting skill.
+The better a SA's BASH scripting skill
+the more effectively that SA can wield sorcery.
+
+Sorcerer was originally designed to scratch an itch
+that senior level SAs acquire from using a pre-compiled
+binary based distro.
+And unfortunately, it still remains a tool where skilled
+SAs have a much greater capacity to wield than novice.
+Consequently, almost any output that can be achieved
+by connecting a few commands together using pipes
+is not usually scripted as a convenient augur command.
+
+Therefore, overall the best way to increase a SAs
+ability with sorcery is to increase the SAs ability,
+especially scripting ability.
+With Sorcerer there are not a dozens
+or more GUI programs to learn.
+The most basic sorcerer commands are:
+augur cast dispel leech sorcery
+That in itself is practically nothing to learn,
+about a 15 minute effort at most.
+
+In contrast, learning about coreutils and BASH
+and other things useful for a SA can require
+a week of study.
+However, such knowledge is not insignificant nor
+limited to practical use on Sorcerer boxes.
+coreutils and BASH are installed on almost every POSIX box.
+Even Solaris and UNIX implementations have
+commands with the same names that accept
+similar command line parameters and produce similar output.
+Most if not almost everything learned about while
+administrating a Sorcerer box is also knowledge
+that is applicable while administrating other distros.
+
+Therefore, in summary Sorcerer tends to attract
+the type of SAs that could deploy a box without
+a distro or deploy a box with a distro of their own design
+if that SA had sufficient time to accomplish the task.
+That does not make Sorcerer the best distro,
+but it grants experienced SAs nearly as much freedom
+they could want from a distro while still gaining
+the benefits of easy software updating.
+I want to expect about Sorcerer that
+the division of decision of what happens
+is more equally weighted to SAs rather than distro developers.
+
+Probably the most significant power struggle in Sorcerer
+is about the init-scripts.
+It is not just about how init-scripts execute,
+but more importantly about how
+I made a distribution wide decision that init-scripts
+are not configuration files and
+therefore init-script content is non-customizable
+unlike other files stored in /etc/
+With that declaration I also made the provision that
+SAs who want a customized init-script
+must take full responsibility for it
+by creating a custom spell which installs that init-script.
+
+Therefore, the change I recommended by adding
+a sleep 1 to the /etc/init.d/mount init-script
+would not be a permanent change.
+The next time the &quot;init-scripts&quot; spell casts
+the modified /etc/init.d/mount would be replaced
+by a stock version.
+
+Since init-scripts can change name, function, and
+even ordering an init-script that would be permitted
+customization today could cause a box fail to reboot a year later.
+That sort of unexpected latency between cause and effect
+could baffle and frustrate a SA.
+Therefore, most decisions about init-scripts are made
+at the distribution level.
+Such decisions a SA can only overrule by creating custom spells.
+Unfortunately, understanding how all the init-scripts
+fit together is not unlike assembling a 200 piece jigsaw puzzle.
+
+I hope that helps provide some useful information.
+Much of the documentation that Sorcerer SAs
+would want to use on a daily basis is provided in
+the form of help screens, manual pages, info pages,
+/usr/src/linux/Documentation/  /usr/share/doc/ /usr/doc/
+and basically all of that good stuff is installed on Sorcerer boxes.
+The next best places to look on the World Wide Web are
+google's search engine,
+software author's project and home pages,
+and &quot;The Linux Documentation Project.&quot;
+Most Sorcerer spells have a homepage entry
+that contains the URL to the software author's project
+website or homepage.
+However, Sorcerer itself does not provide much documentation,
+because almost all the docs anyone needs already exists.
+
+
+Sorcerer is not unlike a ship in a bottle.
+The bottle is POSIX, Portable Operating System for unIX.
+POSIX defines what is and should be about distros.
+The Sorcerer I/R is like a quick start kit.
+Sorcery is like glue and simple tools for fastening pieces together.
+And the individual pieces of the boat
+come from the installed software components.
+Being Sorcerer SA requires
+some effort and some skill.
+But the requirement is not as much
+as compared to someone who builds
+model ships inside of bottles.  :)
+Some Sorcerer SAs come to feel a bit of
+pride and affection for their Sorcerer boxes.
+They learn how to care for
+and feed their pet Sorcerer boxes.  :)
+It is not a bad experience for SAs that have
+the skill and required tenacity to make their boxes thrive.
+Good luck.
+
+
+On Wed, Jul 14, 2010 at 1:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> Sorry but I don't see a unmount command in&#160; /etc/init.d/mount so I can't try
+</I>&gt;<i> it.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001755.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001759.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1757">[ date ]</a>
+              <a href="thread.html#1757">[ thread ]</a>
+              <a href="subject.html#1757">[ subject ]</a>
+              <a href="author.html#1757">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

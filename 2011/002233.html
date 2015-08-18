@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more init-script improvements
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20init-script%20improvements&In-Reply-To=%3CCA%2BT4wDgjQ93hVtp88F2SyHF-XQbebv6v8XE4zA0GyWmokH3MUA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002228.html">
+   <LINK REL="Next"  HREF="002234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more init-script improvements</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20init-script%20improvements&In-Reply-To=%3CCA%2BT4wDgjQ93hVtp88F2SyHF-XQbebv6v8XE4zA0GyWmokH3MUA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more init-script improvements">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Aug  3 23:29:35 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002228.html">[Sorcerer-admins] init-scripts again
+</A></li>
+        <LI>Next message: <A HREF="002234.html">[Sorcerer-admins] more improved init-scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2233">[ date ]</a>
+              <a href="thread.html#2233">[ thread ]</a>
+              <a href="subject.html#2233">[ subject ]</a>
+              <a href="author.html#2233">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Unfortunately, my list of init-script improvements
+is too long to complete anytime soon.
+However, yesterday I scratched a small itch
+concerning locale-archive generation.
+
+glibc-locales spell is deprecated
+locale-archive is created by an init-script,
+during runlevel, in the background, using multiple processes.
+The creation of locale-archives does not delay the completion of the runlevel.
+
+Basically, on a quad core processor locale-archive creation
+for a full set of locales is nearly 4x faster than using the
+glibc-locales spell.
+And the benefit of menu driven selection of locales is still available.
+Here is how it works...
+
+# /etc/init.d/lang configure
+# /etc/init.d/locale-archive configure
+
+init-script lang provides a dialog for selecting the value for
+the LANG environment variable from the available locales.
+Maybe I should have called the init-script LANG instead?
+
+The locale-archive init-script is responsible for creating the locale-archive.
+The &quot;configure&quot; parameter provides a menu for selecting individual locales.
+A full set of locales requires about 94M and 1 minute to generate.
+A custom set of locales might require less than 4M.
+
+/etc/init.d/lang is potentially interactive when it starts.
+Therefore, it should run during sysinit since sysinit
+never executes init-scripts in parallel in the background.
+/etc/init.d/locale-archive runs during runlevel.
+locale-archive is worth creating.
+But awaiting the outcome would be a waste of time.
+Therefore, locale-archive is generated in the background.
+
+The most apparent effect of this change is no effect,
+or rather no waiting for glibc-locales to complete casting.
+locale-archive only regenerates when obsolete or missing.
+And it is all automatic.
+If the SA forgets to set a LANG environment variable
+then the opportunity is eventually presented to the SA during a boot.
+That is an excellent convenience for sleepy overworked SAs
+and SAs that that otherwise would not bother with internationalization
+or might be unaware of how the choice is implemented on Sorcerer.
+
+This change trims nearly 5 minutes
+from the testing time for new Install/Rescue images
+since the generation of a full set of locales involves no waiting.
+It makes more efficient use of available CPU cycles during
+and immediately after the first boot of a Sorcerer Sentient installation.
+Therefore, I feel pleased to eliminate the glibc-locales spell.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002228.html">[Sorcerer-admins] init-scripts again
+</A></li>
+	<LI>Next message: <A HREF="002234.html">[Sorcerer-admins] more improved init-scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2233">[ date ]</a>
+              <a href="thread.html#2233">[ thread ]</a>
+              <a href="subject.html#2233">[ subject ]</a>
+              <a href="author.html#2233">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

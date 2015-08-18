@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Important Changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Important%20Changes...&In-Reply-To=%3CAANLkTinweqdBiF4A6s6ElNGO30GRPlnxIJ3cDRXoPEc0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001692.html">
+   <LINK REL="Next"  HREF="001693.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Important Changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Important%20Changes...&In-Reply-To=%3CAANLkTinweqdBiF4A6s6ElNGO30GRPlnxIJ3cDRXoPEc0%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Important Changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul  3 04:08:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001692.html">[Sorcerer-admins] Important Changes...
+</A></li>
+        <LI>Next message: <A HREF="001693.html">[Sorcerer-admins] Important Changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1694">[ date ]</a>
+              <a href="thread.html#1694">[ thread ]</a>
+              <a href="subject.html#1694">[ subject ]</a>
+              <a href="author.html#1694">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jul 2, 2010 at 2:55 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> Hi!
+</I>&gt;<i> DESTDIR like support is good news! I just wonder where augur alien command
+</I>&gt;<i> went?
+</I>
+It went away.  :)
+I did not like waiting for it.
+Probably it was rarely used for dislike of waiting.
+Probably runs nearly instantly on a box with RAM drives.
+However, on fixed-disk
+it accessed lots of files/dirs all over the disk
+and required considerable time to complete.
+
+I did not dislike the augur alien command.
+It is a useful command.
+So I made a spell out of it &quot;sorcery-alien&quot;
+# cast sorcery-alien
+it will re-cast itself weekly.
+It's compile log contains the list of aliens.
+That way whenever a SA wants to hunt aliens
+they can just start with the compile log
+of sorcery-alien.
+
+Is it more useful as an augur command?
+
+A while ago a number of augur commands that
+tended to be periodic became spells.
+Or maybe some were spells from before then?
+
+Well at the moment I am thinking about:
+sorcery-alien
+sorcery-backup
+sorcery-bxz
+sorcery-clean
+sorcery-defrag
+sorcery-immune
+sorcery-md5sum
+
+Ah, I do not recommend using sorcery-backup.
+I have not reviewed that spell in a long time.
+Probably not since 2008.
+It is still written to compress files using 7za instead of xz.
+
+Another useful spells is the &quot;etc&quot; spell.
+It is a strange modular spell that I last updated
+probably in 2008.
+# augur forget etc; cast etc
+That will cast it.
+Basically, it is a menu that helps SAs
+learn about and edit some files in /etc
+It is really a one-time cast type spell.
+And I can not remember why I wanted
+to make that spell instead of adding
+it as menus to sorcery.
+
+If you had not noticed already
+augur is now a very modular type program.
+Each augur command is in it's own file.
+The augur command module files are loaded as needed.
+/usr/libexec/sorcery/augur.d/ is full of modules.
+The SA also can also install their own augur modules.
+SA augur modules should be placed in
+/usr/local/libexec/sorcery/augur.d/
+They will be discovered and made available automatically.
+
+The modularization of augur makes
+augur easier to maintain.
+And a change that might break
+a single augur module will not break the rest.
+And I can accept SA contributed augur modules
+provided that they are augur modules.
+The SA only has to figure out what code
+they want to put into the augur module
+which will mostly be copy 'n paste from
+a similar augur module, not unlike creating spells.
+
+At the moment 71 augur modules exist.
+Having more is fine provided they are useful.
+Maybe some are not so useful:
+
+&quot;
+# augur help older
+
+Sometimes a SA may wonder exactly how many days, or years,
+a spell has been installed without being updated.
+The older function provides an easy way show these spells.
+This is a useful command since Sorcerer boxes are typically
+installed once and updated for years.
+&quot;
+
+I never use the # augur older
+command.
+But it could be used to recompile
+spells that have been installed for a long time.
+For example:
+# cast $( augur older 365 )
+
+Additionally, most help modules have
+extra verbose help screens that can be viewed
+by typing
+# augur help $COMMAND
+
+The &quot;older&quot; command has a fitting name.
+However, judging from the name alone
+the function is not entirely obvious.
+
+I probably forgot to mention a lot of useful stuff.
+Naturally, some aspects internal to sorcery
+and spells have changed.
+However, the outward appearance and
+use of sorcery is mostly unchanged.
+Although indexing is a little slower now,
+every other aspect is faster.
+Faster is nice, but on multi-core boxes
+the word &quot;instant&quot; is a better description.
+*lol*
+I can even receive instant answers for
+# augur aron $SPELL
+and
+# augur iron $SPELL
+commands.
+Only have to wait a few seconds for indexing to complete;
+just like starting the engine and warming it up a little
+before going full throttle.
+
+Speaking of faster;
+the new version of ccache can concatenate files
+itself without using the C pre-processor in order
+to produce hashes several times faster.
+With reduced overhead the new ccache is
+about 3 to 5 times faster.
+It is faster on the initial compile of software
+and faster on the subsequent update compiles.
+Still there is a little overhead for using it.
+
+I will stop rambling.
+Hope you enjoy the changes.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001692.html">[Sorcerer-admins] Important Changes...
+</A></li>
+	<LI>Next message: <A HREF="001693.html">[Sorcerer-admins] Important Changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1694">[ date ]</a>
+              <a href="thread.html#1694">[ thread ]</a>
+              <a href="subject.html#1694">[ subject ]</a>
+              <a href="author.html#1694">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%20processes&In-Reply-To=%3CAANLkTimAt0rsuwOlx-ifVEgnNwqeI_3MYR3irEpX7boZ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001644.html">
+   <LINK REL="Next"  HREF="001650.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init processes</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%20processes&In-Reply-To=%3CAANLkTimAt0rsuwOlx-ifVEgnNwqeI_3MYR3irEpX7boZ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init processes">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue Jun  1 15:49:31 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001644.html">[Sorcerer-admins] xfce update
+</A></li>
+        <LI>Next message: <A HREF="001650.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1647">[ date ]</a>
+              <a href="thread.html#1647">[ thread ]</a>
+              <a href="subject.html#1647">[ subject ]</a>
+              <a href="author.html#1647">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+I noticed something while re-installing sorcerer and while trying to switch
+from init(4) to init(3), most of stop command does fails
+1) the pid file might contain a pid that is assigned to a process that
+changed it's name (for example /etc/init.d/gdm start stop, the file
+containing the pid has the pid number of a process gdm-binary)
+2) the process might have spawned a child and exited (ie the main executable
+is only a wrapper that spawn the real server) (I've no exemple but I
+remember something like that)
+3) a service that has crashed but spawned childs (who are then now attached
+to the init process) (exemple if you pkill -9 gdm-binary, then X that is the
+child of gdm-simple-slave remains alive)
+
+I've no solution to propose,
+but is there a way to kill all a tree? ie kill the process and all it's
+childs?
+is there a way to assign a group id or something like that that remains for
+all childs of the process? if yes we could set it, and then kill all the
+process of the group....
+
+best regards
+JLM
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100601/860cb7b6/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100601/860cb7b6/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001644.html">[Sorcerer-admins] xfce update
+</A></li>
+	<LI>Next message: <A HREF="001650.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1647">[ date ]</a>
+              <a href="thread.html#1647">[ thread ]</a>
+              <a href="subject.html#1647">[ subject ]</a>
+              <a href="author.html#1647">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

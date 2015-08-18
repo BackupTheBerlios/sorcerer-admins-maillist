@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.5.1331738364.12121.sorcerer-admins%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000813.html">
+   <LINK REL="Next"  HREF="002306.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.5.1331738364.12121.sorcerer-admins%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:19:14 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000813.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="002306.html">[Sorcerer-admins] unusual bugs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#975">[ date ]</a>
+              <a href="thread.html#975">[ thread ]</a>
+              <a href="subject.html#975">[ subject ]</a>
+              <a href="author.html#975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&quot;Files that are compressed with pbzip2 are broken up into pieces and
+each individual piece is compressed.  This is how pbzip2 runs faster
+on multiple CPUs since the pieces can be compressed simultaneously.
+The final .bz2 file may be slightly larger than if it was compressed
+with the regular bzip2 program due to this file splitting (usually
+less than 0.2% larger).  Files that are compressed with pbzip2 will
+also gain considerable speedup when decompressed using pbzip2
+
+Files that were compressed using bzip2 will not see speedup since
+bzip2 pacakages the data into a single chunk that cannot be split
+between processors.&quot;
+
+That's reason why decompression is not fast unless its made using pbzip2.
+
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+
+--=_alternative 0049F84AC225752E_=
+Content-Type: text/html; charset=&quot;US-ASCII&quot;
+
+
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&gt; &quot;Kyle Sallee&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&gt; Thank you for the results.&lt;br&gt;
+&gt;<i> However, it is important to consider the file size.&lt;br&gt;
+</I>&gt;<i> How large of a file is being compressed?&lt;br&gt;
+</I>&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;It was 100MB, made from /dev/urandom.&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&gt; I am surprised if pbzip2 must be used as the
+compression program&lt;br&gt;
+&gt;<i> in order to gain a commensurate speedup for decompression.&lt;br&gt;
+</I>&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;From pbzip2 README file, Chapter 4. PBZIP2 DATA FORMAT&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&quot;Files that are compressed with pbzip2 are broken
+up into pieces and&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;each individual piece is compressed. &nbsp;This is
+how pbzip2 runs faster&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;on multiple CPUs since the pieces can be compressed
+simultaneously.&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;The final .bz2 file may be slightly larger than if
+it was compressed&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;with the regular bzip2 program due to this file splitting
+(usually&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;less than 0.2% larger). &nbsp;&lt;b&gt;Files that are compressed
+with pbzip2 will&lt;/b&gt;&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&lt;b&gt;also gain considerable speedup when decompressed
+using pbzip2&lt;/b&gt;&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&lt;b&gt;Files that were compressed using bzip2 will not
+see speedup since&lt;/b&gt;&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&lt;b&gt;bzip2 pacakages the data into a single chunk that
+cannot be split&lt;/b&gt;&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;&lt;b&gt;between processors.&lt;/b&gt;&quot;&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;
+&lt;br&gt;&lt;tt&gt;&lt;font size=2&gt;That's reason why decompression is not fast unless
+its made using pbzip2.&lt;/font&gt;&lt;/tt&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;&lt;font size=2 face=&quot;sans-serif&quot;&gt;Terveisin/Regards,&lt;br&gt;
+ &nbsp; Pekka Panula, Net Servant Oy&lt;br&gt;
+&lt;/font&gt;
+--=_alternative 0049F84AC225752E_=--
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000813.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="002306.html">[Sorcerer-admins] unusual bugs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#975">[ date ]</a>
+              <a href="thread.html#975">[ thread ]</a>
+              <a href="subject.html#975">[ subject ]</a>
+              <a href="author.html#975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

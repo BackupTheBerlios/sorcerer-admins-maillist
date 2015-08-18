@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] ssh on the move
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ssh%20on%20the%20move&In-Reply-To=%3CBANLkTimN3fFGwj_0Bds0dTojfejUUy2bUg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002165.html">
+   <LINK REL="Next"  HREF="002166.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] ssh on the move</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ssh%20on%20the%20move&In-Reply-To=%3CBANLkTimN3fFGwj_0Bds0dTojfejUUy2bUg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] ssh on the move">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 20 07:59:16 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002165.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+        <LI>Next message: <A HREF="002166.html">[Sorcerer-admins] no more lilo failures, I hope.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2164">[ date ]</a>
+              <a href="thread.html#2164">[ thread ]</a>
+              <a href="subject.html#2164">[ subject ]</a>
+              <a href="author.html#2164">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Boxes will run two sshd concurrently.
+No this is not a mistake.
+
+The primary sshd running on port 22,
+which is the IANA assigned port number for ssh,
+connects to the box's real root file system.
+
+The secondary sshd running on port 30,
+or the port specified in /etc/ssh/sshd_config_keep ,
+connects to the keep.
+
+In this fashion the keep is now available to SAs
+without doing a virtual console login.
+
+In addition ssh and scp are now provided on the initramfs
+and therefore while logged into the keep the SA can easily
+copy or access files from another computer via ssh.
+
+Training in the keep is now more comfortable for SAs.
+Instead of walking to a dev box and doing a boring virtual console login
+please continue to enjoy the comfortable workstation chair.
+Explore the keep from the comfort of X using
+a terminal emulation program and ssh.
+
+In addition this provides another benefit.
+If a box becomes inaccessible via ssh after an update
+then the sshd running on the keep will still be running.
+Therefore, a SA can still
+remotely log into the box via the keep and
+then discover the problem.
+Therefore, this change should makes remote boxes
+somewhat more robust and accessible.
+Such problems should already be very rare.
+But we can sleep more comfortably with the safety net.
+
+However, this change is not without drawbacks.
+The sshd running on the keep will remain vulnerable
+after openssl and opensshd receive security updates.
+The openssl and openssh on the keep
+update to the newer version when the box is truly rebooted.
+Therefore, please add additional adequate security
+precautions in order to protect the port assigned to the keep.
+The port number is specified in /etc/ssh/sshd_config_keep
+sshd on the keep can be disabled by running
+# chmod 600 /etc/init.d/sshd_keep
+Therefore, this enhancement is entirely optional
+and can be disabled where the reward seems
+less than commensurate with the risk.
+
+This update will become available in a couple of days.
+sshd on the keep will not start running until after reboot.
+/etc/ssh/sshd_config is not modified.
+/etc/ssh/sshd_config_keep is created from a stock /etc/ssh/sshd_config
+with 2 lines modified.
+Customize as desired.
+Root login is not allowed by default.
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002165.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+	<LI>Next message: <A HREF="002166.html">[Sorcerer-admins] no more lilo failures, I hope.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2164">[ date ]</a>
+              <a href="thread.html#2164">[ thread ]</a>
+              <a href="subject.html#2164">[ subject ]</a>
+              <a href="author.html#2164">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

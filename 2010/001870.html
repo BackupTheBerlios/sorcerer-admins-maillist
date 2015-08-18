@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTikxKduKHS780aU0j1y-quLqExkZwxgiL2LRn2sL%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001862.html">
+   <LINK REL="Next"  HREF="001851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTikxKduKHS780aU0j1y-quLqExkZwxgiL2LRn2sL%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 29 01:42:46 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001862.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001851.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1870">[ date ]</a>
+              <a href="thread.html#1870">[ thread ]</a>
+              <a href="subject.html#1870">[ subject ]</a>
+              <a href="author.html#1870">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 27, 2010 at 2:10 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jul 26, 2010 at 10:56 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>
+&gt;<i> taking the case of cryptsetup..... the error was when doing fsck.... let's
+</I>&gt;<i> have a look at this particular use case :
+</I>&gt;<i> the root cause of the problem is in one of the services started before.
+</I>&gt;<i> which one? no idea.... there are several red lines before... so how to know?
+</I>&gt;<i> so ok you start with /bin/bash as initrd... begin to start processes one by
+</I>&gt;<i> one... ah? shit this process failed! so take a paper write down on a piece
+</I>&gt;<i> of paper how to fix it, because, remember you're on a ramdisk, any
+</I>&gt;<i> modification will be lost upon reboot! and you don't have access to the real
+</I>&gt;<i> filesystem.... soooooooooo funny! finding that the root cause was mdadm and
+</I>&gt;<i> some other system service was only a guess and by chance it worked! between
+</I>&gt;<i> the time I found it and the begin of the try and guess process I restarted
+</I>&gt;<i> almost 50 or more time, because one time you forget to do that manual step,
+</I>&gt;<i> that time you forget to desactivate that service.....
+</I>&gt;<i> this is a cascade effect.... the initrd=/bin/bash is pain in the ass in such
+</I>&gt;<i> case, when you have to debug one or 2 identified services, fine! when you do
+</I>&gt;<i> have to troubleshoot interactions of service it's another story!
+</I>
+Interesting how activating LVM2 does that on your box.
+Why does it do that?
+How can it be detected in advance and avoided?
+Where is the distribution wide fix to improve robustness?
+
+I debug sysinit init-scripts using rdinit=/bin/bash to start.
+It offers excellent control.
+There are no hexadecimal dumps to read.
+I do not have to be able to identify instructions by
+80x86 hexadecimal codes.
+However, if there is much to remember
+then I still have to use some paper and pencil
+to write down what I have tried, what works, what fails.
+To me this does not seem unreasonable.
+Debugging init-scripts from a BASH prompt
+is still far easier than debugging .com and .exe
+files using debug.exe on a DOS operating system.
+And even if I use gdb to debug a program
+then I usually still end up writing some information
+on paper or in a separate log file.
+
+I am half way done writing an /sbin/init.debug,
+and I still can not imagine why I would want to use it
+to interactively step through init-script execution during sysinit.
+
+
+&gt;&gt;<i> And it will not ever be debuggable by SAs during boot
+</I>&gt;&gt;<i> unless we start including gcc, make,
+</I>&gt;&gt;<i> and source files on the initramfs.
+</I>&gt;<i>
+</I>&gt;<i> this process is intended to be small and rebust! your point is like saying
+</I>&gt;<i> me that you should include gcc, make and source files in the initramfs
+</I>&gt;<i> because sh, cat, grep, tail and other might be buggy.....
+</I>
+A new, evolving, complex, init-system
+is bound to have some gnarly bugs
+that only show with certain combinations of init-scripts.
+In contrast the 40 line init-script,
+of which 6 lines are empty,
+is almost too simple to have a terrible bug.
+I probably have not changed it in years.
+
+A more complex method for running init-scripts
+makes debugging init related problems more difficult.
+Is the problem with an init-script or is the problem
+with the method for running init-scripts?
+The SA might be looking at the wrong thing.
+
+
+&gt;<i> this logic works on my netbook... an atom CPU with a regular harddrive...
+</I>
+Trying to request all those sectors at once
+is like hard impact aerobics for fixed disks.
+It also creates the possibility that the files
+which are needed most immediately
+might not be read with the greatest priority.
+
+
+&gt;&gt;<i> If an operating system was different and services
+</I>&gt;&gt;<i> had no order requirements, and disks are RAM based,
+</I>&gt;&gt;<i> and CPU cores are unlimited then it wins.
+</I>&gt;&gt;<i> Yet on a real computer it loses
+</I>&gt;&gt;<i> and the fixed disk device loses also.
+</I>&gt;<i>
+</I>&gt;<i> not a single way.... you know what is read reordering? and you probably also
+</I>&gt;<i> know that even small, low power, low performances CPU have at least 2 cores
+</I>&gt;<i> (even if in some case it's virtualized?)
+</I>&gt;<i> on real computer, even low power ones, multhreaded/multiprocess scheme if
+</I>&gt;<i> correctly written is allmost always winner.... in the proposed scheme, no
+</I>&gt;<i> service is consuming resources during the wait phase
+</I>&gt;<i> at this phase only ONE process is running : the service manager,
+</I>&gt;<i> since the system use caching, there is only ONE read that have to be done,
+</I>&gt;<i> which is cached into the system disk cache......
+</I>&gt;<i> even the current scheme as more filesystem accesses....
+</I>
+There is no reason why either method
+should have access more files than another.
+The exact same files that are required for booting are read.
+The difference in methods for running init-scripts
+determines when and in what order those files are read.
+Are they read in rather optimal method
+or a random method that has the fixed disk heads
+dance a jig trying to fetch sectors from all over?
+
+Perhaps what you meant to say above is that due to
+the DMA, direct memory access chip, sectors from
+disks can be read into RAM without troubling the CPU
+to do the transfer and thus CPU cores can be tasked
+to do other things while files are being read, provided
+that there are other things to be done.
+
+With runlevel init-script execution there can be
+a large amount of parallelization because many
+of the init-scripts mount virtual filesystems.
+External programs that are basic elements of
+init-scripts execution such as /bin/grep /bin/bash /bin/dash
+need to be read from disk only once and
+then they are stored in the kernel's cache.
+
+
+&gt;&gt;<i> The fact that most Sorcerer init-scripts are
+</I>&gt;&gt;<i> under 4096 bytes is not a coincidence.
+</I>&gt;&gt;<i> By design they are intended to be that small
+</I>&gt;&gt;<i> so that they can not become fragmented
+</I>&gt;&gt;<i> and can be entirely read with that first seek
+</I>&gt;&gt;<i> to the part of the disk that holds them.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> well fine! what an optimisation!
+</I>&gt;<i> ls -lh /bin/dash /bin/grep /bin/cat
+</I>&gt;<i> -rwxr-xr-x 1 root root 50K 2010-03-05 04:29 /bin/cat
+</I>&gt;<i> -rwxr-xr-x 1 root root 82K 2010-04-01 21:22 /bin/dash
+</I>&gt;<i> -rwxr-xr-x 1 root root 99K 2010-03-05 05:48 /bin/grep
+</I>
+/bin/cat is barely used if at all.
+/bin/dash and /bin/grep are read once and used frequently.
+In contrast init-scripts read once used once.
+The obvious benefit of tiny init-scripts is that
+they can be read quickly nearly as fast become
+useless trash in the kernel's cache.
+/bin/grep and /bin/dash have a much more useful
+existence in the kernel's cache.
+
+I also do not like the large size and slow start of coreutils,
+but I have grown accustomed to their parameters.
+I have done adventuring with busybox and
+statically linked utilities are fast to execute
+while busybox can live within 2 megabytes of RAM
+in the kernel's cache.
+Unfortunately, busybox is not a parameter for parameter
+drop in replacement for GNU utilities such as those
+from coreutils, grep, findutils, etc...
+
+I am tempted to allow, for example,
+statically linked /bin/sed, /bin/grep, /bin/find
+and many other programs because such
+programs will start fast, even faster than
+dynamically linked programs after they
+are entirely in the kernel cache.
+Unfortunately, statically linking with glibc
+can turn a few 67 kilobyte program like /bin/sed
+into a 300K or larger file.
+Then it takes longer to read from disk.
+And since it is statically linked it uses less shared memory
+so it requires more RAM while it runs.
+Hard to decide which is best.
+
+However, in the past I have examined kde-v3 koffice-v3
+and other programs that used libtool
+and discovered that they would often used
+over 300 invocations of /bin/sed while creating an object file.
+If one is going to run /bin/sed 300 times
+then the statically linked /bin/sed will definitely
+accomplish the task faster.
+
+&gt;<i> oh! great you managed to make the initscript readable in one seek..... and
+</I>&gt;<i> can you explain me how you managed to do with what is used by the
+</I>&gt;<i> initscript? I'm really curious...
+</I>
+init-scripts are read once, run once, throw away.
+Most of the programs that are used by init-scripts
+such as /bin/grep are read once yet used many times.
+And on most Sorcerer boxes
+they are compiled with -Os and stripped.
+Therefore, they are already just about as small as they can be.
+
+
+&gt;<i> anyway, on most modern computers disks are enough fast so that it won't even
+</I>&gt;<i> be noticeable, most disk are able now to re-order requests to optimize the
+</I>&gt;<i> seek process, and if the disk itself don't do it, the kernel is doing it
+</I>&gt;<i> anyway..... this discussion about speed is non sense because even on a
+</I>&gt;<i> netbook you won't notice a 1% speed loss....
+</I>&gt;<i> speed and optimisation is my work, and I don't work an 16CPU system, I work
+</I>&gt;<i> on embedded, and here when we have the CPU power of an i486 we're happy....
+</I>&gt;<i> even on such system the scenario given are happening and are winner....
+</I>
+Evey computer is bottlenecked by the mass storage device.
+Computers are several magnitudes faster than
+their mass storage devices.
+Efficient reading of disk sectors
+is not decided by the disk device.
+What matters is the order the kernel requests them in.
+The kernel tends to be FIFO, first request in first request out.
+
+Not only is the above true but computer CPUs are
+bottlenecked by slow RAM and tiny L1 L2 and L3 caches.
+If a computer's CPU could access RAM and
+mass storage devices at the capacity of the CPU
+then we would be seeing a new definition of speed
+even for meager 1Ghz CPUs.
+
+I hated that trend ever since it began.
+A modern computer is like the having
+heads of dragons mounted onto the body of a poodle.
+
+Trying to read 500 files concurrently from disk
+seems like it should put much stress
+on normal fixed disk drive during booting.
+The x86_64 might use a block size of 64K instead 4K
+for reading from disk.
+In that case reading 500 tiny files concurrently from
+disk might not be as bad on x86_64
+It might only amount to a few thousand seeks.
+On an IA32 using 4K sectors and 8K clusters
+the amount of seeks might be 8 times as much.
+Atoms are not x86_64 processors
+so performance aught not to be great.
+
+I am still of the opinion that even parallel
+init-script execution should proceeded in a
+somewhat orderly fashion that tends to load
+from disks the files in the order in which
+those files will be needed.
+I used that same logic for creating bootblaze.
+Order of file loading should be congruent
+with previous boot access times.
+But the gain in speed for parallelization is
+insufficient in regards to the potential wear
+and tear on disk devices.
+And that is why I only use the serial execution runlevels.
+
+
+If you write and debug the new method for init-script
+execution and provided that it requires no changes
+to existing init-scripts
+then the new method could be added as a spell
+that could be cast and become a drop in replacement
+for /etc/init.d/prc
+That way SAs unafraid of giving it a try
+can compare to see what speed gain
+or improved control it can provide.
+
+Please do not modify the
+grimoire/init-scripts.d/init.d.on/prc
+An attempt to provide an alternate
+method for init-script execution
+should not discard the current method
+which is already reliable, debugged, usable, working.
+
+This change should be a matter of preference and not necessity.
+Therefore, SAs should be able to try the new method
+on dev boxes while not having their production boxes
+automatically switch over to it.
+
+After some SAs that are neither Jeanluc nor Kyle
+test and compare it with the current method
+then we will gain some input useful for deciding
+if the boons and banes are as conjectured
+and whether it should be made the default method.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001862.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001851.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1870">[ date ]</a>
+              <a href="thread.html#1870">[ thread ]</a>
+              <a href="subject.html#1870">[ subject ]</a>
+              <a href="author.html#1870">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

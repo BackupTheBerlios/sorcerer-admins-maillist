@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20menu%20driven%20installer%20on%0A%09sorcerer-ia32-20100122%20seems%20broken%20to%20me&In-Reply-To=%3C61f63af31002060914w26fb8edbrac2460ab03f299e5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001436.html">
+   <LINK REL="Next"  HREF="001439.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me</H1>
+    <B>bent jakobsen</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20menu%20driven%20installer%20on%0A%09sorcerer-ia32-20100122%20seems%20broken%20to%20me&In-Reply-To=%3C61f63af31002060914w26fb8edbrac2460ab03f299e5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me">jakobsen.bent at gmail.com
+       </A><BR>
+    <I>Sat Feb  6 18:14:14 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001436.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+        <LI>Next message: <A HREF="001439.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1437">[ date ]</a>
+              <a href="thread.html#1437">[ thread ]</a>
+              <a href="subject.html#1437">[ subject ]</a>
+              <a href="author.html#1437">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Now...removed the floppy-drive from the machine all together
+
+And it booted with success...and the fstab menu worked somewhat.
+
+it now list the differnt partitions, and one can use them in the menu ;)
+
+But select Device in the menu..one still got the error message which I read
+to something like: sed: -e expression #1, char 12: unterminated 's' command
+
+
+Best regards
+
+Bent
+
+
+
+On Sat, Feb 6, 2010 at 5:32 PM, bent jakobsen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>&gt;wrote:
+
+&gt;<i> I tried further.
+</I>&gt;<i>
+</I>&gt;<i>  Here are some basic information:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>    -
+</I>&gt;<i>
+</I>&gt;<i>    The hd and CD is on a PIIX4- controller (Eventhough it does not matter
+</I>&gt;<i>    if I use a PIIX3 og ICH6 controller).
+</I>&gt;<i>
+</I>&gt;<i>  If I during the: &#8221;Install/Rescue Image not found...&#8221; command hit Enter to
+</I>&gt;<i> get to the shell.
+</I>&gt;<i>
+</I>&gt;<i>  I can see that:the harddisk is loaded on:
+</I>&gt;<i>
+</I>&gt;<i>  /dev/hda
+</I>&gt;<i>
+</I>&gt;<i>  I can even check it whith: cfdisk /dev/hda &#8211; and it looks good. So I do
+</I>&gt;<i> not think it is something related to hardware emulation.
+</I>&gt;<i>
+</I>&gt;<i>  The CD-rom is located on hdb.
+</I>&gt;<i>
+</I>&gt;<i>  The command: grep -I 1 /sys/block/*/removable
+</I>&gt;<i>
+</I>&gt;<i>  Output:
+</I>&gt;<i>
+</I>&gt;<i>  /sys/block/fd0/removable:1
+</I>&gt;<i>
+</I>&gt;<i> /sys/block/hdb/removable:1
+</I>&gt;<i>
+</I>&gt;<i>  the output of the two lines in the find_ir script is:
+</I>&gt;<i>
+</I>&gt;<i>  /dev/fd0
+</I>&gt;<i>
+</I>&gt;<i> /dev/hdb
+</I>&gt;<i>
+</I>&gt;<i>  And issuing: mount /dev/hdb /media/IR . Will load the CD-drive.
+</I>&gt;<i>
+</I>&gt;<i>  Ctrl+D to cont.
+</I>&gt;<i>
+</I>&gt;<i>  Issue: /sbin/sinstall
+</I>&gt;<i>
+</I>&gt;<i> Output: states something about fail in line 726 because it tries to write
+</I>&gt;<i> to: fd0
+</I>&gt;<i>
+</I>&gt;<i>  It seems that it tries to hit the fd0 first.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Okay so I just reboot....to reset everything, and to debug...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  Now at the &#8221;Install/Rescue Image not found...&#8221; command I hit Enter to get
+</I>&gt;<i> to the shell.
+</I>&gt;<i>
+</I>&gt;<i>  Issue: /etc/init.d/find_ir start
+</I>&gt;<i>
+</I>&gt;<i>  It states:
+</I>&gt;<i>
+</I>&gt;<i>  mount /dev/fd0 is not a valid block device
+</I>&gt;<i>
+</I>&gt;<i> umount /media/IR: not mounted
+</I>&gt;<i>
+</I>&gt;<i>  No of cause /dev/fd0 is not valid &#8211; the CD is on /dev/hdb ;)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> And there is no problem with these device even on other distributions...
+</I>&gt;<i>
+</I>&gt;<i> Now hit exit . and log in.
+</I>&gt;<i>
+</I>&gt;<i> mount /dev/hdd /media/IR
+</I>&gt;<i>
+</I>&gt;<i> Start /sbin/sinstall (states that line: 739 uniq command not found, 743: tr
+</I>&gt;<i> command not found) during start.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Go to modify_fstab command, hit device ....it states very fast something
+</I>&gt;<i> like
+</I>&gt;<i>
+</I>&gt;<i> sed: -e expression #1, char 12: unterminated 's' command
+</I>&gt;<i> 739 uniq command not found
+</I>&gt;<i> 743: tr command not found
+</I>&gt;<i>
+</I>&gt;<i> Sorry this is going very fast due to the processor speed.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Feb 6, 2010 at 2:38 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What exactly was on the fstab menu?
+</I>&gt;&gt;<i> It listed no
+</I>&gt;&gt;<i> /dev/hda1
+</I>&gt;&gt;<i> /dev/hda2
+</I>&gt;&gt;<i> /dev/hda3
+</I>&gt;&gt;<i> even if such partitions exist?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> That is correct it did not list anything...
+</I>&gt;<i>
+</I>&gt;<i> but I think it got something to do with:  &quot;sed: -e expression #1, char 12:
+</I>&gt;<i> unterminated 's' command&quot;.
+</I>&gt;<i>
+</I>&gt;<i> Best regards
+</I>&gt;<i>
+</I>&gt;<i> Bent
+</I>&gt;<i>
+</I>
+
+
+-- 
+Best regards
+
+Bent Jakobsen
+
+MSN: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>
+Mobile phone: +45 2672 7499
+E-mail: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100206/7ee07505/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100206/7ee07505/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001436.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+	<LI>Next message: <A HREF="001439.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1437">[ date ]</a>
+              <a href="thread.html#1437">[ thread ]</a>
+              <a href="subject.html#1437">[ subject ]</a>
+              <a href="author.html#1437">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

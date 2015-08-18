@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] potential re-announcement concerning debugging sysinit and linux version progress.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20potential%20re-announcement%20concerning%20debugging%0A%20sysinit%20and%20linux%20version%20progress.&In-Reply-To=%3CCA%2BT4wDgZASn2AKwyTz_AavJwFfeX6QtvnoCPTLgXovKMyk26Xw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002376.html">
+   <LINK REL="Next"  HREF="002375.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] potential re-announcement concerning debugging sysinit and linux version progress.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20potential%20re-announcement%20concerning%20debugging%0A%20sysinit%20and%20linux%20version%20progress.&In-Reply-To=%3CCA%2BT4wDgZASn2AKwyTz_AavJwFfeX6QtvnoCPTLgXovKMyk26Xw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] potential re-announcement concerning debugging sysinit and linux version progress.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug 18 17:37:17 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002376.html">[Sorcerer-admins] Thanks!
+</A></li>
+        <LI>Next message: <A HREF="002375.html">[Sorcerer-admins] How come booting is so blinking slow?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2373">[ date ]</a>
+              <a href="thread.html#2373">[ thread ]</a>
+              <a href="subject.html#2373">[ subject ]</a>
+              <a href="author.html#2373">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Please pardon if I previously announced this.
+I discovered that linux kernel parameter rdinit=/bin/bash
+was problematic when the keyboard was attached by USB.
+Therefore, I created support for a new linux kernel parameter called &quot;bash&quot;
+The end result will achieve a bash prompt instead of doing the normal
+execution of sysinit followed by runlevel.
+However, that would be typically loaded will be loaded.
+This way the USB keyboard will function.
+Additionally, the loading of modules is accomplished with udev.
+Therefore, parameter &quot;bash&quot; can be used to debug problems involving udev.
+
+Since systemd development annexed udev; I am not above expecting
+instability with releases that is tantamount to the udev of the past
+back when I tended to check in versions of udev that ended in 0 or 5
+in order to mitigate the amount of time
+that I allocated to the task of compensating for udev changes and bugs.
+Although systemd is now installed on all Sorcerer boxes,
+only the udev portion of it is used.
+Sorcerer boxes do not boot with systemd
+although systemd wastes space on the initramfs.
+After systemd reaches maturity I will re-evaluate it's potential
+for replacing sysvinit for booting Sorcerer boxes.
+However, I do not intend to concern myself with it this year.
+
+Okay, so here is the summary:
+Want to debug a boot problem?
+Keep pressing tab and supplying the boot password.
+Eventually, extlinux will present the command line used to boot
+which will include both linux kernel parameters and bootloader parameters
+such as the names of the initrf files that will load.
+Onto the last add a space followed by the word bash
+The end result will load modules
+and give the person at keyboard a root bash prompt running as PID = 1.
+After modifications/fixes are complete
+then normal booting can be accomplished by:
+# exec /init
+
+If a serious problem exists in an init-script that will run during sysinit
+then I typically fix the problem by booting this way, editing the init script
+and then passing control to /init to allow the box to boot normally.
+Then I make the necessary adjustments on the real root file system,
+and might immediately request that new initramfs be regenerated with
+# /etc/init.d/initramfs stop
+The initramfs generation init-script tends to run during shutdown and by cast.
+Therefore, it expects the parameter &quot;stop&quot;
+But it does not stop anything.  :)
+initramfs are properly regenerated during a proper shutdown/reboot.
+However, if the box reset or lost power then a problem on an initramfs image
+persists into the next boot if the initramfs was not regenerated.
+
+Every Sorcerer SA already knows  that Sorcerer boxes boot with
+multiple initramfs images.
+That much is evident while watching the bootloader's output.
+One initramfs is kernel specific and contains modules.
+Others correspond to parts of the file system such as /etc /bin /lib
+/lib64 /sbin
+This expedites initramfs regeneration by only regenerating an initramfs
+where files in the corresponding section of the file system were
+modified/updated.
+
+I added the additional information about initramfs.
+Since initramfs regeneration is entirely automatic
+then such information might be of no use to a typical Sorcerer SA.
+Boot problems involving sysinit are exceptionally rare.
+However, the possibility exists.
+Therefore, good for every SA to know how to debug sysinit if necessary.
+
+BTW, the linux version 3.5.2 kernel does not link on an Athlon-XP
+without a patch
+and then when booting linux version 3.5.2 on an Athlon-XP the box consistently
+locked during udevtrigger.  The typical 1.5m timeout never released the box.
+The keyboard's LEDs would not respond to cap locks being pressed nor numlock.
+My solution for this problem was to use the bootloader menu
+in order to select an older label to boot.
+However, as a consequence of the experience I am shying away from
+kernels version 3.3 and above
+and returning linux's &quot;stable version progress&quot; to the 3.2.x series of kernels.
+
+New features exists in the later branches of linux that I want to use
+and explore.
+However, those must yet wait perhaps until 2013.
+Those that dare to use the newer linux can select version progress for
+the additional branches.
+# augur progress linux 3.5.x
+The above command selects the 3.5.x version progress for linux
+and would make available linux version 3.5.2 and an appropriate
+configuration file.
+Only the version progress defined in the spell is supported.
+
+2.6.27.x
+2.6.30.x
+2.6.32.x
+2.6.34.x
+2.6.35.x
+2.6.36.1
+2.6.36.x
+2.6.37.x
+2.6.38.x
+2.6.39.x
+3.0.x
+3.1.x
+3.2.x
+3.3.x
+3.4.x
+3.5.x
+
+Anything else I have not created config files for.
+And anything 2.6.y.x might be worth avoiding.
+I have not examined their config files in ages.
+Version progress 3.2.x seems like a champion at the moment.
+It will currently provide linux-3.2.27.tar.xz as it's source.
+27 bug fixes releases helps create confidence that it should work as expected.
+However, in the future when newer linux branches are ripe for harvest
+then the linux spell will change.
+However, that evaluation might not be considered and tested again
+until early 2013.
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002376.html">[Sorcerer-admins] Thanks!
+</A></li>
+	<LI>Next message: <A HREF="002375.html">[Sorcerer-admins] How come booting is so blinking slow?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2373">[ date ]</a>
+              <a href="thread.html#2373">[ thread ]</a>
+              <a href="subject.html#2373">[ subject ]</a>
+              <a href="author.html#2373">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sound problems on kde4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sound%20problems%20on%20kde4&In-Reply-To=%3C596b75860911301417g40aa4919ie0d469aba7e46155%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001372.html">
+   <LINK REL="Next"  HREF="001374.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sound problems on kde4</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sound%20problems%20on%20kde4&In-Reply-To=%3C596b75860911301417g40aa4919ie0d469aba7e46155%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sound problems on kde4">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Nov 30 23:17:49 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001372.html">[Sorcerer-admins] sound problems on kde4
+</A></li>
+        <LI>Next message: <A HREF="001374.html">[Sorcerer-admins] sound problems on kde4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1373">[ date ]</a>
+              <a href="thread.html#1373">[ thread ]</a>
+              <a href="subject.html#1373">[ subject ]</a>
+              <a href="author.html#1373">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was assuming that the 4.3.1 version phonon is
+the one included in the qt-x11-opensource.
+Both use the same backend.
+I still agree with the way that I set it up.
+I do not agree because it worked.
+When I booted a 2.6.31.6 linux kernel
+I suddenly had a missing /dev/mixer and other sound problems.
+But when I booted an older linux kernel 2.6.30.4
+then both sound and networking worked fine.
+Therefore, the problem seems to be linux related.
+
+Although the 2.6.31.6 linux kernel seems to be configured correctly,
+and I did double check the .config,
+it seems to have issues or bugs involving sound
+and at least the at76c50x_usb related networking,
+although the problem might not be in that module.
+
+Support for phonon is required for KDE.
+KDE authors removed the latest phonon source tarball.
+I presume that they will provide no new phonon.
+Therefore, the newest phonon will be provided in qt-x11-opensource.
+That is why I made the spell changes.
+
+Obviously, the phonon 4.3.0 has problems since it
+preferred using xine as the backend.
+4.3.1 source tarball no longer effective exists for download.
+So I do not want to force phonon back to version 4.3.0
+and neglect using the newer phonon in qt-x11-opensource.
+And yes, I tried it before discarding that solution.
+Therefore, I still favor the solution of using phonon that
+is installed by qt-x11-opensource because it should
+eliminate phonon concerns with future updates of KDE
+and qt-x11-opensource since phonon is now being provided
+with qt-x11-opensource.
+
+
+On Mon, Nov 30, 2009 at 1:22 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> More info and a partial solution:
+</I>&gt;<i>
+</I>&gt;<i> The sound problem affects only certain applications or sound formats, not sure
+</I>&gt;<i> which is correct. For example, &#160;amarok2 would not play any music and display
+</I>&gt;<i> instead a message on start up 'Sound device hw0,0 does not work'. Any attempts
+</I>&gt;<i> to configure use of a different sound device provided the same outcome.
+</I>&gt;<i>
+</I>&gt;<i> It was interesting however that the KDE sound configuration dialog (the same
+</I>&gt;<i> one is opened by amarok2) offers a 'Test' button which actually plays sound!
+</I>&gt;<i>
+</I>&gt;<i> I have recompiled qt-x11-opensource and the problem persisted.
+</I>&gt;<i>
+</I>&gt;<i> Then, I have installed the phonon 4.3.1 spell again and recompiled amarok2.
+</I>&gt;<i> Voila! Amarok now plays music again.
+</I>&gt;<i>
+</I>&gt;<i> Note that the phonon spell is marked broke and that the 4.3.1 version is not
+</I>&gt;<i> available on the KDE servers anymore, at least I could not find it.
+</I>&gt;<i> Fortunately, I have found a copy of the 4.3.1 phonon sources on my computer...
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>&gt;<i>
+</I>&gt;<i> On Wednesday 18 November 2009, Jan Merka wrote:
+</I>&gt;&gt;<i> After the recent update to KDE 4.3.3 and qt-x11-opensource 4.5.3, the sound
+</I>&gt;&gt;<i> stopped working in KDE. Well it does sort of work initially but soon
+</I>&gt;&gt;<i> applications like amarok2 stop working and I get notification messages
+</I>&gt;&gt;<i> &#160;about the analog sound device not available/missing. Could be an issue
+</I>&gt;&gt;<i> &#160;with phonon but I have no idea how to figure this...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Suggestions are appreciated.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jan
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001372.html">[Sorcerer-admins] sound problems on kde4
+</A></li>
+	<LI>Next message: <A HREF="001374.html">[Sorcerer-admins] sound problems on kde4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1373">[ date ]</a>
+              <a href="thread.html#1373">[ thread ]</a>
+              <a href="subject.html#1373">[ subject ]</a>
+              <a href="author.html#1373">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

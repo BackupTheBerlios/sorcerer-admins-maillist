@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Poppler &amp; kdegraphics
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3C596b75860708140137p61234114t11c4da0a81bd88ea%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000124.html">
+   <LINK REL="Next"  HREF="000145.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Poppler &amp; kdegraphics</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3C596b75860708140137p61234114t11c4da0a81bd88ea%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Poppler &amp; kdegraphics">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 14 10:37:55 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000124.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+        <LI>Next message: <A HREF="000145.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#137">[ date ]</a>
+              <a href="thread.html#137">[ thread ]</a>
+              <a href="subject.html#137">[ subject ]</a>
+              <a href="author.html#137">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 8/13/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on
+</I>&gt;<i> 09.08.2007 18:38:16:
+</I>&gt;<i>
+</I>&gt;<i>  &gt; Actually, the current system does support these types of chains.
+</I>&gt;<i>  &gt; However, I rarely split spells.
+</I>&gt;<i>
+</I>&gt;<i> No, it does not support, unless you make new spell as you have done but i
+</I>&gt;<i> dont think its good think to split spells only because optional
+</I>&gt;<i> requirements.
+</I>&gt;<i> Its no better that you have now inherited it, because its still a new spell,
+</I>&gt;<i> i dont like it.
+</I>
+Well.... nether do I like it as a split spell.
+But it is a rare occasion that it might actually
+work better that way without causing additional problems.
+
+
+&gt;<i> I propose that current system should be improved in way that there is no
+</I>&gt;<i> need to split spells, but to improve requirement chain checking to include
+</I>&gt;<i> to check that needed optional requirements is set to on.
+</I>
+That is easy to think of, easy to suggest, and easy to implement.
+It really has only one cost.
+Speed!
+The way requirements are written currently is a bit slow to handle
+when checking to see if a spell about to be cast has already been
+properly configured in respect to optional requirements.
+I may have been merely lucky that I was able to deduce a bash
+command to properly separate the spell in front of the : from
+the stuff that follows in order to be able to quickly generate
+the grimoire index.
+Adding onto the specification for an optional requirement
+will make cast slower while providing a functionality that currently
+is required for only 1 spell and perhaps at most no more than 5 spells.
+Consequently, the the benefit does not outweigh the cost.
+I should not expand the
+&quot;spell:--enable-something:--disable-something:description of it&quot;
+to
+&quot;spell:--enable-something:--disable-something:description of it:also required&quot;
+
+
+&gt;<i> I think current system stores optional requirement to some file, i am right?
+</I>
+Names of optionally required spells are stored in files
+during the generation of the grimoire index.
+When optionals for a spell are selected by the SA those
+selections are stored in files for the spell such that:
+
+/etc/sorcery/log/opt.on/httpd
+/etc/sorcery/log/opt.off/httpd
+
+those files describe what optionals were selected as on and off
+for the httpd spell.
+
+And of course you are already familiar with how optionals are written in spells:
+
+REQ=( &quot;ncurses readline&quot;
+      &quot;gdb:--enable-gdb:--disable-gdb:for debugging support&quot; )
+
+Where all elements of array REQ beyond ${REQ[0]} specify
+optionally required spells and/or optional configuration switches.
+
+
+&gt;<i> so why cant there be support so sorcerer checks if particular optional part
+</I>&gt;<i> is on or off, if its off, then its re-cast that spell with that optional
+</I>&gt;<i> part forced as on?
+</I>
+There can be such support.
+However, there is no truly eloquent place to implement it.
+Extending the definition of an optional requirement
+makes cast a bit slower.
+Custom coding the check into the kdegraphics spell
+lacks a specific section where it should go.
+It is perhaps possible to put it in something like
+pre_build() {
+do_the_check
+default_pre_build }
+
+But if CAST_RATE=1
+then the current compilation of kdegraphics would
+have to be aborted in the event that poppler required
+recompilation.
+If CAST_RATE&gt;1 then at the very least the compilation
+of kdegraphics would have to be delayed within the
+pre_build until poppler finished re-compilation if it is
+necessary to adjust the previously selected optionals
+for poppler and to re-compile poppler.
+
+Ideally, I might have to a new variable in the SPELL
+and have a section added onto satisfy_required()
+that makes certain a previously installed spell's
+optional requirements are properly selected
+and if not adjusts that and inserts the spell into
+the cast queue to be re-compiled.
+
+
+
+&gt;<i> Poppler &amp; kdegraphics is not only place which this
+</I>&gt;<i> feature is needed, there are other KDE spells that needs spells with
+</I>&gt;<i> optional requirement on.
+</I>&gt;<i>
+</I>&gt;<i> Example in this case, with poppler and kdegraphics. kdegraphics REQ-line is
+</I>&gt;<i> (now with splitted spell):
+</I>&gt;<i>
+</I>&gt;<i>        REQ=( &quot;glut kdelibs lcms&quot;
+</I>&gt;<i>              &quot;sane-backends:::for libkscan/kooka&quot;
+</I>&gt;<i>              &quot;gphoto2:::for digital still camera support&quot;
+</I>&gt;<i>              &quot;imlib:::to build the graphics browser/viewer KuickShow&quot;
+</I>&gt;<i>              &quot;fribidi:::for viewing right to left texts&quot;
+</I>&gt;<i>
+</I>&gt;<i> &quot;poppler-qt-x11-free:--with-poppler:--without-poppler:for
+</I>&gt;<i> enhanced PDF support&quot;
+</I>&gt;<i>              &quot;openexr:--with-openexr:--without-openexr:for
+</I>&gt;<i> OpenEXR support&quot;
+</I>&gt;<i>              &quot;tiff:--with-tiff:--without-tiff:for TIFF
+</I>&gt;<i> image support&quot; )
+</I>&gt;<i> #            &quot;arts:--with-arts:--without-arts:for sound
+</I>&gt;<i> support&quot;
+</I>&gt;<i>
+</I>&gt;<i> You could mark poppler like this:
+</I>&gt;<i>        REQ=( &quot;glut kdelibs lcms&quot;
+</I>&gt;<i>              &quot;sane-backends:::for libkscan/kooka&quot;
+</I>&gt;<i>              &quot;gphoto2:::for digital still camera support&quot;
+</I>&gt;<i>              &quot;imlib:::to build the graphics browser/viewer KuickShow&quot;
+</I>&gt;<i>              &quot;fribidi:::for viewing right to left texts&quot;
+</I>&gt;<i>
+</I>&gt;<i> &quot;poppler/qt-x11-free:--with-poppler:--without-poppler:for
+</I>&gt;<i> enhanced PDF support&quot;
+</I>&gt;<i>              &quot;openexr:--with-openexr:--without-openexr:for
+</I>&gt;<i> OpenEXR support&quot;
+</I>&gt;<i>              &quot;tiff:--with-tiff:--without-tiff:for TIFF
+</I>&gt;<i> image support&quot; )
+</I>&gt;<i> #            &quot;arts:--with-arts:--without-arts:for sound
+</I>&gt;<i> support&quot;
+</I>&gt;<i>
+</I>&gt;<i> So &lt;spell&gt;/&lt;optional requirement&gt;[/&lt;optional requirement&gt;]...etc.  so
+</I>&gt;<i> poppler/qt-x11-free means that optional requirement qt-x11-free is needed
+</I>&gt;<i> on.
+</I>
+Ah, that's good thinking excpet one thing...
+Let us call it
+A/Z:B:C:D
+and
+A:B:C:D
+
+Spell X is has the above optionally required spell A
+In the second example it is obvious if A is selected
+that X's configure receives B and if not X's configure
+receives parameter C
+However in the example above that what spell receives B or C?
+Does spell A receive B or C
+Does spell X receive B or C
+
+Sorry, if I am making it more complicate than it is.
+The point is clearly that the currently defined optional
+requirement method is not flexibile enough to specify
+whether spell A should or should not have certain optional
+requirements selected.
+
+Really, there is no eloquent method for correcting the potential
+mistake of having accidentally selected or not selected a certain
+optional for a spell short of recasting that spell such as
+# cast -r -c $SPELL
+
+Any ideas I have for implementing such support
+I can describe only with the word ugly.
+
+poppler and poppler-qt-x11-free may be ugly,
+but it is less ugly than designing a new variable
+to use in the DETAILS section of a spell.
+I try to think of it as a type of wrapper solution.
+
+Let us say you have 3 commands you want executed by a cronjob.
+Of course a cronjob line only allows for the execution of a single command.
+So what does one do?
+They place those 3 commands within a shell script.
+And the shell script acts as a wrapper to in a way
+extend the functionality of executing multiple commands
+per cronjob to cron without actually having to modify cron source code.
+
+The solution of having two spells that can provide poppler
+accomplish the desired goal of having the correctly configured
+poppler installed without having to overall sorcery code.
+And the reason that sorcery code will probably not change
+is the same reason that crontab has remained relatively
+unchanged for years...
+Adding the additional desired functionality adds complexity,
+slowness, ugliness, and while the goal can be accomplished
+easily enough by using a script to wrap and control the commands.
+
+So the question of whether or not we can do that with sorcery
+is not as important as the speculation of how unhappy we would
+make ourselves by the added complexity and ugliness if we did
+implement the additional functionality.
+
+
+&gt;<i> All is needed that sorcerer checks if that optional part is on, if not, then
+</I>&gt;<i> its re-casted with that option locked on.
+</I>&gt;<i> Allthough locked optional requirements needs some sort support so end user
+</I>&gt;<i> cant later re-cast spell and check off option that is needed elsewhere...
+</I>&gt;<i> some sort of locked.on files?
+</I>
+locking optional requirements for another spell as on or off definitely
+requires some additional and very spell specific custom code.
+In other words, to do it right with kdegraphics actually requires
+some lines of bash code within kdegraphics rather than trying
+to use some ugly variable to straighten out the wrinkles.
+However, there is a slight problem.
+By the time kdegraphics is ready to compile it is either do it or fail it.
+if poppler is not installed correctly by the time kdegraphics begins
+compilation then it aught to be too late to do anything except
+abort kdegraphics and insert poppler into the cast queue.
+That is sort of sticky since there is no mechanism for a spell
+to both abort itself and also re-insert itself into the cast queue.
+
+Locking the optional as on or off is another difficult problem
+since the SA could at any type either directly edit the
+optional requirements for that spell with a text editor or
+issue cast -r --deps on it.
+Of course with a spell such as
+poppler-qt-x11-free
+qt-x11-free is a truly locked requirement since it is not an optional.
+With a split spell solution we have a situation
+that the SA can not as easily fight or accidentally disrupt.
+
+Although there are not many examples of split spells,
+none that I can think of,
+spells are not always spells in the traditional sense.
+glibc-locales has no source and compiles nothing.
+profile spells like xf86-input has no source and therefore
+does no compilation, but is very useful to have as a spell.
+Those quasi spells act like wrappers.
+Therefore, what can not so easily be accomplished with
+sorcery can usually be accomplished with a spell.
+
+One of the reasons that I am fond of sorcery is the great flexibility
+that spells have entirely because spells are BASH script fragments.
+The definition of a spell does not have to be overly rigid and placed
+in files that have exact spacing where each line has a specific meaning.
+Therefore, since spells are more flexibile than pre-formated text/data files
+I do not find it unreasonable to sometimes use a spell to surpass the
+ordinary design limitations of sorcery.
+That way the system can flex and accommodate change
+rather than snap and break.
+
+
+&gt;<i> Any comments, would this be better than spell splitting/inheriting?
+</I>
+Yes, I agree that the definition of a spell can be improved.
+Exactly, how that should be handled it not yet apparent.
+Rarely desired functionality should not come at an extraordinary
+cost in speed and/or functionality.
+Ideally, a change in the definition of a spell should make
+sorcery overall faster, spell less complex, and grant better functionality.
+Now you might be thinking....
+Wait, that is too much to ask for.
+But in the past we had variables $REQ and $OPT in spells
+and there was at one time a $SHORT_DESC and a $LONG_DESC
+But now there is merely $REQ and $DESC
+And it is faster and less complex.
+Therefore, the definition of a spell, has in the past, progressed
+towards becoming faster, easier, and more functional.
+
+If we are to modify the definition of a spell we should not
+be too hasty that we fail to achieve what we will ultimately
+desire in the first attempt.
+Nor should we be hasty in implementing any change that
+breaks backward compatibility.
+I am not imply that the definition of a spell is set in stone.
+However, it should be clear that modifications to sorcery
+or the definition of a spell have boons that outweigh the costs.
+
+In the 5 or more ways I considered handling the
+poppler's necessary optional requirement on qt-x11-free
+when poppler is optionally required by kdegraphics
+the split spell implementation provides the least ugly
+solution that requires the least amount of effort and
+incurs the least probability of introducing bugs into
+sorcery and/or the grimoire while providing the
+desired outcome of having the correctly compiled
+poppler installed before kdegraphics begins compilation.
+More simply put it is the lesser of several evils.
+But I do detest splitting spells.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000124.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+	<LI>Next message: <A HREF="000145.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#137">[ date ]</a>
+              <a href="thread.html#137">[ thread ]</a>
+              <a href="subject.html#137">[ subject ]</a>
+              <a href="author.html#137">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

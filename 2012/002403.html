@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] transition to sorcery-delegate...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20transition%20to%20sorcery-delegate...&In-Reply-To=%3CCA%2BT4wDi8W5qhJCK8%3DBOtmxMz-KWLNjNrrx0yOMax8ewrJSR2gg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002402.html">
+   <LINK REL="Next"  HREF="002404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] transition to sorcery-delegate...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20transition%20to%20sorcery-delegate...&In-Reply-To=%3CCA%2BT4wDi8W5qhJCK8%3DBOtmxMz-KWLNjNrrx0yOMax8ewrJSR2gg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] transition to sorcery-delegate...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Oct 24 05:40:36 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002402.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+        <LI>Next message: <A HREF="002404.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2403">[ date ]</a>
+              <a href="thread.html#2403">[ thread ]</a>
+              <a href="subject.html#2403">[ subject ]</a>
+              <a href="author.html#2403">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well, a tiny bug exists in the sorcery spell.
+It could cause wane to fork bomb.
+Other than that it works decently.
+However, if I was anyone except Kyle or Evert
+then I might consider not updating
+for another couple of days.  :)
+
+The bug in the sorcery spell
+was introduced to deal with the odd situation
+of having a customized /etc/sorcery/config
+that should not have been customized.
+Evert reported the problem of having newer sorcery installed
+without updating /etc/sorcery/config
+Only possible conclusion was that I did not anticipate it
+did not add backward compatibility for a function
+that prevents customization of /etc/sorcery/config
+No box should have that file customized.
+All customizations involving sorcery go into
+/etc/sorcery/local.config
+It says that at the top of /etc/sorcery/config
+
+I slipped the fix for sorcery into the spell after testing.
+Therefore, the bug went forth in the daily grimoire,
+since I accidentally typed : where a ; should be.
+Unfortunately, instead of adding a solution for a situation
+that should not exist
+I instead introduced a distribution wide bug
+which could cause update complications on boxes
+that otherwise would have updated reasonably smoothly.
+Sorry about that.
+
+Ah it is irritating.
+Also a bug might exist in immune-exam-transition.
+Anyone who definitely wants to keep their source cache
+aught to execute
+# cp -al /var/cache/sources{,.save}
+before attempting to update.
+Some boxes properly transfer /var/cache/sources/ to /aux/can/source/
+On other boxes the source cache evaporates.
+The code looks fine.
+So the mystery persists.
+
+So aside from an evaporating source cache
+and a few machines fork bombing wane
+the update happened.
+While definitely not a failure,
+I am irritating myself over the aforementioned aspects.
+
+BTW, sdelta3 update patches will be unavailable for a while.
+And the master source cache will be less stocked than usual.
+And as usual a month from now we can look back at this moment
+and laugh heartily, although some people might already be laughing.  :)
+
+
+
+On Tue, Oct 23, 2012 at 8:18 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 10/23/2012 08:37 AM, Kyle Sallee wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> *grins*
+</I>&gt;&gt;<i> It should have copied to /aux/can/source/
+</I>&gt;&gt;<i> If not then it might be anywhere.
+</I>&gt;<i>
+</I>&gt;<i> &lt;quote&gt;
+</I>&gt;<i> Ultimately, shit will happen. It also happens to fly farther when using
+</I>&gt;<i> tools.
+</I>&gt;<i>
+</I>&gt;<i> - - Robby Workman -
+</I>&gt;<i> &lt;/quote&gt;
+</I>&gt;<i>
+</I>&gt;<i> From
+</I>&gt;<i> <A HREF="http://www.linuxquestions.org/questions/slackware-14/article-about-upgrading-to-current-726782/#post3546495">http://www.linuxquestions.org/questions/slackware-14/article-about-upgrading-to-current-726782/#post3546495</A>
+</I>&gt;<i>
+</I>&gt;<i> Thanks Kyle! Now I'm going to have to down a shot of vinegar to get rid
+</I>&gt;<i> of the hiccups from laughing so hard ;)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.310.388.9469  (US)
+</I>&gt;<i> TEL: +44.203.318.2755 (UK)
+</I>&gt;<i> TEL: +41.43.508.05.10 (CH)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.10 (GNU/Linux)
+</I>&gt;<i> Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJQh14CAAoJEE1wgkIhr9j39aAIAKhB783WRimgnQGxyc4eGRw9
+</I>&gt;<i> qz++xqV5QSjQPYMsp6W+30Ru8FORkFJhjr1FdozTE9H8Ddo8tzyvnr3BvxN5FPBc
+</I>&gt;<i> XYb/+2rOznom3d7HvkRqM5ySR33nU8uhBF9viHSseCBlfg5Zzrh2RxwSb905lCJR
+</I>&gt;<i> nOW/jLIwAqkD0sLWIVgE9PU/82M7tWzpuIjaEfheh60Vvl0GyvFwoMtXWd7uf0DQ
+</I>&gt;<i> 1W+B0XSup3LnFszV0Dt3fAan+gQ3CGTGavHXO91NXflzqxAd6Y/8s1B0Oo0BLZ35
+</I>&gt;<i> K4HjARIYW3YPrJAD1sJ2YorO+eDe3qRYfINTr/vPS+y6EweykHBehzwmIMdYK7E=
+</I>&gt;<i> =OC+d
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002402.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+	<LI>Next message: <A HREF="002404.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2403">[ date ]</a>
+              <a href="thread.html#2403">[ thread ]</a>
+              <a href="subject.html#2403">[ subject ]</a>
+              <a href="author.html#2403">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

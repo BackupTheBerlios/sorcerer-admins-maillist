@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] LVM2 big WARNING!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20LVM2%20big%20WARNING%21&In-Reply-To=%3C200910160152.53239.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001352.html">
+   <LINK REL="Next"  HREF="001353.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] LVM2 big WARNING!</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20LVM2%20big%20WARNING%21&In-Reply-To=%3C200910160152.53239.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] LVM2 big WARNING!">merka at highsphere.net
+       </A><BR>
+    <I>Fri Oct 16 07:52:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001352.html">[Sorcerer-admins] longer X failures description
+</A></li>
+        <LI>Next message: <A HREF="001353.html">[Sorcerer-admins] LVM2 big WARNING!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1347">[ date ]</a>
+              <a href="thread.html#1347">[ thread ]</a>
+              <a href="subject.html#1347">[ subject ]</a>
+              <a href="author.html#1347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Be careful installing LVM2 version 2.02.52, it creates a big problem because 
+it installs its own libdevmapper.so.1.02 library into /usr/lib while device-
+mapper already provides a library of the same name and version in /lib. As a 
+result, executables like /sbin/vgscan and others will stop running and a 
+message about a relocation error in libdevmapper.so.1.02 will be issued. That 
+is if you are lucky to try it before rebooting. 
+
+If you try to reboot first instead, and your root file system is on LVM, grab 
+your rescue CD and have fun... You have been warned.
+
+I will investigate a proper solution when (if) I have some time but that's not 
+going to happen in the next few days. Sorry. 
+
+For now, I am sticking with LVM2 version 2.02.39.
+
+J.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001352.html">[Sorcerer-admins] longer X failures description
+</A></li>
+	<LI>Next message: <A HREF="001353.html">[Sorcerer-admins] LVM2 big WARNING!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1347">[ date ]</a>
+              <a href="thread.html#1347">[ thread ]</a>
+              <a href="subject.html#1347">[ subject ]</a>
+              <a href="author.html#1347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

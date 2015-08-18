@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] openssh failed to install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3CAANLkTimg39zQqPGtVKe6WGAwS31G2Vc31Kjx2B-EZvja%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001833.html">
+   <LINK REL="Next"  HREF="001842.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] openssh failed to install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3CAANLkTimg39zQqPGtVKe6WGAwS31G2Vc31Kjx2B-EZvja%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] openssh failed to install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 22 10:37:16 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001833.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+        <LI>Next message: <A HREF="001842.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1837">[ date ]</a>
+              <a href="thread.html#1837">[ thread ]</a>
+              <a href="subject.html#1837">[ subject ]</a>
+              <a href="author.html#1837">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I admit that tcp_wrappers is a necessary evil
+for making some software work.
+But if there is a lingering popularity for tcp_wrappers
+then where is the source being maintained?
+I saw a replacement for it on freshmeat dated in 2003.
+But those hyperlinks are dead.
+Did the project discontinue due to apathy?
+
+Although I have not looked
+at tcp_wrappers source in great detail
+I would expect that since it receives TCP requests first
+tcp_wrappers could become a target for attack.
+Could there be a tcp_wrappers targeted attack
+upon sshd or some other tcp_wrappers enabled
+service that could break into a box?
+openssl and openssh are updated almost constantly
+fixing potential security vulnerabilities and bugs.
+Consequently, we can rest easy at night
+expecting that our current version of openssh
+should not be an easy egg to crack.
+However comparing tcp_wrappers releases to openssh
+protection from tcp_wrappers feels like a
+13 year old condom baked in sunlight.
+
+I want to know if we can do better than tcp_wrappers.
+That is why I did a quick scan on freshmeat
+to see if there was a replacement.
+I did not look over hill an dale for a replacement.
+I should have checked google.
+But then the power went out
+due to summer lightening storms.
+
+tcp_wrappers release is 13 years old.
+If the date on the ftp server is accurate
+then that much can be accepted as fact.
+Does that not warrant concern?
+Is there no security auditing on it?
+Do we want software that has not
+been updated nor audited for 13 years
+to act as a prophylactic for where our boxes'
+sensitive services are exposed to the Internet?
+Does such a concern seem irrational?
+
+My suggestion that SAs avoid using tcp_wrappers
+is an attempt to make their boxes more secure
+rather than less secure.
+Smug feelings about using tcp_wrappers
+might turn into irate vehemence
+if we became aware of an effective attack
+that can be used on tcp_wrappers enabled boxes.
+If someone discovered how to break into boxes
+or even DOS services
+by exploiting a bug in tcp_wrappers and
+did a massive simultaneous attack
+then that would be the stuff of movies.  *lol*
+
+Hopefully, that helps explain my point of view
+so my perspective does not seem extreme,
+but instead only cautious and concerned.
+
+
+On Wed, Jul 21, 2010 at 6:53 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> I'm of the same opinion as Jan on this Kyle. I use/depend upon
+</I>&gt;<i> tcp_wrappers for things like NFS and portsentry, etc.
+</I>&gt;<i>
+</I>&gt;<i> To me, it's kind of a 'standard' thing, expected to be part of a UNIX
+</I>&gt;<i> installation, and used regularly.
+</I>&gt;<i>
+</I>&gt;<i> I don't always use netfilter, often depending upon PfSense firewalls on
+</I>&gt;<i> the perimeter, and quite often will just quickly enter some jerk into
+</I>&gt;<i> /etc/hosts.deny (even on a LAN) for simplicity ;)
+</I>&gt;<i>
+</I>&gt;<i> To do that w/iptables might require four or five rules, when I can do it
+</I>&gt;<i> on a single line in /etc/hosts/deny for particular services.
+</I>&gt;<i>
+</I>&gt;<i> wrt things like portsentry, I like the redundancy and have no problems
+</I>&gt;<i> removing false positives from iptables AND /etc/hosts.deny as
+</I>&gt;<i> a regular course of re-allowing access.
+</I>&gt;<i>
+</I>&gt;<i> Not to mention its integral relationship to NFS. I'm hoping you'll
+</I>&gt;<i> rethink your inclinations on this Kyle, and then we can all go back to
+</I>&gt;<i> hating Redhat - coz it's fun! :)
+</I>&gt;<i>
+</I>&gt;<i> um... okay, time for a non-sequitur: I'm really incensed about what I
+</I>&gt;<i> perceive as perhaps the demise of Sun and Solaris. I don't think any of
+</I>&gt;<i> us would be here quite like we are now if it wasn't for Bill Joy, his
+</I>&gt;<i> BSD and IP stack, and I'm very saddened every time I see another aspect
+</I>&gt;<i> of Sun Microsystem's contributions to our world being re-branded under
+</I>&gt;<i> Oracle.
+</I>&gt;<i>
+</I>&gt;<i> I've got what I think is the very last free release of Solaris 10 (the
+</I>&gt;<i> October edition) in a boxed set. Dunno where things are going from here,
+</I>&gt;<i> but I'm not optimistic.
+</I>&gt;<i>
+</I>&gt;<i> On 7/21/2010 11:38 AM, Jan Merka wrote:
+</I>&gt;&gt;<i> On Wednesday, July 21, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;&gt;<i> If someone who uses tcp_wrappers wants
+</I>&gt;&gt;&gt;<i> for a better solution
+</I>&gt;&gt;&gt;<i> then please implement one.
+</I>&gt;&gt;&gt;<i> This ancient source is causing more problems than it is worth.
+</I>&gt;&gt;&gt;<i> I would prefer to dispose of it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I use tcp_wrappers on my servers together with iptables. Tcp_wrappers are
+</I>&gt;&gt;<i> still extremely convenient because they enable the use of /etc/hosts.allow and
+</I>&gt;&gt;<i> /etc/hosts.deny. I use it primarily due to NFSv4 and DenyHost services.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Do you have a suggestion as to what (how) could replace tcp_wrappers?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703 &#160;(US)
+</I>&gt;<i> TEL: +44.702.405.1909 (UK)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJMR6S2AAoJEE1wgkIhr9j3Yz4H/0+bBtwO9gGmwgVAONMmvonV
+</I>&gt;<i> fZ+XKRW/HSmmNtD9ufmJ2M6uBVV61XCMTbuV7E8eOiB0jHClf5H0WPsDFcfo/wIJ
+</I>&gt;<i> 42FpajjHSbT8Pc/KD5fAh7p4cBHfIQ7/aOHwZkruOjq7ktwRkFNQ2+tv3iIsJ3xc
+</I>&gt;<i> AUQ9jplIlA51ZhjmNfkFY76xsJLigySvGJbVkVbvzI+ChgYN5y84dq1RSjUtFEae
+</I>&gt;<i> B4t45JaLVi8IOwj8mpIIWftYmCHd62dH99Zw886kONKIln9lJ7Ki9zg3AbmxYGIB
+</I>&gt;<i> sutYRtgW8JVYp8nuDRQH1qbeAOB54aZ2y0gi7JLj8j9UIVOJReXFjkqZyBxnQvs=
+</I>&gt;<i> =NizO
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001833.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+	<LI>Next message: <A HREF="001842.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1837">[ date ]</a>
+              <a href="thread.html#1837">[ thread ]</a>
+              <a href="subject.html#1837">[ subject ]</a>
+              <a href="author.html#1837">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

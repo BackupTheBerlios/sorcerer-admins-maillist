@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] processing the complaint box again...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20processing%20the%20complaint%20box%20again...&In-Reply-To=%3CCA%2BT4wDjJkwTPGwt%3DVfjPdLXy9eok1Te2xupo12EAKqL%2BZzzSug%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002251.html">
+   <LINK REL="Next"  HREF="002253.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] processing the complaint box again...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20processing%20the%20complaint%20box%20again...&In-Reply-To=%3CCA%2BT4wDjJkwTPGwt%3DVfjPdLXy9eok1Te2xupo12EAKqL%2BZzzSug%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] processing the complaint box again...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep 14 15:00:45 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002251.html">[Sorcerer-admins] Greetings...
+</A></li>
+        <LI>Next message: <A HREF="002253.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2252">[ date ]</a>
+              <a href="thread.html#2252">[ thread ]</a>
+              <a href="subject.html#2252">[ subject ]</a>
+              <a href="author.html#2252">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A recent complaint was that too much happens during sysinit.
+And I agree.
+And there is also too much scroll during sysinit.
+And it scrolls quickly.
+
+However, there is almost no init-scripts in sysinit
+that can be moved to a runlevel
+that would not sacrifice something important.
+
+As for scroll I discovered that apparently pressing the
+scroll lock key pauses sysinit and runlevel.
+I am wondering if being able to pause a box during startup
+is useful or if it is a security risk.
+
+Also we already know that on virtual console #7 is a login getty
+that is available even before sysinit begins.
+That way if sysinit hangs or stalls
+then a SA can switch to virtual console #7
+and log into the initramfs and run utilities such as top
+and ps to discover the probable culprit.
+
+However, I am also wondering what small improvements
+can or should be made to init-scripts or running init-scripts
+that would make booting better.
+
+For the moment I am playing with a simple modification
+that turns on the numlock just before running
+the command to start a daemon
+and then turns off the numlock just before
+the init-script exits.
+I am not yet certain if that could be useful
+or if it is merely a waste of processes and CPU.
+
+Also I am playing with a small modification that allows
+cap lock key to be pressed during sysinit,
+runlevel 3 and runlevel 5.
+Upon detecting caps lock then
+cap lock is turned off automatically
+and a sulogin prompt is presented
+with a 10 second timeout
+for providing the root password.
+
+The idea is that if the SA sees something that looked problematic
+and wants to jump on it straight away
+then the SA can test his arcade game honed reflexes
+by pressing cap lock which pauses the scroll
+and allows for immediate login.
+
+As we all know already
+pressing shift page up or shift page down allows for
+paging up and down in a virtual console.
+The number of lines saved is not unlimited.
+Every line above the visible area is lost
+when changing to a different virtual console.
+And switching to virtual consoles is easy.
+I typically press alt left arrow to switch from
+virtual console #1 to virtual console #7
+However, from xorg the key sequence would
+be something such as pressing ctrl-alt-F7
+
+Runlevels 2 and 4 remain unchanged.
+The parallel execution of init-scripts on
+runlevel 2 and 4 is appropriate for speed,
+but not for debugging a problem.
+Runlevels 0 and 6 remain unchanged.
+They have the excellent finale menu
+that grants a limited opportunity to
+login to the Sorcerer's keep
+or rebound to into a new run level.
+
+Additional complexity to the init system
+in order to try to give it something suitable
+for detecting problems and debugging init-scripts
+still seems unsuitable at this time.
+When I see a significant problem
+then I boot with kernel parameter
+rdinit=/bin/bash
+and hunt the problem by a method
+that is very specific to the clues
+I previously received.
+
+However, there are some other nifty improvements related to init.
+
+/etc/init.d/Menu
+is a rather odd init-script.
+When run with parameter configure
+then it first prompts for a new command parameter.
+Then, it presents a list of init-scirpts
+that the SA can select for running
+the previously selected parameter with.
+It is potentially useful, but difficult to explain.
+
+/etc/init.d/cgroup_{user,daemon,sorcery,idle}
+now allow more variables to be configured.
+Yet, I am waffling about whether to continue
+to allow memory limits to be set for cgroups.
+Doing so sometimes disables the ability to disable the oom_killer.
+This might be a bug.
+Chances are control group is receiving
+considerable testing in Sorcerer
+that might expose unexpected bugs
+that arise from complex configurations.
+Yet, control groups are still awesome
+and worth learning how to use.
+
+I am still waffling about how aliens should be handled.
+SAs do not grant aliens enough attention
+and therefore are surprised when a problem arises.
+So I made detection and disposition of aliens more amusing.
+
+Spell immune-exam-alien installs /etc/init.d/exam-alien.
+The init-script runs during boot.
+It immediately returns while leaving a program
+running in the background that detects aliens.
+After the program completes the list of aliens
+can be processed with the command
+
+# /etc/init.d/exam-alien deport
+
+The next screen shows a list of alien files.
+But better to goto the command screen first
+and select a command such as view, deport, or visa.
+Aliens to be ignored can be given a visa.  :)
+Aliens to deport are moved
+into a similarly named directory structure located under
+/var/log/alien/deported/
+They can remain their harmlessly forever
+or until the SA decides to remove the directory.
+
+I encourage SAs to find and resolve alien problems.
+Aliens in /etc/ are not normally problematic and can usually be ignored.
+Aliens in library directories can become problematic, especially if
+from an older glibc.
+Aliens in executable directories can create a future security problem.
+If a similarly named executable file
+exists in two locations and one is tracked
+then the other may be from a very old version
+of the same software project from a time when an exploitable bug existed.
+So do not expect USA's Homeland Security
+to do anything about the illegal alien situation on Sorcerer boxes.
+This is a task to be delegated to no person less skilled than the SA.
+
+If someone has ideas about how the num lock light
+should indicate something useful during booting
+or how pressing cap locks should do something useful
+then please contribute suggestions.
+For the moment the functionality is provided on a trial basis.
+Feedback will determine if it is fluff to be cut
+or whether it has merit to be honed into something useful.
+The way it stands currently is that the functionality
+may not be commensurate with the additional CPU cycles.
+However, the increase in complexity is not yet significant.
+
+Yet, I am wondering if SAs trying to read the rapid scroll
+during sysinit and runlevel execution are wishing for a
+turbo button on the case that can be depressed to release
+the box back into a normal cruising speed of 4.77 MHz,
+or maybe 16 MHz since we did not have linux before 80386 computers.  :)
+I am waffling about the idea of activating
+numlock could relegate init-script execution speed
+to no greater than 4 init-scripts per second.
+Yet I have never before preferred or wanted slow motion booting.
+
+For those wondering about it...
+Not all the boot scroll is captured.
+However, a large portion of sysinit
+and almost anything else that later
+arrives at the console
+is also directed into the file /var/log/console.
+/sbin/bootlogd does that.
+
+Useful information concerning the
+parameter used to invoke an init-script
+and the outcome of that invocation
+are stored in /var/log/init/{passed,failed}/
+It is actually there for SAs to view
+and is not a substitute for lock files or PIDs.
+It is purely informational.
+At a glance it may be faster to determine
+what one wants to know than by parsing
+a console log , dmesg log, or syslog.
+It is best viewed immediately after booting.
+
+The bug in sentinel-resume is perhaps finally squished.
+If it is misbehaving on non Sorcerer Sentient installations
+then please report the problem.
+I will be updating Sorcerer Sentient to a newer grimoire very soon.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002251.html">[Sorcerer-admins] Greetings...
+</A></li>
+	<LI>Next message: <A HREF="002253.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2252">[ date ]</a>
+              <a href="thread.html#2252">[ thread ]</a>
+              <a href="subject.html#2252">[ subject ]</a>
+              <a href="author.html#2252">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more pbzip2 tests
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20pbzip2%20tests&In-Reply-To=%3COF5794FBA7.CACE6ABB-ONC225752E.002A62D0-C225752E.002AF62F%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000971.html">
+   <LINK REL="Next"  HREF="000973.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more pbzip2 tests</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20pbzip2%20tests&In-Reply-To=%3COF5794FBA7.CACE6ABB-ONC225752E.002A62D0-C225752E.002AF62F%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] more pbzip2 tests">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Mon Dec 29 08:49:14 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000971.html">[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+</A></li>
+        <LI>Next message: <A HREF="000973.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#972">[ date ]</a>
+              <a href="thread.html#972">[ thread ]</a>
+              <a href="subject.html#972">[ subject ]</a>
+              <a href="author.html#972">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There is a major drawback using pbzip2 as decompression program if 
+sourcefile is compressed with a bzip2 in beginning.
+It's not fast at all. Decompression is only fast if it's compressed with 
+pbzip2, it organizes compressed file so it can be decompressed fast way, 
+but if it was compressed using bzip2 there is no speedup to decompress 
+with pbzip2.
+
+Same test environment as in last message, but this time source file was 
+compressed using bzip2:
+
+pbzip2 decompress, 2 core, bzip2 created source
+real    0m20.371s
+user    0m19.005s
+sys     0m0.672s
+
+pbzip2 decompress, 4 core, bzip2 created source
+real    0m19.598s
+user    0m18.865s
+sys     0m0.640s
+
+And what if source file is compressed with pbzip2:
+pbzip2 decompress, 2 core, pbzip2 created source
+real    0m5.991s
+user    0m11.277s
+sys     0m0.272s
+
+pbzip2 decompress, 4 core, pbzip2 created souce
+real    0m3.961s
+user    0m13.849s
+sys     0m0.376s
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081229/d93ea89a/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081229/d93ea89a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000971.html">[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+</A></li>
+	<LI>Next message: <A HREF="000973.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#972">[ date ]</a>
+              <a href="thread.html#972">[ thread ]</a>
+              <a href="subject.html#972">[ subject ]</a>
+              <a href="author.html#972">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

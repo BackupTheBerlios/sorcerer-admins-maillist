@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please forgive the excessive recompilation...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20forgive%20the%20excessive%20recompilation...&In-Reply-To=%3CCA%2BT4wDh%2BtkRt%3Drz1okPv4zCt4hQ_fuLnCj75Z60aX2wp%2BHLH1w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002468.html">
+   <LINK REL="Next"  HREF="002470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please forgive the excessive recompilation...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20forgive%20the%20excessive%20recompilation...&In-Reply-To=%3CCA%2BT4wDh%2BtkRt%3Drz1okPv4zCt4hQ_fuLnCj75Z60aX2wp%2BHLH1w%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please forgive the excessive recompilation...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct 15 22:17:41 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002468.html">[Sorcerer-admins] sorcery scan
+</A></li>
+        <LI>Next message: <A HREF="002470.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2469">[ date ]</a>
+              <a href="thread.html#2469">[ thread ]</a>
+              <a href="subject.html#2469">[ subject ]</a>
+              <a href="author.html#2469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Since introducing the sorcery utility scan
+several software projects might be frequently re-installing.
+That is typically caused because two installed software projects
+are sharing ownership of file names that differ in content.
+I have been editing spells to help eliminate the overlap.
+Eventually, all that overlap should be eliminated.
+Remaining overlapped files will share the same content.
+Or the overlap will be explicitly ignored by the sorcery utilities
+to circumvent inaccurate Fail Scan outcomes.
+
+And now for the big, Big, BIG news.
+My patch for &quot;cat&quot; submitted to the coreutils email list was rejected.
+No problemo.
+I wrote a utility that works better
+for the task of generating message digests
+for installed files.
+It supports opening files with O_DIRECT flag
+to omit deluging the kernel's block cache
+and to verify the content of files,
+as seen from their backing device,
+rather than receiving the kernel's cached blocks.
+And it runs without using requiring xargs
+and without the necessity of piping output
+into another utility for generating the message digests:
+
+Here is code that represents a method that utilizes
+utilities from software projects &quot;coreutils&quot; and &quot;findutils.&quot;
+
+# sed &quot;s:^:if=&quot; filenames.txt |
+ xargs -r --max-lines=1 dd direct |
+ sha512sum |
+ cut -b1-64
+
+xargs invokes once dd once per filename.
+Therefore, if running on 100,000 files
+then 100,004 processes are created.
+That amounts to significant processor overhead.
+
+# baresha256 -d &lt; filenames.txt
+
+One process is created and the output
+is the sha512 message digest for the concatenated content
+of the files listed in filenames.txt
+That is performance.
+
+Probably noticed by now;
+I switched from using md5sum to sha512.
+That is because md5sum was cryptographically broke in 1996.
+Some people might prefer
+a cryptographically secure message digest.
+Consequently, I went ahead and selected one that seems good.
+
+The change in sorcery code will render the previously stored
+message digests invalid for all installed spells.
+Consequently, expect sorcery to rebuild root file systems
+following the installation of the newer sorcery.
+
+If wondering why all the re-compilation
+then the answer is to ultimately provide
+a level of file system integrity that spots
+and remedies problems quickly and automatically.
+Please forgive the inconvenience the transition causes.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131015/0075d950/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131015/0075d950/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002468.html">[Sorcerer-admins] sorcery scan
+</A></li>
+	<LI>Next message: <A HREF="002470.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2469">[ date ]</a>
+              <a href="thread.html#2469">[ thread ]</a>
+              <a href="subject.html#2469">[ subject ]</a>
+              <a href="author.html#2469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

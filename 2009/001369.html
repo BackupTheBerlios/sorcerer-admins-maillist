@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] linux version 2.6.31.6
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20version%202.6.31.6&In-Reply-To=%3C596b75860911240230h35202298udb878031d13aed97%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001368.html">
+   <LINK REL="Next"  HREF="001370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] linux version 2.6.31.6</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20version%202.6.31.6&In-Reply-To=%3C596b75860911240230h35202298udb878031d13aed97%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] linux version 2.6.31.6">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Nov 24 11:30:01 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001368.html">[Sorcerer-admins] ppr.silverice.org downtime expected in near	future
+</A></li>
+        <LI>Next message: <A HREF="001370.html">[Sorcerer-admins] ppr.silverice.org ip change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1369">[ date ]</a>
+              <a href="thread.html#1369">[ thread ]</a>
+              <a href="subject.html#1369">[ subject ]</a>
+              <a href="author.html#1369">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I discovered recently that linux version 2.6.31.6 turns my wireless
+USB NIC into a paperweight.
+I spent an embarrassingly long amount of time trying to debug the problem
+as if it were a udev problem instead of being caused by the newer kernel.
+The module I am using is at76c50x_usb.
+Please expect it if you use that.
+I have no idea if the problem is limited to only that module.
+
+After a good examining of udev I learned two interesting things.
+First, it can load firmware.
+However, it does not seem to want to do so successfully during boot.
+I have the feeling that this is something like a domino effect
+where something else going wrong before it causes the failure later.
+After booting I can restart udevd, unload the module, pull out the usb cord
+and stuff the usb cord back into the case and then udev has no problem
+with loading the module and firmware together.
+Another solution that works even better is to rmmod the module
+then modprobe the module.
+It is rather annoying.
+The problem appears to be caused by udev.
+
+udev 147 was completely unsuable for booting.
+udev 146 is the version currently listed as stable in the grimoire.
+If an older version of udev worked better than 146
+then I no longer remember which one.
+So for the moment we are at the mercy of udev development
+which reminds me of guys with lit cigarettes playing tag using
+super-soakers filled with gasoline.
+We might be lucky if no boxes go up in flames,
+due to bugs in udev.
+
+I am posting this information to the list so that SAs will know
+to be extra careful with testing their boxes following updates.
+I do what I can to test, but even I discover some things the hard way.
+
+Also someone mentioned new problems involving audio following
+the update to the 2.6.31.6 kernel.
+I also noticed that aumix was not loading and that
+/dev/mixer did not exist.
+I suppose that might be due to an inadequate linux .config, however:
+
+# LC_ALL=C grep MIX .config
+CONFIG_MIXCOMWD=m
+CONFIG_SND_MIXER_OSS=m
+CONFIG_SND_MIXART=m
+
+So it looks as if it aught to work.
+My impression is that both udev and linux stable releases
+have become less reliable.
+Please be careful and boot an older kernel
+if something odd is happening with the newer kernel.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001368.html">[Sorcerer-admins] ppr.silverice.org downtime expected in near	future
+</A></li>
+	<LI>Next message: <A HREF="001370.html">[Sorcerer-admins] ppr.silverice.org ip change
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1369">[ date ]</a>
+              <a href="thread.html#1369">[ thread ]</a>
+              <a href="subject.html#1369">[ subject ]</a>
+              <a href="author.html#1369">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

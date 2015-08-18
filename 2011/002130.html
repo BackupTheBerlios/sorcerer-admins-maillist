@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIDIA-Linux-x86 and NVIDIA-Linux-x86_64
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20NVIDIA-Linux-x86_64&In-Reply-To=%3CBANLkTimBWpWXwHnh8uZ%2B1pMMv83L85PBCw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002129.html">
+   <LINK REL="Next"  HREF="002131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIDIA-Linux-x86 and NVIDIA-Linux-x86_64</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20NVIDIA-Linux-x86_64&In-Reply-To=%3CBANLkTimBWpWXwHnh8uZ%2B1pMMv83L85PBCw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] NVIDIA-Linux-x86 and NVIDIA-Linux-x86_64">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 25 05:08:29 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002129.html">[Sorcerer-admins] Fwd:  Sorcerer-admins Digest, Vol 58, Issue 8
+</A></li>
+        <LI>Next message: <A HREF="002131.html">[Sorcerer-admins] A little more about OpenGL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2130">[ date ]</a>
+              <a href="thread.html#2130">[ thread ]</a>
+              <a href="subject.html#2130">[ subject ]</a>
+              <a href="author.html#2130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I will start by saying that NVIDIA's method for installation is not proper.
+The only method that properly installs and tracks files
+is having two separate spells.
+Therefore, there are now two spells for installing NVIDIA drivers from NVIDIA.
+
+NVIDIA-Linux-x86_64 installs ELF 64-bit libraries and kernel module.
+NVIDIA-Linux-x86 installs ELF 32-bit libraries.
+On i686 boxes it also installs the kernel module.
+
+Most boxes will have only one of the above two spells installed.
+Multilib boxes will have both spells installed when OpenGL
+is desired for running 32-bit ELFs or win32 applications in wine.
+
+I know about the multilib file for download.
+Unfortunately, it does not entirely track when installed,
+because it installs some files directly into /usr.
+Not only does it create annoying alien files,
+but it corrupts files installed by MesaLib.
+
+I also tried a single spell that uses each of the two single
+architecture binaries.
+That nearly works.
+Unfortunately, NVIDIA's ELF 64-bit installer removes files from the DESTDIR
+that were installed by NVIDIA's ELF 32-bit installer.
+And so the installation falls short of becoming usable for ELF 32-bit OpenGL.
+
+However, since NVIDIA provide the two single architecture files for download
+having two separates spells is not entirely illogical.
+Sorry for the inconvenience.
+Please redirect all flame email to NVIDIA.
+
+Hopefully, after the dust settles boxes can have either or both ELF
+32/64-bit NVIDIA drivers
+a kernel module, no aliens, and no overwritten MesaLib files.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002129.html">[Sorcerer-admins] Fwd:  Sorcerer-admins Digest, Vol 58, Issue 8
+</A></li>
+	<LI>Next message: <A HREF="002131.html">[Sorcerer-admins] A little more about OpenGL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2130">[ date ]</a>
+              <a href="thread.html#2130">[ thread ]</a>
+              <a href="subject.html#2130">[ subject ]</a>
+              <a href="author.html#2130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

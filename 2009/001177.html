@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Making the port...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Making%20the%20port...&In-Reply-To=%3C596b75860905131545p3fe02116sc1b9d383208c07ae%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001174.html">
+   <LINK REL="Next"  HREF="001175.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Making the port...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Making%20the%20port...&In-Reply-To=%3C596b75860905131545p3fe02116sc1b9d383208c07ae%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Making the port...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 14 00:45:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001174.html">[Sorcerer-admins] Making the port...
+</A></li>
+        <LI>Next message: <A HREF="001175.html">[Sorcerer-admins] xinetd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1177">[ date ]</a>
+              <a href="thread.html#1177">[ thread ]</a>
+              <a href="subject.html#1177">[ subject ]</a>
+              <a href="author.html#1177">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, May 13, 2009 at 1:21 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Wow...
+</I>&gt;<i>
+</I>&gt;<i> Some great progress on your side. Well done!
+</I>
+We owe thanks to uClibc for being very compatible with glibc.
+I discovered a recent compile error with device-mapper,
+and perhaps adjusting the uClibc configuration will avoid it.
+Mostly adjusting uClibc configuration and spells are
+all that has been necessary to keep the port compiling.
+
+
+&gt;<i> I noticed there was a libdrm update or something today, and I decided to yet
+</I>&gt;<i> again try getting my video driver issues sorted out on my laptop. ( It's a
+</I>&gt;<i> long story, you don't want to know )
+</I>
+Seemed like the linux-headers mandated the MesaLib update
+which mandated the libdrm udpate, and so forth...
+I was updating available stable versions for spells
+just to keep it all compiled.
+The new versions are not necessarily unstable,
+but they are not was specified part of the last xorg release.
+And xorg releases happen even less frequently than
+Sorcerer I/R releases.
+
+
+&gt;<i> Anyways, with everything in unstable, this intel graphics-enabled laptop now
+</I>&gt;<i> runs like a dream! No more video artefacting, no more weirness in shutting
+</I>&gt;<i> down.. it just works perfectly, and the speed is not half bad either!
+</I>
+Actually, I did not expect that all the individual graphics drivers
+would adjust smoothly to the other updates.
+However, I expected to deal with it soon since the
+uClibc port is recompiling everything that ELF linked with glibc.
+
+The update was compatible with the pre-compiled drivers provided by NVIDIA.
+However, I expect that there may still be a bug in the newer
+MesaLib or libdrm, because I experienced one graphic lockup
+while running an OpenGL program.
+I sshed in from outside, killed the process and regained control.
+
+
+&gt;<i> I might actually try doom3 on it once I get home next month. :)
+</I>
+Even though it might be doomed to fail?
+Also there is the problem of providing the necessary
+glibc linked 32 bit ELF libraries to run it.
+
+
+&gt;<i> In all seriousness, if uClibc is markedly faster in executing programs, I
+</I>&gt;<i> might be interested in getting a copy once an I/R for that is ready. I
+</I>&gt;<i> suppose that this will hopefully be the smallest I/R of the Sorcerer range?
+</I>
+It can be.
+But design and effort is required to integrate busybox.
+Also I must begin testing with lzip to see about replacing
+all the 7za compressed archives on the I/R
+with lzip compressed archives.
+
+
+&gt;<i> -Evert-
+</I>&gt;<i> P.S. I am slightly glad now that I have an intel chip in my laptop, as it
+</I>&gt;<i> means I'll get the same if not better video accell on uClibc.
+</I>
+Not certain if X11 and OpenGL will be faster for using uClibc.
+Graphics rather than libc functions involving libc,
+will probably not gain a boost from transitioning to uClibc.
+That least that is my guess.
+Running a game, for example, would probably not have
+processes constantly start such as when a source is compiled.
+If ydoom3 source code can be acquired, compiled, and statically linked
+that could provide some benefit.
+
+I remember years ago the xmame team were
+into squeezing every bit of performance possible.
+Therefore, xmame executable was statically linked when possible.
+Unfortunately, only the compiler can inline code.
+Static linking still has function calls even for the smallest of functions
+that are linked from a static archive.
+Compilation of functions inline,
+where the entire code of a function is inserted rather
+than a call to the function,
+can often increase performance at the expense of
+increased code size.
+However, inlining of functions that execute inside of a loop
+is often an excellent performance benefit since
+it skips all the stack play, pushing, popping, address, etc...
+
+When creating the port uclibc port
+I could probably have tried for
+IA32 C programs compiled with -mregparm=3
+I vaguely recollect that -mregparm=3 may be the default for C++ programs,
+might be a default for the x86_64 port,
+and might be a default for internal kernel functions.
+However, I might be wrong about any or all of that.
+
+According to the gcc manual page -mregparm=3 is a one way trip.
+Everything must be compiled with it if it is to be used.
+Otherwise libraries and executables might disagree about
+how parameters should be passed to functions,
+and thus do the wrong thing and runtime error.
+
+If -mregparm=3 with gcc works okay,
+which seems to be subject to a bit of debate,
+then some programs might run faster and be
+less bottled by the bus.
+
+However, aside from the question of whether it works
+the gcc manual page suggests that those parameters must be
+given explicitly forever when compiling anything.
+And some sources do not want to use CFLAGS and CXXFLAGS
+environment variables.
+Therefore, it gave me cause to wonder if it would turn into a pain.
+I would not want to have to add it to the gcc spec file
+or modify gcc source code to enforce it.
+Also, I have not made enough time to play with -mregparm=3
+
+Yet while it may provide some performance improvement,
+the benefits are not entirely clear.
+If a parameter to a function is not immediately used,
+but the registers which hold the parameter must be used
+then register content must go into memory
+and thus probably have a spot on the stack allocated for it
+which is the same as would happen as if the parameter was
+passed to the function on the stack instead of in a register.
+
+Oops, I went on a tangent.
+
+Anyway, quality of code, especially execution speed,
+is still 99% dependent on the programmer and 1% on compiler.
+With all the nifty parameters gcc supports it might seem otherwise.
+However, poorly written code still runs slow even with the best
+gcc optimizations.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001174.html">[Sorcerer-admins] Making the port...
+</A></li>
+	<LI>Next message: <A HREF="001175.html">[Sorcerer-admins] xinetd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1177">[ date ]</a>
+              <a href="thread.html#1177">[ thread ]</a>
+              <a href="subject.html#1177">[ subject ]</a>
+              <a href="author.html#1177">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

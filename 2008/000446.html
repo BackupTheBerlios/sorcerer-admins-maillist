@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init-functions
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-functions&In-Reply-To=%3C596b75860805170641k3e94eacey754182551739080f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000439.html">
+   <LINK REL="Next"  HREF="000447.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init-functions</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-functions&In-Reply-To=%3C596b75860805170641k3e94eacey754182551739080f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init-functions">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 17 15:41:51 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000439.html">[Sorcerer-admins] runlevel confusion
+</A></li>
+        <LI>Next message: <A HREF="000447.html">[Sorcerer-admins] /dev/sd* or /dev/hd*
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#446">[ date ]</a>
+              <a href="thread.html#446">[ thread ]</a>
+              <a href="subject.html#446">[ subject ]</a>
+              <a href="author.html#446">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Another common factor was discovered in init-scripts
+Often whether an init-script should run
+depends upon whether a file or directory exists.
+
+For example:
+
+If /etc/ssh/sshd_config exists
+then the box should probably start a sshd server to listen for inbound
+connections.
+However if /etc/ssh/sshd_config does not exist
+then it is obvious that a sshd server should not be started.
+
+The existence of the pivotal file or directory is now formalized as $CONF
+If $CONF is defined in an init-script then it must exist or the
+service will not start.
+Instead it will print an info message about why the service did not start.
+
+What this gains for Sorcerer SAs is that fewer questions must be asked about
+what init-scripts should be installed mode 0600 or mode 0700.
+Nearly all init-scripts can now be installed mode 0700.
+The $CONF variable will help decide during boot which services should
+be started and which should be discarded.
+Therefore, the SA will only have to properly set up configuration
+files for services
+in order for those services to start on the next boot.
+This should decrease the frequency of which the SA executes either:
+
+# cast -r $SPELL
+or
+# cast -r --deps init-scripts
+
+Of course having more init-scripts to run during boot will impact boot speed.
+However, the impact will be less than a second.
+That makes the added functionality more than worth the added delay.
+
+This change does have one drawback worth elaboration.
+Legacy boxes may have installed configuration files for services
+that should not be started.
+A box that does not normally run sshd may have file
+/etc/ssh/sshd_config
+installed
+The proper way to handle this is to remove or rename
+the server configuration file.
+
+Sometimes two steps forward requires one step backwards.
+Therefore, please continue checking deployed boxes
+to ensure that no new additional unwanted services
+are started following updates.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000439.html">[Sorcerer-admins] runlevel confusion
+</A></li>
+	<LI>Next message: <A HREF="000447.html">[Sorcerer-admins] /dev/sd* or /dev/hd*
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#446">[ date ]</a>
+              <a href="thread.html#446">[ thread ]</a>
+              <a href="subject.html#446">[ subject ]</a>
+              <a href="author.html#446">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

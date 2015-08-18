@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTinLv3A3n2P9QruV2cdrtksgCiMXRZZz94bLPYbm%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001661.html">
+   <LINK REL="Next"  HREF="001666.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTinLv3A3n2P9QruV2cdrtksgCiMXRZZz94bLPYbm%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sat Jun 19 14:55:31 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001661.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001666.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1664">[ date ]</a>
+              <a href="thread.html#1664">[ thread ]</a>
+              <a href="subject.html#1664">[ subject ]</a>
+              <a href="author.html#1664">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>really interesting concept!
+just the name of the command is a bit confusing.... I would have looked for
+something like &quot;dispel -r&quot; or &quot;augur wipe&quot;
+anyway good news!
+for the SID how do you manage to have spawned child have there own SID? set
+-m? or another method?
+
+I think there are also room of improvement with the requirement menu....
+when I re-installed sorcerer, I had to re-configure every spell... however
+the list was long and after a while I forgot if I already selected this
+requirement or not.... I'm annoyed by this inconsistency, spell A opt B and
+C, spell D opt B and E but at the end when configuring spell D I forgot that
+I previously selected B...
+more if spell A req B and C and spell D opt B and E, I would like to only
+have to opt E because B is &quot;implicitly selected&quot;
+
+the rules would be :
+for SPELL in  ${TO_CONFIGURE}; do
+     ALL_REQUIRED_SPELLS += requirements(${SPELL})
+     ALL_ALLREADY_SELECTED_OPT += is_optional_installed(${SPELL})
+done
+
+
+if [ $(echo &quot;${ALL_REQUIRED_SPELLS} ${ALL_ALLREADY_SELECTED_OPT}&quot; | grep
+${OPT} ) != &quot;&quot; ];
+then
+     autoselect ${OPT}
+else
+     TO_QUERY += ${OPT}
+fi
+TO_QUERY=$(echo ${TO_QUERY} | sort | uniq)
+
+SELECTED_OPT = display_all_OPT_of_all_spells_menu(${TO_QUERY})
+save_selected_opt_into_conf_file(${SELECTED_OPT})
+cast ${SELECTED_OPT}
+
+like this you can configure all the spells at once, avoiding
+inconsistencies....
+now say you dispel a spell A that REQ B is dispelled. let say that spell C
+has OPT B autoselected because of A, now that A isn't anymore, B is likely
+to be dispelled. But this won't until B is casted again (say during an
+update) or if a reconfiguration/clean is requested
+now there is also a possibility of autoclean of the box. any spell that
+isn't in the SELECTED_OPT (that contain also the list of spell that are
+casted by the user) and that isn't required isn't wanted to be installed...
+
+
+what do you think about this?
+JLM
+
+
+On Sat, Jun 19, 2010 at 3:27 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> The init-script PID/SID problem is not entirely solved yet.
+</I>&gt;<i> Partially that is because I am using a fast method
+</I>&gt;<i> for checking that a PID in a PID file is owned by
+</I>&gt;<i> the expected server and that check might not
+</I>&gt;<i> always work properly for a SID when
+</I>&gt;<i> the SID differs from the PID.
+</I>&gt;<i> But that might only happen if gdm-binary
+</I>&gt;<i> restarts itself and receives a new PID.
+</I>&gt;<i> It will probably keep the same SID.
+</I>&gt;<i> But the check is wrong.
+</I>&gt;<i>
+</I>&gt;<i> As for killing I substituted pkill -s for kills,
+</I>&gt;<i> because the session leaders SID #
+</I>&gt;<i> is usually also the session leaders PID #.
+</I>&gt;<i>
+</I>&gt;<i> I can fix it, but want to do so without a performance hit.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Something interesting recently is a request by Evert.
+</I>&gt;<i> He wanted a dispel command that could bowl over
+</I>&gt;<i> several spells at once when just the head pin is aimed for.
+</I>&gt;<i> That way he could issue something like
+</I>&gt;<i> # dispel xfce
+</I>&gt;<i> and everything xfce and
+</I>&gt;<i> that which only xfce requires can be dispelled.
+</I>&gt;<i> To me that seemed more like uprooting a weed
+</I>&gt;<i> than bowling so I created the
+</I>&gt;<i> # augur uproot $SPELL
+</I>&gt;<i> command.
+</I>&gt;<i>
+</I>&gt;<i> Okay here is the example:
+</I>&gt;<i>
+</I>&gt;<i> # time augur uproot xfce
+</I>&gt;<i> Queued for dispel in directory: /root/.sorcery/queue/dispel
+</I>&gt;<i> libxfce4util
+</I>&gt;<i> xfconf
+</I>&gt;<i> libxfcegui4
+</I>&gt;<i> libxfce4mcs
+</I>&gt;<i> xfce-mcs-manager
+</I>&gt;<i> exo
+</I>&gt;<i> xfce4-panel
+</I>&gt;<i> libxfce4menu
+</I>&gt;<i> gtk-xfce-engine
+</I>&gt;<i> fortune
+</I>&gt;<i> Thunar
+</I>&gt;<i> xfwm4
+</I>&gt;<i> xfdesktop
+</I>&gt;<i> xfce4-settings
+</I>&gt;<i> xfce4-session
+</I>&gt;<i> xfce4-dev-tools
+</I>&gt;<i> xfce4-appfinder
+</I>&gt;<i> xfce-utils
+</I>&gt;<i> orage
+</I>&gt;<i> mousepad
+</I>&gt;<i> Terminal
+</I>&gt;<i> xfce
+</I>&gt;<i>
+</I>&gt;<i> real    0m4.148s
+</I>&gt;<i> user    0m1.320s
+</I>&gt;<i> sys     0m2.150s
+</I>&gt;<i>
+</I>&gt;<i> Sure, it takes a little bit of time on a Pentium 3 to run,
+</I>&gt;<i> but it correctly identified what can be safely removed
+</I>&gt;<i> and added it to the dispel queue.
+</I>&gt;<i> Now I can remove spells from the dispel queue,
+</I>&gt;<i> add more to the spell queue by another invocation of
+</I>&gt;<i> # augur uproot $SPELL1 $SPELL2 $SPELL3
+</I>&gt;<i> Or I can issue
+</I>&gt;<i> # dispel
+</I>&gt;<i> and have dispel goto work at removing the software
+</I>&gt;<i> that is specified in the dispel queue.
+</I>&gt;<i>
+</I>&gt;<i> Like most augur commands
+</I>&gt;<i> the uproot command can accept spell names as input
+</I>&gt;<i> as either command line parameters
+</I>&gt;<i> or as stdin to the augur program
+</I>&gt;<i> # echo &quot;$SPELL1
+</I>&gt;<i> $SPELL2
+</I>&gt;<i> $SPELL3&quot; | augur uproot
+</I>&gt;<i>
+</I>&gt;<i> When input comes on stdin the spell names
+</I>&gt;<i> must be listed no more than one per line.
+</I>&gt;<i>
+</I>&gt;<i> Another good example of that is one of my favorite commands.
+</I>&gt;<i>
+</I>&gt;<i> # augur lone | augur size | sort -g | tee /tmp/piggy.txt
+</I>&gt;<i>
+</I>&gt;<i> That creates the piggy list which shows
+</I>&gt;<i> which spells can be removed and orders them
+</I>&gt;<i> so that the spells hogging more disk space
+</I>&gt;<i> show at the bottom of the list.
+</I>&gt;<i>
+</I>&gt;<i> Most augur commands can be connected in pipes
+</I>&gt;<i> like the above example which might be useful
+</I>&gt;<i> depending on what the SA wants to do.
+</I>&gt;<i>
+</I>&gt;<i> Sorry, I digressed.
+</I>&gt;<i> My point was that you can thank Evert for making the request.
+</I>&gt;<i> He had a good idea for selecting software for removal
+</I>&gt;<i> but without having to invoke augur lone repeatedly
+</I>&gt;<i> and without having to use the sorcery dispel menu.
+</I>&gt;<i>
+</I>&gt;<i> I will probably be using the
+</I>&gt;<i> # augur uproot $SPELL
+</I>&gt;<i> command often instead of specifying spell names
+</I>&gt;<i> directly as parameters to dispel.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Jun 18, 2010 at 2:33 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; maybe /var/run/sid? ;)
+</I>&gt;<i> &gt; &quot;other information about the system that is valid...&quot;
+</I>&gt;<i> &gt; SID isn't &quot;other information&quot;
+</I>&gt;<i> &gt; nothing force the SA to fill the PIDs files....
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100619/709cb453/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100619/709cb453/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001661.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001666.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1664">[ date ]</a>
+              <a href="thread.html#1664">[ thread ]</a>
+              <a href="subject.html#1664">[ subject ]</a>
+              <a href="author.html#1664">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

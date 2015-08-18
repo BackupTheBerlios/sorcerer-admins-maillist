@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] What is cooking on the stove?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20What%20is%20cooking%20on%20the%20stove%3F&In-Reply-To=%3C596b75860712290349o182fe2d6ke9504b6feca9dac1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000335.html">
+   <LINK REL="Next"  HREF="000333.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] What is cooking on the stove?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20What%20is%20cooking%20on%20the%20stove%3F&In-Reply-To=%3C596b75860712290349o182fe2d6ke9504b6feca9dac1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] What is cooking on the stove?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Dec 29 12:49:42 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000335.html">[Sorcerer-admins] What is cooking on the stove?
+</A></li>
+        <LI>Next message: <A HREF="000333.html">[Sorcerer-admins] glibc-locales spell broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#336">[ date ]</a>
+              <a href="thread.html#336">[ thread ]</a>
+              <a href="subject.html#336">[ subject ]</a>
+              <a href="author.html#336">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The transition has been easier on some boxes than others.
+First, udev is started by the currently recommend method
+instead of the deprecated way.
+The deprecated way ran an executable called udevstart
+However, that executable is no longer built by default.
+The new way invokes:
+
+/sbin/udev
+followed by
+/sbin/udevtrigger
+
+That causes all the &quot;cold-plugged&quot; udev events
+for devices already installed
+to be re-issued while udev handles
+creating the devices nodes and loading the appropriate modules.
+
+Then:
+/sbin/udevsettle  --timeout=10
+
+is executed.
+That causes a delay up to 10 seconds for udev to handle events,
+such as loading the drivers required in order to access
+IDE, SCSI, ATA, SATA, and PATA drives.
+One person has already reported that:
+/sbin/udevsettle  --timeout=10
+might not end after 10 seconds.
+However, on my boxes it does.
+Following that report I updated udev to
+version 118 which hopefully has fixed
+whatever problem exists or exited in /sbin/udevsettle
+
+Note udev is not started merely once.
+It is started twice.
+
+# ls /etc/rc.d/*/*udev | cat
+/etc/rc.d/init.d/udev
+/etc/rc.d/rc1.d/S00udev
+/etc/rc.d/rc2.d/S00udev
+/etc/rc.d/rc3.d/S00udev
+/etc/rc.d/rc4.d/S00udev
+/etc/rc.d/rc5.d/S00udev
+/etc/rc.d/rcS.d/S01udev
+
+udev start in sysinit rcS.d
+then it restarts in runlevels 1 2 3 4 5
+Why twice?
+
+Boxes deployed with the newer I/Rs,
+that I am still testing,
+begin initial booting using a generic modular kernel
+and an initramfs image.
+However, the initramfs image does not contain
+modules for all possible devices.
+It only contains modules that will probably be required during boot.
+Such as modules for IDE SCSI ATA SATA PATA and filesystems.
+Therefore, the first time /sbin/udevtrigger runs
+it will be unable to load modules for all installed devices.
+Consequently, /sbin/udevtrigger is run again during the runlevel startup.
+During the restart it transitions to running udev from the real root filesystem.
+The real root filesystem contains a /lib/modules/
+that includes all the modules build for the running kernel.
+Now udev can finish loading modules and creating device nodes
+for all installed hardware.
+
+There is, of course, a longer explanation which I will skip for now.
+But the point is please check:
+
+# ls /etc/rc.d/*/*udev | cat
+
+Check that udev is starting both in sysinit and runlevels 1 2 3 4 5
+
+
+$ ls /etc/rc.d/rcS.d | cat
+S00loglevel
+S00proc
+S00sys
+S01hostname
+S01udev
+S02devpts
+S02lvm
+S02modprobe
+S03loadkeys
+S04find_ir
+S04fsck
+S05mount
+S06fuse
+S06hwclock
+S06loopback
+S07msyslog
+S08dmesg
+S09welcome
+
+That is what symbolic links in the sysinit directory
+look like on a recently deployed Sorcerer box.
+Note, steps are no longer
+S0, S1, S2, S3
+But instead
+S00, S01, S02, S03, S04 ... S99
+
+This change was necessary as in some conditions there could be more
+than 9 distinct order groups to sequence parallel init script startup.
+And while the naming method for symbolic links apply to sysinit
+Only runlevels 2 and 4 support parallel init script execution for
+faster startups.
+
+There are no symbolic links to hoplug any runlevel or sysinit directory.
+hotplug is no longer used.
+udev handles both hot-plugging and cold-plugging events.
+
+Feel free to dispel hotplug
+if it does not remove itself.
+
+At the moment I am writing this email:
+# augur available grimoire
+2007-363
+
+# augur available sorcery
+implosion-20071229-0
+
+If there is any problem with updating the grimoire to current
+then it may be overcome by:
+# rm /root/.sorcery/*
+# augur merge; augur index; cast grimoire
+
+Most boxes with LAG=1 will receive grimoire version 2007-362
+and sorcery version implosion-20071227-0
+if they were updating at this moment.
+
+Aside from a potential hang with udevsettle which does not occur on all boxes,
+no big bad boot bumbling bugs are known to exist.
+
+Aside from the above mentioned changes to udev, hotplug, sysvinit,
+init-functions,
+linux-modular, initramfs there is nothing much else to report except
+updates are going into the grimoire as usual.
+
+If you spot a bug happening during boot
+please give a detailed report as to what is causing
+it and how to fix it as it maybe a distribution wide problem
+which should be fixed distribution wide.
+Any more details information regarding why and on what boxes
+that udevsettle --timeout 10  hangs is appreciated.
+
+Most SAs will probably not see the new linux-modular and initramfs until
+their next deployment with the newer IRs.
+The newer IRs may install more software onto a new box
+than you would expect can fit on an ISO9660.
+It will completely skip the skill check of configuring a linux kernel.
+Yes, installation will probably be faster since the linux kernel will
+not be compiled.
+
+Additionally, the I/Rs contain KDE.
+Somewhere over the last couple of years I became a KDE addict.
+But I loathe the lengthy compilation.
+The new I/Rs with xorg and KDE will be fast to install
+and even faster to strip off the KDE if you prefer Gnome
+or a lighter window manager and/or desktop environment
+or even none at all.
+
+Although the new I/Rs are KDE ready
+they are not intended to be &quot;Live CDs&quot;
+The default init is still runlevel 3.
+We will continue to enjoy the simplicity
+of a menu driven console based installation.
+But you could try starting the X server if you wanted.
+But there is no guarantee that xorg's auto-detection
+will not blow older monitors when it tries to start using
+Linux framebuffer, svga, or vga drivers and guessed/detected mode values.
+
+The long development time of the new I/Rs is in part due to
+compiling the x86_64 software.
+Thanks to Mr. Jim Decker's temporary loan of an x86_64 box
+much of the KDE and xorg components were compiled
+on an actual x86_64 box and not in qemu's x86_64 simulator.
+
+I am as eager to release the new I/Rs as you are to use them.
+The switch to a modular kernel with udev cold plugging should
+enable booting and installation on any ia32 or x86_64 box for
+which the vanilla linux kernel has appropriate drivers.
+
+
+For those curious about the costs of booting with an initramfs
+and modular kernel, but not eager to ask, read onward.
+Otherwise, feel free to archive the rest for later reading
+upon deploying boxes with the newer IRs.
+
+The performance loss for using the modular kernel
+is very negligible and not a factor for most uses of a Linux box.
+However, more space is required on /boot
+
+/boot/initrf.gz will exist.
+It will be a gziped cpio that contains
+truncated sets of modules for up to 4 linux kernels.
+The initramfs also contains copies of
+/bin /etc /lib /lib64 /sbin of the real root filesystem.
+If a problem does occur during boot
+that prevents mounting the real root filesystem
+then plenty of utilities are available for the SA
+to debug the problem without using an I/R CD.
+
+The larger initramfs image uses more memory during boot.
+However, this is rarely a problem.
+Most Sorcerer boxes have plenty of RAM to spare.
+After booting is complete the initramfs image is not destroyed.
+Although it remains virtually inaccessible the ramfs filesystem
+will act as if it is a tmpfs filesystem.
+If the RAM being used by the initramfs is required
+then linux will move the content from the initramfs
+image from RAM to swap space.
+
+Most of my prejudices against
+using modular kernels come from a time when:
+
+1. Hard drives were tiny.
+2. 64M was a generous loadout of RAM.
+3. Modular linux kernels contained only optimizations
+    for the architecture for which the kernel was built.
+4. Ramdisk images contained a very stripped down set
+    of utilities if any at all which made debugging a boot problem
+    difficult if not impossible if it occurs before
+    the real root filesystem is mounted.
+
+And compared with today:
+
+1. 0.5 Terabyte fixed disks are no longer uncommon.
+2. 2 through 4 gigabytes of RAM is not uncommon.
+3. CONFIG_X86_GENERIC=y and a generic kernel receives
+    optimizations for more than merely the microprocessor selected
+4. initramfs can contain near complete copies of /bin /etc /lib /lib64 /sbin
+
+
+Still there are some banes that remain:
+
+While a generic linux kernel requires no configuration
+it requires almost a magnitude more time to compile
+than most custom and precisely configured linux kernels.
+
+initramfs images do require a larger /boot
+
+Failing to mount the real root filesystem is still an unnerving experience
+even when the initramfs does contain enough programs to circumvent
+the problem and continue booting and then repair the problem on the
+real root filesystem.
+
+Use of an initramfs may cause shutdown to be a bit slower since
+the initramfs is checked and rebuilt when required during
+runlevels 0 6 to ensure on the next boot that the initramfs image
+is current with any modifications the SA made to the box.
+
+But it has some boons also:
+
+SAs with the potential to become senior level
+but insufficient hardware knowledge can enjoy
+wielding sorcery without proving themselves
+with a linux kernel configuration.
+
+Creating and updating the I/Rs will be easier since
+the linux kernel on the I/Rs will be the same as the
+deployed kernel on boxes which is linux-modular.
+
+Sorcerer can be deployed without the SA having to read
+the output from lspci, lsusb, and other diagnostic programs
+to identify installed hardware.
+Basically, if it looks like an X86_64 or IA32
+then Sorcerer will probably install on it.
+
+Hopefully, the changes to booting and installing that includes
+using a modular kernel, initramfs image, xorg, and KDE
+will enable Sorcerer to remain a viable choice for deployment
+for yet a few more years since it provides
+most of the convenience of installing a pre-compiled binary based distro
+with the power of sorcery source based management.
+
+By being considerably late in the game when it comes to
+providing an modular kernel and initramdisk/initramfs boot
+the Sorcerer distribution has nothing to be concerned about
+remaining backward compatible.
+Existing deployments of Sorcerer can remain deployed using linux
+or updated to using linux-modular if the SA chooses.
+The changes are for SA convenience.
+They do not enforce a change over to a new standard,
+nor do they require the SA to learn anything new.
+You can continue with custom linux configuration or
+leave it to the distribution maintainers to decide what is best.
+
+Assuming the transitions are uneventful these changes will provide
+Sorcerer SAs with more choices between greater convenience
+while at the same time not sacrificing any of the configure-ability
+that may be considered mission critical for the roles of our Sorcerer boxes.
+
+For those still reading, no doubt the most helpful of Sorcerer SAs,
+I want to open for discussion the following topics:
+
+Should certain sensible optionals such as alsa-lib
+be considered instead mandatory requirements for
+all software that can used alsa-lib for audio output?
+Note that linux-modular only contains ALSA driver modules and not OSS.
+However, ALSA does have an OSS compatibility module to enable
+programs that can not natively use ALSA device nodes to continue
+using OSS device nodes.
+
+Are there any other libraries or programs that are optional that
+should be instead set as mandatory requirements in spells.
+Such libraries that are already done this way are:
+ncurses
+readline
+
+Currently, authentication for newly deployed Sorcerer boxes
+is by shadow passwords.
+However, the Sorcerer grimoire has spells for many types of
+authentication methods, in fact more than I currently remember.
+However, to list a few:
+Linux-PAM
+PADL's openldap
+heimdal's kerberos 5.
+shishi's kerberos 5.
+NIS
+freeradius
+radius
+samba
+SQL
+
+Should the default installation of Sorcerer for I/Rs released sometime in
+2008 have a default configuration better suited for using a more
+complex network/enterprise based authentication where each Sorcerer
+box can authenticate users from a networked server dedicated to
+user authentication?
+Please feel free to elaborate on what authentication methods you
+have deployed and how they are useful or problematic.
+
+Happy New Year.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000335.html">[Sorcerer-admins] What is cooking on the stove?
+</A></li>
+	<LI>Next message: <A HREF="000333.html">[Sorcerer-admins] glibc-locales spell broken
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#336">[ date ]</a>
+              <a href="thread.html#336">[ thread ]</a>
+              <a href="subject.html#336">[ subject ]</a>
+              <a href="author.html#336">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

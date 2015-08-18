@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C8596d02a0808021450o21c95e14na07c4bbee0d543ad%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000707.html">
+   <LINK REL="Next"  HREF="000693.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C8596d02a0808021450o21c95e14na07c4bbee0d543ad%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">d3ck0r at gmail.com
+       </A><BR>
+    <I>Sat Aug  2 23:50:05 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000707.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000693.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#708">[ date ]</a>
+              <a href="thread.html#708">[ thread ]</a>
+              <a href="subject.html#708">[ subject ]</a>
+              <a href="author.html#708">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Aug 2, 2008 at 11:24 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Sat, Aug 2, 2008 at 2:02 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> syslinux is for booting from M$ file systems.
+</I>&gt;&gt;&gt;<i> I used lilo to boot from the flash drive because
+</I>&gt;&gt;&gt;<i> the boot filesystem is ext2.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> all you need is 2 files (linux, initfs, unless you pack it together)
+</I>&gt;&gt;<i> and the ext2 filesystem file? any particular reason you're making it
+</I>&gt;&gt;<i> windows unfriendly to modify scripts etc ?
+</I>&gt;<i>
+</I>&gt;<i> The standard boot loader for Sorcerer boxes is lilo.
+</I>&gt;<i> Does lilo support FAT?
+</I>&gt;<i> A FAT partition for /boot might require syslinux.
+</I>&gt;<i> While I do not mind using syslinux for I/R CDs
+</I>&gt;<i> I prefer lilo for booting deployed Sorcerer boxes.
+</I>&gt;<i> FAT would also allow the average windows user
+</I>&gt;<i> to delete your kernel and initramfs files
+</I>&gt;<i> in order to make space for their files if
+</I>&gt;<i> they acquired your USB flash drive,
+</I>&gt;<i> since they would not know how to repartition it.
+</I>&gt;<i> Unless ext2 read/write is supported
+</I>&gt;<i> the average windows user would probably not
+</I>&gt;<i> modify files on an ext2 filesystem.
+</I>&gt;<i>
+</I>
+No, instead it registers as unrecognized ... and promptes you with
+defaults to format it.
+
+&gt;<i> If transporting files from M$ boxes is necessary
+</I>&gt;<i> then having an additional FAT filesystem on the flash drive is possible.
+</I>&gt;<i>
+</I>&gt;<i> If possible to make the boot partition invulnerable to modification
+</I>&gt;<i> except when the encrypted / is mounted and booted
+</I>&gt;<i> then I would like that.
+</I>&gt;<i> However, at best I could probably only provide something
+</I>&gt;<i> like a simple check where md5sums of the kernels
+</I>&gt;<i> and initramfs are checked during runlevel execution.
+</I>&gt;<i> Naturally, those md5sum would be kept in files on the encrypted /
+</I>&gt;<i> so that they can not be modified.
+</I>&gt;<i> This type of check could only detect and report that
+</I>&gt;<i> files in /boot were modified without authorization.
+</I>&gt;<i> However, with the box already booted it may be
+</I>&gt;<i> too late to prevent data theft or the intent
+</I>&gt;<i> of the person who modified the files on /boot
+</I>&gt;<i> because the kernel and initramfs have loaded
+</I>&gt;<i> and already run.
+</I>&gt;<i>
+</I>&gt;<i> I read that non linux compatible encryption is provided on some flash drives.
+</I>&gt;<i>
+</I>&gt;<i> Are there reasons why having a FAT /boot would be better than an ext2 boot?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> Yes, I had the compact option.
+</I>&gt;&gt;&gt;<i> 16 bit BIOS calls are slow.
+</I>&gt;&gt;&gt;<i> Also we know the max throughput for reading from
+</I>&gt;&gt;&gt;<i> the USB flash drive is also slower than fixed disk.
+</I>&gt;&gt;&gt;<i> Therefore, the time required to load the kernel
+</I>&gt;&gt;&gt;<i> and initramfs is not entirely unexpected.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> mine boots as fast as most hard drives  (course I do have fewer things
+</I>&gt;&gt;<i> I'm starting up)
+</I>&gt;<i>
+</I>&gt;<i> Good to know that loading speed
+</I>&gt;<i> for initramfs and linux from flash drive by BIOS calls
+</I>&gt;<i> varies with the BIOS.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000707.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000693.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#708">[ date ]</a>
+              <a href="thread.html#708">[ thread ]</a>
+              <a href="subject.html#708">[ subject ]</a>
+              <a href="author.html#708">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

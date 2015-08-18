@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTinBsqQjoS3070oxC7Bmt2JyytJ6PoO_s-SO4KJK%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001628.html">
+   <LINK REL="Next"  HREF="001631.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] progress...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTinBsqQjoS3070oxC7Bmt2JyytJ6PoO_s-SO4KJK%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] progress...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May 26 23:44:16 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001628.html">[Sorcerer-admins] progress...
+</A></li>
+        <LI>Next message: <A HREF="001631.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1629">[ date ]</a>
+              <a href="thread.html#1629">[ thread ]</a>
+              <a href="subject.html#1629">[ subject ]</a>
+              <a href="author.html#1629">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, May 26, 2010 at 1:38 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Good work on the Sorcerer updates.
+</I>
+Thanks.
+
+
+&gt;<i> Am I right in assuming that the Sorcerer I/R's without xorg will also be a
+</I>&gt;<i> smaller download than the current ones?
+</I>
+Not yet certain how much smaller.
+But I am also removing some rarely used
+wide loads such as samba and nfs.
+Seriously, any SA can just scp over
+any files needed without using NFS and/or samba.
+
+
+&gt;<i> In that case, I might be tempted to wait a while till they are out.
+</I>
+I never did make the time to cook something up using gtk+
+for a GUI type install experience.
+I was thinking that with xine and X installed
+there could even be instructional videos.
+But I suppose that will not be.
+
+&gt;<i> I am extremely limited on the download bandwidth that I can use at work.
+</I>
+I am using 64M sliding window xz's LZMA implementation
+to compress the archives.
+It could not be much smaller.
+Nearly half the load is probably the initramfs
+which is merely gzip compressed.
+The kernel might be able to support a LZMA
+compressed initramfs, but I do not like it,
+because LZMA lacks a magic.
+If the kernel starts supporting xz compressed
+initramfs then I would do that as long as all
+the kernels available can handle it.
+For now I know they can all handle gzip compressed.
+
+&gt;<i> Thanks for the info. I might even try going from linux-custom to linux
+</I>&gt;<i> again...
+</I>
+Aside from having nice small stripped modules
+sometimes modules that look unnecessary
+can be unloaded.
+Just because it is fat on disk
+does not make it fat in RAM.
+The amount of RAM consumed by the kernel
+is somewhat in proportion to the total RAM.
+However, on many boxes kernel consumption,
+caching and buffers not counted,
+can be under 30M
+It is not like the old days when running
+linux on a 16M box was possible.
+But also it is not unreasonable.
+
+Nearly, the only way I could provide a linux kernel
+that is not modular yet can boot most boxes
+is to include all the SCSI SATA PATA EIDE
+and filesystem drivers into the kernel.
+And there was a time when that could work
+if I carefully weeded out the buggy SCSI drivers
+that caused kernel crashes during booting.
+However, now that makes for a kernel that
+is too large to boot.
+Creating a monolithic generic rescue kernel
+would be difficult with a modern linux kernel.
+It was possible at a time when a generic EIDE
+driver was available that could work without
+chipset specific drivers.
+But now there is possibly plenty of hardware
+which requires drivers for the chipset.
+When it comes to graphics, audio, and disks
+there is not as much standardization.
+VGA and SVGA to some extend,
+AC97 audio to some extent,
+and generic BIOS driven EIDE on some boxes.
+
+One thing that does seem to work good is removable
+SCSI mass storage on digital cameras.
+So far I have owned 3 cameras with that
+and I have not required gphoto2 to download pictures.
+I just plug in the camera and mount the SCSI drive.
+
+
+&gt;<i> But I need to have a list of things that need to be installed, scripts in
+</I>&gt;<i> /etc/init.d that need to be run in order to have a valid initram
+</I>
+(
+find /etc/init.d -maxdepth 1 -type f
+find /root/.sorcery/grimoire/*.d/init.d.on/ -maxdepth 1 \
+-type f -printf &quot;/etc/init.d/%f\n&quot;
+) | sort | uniq -d | xargs chmod 700
+
+That should turn on the init-scripts that must be on,
+unless you removed them from /etc/init.d/
+
+
+&gt;<i> My last one loaded the kernel, but then could not mount the root filesystem rw.
+</I>
+That does seem strange.
+Even if the init-scripts were not needed
+I wonder why you turned them off?
+I wonder if there could be bugs in the init-scripts
+that are causing the problem?
+They work okay for me,
+but years have past since I transitioned a box
+from a monolithic kernel to a modular one.
+
+Also please check that initramfs and init-scripts are installed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001628.html">[Sorcerer-admins] progress...
+</A></li>
+	<LI>Next message: <A HREF="001631.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1629">[ date ]</a>
+              <a href="thread.html#1629">[ thread ]</a>
+              <a href="subject.html#1629">[ subject ]</a>
+              <a href="author.html#1629">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

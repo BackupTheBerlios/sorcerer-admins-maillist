@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] grimoire 2008-6 now has more convenient	spells.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grimoire%202008-6%20now%20has%20more%20convenient%0A%09spells.&In-Reply-To=%3C596b75860801081145t1d1cdb3em92dc548b591d90f8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000345.html">
+   <LINK REL="Next"  HREF="000343.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] grimoire 2008-6 now has more convenient	spells.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grimoire%202008-6%20now%20has%20more%20convenient%0A%09spells.&In-Reply-To=%3C596b75860801081145t1d1cdb3em92dc548b591d90f8%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] grimoire 2008-6 now has more convenient	spells.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jan  8 20:45:04 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000345.html">[Sorcerer-admins] grimoire 2008-6 now has more convenient	spells.
+</A></li>
+        <LI>Next message: <A HREF="000343.html">[Sorcerer-admins] tcp_wrappers instead of iptables?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#346">[ date ]</a>
+              <a href="thread.html#346">[ thread ]</a>
+              <a href="subject.html#346">[ subject ]</a>
+              <a href="author.html#346">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I understand your dismay.
+I pondered whether to make that decision for more than a month.
+And yes it is a terrible inconvenience,
+but less of an inconvenience than having a box break during
+boot due to an old /etc/init.d/mount script falling short of
+being forward compatible.
+
+If it is a sufficiently large enough inconvenience
+then we should discuss compromises and
+alternatives that perhaps can accomplish the same goals,
+but by a more agreeable method?
+
+While on the subject of init-scripts...
+The habit of copying and editing init-scripts
+created an interesting and useful convenience.
+Certain variables such as:
+$NAME
+$SERV
+$OPTS
+$PIDF
+have become common to nearly all init-scripts.
+Likewise certain functions are almost identical in most init scripts.
+Consequently, init-scripts was updated to include sensible defaults
+for functions such as:
+status()
+start()
+stop()
+restart()
+try_restart()
+help()
+parse()
+
+Therefore, many of the new init scripts contain a LSB section
+a $NAME $SERV $PIDF definition
+and finish off with a parse &quot;$@&quot;
+Now that the average size of init-scripts is under 1K
+writing them has never been easier.
+
+This change does not break backward compatibility.
+However, a change of this magnitude easily could.
+It is fortunate that the init-scripts are such that they
+can still evolve with the distribution instead of being
+too sensitive to change.
+
+Now back to the previous discussion.
+You use custom init-scripts for NFS.
+Just guessing, but could it be because the
+current grimoire provided NFS init-scripts are inadequate?
+Perhaps they could use some updating?
+I mentioned in a recent email that the handling of NFS
+probably should be changed.
+portmap should probably either be made optional or obsolete.
+Those types of changes do require changes be made to the NFS init-scripts.
+Maybe you might want to provide some better more configurable
+NFS init-script defaults?
+
+Let us take a look at gmp, for example...
+I recently added a configure() to it.
+That way it asks the mouse protocol.
+Then it asks the mouse device, and suggests /dev/psaux as the default.
+Finally, during build() it modifies the gpm.d/init.d.on/gpm init-script
+Then the modified gpm init-script is installed in /etc/init.d/
+But it is the SA input values are saved in the spell config file.
+That way every time gpm casts or updates it can correctly
+modified the gpm init-script so that an init script appropraite
+for the mouse configuration on that box is installed into /etc/init.d
+
+Similar to gpm, the nfs-utils spell could probably ask the SA some questions.
+Then, it could store those answers in the spell config file.
+Finally, during build it could make appropriate changes to the init-scripts
+in the grimoire before they are installed into /etc/init.d
+In that fashion NFS is made more customizable.
+However, at the same time the scripts installed into /etc/init.d/
+will not require SA customization.
+
+My supposition is that with the use of better spells
+and better init-scripts from the grimoire
+that the SA can probably achieve the level of customization
+that the SA wans without having to customized init-scripts
+after they are installed into /etc/init.d/
+Now I do not expect that conjecture to be 100% correct.
+Naturally, there will remain less than 1% of init-scripts
+where a SA will definitely have to create a custom spell
+in order to have a custom init-script installed.
+However, if we put in a good effort into revising the spells
+in the grimoire that involve init-scripts
+then we can minimize the inconvenience.
+In the long run maybe answering a few spell configuration questions
+would be even easier for a SA than editing init-scripts?
+
+
+On Jan 8, 2008 9:11 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Saturday 05 January 2008, Kyle Sallee wrote:
+</I>&gt;<i> &gt; Hopefully, the afore mentioned conveniences will outweigh this
+</I>&gt;<i> &gt; potential minor inconvenience with disallowing customized init-scripts.
+</I>&gt;<i> &gt; It is a fair trade for avoiding the potential of a customized init-script
+</I>&gt;<i> &gt; causing a box to malfunction during boot or shutdown.
+</I>&gt;<i>
+</I>&gt;<i> I know of at least one  possible case where this change will affect my
+</I>&gt;<i> systems: NFS. My NFS init.d scripts (and also a few other init.d) scripts
+</I>&gt;<i> define optional arguments for the invoked service(s). How is this going to be
+</I>&gt;<i> accomplished now? By creating local spells? This seems almost backwards, what
+</I>&gt;<i> if another admin, not familiar with Sorcerer needs to reconfigure the
+</I>&gt;<i> services? I can see how immune or next regular update will revert the changes
+</I>&gt;<i> in /etc/init.d back...
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000345.html">[Sorcerer-admins] grimoire 2008-6 now has more convenient	spells.
+</A></li>
+	<LI>Next message: <A HREF="000343.html">[Sorcerer-admins] tcp_wrappers instead of iptables?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#346">[ date ]</a>
+              <a href="thread.html#346">[ thread ]</a>
+              <a href="subject.html#346">[ subject ]</a>
+              <a href="author.html#346">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

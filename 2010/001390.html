@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] grub...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grub...&In-Reply-To=%3C596b75861001031852j128216ddpda2e99c1c4a0cec2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001388.html">
+   <LINK REL="Next"  HREF="001391.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] grub...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grub...&In-Reply-To=%3C596b75861001031852j128216ddpda2e99c1c4a0cec2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] grub...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jan  4 03:52:22 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001388.html">[Sorcerer-admins] grub...
+</A></li>
+        <LI>Next message: <A HREF="001391.html">[Sorcerer-admins] grub...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1390">[ date ]</a>
+              <a href="thread.html#1390">[ thread ]</a>
+              <a href="subject.html#1390">[ subject ]</a>
+              <a href="author.html#1390">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While I do like how grub supports loading multiple initramfs
+I have not tested it to see if it actually works.
+Also there are other concerns about grub
+besides the expected difficulty in mapping a
+correct correlation between /dev names and grub names.
+Probably there would be other unanticipated problems.
+
+Obviously, both lilo and grub have benefits that the other lacks.
+I suppose a SA that still wanted some of grubby conveniences
+could install grub to the MBR and
+chain load lilo from the boot block of a partition.
+But that still does not gain the benefit I wanted
+which is to load two separate initramfs together.
+
+On a box that is properly installed
+then the main reason for lilo failing to boot
+would probably be that the initramfs are messed up or incomplete.
+If the initramfs images are messed up
+then booting with grub would still be impossible.
+With messed up initramfs booting by I/R is the only solution.
+
+JLM, has a good observation about grub.
+If we bite into that new apple we might
+be chewing on some grub worms.  :)
+
+Instead I already tried emailing some potentially
+useful addresses to see who is maintaining lilo
+Maybe no one is?
+Lilo has no website.
+The most recent releases were from early 2007
+The emails I sent bounced back.
+My guess is that improvements in lilo are now self-service.
+But is the improvement worth the effort...
+
+Each initramfs, except the one used for fast booting,
+contains two components.
+First, it contains the modules specific to the kernel being booted.
+Second, it contains a selection of files from /etc /sbin /bin /lib /lib64
+Basically, the first part is unique to the intiramfs for each kernel,
+but the second part is common to all initramfs.
+Therefore, if lilo supported loading two initramfs
+then the second initramfs could be the common part.
+
+I do not currently remember the exact figures.
+But let us go with this as a hypothetical example:
+$ ls -lah /boot/2.6.32.2/
+total 91M
+drwxr-xr-x 2 root root 4.0K Dec 30 01:20 .
+drwxr-xr-x 4 root root 4.0K Jan  2 06:01 ..
+-rw------- 1 root root  88M Jan  2 06:00 initrf
+-rw-r--r-- 1 root root 1.7M Dec 30 01:19 linux
+-rw-r--r-- 1 root root 827K Dec 30 01:19 System.map
+
+This initramfs is 88M
+Let us conjecture that the common portion is 40M
+If there are 4 kernel images in /boot with 4 initramfs images
+then the common portion consumes 40M * ( 4 - 1 )
+additional space.
+In this case it wastes 120M
+120M of waste might seem like nothing to a modern SA,
+but it's still 12 times larger than my chirpy 10M fixed disk
+that I had in the 80s.  :)
+
+So does the effort to hack and debug modifications to it
+merit the possibility of saving a hundred or so megabytes?
+Having no experience with hacking bootloaders
+and an interest in improving other Sorcerer aspects
+I tend to think this might be nice, but not essential.
+
+However, the task might not be too complicated.
+I suspect lilo stores lists of blocks that should be loaded from
+disk in order to load the kernel and the initramfs.
+Adding support for additional initramfs might be no
+more complicated than adding additional blocks
+onto the list of blocks for the initramfs.
+Currently, the initramfs loaded by lilo is actually
+two separate cpio files concatenated.
+Therefore, I conjecture that the changes to lilo source
+are probably simple.
+But I have not made any time to play with it.
+
+Yet if we could have grub be more lilo like
+then we could transition from lilo to grub.
+If lilo development and support is dead
+then eventually we might end up transitioning
+to grub someday when newer kernels require
+something not implemented by lilo.
+
+But grub development was not a one way ticket to stable-ville.
+Who knows what bugs we might have avoided by staying with lilo.
+Lilo has provided reliable quality for Sorcerer for a decade.
+Difficult to dismiss something like that?
+
+I checked freshmeat for clues about other boot loaders.
+Most are either underdeveloped or merely chainloaders.
+So the best choices still seem to be lilo or grub,
+unless someone has info on something better?
+
+
+On Sun, Jan 3, 2010 at 2:23 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> be careful that grub v1 don't support chroot install
+</I>&gt;<i> if you do
+</I>&gt;<i> chroot new/mount/point
+</I>&gt;<i> grub-install
+</I>&gt;<i>
+</I>&gt;<i> it will end saying that it can't make the stage2.... It took me long
+</I>&gt;<i> time to understand that this was caused by the chroot jail (google was
+</I>&gt;<i> no help, I had to read till the 3rd or 4th google page until I got
+</I>&gt;<i> something useful)
+</I>&gt;<i> I don't like grub that much, it can severly break a box, for example
+</I>&gt;<i> if you destroy the partition that contain grub files, you won't ever
+</I>&gt;<i> be able to boot on the other os that might be installed. Lilo does!
+</I>&gt;<i> lilo don't require to have access to some files to work, you can still
+</I>&gt;<i> boot the others partition...
+</I>&gt;<i>
+</I>&gt;<i> Best Regards
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001388.html">[Sorcerer-admins] grub...
+</A></li>
+	<LI>Next message: <A HREF="001391.html">[Sorcerer-admins] grub...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1390">[ date ]</a>
+              <a href="thread.html#1390">[ thread ]</a>
+              <a href="subject.html#1390">[ subject ]</a>
+              <a href="author.html#1390">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

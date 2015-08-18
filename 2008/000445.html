@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805161115q1cb3d907me8bf53d62713ae84%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000444.html">
+   <LINK REL="Next"  HREF="000449.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805161115q1cb3d907me8bf53d62713ae84%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 16 20:15:01 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000444.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000449.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#445">[ date ]</a>
+              <a href="thread.html#445">[ thread ]</a>
+              <a href="subject.html#445">[ subject ]</a>
+              <a href="author.html#445">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, May 16, 2008 at 10:21 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> that sort of script would cause startup to hang, as it expects scripts
+</I>&gt;<i> to terminate before moving on to the next one.
+</I>
+Logical expectation.
+However, it does not hang.
+prc starts /etc/init.d/xguest in the background.
+prc waits for completion of /etc/init.d/xguest
+/etc/init.d/xguest starts a piece of itself in the background
+/etc/init.d/xguest exits
+prc is satisfied
+However, a piece of xguest continues running in the background.
+
+The wait that prc performs is only to wait upon the
+processes that prc starts in the background.
+
+I understand how the use of backgrounding &amp; is confusing.
+To verify this works I tested it at runlevel 4 and 5:
+If it should hang it should definitely hang runlevel 4.
+
+# grep -i end /etc/init.d/log.d/runlevel.4
+End runlevel 4
+
+But apparently it did not hang.
+It works.
+I booted it twice.
+It opened two xterms and one xconsole
+and twm as the window manager.
+The fonts appeared fine, but tiny.
+However, font size can easily be fixed.
+
+The way the box booted reminded me of something.
+It felt nostalgic like a Microsoft operating system.
+I nearly expected it to prompt for the date and time.  :)
+
+This will probably fit what you want.
+It is fast, tiny, simple, eloquent.
+
+Other programs can be added to ~/.xinitrc
+in order to load a pretty background or other programs.
+I suggest a looped script with delay that periodically
+changes the background from one image to another.
+That helps draw attention while avoiding burn in
+and it may keep users awake.
+I used to use something like that on my workstations.
+But now I have konsole and other programs open covering
+nearly every bit of desktop space on two monitors.
+Therefore, I no longer use a background.
+Just have it set to black.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000444.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000449.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#445">[ date ]</a>
+              <a href="thread.html#445">[ thread ]</a>
+              <a href="subject.html#445">[ subject ]</a>
+              <a href="author.html#445">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

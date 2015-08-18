@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] linux is it more stable or less stable?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Cz2h596b75861004172046ha0c85894rd7878f3ca3dae88e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001569.html">
+   <LINK REL="Next"  HREF="001571.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] linux is it more stable or less stable?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Cz2h596b75861004172046ha0c85894rd7878f3ca3dae88e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] linux is it more stable or less stable?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Apr 18 05:46:56 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001569.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+        <LI>Next message: <A HREF="001571.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1570">[ date ]</a>
+              <a href="thread.html#1570">[ thread ]</a>
+              <a href="subject.html#1570">[ subject ]</a>
+              <a href="author.html#1570">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>According to <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+there are plenty of stable releases of linux to choose from.
+Let us say that the versions of kernels are represented by the variables w.x.y.z
+w is always 2
+x  should be 6
+y represents a branch where certain technology and new drivers are introduced
+z indicates bug fixes and security patches.
+
+So what does it mean?
+Well through retrospect I gather it means something like this...
+One of my workstations has a network device
+that can only be driven by linux 2.6.30.? kernels.
+When booting linux 2.6.31 and higher kernels
+I immediately noticed that I was unable to create a network connection.
+Yet when booting 2.6.30.? kernels making a network connection
+was possible without making any additional change.
+
+So if the stable versions of linux look like:
+
+stable:  	2.6.33.2
+stable: 	2.6.32.11
+stable: 	2.6.31.13
+stable: 	2.6.30.10
+
+then which is the best version to use?
+If one has extremely new hardware in their box
+and/or linux version 2.6.33.2 correctly drives the hardware
+then the version with the highest y value tends to be a good choice.
+Do I know what version you should use on your box?
+No, I have no clue.
+So instead I am trying to make the linux spell choices
+better represent what is offered according to <A HREF="http://www.kernel.org">http://www.kernel.org</A>
+
+Here are the new spells:
+
+linux
+linux-2.6.27
+linux-2.6.30
+linux-2.6.31
+linux-2.6.32
+linux-custom
+
+linux-custom is what the old linux spell used to be.
+The SA must provide a .config file to use.
+Also the version on linux-custom must be set by the SA
+using the # augur version linux-custom $VERSION
+If the SA is using custom configured kernels
+then the SA is responsible for updating the version number
+for that spell and updating it's configuration file as necessary.
+Fortunately, most Sorcerer SAs will not be using linux-custom
+So we can immediately forget about the linux-custom spell.
+
+linux
+linux-2.6.27
+linux-2.6.30
+linux-2.6.31
+linux-2.6.32
+
+Those spells all come with configuration files for IA32, IA32-SMP, and x86_64
+The SA need only decide upon which spell to cast.
+Deployed boxes will automatically switch over from
+having linux-modular installed to having linux installed
+linux will install the most current highest y value branch of linux available.
+I hope that linux will be a good choice for many boxes.
+
+However, for my workstation where the network device only works
+when driven by the 2.6.30.x kernels;
+on that box I will cast linux-2.6.30
+which will install linux version 2.6.30.13
+
+Are you confused yet?
+Well the topic is a bit confusing.
+We owe it to the linux developers who
+want to charge ahead with progress
+without doing much testing to see what breaks.
+
+I am not complaining.
+The situation would be worse.
+If the only stable branch of linux
+that can drives my old cheap network device becomes obsolete
+then I must buy a new network device to replace my paperweight.
+
+In the past linux used to be an excellent kernel
+for driving both new and old hardware.
+Hardware that became without drivers
+in modern commercial operating systems
+would still work like new with a modern linux kernel.
+However, modern linux kernel development
+seems to be pressured to grow.
+Therefore, our favorite pieces of legacy hardware
+will probably soon take up residence at the landfill.
+But if a device worked fine on a somewhat older stable branch of linux
+then there is still hope that one can continue riding that branch for as long
+as it is maintained.
+
+These new linux spells in the grimoire will
+change, update, and disappear roughly according
+to what appears to be stable on <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+
+Will I be checking each update of linux and linux-2.6.*
+to see if it compiles, installs, and runs?
+No, actually, I am just going to update the versions
+and assume that everything goes according to plan.
+Since new features and new drivers are not added
+when the kernel updates only the z value
+the kernel configurations that I created
+when I created the spell should be able to carry forward.
+
+If you notice a serious problem with a linux or linux-2.6.* spell
+then please report it.
+Otherwise if it is not a bug in the spell
+then the kernels will probably work as good
+as the linux kernel hackers could manage.
+
+Please do not blame me if your hardware does not work.
+Also please do not ask me if Sorcerer supports &quot;such and such&quot; hardware.
+Questions about the linux kernel should be directed
+at different email lists.
+I am not a linux kernel hacker.
+I can answer questions about the linux kernel
+at the knowledge level of a regular SA.
+To put it simply I am not the best person to ask.
+
+My goal is to create the spells that will give SAs
+as much convenience as possible
+while still providing as much selection as a SA
+would have if manually downloading, configuring,
+compiling, and installing a linux kernel.
+
+Lastly, the question... why so many linux-2.6.* spells
+instead of a single spell with different version progresses.
+The answer is because linux is a bit different than other projects.
+The version progress currently supports selections of:
+a custom version;
+stable version;
+unstable version;
+legacy version;
+secure version.
+That selection works fine for many software projects.
+But with linux there is an arbitrary amount of stable versions.
+
+Can I do an augur progress linux $VERSION
+and set an arbitrary version for that spell?
+I advise against that.
+The linux and linux-2.6.* spells have configuration files
+that are only good for the series of versions specified
+in the stable version sequence for those spells.
+
+So if the current version of linux is 2.6.33.2
+and the SA does:
+# augur progress linux 2.6.34.1
+Because the SA is impatient to wait for me to update those spells
+then linux will compile without a .config file and create
+a kernel and modules that are unusable and unbootable.
+
+I might change the spells in the future so that setting version
+progress on linux works.
+But for now if a SA wants a custom linux version and custom config
+then use the linux-custom spell instead.
+
+Again I apologize for the complexity.
+I am still providing as much convenience as possible
+while matching the selection of kernels avaialble
+if one were to do a manual install after choosing
+a recommended kernel from <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001569.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+	<LI>Next message: <A HREF="001571.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1570">[ date ]</a>
+              <a href="thread.html#1570">[ thread ]</a>
+              <a href="subject.html#1570">[ subject ]</a>
+              <a href="author.html#1570">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] glibc..... cast issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3C596b75860703141449h5cc7236bn5c9ab756e4dc0f87%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000056.html">
+   <LINK REL="Next"  HREF="000057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] glibc..... cast issue</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3C596b75860703141449h5cc7236bn5c9ab756e4dc0f87%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] glibc..... cast issue">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Mar 14 22:49:51 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000056.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+        <LI>Next message: <A HREF="000057.html">[Sorcerer-admins] fuse install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#60">[ date ]</a>
+              <a href="thread.html#60">[ thread ]</a>
+              <a href="subject.html#60">[ subject ]</a>
+              <a href="author.html#60">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It is true that there are some areas that are not of interest
+during augur alien.
+
+However, that does not mean that files and directories
+whether intentional or unintentional do not exist there.
+Here is an example:
+
+Let us say that a someone accidentally rebooted a box during an update.
+/tmp/.sorcery is --bind to /usr/src/sorcery
+And /tmp is a real filesystem.
+When the box finishes rebooting the directory and files
+of that spell that was casting previously might still exist.
+Now they are just wasting space.
+It may be a week before sorcery decides to auto clear that directory.
+Or it might exist even longer if I did not code a check for that.
+
+So on one hand a SA doing augur alien may not be interested in files
+that exist in /usr/src/
+On the other hand if there was a stale directory from 2006
+in /usr/src then the SA might want to go ahead and remove it.
+
+The easiest way to exclude files from the output of augur alien
+is to pipe it through grep:
+
+# augur alien | grep -v &quot;^/etc/sorcery/\|^/usr/src/&quot; | tee /tmp/aliens.txt
+
+Now the output to /tmp/aliens.txt will not show aliens
+within the two directories specified above.
+Let us say after a quick review of /tmp/aliens.txt
+the SA is not interested in aliens that exist in /etc
+
+# sed -i &quot;\,^/etc/,d&quot;  /tmp/aliens.txt
+
+The above command removes lines beginning with /etc/
+from the file /tmp/aliens.txt
+
+Now the list of aliens is smaller.
+
+I recommend creating a wrapper in /usr/local/bin
+that executes # augur alien | grep -v ....
+that parses down the list to what you typically want to search.
+
+Congrats on fixing glibc.
+
+
+On 3/14/07, xyz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jlm_devel at laposte.net</A>&gt; wrote:
+&gt;<i> ok it casted after recreating the log and the file id information
+</I>&gt;<i> thanks
+</I>&gt;<i> now I've to clean my box a little more (still have alien files)
+</I>&gt;<i>
+</I>&gt;<i> by the way it should be interesting to create a list of
+</I>&gt;<i> directory to exclude in augur alien because having the listing
+</I>&gt;<i> of /usr/src isn't really interesting.... as well as having the
+</I>&gt;<i> listing of /etc/sorcery/log (which are all alien, why by the
+</I>&gt;<i> way? they should be tracked as other /etc/ files)
+</I>&gt;<i>
+</I>&gt;<i> thanks a lot
+</I>&gt;<i> and best regards,
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000056.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+	<LI>Next message: <A HREF="000057.html">[Sorcerer-admins] fuse install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#60">[ date ]</a>
+              <a href="thread.html#60">[ thread ]</a>
+              <a href="subject.html#60">[ subject ]</a>
+              <a href="author.html#60">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

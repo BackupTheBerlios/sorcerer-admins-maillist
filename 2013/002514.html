@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] persistent content for virtual file systems	changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20persistent%20content%20for%20virtual%20file%20systems%0A%09changes.&In-Reply-To=%3CCA%2BT4wDhLEDeWWjLq187RqQK0_Z2Tu-59zsjDn8vxsWT%2BUPZsZA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002513.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] persistent content for virtual file systems	changes.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20persistent%20content%20for%20virtual%20file%20systems%0A%09changes.&In-Reply-To=%3CCA%2BT4wDhLEDeWWjLq187RqQK0_Z2Tu-59zsjDn8vxsWT%2BUPZsZA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] persistent content for virtual file systems	changes.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Dec 31 01:21:18 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002513.html">[Sorcerer-admins] Evolving beyond sorcery,
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2514">[ date ]</a>
+              <a href="thread.html#2514">[ thread ]</a>
+              <a href="subject.html#2514">[ subject ]</a>
+              <a href="author.html#2514">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>For more than a week I mulled the subject of this email.
+The solution was to move all related aspects into /aux/set/
+
+/aux/set/rootfs/
+contains directories files device nodes, and symbolic links
+that will be placed on the rootfs during sysinit
+
+/aux/set/realfs/
+contains directories files device nodes and symbolic links
+that will be placed on the root file system during runlevel.
+
+Files formerly stored in
+/etc/rootfs/
+are now stored in
+/aux/set/rootfs/etc/
+
+Therefore, during sysinit
+
+/aux/set/rootfs/etc/fstab is copied to /etc/fstab
+
+Someone might be curious as to why I made this adjustment.
+First, utilizing /aux/set/rootfs/etc/ helps mitigate confusion
+as compared to using /etc/set/rootfs/etc/
+Secondly, it deprecates directories /etc/cgroup/ and /etc/rootfs/cgroup/
+Those directories become
+/aux/set/realfs/sys/fs/cgroup/ and
+/aux/set/rootfs/sys/fs/cgroup/ respectively.
+
+Previously, separate methods existed for providing
+persistent files on the rootfs, persistent files on
+rootfs /dev/ /proc/ /sys/
+
+Utilizing /aux/set/ deprecates the former 4 methods
+in favor of a single method that is useful
+for all aspects of maintaining persistent content
+on virtual file systems.
+And the elimination of a few init-scripts helps expedite booting.
+
+Yes, the path /aux/set/rootfs/ is rather long.
+Make a symbolic link to it if it helps.
+Do not /etc/rootfs a symbolic link to /aux/set/rootfs/etc/
+
+Evert made a suggestion that I remember as,
+&quot;We should stop calling the rootfs the rootfs,
+because it confuses novices who expect that
+rootfs = root file system.&quot;
+As previously mentioned kernel hackers are named it rootfs
+and the documentation
+/usr/src/linux/Documentation/filesystems/ramfs-rootfs-initramfs.txt
+also uses the same nomenclature.
+Therefore, consistency should be maintained.
+However, the name realfs for a root file system
+provides the additional contrast of it being
+a real or device block backed file system
+while the rootfs is virtual only backed by swap.
+So as a compromise I did not change the expected nomenclature,
+yet changed another to help avoid confusion.
+Naturally, much documentation requires updates to reflect it.
+
+Yes /aux/set/{real,root}fs/ modified content is preserved across updates.
+It is treated as configuration files.
+However, some SAs might want to omit keeping in synchronization
+with the default changes.
+I have no idea why.
+However, if absolute control is a must
+then /aux/set/$HOSTNAME/{real,root}fs/ will be used if detected
+during sysinit and runlevel.
+I definitely advise against it.
+Instead modify files in /aux/set/{real,root}fs/
+
+# /etc/init.d/set configure
+
+I began the menu driven configuration functions
+for assisting with modification of /aux/set/
+but have not yet completed it or tested it.
+Expect that to improve quickly.
+However, I recommend diving into /aux/set/
+with a shell and making changes directly
+when changes are desired.
+
+A persistent loglevel numeric value can be set in file:
+/aux/set/rootfs/proc/sys/kernel/printk
+
+I previously mentioned that I would eventually add functions to
+immune-exam-transition to discover files /etc/*.rootfs and /etc/rootfs/*
+and eventually relocate and rename those to how they should properly exist.
+And so I did.
+Consequently, some file will disappear from /etc/
+and appear in /aux/set/rootfs/etc/
+
+Every POSIX requires a method for maintaining
+persistent content in virtual file systems across boots.
+Udevd rules provides a fine example of how content
+on /dev/ is re-created during each boot.
+However, each POSIX probably has a method also
+for /proc/ and /sys/
+
+This POSIX has only one additional difference,
+which is the added rootfs virtual file system.
+Some of it's content must differ because
+of multiple root file systems support.
+And at first the added convenience
+might seem unworthy with the added complexity.
+However, since learning the method
+for maintaining persistent content on virtual file systems
+is required for every SA on each POSIX.
+
+The method of using /aux/set/
+as a prefix for data that go onto rootfs /dev /proc /sys/
+becomes part of the lore SAs are expected to learn.
+And after much consideration I decided that this method
+provides maximum functionality for minimal complexity.
+It is a worthy compromise that allows pristine backward
+compatibility for a traditional /etc/
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131230/9e483227/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131230/9e483227/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002513.html">[Sorcerer-admins] Evolving beyond sorcery,
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2514">[ date ]</a>
+              <a href="thread.html#2514">[ thread ]</a>
+              <a href="subject.html#2514">[ subject ]</a>
+              <a href="author.html#2514">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] A couple problems, one with a solution
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20couple%20problems%2C%20one%20with%20a%20solution&In-Reply-To=%3C596b75860801111020u78651678x7ec6d9baabc677a7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000354.html">
+   <LINK REL="Next"  HREF="000357.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] A couple problems, one with a solution</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20couple%20problems%2C%20one%20with%20a%20solution&In-Reply-To=%3C596b75860801111020u78651678x7ec6d9baabc677a7%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] A couple problems, one with a solution">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan 11 19:20:22 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000354.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+        <LI>Next message: <A HREF="000357.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#355">[ date ]</a>
+              <a href="thread.html#355">[ thread ]</a>
+              <a href="subject.html#355">[ subject ]</a>
+              <a href="author.html#355">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 11, 2008 7:32 AM, Vincent Penquerc'h
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">vincent.penquerch at cohortstudios.com</A>&gt; wrote:
+&gt;<i> /etc/init.d/mcron says:
+</I>&gt;<i> start_daemon-p
+</I>&gt;<i> (missing space before -p)
+</I>&gt;<i> It results in cron not starting when I rebuilt my box, and people
+</I>&gt;<i> complaining about missing messages, which is how I found it.
+</I>
+Right on about mcron!
+Thanks for finding and reporting the problem with it.
+
+&gt;<i> Also, I've now had various problems with software trying to get
+</I>&gt;<i> files from the internet when compiling - the ones using gtk-doc.
+</I>&gt;<i> This tries to get XSL def files from docbook.sourceforge.net,
+</I>&gt;<i> fails, and stops the build, failing the cast. Since it's for
+</I>&gt;<i> docs, it's mighty annoying (and autofails spells depending on
+</I>&gt;<i> them too).
+</I>&gt;<i> After investigating, it appears it should not load anything since
+</I>&gt;<i> there should be a cache in /etc/xml. I've got only two files there,
+</I>&gt;<i> catalog and docbook. There are rewrite rules in there, but I kinda
+</I>&gt;<i> suspect I should have copies of the XSL files in there as well ?
+</I>&gt;<i> Am I right ? Needing internet access to build seems like a very
+</I>&gt;<i> backwards idea, and I doubt gtk-doc would be used so much if it
+</I>&gt;<i> really needed it, so I assume it's a problem on my box ?
+</I>
+gtk-doc has been a problem in the past.
+Some versions of it would not compile.
+In most cases gtk-doc is an optional requirement for compilation.
+Several spells have gtk-doc off or optional.
+However pygtk recently made gtk-doc a mandatory requirement
+in order for pygtk to compile and install.
+Is that the spell at the base of the gtk-doc problem?
+
+docbook, hmmm?
+Fix the spell if you can, please.
+Although I wrote it, I did so in a rather odd fashion.
+Much to my surprise nowhere
+could I find documentation on how to install docbook.
+However, one tarball or zipfile did have something like
+an install script so I attempted to mimic what it did for
+different versions of docbook XML and XSL so that they
+could be installed and have their catalogs correctly adjusted.
+
+Much time has elapsed since I wrote the spell.
+It probably works as good as it ever did.
+And in several cases it does work.
+But perhaps not all.
+Sometimes it is just a matter of having the correct
+version of XML or XSL sheets installed.
+Unfortunately, source trees never specify
+in the README or INSTALL files
+what versions of docbook XML or XSL is required.
+
+
+&gt;<i> I've rebuilt it all yesterday, didn't fix the problem (but did
+</I>&gt;<i> make me spot the cron bug).
+</I>&gt;<i> I tried recasting docbooc, various docbook-* spells, etc, to no
+</I>&gt;<i> avail.
+</I>&gt;<i>
+</I>&gt;<i> Any pointers greatly appreciated.
+</I>
+I feel the same way about docbook.
+I can try to check and revise the spell in a few days,
+but it might not perform any better than it does already.
+And I agree that docbook is problematic in that it some sources
+try to download pages files from the Internet during compilation.
+It should just throw errors and specify what it requires where.
+The absurd complexity of docbook makes
+it a big step down from plain ASCII.
+
+I recently wrote a spell for docbook2X.
+The spell is probably proper.
+However, docbook2X does not install any of the XML or XSL it requires.
+Consequently, docbook2man does not work properly.
+Consequently, module-init-tools 3.4 fails compilation
+because it requires docbook2man.
+
+If you get a chance to fix docbook* gtk-doc
+then maybe try fixing docbook2X also, please?
+
+Thanks again for reporting the mcron problem.
+The fix will is in time for the girmoire that will go out
+6 hours from now.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000354.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+	<LI>Next message: <A HREF="000357.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#355">[ date ]</a>
+              <a href="thread.html#355">[ thread ]</a>
+              <a href="subject.html#355">[ subject ]</a>
+              <a href="author.html#355">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

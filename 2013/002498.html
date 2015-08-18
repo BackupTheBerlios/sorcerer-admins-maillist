@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Augur man page and GCC optimization
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Augur%20man%20page%20and%20GCC%20optimization&In-Reply-To=%3CCA%2BT4wDjJnqDrJ8x41QW7%2BnQw5fPhgH-n%3DwGmLA%2BsPY2L08xvxw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002495.html">
+   <LINK REL="Next"  HREF="002496.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Augur man page and GCC optimization</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Augur%20man%20page%20and%20GCC%20optimization&In-Reply-To=%3CCA%2BT4wDjJnqDrJ8x41QW7%2BnQw5fPhgH-n%3DwGmLA%2BsPY2L08xvxw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Augur man page and GCC optimization">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Dec  8 08:34:41 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002495.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+        <LI>Next message: <A HREF="002496.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2498">[ date ]</a>
+              <a href="thread.html#2498">[ thread ]</a>
+              <a href="subject.html#2498">[ subject ]</a>
+              <a href="author.html#2498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ha, there goes Evert again sharing
+the fancy lore with neophytes.
+However, that is nearly correct.
+The configuration file is called .config.custom
+The file .config.stock is installed by the spell linux-config
+Become confused, and linux-config will overwrite .config.stock
+and destroy the custom configuration.
+
+Providing that a SA can create
+a kernel configuration that is usable
+then it can be utilize that easily
+by copying it to /usr/src/linux/.config.custom
+However, with that said....
+Do not do it!
+*chuckles*
+
+What if I start using oh something like unshared namespace.
+And it happens so that unshared namespace is used.
+Yet, a new SA might not realize that.
+So the new SA creates a Linux configuration file
+that is suitable for all the features that the SA
+anticipates using and omits including the features
+that this POSIX requires in order to function.
+Guess what happens?
+Failure to boot.
+
+The best a SA could hope for is to start with a stock configuration
+then modify it to create the custom configuration by
+removing hardware drivers for hardware that is not installed.
+Then the SA is responsible for doing that EVERY time
+that a major Linux kernel is released.
+Therefore, when transitioning from Linux 3.9.11 to 3.10
+the SA must create an updated .config.custom
+that is also compatible with the .config.stock
+Is it a chore?
+Well, yes it is.
+I update the modular Linux kernel configurations
+for every major update of Linux.
+I previously provided 3.
+Now I only provide 2.
+
+Anyway, forget about /usr/src/linux/.config.custom
+Almost nobody uses it.
+I also do not use it.
+The only people who would use it are also those
+who would have some very different initramfs generation scripts
+that enable the creation of micro-sized initramfs images,
+like on the scale of 16M or less.
+Those boxes fail to boot if anything goes unexpected
+and they can not be rescued without a rescue label
+or a rescue USB SSD.
+
+BTW, this POSIX is not for use on legacy and embedded computers.
+However, persistent people never stop trying.
+For that reason the previous IA32 deployment disk
+had software compiled with the 80486 instruction set
+which is the least advanced IA32 platform which Linux
+can be expected to boot on.
+
+Still, the deployment disk probably would not boot on a computer
+that has less than 1G of installed RAM.
+But that would not stop someone
+from making one that would
+on a USB SSD if such was desired.
+Bare minimum RAM for booting is probably around 256M.
+Updating much software aside from what is provided on /+/base/
+would not be possible with less than 512M or perhaps 1G of RAM.
+Certain software projects would create serious swap thrashing
+that could last for hours or longer while linking.
+
+
+On Sat, Dec 7, 2013 at 11:20 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Sorcerer tries to get good defaults as much as possible. In fact,
+</I>&gt;<i> there is a lot of chatter between me and Kyle from time to time as to
+</I>&gt;<i> what the default should be, and so on.
+</I>&gt;<i>
+</I>&gt;<i> If you do find that you have to make modifications to the kernel, the
+</I>&gt;<i> process is rather straightforward, as long as you are prepared to be
+</I>&gt;<i> surgical about it.
+</I>&gt;<i>
+</I>&gt;<i> # cd /usr/share/src/linux
+</I>&gt;<i> # make menuconfig
+</I>&gt;<i>
+</I>&gt;<i> This should pop you into the normal linux kernel configuration screen.
+</I>&gt;<i> Load .config.stock
+</I>&gt;<i> That is the config that Sorcerer suggest. Make the changes that you
+</I>&gt;<i> need to make.
+</I>&gt;<i> Save it as .config.custom
+</I>&gt;<i>
+</I>&gt;<i> Re-cast linux-kernel and linux-modules to apply your changes to the system.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 8 December 2013 01:14, chessmaster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; Thanks! I was just curious. I'm fine with default as I do understand
+</I>&gt;<i> &gt; optimization flags is extremely overated. I rather have a stable system
+</I>&gt;<i> than
+</I>&gt;<i> &gt; worry about what flags to use for ffmpeg etc...... When I did the &quot;au
+</I>&gt;<i> sync&quot;
+</I>&gt;<i> &gt; I notice while updating there was a kernel update. Is the kernel update
+</I>&gt;<i> user
+</I>&gt;<i> &gt; configured or automatic? I was afriad to update. Since on other related
+</I>&gt;<i> &gt; source-based POSIX the user has to recompile the kernel when it is
+</I>&gt;<i> updated.
+</I>&gt;<i> &gt; I acually hold off on that update until I find out what is done.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Sun, Dec 8, 2013 at 1:13 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Hmm, I am not sure, mainly because I have never tried.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Sorcery automatically detects the number of processors available, and
+</I>&gt;<i> &gt;&gt; sets makeopts to the number of free cpu's, if safe to do so. If you
+</I>&gt;<i> &gt;&gt; would like to turn off dynamic makeopts assignment, toggle feature
+</I>&gt;<i> &gt;&gt; &quot;min&quot; in the sorcery feature menus.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; To further utilize all available CPU power, sorcery will compile as
+</I>&gt;<i> &gt;&gt; many spells concurrently as it can. On Kyle's machine this is not a
+</I>&gt;<i> &gt;&gt; problem, but on my i7's there is just too much horsepower and I run
+</I>&gt;<i> &gt;&gt; into situations where strange things happen. I usually enable the
+</I>&gt;<i> &gt;&gt; &quot;sequent&quot; feature which tells Sorcerer to compile sources serially. At
+</I>&gt;<i> &gt;&gt; the end of the day, I don't see much difference, mainly because I
+</I>&gt;<i> &gt;&gt; re-compile often and ccache is quite helpful when doing re-compiles.
+</I>&gt;<i> &gt;&gt; One thing to watch out for.... compiling gcc wipes the ccache.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If not upgrading gcc, and just recompiling it, move /auc/can/ccache to
+</I>&gt;<i> &gt;&gt; some temporary location on the same filesystem, cast gcc, then move
+</I>&gt;<i> &gt;&gt; the ccache back.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Hope that answers your questions?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On 7 December 2013 23:06, chessmaster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Can I save 'export MAKEOPTS=&quot;-j8&quot;', in  /etc/sorcery/cpref/default
+</I>&gt;<i> &gt;&gt; &gt; safely
+</I>&gt;<i> &gt;&gt; &gt; without overwriting the defaults?  Enjoyed the installed and reading
+</I>&gt;<i> the
+</I>&gt;<i> &gt;&gt; &gt; excellent install/post-install docs. :)
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; On Sat, Dec 7, 2013 at 9:29 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; &gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Hi there, and welcome to Sorcerer.
+</I>&gt;<i> &gt;&gt; &gt;&gt; augur does not have a manpage. Instead, just type &quot;augur&quot; on the
+</I>&gt;<i> &gt;&gt; &gt;&gt; command line, and it will tel you it's options.
+</I>&gt;<i> &gt;&gt; &gt;&gt; One of us might write a manpage someday...
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; On your second question, the short answer is yes it does, but you
+</I>&gt;<i> &gt;&gt; &gt;&gt; don't want to mess with it.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Longer answer:
+</I>&gt;<i> &gt;&gt; &gt;&gt; Because I know you want to mess with it, and it's your machine and
+</I>&gt;<i> &gt;&gt; &gt;&gt; your right, I'll explain the mechanism to you, but if you blow up
+</I>&gt;<i> your
+</I>&gt;<i> &gt;&gt; &gt;&gt; box, don't blame me.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Sorcery will by default read:
+</I>&gt;<i> &gt;&gt; &gt;&gt; /etc/sorcery/cpref/default
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; If that file does not exist, sorcery will pick sensible defaults,
+</I>&gt;<i> &gt;&gt; &gt;&gt; which you can fine-tune in the sorcery menu. You will basically get
+</I>&gt;<i> &gt;&gt; &gt;&gt; optimization -O0 for most small packages, and -O2 for stuff that
+</I>&gt;<i> makes
+</I>&gt;<i> &gt;&gt; &gt;&gt; sense to have optimized, and some esoteric flags for spells that
+</I>&gt;<i> needs
+</I>&gt;<i> &gt;&gt; &gt;&gt; them.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; In the Sorcery menu, under &quot;Toggle&quot; sorcerer features, you can select
+</I>&gt;<i> &gt;&gt; &gt;&gt; whether to compile for base architecture or not. This switches
+</I>&gt;<i> default
+</I>&gt;<i> &gt;&gt; &gt;&gt; between -mtune=native and -march=native.
+</I>&gt;<i> &gt;&gt; &gt;&gt; You can also switch on &quot;lto&quot; for link time optimizations. If you
+</I>&gt;<i> want,
+</I>&gt;<i> &gt;&gt; &gt;&gt; switch on the complementary -Os for spells that have the &quot;lto&quot;
+</I>&gt;<i> &gt;&gt; &gt;&gt; capability.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Now, if that is not specific enough for you, and you want to specify
+</I>&gt;<i> a
+</I>&gt;<i> &gt;&gt; &gt;&gt; default that is different from what I described above, here is how:
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; # mkdir -p /etc/sorcery/cpref
+</I>&gt;<i> &gt;&gt; &gt;&gt; # nano mtune-O2
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; inside, put your CFLAGS, like so:
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; export CFLAGS=&quot;$CFLAGS -march=native -O2 -pipe -fno-warnings &quot;
+</I>&gt;<i> &gt;&gt; &gt;&gt; export CXXFLAGS=&quot;$CFLAGS &quot;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Or whatever you may like.
+</I>&gt;<i> &gt;&gt; &gt;&gt; To make sorcerer compile with those enabled,
+</I>&gt;<i> &gt;&gt; &gt;&gt; # ln -s /etc/sorcery/cpref/mtune-O2 /etc/sorcery/cpref/default
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Please let me re-iterate that this changes the defaults to whatever
+</I>&gt;<i> &gt;&gt; &gt;&gt; you put in that file, and can completely break your box. Also, it
+</I>&gt;<i> &gt;&gt; &gt;&gt; probably won't have the desired effect of making everything faster. I
+</I>&gt;<i> &gt;&gt; &gt;&gt; used to run with a default cpref pretty close to the one I described
+</I>&gt;<i> &gt;&gt; &gt;&gt; until very recently. Now I don't, and let sorcery pick the cflags for
+</I>&gt;<i> &gt;&gt; &gt;&gt; spells, and my desktop &quot;feels&quot; more responsive.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; However, there is some really useful application for when you want to
+</I>&gt;<i> &gt;&gt; &gt;&gt; mess with just one spell's cflags:
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; # augur cpref $SPELL &lt;tab&gt; &lt;tab&gt;   &lt;- will list the files in
+</I>&gt;<i> &gt;&gt; &gt;&gt; /etc/sorcery/cpref
+</I>&gt;<i> &gt;&gt; &gt;&gt; # augur cpref $SPELL $CPREF_FILE    &lt;- will set that spell to utilize
+</I>&gt;<i> &gt;&gt; &gt;&gt; the cpref file that you make.
+</I>&gt;<i> &gt;&gt; &gt;&gt; # augur cpref $SPELL  &lt;- will clear the custom cpref for that file
+</I>&gt;<i> &gt;&gt; &gt;&gt; # augur cpref    &lt;- will just list the spells with custom cpref
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; For instance, I have in i7 laptop. Current firefox segfaults when
+</I>&gt;<i> &gt;&gt; &gt;&gt; -march=native is passed to it, because it gcc gets the avx features
+</I>&gt;<i> of
+</I>&gt;<i> &gt;&gt; &gt;&gt; my CPU wrong. Just for firefox. strange, but I like compiling for my
+</I>&gt;<i> &gt;&gt; &gt;&gt; cpu type, so now I have the following file
+</I>&gt;<i> &gt;&gt; &gt;&gt; /etc/sorcery/cpref/firefox
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Contents of which:
+</I>&gt;<i> &gt;&gt; &gt;&gt; export CFLAGS=&quot; $CFLAGS -mno-avx &quot;
+</I>&gt;<i> &gt;&gt; &gt;&gt; export CXXFLAGS=&quot; $CXXFLAGS -mno-avx &quot;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; I issued the following command:
+</I>&gt;<i> &gt;&gt; &gt;&gt; augur cpref firefox firefox
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; And now just firefox is compiled with the added -mno-avx
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; The same mechanism can be applied to any single spell that you want
+</I>&gt;<i> to
+</I>&gt;<i> &gt;&gt; &gt;&gt; mess with, and limits the potential damage to the rest of your box.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Have fun.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; On 7 December 2013 18:02, chessmaster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; Hello everyone! I was curious to ask if augur has a man page? Also,
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; is
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; there
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; a configuration file that stores GCC optimization flags?
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; Regards,
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; Roosevelt
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; --
+</I>&gt;<i> &gt;&gt; &gt;&gt; Evert Vorster
+</I>&gt;<i> &gt;&gt; &gt;&gt; Chief Observer
+</I>&gt;<i> &gt;&gt; &gt;&gt; WG Cook
+</I>&gt;<i> &gt;&gt; &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; Evert Vorster
+</I>&gt;<i> &gt;&gt; Chief Observer
+</I>&gt;<i> &gt;&gt; WG Cook
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Evert Vorster
+</I>&gt;<i> Chief Observer
+</I>&gt;<i> WG Cook
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131207/660c5d0d/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131207/660c5d0d/attachment-0001.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002495.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+	<LI>Next message: <A HREF="002496.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2498">[ date ]</a>
+              <a href="thread.html#2498">[ thread ]</a>
+              <a href="subject.html#2498">[ subject ]</a>
+              <a href="author.html#2498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

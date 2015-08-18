@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Important changes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Important%20changes&In-Reply-To=%3C596b75860807111548ka08b8f7x14956db20cacf661%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000616.html">
+   <LINK REL="Next"  HREF="000618.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Important changes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Important%20changes&In-Reply-To=%3C596b75860807111548ka08b8f7x14956db20cacf661%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Important changes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 12 00:48:12 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000616.html">[Sorcerer-admins] MPlayer depends on kdebase-workspace-v4?
+</A></li>
+        <LI>Next message: <A HREF="000618.html">[Sorcerer-admins] Old style spells...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#617">[ date ]</a>
+              <a href="thread.html#617">[ thread ]</a>
+              <a href="subject.html#617">[ subject ]</a>
+              <a href="author.html#617">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>          Bugs and Problems
+
+BASH variable bleed has long been a problem when indexing.
+Previously, when detected and reported I attempt to circumvent it.
+That is usually successful.
+But it was an ongoing battle.
+
+However, after years of this bug not being fixed in BASH
+I decided that the best way to avoid BASH variable bleed
+is to not be setting and unsetting variables.
+
+Also I discovered with the KDE 4 format that cmake parameters
+can have ':' in them which defeats using ':' as a separator for
+components of optional requirements in the REQ array variable.
+
+
+          Solution
+
+I redesigned sorcery and the entire Sorcerer grimoire
+in a way that completely moots the above problems.
+
+Yes, I hand edited 3000+ spells in under 2 days.
+
+Upon installing the new grimoire with old sorcery
+plenty of error messages will print.
+Then, upon sorcery cast
+the grimoire will be re-indexed and the errors go away.
+
+The new format is not unlike the old format.
+However, instead of variable names
+functions are invoked to set variables.
+
+REQ is completely retired.
+
+However, 3 functions replace it:
+
+require()
+optional()
+switch()
+
+They accept parameters in nearly the same fashion that was used
+to create the REQ variable.
+
+Examples:
+
+optional libao   --enable-libao --disable-libao for sound output
+
+switch --enable-nvidia=yes --enable-nvidia=no to enable NV-extentions
+
+
+Very easy yes?
+
+optional  spell  on_string  off_string  description
+switch  on_string  off_string  description
+
+
+All the function names are lower case.
+All the variables are still upper case.
+
+Functions that set $VERSION array are:
+
+stable()
+unstable()
+secure()
+
+They must exist before $VERSION is used in a spell.
+
+Here is a sample spell.
+Looks best in fixed width fonts:
+
+    stable 2.8 2.7
+   require ncurses
+  optional gtk+ '' --without-gtk for graphical interface
+  category audio/mixer
+ attribute console x11
+    source aumix-$VERSION.tar.bz2
+       url <A HREF="http://www.jpj.net/~trevor/aumix/">http://www.jpj.net/~trevor/aumix/</A>
+  homepage <A HREF="http://jpj.net/~trevor/aumix.html">http://jpj.net/~trevor/aumix.html</A>
+       opts --without-gtk1
+  estimate 60
+      desc 'aumix is a mixer program for adjusting audio volume.
+It can run under X with GTK+, in full-screen text
+mode with ncurses and (if available) gpm, or
+non-interactively, and can store all settings in a file.
+It works with the OSS API.'
+
+
+
+Looks like a spell whispered?
+
+
+Will old spells work with the newer sorcery?
+Yes, to a limited degree and for a limited time.
+Update them ASAP
+
+Does the new spell format take longer to index?
+The boons and banes for indexing
+by this method nearly average.
+Indexing will be somewhat faster.
+Indexing speed increases more
+after support for old style spells is completely removed.
+
+For old style spells the only variables that are indexed are:
+$VERSION  $SOURCE  $URL
+
+Please update your local and any grimoires that you maintain.
+Many changes can be accomplished using a sed -i command.
+Variables that previously could span more than one line such as:
+REQ  SOURCE  URL  PROTECT  EXCLUDE
+might not be easily corrected by sed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000616.html">[Sorcerer-admins] MPlayer depends on kdebase-workspace-v4?
+</A></li>
+	<LI>Next message: <A HREF="000618.html">[Sorcerer-admins] Old style spells...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#617">[ date ]</a>
+              <a href="thread.html#617">[ thread ]</a>
+              <a href="subject.html#617">[ subject ]</a>
+              <a href="author.html#617">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

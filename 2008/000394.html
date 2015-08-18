@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MesaLib failling compilation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20failling%20compilation&In-Reply-To=%3C596b75860802121856o6b2d557dg6071f66dcc4bda0f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000393.html">
+   <LINK REL="Next"  HREF="000395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MesaLib failling compilation</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20failling%20compilation&In-Reply-To=%3C596b75860802121856o6b2d557dg6071f66dcc4bda0f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MesaLib failling compilation">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Feb 13 03:56:04 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000393.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+        <LI>Next message: <A HREF="000395.html">[Sorcerer-admins] net-snmp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#394">[ date ]</a>
+              <a href="thread.html#394">[ thread ]</a>
+              <a href="subject.html#394">[ subject ]</a>
+              <a href="author.html#394">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>That problem may be caused by
+the less aggressive method
+of clearing the library cache.
+If that is the case then it is fixed.
+The error can be avoided by:
+
+# rm /usr/lib.old/libstdc++*
+# cast MesaLib
+
+Sorry about the inconvenience.
+Thanks for the report.
+
+
+On Feb 12, 2008 5:00 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>  sorry here are the end of the logs :
+</I>&gt;<i>  make[2]: quittant le r&#233;pertoire &#171; /usr/src/sorcery/MesaLib/Mesa-6.5.2/src &#187;
+</I>&gt;<i>  make[2]: entrant dans le r&#233;pertoire &#171;
+</I>&gt;<i> /usr/src/sorcery/MesaLib/Mesa-6.5.2/progs &#187;
+</I>&gt;<i>  Making programs for linux-dri-x86
+</I>&gt;<i>  make[2]: quittant le r&#233;pertoire &#171; /usr/src/sorcery/MesaLib/Mesa-6.5.2/progs
+</I>&gt;<i> &#187;
+</I>&gt;<i>  make[1]: quittant le r&#233;pertoire &#171; /usr/src/sorcery/MesaLib/Mesa-6.5.2 &#187;
+</I>&gt;<i>  gcc -I../../include -Wall -Wmissing-prototypes -std=c99 -ffast-math -O -g
+</I>&gt;<i> -m32 -D_POSIX_SOURCE -D_POSIX_C_SOURCE=199309L -D_SVID_SOURCE -D_BSD_SOURCE
+</I>&gt;<i> -D_GNU_SOURCE -DPTHREADS -DUSE_EXTERNAL_DXTN_LIB=1 -DIN_DRI_DRIVER
+</I>&gt;<i> -DGLX_DIRECT_RENDERING -DGLX_INDIRECT_RENDERING -DHAVE_ALIAS
+</I>&gt;<i> -DHAVE_POSIX_MEMALIGN -DUSE_X86_ASM -DUSE_MMX_ASM -DUSE_3DNOW_ASM
+</I>&gt;<i> -DUSE_SSE_ASM glxinfo.c -L../../lib -lglut -lGLU -lGL -lm -o glxinfo
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `operator new[](unsigned
+</I>&gt;<i> int)@GLIBCXX_3.4'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `operator
+</I>&gt;<i> delete(void*)@GLIBCXX_3.4'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `vtable for
+</I>&gt;<i> __cxxabiv1::<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">__class_type_info at CXXABI_1.3</A>'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to
+</I>&gt;<i> `<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">__gxx_personality_v0 at CXXABI_1.3</A>'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `operator
+</I>&gt;<i> delete[](void*)@GLIBCXX_3.4'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `vtable for
+</I>&gt;<i> __cxxabiv1::<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">__si_class_type_info at CXXABI_1.3</A>'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `vtable for
+</I>&gt;<i> __cxxabiv1::<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">__vmi_class_type_info at CXXABI_1.3</A>'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">__cxa_pure_virtual at CXXABI_1.3</A>'
+</I>&gt;<i>  ../../lib/libGLU.so: undefined reference to `operator new(unsigned
+</I>&gt;<i> int)@GLIBCXX_3.4'
+</I>&gt;<i>  collect2: ld a retourn&#233; 1 code d'&#233;tat d'ex&#233;cution
+</I>&gt;<i>  make: *** [glxinfo] Erreur 1
+</I>&gt;<i>  ESC[31mESC[1m! Problem Detected !ESC[0mESC[0m
+</I>&gt;<i>  Source moved to /var/tmp/failed/Mesa-6.5.2
+</I>&gt;<i>  (END)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>  ia32 architechture
+</I>&gt;<i>  maybe the no strict aliasing is the cause... will try it shortly
+</I>&gt;<i>  thanks
+</I>&gt;<i>  JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000393.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+	<LI>Next message: <A HREF="000395.html">[Sorcerer-admins] net-snmp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#394">[ date ]</a>
+              <a href="thread.html#394">[ thread ]</a>
+              <a href="subject.html#394">[ subject ]</a>
+              <a href="author.html#394">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

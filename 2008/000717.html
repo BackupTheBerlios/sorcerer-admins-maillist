@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860808050703v2351b59cu7eb8e71cddccfeb%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000716.html">
+   <LINK REL="Next"  HREF="000638.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860808050703v2351b59cu7eb8e71cddccfeb%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug  5 16:03:57 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000716.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000638.html">[Sorcerer-admins] Jan suggested augur provide some more information.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#717">[ date ]</a>
+              <a href="thread.html#717">[ thread ]</a>
+              <a href="subject.html#717">[ subject ]</a>
+              <a href="author.html#717">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have booted from USB flash drive before.
+What feedback is desired?
+See the install script for Sorcerer in the grimoire.
+Basically only adjust /etc/lilo.conf and /etc/fstab
+to properly address devices using UUIDs
+and then it can boot from a flash device.
+
+Returning to the initramfs discussion,
+knowing exactly what to put on an initramfs is
+both a simple and complex challenge.
+I will skip the explanation and go straight to the interesting part.
+How much can a precise initramfs save?
+
+# ls -lah /boot/*/initrf
+-rw------- 1 root root  42M 2008-08-05 06:02 /boot/2.6.25.6/initrf
+-rw------- 1 root root  42M 2008-08-05 06:03 /boot/2.6.25.9/initrf
+-rw------- 1 root root  42M 2008-08-05 06:03 /boot/2.6.26/initrf
+-rw------- 1 root root 8.7M 2008-08-05 06:05 /boot/fast/initrf
+
+It can save about 4/5th
+However, any update that causes initramfs regeneration
+causes the precise initrf to also go stale.
+And the precise initrf can not be regenerated until after
+a successful boot.
+The precise initrf generation is fast enough since it
+forms the cpio from the files already on the initramfs
+which are already in RAM.
+
+The bootable kernel called fast is merely a copy
+of the default kernel booted at the time that
+precise initrf was generated.
+Therefore, if the box booted into the most recently installed kernel
+then that will be generated as fast so that on the next boot
+fast can be booted instead.
+
+If gremlins infest the fast boot initrf and make it useless
+then the SA can boot any of the other available kernels.
+This way a box has both the fast road where you race
+around the mountain at with the pedal floored
+and also the scenic root where you can stop and get out of the
+car to pick some flowers if the car develops an odd odor.
+
+Unfortunately, the change comes with
+an expected commensurate amount of complexity.
+And it is of no great use to anyone who does not
+reboot a box more than twice between kernel updates.
+
+Although the banes outweigh the boons 4 to 1
+it does go to show that a precise initramfs is possible
+and that does boot faster.
+I have only tested it on fixed disk.
+On an pentium 233 MMX it saves about 10 seconds.
+Not fast enough to notice.
+However, when booting from flash drive
+the savings may be more impressive when
+compared to booting from fixed disk.
+While it will not be as fast
+it will not be nearly as slow as it was
+since the fast/initrf would be 1/5th the size of a full initrf.
+
+Overall an initrf of 9M to 13M is a very reasonable size
+considering it contains no non-standard utilities such as uClibc + busybox.
+About 1/3 of the size is used by modules.
+Results on other boxes will vary depending upon
+what is run during sysinit.
+Perhaps an initramfs smaller than 6M is possible.
+It surely is possible if the initrf is gzip compressed.
+However, compressing such a small file that might
+not be used is not worth the CPU cycles since the
+creation of the fast initrf happens at the end of sysinit
+and before runlevel execution begins.
+Therefore, a delay there would be noticed.
+
+I gziped -9
+
+-rw------- 1 root root 8.7M 2008-08-05 06:05 /boot/fast/initrf
+
+just to see.
+
+-rw-------  1 root root 4.3M 2008-08-05 06:51 initrf.gz
+
+Now that is a tiny initramfs.
+Nearly a full magnitude smaller that the larger full uncompressed initramfs.
+It is even usable on a modern embedded system
+or vmware appliance,  ;) for you know who.
+
+Also...
+Even if it seemed like it would be great if they were all that small,
+remember that a precise initramfs can only be generated for
+the kernel that was booted when no /boot/fast existed during boot.
+Therefore, the precise initramfs is determined and not conjectured.
+
+Sorry if that seemed complex.
+Hopefully, this compromise answers some questions
+and provides additional functionality while maintaining
+the fall back security blanket of the full initramfs should
+the box have to be booted into it in order to deal with
+hardware changes and software updates.
+
+
+
+On Mon, Aug 4, 2008 at 10:46 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> does someone has a small script or the like even as draft that can be used
+</I>&gt;<i> to grenerate the image for a sdcard? I would like to try sdcard booting on
+</I>&gt;<i> this laptop to give better feedback
+</I>&gt;<i> JL
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000716.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000638.html">[Sorcerer-admins] Jan suggested augur provide some more information.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#717">[ date ]</a>
+              <a href="thread.html#717">[ thread ]</a>
+              <a href="subject.html#717">[ subject ]</a>
+              <a href="author.html#717">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C49E8CDA8.3030401%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001071.html">
+   <LINK REL="Next"  HREF="001073.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lvm, suspend, raid, swap, encryption...</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C49E8CDA8.3030401%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] lvm, suspend, raid, swap, encryption...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Apr 17 20:42:48 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001071.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+        <LI>Next message: <A HREF="001073.html">[Sorcerer-admins] New I/Rs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1072">[ date ]</a>
+              <a href="thread.html#1072">[ thread ]</a>
+              <a href="subject.html#1072">[ subject ]</a>
+              <a href="author.html#1072">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee wrote:
+&gt;<i> On Thu, Apr 16, 2009 at 1:51 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> 2) in sorcerer it's not possible to use software raid on top of lvm, since
+</I>&gt;&gt;<i> lvm shall be activated first before raid is activated, however I'm not sure
+</I>&gt;&gt;<i> that raid array can be dynimically updated like lvm allow
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> When I was deciding how it aught to work I found it interesting that
+</I>&gt;<i> certain choices had to be made that exclude some methods.
+</I>&gt;<i> Having LVM2 on top of software RAIDs made sense at the time.
+</I>&gt;<i> Use the software RAID to group up the disks.
+</I>&gt;<i> Use the LVM2 to break it down.
+</I>&gt;<i> However, LVM2 can also be used to group disks.
+</I>&gt;<i> But it does not have the same benefits of the software RAID.
+</I>&gt;<i> Are there reasons why this order is a mistake or less useful
+</I>&gt;<i> than had it been the other way around?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> 3) encryption is the only thing that would work ;)
+</I>&gt;&gt;<i> so I'll drop the idea of using lvm, it's sure interesting to be more
+</I>&gt;&gt;<i> flexible and allow fast resizing of partitions, however I don't change  my
+</I>&gt;&gt;<i> partition size every weekend and the actual size seems to fit me...
+</I>&gt;&gt;<i> I'll then simply activate my suspend (there are boons with suspend,
+</I>&gt;&gt;<i> especially on laptops when you run out of battery and don't wanna loose all
+</I>&gt;&gt;<i> your open applications...) and toy around with ext4....
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Using LUKS encrypted partitions on a notebook that can suspend to disk
+</I>&gt;<i> seems counter intuitive, as I mentioned previously.
+</I>&gt;<i> Something that might otherwise be encrypted could end up
+</I>&gt;<i> written to the swap unencrypted during the suspend.
+</I>&gt;<i> If someone managed to un-suspend from disk the notebook
+</I>&gt;<i> then the encryption key for / or /home will be loaded back into
+</I>&gt;<i> memory and those filesystems will be mounted
+</I>&gt;<i> when the notebook resumes running
+</I>&gt;<i> if those filesystems were mounted when the notebook was suspended.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Although I have not checked prices on large solid state drives,
+</I>&gt;<i> probability for an extra $100 a notebook can have a USB
+</I>&gt;<i> solid state drive to store almost everything required.
+</I>&gt;<i> The fixed disk could be turned into an extra long term
+</I>&gt;<i> storage area and spun up and down only when required.
+</I>&gt;<i> Probably a memory drive will not be as fast as a fixed disk,
+</I>&gt;<i> but the random access times should be excellent!
+</I>&gt;<i>   
+</I>not exactly... usb is a rather slow ass bus... bandwith is great but 
+responsiveness is poor....
+&gt;<i> It could make loading programs such as firefox nearly instant.
+</I>&gt;<i> firefox, for example, access many files while loading.
+</I>&gt;<i> And while each file might not be fragmented,
+</I>&gt;<i> they might not be close to each other on disk.
+</I>&gt;<i>   
+</I>well according to my tests on fast sdcard, the system is usable but 
+takes about 1.5 times the one on the disk
+&gt;<i> Maybe longer battery life can be achieved by not using the fixed disk drive?
+</I>&gt;<i> I vaguely recollect seeing a notebook that advertised a battery charge
+</I>&gt;<i> that would power and run the notebook for 7 hours.
+</I>&gt;<i> Keep a notebook at 12.5% throttle, do not use the fixed disk drive,
+</I>&gt;<i> reduce LCD back-light intensity and maybe it can run for a while?
+</I>&gt;<i>   
+</I>lcd is the most energy eater of the pc... however transflective lcd 
+aren't widely available.... sadely
+yes not using the disk can save some power.... however my laptop barely 
+use the disk, my 2G ram never fil more than 500Mo (appart when 
+compiling) so disk is almost all time in suspend state....
+&gt;<i> Obviously, with 35W CPUs the notebook computer is not yet
+</I>&gt;<i> approaching the efficiency of a solar calculator.  *lol*
+</I>&gt;<i> Yes, I want a 16 gigaherts, 16 core, 256 bit, solar powered notebook.  :)
+</I>&gt;<i> Maybe someday, yes?
+</I>&gt;<i>   
+</I>well appart the frequency.... powers consumption increase with 
+frequency, if I'm correct in a way that is exponential an not simply 
+linear, but for our cpu frequency it can be approximated as linear
+on the other hand multiplying the number of core don't increase much the 
+cpu consumption, a 2 core cpu provide about 1,90 the calcul power of a 
+single core at the same frequency, but consume at most 1,5 the power of 
+the single core, so if the software is well optimised for multicpu then 
+you can increase average calcul power with decreasing average consuption....
+&gt;<i> I am open to suggestions for making Sorcerer
+</I>&gt;<i> boot and shutdown run faster.
+</I>&gt;<i>   
+</I>
+the problem isn't speed, but rather saving application state and be 
+certain to restore it.... I never managed to make it work correctly... 
+so suspend is the only way I found to be certain to save and restore my 
+env....
+&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090417/24138c21/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090417/24138c21/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001071.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+	<LI>Next message: <A HREF="001073.html">[Sorcerer-admins] New I/Rs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1072">[ date ]</a>
+              <a href="thread.html#1072">[ thread ]</a>
+              <a href="subject.html#1072">[ subject ]</a>
+              <a href="author.html#1072">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

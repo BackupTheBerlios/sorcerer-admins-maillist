@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] How do I get a GUI to run?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20do%20I%20get%20a%20GUI%20to%20run%3F&In-Reply-To=%3CCA%2BT4wDixBvAYqDcfY0OPALJNm%3DrZAyjJ8F7eqjPD55-2HCRrmA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002379.html">
+   <LINK REL="Next"  HREF="002381.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] How do I get a GUI to run?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20do%20I%20get%20a%20GUI%20to%20run%3F&In-Reply-To=%3CCA%2BT4wDixBvAYqDcfY0OPALJNm%3DrZAyjJ8F7eqjPD55-2HCRrmA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] How do I get a GUI to run?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Aug 20 18:51:07 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002379.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+        <LI>Next message: <A HREF="002381.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2380">[ date ]</a>
+              <a href="thread.html#2380">[ thread ]</a>
+              <a href="subject.html#2380">[ subject ]</a>
+              <a href="author.html#2380">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Aug 19, 2012 at 9:23 PM, Demetri Salamander
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">demetrisalamander at gmail.com</A>&gt; wrote:
+&gt;<i> There was no sentient version. I'm somewhat new to the command line but I
+</I>&gt;<i> have a guide. I have not done much but I'll do as much as I can before
+</I>&gt;<i> asking for help. I need sleep but I can either get back on this tomorrow
+</I>&gt;<i> night or Tuesday. Thank you. I don't think I want it to start up with a GUI
+</I>&gt;<i> but I want to start up enlightenment or KDE someday.
+</I>&gt;<i>
+</I>&gt;<i> You should look into the Wayland replacement for X11 or Xorg. From what I
+</I>&gt;<i> hear it will be better but it is just developing.
+</I>
+Apparently, wayland can not replace Xorg.
+It is not a drop in replacement, not a compatible set of API,
+but instead a simplified API that combines a window manager,
+compositor and protocol.
+The docs suggest that X can be made to display through wayland at a
+performance cost.
+However, programs that are clients of an X server expect to interact
+with an X server
+and wayland is not an X server an does not speak that protocol.
+The most accurate description of wayland
+might be something like an alternative implementation of DirectFB on 'roids.
+linux-fusion is the program that makes possible running multiple
+clients on DirectFB.
+However, my impression of DirectFB + linux-fusion is that the goal is
+less ambitious than wayland.
+
+Many programs use a widget library rather than communicate directly with X.
+Therefore, widget libraries such as gtk+ and qt-everywhere-opensource could
+gain a backend for wayland.
+And if so then such programs could output directly to wayland instead
+going through an X server.
+However, decades of software exist that is specific to X.
+And wayland's OpenGL is not yet complete and can not link with libGL
+without having to supporting the X protocol which is not what the
+wayland project wants.
+Therefore, for reasons such as that wayland will can not deprecate X.
+So for the moment using wayland would achieve slower rendering.
+
+Using wayland would be somewhat like using KDE,
+but being unable to turn off the compositor that creates
+the glowing blue boarders around windows and other effects.
+Compositing seems to be a word that means
+using OpenGL for rendering everything,
+instead of using the traditional fast 2D methods.
+Compositing is one of those ideas where someone thought,
+&quot;Oh I can do this,&quot; but probably forgot to ask, &quot;Should it be done?&quot;
+
+Calling wayland a widget or graphic toolkit would be inaccurate.
+However, it has a similar goal of providing convenience to the client
+and simplifying the complexity that is required by X clients.
+The protocol, which is a fancy word for language, is expected to
+be easier to learn and program than X.
+And that might be a good thing.
+Wayland's future could be secured if they developed an X protocol to
+wayland wrapper API
+sort of like how wine allows running win32 software on linux.
+That could help eliminate some of the slowness that would be incurred by running
+xorg with an Xserver that outputs to wayland.
+
+<A HREF="http://wayland.freedesktop.org/xserver.html">http://wayland.freedesktop.org/xserver.html</A>
+that shows a method that might work for allowing the X server to
+output through wayland.
+However, it requires versions of software fresh from repositories and
+the application of 3rd party patches.
+This is an invitation for instability.
+Furthermore if it works then it adds additional complexity
+and performance degradation to the X experience
+that is beyond what is desired on most desktops.
+
+For the moment adding support for wayland
+would be like tossing our sabots into the machine.
+And we do not want to sabotage Sorcerer.
+However, &quot;Sorcerer Sabotage,&quot; sounds like a cool name
+next to &quot;Sorcerer Sentient&quot; and &quot;Sorcerer Modern Magic.&quot;
+
+The wayland project authors have an ambitious goal.
+It is not without merit.
+However, it might not gain a strong foothold.
+DirectFB for example has been around for a long time,
+but might only be considered a preferred method
+running select graphic programs on embedded systems.
+For example a program that links with gtk+
+can use a gtk+ that is compiled for use with DirectFB
+and the outcome is that the program can be run on DirectFB instead of X11.
+I have done and tested this before.
+DirectFB is not nearly as experimental as wayland.
+
+Wayland might have a fair chance at supplanting DirectFB,
+after considerable more development and patch integration
+into the vanilla sources for Xorg and possibly major graphic toolkit libraries
+such as gtk+ and qt-everywhere-opensource.
+But that is not much of a foothold.
+However, X is rather difficult to escape.
+
+Thanks for mentioning the wayland project.
+I hope they have achieve success and gain a larger foothold than DirectX.
+However, personally, I might not want to use wayland.
+I run KDE without compositing enabled.
+I prefer performance over being able to have windows mapped to the face
+of a 3D cube and the other fanciness that compositing can achieve.
+
+For the moment using xorg would require a considerable duplication of
+xorg spells
+with an install prefix outside of /usr so that an X for use with wayland
+can be started independently of an X that is stable and unpatched.
+If I had the time and curiosity then I might feel tempted to try it.
+But I do not have the time to spare for the sub project.
+
+Demetri Salamander might want to give it a try.
+However, I would estimate the task to be overly challenging for a novice.
+The challenge of being able to start the X server on a box should be
+surmounted first.
+And it can be started from a shell prompt with
+$ startx &amp; exit
+Reading the manual page for startx
+describes exactly which files to edit in one's home directory
+for a window manager to automatically start.
+And startx is installed by the spell xinit.
+Good luck with that.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002379.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+	<LI>Next message: <A HREF="002381.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2380">[ date ]</a>
+              <a href="thread.html#2380">[ thread ]</a>
+              <a href="subject.html#2380">[ subject ]</a>
+              <a href="author.html#2380">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

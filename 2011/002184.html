@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%0A%09becomes%09mandatory.&In-Reply-To=%3C4DEAA17B.6010501%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002182.html">
+   <LINK REL="Next"  HREF="002185.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%0A%09becomes%09mandatory.&In-Reply-To=%3C4DEAA17B.6010501%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.">Bradley at NorthTech.US
+       </A><BR>
+    <I>Sat Jun  4 23:19:55 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002182.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+        <LI>Next message: <A HREF="002185.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2184">[ date ]</a>
+              <a href="thread.html#2184">[ thread ]</a>
+              <a href="subject.html#2184">[ subject ]</a>
+              <a href="author.html#2184">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+Okay I'll try to respond to this with my take on it, w/o being too
+verbose ;)
+
+On 06/04/2011 04:25 AM, Kyle Sallee wrote:
+&gt;<i> On Fri, Jun 3, 2011 at 1:44 PM, Bradley D. Thornton
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+</I>&gt;&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;&gt;<i> Hash: RIPEMD160
+</I>&gt;&gt;<i>
+</I>&gt;<i> 
+</I>&gt;<i> Perhaps I remember it as &quot;XFS does not have a reserved boot sector?&quot;
+</I>&gt;<i> I have since updated the menu driven installer to disallow combinations
+</I>&gt;<i> that I know will not work without a dedicated /boot.
+</I>&gt;<i> And I have also recently modified it to enforce a 2G /boot
+</I>
+Yes. I agree that is good. However, there's a point further down that
+needs to be addressed....
+
+&gt;<i> Hopefully, I can fix that in the next set of I/Rs.
+</I>&gt;<i> Hate to be this way, but I guess I must use a
+</I>&gt;<i> &quot;shove it in their face&quot; approach.
+</I>&gt;<i> I realize it will be a bit more than annoying,
+</I>&gt;<i> because we will have to tap enter a few times
+</I>&gt;<i> and then confirm that we understood before
+</I>&gt;<i> proceeding with installation.
+</I>&gt;<i> But it is the lesser of two evils compared to a SA
+</I>&gt;<i> doing an installation that will become problematic.
+</I>
+I'll be honest here, I haven't seen the immediate prior, or the the I/R
+just before that. I think the last I/R I used was from about a year ago.
+
+I did give up trying to install KDE, etc., because the casts kept
+failing and I was lost in the ever moving augur target. Trying old, way
+past deprecated things such as scry that weren't even currently used
+that way, etc.
+
+So not only are my Sorcerer boxes cli based servers (and running good I
+might add), but I'm not familiar with the latest install script.
+
+That having been said, expert is what it is. Novice, to me means, &quot;Hold
+my hand a little and explain things in a manner that won't insult my
+level of experience as a seasoned admin, because I just need to know
+what *This* requires of me.&quot;
+
+The last install I did was sufficient for me, and I know you've made
+improvements upon that since.
+
+Automatic... um... yeah, I'll address that below too...
+
+&gt;<i> 
+</I>&gt;<i> So maybe an automatically created /boot partition for &quot;novice&quot; mode,
+</I>&gt;<i> and merely the 2G size enforcement for &quot;expert&quot; mode?
+</I>&gt;<i> I can not help making the &quot;novice&quot; mode of the installer
+</I>&gt;<i> extremely unpalatable for experienced SAs.
+</I>&gt;<i> But we always that the option to switch modes and re-partition.
+</I>
+I liked the last install I did, with one exception. It told me what I
+needed to do as far as run fdisk, create your partitions, swap, choose
+your mount points, etc.
+
+Great for the seasoned SA, who is worried he/she might forget a step,
+but knows how to do it with a couple of nice reminders. This is usually
+my choice on an install, to, &quot;Tell me what I need to do and in what
+order, and let me do it myself&quot;.
+
+Something unique, that I like in what you've done, is to enforce a
+minimum of 2GB for a /boot - but only where it's required (i.e., not
+with ext3 or ext4).
+
+Now, for the problem I had, which (and this might sound a little stupid
+on my part) by default, wanted to create an /etc/fstab with a *swap
+file*, instead of mounting SWAP on it's own type 82 partition.
+
+I had never done that before, and the thought of it actually makes me
+cringe. I have, for the past 18yrs or so, always created a type 82
+partition, and put my swap there.
+
+In my case, I had to run sinstall twice before I figured out how to do
+that in one step. Once to get through the fdisk and fstab part of the
+install, and once to point choose the now existing partition as the
+place to mount swap.
+
+That might sound silly, but I still do not understand why someone would
+want a swap file, instead of a swap partition.
+
+Okay, moving on. From what it sounds like (and I'll create a new VM in
+vmware  to see it for myself in a few minutes here), the requirement now
+is that an SA *must* create a /boot of *at least* 2GB &quot;if&quot; he chooses
+something like xfs, which needs one - perfect!
+
+Anything more isn't 'novice', IMO, but rather, n00b, and deserves to be
+below in your proposed *Automatic* mode ;)
+
+&gt;<i> 
+</I>&gt;<i> The novice mode could be made to query an installation device from the SA
+</I>&gt;<i> and automatically create a 2G ext2 /boot partition, 4G swap, and to put
+</I>&gt;<i> the rest on an ext4 / or is that too harsh?
+</I>
+To reiterate and clarify, too harse, IMO :)
+
+&gt;<i> Besides an ext2 /boot would probably be unnecessary with an ext4 /
+</I>
+Precisely.
+
+&gt;<i> 
+</I>&gt;<i> Should the menu driven installer have a
+</I>&gt;<i> &quot;novice&quot; mode an &quot;expert&quot; mode and an &quot;automatic&quot; mode?
+</I>
+I'll never use an *automatic* mode, but yes, I think that's a good idea...
+
+&gt;<i> Perhaps it should start in automatic mode and ask the SA just one questions?
+</I>&gt;<i> Which /dev/sd* device to install Sorcerer?
+</I>
+Okay this isn't something that most of us will use, yet I think perhaps
+it's not a bad idea so people coming to the distro can just say, install
+on /dev/sda and off it goes. Yes. for &quot;Automatic&quot; - something I would
+never use.
+
+I believe it will make it more palatable for some to adopt Sorcerer.
+They just want to see a box light up. Then, hopefully, they fdisk and do
+it right later once they know it's bitchen.
+
+And another point you raised a couple of times here, is that many of us
+(including myself) had to change the way we think when it comes to
+Sorcerer, in regards to what should be sufficient for a /boot - due to
+they way we had been raised, so to speak ;)
+
+for example, back in the 386 days, it was enough to create a /boot of
+8MBytes  on a Maxtor 514MByte drive that had more than 1024 Cylinders ;)
+
+
+&gt;<i> With merely the answer to that question
+</I>&gt;<i> I can lay that down a Sorcerer installation
+</I>&gt;<i> faster and easier than a 4 course meal.
+</I>&gt;<i> Is that what new Sorcerer SAs actually require
+</I>&gt;<i> so that Sorcerer is no longer too difficult to install?
+</I>
+That's a judgement call on your part Kyle. I'll never use an automatic.
+In fact, I looked at an automatic install once in the Redhat 4 or 5
+days, just to see - it was ugly, but perhaps necessary for the sake of
+adoption. As I recall, it would build a system that wasn't even usable
+for longer than a month or so.
+
+And I was also totally freaked out around the RH 6 time, when I first
+saw that disk druid thingy. Gawd I hate it when a company insists that
+we use those distros.
+
+
+&gt;<i> then we can abandon all hope of him/her being able to deploy
+</I>&gt;<i> a console only server box.
+</I>
+Usually all I need. I run mostly Slackware, Sorcerer and yes, a deb
+server here and there when I think that someone else will be taking over
+the admin from me later.
+
+Although I would really like to try a Sorcerer workstation out and see
+how all that comes together, it didn't happen for me starting with the
+I/R's I was using as late as six or eight months ago.
+
+But having come from Jolix, SLS, Slack, Yggdrasil, etc., I just don't
+see any other way to manipulate a disk other than fdisk - I don't even
+like the cfdisk front end, or care much for that grub stuff either LOL.
+
+The problem with making novice too n00b, is I often mount my /home off
+somewhere in the distance and traditionally like a /var on it's own
+partition too (for no good reason anymore). having /usr/local separate
+is nice too sometimes ;)
+
+Just the prompts telling me what I should be doing next, and yes, to
+avoid the botching of an install, your safeguard to require a 2GB+ /boot
+when necessary is all I need. More importantly, I think that's all most
+people need.
+
+Once more, the ONLY thing I had a problem with before, was figuring out
+how to get through the /etc/fstab process by deleting the swap file and
+having a swap partition instead.
+
+
+&gt;<i> I can not help thinking that an automatic installation
+</I>&gt;<i> is like giving a noob a stick of C7H5N3O6 to use for a match.
+</I>
+It is.
+
+
+&gt;<i> Or will it explode in their face later?
+</I>
+It will. But... perhaps (If you think it's desirable to move forward
+with such an endeavor) you could call it an Automatic *Trial* install,
+or *Test Drive* install, to enforce the principle that such an install
+is merely a peek, and only that.
+
+As far as helping. um... Well just a couple of things. First, I heard
+that you used to yell at your developers sometimes. Just hearsay, and I
+don't know the context or if they were being pricks themselves.
+
+Second, I have limited time, so progress on such a thing would move
+slowly, yet would be a kewl project for me nevertheless to work on.
+
+Third, I do have, once again ;), unlimited bandwidth, resources, my own
+Portable IPs under direct assignment from nic.ddn.mil (No, think back
+way further than internic.net) - so I have a perfect platform for distro
+devel in a vmware environment. And I'm at One Wilshire now :)
+
+So if you can put up with what might be from time to time, extensive
+delays (life happens, gotta feed my daughter, and I still need a real
+job or more clients), stupid questions, maybe a little extra hand
+holding (I'm a careful admin), I'd like to try if you wanna move forward
+on that, and the other thing I had been looking at contributing was a
+spell for Twin, a window manager I have come to love that runs in/out of
+X, etc.
+
+I'm a believer in giving back. You can call me a collector, or a
+believer, but I always keep a Slackware subscription, not because I want
+the official DVDs (I never open them), but because Pat needs money to
+feed his family and continue that distro.
+
+Now that Mageia I is out, I can leave that distro to its own destiny, as
+I really hate rpms as much as I ever did. I only helped out there
+because I liked Mandrake for some reason, and despised Mandriva.
+
+I like Sorcerer, and I apologize for not having been able to offer more
+support related articles about it on my website.
+
+Kindest regards,
+
+
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.760.666.2703  (US)
+TEL: +44.203.318.2755 (UK)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+
+iQEcBAEBAwAGBQJN6qF7AAoJEE1wgkIhr9j3HeMH/2eUYXidDrF2h1AQ+TBneEHH
+7RC5aidZeAXq3Y9QraoqKbBp57Ytscp/eh7LQHXkYKkZs+7pGa/LA2ZaVgluoapj
+PPf8B1LTDQ3NqeFGYoTmMbclys9+mY9zGODL/bvsATyvk4e3SGkO4aqxdQmUindL
+RmsI2InXwEJMknHZhdH26YbfbDBL0L3NFhR1cc81kbDRqHuMf/YB2S1sAtI149Sc
+7BSo18TRiin41/EAhb9iSsU534gW3h4nxty6On3h32e/lXCKBoNvOqqqHsEp301Z
+hnUJNDehg/YdyJlYd0aTkaixRO9Xs0WbDkZV2FBeXThSR+a5qiU2yhVCQL+B8cM=
+=gSPc
+-----END PGP SIGNATURE-----
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002182.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+	<LI>Next message: <A HREF="002185.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2184">[ date ]</a>
+              <a href="thread.html#2184">[ thread ]</a>
+              <a href="subject.html#2184">[ subject ]</a>
+              <a href="author.html#2184">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

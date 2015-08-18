@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo does not compile - several problems with it
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%20with%20it&In-Reply-To=%3COFFD4477BB.A8EFD928-ONC225778A.00674E55-C225778A.006A6785%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001887.html">
+   <LINK REL="Next"  HREF="001889.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo does not compile - several problems with it</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%20with%20it&In-Reply-To=%3COFFD4477BB.A8EFD928-ONC225778A.00674E55-C225778A.006A6785%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] lilo does not compile - several problems with it">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Aug 25 21:22:20 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001887.html">[Sorcerer-admins] Sorcerer servers do not reply outside Finland	atm
+</A></li>
+        <LI>Next message: <A HREF="001889.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1888">[ date ]</a>
+              <a href="thread.html#1888">[ thread ]</a>
+              <a href="subject.html#1888">[ subject ]</a>
+              <a href="author.html#1888">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+One giant bug report here. I am updating one older server and noticed that 
+lilo does not compile.
+
+1. bug, does not discover gcc is installed if your locale is something 
+else than english. Current lilo logic is brain dead and its grepping 
+&quot;version&quot; word from gcc version output, put if you happen to use some 
+other locale, like i am using Finnish locale, its not &quot;version&quot; anymore, 
+its localiced to my local language (its versio in finnish). So first is to 
+fix force locale eg to LANG=C before you cast it, then it finds your gcc 
+(it has some wierd code to discover if you have gcc). 
+
+2. problem. I am not sure but on my older sorcerer installation lilo does 
+want to use bcc command, but it should be recomended only, not sure whats 
+different as i tested on sorcerer test server (its newer installation, 
+installed on this year), it compiles fine without bcc, but on this other 
+server i am getting compile time error because bcc is missing... lilo 
+spell requires bin86, but bin86 does not provides bcc and those other 
+binaries if bcc is installed - afaik then lilo needs dev86 not bin86.
+
+Good news is that grimoire does includes Dev86 (why its spell name got a 
+capitalised D, should it be just dev86?), i founded it and casted it. 
+
+3. problem. Then i noticed several problems with Dev86 spell. It does not 
+install those required binaries, like bcc, bcc-cpp, bcc-cc1, copt and 
+unproto what lilo is trying to use.
+
+If you manually compile dev86 and copy those needed binaries to 
+/usr/local/bin you notice then that those missing binaries needs more 
+files that current spell does also not install. Lots of files that should 
+go to /usr/lib/bcc (i think), but current spell does not even make 
+/usr/lib/bcc -dir. 
+So you manully need to copy those missing files to: 
+/usr/src/sorcery/.destdir/Dev86/usr/lib/bcc (wierd). 
+
+I managed to compile newer lilo, but i haven't try to boot it yet, those 
+pesky udev problems leaves usually /dev empty if udev version and linux 
+kernel does not match, thats one big problem also when you have older 
+installation like i have. Several servers installed many years ago, and 
+when i needed to update it, because security problems and need for new 
+features, etc. its big pain to update and nervous business to boot them if 
+you need newer kernel, because many installations i have here has been 
+bugged with udev problem. Has anyone else managed to get problems if you 
+use older installation and you update your system and after reboot its 
+boot goes broke, like almost all files are missing from /dev?
+
+Anyway, Is lilo even maintained anymore? What i would like to see is that 
+we switch over GRUB2, it looks promising and its what all major distros 
+uses, it's been maintained and developed actively and it got more features 
+than lilo can provide. 
+
+Terveisin/Regards,
+   Pekka Panula, Sofor Oy - Jatkuvat palvelut
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100825/b4f18795/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100825/b4f18795/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001887.html">[Sorcerer-admins] Sorcerer servers do not reply outside Finland	atm
+</A></li>
+	<LI>Next message: <A HREF="001889.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1888">[ date ]</a>
+              <a href="thread.html#1888">[ thread ]</a>
+              <a href="subject.html#1888">[ subject ]</a>
+              <a href="author.html#1888">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

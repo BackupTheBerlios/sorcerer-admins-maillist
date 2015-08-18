@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Removing modules for current kernel...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTinjBALOBrmtR-Qy%2Bn4N3SJ41mRPYw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002105.html">
+   <LINK REL="Next"  HREF="002107.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Removing modules for current kernel...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTinjBALOBrmtR-Qy%2Bn4N3SJ41mRPYw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Removing modules for current kernel...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Apr 13 20:38:04 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002105.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+        <LI>Next message: <A HREF="002107.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2106">[ date ]</a>
+              <a href="thread.html#2106">[ thread ]</a>
+              <a href="subject.html#2106">[ subject ]</a>
+              <a href="author.html#2106">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Apr 13, 2011 at 1:17 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On Tue, Apr 12, 2011 at 11:43 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>
+&gt;&gt;<i> As for kernel and module removal...
+</I>&gt;&gt;<i> This is not done by sorcery.
+</I>&gt;&gt;<i> Instead it is done by /etc/init.d/lilo
+</I>&gt;&gt;<i> The last 4 installed kernels are kept.
+</I>&gt;&gt;<i> The most recently installed kernel becomes the default
+</I>&gt;&gt;<i> kernel unless a default is specified in /etc/lilo/head
+</I>&gt;&gt;<i> Specifying a default in /etc/lilo/head can become problematic
+</I>&gt;&gt;<i> eventually when that kernel is removed.
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Ya that's a good idea; but it should be the last 4 + the current one
+</I>&gt;<i> or 3+ the current one... I mean if the kernel has gone through 5
+</I>&gt;<i> rebuilds because of version changes do you really care about any of
+</I>&gt;<i> the first 4? &#160;They would all be untested and therefore potentially
+</I>&gt;<i> unviable to boot.
+</I>
+Hmm.... that is an interesting idea.
+I can appreciate the logic of keeping the kernel
+that is already tested and the most recent 3 newer kernels.
+That alone however might not allow a box to survive reboot.
+initramfs are regenerated as required and lilo is reinstalled
+whenever initramfs are regenerated.
+Therefore, if a problem exist
+with the initramfs or lilo's install location
+then the problem will persist.
+There are some file systems, maybe xfs was one of them,
+where lilo can not be installed to the boot block.
+Installing lilo to the boot block of a file system that does
+not have a boot block usually causes corruption that
+can be severe.
+
+&gt;&gt;<i> That way when the box boots it first runs ms-sys
+</I>&gt;&gt;<i> then ms-sys loads and runs the boot block of the first partition with
+</I>&gt;&gt;<i> the bootable flag.
+</I>&gt;&gt;<i> That should cause lilo to run.
+</I>&gt;&gt;<i> And lilo should load the initramfs and kernel image.
+</I>&gt;<i>
+</I>&gt;<i> unelss the initramfs failed :)
+</I>
+lilo will load the blocks that are expected to contain
+the initramfs and the linux kernel.
+Then lilo starts execution of linux.
+Since locations of kernels on disk change less frequently
+than the location of an initramfs
+there is a higher probability that the installed lilo's mapping
+for the kernel is correct.
+Then after the kernel begins one would see where the kernel
+unpacks the initramfs which happens very quickly except
+on the I/R where it is compressed.
+Then the kernel tries to mount it.
+At that point if the initramfs is not actually an initramfs
+then the kernel will complain and booting will halt.
+
+If booting proceeds then /init on the initramfs is running.
+This is usually a good sign.
+Even if something does go wrong
+if the kernel and initramfs are loaded
+then the SA can usually fix the problem
+without having to boot using an I/R.
+If something goes unexpected while /init runs
+then that might indicate a problem with the init-scripts
+that run or should have run but did not.
+
+&gt;<i> But really; why should it keep versions of the kernel that haven't
+</I>&gt;<i> been booted? &#160;and really the current should be kept laways in addtion
+</I>&gt;<i> to the 4 (or reduce that to 2 prior to the current, the current and 1
+</I>&gt;<i> new &#160;(total of 4)... )
+</I>
+The choice of keeping the 4 most recently installed kernels
+was mostly due to the consideration of keeping the disk
+space usage of /boot within expected limitations.
+If each initramfs + kernel is about 100M
+then 4 of them could fit within a 512M /boot
+Maybe no one knows if legacy 512M /boot
+partitions are still usable.
+Due to potential changes in the future I decided
+the recommended size of /boot should be 2G.
+This helps deter fragmentation while also allowing
+the possibility of the SA creating a swap file on /boot
+when temporarily necessary.
+
+The reason for keeping multiple kernels instead
+of merely one or two kernels
+is due to the expectation that sometimes a kernel
+might have instability due to bugs.
+Some SAs might want to sit on a kernel for a couple of years,
+but even after a year software such as coreutils will
+gain requirements on features available in a recent kernel.
+So generally, we must push forward with using newer kernels
+or painfully encounter unexpected breaks.
+Stability is not achieved by standing still,
+but rather by trying to discover what still works properly.
+
+However, I like the idea of keeping the 3 newer kernels
+plus the kernel that is currently booted.
+Thanks for the suggestion.
+
+
+P.S. about RAM.
+
+A linux kernel requires about 2.1x
+as much RAM as the size of the initramfs in order to boot.
+And it requires a bit more if the initramfs image is compressed.
+So the theoretical lower RAM
+limit for booting Sorcerer under 256M.
+However, deploying a Sorcerer box with less than 1G of RAM
+would probably show undesirable performance even when
+/usr/src/sorcery/ is not tmpfs.
+
+More recently, I have discovered that installed RAM should
+scale linearly with installed processors in order to achieve
+good results.
+So 2G is probably adequate on a 2 core SMP.
+4G seems to run fine on a 4 core SMP.
+Some SAs might still use 8G or more.
+
+My opinion is that buying more RAM
+is not necessarily a waste of money,
+but rather an investment in disk longevity,
+although some SA might disagree about that.
+There also exists some debate about using tmpfs on /usr/src/sorcery/
+
+I still recommend using tmpfs on /usr/src/sorcery/ when
+compiling optimized code without debug information.
+Yet, from what I have observed I feel safe to conjecture that
+Sorcerer runs awesomely on any ia32 or x86_64 with
+1 to 4 cores provided the box has sufficient installed RAM.
+
+However, we will be seeing in the near future much higher than
+expected loadavg when compiling multilib libraries on a 4 core
+SMP x86_64 multilib Sorcerer box.
+Doing so makes a significant expenditure of RAM.
+However, recent changes to the linux kernel allows
+nice to treat entire sessions of processes as a single process.
+Therefore, when allocating CPU cycles with respect to nice
+each spell that casts is given an allocation of cycles as if
+all it's processes were merely a single process.
+So to put it in plain English
+a Sorcerer box is still very responsive and performance ready
+even while under a high load during updates.
+
+However, for SAs that absolute want it
+the newer sorcery will have a &quot;min&quot; feature
+that minimizes the amount of resources that cast can use.
+
+There will be more posts about newer sorcery in the near future,
+because it will soon transition from devel to stable.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002105.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+	<LI>Next message: <A HREF="002107.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2106">[ date ]</a>
+              <a href="thread.html#2106">[ thread ]</a>
+              <a href="subject.html#2106">[ subject ]</a>
+              <a href="author.html#2106">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Casting of 'services' hangs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Casting%20of%20%27services%27%20hangs&In-Reply-To=%3C596b75860709232309y6619ec6am8b5576bdcccf8550%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000272.html">
+   <LINK REL="Next"  HREF="000273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Casting of 'services' hangs</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Casting%20of%20%27services%27%20hangs&In-Reply-To=%3C596b75860709232309y6619ec6am8b5576bdcccf8550%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Casting of 'services' hangs">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Sep 24 08:09:06 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000272.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+        <LI>Next message: <A HREF="000273.html">[Sorcerer-admins] gcc-v3.3 fails to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#275">[ date ]</a>
+              <a href="thread.html#275">[ thread ]</a>
+              <a href="subject.html#275">[ subject ]</a>
+              <a href="author.html#275">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 9/23/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+
+&gt;<i> Back to my problems.  Right now I have two main ones.  First off, I recast
+</I>&gt;<i> 'pcre' and that broke sorcery.  I recast it because it was libpcre that I
+</I>&gt;<i> had to make a link from /usr/lib64.old.  I thought if I recast it it would
+</I>&gt;<i> update all of the other spells to point to the correct library.  Well, that
+</I>&gt;<i> didn't happen.  After 'pcre' was cast, now I'm back to grep not working.
+</I>&gt;<i> When I try and do anything that calls grep, I get the foloowing
+</I>&gt;<i> 'grep: error while loading shared libraries: libpcre.so.0: cannot open
+</I>&gt;<i> shared object file: No such file or directory'
+</I>&gt;<i>
+</I>&gt;<i> This is what I was getting before when I update the files in /usr/lib64.old
+</I>&gt;<i> to point to /lib.  I agree that this is a tempory fix only, and I was
+</I>&gt;<i> wondering if you had any better suggestions.  Without grep working though,
+</I>&gt;<i> none of the sorcery commands will work.
+</I>
+The problem is not as bad as it might appear.
+If you can not repair it directly, such as retrieving working
+versions from /var/cache/archive/
+then the next best solution is to use the pcre and grep
+that is available on the Install/RESCUE disk.  :)
+
+For something that small you need not do a precise full transfer,
+but just grab the files from the I/R that you require and for the moment
+place them, if libraries, in /usr/local/lib/
+Then, run ldconfig
+Once pcre and grep are cast again
+then you can go ahead and safely remove the libraries
+that you temporarily placed in /usr/local/lib/
+
+
+&gt;<i> My second problem that seems to be persistant is the gcc-v3.3 is failing to
+</I>&gt;<i> compile.  I've tried it multpile times, and it always fails.  I have a log
+</I>&gt;<i> of the failure, however getting off the box is proving to be a pain.  I will
+</I>&gt;<i> post it as soon as I can transfer over to a working machine.
+</I>
+Hmm.... was that.... oh right I just answered that email a moment ago.
+Once the installed glibc is fixed then gcc-v3.3 will probably compile.
+However,....
+If the currently installed glibc is not properly tracked by sorcery
+and/or there is cruft from other non tracked glibc versions installed
+then the cast of glibc could fail.
+
+You may want to verify that the installed glibc is tracked by comparing
+what is in /lib and /lib64 with what is reported by
+# augur install glibc
+
+Additionally, you should check that there are no other glibc libraries of
+other versions installed in /lib and /lib64 that are not listed in the glibc
+install log.
+
+glibc libraries are fairly easy to identify because they follow the same naming
+pattern as those libraries listed in # augur install glibc
+
+/lib/libform.so.5.6
+
+For example the above library is not a glibc installed library.
+It is from ncurses.
+But if I did not know that I could ask sorcery.
+
+# augur from /lib/libform.so.5.6
+ncurses:/lib/libform.so.5.6
+ncurses:/usr/lib/libform.so.5.6
+
+And it tells me that it is from ncurses.
+
+I recommend the order of fixing be pcre, grep, glibc, gcc-v3.3
+Naturally, the most difficult component to fix is glibc.
+If you have an archive file for glibc it may be okay to use that
+instead of re-compiling glibc, likewise the glibc provided on the
+Install/Rescue disk can also be used.
+However, you have practically no chance of being able to merely
+# tar -xf /var/cache/archive/glibc-archive....
+When it tries to overwrite some of the files, some of the files will
+probably fail to be overwitten, end up with a size of zero, and
+being important library files at that cause the box to break for
+up to 1.5 minutes until immune spots the break and attempts
+to repair it using /lib.old and /lib64.old
+
+It is possible to replace a running glibc library on a box.
+But unless you are certain you know how to do it
+then it is best to boot from the I/R and then mount the
+hard disk filesytem and fix it that way.
+Of course, if that is not done correctly then the box may fail to reboot.
+# cast -c glibc
+is probably best as long as the install log and id log for glibc is correct
+and there are no other untracked glibc libraries installed.
+But if you end up fixing it while booted from the I/R then remember
+that the last step to do is...
+
+# ldconfig -r /media/root
+
+That assumes that the real filesystem is located at /media/root
+It is important that the /media/root/ld.so.cache is updated after
+changing around the glibc libraries and before rebooting the box.
+It would be very easy for anyone to forget to do that.
+
+Hopefully, the box will be entirely in good working order after you
+make those fixes.
+If not then there is always the other way around.  :)
+
+The other way around is this...
+but of course it takes a long time.
+It is what one might do if there is no time when
+one can really take the box down for extreme repairs.
+
+Copy an I/R to a directory on the hard disk.
+Set it up appropriately.
+chroot into it.
+cast all the software on it that is installed on the box.
+Transfer over the appropriate configuration files.
+Then finally, after the new chroot image is completely built
+you can switch it with the main filesystem.
+This can be done without rebooting, if you are me.  :)
+Otherwise, I recommend that you boot from the I/R to do the switch.
+That is because the moment you moved /lib or /lib64 to
+/old/
+nothing would work after that unless you export LD_LIBRARY_PATH
+and gave very precise commands prefixed with the correct path to
+what you want to use for ld.so
+
+For example:
+
+# mv /lib /old/
+## Bad break occurs right here, hope you shut off immune before you did this.
+# export LD_LIBRARY_PATH=&quot;/old/lib&quot;
+# /old/lib/ld-linux.so.2 /bin/mv /new/lib /
+
+That way mv could be executed and move the new /lib from /new/lib to /
+
+It is probably easier to just reboot from the I/R then
+mount the hard disk filesystem and then move the directories around.
+But, if the box can't come down.  :)  Then, a SA has to do the directory
+switching live.
+
+I always encourage SAs to directly solve the problem at hand rather
+than doing a re-install or an advanced chrooted rebuild.
+Even the problems that seem really big at first are usually fixable
+by executing 3 to 5 commands correctly.
+And thus even difficult problems seem very trivial after they are fixed.
+Plus the SA learns those tricks that in the future make what they do
+seem effortless.
+
+If you have a moment to keep reading....
+The other day I bugged up some sorcery
+and ended up exploding a grimoire onto /
+Can you imagine all those files and directories right within /
+I was thinking to myself, oh this will take a moment to clean up.
+So first I make a /trash directory.
+Of course I did not want to accidentally rm anything important.
+Then, I started moving everything into /trash,
+but sort of by accident I moved both /bin /sbin /lib into /trash also.
+That caused an immediate bad break.
+Did I brick my shorts or cuss?
+Nah.
+I just exported LD_LIBRARY_PATH executed the /trash/bin/mv command
+and moved those important directories back out of /trash
+
+Point is that through experience you will learn the tricks to recovery quickly
+from even some of the worst mistakes and you will have experience to
+choose cautious courses of actions such as using an initial trash directory
+when disposing of files and directories in dangerous areas or as root.
+
+But at times I am tempted to remember a certain Bob that executed a
+rm -rf something* in his home directory and accidentally put a space
+between something and the *
+He blew away everything in his home directory.
+And that is why some of us are SAs, and some of us are users.
+*chuckle*
+But I did sort of feel sorry for him, because at the time the very limited
+backups were only done using tapes of mission critical servers and not of
+user's home directories.
+Maybe if there was a way to undelete files on Solaris?
+But at the time I did not know.
+I guess I was a bit surprised that he did not have any of his own
+personal backups.
+But then again the box was on a closed network.
+Oh well.
+
+Anyway, no doubt you will be able to repair those, learn a bit in the process.
+But if it requires too much attention you can always do a chrooted rebuild,
+followed by a switch while booted from the I/R
+All that would take is a bit of disk space.
+And if you do, do the chrooted rebuild, it is easier to mount --bind
+/new/proc to /proc
+and same for sys and dev and so forth...
+--binds can be removed more easily.
+And also make sure that lsof is installed.
+That way when you are done you can check to see if any programs
+are left running within the previous chroot
+# lsof | grep /new
+Or in your case
+# lsof | sed -n &quot;\,/new,p&quot;
+*chuckle*
+
+If you have any trouble unbinding /new/sys /new/proc /new/dev,
+or most likely only /new/dev, then do a lsof check
+# lsof | sed -n &quot;\,/new/dev/,p&quot;
+
+After the box is all fixed you may want to run
+# augur alien | tee /tmp/aliens.txt
+# augur md5sum
+
+Some of the aliens may be files or directories that you want to remove.
+Likewise the md5sum check will put into the cast queue spells that have
+files that should be installed and are missing or files that are installed,
+but do not have the same md5sum as when installed.
+Those files may have been modified without authorization or have
+simply corrupted on disk or have been corrupted due to a filesystem error.
+
+I hope that grants you some options for repairing the box that best suit
+your constraints for effort, time, downtime, etc...
+I do enjoy the ease of repairing a Sorcerer box by using either
+archives or files from the Install/Rescue disk.
+No databases to worry about, no complexity, everything fixable
+usually with using commands such as export cp and tar.
+Easier than putting together a 100 piece puzzle.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000272.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+	<LI>Next message: <A HREF="000273.html">[Sorcerer-admins] gcc-v3.3 fails to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#275">[ date ]</a>
+              <a href="thread.html#275">[ thread ]</a>
+              <a href="subject.html#275">[ subject ]</a>
+              <a href="author.html#275">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Grimoire fails to download
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Grimoire%20fails%20to%20download&In-Reply-To=%3C596b75860708210040p7d538a99t5eb3dd7893092cb0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000199.html">
+   <LINK REL="Next"  HREF="000201.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Grimoire fails to download</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Grimoire%20fails%20to%20download&In-Reply-To=%3C596b75860708210040p7d538a99t5eb3dd7893092cb0%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Grimoire fails to download">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 21 09:40:34 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000199.html">[Sorcerer-admins] Grimoire fails to download
+</A></li>
+        <LI>Next message: <A HREF="000201.html">[Sorcerer-admins] Grimoire fails to download
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#200">[ date ]</a>
+              <a href="thread.html#200">[ thread ]</a>
+              <a href="subject.html#200">[ subject ]</a>
+              <a href="author.html#200">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Corrupted?
+Hmm....
+I just check 2007-232 on my box
+using tar -tf
+Looks fine to me.
+No sign of corruption.
+
+When leech downloads a compressed tarball
+leech automatically attempts to test the the decompression
+of the tarball before moving it from
+/var/tmp/leech/
+to
+/var/cache/sources/
+
+If the compressed tarball is incomplete or corrupt
+then leech automatically discards it and attempts
+to download the file again.
+If the file:
+/var/cache/sources/grimoire/2007-232/grimorie-2007-232.tar.bz2
+is corrupt
+then it probably corrupted when it copied from
+/var/tmp/leech/ to /var/cache/sources/
+
+It would be a bit silly for leech to test the tarball once at
+/var/tmp/leech/, copy it to /var/cache/sources/ and then
+test it again at /var/cache/sources/
+
+Is there some other way a corrupt tarball could arrive in /var/cache/sources?
+
+Sources in /var/cache/sources are expected to be intact and not corrupt.
+If there is a problem with a source there then it should
+be manually removed by the SA and downloaded again.
+
+I have never seen it happen.
+But assuming it does it should rarely occur.
+In the case of a the grimoire tarball being corrupt
+the problem would go away on the next update
+since the grimoire changes versions daily.
+
+
+Let us assume that I code 3 outcomes into cast
+Success, Failure, ( Delete corrupt source and try again )
+When leech retrieves the source it brings in the corrupt
+source from ${SOURCE_CACHE[1]}
+cast repeats
+leech repeats
+cast repeats
+leech repeats
+forever and ever
+
+The only time leech checks if a source is corrupted is right
+after it finishes downloading the source from across the Internet.
+When the source appears in /var/tmp/leech/$SPELL/
+it is checked before being moved to /var/cache/sources/
+Therefore, if the corruption is happening in some other way
+then trying to code a method into cast or into leech to detect
+and discard corrupted courses could lead to an infinite loop.
+
+In order to begin to code an automatic method for detecting
+and handling corruption of source tarballs in /var/cache/sources/
+I must have a clue as to why it happens otherwise I risk
+throwing cast and leech into an infinite loop.
+
+
+
+On 8/20/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> It was corrupted, i deleted it.
+</I>&gt;<i>
+</I>&gt;<i> Can you make changes to script where you create grimoire for download so it
+</I>&gt;<i> checks if its corrupted and make some alert perhaps?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000199.html">[Sorcerer-admins] Grimoire fails to download
+</A></li>
+	<LI>Next message: <A HREF="000201.html">[Sorcerer-admins] Grimoire fails to download
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#200">[ date ]</a>
+              <a href="thread.html#200">[ thread ]</a>
+              <a href="subject.html#200">[ subject ]</a>
+              <a href="author.html#200">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

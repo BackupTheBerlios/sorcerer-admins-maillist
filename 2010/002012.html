@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] 2g /boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%202g%20/boot&In-Reply-To=%3CAANLkTikSjCdB_wZ%2B0SYhdwPpkj%3DtDXgnNxRfXzUg8mFE%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002011.html">
+   <LINK REL="Next"  HREF="002013.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] 2g /boot</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%202g%20/boot&In-Reply-To=%3CAANLkTikSjCdB_wZ%2B0SYhdwPpkj%3DtDXgnNxRfXzUg8mFE%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] 2g /boot">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Nov 12 07:26:36 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002011.html">[Sorcerer-admins] 2g /boot
+</A></li>
+        <LI>Next message: <A HREF="002013.html">[Sorcerer-admins] Was incommunicado for a while, but I am back.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2012">[ date ]</a>
+              <a href="thread.html#2012">[ thread ]</a>
+              <a href="subject.html#2012">[ subject ]</a>
+              <a href="author.html#2012">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry, I have been incommunicado.
+However, the answer is simple.
+The huge /boot/ partition is for the convenience of SAs.
+
+I could make the requirement of /boot/ smaller.
+But I am not doing it.
+And what follows is the explanation.
+
+When Sorcerer started providing a modular kernel and modules
+I made the method for only providing the modules on the initramfs
+that would be required in order to mount the real root filesystem
+and proceed with the start of the runlevel.
+The advantage to this is that it made for a smaller initramfs.
+The disadvantage is that udev's coldplug trigger had to be run twice
+so that the modules and firmware that could not be loaded during sysinit
+could be loaded during the runlevel.
+It was a good compromise.
+
+However, some SAs objected to the absence of a complete
+collection of kernel modules on the initramfs.
+A complete collection of kernel modules, stripped, and compressed
+was still in excess of 30 megabytes.
+That is not such a big problem since most boxes have 512M RAM or more installed.
+However, if the required space on the initramfs for modules alone
+would be at least 30G
+then why not allocate at least that much more space to provide the
+files that are in
+/lib/ /lib64/ /sbin/ /bin/ /etc/  ?
+And so I did.
+initramfs images tend to be between 60M and 100M in size.
+That is rather larger.
+
+lilo allows up to 16 possible labels to be booted.
+In theory that could be 16 * 100M of disk space used.
+However, for legacy concerns Sorcerer only provides
+the 4 more recently compiled kernel images and modules.
+Still that could be large, and that restriction might be removed in time.
+
+The size of the kernel, modules, and software provided in /lib64/
+/lib/ /sbin/ /bin/
+continues to increase gradually over time.
+Also new software projects are provided that also add to those totals.
+New file systems like BTRFS and OCFS2 are added that also have
+their utilities installed into /lib/ /lib64/ /bin/ /sbin/
+Consequently, after another 5 to 10 years the space required for /boot/
+could be up to 2G in size.
+2G in size is almost nothing compared to the standard half terabyte
+or larger fixed-disks that come in new computers.
+So making that precaution requires almost nothing from the SA
+that wants to use a file system like xfs, or LVM2, or MDRAIDs,
+LUKS encryption, or some method for installation that requires a
+dedicated /boot/ partition.
+
+Simple installations of Sorcerer do not require a dedicated /boot/ partition.
+So in that respect /boot/ is optional for SAs that will settle for an
+ext3 or ext4
+for the root file system.
+
+
+Now regressing back to the original question, why 2G,
+and the question that would follow, why large initramfs images?
+The idea for Sorcerer's large initramfs is not to provide the
+minimal amount of software required for booting.
+The idea for Sorcerer's large initramfs is to provide the
+minimal amount of software required for the SA to
+fix a problem that might happen during booting.
+More simply put, there is a lot of software available
+to the SA even if the box can only do sysinit
+and is unable to mount the real root file system.
+
+The fast label differs from the regular kernel image.
+The fast label is incredibly tiny, sometimes only about 3M to 20M in size.
+The fast label can be used to boot quickly because it has all the file on it
+that were accessed on a previous boot.
+However, the fast label can not be used to trouble shoot a boot problem.
+The fast label is a quick blind leap.
+But the labels that have the same name as a kernel version
+contain a complete selection of kernel modules and also
+the files from the file system that could be useful for
+diagnosing and repairing problems.
+
+As a summary, the large initramfs images provided by Sorcerer
+are to maximize the amount of tools provided to the SA
+in order to recognize, circumvent or fix a problem happening during boot.
+Certainly, it is not enough for a SA to start an X session
+and go web browsing using firefox.
+But it has file system moudules, utilities
+for checking, making, and mounting file systems and even more.
+It even has archiving utilities like tar, gzip, bzip2, and xz.
+Some SAs might be inclined to expect that it has too much.
+But better to have too much than to be lacking a utility
+when it is needed the most.
+
+Short of a lilo error where the initramfs can not be loaded
+then many significant problems on a Sorcerer box can be
+fixed either without rebooting or just before sysinit
+by issuing the kernel parameter rdinit=/bin/bash/
+I know this because I recently wrote a modprobe configuration
+file to blacklist the radeon driver to prevent it's kernel module switch
+from blanking the screen during booting.
+I saw this problem during a boot, surmised the solution, and tested it.
+
+It is one of the benefits of knowing that the initramfs is more than a handful
+of thin vine while sinking into quick sand.
+It is like having a boulder to cling onto and to pull oneself onto.
+It is very solid, as solid as having a very useful chunk of the real
+root file system right there in memory.
+
+And while this does cost significant space on a dedicated /boot/
+The convenience is worth more than a sysinit with merely
+40G of moduiles, uClibc and busybox.
+That might seem like a significant compromise,
+but even more so from me a SA that enjoys playing with busybox and uClibc.
+In some sense booting using busybox and uClibc would be faster
+and perhaps less problematic as compared to using udev during sysinit.
+However, having something different for sysinit than is installed onto
+the root file system and used regularly
+is somewhat confusing and provides less convenience.
+At the very least uClibc replacement commands do not always
+support the same command line parameters as the GNU
+counterparts that they are intended to replace.
+Having the same familiar GNU utilities to use minimizes confusing.
+.
+Given how boxes have enough RAM to support using Sorcerer's large
+initramfs images
+the convenience is nice in that it enables Sorcerer to continue to
+provide modern conveniences
+while maintaining that familiar feeling and layout that SAs have
+enjoyed for decades.
+Sorcerer is open to this possibility because Sorcerer was late
+in providing a modular kernel and initramfs method for booting.
+Sorcerer with modular kernel and initramfs became available sometime
+around 2007 or 2008.
+Already at that time most computers had 256M or more of RAM installed.
+In contrast pre-compiled binary based distros going back to year 2000 and before
+that provided a method for booting a kernel with an initrd image
+had to severely limit the size of the initrd image in order to be booted
+on boxes with as little as 16M or 64M of RAM.
+There was a time when linux boxes were bootable and runable
+on as little as 4 megabytes of RAM,
+which was back in the days before a getty required 1M of RAM ore more to run.
+
+Everything was smaller in those days, especially the initrd image.
+However, many SAs could escape the inconvenience by compiling
+custom and somewhat monolithic kernels.
+Even some of the modular kernels had both file systems and
+support for either IDE or SCSI compiled directly into the kernel
+instead of being provided as modules on an initrd image.
+Such kernels tended to waste a bit of RAM while running
+in order to enjoy greater convenience for booting.
+
+However in contrast, the modern modular linux kernel
+on a modern box has the advantage of provinding
+convenient booting without wasting RAM for drivers
+that are not used when the kernel is running.
+The method of providing a nearly completely modular
+linux kernel enables for the kernel modules be
+stripped of unnecessary symbols to further reduce
+the size of RAM consumes after they are loaded.
+Consequently, a modular linux kernel might save
+RAM as opposed to a monolithic kernel,
+because in both cases only necessary drivers
+are loaded, however the modular kernel's
+drivers have been stripped.
+
+So the final question is,
+&quot;Is Sorcerer's larger initramfs images worthy of the space?&quot;
+The answer to that question is subjective.
+If a SA discovered a problem and fixed it without having to boot an
+Install/Rescue CD
+then the answer is that the additional space just justified it's existence then.
+However, in contrast some SAs that might prefer booting an Install/Rescue
+imagine to trouble-shoot or avoid a problem during booting of a box
+might expect that the space for the large initramfs images is not justified.
+There is not right or wrong about it.
+Mostly it is a matter of preference.
+
+Currently, there also exists the option to install a Rescue kernel and initramfs
+that is taken directly from a recently provided Install/Rescue image.
+This is installed in /boot/ and provides nearly as reliable an experience
+as a SA would have if booting from an Install/Rescue image.
+However, in the event that a booting problem is preventing lilo
+from correctly loading the kernel or correctly loading the initramfs image
+then such problems must be debugged by booting an Install/Rescue image.
+
+However, for problems that are not lilo related can be debugged
+with a convenience of studying exactly what is happening up to
+and during the problem while booting a thick rich initramfs.
+Having a useful initramfs maximizes the chances that skilled
+SAs will be able to spot the problem and circumvent or fix it.
+In contrast booting a rescue image instead can at best
+only circumvent a problem.
+However, a SA would be removed from being able to observe
+and try test cases involving the actual problem happening
+on recently generated initramfs images
+when using a rescue kernel and rescue initramfs as provided
+from an Install/Rescue CD.
+
+So in conclusion, savings of space and speed
+are not the solitary and most important concerns
+about an initramfs image.
+If that were so then the initramfs image would
+have little more than a Swiss army knife
+for booting and debugging.
+Instead it has close to a full workshop of tools
+for booting and debugging problems during sysinit.
+And consensus seems to support the idea
+that Sorcerer SAs prefer the full service treatment.
+And in contrast the fast booting can shave
+1 to 5 seconds off of the time required in order
+to load the initramfs image.
+However, in all other respects it boots nearly
+at the same speed.
+Consequently, when speed seems nearly the same
+and size is less than 2% of the fixed disk
+a minimalistic approach to booting seems less
+attractive than a full service fully loaded initramfs.
+
+Lastly, for those who might not know this...
+The content of the initramfs is deleted
+just a short while after it is no longer needed.
+The initramfs file system remains in memory,
+but it's contents are removed and thus it's
+overhead to remain in RAM is insignificant.
+
+Therefore, the Sorcerer boot method does
+require a lot of RAM initially
+and is slightly slow to load off of disk,
+however the final stage is having a very
+efficient kernel with modules loaded into RAM
+and almost no space going to waste.
+If a SA wants to regain a few kilobytes or
+maybe half a megabyte
+then the SA can also umount /etc/init.d/log.d/
+after booting completes.
+But overall Sorcerer makes good use of RAM
+and overall is that not important?
+A Sorcerer box spends less than 0.001% of it's uptime booting.
+So selecting a rich and satisfying boot while completely discarding
+unused components provides a lean use of memory that is
+idea for the 99.99% of the time that the box is up and running.
+Therefore, the large initramfs images and even
+the large 2G recommended for /boot/
+is not a significant waste of resources..
+It might just seem strange as compared to distros
+that have been providing initrd and initramfs images
+for booting since earlier days when boxes did
+not have a huge load out of installed RAM.
+
+The compromises made with Sorcerer are careful.
+At first they might seem strange as compared to other distros.
+However, Sorcerer SAs, are not copying the methods of other distros.
+They are free to perceive the costs and benefits differently, freshly
+and uniquely.
+Consequently, the selected compromise
+might contrast greatly with what other distros are doing.
+But being different is not necessarily bad.
+Compromises in Sorcerer tends to favor benefits.
+So when the situation becomes difficult
+the benefits start to look attractive.
+
+Sorry for the long explanation.
+Even with careful examination of /boot and initrmafs images
+some SAs might mis-perceive the Sorcerer method as bloat.
+Yet, from a modern perspective
+the initramfs that Sorcerer provides
+are a practical and useful size.
+Only when comparing to the installed RAM and
+available disk space of computers over a decade old
+can one gain the perspective that Sorcerer's use of
+/boot/ and initramfs space is excessive.
+
+If booting on a box with 128M of RAM installed
+then maybe a pre-compiled binary based distribution that is
+modern or somewhat obsolete might be best.
+But all one has to do is rip that stick of tiny slow RAM out
+and put in a 1G stick of RAM and then the box will probably
+become worthy of running Sorcerer.
+It is not an unreasonable compromise,
+because who would want to run xorg and firefox on a computer
+that only has 128M of RAM installed?
+I can hardly think of worse torture for a fixed disk than
+having a busy file system mounted with atimes enabled.
+Either method is sufficient killing a fixed disk.
+So buy the RAM and make the box worthy of Sorcerer. :)
+
+That is not merely my advise.
+That is exactly what I did to make an old pentium M laptop
+worthy of running Sorcerer.
+And I have no doubt that was much better than trying to make
+Sorcerer bootable on configurations with insufficient RAM
+to be worthy of running as a workstation or server.
+
+So even if the Sorcerer intiramfs image can be reduced
+to the 20M to 30M range the better question is, &quot;Why bother?&quot;
+If Sorcerer is to be booted on boxes with 256M of RAM of more installed,
+and probably 1G or more of RAM installed
+then why even try to confine ourselves to minimalistic initramfs images?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002011.html">[Sorcerer-admins] 2g /boot
+</A></li>
+	<LI>Next message: <A HREF="002013.html">[Sorcerer-admins] Was incommunicado for a while, but I am back.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2012">[ date ]</a>
+              <a href="thread.html#2012">[ thread ]</a>
+              <a href="subject.html#2012">[ subject ]</a>
+              <a href="author.html#2012">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

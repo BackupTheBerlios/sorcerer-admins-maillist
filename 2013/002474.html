@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] baresha512
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20baresha512&In-Reply-To=%3CCA%2BT4wDhutJf0Kk_xa3KM90fOR8BOBM2ZSEy9EKMEBZKd8tV-cw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002473.html">
+   <LINK REL="Next"  HREF="002475.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] baresha512</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20baresha512&In-Reply-To=%3CCA%2BT4wDhutJf0Kk_xa3KM90fOR8BOBM2ZSEy9EKMEBZKd8tV-cw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] baresha512">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Oct 28 20:30:28 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002473.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+        <LI>Next message: <A HREF="002475.html">[Sorcerer-admins] please forgive the downtime...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2474">[ date ]</a>
+              <a href="thread.html#2474">[ thread ]</a>
+              <a href="subject.html#2474">[ subject ]</a>
+              <a href="author.html#2474">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>By now root file systems should be good to go
+and have excellent integrity checking.
+Therefore, repeat &quot;Scan Fail&quot; should be over
+for the meanwhile.
+
+A few spells required modification
+and the scanning method required a tiny modification
+to allow for something previously unexpected.
+Some odd software projects will install a symbolic link
+that points to a file which is installed by a different software project.
+The method change solves that problem by using
+the value of the symbolic link rather than content
+from the file to which the symbolic link points.
+That change provides 100% boon and 0% bane.
+
+If a symbolic link points to a file owned by the same spell
+then file's content is being checked and also the correct value
+for the symbolic link is being checked.
+And if the file is not owned by the same spell
+which owns the symbolic link
+then change in content of the file will not change the value
+of the symbolic link.
+Finally, checking the value of a symbolic link requires digesting
+far fewer bytes than a typical file's content.
+Therefore, message digest generation speed slightly improves.
+
+baresha512 is the name of the C program I created
+and am distributing as part of the software project called
+dsppu or Data Shovel Pinnacle Performance Utilities.
+The odd name helps ensure first hits on google searches.  :)
+baresha512 opens and reads files using O_DIRECT thereby
+bypassing the kernel's cache which is excellent for integrity checking.
+It reads all the file names to process from standard input,
+which entirely omits any reason invoking baresha512 as a client of xargs.
+And finally, it links with openssl's excellent cryptographic library
+which generates sha512 message digests 3 times faster
+than sha512sum provided by coreutils.
+Therefore, less processing cycles are required by both sign and scan.
+
+Sorry for the rough transition.
+Unexpectedly the idea was more simple than the implementation.
+The idea is that every spell should have message digests
+per configuration file, and only one message digest that verifies
+the expected content for all other salient files owned by the spell.
+The massive reduction in the amount of message digests
+that appear in logs allows for smaller tracking logs.
+
+# find /aux/log/post -type f | wc -l
+1414
+
+# find /aux/log/post -type f -size -4k | wc -l
+1332
+
+That is from the test box.
+A vast majority of log files are less than 4K.
+Such small files can not fragment.
+They contain sufficient information to determine
+the installed spell, it's version, owned files,
+whether or not configuration are modified,
+and whether or not integrity owned files was compromised.
+
+I feel pleased with the evolution of post logs
+A typical root file system might have 560 installed spells.
+Tracking approximately 164000 installed files requires
+approximately 2600K.  That is about 16.2 bytes per file.
+Amazed?  It amazes me.
+
+Transitions to the current level of scanning and logging
+at first looked like security contracted out to the Keystone Cops.
+However, the final outcome is worthy of cheer rather than jeer.
+But with that said the implementation is intended to detect
+corruption on the mass storage device, corruption of the file system,
+and unintentional modification of files.
+
+It is not a security device.
+It can be intentionally and carefully compromised.
+Any type of intrusion detection system requires that
+the database of files used to detect intrusion to be stored
+either remotely on another computer or encrypted
+and requiring a pass phrase from a person
+before being able to verify file integrity or update the database.
+
+While an intrusion detection system can be easily implemented;
+it is software with a mission that differs from sorcery and Modern Magic.
+Therefore, such tasks should be delegated to third party software.
+The best reason for that is if the task of providing security
+is no the same on each Modern Magic root file system
+then that creates additional challenge for mitigating intrusion detection.
+
+That covers the current state of sorcery and Modern Magic.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131028/344711cf/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131028/344711cf/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002473.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+	<LI>Next message: <A HREF="002475.html">[Sorcerer-admins] please forgive the downtime...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2474">[ date ]</a>
+              <a href="thread.html#2474">[ thread ]</a>
+              <a href="subject.html#2474">[ subject ]</a>
+              <a href="author.html#2474">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

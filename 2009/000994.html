@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] ext4?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ext4%3F&In-Reply-To=%3C596b75860902130047q5a24c146wba02d0c033c10a1b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000993.html">
+   <LINK REL="Next"  HREF="000995.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] ext4?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ext4%3F&In-Reply-To=%3C596b75860902130047q5a24c146wba02d0c033c10a1b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] ext4?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Feb 13 09:47:35 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000993.html">[Sorcerer-admins] ext4?
+</A></li>
+        <LI>Next message: <A HREF="000995.html">[Sorcerer-admins] ext4?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#994">[ date ]</a>
+              <a href="thread.html#994">[ thread ]</a>
+              <a href="subject.html#994">[ subject ]</a>
+              <a href="author.html#994">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes, I already included support for EXT4 in the sorcerer menu driven installer.
+The changes were committed to svn recently.
+
+# grep EXT4 /root/.sorcery/grimoire/linux-modular.d/*
+
+And it will show that modular EXT4 support is enabled.
+
+I will soon be making some changes to the way linux config
+files are kept in linux-modular.d/ so that SA can more easily
+select an older version for linux-modular if they want and still
+have a proper config file for it.
+
+
+The next release of the Sorcerer I/R will have full EXT4 support.
+
+Assuming that an installed kernel is new enough
+ext4 support should be available already on boxes.
+ext3 filesystems can be migrated or converted to EXT4
+which might have disadvantages.
+The one disadvantage that I already know of is
+being unable to revert to EXT3 again.
+
+I have not tested EXT4 yet.
+I have merely read a little about it.
+However, Evert probably has a head start using EXT4.
+I hope the final implementation of EXT4 was compatible
+with the development versions otherwise some boxes
+may require new filesystems to upgrade to the newer kernel.
+
+The reason I did not include EXT4 support in the installer
+was to avoid SAs the inconvenience of the possibility of
+it breaking when the implementation was finalized.
+Doing a backup and restore of filesystems
+is not a fun day Sunday.
+
+
+
+On Thu, Feb 12, 2009 at 2:55 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> is there any support for ext4 on sorcerer?
+</I>&gt;<i> even modular kernel seems to not build it
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000993.html">[Sorcerer-admins] ext4?
+</A></li>
+	<LI>Next message: <A HREF="000995.html">[Sorcerer-admins] ext4?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#994">[ date ]</a>
+              <a href="thread.html#994">[ thread ]</a>
+              <a href="subject.html#994">[ subject ]</a>
+              <a href="author.html#994">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

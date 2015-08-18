@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The evolution of Sorcerer initramfs.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTinZK1OEFz4M1Y6cx_-zAZp3VAJ4aw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002162.html">
+   <LINK REL="Next"  HREF="002165.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The evolution of Sorcerer initramfs.</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTinZK1OEFz4M1Y6cx_-zAZp3VAJ4aw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The evolution of Sorcerer initramfs.">evorster at gmail.com
+       </A><BR>
+    <I>Fri May 20 07:41:42 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002162.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+        <LI>Next message: <A HREF="002165.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2163">[ date ]</a>
+              <a href="thread.html#2163">[ thread ]</a>
+              <a href="subject.html#2163">[ subject ]</a>
+              <a href="author.html#2163">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Heh...
+
+Just a bit later something destroyed /etc/init.d and /etc/rc.d
+
+Without those two directories rebooting becomes...  interesting. I
+still have no clue as to how that happened, and I pasted /etc from a
+week ago over the hole where my /etc used to be. It's not a fix I am
+too fond of, so now I am in the process of another rebuild to rebuild
+the config files for everything that's installed now. Once that
+succeeds I'll back up this file system.
+
+Thanks for the tips. Next time I'll use the shutdown method to kill
+all the running processes, and then be able to do the unmounting of
+root.
+
+On Solaris machines you can switch to runlevel 1, and it does pretty
+much the same. Not that I get much time to play in that runlevel, our
+production machines are usually very busy.
+
+Don't you think it might be advantageous to have an init 7 command to
+drop a user into the keep? Or maybe use init 1 to drop one back into
+the keep without the shutdown trick.
+
+Thanks again for the tips...
+
+
+-Evert-
+
+On Fri, May 20, 2011 at 1:55 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> That was close.
+</I>&gt;<i> If the box is switched to runlevel 7
+</I>&gt;<i> then all getty except the getty running on the keep terminate.
+</I>&gt;<i> At that point the SA can use the killall command in
+</I>&gt;<i> order to terminate all processes that are not in series
+</I>&gt;<i> with their shell.
+</I>&gt;<i> After that then all the binds on /media/root/ can be unmounted.
+</I>&gt;<i> Then /media/root/ can be unmounted effortlessly.
+</I>&gt;<i>
+</I>&gt;<i> I tested that previously.
+</I>&gt;<i> It was the reason for the addition of runlevel 7.
+</I>&gt;<i> Otherwise the gettys running on the root filesystem
+</I>&gt;<i> would pin it down.
+</I>&gt;<i> So yes, that was very close.
+</I>&gt;<i>
+</I>&gt;<i> Another method for entrance into the keep
+</I>&gt;<i> that probably accomplishes all of the above
+</I>&gt;<i> is to do a
+</I>&gt;<i> # shutdown -r now
+</I>&gt;<i> Then, during the final countdown press &quot;s&quot; for sulogin
+</I>&gt;<i> The sulogin would put the SA inside the keep
+</I>&gt;<i> and since the only command after finale to run is reboot or halt
+</I>&gt;<i> then /media/root should already be cleanly unmounted.
+</I>&gt;<i>
+</I>&gt;<i> Switching to runlevel 7 is my preference.
+</I>&gt;<i> Using shutdown or reboot runlevels
+</I>&gt;<i> has different benefits and costs. &#160;:)
+</I>&gt;<i>
+</I>&gt;<i> The keep can do that which we want;
+</I>&gt;<i> yet not without some practice.
+</I>&gt;<i> In the above scenario the &quot;lsof&quot; command might prove useful
+</I>&gt;<i> for seeing what processes are running that still have files
+</I>&gt;<i> open on /media/root/ or filesystems bound or mounted within.
+</I>&gt;<i> Of course killing gettys does not work.
+</I>&gt;<i> Therefore, the SA must know about
+</I>&gt;<i> or decide to check /etc/inittab
+</I>&gt;<i> in order to learn about runlevel 7.
+</I>&gt;<i>
+</I>&gt;<i> &quot;In the keep&quot; training on a test box
+</I>&gt;<i> prepares SAs for handling tense situations.
+</I>&gt;<i> Wielding the power of the keep
+</I>&gt;<i> is like the knowing how to cut with a sword.
+</I>&gt;<i> If one does not learn in advance
+</I>&gt;<i> then learning during combat may be too late a time
+</I>&gt;<i> to discover one's cutting technique is insufficient.
+</I>&gt;<i> While a SA expects the keep provides a root shell prompt
+</I>&gt;<i> which is the same as any root prompt;
+</I>&gt;<i> even so a bit of practice within the keep helps hone technique.
+</I>&gt;<i>
+</I>&gt;<i> The Sorcerer's keep is the ultimate vantage
+</I>&gt;<i> for battling bugs on the root file system.
+</I>&gt;<i> As the general of a box,
+</I>&gt;<i> and the commander of the keep,
+</I>&gt;<i> the SAs duty is to crush the bugs' siege
+</I>&gt;<i> upon the real root file system.
+</I>&gt;<i> To not know how to effectively bark commands
+</I>&gt;<i> from the keep is to allow one's troops to be routed
+</I>&gt;<i> and to have one's castle fall to the onslaught of bugs.
+</I>&gt;<i>
+</I>&gt;<i> A skilled SA with modest training in the keep should be
+</I>&gt;<i> able to solve just about any problem without rebooting,
+</I>&gt;<i> except kernel bugs and serious hardware problems.
+</I>&gt;<i>
+</I>&gt;<i> And the keep can sometimes be a better option than rebooting.
+</I>&gt;<i> /media/root can remain mounted until un-mounting is desirable.
+</I>&gt;<i> That can be useful when /media/root might not be expected
+</I>&gt;<i> to be remountable due to significant errors.
+</I>&gt;<i> And rebooting can be delayed until the SA is certain that
+</I>&gt;<i> the real root filesystem, lilo, and the initramfs are passable.
+</I>&gt;<i>
+</I>&gt;<i> So in summary the keep is like a perfectly sharp katana.
+</I>&gt;<i> In that respect the keep is is an excellent weapon
+</I>&gt;<i> for waging war with bugs,
+</I>&gt;<i> yet it is also a useless weapon
+</I>&gt;<i> within hands that have yet to train with it.
+</I>&gt;<i>
+</I>&gt;<i> I offer this advise not to rebuke anyone,
+</I>&gt;<i> but rather to encourage SAs to periodically
+</I>&gt;<i> invest 5 to 15 minutes of self training
+</I>&gt;<i> to familiarize with new functionality of Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer is a distribution for senior level SAs.
+</I>&gt;<i> That much said alone implies that the
+</I>&gt;<i> the ability to eloquently wield awesome Sorcerer powers
+</I>&gt;<i> goes only to SAs that make themselves worthy.
+</I>&gt;<i> I know Sorcerer SAs are worthy.
+</I>&gt;<i> Otherwise sharing this distro would be pointless.
+</I>&gt;<i> So all that is required is a bit of fun-time self training.
+</I>&gt;<i> And then nearly all tasks will solve nearly effortlessly.
+</I>&gt;<i>
+</I>&gt;<i> Self-training, making backups, and a dev/testing box
+</I>&gt;<i> on every production LAN are necessary evils
+</I>&gt;<i> for keeping prime uptime.
+</I>&gt;<i>
+</I>&gt;<i> We owe Evert thanks for sharing the experience.
+</I>&gt;<i> From his humility and compassion
+</I>&gt;<i> we receive an example of how wielding power from the keep
+</I>&gt;<i> is proportional to the SAs experience within the keep.
+</I>&gt;<i> There is no shame in Evert's experience.
+</I>&gt;<i> The Sorcerer's keep is very new.
+</I>&gt;<i> Many SAs have probably yet to even try it.
+</I>&gt;<i> Hopefully, sharing this experience imparts motivation
+</I>&gt;<i> to master the mysteries of the keep.
+</I>&gt;<i>
+</I>&gt;<i> As the prime SA of Sorcerer
+</I>&gt;<i> I wish that I could be able to magically loan
+</I>&gt;<i> my lore to SAs during their times of need.
+</I>&gt;<i> But as we already know
+</I>&gt;<i> modern magic does not work that way.
+</I>&gt;<i> The keep is not merely the ultimate vantage for battling bugs.
+</I>&gt;<i> The keep's existence is a gift to Sorcerer SAs
+</I>&gt;<i> that demonstrates my faith that all Sorcerer SAs are worthy.
+</I>&gt;<i> Therefore, please train with the tools and become powerful SAs.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, May 19, 2011 at 7:03 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hi there...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ah, I flattened a multilib box into a pure 64 bit install by accident.
+</I>&gt;&gt;<i> So, in wanting to go back to Multilib I wanted to just mount my root
+</I>&gt;&gt;<i> partition somewhere, wipe it, and restore from an earlier backup that
+</I>&gt;&gt;<i> was known good.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I stopped most processes, and then Alt-F7 into my &quot;keep&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Unfortunately, /media was read-only, I did not have enough time to
+</I>&gt;&gt;<i> mess with it, and I was not brave enough to rm -r * in the mounted
+</I>&gt;&gt;<i> directory.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, I whipped out the Sorcerer I/R and once booted, just mkfs.ext4 on
+</I>&gt;&gt;<i> the affected partition, mount, restore, lilo, reboot and I was back up
+</I>&gt;&gt;<i> and running in about 20 minutes.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This would be a killer cool feature if an SA can restore ROOT without
+</I>&gt;&gt;<i> rebooting.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> :D
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I was so close, too. :(
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, May 19, 2011 at 3:49 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> I recently gave a nickname to the Sorcerer's initramfs.
+</I>&gt;&gt;&gt;<i> I call it the keep of the Sorcerer's castle.
+</I>&gt;&gt;&gt;<i> The name is appropriate in many ways.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> However, thus far the potential of the keep is mostly untapped.
+</I>&gt;&gt;&gt;<i> After booting completes only /sbin/init and /sbin/agetty continue
+</I>&gt;&gt;&gt;<i> running from the keep.
+</I>&gt;&gt;&gt;<i> I was discussing with Evert that perhaps udev should remain running on the keep
+</I>&gt;&gt;&gt;<i> and that also the system logger program should run from the keep.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Processes running in the keep have both benefits and drawbacks.
+</I>&gt;&gt;&gt;<i> First, the process is not likely to be reading or writing to files that exist
+</I>&gt;&gt;&gt;<i> on a filesystem attached to a physical device.
+</I>&gt;&gt;&gt;<i> Therefore, processes running from the keep
+</I>&gt;&gt;&gt;<i> are unlikely to become zombies or freeze
+</I>&gt;&gt;&gt;<i> in the event of a serious disk or serious file system error.
+</I>&gt;&gt;&gt;<i> However, if the system logger runs from the keep
+</I>&gt;&gt;&gt;<i> then it would write files to a tmpfs that would also be bound
+</I>&gt;&gt;&gt;<i> somewhere in /var/log/ so that it can be viewed from both places.
+</I>&gt;&gt;&gt;<i> No inconvenience with that.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The first and most obvious drawback is that the system logs eat swap.
+</I>&gt;&gt;&gt;<i> A box that keeps a years worth of system logs,
+</I>&gt;&gt;&gt;<i> without rebooting, might eat a lot of swap.
+</I>&gt;&gt;&gt;<i> Apparently, that is not a problem with metalog.
+</I>&gt;&gt;&gt;<i> Also if a box reboots or shutdown unexpectedly rather
+</I>&gt;&gt;&gt;<i> than using the proper method
+</I>&gt;&gt;&gt;<i> then the content of the logs would be lost.
+</I>&gt;&gt;&gt;<i> The most obvious method to avoid that is
+</I>&gt;&gt;&gt;<i> to have the system logger also output over the network
+</I>&gt;&gt;&gt;<i> to a logger listening on a different box.
+</I>&gt;&gt;&gt;<i> And at least 9 out of 10 times when a box loses power suddenly
+</I>&gt;&gt;&gt;<i> there is no clue in the on disk system log as to what happened.
+</I>&gt;&gt;&gt;<i> Lost system logs could be annoying for other reasons,
+</I>&gt;&gt;&gt;<i> but on a box operating perfectly normal
+</I>&gt;&gt;&gt;<i> then a system log would not be lost.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Switching udev to running from keep I have mostly decided upon.
+</I>&gt;&gt;&gt;<i> Whether or not to switch system loggers is yet undecided.
+</I>&gt;&gt;&gt;<i> I pose the question on the list in order to gather insight from Sorcerer SAs.
+</I>&gt;&gt;&gt;<i> Some SAs might know reasons for why that change would be very undesirable.
+</I>&gt;&gt;&gt;<i> In contrast, I prefer a system log that runs
+</I>&gt;&gt;&gt;<i> no-matter-what-except-sudden-power-loss. &#160;:)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Since Sorcerer boxes use the keep both during boot and shutdown
+</I>&gt;&gt;&gt;<i> we should also consider what process we want
+</I>&gt;&gt;&gt;<i> to start and continue running on the keep.
+</I>&gt;&gt;&gt;<i> For example, the keep is currently inaccessible when we ssh into a box.
+</I>&gt;&gt;&gt;<i> But what if sshing into the box is not working?
+</I>&gt;&gt;&gt;<i> Might we want to be able to ssh into the keep?
+</I>&gt;&gt;&gt;<i> So should sshd also be running on the keep
+</I>&gt;&gt;&gt;<i> but accessible on a different port?
+</I>&gt;&gt;&gt;<i> Maybe TCP port 30 since it lacks an assignment in /etc/services ?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> No matter what new bugs may lay siege
+</I>&gt;&gt;&gt;<i> to a box when installed software is updated;
+</I>&gt;&gt;&gt;<i> the keep remains as potential last point of retreat.
+</I>&gt;&gt;&gt;<i> It is a zone of safety from which problems
+</I>&gt;&gt;&gt;<i> can be carefully examined and solved
+</I>&gt;&gt;&gt;<i> without being mired in the battlefield on /media/root/
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So how should we fortify the keep?
+</I>&gt;&gt;&gt;<i> Besides ssh and scp
+</I>&gt;&gt;&gt;<i> what other useful programs and libraries
+</I>&gt;&gt;&gt;<i> should be moved into the keep?
+</I>&gt;&gt;&gt;<i> What processes should be started in the keep and remain running?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Since the initramfs is being retained as the central &quot;keep&quot; of our
+</I>&gt;&gt;&gt;<i> Sorcerer's castle
+</I>&gt;&gt;&gt;<i> we should grown accustomed to the idea that it is a valid file system
+</I>&gt;&gt;&gt;<i> for running
+</I>&gt;&gt;&gt;<i> processes, daemons, and services.
+</I>&gt;&gt;&gt;<i> What benefits most from running inside the keep?
+</I>&gt;&gt;&gt;<i> What deserves the honor?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks for making a moment to consider it.
+</I>&gt;&gt;&gt;<i> No urgent requirement to rack one's brain.
+</I>&gt;&gt;&gt;<i> For over a decade the initrd and initramfs was considered
+</I>&gt;&gt;&gt;<i> a filesystem to be discarded after booting.
+</I>&gt;&gt;&gt;<i> That habit of thought is not easily discarded.
+</I>&gt;&gt;&gt;<i> Yet if something useful pops into mind
+</I>&gt;&gt;&gt;<i> then please share it.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+-Evert-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002162.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+	<LI>Next message: <A HREF="002165.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2163">[ date ]</a>
+              <a href="thread.html#2163">[ thread ]</a>
+              <a href="subject.html#2163">[ subject ]</a>
+              <a href="author.html#2163">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

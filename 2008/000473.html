@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] httpd installs to /usr/local/ ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20httpd%20installs%20to%20/usr/local/%20%3F&In-Reply-To=%3C596b75860805290632s6dab840esd9050779e8deccf3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000472.html">
+   <LINK REL="Next"  HREF="000476.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] httpd installs to /usr/local/ ?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20httpd%20installs%20to%20/usr/local/%20%3F&In-Reply-To=%3C596b75860805290632s6dab840esd9050779e8deccf3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] httpd installs to /usr/local/ ?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 29 15:32:31 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000472.html">[Sorcerer-admins] httpd installs to /usr/local/ ?
+</A></li>
+        <LI>Next message: <A HREF="000476.html">[Sorcerer-admins] CPIO Archive Append...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#473">[ date ]</a>
+              <a href="thread.html#473">[ thread ]</a>
+              <a href="subject.html#473">[ subject ]</a>
+              <a href="author.html#473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry about that.
+I was trying to correct a problem
+and did but maybe caused this problem.
+subversion was not compiling.
+It was complaining that it could not find layout Sorcerer.
+Either httpd is incorrect or subversion is incorrect.
+They aught not install and use apr.
+I will try to fix it today.
+However, I did not anticipate it would install in /usr/local
+because after the last changes I made to httpd I recompiled it.
+And it installed in /usr not /usr/local
+
+
+
+On Thu, May 29, 2008 at 3:26 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> I just updated httpd and i am now wondering why it seems to installs itself
+</I>&gt;<i> to under /usr/local/? Anyone else noticed this problem?
+</I>&gt;<i>
+</I>&gt;<i> ------------------8&lt;-------------------
+</I>&gt;<i> /etc/init.d/httpd
+</I>&gt;<i> /etc/sorcery/log/compile/httpd
+</I>&gt;<i> /etc/sorcery/log/compile/httpd.gz
+</I>&gt;<i> /etc/sorcery/log/elf/httpd
+</I>&gt;<i> /etc/sorcery/log/id/httpd
+</I>&gt;<i> /etc/sorcery/log/install/httpd
+</I>&gt;<i> /etc/sorcery/log/la/httpd
+</I>&gt;<i> /etc/sorcery/log/md5sum/httpd.gz
+</I>&gt;<i> /etc/sorcery/log/snap/httpd.gz
+</I>&gt;<i> /etc/sorcery/log/version/httpd
+</I>&gt;<i> /usr
+</I>&gt;<i> /usr/local/apache2
+</I>&gt;<i> /usr/local/apache2/bin
+</I>&gt;<i> /usr/local/apache2/bin/ab
+</I>&gt;<i> /usr/local/apache2/bin/apachectl
+</I>&gt;<i> /usr/local/apache2/bin/apr-1-config
+</I>&gt;<i> /usr/local/apache2/bin/apu-1-config
+</I>&gt;<i> /usr/local/apache2/bin/apxs
+</I>&gt;<i> /usr/local/apache2/bin/checkgid
+</I>&gt;<i> /usr/local/apache2/bin/dbmmanage
+</I>&gt;<i> /usr/local/apache2/bin/envvars
+</I>&gt;<i> /usr/local/apache2/bin/envvars-std
+</I>&gt;<i>
+</I>&gt;<i> .... and so on
+</I>&gt;<i>
+</I>&gt;<i> /usr/local/apache2/modules/mod_ssl.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_status.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_substitute.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_unique_id.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_userdir.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_usertrack.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_version.so
+</I>&gt;<i> /usr/local/apache2/modules/mod_vhost_alias.so
+</I>&gt;<i> /usr/share
+</I>&gt;<i> /usr/share/httpd
+</I>&gt;<i> /usr/share/httpd/cgi-bin.ssl
+</I>&gt;<i> /usr/share/httpd/htdocs.ssl
+</I>&gt;<i> /usr/share/httpd/logs
+</I>&gt;<i> /var
+</I>&gt;<i> /var/lib
+</I>&gt;<i> /var/lib/httpd
+</I>&gt;<i> /var/lib/httpd/run
+</I>&gt;<i> ------------------8&lt;-------------------
+</I>&gt;<i>
+</I>&gt;<i> Compile log
+</I>&gt;<i> ------------------8&lt;-------------------
+</I>&gt;<i> Compile log for httpd 2.2.8
+</I>&gt;<i> Built with sorcery implosion-20080526-0 and gcc 4.3.0
+</I>&gt;<i> Built on Thu May 29 13:16:59 EEST 2008
+</I>&gt;<i> cp: cannot stat `ssl-std.conf': No such file or directory
+</I>&gt;<i> sed: can't read ssl-std.conf.b4: No such file or directory
+</I>&gt;<i> found apr source: srclib/apr
+</I>&gt;<i> found apr-util source: srclib/apr-util
+</I>&gt;<i> rebuilding srclib/apr/configure
+</I>&gt;<i> buildconf: checking installation...
+</I>&gt;<i> buildconf: python version 2.5.1 (ok)
+</I>&gt;<i> buildconf: autoconf version 2.62 (ok)
+</I>&gt;<i> buildconf: libtool version 1.5.26 (ok)
+</I>&gt;<i> Copying libtool helper files ...
+</I>&gt;<i> buildconf: Using libtool.m4 at /opt/libtool/share/aclocal/libtool.m4.
+</I>&gt;<i> Creating include/arch/unix/apr_private.h.in ...
+</I>&gt;<i> configure.in:143: warning: AC_COMPILE_IFELSE was called before
+</I>&gt;<i> AC_USE_SYSTEM_EXTENSIONS
+</I>&gt;<i> ../../lib/autoconf/specific.m4:385: AC_USE_SYSTEM_EXTENSIONS is expanded
+</I>&gt;<i> from...
+</I>&gt;<i> ../../lib/autoconf/specific.m4:456: AC_MINIX is expanded from...
+</I>&gt;<i> configure.in:143: the top level
+</I>&gt;<i> configure.in:143: warning: AC_RUN_IFELSE was called before
+</I>&gt;<i> AC_USE_SYSTEM_EXTENSIONS
+</I>&gt;<i> Creating configure ...
+</I>&gt;<i> configure.in:143: warning: AC_COMPILE_IFELSE was called before
+</I>&gt;<i> AC_USE_SYSTEM_EXTENSIONS
+</I>&gt;<i> ../../lib/autoconf/specific.m4:385: AC_USE_SYSTEM_EXTENSIONS is expanded
+</I>&gt;<i> from...
+</I>&gt;<i> ../../lib/autoconf/specific.m4:456: AC_MINIX is expanded from...
+</I>&gt;<i> configure.in:143: the top level
+</I>&gt;<i> configure.in:143: warning: AC_RUN_IFELSE was called before
+</I>&gt;<i> AC_USE_SYSTEM_EXTENSIONS
+</I>&gt;<i> Generating 'make' outputs ...
+</I>&gt;<i> rebuilding rpm spec file
+</I>&gt;<i> rebuilding srclib/apr-util/configure
+</I>&gt;<i>
+</I>&gt;<i> Looking for apr source in /usr/src/sorcery/httpd/httpd-2.2.8/srclib/apr
+</I>&gt;<i> Creating include/private/apu_config.h ...
+</I>&gt;<i> Creating configure ...
+</I>&gt;<i> Generating 'make' outputs ...
+</I>&gt;<i>
+</I>&gt;<i> ... etc
+</I>&gt;<i> ------------------8&lt;-------------------
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>   Pekka Panula, Net Servant Oy - A Sofor company
+</I>&gt;<i>   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000472.html">[Sorcerer-admins] httpd installs to /usr/local/ ?
+</A></li>
+	<LI>Next message: <A HREF="000476.html">[Sorcerer-admins] CPIO Archive Append...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#473">[ date ]</a>
+              <a href="thread.html#473">[ thread ]</a>
+              <a href="subject.html#473">[ subject ]</a>
+              <a href="author.html#473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C27f41a930905090938u3ea555d0la41448be50048e12%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001091.html">
+   <LINK REL="Next"  HREF="001095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C27f41a930905090938u3ea555d0la41448be50048e12%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">evorster at gmail.com
+       </A><BR>
+    <I>Sat May  9 18:38:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001091.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001095.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1092">[ date ]</a>
+              <a href="thread.html#1092">[ thread ]</a>
+              <a href="subject.html#1092">[ subject ]</a>
+              <a href="author.html#1092">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+Am I right in assuming that statically linked programs can also never suffer
+from ELF failure?
+
+I would be willing to do a test on a fully loaded system in a few weeks when
+I get back home to my testing station back home.
+
+I am particularly interested in what the overall size increase will be.
+If it's only a gig or so for a fully installed machine the speed and
+stability improvements might make it worthwhile.
+It might even not be so bad to link with glibc. I would certainly like to
+give it a go...
+
+I don't particularly care for different languages to my own... besides,
+since Sorcerer is compiled from source all the programs will have the
+language preference of the SA in there already.
+
+I am also curious about the Debian moving their distro over to eglibc (
+mainly because those maintainers are actually willing to receive patches )
+
+Bye....
+
+-Evert-
+
+
+
+
+On Sat, May 9, 2009 at 3:20 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Recently, I was thinking that executables can be categorized in 3 ways.
+</I>&gt;<i> 1. Those that exist but are never run.
+</I>&gt;<i> 2. Those that exist and are run sometimes.
+</I>&gt;<i> 3. Those that exist and are run repeatedly.
+</I>&gt;<i>
+</I>&gt;<i> However, the categories are not a perfect fit for programs.
+</I>&gt;<i> /bin/sed for example we normally think of as being category 1.
+</I>&gt;<i> Yet libtool runs /bin/sed repeatedly.
+</I>&gt;<i> gcc is definitely a category 3 program, because during compilation
+</I>&gt;<i> of software make invokes gcc repeatedly, usually each time an object
+</I>&gt;<i> file is created.
+</I>&gt;<i>
+</I>&gt;<i> I am curious about how to make category 3 programs,
+</I>&gt;<i> those which are run repeatedly, run faster.
+</I>&gt;<i> Optimization is one possibility.
+</I>&gt;<i> However, -O3 makes almost no difference for a program that runs for a
+</I>&gt;<i> short while.
+</I>&gt;<i> Instead static linking will reduce the amount of time required to
+</I>&gt;<i> start those programs.
+</I>&gt;<i> However, static linking has two obvious costs.
+</I>&gt;<i> Statically linked executables require more disk space
+</I>&gt;<i> and they do not provide native language translation.
+</I>&gt;<i>
+</I>&gt;<i> How important is language translation for gcc and sed error messages?
+</I>&gt;<i> Is it okay to have a development environment that is almost entirely in
+</I>&gt;<i> English?
+</I>&gt;<i> Afterall, sorcery does not have decent language translations.
+</I>&gt;<i> User programs and desktop environments and text editors and such
+</I>&gt;<i> would still have native language translation where it is already provided.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Before someone objects to the huge size difference for static linking,
+</I>&gt;<i> I may have a solution for that.
+</I>&gt;<i> By static linking with uClibc instead of glibc
+</I>&gt;<i> the size of executables that are statically linked with libc.a
+</I>&gt;<i> can be reasonable.
+</I>&gt;<i>
+</I>&gt;<i> I was playing with that recently and wrote a hello.c program that uses
+</I>&gt;<i> printf.
+</I>&gt;<i> Here is the size of the executable:
+</I>&gt;<i> glibc dynamic linked 5.3K
+</I>&gt;<i> uClibc static linked 13K
+</I>&gt;<i> glibc static linked 608K
+</I>&gt;<i>
+</I>&gt;<i> Yes statically linked with uClibc's libc.a is larger than glibc
+</I>&gt;<i> dynamically linked.
+</I>&gt;<i> But the size difference is reasonable considering that the statically
+</I>&gt;<i> linked
+</I>&gt;<i> executable loads even faster than a dynamically linked ELF with prelinking.
+</I>&gt;<i> As we remember pre-linking was a mixed boon since it wasted address space,
+</I>&gt;<i> but more important modified previously installed ELF libraries and thus
+</I>&gt;<i> changing the md5sum signatures for previously installed software.
+</I>&gt;<i> There has not even been a new release of prelink since the start of 2006.
+</I>&gt;<i>
+</I>&gt;<i> Finally have some speed tests on the pentium 3.
+</I>&gt;<i>
+</I>&gt;<i> 1000 invocations:
+</I>&gt;<i>
+</I>&gt;<i> 4.7s with uClibc static
+</I>&gt;<i> 6.3s with glibc ELF
+</I>&gt;<i> 5.1s with glibc static
+</I>&gt;<i>
+</I>&gt;<i> Naturally, I have the output piped to /dev/null for the test.
+</I>&gt;<i> And as we can see a very simple executable statically linked with
+</I>&gt;<i> uClibc starts faster.
+</I>&gt;<i> Also in the dynamically linked version
+</I>&gt;<i> there are not that many symbols to resolve
+</I>&gt;<i> and link since it is merely a program that invokes printf.
+</I>&gt;<i> Consequently, the time required for dynamic linking will be much greater
+</I>&gt;<i> for more complex programs that use many libc functions.
+</I>&gt;<i>
+</I>&gt;<i> Opinions please?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090509/1c1a789d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090509/1c1a789d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001091.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001095.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1092">[ date ]</a>
+              <a href="thread.html#1092">[ thread ]</a>
+              <a href="subject.html#1092">[ subject ]</a>
+              <a href="author.html#1092">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] openssh changes that can effect /etc/ssh/
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20changes%20that%20can%20effect%20/etc/ssh/&In-Reply-To=%3C596b75860805300925l63e1a0d9t5a1b0c7c57d7b531%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000481.html">
+   <LINK REL="Next"  HREF="000483.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] openssh changes that can effect /etc/ssh/</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20changes%20that%20can%20effect%20/etc/ssh/&In-Reply-To=%3C596b75860805300925l63e1a0d9t5a1b0c7c57d7b531%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] openssh changes that can effect /etc/ssh/">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 30 18:25:25 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000481.html">[Sorcerer-admins] Image Building success!
+</A></li>
+        <LI>Next message: <A HREF="000483.html">[Sorcerer-admins] missing dependancies?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#482">[ date ]</a>
+              <a href="thread.html#482">[ thread ]</a>
+              <a href="subject.html#482">[ subject ]</a>
+              <a href="author.html#482">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The openssh spell has finally completed some changes that
+I should have made years ago.
+
+1. Host keys are no longer tracked as part of the installed openssh.
+I apologize if this change causes the host keys to change on deployed boxes
+when openssh next updates.
+
+2. /etc/init.d/sshd only starts a server if /etc/ssh/sshd_config exists.
+
+3. /etc/init.d/ssh-keygen only checks host keys if /etc/ssh/sshd_config exists.
+
+4. /etc/init.d/ssh-keygen is run before /etc/init.d/sshd during
+runlevel 2 3 4 5 start
+
+5. If host key files do not exist then /etc/init.d/ssh-keygen generates them.
+
+
+These changes have the following benefits:
+
+1. SAs are no longer asked if they want /etc/init.d/sshd to install
+mode 0700 or mode 0600.
+Merely copy or move /etc/ssh/sshd_config.default to /etc/ssh/sshd_config
+With that change a box will be able to start sshd during boot.
+
+2. With the host keys no longer tracked each newly deployed Sorcerer box
+will receive their own unique host keys without the SA having to go through
+the trouble of generating them.
+
+3. Host keys are not stored in the initramfs and are therefore more
+difficult for
+someone to steal if the box has an encrypted / filesystem.
+
+What might inconvenience some SAs
+in the short term will become a boon in the long run.
+It is yet another of example of one step backward to go two step forwards.
+To be certain that old host keys
+are not lost then I recommend:
+# scp -a /etc/ssh /etc/ssh.old
+
+Changing host keys once a year is not entirely a bad idea.  :)
+Be sure to let users know to remove stale host keys from
+~/.ssh/known_hosts in order to login to boxes with new host keys.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000481.html">[Sorcerer-admins] Image Building success!
+</A></li>
+	<LI>Next message: <A HREF="000483.html">[Sorcerer-admins] missing dependancies?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#482">[ date ]</a>
+              <a href="thread.html#482">[ thread ]</a>
+              <a href="subject.html#482">[ subject ]</a>
+              <a href="author.html#482">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

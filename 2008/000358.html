@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New year same problems :)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C8596d02a0801140856j26068df9paba82365921cd952%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000353.html">
+   <LINK REL="Next"  HREF="000352.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New year same problems :)</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C8596d02a0801140856j26068df9paba82365921cd952%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New year same problems :)">d3ck0r at gmail.com
+       </A><BR>
+    <I>Mon Jan 14 17:56:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000353.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+        <LI>Next message: <A HREF="000352.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#358">[ date ]</a>
+              <a href="thread.html#358">[ thread ]</a>
+              <a href="subject.html#358">[ subject ]</a>
+              <a href="author.html#358">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Well... actually it hangs when doing it via modpobe too.. udev
+apparently does the same sort of thing - which is apparent from 'ps
+ax' on a hung system.  (starting /bin/sh during the udev script before
+udevsettle).... which is sorta why I went looking to see if I could
+find the sort of thing it was referencing for driver IDs.
+
+I've been pull off the project for the time being :)
+
+I suspect it's an issue with ATI hard drive chipset module load - as
+opposed to having it compiled in.  but then again - the I/R CD boots
+and runs okay.
+
+
+
+On Jan 10, 2008 11:53 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Jan 10, 2008 4:25 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Okay , having investigate this some more I find that there are
+</I>&gt;<i> &gt; problems with ATI chipset SATA.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Gentoo had problems.
+</I>&gt;<i> &gt; Sidux live CD
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; they all share a common factor, AHCI and ATI and piix4 sort of notations.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; There's some sort of DMA conflict.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; pretty much everything loads, unless it's a disc controller!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; A few things left to try out 'pci=nomsi' 'hda=noprobe' 'hda=none' boot
+</I>&gt;<i> &gt; parameters.....
+</I>&gt;<i>
+</I>&gt;<i> &gt; I found /sys/bus/pci/devices/*/modalias
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; which I can feed to modprobe by hand
+</I>&gt;<i>
+</I>&gt;<i> That is interesting.
+</I>&gt;<i> I can add that to the modprobe script.
+</I>&gt;<i> modprobe will now execute in sysinit before udev
+</I>&gt;<i> That might fix the udev hang problem?
+</I>&gt;<i> Fascinating.
+</I>&gt;<i>
+</I>&gt;<i> Changes committed to svn.
+</I>&gt;<i> Thanks for researching the problem, Jim Decker.
+</I>&gt;<i> Excellent results.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000353.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+	<LI>Next message: <A HREF="000352.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#358">[ date ]</a>
+              <a href="thread.html#358">[ thread ]</a>
+              <a href="subject.html#358">[ subject ]</a>
+              <a href="author.html#358">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

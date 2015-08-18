@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more improved init-scripts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20improved%20init-scripts&In-Reply-To=%3CCAER78vSoF_AAnRpgB065Gz_7RJ1_e-Sh91qMA5KRyNA02Y3f3Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002234.html">
+   <LINK REL="Next"  HREF="002240.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more improved init-scripts</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20improved%20init-scripts&In-Reply-To=%3CCAER78vSoF_AAnRpgB065Gz_7RJ1_e-Sh91qMA5KRyNA02Y3f3Q%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more improved init-scripts">evorster at gmail.com
+       </A><BR>
+    <I>Thu Aug  4 06:27:59 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002234.html">[Sorcerer-admins] more improved init-scripts
+</A></li>
+        <LI>Next message: <A HREF="002240.html">[Sorcerer-admins] more improved init-scripts.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2236">[ date ]</a>
+              <a href="thread.html#2236">[ thread ]</a>
+              <a href="subject.html#2236">[ subject ]</a>
+              <a href="author.html#2236">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah...
+
+btrfs still does not support a swapfile...
+
+It's annoying, as that is the only thing standing between me and
+booting from a disk with no partition table. :)
+
+Anyways, good progress on the init-scripts. They have not seen so much
+attention in a long while. I have to say that I am impressed by how
+little red I see these days when I boot my laptop. :)
+
+-Evert-
+
+On 3 August 2011 16:34, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Remember the useful documentation in
+</I>&gt;<i> /etc/fstab that describes how to make a swap file?
+</I>&gt;<i> I am removing it.
+</I>&gt;<i> Muhahaha.
+</I>&gt;<i> Besides SAs already know the fastest way to create a swap file.
+</I>&gt;<i> Using dd to fill out a file, yes?
+</I>&gt;<i> No, that is the old method.
+</I>&gt;<i>
+</I>&gt;<i> Today's fun init-script improvements are:
+</I>&gt;<i>
+</I>&gt;<i> /etc/init.d/loglevel
+</I>&gt;<i> /etc/init.d/swap
+</I>&gt;<i>
+</I>&gt;<i> The loglevel has been configurable for a considerable time.
+</I>&gt;<i> But it involved editing /etc/init.d./conf.d/loglevel
+</I>&gt;<i> Now instead the init-script provides a dialog
+</I>&gt;<i> that explains each log level and allows the SA to select
+</I>&gt;<i> the default loglevel for printing kernel messages to console.
+</I>&gt;<i>
+</I>&gt;<i> # /etc/init.d/swap
+</I>&gt;<i> Usage: /etc/init.d/swap {start|stop|configure|status}
+</I>&gt;<i>
+</I>&gt;<i> Parameter &quot;start&quot; activates swaps which is no different than executing swapon -a
+</I>&gt;<i> Parameter &quot;stop&quot; deactivates swaps which is no different than
+</I>&gt;<i> executing swapoff -a
+</I>&gt;<i> Parameter &quot;status&quot; indicates whether swaps are active.
+</I>&gt;<i>
+</I>&gt;<i> Parameter &quot;configure&quot; presents dialog menus.
+</I>&gt;<i> swapfiles can be created and removed.
+</I>&gt;<i> Only swapfiles and not swap partitions can be adjusted.
+</I>&gt;<i> The dialogs for creating a swapfile offer a 1 of 4 sizes.
+</I>&gt;<i> 1G 2G 3G or 4G.
+</I>&gt;<i>
+</I>&gt;<i> It also asks for a directory for the swapfile.
+</I>&gt;<i> The default is /swap/
+</I>&gt;<i> That is what I use.
+</I>&gt;<i> This differs for the default location for /etc/init.d/sentinel-memory
+</I>&gt;<i> The memory sentinel creates and activates swapfiles automatically upon demand.
+</I>&gt;<i> However, it's default is /var/cache/swap/
+</I>&gt;<i> /etc/init.d/swap and /etc/init.d/sentinel-memory
+</I>&gt;<i> must not use the same directory for swap files.
+</I>&gt;<i> This is the one and only warning about that. &#160;:)
+</I>&gt;<i>
+</I>&gt;<i> There is no ideal method for setting up swaps.
+</I>&gt;<i>
+</I>&gt;<i> High security boxes may benefit for having swap files
+</I>&gt;<i> created on an encrypted filesystem.
+</I>&gt;<i> Or it might benefit from having an encrypted swap partition.
+</I>&gt;<i>
+</I>&gt;<i> Normal boxes without encrypted partitions may
+</I>&gt;<i> best benefit from having a dedicated 4G swap partition.
+</I>&gt;<i> That is the default for Sorcerer Sentient.
+</I>&gt;<i>
+</I>&gt;<i> Boxes with a mischievous user may benefit from
+</I>&gt;<i> having immune-sentinel-memory installed.
+</I>&gt;<i> That has an excellent probability of preventing
+</I>&gt;<i> a box from running out of memory by
+</I>&gt;<i> automatically activating and adding swap files as necessary.
+</I>&gt;<i> immune-sentinel-memory is also a default for Sorcerer Sentient.
+</I>&gt;<i>
+</I>&gt;<i> The cost of swap partitions is that they must typically be designated
+</I>&gt;<i> during installation and require a dedicated amount of disk space.
+</I>&gt;<i> Swap files can be created and destroyed at any time,
+</I>&gt;<i> yet suffer the inefficiency of existing on a file system.
+</I>&gt;<i>
+</I>&gt;<i> /etc/init.d/swap provides the SA
+</I>&gt;<i> the convenience of easy swap file management.
+</I>&gt;<i>
+</I>&gt;<i> Yes these are trivial improvements.
+</I>&gt;<i> They benefit mostly non SAs.
+</I>&gt;<i> But they are easy enough to quickly hack.
+</I>&gt;<i> And the convenience slowly lowers
+</I>&gt;<i> Sorcerer required skill to the beginner level.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+-Evert-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002234.html">[Sorcerer-admins] more improved init-scripts
+</A></li>
+	<LI>Next message: <A HREF="002240.html">[Sorcerer-admins] more improved init-scripts.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2236">[ date ]</a>
+              <a href="thread.html#2236">[ thread ]</a>
+              <a href="subject.html#2236">[ subject ]</a>
+              <a href="author.html#2236">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

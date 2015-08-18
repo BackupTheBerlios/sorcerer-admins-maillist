@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CAANLkTinTVicKzhbGOekTueqqHIcjicJGyAix3pnzCGil%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001825.html">
+   <LINK REL="Next"  HREF="001831.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CAANLkTinTVicKzhbGOekTueqqHIcjicJGyAix3pnzCGil%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 21 19:47:55 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001825.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001831.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1830">[ date ]</a>
+              <a href="thread.html#1830">[ thread ]</a>
+              <a href="subject.html#1830">[ subject ]</a>
+              <a href="author.html#1830">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Every now and then linux or udev
+flip flops /dev/hd* to /dev/sd* or vice versa.
+The use of UUIDs provides a method for
+identifying filesystems in a device independent way.
+This avoids flip/flip confusion and also any confusion
+about where a device is located when a new fixed
+disk is attached.
+
+Usually, the only problem with UUIDs occurs
+when a SA dd a filesystem to a different filesystem.
+I do not know what happens
+when a box has two filesystems with the same UUID.
+UUID are supposed to be unique to each filesystem.
+
+The Sorcerer menu driven installer
+will give UUIDs to all filesystems
+that do not already have UUIDs
+Filesystems can be identified by
+traditional /dev/sda5 type notation, or by UUID,
+or by label when specified in /etc/fstab
+I prefer to use only UUIDs or traditional device names
+instead of using labels.
+
+Also filesystems spread across LVM2
+have a method for identification.
+It is not something I use often enough
+to remember what it would look like.
+But it is in the Linux Documentation Project's LVM2 HowTo.
+
+I am uncertain if UUIDs work on swap partitions.
+That might be a bug in the menu driven installer
+if I am trying to use UUIDs with swap partitions.
+Swap partitions do require an entry in /etc/fstab
+but a swap partition is not initialized during boot.
+So filesystem mistakenly specified
+as a swap partition can not swapon -a
+
+I am confused how this relates to depmod.
+depmod is for updating /lib/modules/*/modules.dep
+Last night I uploaded a superior /etc/init.d/depmod
+which is installed by the init-scripts spell.
+It will check and create /lib/modules/*/modules.dep
+for all stored sets of kernel modules instead
+of just the most recently installed kernel.
+
+
+On Wed, Jul 21, 2010 at 9:20 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Oke,
+</I>&gt;<i>
+</I>&gt;<i> No problem.
+</I>&gt;<i>
+</I>&gt;<i> And how can&#160;I recreate the initramfs.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001825.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001831.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1830">[ date ]</a>
+              <a href="thread.html#1830">[ thread ]</a>
+              <a href="subject.html#1830">[ subject ]</a>
+              <a href="author.html#1830">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

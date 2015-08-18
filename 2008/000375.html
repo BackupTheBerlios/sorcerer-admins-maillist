@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery changes, and KDE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C1de9d39c0801270339h3159843cqa8b0281905406acd%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000373.html">
+   <LINK REL="Next"  HREF="000376.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery changes, and KDE</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C1de9d39c0801270339h3159843cqa8b0281905406acd%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery changes, and KDE">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sun Jan 27 12:39:59 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000373.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+        <LI>Next message: <A HREF="000376.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#375">[ date ]</a>
+              <a href="thread.html#375">[ thread ]</a>
+              <a href="subject.html#375">[ subject ]</a>
+              <a href="author.html#375">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>a hook is usualy a script  that is run before/after some key step is
+performed and this independantly of the content
+
+let take the example of a scm : from the user point of view he modify
+the source  and do a commit, when a commit is done the scm do several
+checks  (check consistency of the patch, verify if the comment is
+provided...) thoses checks can be and have to be user customizable and
+then are usually script... this is called a  hook because this is part
+of the software where we can hook some script on. on a scm there are
+several of thoses hooks,  like precommit postcommit, if you want somme
+example install git go into any dir and do a git init, and look at
+.git/hooks
+
+in your example as you says any spell can customize spell level hooks
+(build(), prebuild(), configure()) but this is only at spell level,
+what if you want to have some action performed whatever the spell? if
+you want to check if enough space is available rigth before some
+install? or you want to remount the drive rw? or anything else that is
+not spell related but system related? there are there 2 options :
+modify sorcery or modify every single spells... 3rd possibility : that
+sorcery provide system hooks, for example
+/usr/share/sorcery/hooks/prepare_install/
+/usr/share/sorcery/hooks/post_install/
+/usr/share/sorcery/hooks/.../
+each are directories (or scripts at your option) that contains scripts
+that will be called at certain step of sorcery (inside
+prepare_install....) this allow extend sorcery at low cost and easely,
+no need to rewrite some sorcery internal functions and have them
+sourced localy (which can be really  dangerous in case of internal
+change)
+each hook is lanched and must return 0 to have other hooks ran, if all
+hooks are successfull then sorcery can continue else it should
+abort...
+
+best regards,
+jean-luc
+
+On 1/26/08, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> What is a hook?
+</I>&gt;<i> What can a hook do?
+</I>&gt;<i> Spells can have their own
+</I>&gt;<i> pre_build()
+</I>&gt;<i> build()
+</I>&gt;<i> post_install()
+</I>&gt;<i> and other functions if you want.
+</I>&gt;<i> You can simply do something like....
+</I>&gt;<i>
+</I>&gt;<i> build(){
+</I>&gt;<i> do_something
+</I>&gt;<i> default_build &amp;&amp;
+</I>&gt;<i> do_something_else
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> pre_build(){
+</I>&gt;<i> before
+</I>&gt;<i> default_pre_build &amp;&amp;
+</I>&gt;<i> after
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Jan 25, 2008 2:40 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; this is just an idea...
+</I>&gt;<i> &gt; but may it possible to implement hooks like SCM software (svn, git...) do?
+</I>&gt;<i> &gt; something like
+</I>&gt;<i> &gt; precast_hook, pre_install_hook, post_install_hook....
+</I>&gt;<i> &gt; hooks are really interesting way to add functionality to sorcery without
+</I>&gt;<i> &gt; having to modify it and then move out functions outside of sorcery...
+</I>&gt;<i> &gt; for example there could be a mail_post_install_hook.sh that send some
+</I>&gt;<i> &gt; information by mail (then remove the actual requirement of sorcery upon
+</I>&gt;<i> &gt; mail) or an archive post install hook that will wait for all cast to
+</I>&gt;<i> &gt; finish and then lock cast to prevent further fs modification and then
+</I>&gt;<i> &gt; create an incremental tarball....
+</I>&gt;<i> &gt; such things like this
+</I>&gt;<i> &gt; Best Regards
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000373.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+	<LI>Next message: <A HREF="000376.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#375">[ date ]</a>
+              <a href="thread.html#375">[ thread ]</a>
+              <a href="subject.html#375">[ subject ]</a>
+              <a href="author.html#375">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

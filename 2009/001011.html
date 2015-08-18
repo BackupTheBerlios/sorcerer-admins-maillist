@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] VirtualBox
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20VirtualBox&In-Reply-To=%3C596b75860902181634j68062c17ybc695e0bbd144818%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001022.html">
+   <LINK REL="Next"  HREF="001012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] VirtualBox</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20VirtualBox&In-Reply-To=%3C596b75860902181634j68062c17ybc695e0bbd144818%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] VirtualBox">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Feb 19 01:34:28 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001022.html">[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+</A></li>
+        <LI>Next message: <A HREF="001012.html">[Sorcerer-admins] VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1011">[ date ]</a>
+              <a href="thread.html#1011">[ thread ]</a>
+              <a href="subject.html#1011">[ subject ]</a>
+              <a href="author.html#1011">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It has several requirements where it does not list it's homepage.
+Therefore, I have not tested it yet.
+However, I did read some of the documentation.
+
+According to: <A HREF="http://www.virtualbox.org/wiki/User_FAQ">http://www.virtualbox.org/wiki/User_FAQ</A>
+
+&quot;    * Tickless Linux timer: VirtualBox currently does not work well
+on Linux kernels with tickless timer support (CONFIG_NO_HZ enabled).
+We are investigating the problem but in the meantime you should
+disable the tickless timer by disabling that config option or by
+adding nohz=off to the Linux kernel command line.
+      Starting with VirtualBox 1.5.6 the Linux kernel module knows the
+parameter force_async_tsc. Try loading the kernel module with
+
+      modprobe vboxdrv force_async_tsc=1
+
+      and see if that helps to improve things for you.
+      (Should not be necessary anymore since VirtualBox 1.6.0) &quot;
+
+Yet it might still be required, because Sorcerer I/Rs are tickless.
+There may be other reasons in the VirtualBox documentation
+that explain why VirtualBox does not perform good while running a Sorcerer I/R.
+For the most part the Sorcerer I/Rs have all the same optimization and
+experimental
+features enabled as would be in the kernels compiled when a box updates.
+The kernels are for as decent performance as modular architecture allows.
+They are not intended to be safe.
+They are intended to make use of every nifty feature that it can support
+for the CPU instruction set that is available and other installed hardware.
+
+I once had a uniprocess CPU for which the APIC was broken.
+However, with the kernel parameter to disable APIC,
+or rather I simply did not compile support for it,
+the kernel was usable and stable.
+With APIC it was unusable.
+
+Many kernel parameters are listed in
+/usr/src/linux/Documentation/kernel-parameters.txt
+It is worth looking at.
+And if one has a hunch that something could be disabled that is problematic
+then it is usually easy enough to try disabling it with a kernel parameter.
+
+For example of interesting and somewhat expected parameters,
+the linux kernel now has memory testing code.
+And it can be activated with memtest=
+
+Reading /usr/src/linux/Documentation/kernel-parameters.txt
+from time to time is good for a yawn or sometimes discovering
+something potentially useful.
+Sort of makes one wonder if it would be nice to have a bootloader
+that can display that file before booting.
+Considering how grub can read some types of filesystems
+it may be possible to display that file?
+Since I do not use grub I am uncertain.
+However, please comment if you know if it is done.
+If so then it may be useful to have kernel-parameters.txt
+also installed in /boot where the filesystem is expected
+to be something that a bootloader can handle.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001022.html">[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+</A></li>
+	<LI>Next message: <A HREF="001012.html">[Sorcerer-admins] VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1011">[ date ]</a>
+              <a href="thread.html#1011">[ thread ]</a>
+              <a href="subject.html#1011">[ subject ]</a>
+              <a href="author.html#1011">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

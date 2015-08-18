@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CAANLkTinS5FR5FWMmP_RViBv1zGdSt7bOE7bjvuJaPBKD%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001831.html">
+   <LINK REL="Next"  HREF="001836.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CAANLkTinS5FR5FWMmP_RViBv1zGdSt7bOE7bjvuJaPBKD%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 22 08:27:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001831.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001836.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1835">[ date ]</a>
+              <a href="thread.html#1835">[ thread ]</a>
+              <a href="subject.html#1835">[ subject ]</a>
+              <a href="author.html#1835">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oh, yes now that makes sense.
+I expected /boot would be mounted.
+It is of no consequence to /etc/init.d/depmod now.
+The newer /etc/init.d/depmod
+does not check /boot
+It uses only the files in /lib/modules/*
+
+Originally I was being too minimalistic
+and trying to keep it fast.
+But after all that has changed
+shutting down a box can take more
+than a few seconds for all the checks that are done.
+
+Normally /boot should be mounted during shutdown.
+That way initramfs can be regenerated if necessary
+and written to /boot and lilo can be updated.
+/boot should also be mounted when casting
+any spell that compiles a linux kernel.
+
+Almost any annoying, trivial, repetitive, easily forgotten task
+such as executing depmod, ldconfig, generating initramfs,
+writing lilo, generating/updating lilo.conf,
+generating symbolic links in /etc/rc.d/rc*/
+and other tasks are handled automatically
+both by cast and during runlevel 0,6 execution.
+
+Also Sorcerer boxes stick to LSB specifications.
+SAs can run /sbin/mkinitrd or /sbin/mkinitrf
+for example and that executes /etc/init.d/initramfs
+Likewise SAs can run /lib/lsb/install_initd and
+/lib/lsb/remove_initd
+They do not require parameters as specified by the LSB
+But they accept parameters as specified by the LSB
+if the SA wants to do that.
+
+There is a bit of complicated trivial stuff
+to do on any POSIX box.
+Would be nice to have symbolic links to all of that
+in a single directory easy for a SA to find.
+But it really is too troublesome for a SA
+to remember everything that must be done
+and when it must be done and in what order.
+So I made init-scripts that execute
+during runlevel 0,6 to handle it.
+
+A SA who does not want that can always
+turn off those init-scripts by chmod 0600
+and then run them manually using
+bash /etc/init.d/$NAME
+Either way is fine.
+My preference is automatic.
+So please have /boot mounted read/write
+if you also prefer the full service wash, rinse, buff, shine
+at no additional cost.
+
+
+On Wed, Jul 21, 2010 at 10:52 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hello Kyle,
+</I>&gt;<i>
+</I>&gt;<i> Depmod has a function check &#160;where it looks at the kernel&#160;version.
+</I>&gt;<i>
+</I>&gt;<i> So if the partition which contains boot is not mounted&#160;depmod can't find
+</I>&gt;<i> the&#160;kernel-version
+</I>&gt;<i>
+</I>&gt;<i> So&#160;depmod looks at&#160;the wrong place&#160;for&#160;modules.dep and gives a error
+</I>&gt;<i> message.
+</I>&gt;<i>
+</I>&gt;<i> I hope that this is clear.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Date: Wed, 21 Jul 2010 10:47:55 -0700
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Every now and then linux or udev
+</I>&gt;&gt;<i> flip flops /dev/hd* to /dev/sd* or vice versa.
+</I>&gt;&gt;<i> The use of UUIDs provides a method for
+</I>&gt;&gt;<i> identifying filesystems in a device independent way.
+</I>&gt;&gt;<i> This avoids flip/flip confusion and also any confusion
+</I>&gt;&gt;<i> about where a device is located when a new fixed
+</I>&gt;&gt;<i> disk is attached.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Usually, the only problem with UUIDs occurs
+</I>&gt;&gt;<i> when a SA dd a filesystem to a different filesystem.
+</I>&gt;&gt;<i> I do not know what happens
+</I>&gt;&gt;<i> when a box has two filesystems with the same UUID.
+</I>&gt;&gt;<i> UUID are supposed to be unique to each filesystem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The Sorcerer menu driven installer
+</I>&gt;&gt;<i> will give UUIDs to all filesystems
+</I>&gt;&gt;<i> that do not already have UUIDs
+</I>&gt;&gt;<i> Filesystems can be identified by
+</I>&gt;&gt;<i> traditional /dev/sda5 type notation, or by UUID,
+</I>&gt;&gt;<i> or by label when specified in /etc/fstab
+</I>&gt;&gt;<i> I prefer to use only UUIDs or traditional device names
+</I>&gt;&gt;<i> instead of using labels.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also filesystems spread across LVM2
+</I>&gt;&gt;<i> have a method for identification.
+</I>&gt;&gt;<i> It is not something I use often enough
+</I>&gt;&gt;<i> to remember what it would look like.
+</I>&gt;&gt;<i> But it is in the Linux Documentation Project's LVM2 HowTo.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am uncertain if UUIDs work on swap partitions.
+</I>&gt;&gt;<i> That might be a bug in the menu driven installer
+</I>&gt;&gt;<i> if I am trying to use UUIDs with swap partitions.
+</I>&gt;&gt;<i> Swap partitions do require an entry in /etc/fstab
+</I>&gt;&gt;<i> but a swap partition is not initialized during boot.
+</I>&gt;&gt;<i> So filesystem mistakenly specified
+</I>&gt;&gt;<i> as a swap partition can not swapon -a
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am confused how this relates to depmod.
+</I>&gt;&gt;<i> depmod is for updating /lib/modules/*/modules.dep
+</I>&gt;&gt;<i> Last night I uploaded a superior /etc/init.d/depmod
+</I>&gt;&gt;<i> which is installed by the init-scripts spell.
+</I>&gt;&gt;<i> It will check and create /lib/modules/*/modules.dep
+</I>&gt;&gt;<i> for all stored sets of kernel modules instead
+</I>&gt;&gt;<i> of just the most recently installed kernel.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Jul 21, 2010 at 9:20 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; Oke,
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; No problem.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; And how can&#160;I recreate the initramfs.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Roelof
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001831.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001836.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1835">[ date ]</a>
+              <a href="thread.html#1835">[ thread ]</a>
+              <a href="subject.html#1835">[ subject ]</a>
+              <a href="author.html#1835">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

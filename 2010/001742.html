@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W46E8750AB96105273B770DAEB90%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001740.html">
+   <LINK REL="Next"  HREF="001743.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W46E8750AB96105273B770DAEB90%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Tue Jul 13 09:54:45 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001740.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001743.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1742">[ date ]</a>
+              <a href="thread.html#1742">[ thread ]</a>
+              <a href="subject.html#1742">[ subject ]</a>
+              <a href="author.html#1742">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello, 
+
+ 
+
+Im not going to work with KDE. Im a Gnome man.
+
+ 
+
+Networks is still not working.
+
+
+I see these messages.
+
+ 
+
++ case $1 in 
+
++ start
+
++ log_warning_msg &quot;networks checking&quot;
+
++ log_line 'networks checking' ' warning'
+
++ echo -e &quot; * networks checking 
+
+* networks checking
+
++ '[' -f /var/lock/networks ']'
+
++ log_warning-msg 'networks starting'
+
++ log_line ' networks starting' warning 
+
++ echo -e &quot;* networks starting
+
+* networks starting
+
++ for file in '$NETWORKS/*'
+
++ '[' -f /etc/networks.d/eth-dhcp ']' 
+
++ bash /etc/networks.d/eth-dhcp start
+
++ for file in '$NETWORKS/*'
+
++ '[' -f /etc/networks.d/functions ']'
+
++ for file in '$NETWORKS/*'
+
++ '[' -f /etc/networks.d/templates ']'
+
++ log_failure_msg 'networks not started' 'failed'
+
++ echo -e &quot;* networks not started
+
+ 
+
+Roelof
+
+  
+
+
+ 
+
+
+Date: Tue, 13 Jul 2010 03:26:13 +0000
+From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Subject: Re: [Sorcerer-admins] dhcp on boot
+
+Roedolf, thanks for trying Sorcerer. 
+
+We have recently switched over to a new way of installing our software, and are still ironing out the bugs. 
+
+99% of the software compiles now, thanks to Kyle's hard work. 
+
+If you plan on running KDE, you will run into a bug in qt-everywhere-opensource. This spell can't be compiled if it's not installed already. The way around this is to use an earlier version of the spell, but unfortunate;y the earlier version has a different source name, so the spell needs to be modified a little to allow for the first time cast. Oh, and it's a few hours to cast this spell, btw. 
+
+I can mail you the modified spell. Are you planning to use KDE?
+
+Kind regards,
+-Evert Vorster-
+
+
+On Mon, Jul 12, 2010 at 10:26 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+I could tell you how to debug it,
+but it may be easier just to gzip the template
+and attach it to an email.
+
+First, I would double check the template.
+Then, I would
+# /etc/init.d/networks stop
+# bash -x /etc/init.d/networks start 1&gt;&amp;2 | tee /tmp/read.me
+
+Then I would follow the trace looking for a problem.
+If there is a problem in the functions that parse the templates
+then I would be able to find it from this.
+
+Probably not in over a year has anyone mentioned
+a problem with the network template method
+so I have no way to begin debugging this without
+also having the template that was used.
+Also I recommend just using dhcpcd instead of dhclient.
+For some unknown reason the functions tries dhclient first.
+I never use dhclient.
+
+If manually starting
+# dhcpcd eth0
+works then go ahead and
+
+# dispel dhcp
+
+and try stopping and starting networks again.
+Oh, that is interesting.
+I or someone else probably made the switch
+to put dhcpcd first in the functions,
+but then never updated the available version
+of the networks spell.
+
+I will update that now to be certain that
+the installed network functions and templates
+are the same distribution wide.
+
+Thanks for reporting a potential problem.
+Hopefully, it was trying dhclient
+and dhclient is bugged.
+
+
+
+
+
+On Mon, Jul 12, 2010 at 10:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I did copy the template to the networks dir,
+</I>&gt;<i> Uncomment the IF= rule.
+</I>&gt;<i> Then saved it
+</I>&gt;<i>
+</I>&gt;<i> But when I do /etc/init.d/networks start.
+</I>&gt;<i>
+</I>&gt;<i> I get a message that's it's failed.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>_______________________________________________
+Sorcerer-admins mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+ 		 	   		  
+_________________________________________________________________
+Alles wat je wilt weten over Windows 7, en meer !
+<A HREF="http://www.windows.nl/windows7">http://www.windows.nl/windows7</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/032dcdef/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/032dcdef/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001740.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001743.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1742">[ date ]</a>
+              <a href="thread.html#1742">[ thread ]</a>
+              <a href="subject.html#1742">[ subject ]</a>
+              <a href="author.html#1742">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

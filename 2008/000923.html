@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] current I/R does not install bootloader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812110230j3cf1b217r16a1c79d830eced0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000921.html">
+   <LINK REL="Next"  HREF="000925.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] current I/R does not install bootloader</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812110230j3cf1b217r16a1c79d830eced0%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] current I/R does not install bootloader">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Dec 11 11:30:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000921.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+        <LI>Next message: <A HREF="000925.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#923">[ date ]</a>
+              <a href="thread.html#923">[ thread ]</a>
+              <a href="subject.html#923">[ subject ]</a>
+              <a href="author.html#923">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Dec 11, 2008 at 12:05 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+
+&gt;<i> Pretty sure initramfs does not cast at all.
+</I>&gt;<i> Hmm, i might now suspect chroot casting does not work at current I/R .iso.
+</I>
+The none of the chrooted casting worked then?
+That is a bit of a problem.
+Yet it will have to wait until I roll the next I/Rs
+
+&gt;&gt;<i> If a SA does not do the compilation step as part of the installation
+</I>&gt;&gt;<i> then the SA will have to manually chroot to /media/root/
+</I>&gt;<i>
+</I>&gt;<i> Hmm, i think i did try to chroot to /media/root/ but it did not worked.
+</I>&gt;<i> So perhaps transfer is to blame?
+</I>
+Well if transferring did not work then chroot building would not work,
+however there would also probably be nothing installed.
+How did you make it work with nothing installed?
+Did you do a manual installation?
+
+
+&gt;<i> &gt; Was it possible that some important step was skipped?
+</I>&gt;<i>
+</I>&gt;<i> Well i did go thru all steps, so i dont think so.
+</I>
+That is good.
+In many cases the installer will not allow progress to the next step
+until required steps are complete.
+
+
+&gt;&gt;<i> Or does the target disk have an old lilo in the MBR and
+</I>&gt;&gt;<i> the new lilo in a partition boot block?
+</I>&gt;<i>
+</I>&gt;<i> Complete blank disk, not even partition exists.
+</I>
+Then it also requires a bootable MBR installed.
+ms-sys will do that.
+It is available from the installer.
+However, it can also be run from the command line.
+
+&gt;&gt;<i> I might also add in that certain filesystems are unsuitable for use
+</I>&gt;&gt;<i> for installing lilo into the boot block of the partition because the file
+</I>&gt;&gt;<i> system will not automatically reserve that space.
+</I>&gt;&gt;<i> I tend to use only ext2 and ext3
+</I>&gt;<i>
+</I>&gt;<i> I also usually make first partition as /boot, using ext3, in this case also.
+</I>
+Then almost without question lilo would install to the boot block of /boot
+/boot should normally be ext2 because a journal would waste space
+on a small partition.
+However, now we do tend to use larger /boot partitions.
+
+&gt;&gt;<i> Another possible solution is to try installing from older I/Rs
+</I>&gt;&gt;<i> Newer is usually better, but older are still available for download.
+</I>&gt;<i>
+</I>&gt;<i> Will try.
+</I>
+Thanks.
+Sorry for the inconvenience.
+
+Evert gave me extensive input for what he wants to see in the next
+menu driven I/R installer.
+Consequently, I have to do full testing on it anyway.
+It is nearly a one menu design.
+It feels a bit overwhelming to me,
+but we shall see if it works or not.
+Evert did not like the idea of having to leave the disk menu
+with partitions mounted in order to goto the compile menu.
+It was perhaps counter intuitive?
+
+Also Evert had a great idea for a menu while booting
+from the I/R that would make the I/R
+be more useful for recovering deployed.
+The improvements for the next I/R should be interesting to see.
+
+I am looking forward to it.
+I miss the days when I had enough CPU power to grind out I/Rs
+one day after the next if a bad mistake was made.
+But there was no x86_64 port back then.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000921.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+	<LI>Next message: <A HREF="000925.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#923">[ date ]</a>
+              <a href="thread.html#923">[ thread ]</a>
+              <a href="subject.html#923">[ subject ]</a>
+              <a href="author.html#923">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

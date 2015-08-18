@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTiklz05RLZ613fqV7XZa7DqxEGtWL_1aQa5wcPyW%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001638.html">
+   <LINK REL="Next"  HREF="001642.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] progress...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTiklz05RLZ613fqV7XZa7DqxEGtWL_1aQa5wcPyW%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] progress...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 28 16:37:05 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001638.html">[Sorcerer-admins] progress...
+</A></li>
+        <LI>Next message: <A HREF="001642.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1639">[ date ]</a>
+              <a href="thread.html#1639">[ thread ]</a>
+              <a href="subject.html#1639">[ subject ]</a>
+              <a href="author.html#1639">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 27, 2010 at 2:36 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> I preferred having an I/R to be as small as possible, with the sources for
+</I>&gt;<i> that I/R as a separate download.
+</I>
+Although most of the sources are all optional
+the download size is insufficient to warrant
+the complexity of a CD disk swap.
+
+I would have included the sources as installed software,
+but some of the spells have nice configuration menus.
+Also some things like the selection of a keyboard map
+are only made permanent when configured through a spell.
+I could work around it, but having the spells cast is easier.
+
+
+&gt;<i> In my humble opinion, an I/R should a binary only collection of software
+</I>&gt;<i> that is just enough software on to boot, do command line fixes, and to
+</I>&gt;<i> download and compile sources.
+</I>
+It nearly is.
+But it also has some text editors.
+A very minimal Sorcerer install
+is still nearly 200 software projects.
+
+
+&gt;<i> The rest is all optional, and might not be needed in whatever the SA has in
+</I>&gt;<i> mind for the linux box.
+</I>
+I also discovered recently when deciding upon the final loadout
+of software on some Sorcerer deployments that the default
+loadout was far more than I wanted.
+
+
+&gt;<i> This approach maximizes the usefulness of having sources stashed away from
+</I>&gt;<i> previous or other Sorcerer installs.
+</I>&gt;<i> Having a small code base makes for easy troubleshooting, quick update cycle and fast downloads.
+</I>
+Yup.
+
+&gt;<i> Is it possible to have an initramfs that replicates itself onto the root
+</I>&gt;<i> filesystem upon install for a seriously small Sorcerer distro?
+</I>
+The initramfs for the I/R differs slightly from the one created
+for the freshly deployed Sorcerer box.
+Important files such as those in /etc/lilo/ and /etc/fstab
+are incomplete for the I/R.
+That is primarily the reason for the initramfs regeneration
+during sinstall prior to booting the into the box without the I/R.
+
+
+&gt;<i> If gcc is needed from there, it could be stored in
+</I>&gt;<i> /var/cache/archive/gcc.xz, and just unpacked with Sorcerer's tools on to the
+</I>&gt;<i> newly installed root?
+</I>&gt;<i> Same with the other tools that is needed for Sorcerer to perform it's
+</I>&gt;<i> functions.
+</I>
+Not only is unarchiving the archives during installation
+a convenience so that it does not happen as a necessity later,
+but unarchiving all those archives ensures that that the installation
+does not have holes in it.
+A hole is like when some important piece of software like a library
+is not installed yet some other installed software requires it.
+Not having zlib installed would create a nasty hole.
+In addition to wanting to avoid creating
+holes in installed software loadouts,
+the initramfs does not contain files
+unnecessary for use during sysinit.
+The initramfs lacks all of /etc/sorcery/
+And even if it had /etc/sorcery/
+the initramfs lacks almost all of /usr
+So the software provided on the iniramfs is
+truncated compared to the software installed from archives.
+The important stuff from /usr is missing.
+
+I understand what you are wanting.
+Eliminate some of the replication of files
+that would occur both in archives and on the initramfs
+by having the content of the initramfs be more complete
+and when installed software is included on the initramfs
+then do not include an archive for it.
+The space saved by that idea seems incommensurate
+with the possible inconvenience during a rescue.
+If a SA required a specific archive to fix a problem
+and that archive was not on the I/R because
+the software is included in the I/R's initramfs
+then extracting it from the initramfs is more complicated.
+Although not impossible,
+the cpio command is dangerous for SAs who have not
+used it before, because unlike tar, cpio will extract
+archives with absolute pathnames and overwrite
+files in /etc /sbin /bin if not explicitly told not to do that.
+At no time should a SA have to take apart
+an initramfs cpio archive in order to repair a box.
+
+There are some files that occur both in archives
+and both in the intiramfs of the I/R
+However, overall it does provide for rescue
+and some replication is difficult to avoid.
+Kernel modules, for example, must exist
+on the initramfs or the initramfs is useless.
+They also should exist in the archive or
+the archive is useless for rescue.
+And the largest portion of replicated files
+is by far the kernel modules.
+
+While not perfectly tiny the compromise is good
+for both installing and rescuing.
+And the layout is not absurdly complex with
+1 kernel, 1 compress cpio initramfs archive,
+1 /var/cache/sources/ directory,
+and 1 /var/cache/archive/ directory.
+And the I/R does not require decompression
+after downloading and before burning to disk.
+
+The x86_64 I/R is now in the 190M range.
+I am still trying to make it smaller without
+shaving off any files.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001638.html">[Sorcerer-admins] progress...
+</A></li>
+	<LI>Next message: <A HREF="001642.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1639">[ date ]</a>
+              <a href="thread.html#1639">[ thread ]</a>
+              <a href="subject.html#1639">[ subject ]</a>
+              <a href="author.html#1639">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

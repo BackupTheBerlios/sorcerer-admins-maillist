@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/sbin/lilo round 1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTikcRD8u-Hsx99_bVk440csZPB%2BviOOvPDoSsguY%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002091.html">
+   <LINK REL="Next"  HREF="002093.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/sbin/lilo round 1</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTikcRD8u-Hsx99_bVk440csZPB%2BviOOvPDoSsguY%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/sbin/lilo round 1">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Mar 11 19:36:31 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002091.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+        <LI>Next message: <A HREF="002093.html">[Sorcerer-admins] arbitrary version progress important to read
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2092">[ date ]</a>
+              <a href="thread.html#2092">[ thread ]</a>
+              <a href="subject.html#2092">[ subject ]</a>
+              <a href="author.html#2092">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Mar 10, 2011 at 9:23 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;&gt;<i> Generally, I assume that convenience and automation is best.
+</I>&gt;&gt;<i> However, if the conveniences or automatic execution seems
+</I>&gt;&gt;<i> to be more of a bane than a boon then please voice it as Evert did.
+</I>&gt;&gt;<i> Sometimes a small bit of adjustment can make the implementation better.
+</I>&gt;<i>
+</I>&gt;<i> Let's just be clear here. I like the automation, and in my humble
+</I>&gt;<i> opinion there should be only one script that uses lilo to update the
+</I>&gt;<i> bootblock. This way troubleshooting is easy.
+</I>
+Having just one script run lilo would be a good thing.
+But there are two conditions for updating lilo
+Those conditions are checked for and created by two separate scripts.
+Therefore, each of those scripts must be allowed to run lilo.
+If /etc/init.d/initramfs regenerates initramfs images
+then /sbin/lilo must be run.
+If /etc/init.d/lilo regenerates /etc/lilo.conf /etc/lilo/conf /etc/lilo/fast
+then /sbin/lilo must be run.
+
+Better to have those scripts run lilo as soon as possible
+rather than to wait and leave it to the probability
+that a separate script will execute and then run /sbin/lilo
+
+The reason that /etc/{initramfs,lilo} are separate scripts
+is so that Sorcerer boxes can be deployed without initramfs
+if the SA so chooses to make custom kernels that include
+the required hardware and file system drivers.
+Therefore, dual configuration requires dual scripts,
+and dual invocations of /sbin/lilo
+
+
+&gt;<i> I just don't want that that script to have exactly the same name as an
+</I>&gt;<i> already installed systems utility.
+</I>
+Which script?  /usr/sbin/lilo
+Seems like a great name for it.
+Call it anything else and a SA might not run it
+for fear of not knowing what it would do.
+
+
+&gt;<i> Yeah, I break Sorcery often, and in interesting ways.
+</I>&gt;<i>
+</I>&gt;<i> :)
+</I>
+It might sound sadistic of me to say so,
+but oddly enough I am counting on it.  :)
+
+
+&gt;&gt;<i> And I probably have a bit more revision to go before
+</I>&gt;&gt;<i> I become satisfied with the way arbitrary version progress works.
+</I>&gt;<i> I do believe that in the past some developers left Sorcerer because of
+</I>&gt;<i> the changing format of the grimoire. However, I can't imagine me using
+</I>&gt;<i> the old grimoire now. Hopefully one day we will hit the perfect
+</I>&gt;<i> grimoire format, but until that day we should not be scared to update
+</I>&gt;<i> stuff.
+</I>
+That is an excellent point!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002091.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+	<LI>Next message: <A HREF="002093.html">[Sorcerer-admins] arbitrary version progress important to read
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2092">[ date ]</a>
+              <a href="thread.html#2092">[ thread ]</a>
+              <a href="subject.html#2092">[ subject ]</a>
+              <a href="author.html#2092">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

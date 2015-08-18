@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805132343v2b2c606idd28ff281a01fcd9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000435.html">
+   <LINK REL="Next"  HREF="000438.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805132343v2b2c606idd28ff281a01fcd9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May 14 08:43:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000435.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000438.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#436">[ date ]</a>
+              <a href="thread.html#436">[ thread ]</a>
+              <a href="subject.html#436">[ subject ]</a>
+              <a href="author.html#436">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm...
+Something about this I message I misunderstood.
+Therefore, I am going to ask about it line by line:
+
+
+On Tue, May 13, 2008 at 5:53 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> Uhmm... Sounds like networking should have individual levels
+</I>
+How can networking have individual levels?
+Currently, if the runlevel switches to 0 1 6
+then networking is shutdown.
+Therefore, runlevel 1 still creates the expected
+single user no networking environment.
+
+
+&gt;<i> I ran into problems with networking starting in runlevel 3 because of
+</I>&gt;<i> X.  I start X in runlevel 3 from inittab, which causes it to start
+</I>&gt;<i> without network (sometimes start) and sometimes just die.
+</I>
+Unless using startx after console login
+then X should be started automatically from runlevels 4 and 5.
+
+&gt;<i> I solved my problem by implementing a script to start x also in
+</I>&gt;<i> runlevel 3 and depended it on the network.
+</I>
+If networking starts in sysinit
+then it will probably be ready for use by the time
+xdm, gdm, kdm-v3, kdm-v4 or any other GUI login
+starts in runlevels 4 and 5.
+
+
+&gt;<i> The problem with this is that X doesn't happily restart.
+</I>
+
+The above sentence I am still confused about.
+
+
+&gt;<i> xdm has no auto login feature.
+</I>
+I expect that if one were to adjust the configuration
+files in /etc/X11/xdm/
+that it is possible to configure xdm
+to startup kiosk style.
+I did it at least once back in XFree86 3.something.
+However, using kdm-v3 or kdm-v4
+or gdm would probably be easier.
+
+
+&gt;<i>  - what's the official good way to have a process restart when it
+</I>&gt;<i> dies?  init takes care of this very wll.
+</I>
+init can be made to restart services as soon as they die
+by following the instructions in man inittab
+However, if a service is started from an init-script
+then it will not automatically restart if it dies.
+
+However, it is possible to write the init-script
+to invoke a wrapper and have that wrapper
+invoke the desired service and
+have that wrapper automatically restart the service
+when the service dies.
+However, whenever the wrapper program dies
+then the service will probably no long restart.
+
+When init from inittab is instructed to start a service
+and restart the service whenever the service dies
+then init will continue doing so until init dies.
+init never dies, because if it does the kernel will immediately halt.
+
+Fortunately, services started directly by init can be
+specified to only start at certain runlevels.
+For example, a different amount of console login
+gettys are started depending upon the runlevel.
+Therefore, adjusting whether a service continually
+re-starts when it is invoked directly by init also
+requires changing the runlevel of the box.
+
+It should be possible to add an option to the
+start_daemon to act as a wrapper for a service
+and continually restart the service whenever the service dies.
+
+Is that what you want?
+
+There are no services, beside login gettys,
+that I expect require this type of aggressive restarting.
+However, about 10 years ago there was a problem with
+xinetd that caused it to crash.
+Back then I wrote a root cronjob to check if xinetd was
+running and restart it if xinetd had crashed.
+While not an eloquent solution it worked.
+
+If xserver zapping is permitted I can understand
+how a use could press ctrl-alt-backspace to kill
+the X server and then no Xserver would be running.
+And it is possible that the X server might crash itself.
+Or if the window manager is holding the X server open
+and the window manager program crashes then
+the X server will also close.
+
+xdm kdm gdm wrap the X server.
+If the X server dies then xdm kdm gdm
+gracefully restart the X server.
+In most configurations this presents a GUI login.
+Therefore, it is wise to have a kiosk started by
+xdm kdm or gdm in order to automatically restart
+the X server whenever the X server dies.
+A guest user would probably not know what to do
+other than restart the box if ctrl-alt-delete works
+or a reset button or power cord is accessible.
+
+
+&gt;<i> and a side question
+</I>&gt;<i>  - what is the environment of an init script?  startx came up with
+</I>&gt;<i> some strange configuration rather than /root/.xinitrc even though
+</I>&gt;<i> whoami reported 'root'.  had to otherwise su root - startx.
+</I>
+The environment that init-scripts run in during boot
+would be described as a non-interactive environment.
+As you have already detected there is not a login
+shell behind them because no logins have occurred.
+
+startx is intended to be used after someone logs in.
+It is not intended to be used from an init-script.
+And it would be unwise to either:
+login as root and start X,
+or by some means start X as user root.
+I strongly recommend that you make a user account
+to su user_account - startx
+if you definitely want to startx in that fashion.
+
+Although I vaguely know how to set up kiosk style GUI with X,
+I know that someone, perhaps Jan, has definite experience
+using this style of configuration.
+There should be a way to have xdm, kdm, gdm launch
+and automatically login as a desired user and then execute
+the ~/.xsession in order to start the desired window manager
+and programs.
+If you want to be certain that the user never has a chance to
+modifiy ~/.xsession then make it root owned.
+However, as I mentioned above,
+kiosk style GUI is inappropriate
+and an unwarranted security risk
+to use in order to run programs as root.
+
+If any programs absolutely must be run as root
+then options exist such as wrapping it with sudo
+and allowing that user automatic use of sudo for
+the purpose of starting only that program.
+And an even less secure method is making
+the program suid and owned by root.
+And also it is possible to ssh with
+X11 forwarding enabled back into the same box as root.
+However, performance with ssh X11 forwarding costs
+a heavy price in CPU and will not do OpenGL.
+And there are yet more complicated methods
+for running X programs as root without logging in as root.
+
+In order to use DRI rendering for some programs it may
+be necessary to have in /etc/X11/xorg.conf the lines:
+
+Section &quot;Module&quot;
+
+# This loads the DRI module
+    Load       &quot;dri&quot;
+
+EndSection
+
+Just add the load &quot;dri&quot; to the Module Section
+which already exists.
+
+Then create the DRI section by itself:
+
+Section &quot;DRI&quot;
+   Mode 0666
+EndSection
+
+
+That grants everyone using X access to DRI.
+
+
+&gt;<i> what does su do that it gets an appropriate environment? (home directory?)
+</I>
+$ su -
+starts a login shell.
+I do not know if I can explain the difference between
+a login shell and a non interactive script shell adequately.
+You may want to read:
+$ man bash
+
+How the environment is set and what files are executed
+when bash is started depends on whether the invocation
+is an interactive login shell or non interactive interpreter.
+BASH itself can also behave differently and have
+different options enabled or disabled depending upon
+how BASH is invoked and
+whether BASH is login or non interactive.
+
+Best recommendations are to ask Jan
+how to set up kiosk style X using kdm gdm or xdm.
+kdm is may be easiest to configure.
+gdm is probably about as easy as kdm.
+xdm probably requires manually rewriting some
+files in /etc/X11/xdm/
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000435.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000438.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#436">[ date ]</a>
+              <a href="thread.html#436">[ thread ]</a>
+              <a href="subject.html#436">[ subject ]</a>
+              <a href="author.html#436">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] optional init-scripts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20optional%20init-scripts&In-Reply-To=%3C596b75860809041547h281f801ev8457928faf8843c2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000753.html">
+   <LINK REL="Next"  HREF="000754.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] optional init-scripts</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20optional%20init-scripts&In-Reply-To=%3C596b75860809041547h281f801ev8457928faf8843c2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] optional init-scripts">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Sep  5 00:47:56 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000753.html">[Sorcerer-admins] firefox compile issue
+</A></li>
+        <LI>Next message: <A HREF="000754.html">[Sorcerer-admins] Some logs moved
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#751">[ date ]</a>
+              <a href="thread.html#751">[ thread ]</a>
+              <a href="subject.html#751">[ subject ]</a>
+              <a href="author.html#751">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There are 3 init-scripts installed by init-scripts that merit consideration:
+
+/etc/init.d/tmp
+/etc/init.d/usr_src_sorcery_bind
+/etc/init.d/usr_src_sorcery_tmpfs
+
+The above list is also the order of execution at runlevels: 1 2 3 4 5
+
+tmp  mounts 3g tmpfs on /tmp
+*_bind  binds /tmp/.sorcery to /usr/src/sorcery
+*_tmpfs  mounts 3G tmpfs on /usr/src/sorcery
+
+Make any of these executable or non-executable.
+The correct decision may prolong disk life.
+
+If all 3 are executable
+then tmp would be 3G
+and /tmp/.sorcery would bind to /usr/src/sorcery
+and tmpfs would not be mounted on /usr/src/sorcery
+
+If all 3 are non executable
+then mounting of /tmp and /usr/src/sorcery can be controlled by /etc/fstab
+
+Choose any combination of on and off.
+All 3 do not have to be concurrently on or off.
+
+Unless previously adjusted, the default is:
+on  /etc/init.d/tmp
+on  /etc/init.d/usr_src_sorcery_tmpfs
+off /etc/init.d/usr_src_sorcery_bind
+
+This change adds greater flexibility to box configuration,
+and simplifies the overly complicated /etc/init.d/tmp
+which previously did both tasks of /etc/init.d/tmp and
+/etc/init.d/usr_src_sorcery_bind
+
+I apologize for any inconvenience this may cause.
+Most SAs can ignore this email and their boxes will
+receive a suitable 3G tmpfs on /tmp and /usr/src/sorcery
+Back it with enough RAM and swap if you intend to fill it.
+
+If concerned about users creating a denial of service
+by running a box out of memory by filling /tmp
+then a smaller /tmp can be specified in /etc/fstab
+while /etc/init.d/tmp is made non-executable.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000753.html">[Sorcerer-admins] firefox compile issue
+</A></li>
+	<LI>Next message: <A HREF="000754.html">[Sorcerer-admins] Some logs moved
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#751">[ date ]</a>
+              <a href="thread.html#751">[ thread ]</a>
+              <a href="subject.html#751">[ subject ]</a>
+              <a href="author.html#751">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

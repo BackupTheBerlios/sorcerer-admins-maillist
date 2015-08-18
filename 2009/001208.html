@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] winner
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20winner&In-Reply-To=%3C596b75860905221146p63c3045ep6e8ae18bce959c3e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001206.html">
+   <LINK REL="Next"  HREF="001211.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] winner</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20winner&In-Reply-To=%3C596b75860905221146p63c3045ep6e8ae18bce959c3e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] winner">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 22 20:46:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001206.html">[Sorcerer-admins] winner
+</A></li>
+        <LI>Next message: <A HREF="001211.html">[Sorcerer-admins] /usr/lib/x11/fonts or /usr/share/fonts?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1208">[ date ]</a>
+              <a href="thread.html#1208">[ thread ]</a>
+              <a href="subject.html#1208">[ subject ]</a>
+              <a href="author.html#1208">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I appreciate that.
+
+However, I am still going after tiny bugs.
+Everyone has probably read the warnings from module-init-tools.
+The current stable release no longer wants /etc/modprobe.conf
+and requires all files in /etc/modprobe.d/ to have a .conf extension.
+So I removed /etc/modprobe.conf from the installation
+of module-init-tools.
+It looked good.
+Then I saw on a run of /etc/init.d/initramfs
+a message from find about
+/etc/modprobe.conf missing
+While the message did not effect the outcome
+of updating the initramfs I knew that someone
+would eventually report it.
+And thus I adjusted the initramfs update script.
+
+At the moment I am in the process of doing a full install
+of the IA32 I/R and it is copy and unarchiving files.
+Although I carefully inspected the code involving UUIDs
+nothing seemed incorrect about it.
+And since I am using merely a single partition for the install
+there is no chance for a mix-up on this test run.
+However, if the test is successful I will test it again
+with a more complicated setup, and using ext4 instead of ext3 also.
+
+The previous 2 times I did a full install test I ran into problems.
+First, I omitted binutils-v2.18 from the I/R since I knew it would
+only be required if glibc was recompiled.
+However, glibc-locales requires glibc and therefore inherits
+the requirement on binutils-v2.18
+Therefore, that omission was not a good idea.
+
+And a time before or after that I discovered that tar
+now automatically escapes spaces in file names and thus,
+was generating an error code return when archiving atk and ustr.
+Therefore, atk and ustr were missing from the archive cache on the I/R
+Consequently, ELF failures happened while cast was run.
+And of course the box was lacking atk and ustr sources.
+Needless to say I aborted the installation and went looking
+for the reason what those archives were not included on the I/R
+
+As you can tell these are errors that would merely annoy Sorcerer SAs,
+but not impede the installation of someone who strongly desired Sorcerer.
+But still these are problems that are obvious, easily spotted, and
+should be fixed before an I/R is released for general consumption.
+
+Considering all the possibilities for problems that exist with I/Rs
+the I/Rs that I am testing are in very good condition.
+But they are not yet perfect.
+I can detect, smote, and retry a new I/R candidate about 3 times in a day.
+So eventually we will have a winner.
+But for the moment there is naught but the mundane process of
+hacking away at the bugs until they are gone.
+
+Because many of the bug solutions involve modification of spells
+the person who can do this fastest is probably me.
+Otherwise the spot and solution to a bug encountered during testing
+would take about 2 days.
+3 bugs a day is faster progress than 1 bug per 2 days.
+Also I am making the same fixes in parallel on the x86_64 I/R
+Basically the module-init-tools and subsequent initramfs problem
+occur both on the IA32 and x86_64 I/Rs.
+
+While it has probably never actually happened.
+I would like to produce an absolute perfect bugless I/R.
+But it will probably still have a bug lurking somewhere.
+They are so sneaky, afterall.
+And that is when I will require feedback to help find and fix those bugs
+so they do not become part of the next set of I/Rs released.
+Sometimes if serious bugs are reported during the first week
+I will be able to rush out new I/Rs.
+If I do a massive update of the grimoire
+then it might not be remain possible
+since I would be waiting an indeterminable amount of time
+for the x86_64 I/R to catch up on compilation.
+
+Currently, while testing the new I/R
+I am searching for the cause of xf86-video-i810's compilation failure.
+I suspect that the problem is related to libpciaccess.
+The new version of xorg-server requires libpciaccess
+And the last time xf86-video-i810 was compiled
+libpciaccess was not installed.
+It may be that the xorg-server 1.5.3 is not compatible with
+xf86-video-i810 which seems unexpected since the
+version of xorg-server that was installed when xf86-video-i810
+was last compiled was 1.4 and I am trying to compile the
+most recently released xf86-video-i810 source.
+And the last successful compile of xf86-video-i810 was the 1.7.4 release.
+
+The release of xorg related tarballs could not be any more confusing!
+This is why I do not like updating xorg related spells in between
+major xorg release events.
+xf86-video-i810 no longer compiles and I do not know what spell
+version should be adjusted in what direction.
+I suppose I will try a newer xorg-server version next
+since I already tried the latest libpciaccess.
+But using xorg-server &gt; 1.5.x may cause ATI's or NVIDIA's
+pre-compiled drivers to not work.
+So I will risk it and try it anyway.
+
+Fortunately, since all Sorcerer I/Rs come with pre-compiled xorg drivers
+SAs will not be burdened by this problem at the moment.
+However, I want to resolve it because I must compile i810 drivers
+for the uclibc port.
+If anyone has a recent successful compile for xf86-video-i810
+then please send me a snapshot for it:
+/var/log/sorcery/snap/xf86-video-i810.gz
+
+
+
+On Fri, May 22, 2009 at 10:36 AM, Mike Flanagan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">gentoo.mike at gmail.com</A>&gt; wrote:
+&gt;<i> I can test whenever , have a few different platforms I can test on if
+</I>&gt;<i> needed . From old hardware to quad core. Ill check the website
+</I>&gt;<i> constantly and check n here for the release dates :) its an early xmas
+</I>&gt;<i> after all
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001206.html">[Sorcerer-admins] winner
+</A></li>
+	<LI>Next message: <A HREF="001211.html">[Sorcerer-admins] /usr/lib/x11/fonts or /usr/share/fonts?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1208">[ date ]</a>
+              <a href="thread.html#1208">[ thread ]</a>
+              <a href="subject.html#1208">[ subject ]</a>
+              <a href="author.html#1208">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

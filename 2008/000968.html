@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhclient%20%3A%20route%20and%20resolv.conf%20aren%27t%20set%0A%09correctly&In-Reply-To=%3C49554835.7080400%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000970.html">
+   <LINK REL="Next"  HREF="000969.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhclient%20%3A%20route%20and%20resolv.conf%20aren%27t%20set%0A%09correctly&In-Reply-To=%3C49554835.7080400%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Dec 26 22:10:13 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000970.html">[Sorcerer-admins] gcc-4.0.0 won't compile will -mtune=native
+</A></li>
+        <LI>Next message: <A HREF="000969.html">[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#968">[ date ]</a>
+              <a href="thread.html#968">[ thread ]</a>
+              <a href="subject.html#968">[ subject ]</a>
+              <a href="author.html#968">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hello!
+I have an issue with sorcerer network script using dhcp.
+I used the template that kyle made (nice work!) and achieved that it use 
+dhclient fast, but after it ran with success, I have strange things :
+1) ip isn't changed
+2) default route isn't set
+3) resolv.conf isn't changed
+
+I ran dhclient by hand in verbose and it outputed the following :
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# dhclient -v eth1
+Internet Systems Consortium DHCP Client 4.0.0
+Copyright 2004-2007 Internet Systems Consortium.
+All rights reserved.
+For info, please visit <A HREF="http://www.isc.org/sw/dhcp/">http://www.isc.org/sw/dhcp/</A>
+
+execve (/etc/dhclient-script, ...): No such file or directory
+Listening on LPF/eth1/00:16:d3:56:7d:12
+Sending on   LPF/eth1/00:16:d3:56:7d:12
+Sending on   Socket/fallback
+Trying medium &quot;-link0 -link1 -link2&quot; 1
+execve (/etc/dhclient-script, ...): No such file or directory
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 2
+Trying medium &quot;link0 link1&quot; 0
+execve (/etc/dhclient-script, ...): No such file or directory
+DHCPDISCOVER on eth1 to 255.255.255.255 port 67 interval 2
+DHCPOFFER from 192.168.1.1
+DHCPOFFER from 192.168.1.1: already seen.
+DHCPREQUEST on eth1 to 255.255.255.255 port 67
+DHCPACK from 192.168.1.1
+execve (/etc/dhclient-script, ...): No such file or directory
+bound to 192.168.1.11 -- renewal in 1695 seconds.
+
+
+so for me dhcp has worked and gave me the 192.168.1.11
+but it seems that /etc/dhclient-script hasn't been installed on this pc 
+and that this script is in charge of updating the information
+I didn't found any spell providing this script
+any idea?
+thanks
+JLM
+best wishes for this new year
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000970.html">[Sorcerer-admins] gcc-4.0.0 won't compile will -mtune=native
+</A></li>
+	<LI>Next message: <A HREF="000969.html">[Sorcerer-admins] dhclient : route and resolv.conf aren't set	correctly
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#968">[ date ]</a>
+              <a href="thread.html#968">[ thread ]</a>
+              <a href="subject.html#968">[ subject ]</a>
+              <a href="author.html#968">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

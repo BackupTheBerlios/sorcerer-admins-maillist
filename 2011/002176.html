@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Either no /boot or a 2G /boot becomes mandatory.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%20mandatory.&In-Reply-To=%3CBANLkTimME3j%3D0-ezeqMsHXohSrz7NVY85g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002175.html">
+   <LINK REL="Next"  HREF="002180.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Either no /boot or a 2G /boot becomes mandatory.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%20mandatory.&In-Reply-To=%3CBANLkTimME3j%3D0-ezeqMsHXohSrz7NVY85g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Either no /boot or a 2G /boot becomes mandatory.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jun  2 14:16:39 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002175.html">[Sorcerer-admins] prior planning prevents PIDF performance...
+</A></li>
+        <LI>Next message: <A HREF="002180.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2176">[ date ]</a>
+              <a href="thread.html#2176">[ thread ]</a>
+              <a href="subject.html#2176">[ subject ]</a>
+              <a href="author.html#2176">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Of course not all boxes require a /boot partition.
+However, I have decided that a 2G /boot partition
+will become mandatory when a /boot partition is required.
+
+Bashar Fouz was telling me about his newly deployed Sorcerer box.
+He allocated a whole 100M to /boot
+That is extremely generous
+if Sorcerer was a pre-compiled binary based distro.
+However, Sorcerer differs.
+
+And perhaps due to my negligence
+he missed the part in the menu driven installer
+that suggests that /boot be 2G.
+The only place that suggestion appears
+is when selecting the &quot;novice&quot; level of help
+for the menu driven installer.
+
+Consequently, I am adding to my todo list to enforce
+the minimum size of 2G for any partition
+selected for the /boot file system.
+Better to re-partition prior to installation
+rather than after installation, yes?
+
+Additional, I have decided that many years
+have passed since Sorcerer was installed
+with custom kernels that booted without initramfs images.
+Consequently, few boxes should be deployed
+that still have tiny /boot partitions from the past.
+Additionally, since the 2G /boot partition
+has been a recommendation for a while
+I want to make better use of the space.
+
+I am adjusting the initamfs script
+so that existing initramfs images are renamed.
+That way
+/boot/2.6.38.6/initrf
+becomes
+/boot/2.6.38.6/initrf.old
+And the new initramfs is installed as
+/boot/2.6.38.6/initrf
+
+This way if lilo refuses to reinstall
+then the previously installed lilo
+will still possess a valid mapping
+to linux kernels and intramfs for each label.
+Of course this change only saves vs
+the refusal of one lilo re-installation.
+If some rather random problem happens
+then this should be sufficient
+to avoid reaping an undesirable consequence.
+But it only forestalls the eventuality
+of an ongoing lilo problem.
+Consequently, prior to rebooting
+I recommend running lilo without a path.
+That way the SA can see if the initramfs
+are updated and if lilo is reinstalled
+and know with certainty that lilo's
+re-installation was not problematic.
+
+However, having the rescue label installed
+is also a good idea because the rescue
+label will not have it's initramfs image updated.
+That way the on disk location for the rescue label's
+kernel and initramfs do not change.
+Consequently, lilo's mappings
+for the rescue label should always be correct.
+
+Both methods are good.
+However, this new method should
+make lilo more robust for booting
+boxes that do not have a rescue label installed.
+
+I now have rescue labels installed on all of my boxes,
+because finding current Install/Rescue CDs
+and a working CDROM drive
+is too much of a chore when booting a rescue label
+can be a faster easy way to circumvent a lilo error.
+And I also have rescue installations installed
+on bootable USB memory drives.
+One can never be over-prepared when it comes to
+backups and bootable rescue images.
+
+Please remember that old Install/Rescue disk
+eventually become useless for rescuing deployed boxes.
+That is because when booted with those old I/Rs
+the kernel is too old.
+The software on the fixed disk will refuse
+to run and reply that the kernel is too old.
+The reason is because glibc acts
+as an interface between software and the linux kernel.
+In order to prevent glibc from growing to epic proportions
+it's backward compatibility is trimmed to what is expected
+to be the oldest kernel running.
+
+Do we want glibc that will run when booting a linux 2.2.x kernel?
+Of course not.
+I liked linux 2.2.x, and I liked linux 2.4.x even better,
+but we have been using linux 2.6.x for many years.
+So why revert?
+
+Okay, so remember to acquire current Install/Rescue images.
+And remember to deploy boxes with at least 2G ext2 for /boot
+when the box requires a /boot partition.
+I will try to make changes to /etc/init.d/initramfs to
+confine itself to the space allowed by /boot
+However, I advise SAs exercise caution
+for their boxes that have less than 2G for /boot
+or are providing a swap file on /boot.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002175.html">[Sorcerer-admins] prior planning prevents PIDF performance...
+</A></li>
+	<LI>Next message: <A HREF="002180.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2176">[ date ]</a>
+              <a href="thread.html#2176">[ thread ]</a>
+              <a href="subject.html#2176">[ subject ]</a>
+              <a href="author.html#2176">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

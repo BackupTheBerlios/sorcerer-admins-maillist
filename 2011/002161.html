@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The evolution of Sorcerer initramfs.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTikYAE3ybbxSkBkEDnY3Ym1b6z2_LA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002160.html">
+   <LINK REL="Next"  HREF="002162.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The evolution of Sorcerer initramfs.</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTikYAE3ybbxSkBkEDnY3Ym1b6z2_LA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The evolution of Sorcerer initramfs.">evorster at gmail.com
+       </A><BR>
+    <I>Thu May 19 16:03:50 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002160.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+        <LI>Next message: <A HREF="002162.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2161">[ date ]</a>
+              <a href="thread.html#2161">[ thread ]</a>
+              <a href="subject.html#2161">[ subject ]</a>
+              <a href="author.html#2161">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+Ah, I flattened a multilib box into a pure 64 bit install by accident.
+So, in wanting to go back to Multilib I wanted to just mount my root
+partition somewhere, wipe it, and restore from an earlier backup that
+was known good.
+
+I stopped most processes, and then Alt-F7 into my &quot;keep&quot;
+
+Unfortunately, /media was read-only, I did not have enough time to
+mess with it, and I was not brave enough to rm -r * in the mounted
+directory.
+
+So, I whipped out the Sorcerer I/R and once booted, just mkfs.ext4 on
+the affected partition, mount, restore, lilo, reboot and I was back up
+and running in about 20 minutes.
+
+This would be a killer cool feature if an SA can restore ROOT without
+rebooting.
+
+:<i>D
+</I>
+I was so close, too. :(
+
+-Evert-
+
+On Thu, May 19, 2011 at 3:49 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> I recently gave a nickname to the Sorcerer's initramfs.
+</I>&gt;<i> I call it the keep of the Sorcerer's castle.
+</I>&gt;<i> The name is appropriate in many ways.
+</I>&gt;<i>
+</I>&gt;<i> However, thus far the potential of the keep is mostly untapped.
+</I>&gt;<i> After booting completes only /sbin/init and /sbin/agetty continue
+</I>&gt;<i> running from the keep.
+</I>&gt;<i> I was discussing with Evert that perhaps udev should remain running on the keep
+</I>&gt;<i> and that also the system logger program should run from the keep.
+</I>&gt;<i>
+</I>&gt;<i> Processes running in the keep have both benefits and drawbacks.
+</I>&gt;<i> First, the process is not likely to be reading or writing to files that exist
+</I>&gt;<i> on a filesystem attached to a physical device.
+</I>&gt;<i> Therefore, processes running from the keep
+</I>&gt;<i> are unlikely to become zombies or freeze
+</I>&gt;<i> in the event of a serious disk or serious file system error.
+</I>&gt;<i> However, if the system logger runs from the keep
+</I>&gt;<i> then it would write files to a tmpfs that would also be bound
+</I>&gt;<i> somewhere in /var/log/ so that it can be viewed from both places.
+</I>&gt;<i> No inconvenience with that.
+</I>&gt;<i>
+</I>&gt;<i> The first and most obvious drawback is that the system logs eat swap.
+</I>&gt;<i> A box that keeps a years worth of system logs,
+</I>&gt;<i> without rebooting, might eat a lot of swap.
+</I>&gt;<i> Apparently, that is not a problem with metalog.
+</I>&gt;<i> Also if a box reboots or shutdown unexpectedly rather
+</I>&gt;<i> than using the proper method
+</I>&gt;<i> then the content of the logs would be lost.
+</I>&gt;<i> The most obvious method to avoid that is
+</I>&gt;<i> to have the system logger also output over the network
+</I>&gt;<i> to a logger listening on a different box.
+</I>&gt;<i> And at least 9 out of 10 times when a box loses power suddenly
+</I>&gt;<i> there is no clue in the on disk system log as to what happened.
+</I>&gt;<i> Lost system logs could be annoying for other reasons,
+</I>&gt;<i> but on a box operating perfectly normal
+</I>&gt;<i> then a system log would not be lost.
+</I>&gt;<i>
+</I>&gt;<i> Switching udev to running from keep I have mostly decided upon.
+</I>&gt;<i> Whether or not to switch system loggers is yet undecided.
+</I>&gt;<i> I pose the question on the list in order to gather insight from Sorcerer SAs.
+</I>&gt;<i> Some SAs might know reasons for why that change would be very undesirable.
+</I>&gt;<i> In contrast, I prefer a system log that runs
+</I>&gt;<i> no-matter-what-except-sudden-power-loss. &#160;:)
+</I>&gt;<i>
+</I>&gt;<i> Since Sorcerer boxes use the keep both during boot and shutdown
+</I>&gt;<i> we should also consider what process we want
+</I>&gt;<i> to start and continue running on the keep.
+</I>&gt;<i> For example, the keep is currently inaccessible when we ssh into a box.
+</I>&gt;<i> But what if sshing into the box is not working?
+</I>&gt;<i> Might we want to be able to ssh into the keep?
+</I>&gt;<i> So should sshd also be running on the keep
+</I>&gt;<i> but accessible on a different port?
+</I>&gt;<i> Maybe TCP port 30 since it lacks an assignment in /etc/services ?
+</I>&gt;<i>
+</I>&gt;<i> No matter what new bugs may lay siege
+</I>&gt;<i> to a box when installed software is updated;
+</I>&gt;<i> the keep remains as potential last point of retreat.
+</I>&gt;<i> It is a zone of safety from which problems
+</I>&gt;<i> can be carefully examined and solved
+</I>&gt;<i> without being mired in the battlefield on /media/root/
+</I>&gt;<i>
+</I>&gt;<i> So how should we fortify the keep?
+</I>&gt;<i> Besides ssh and scp
+</I>&gt;<i> what other useful programs and libraries
+</I>&gt;<i> should be moved into the keep?
+</I>&gt;<i> What processes should be started in the keep and remain running?
+</I>&gt;<i>
+</I>&gt;<i> Since the initramfs is being retained as the central &quot;keep&quot; of our
+</I>&gt;<i> Sorcerer's castle
+</I>&gt;<i> we should grown accustomed to the idea that it is a valid file system
+</I>&gt;<i> for running
+</I>&gt;<i> processes, daemons, and services.
+</I>&gt;<i> What benefits most from running inside the keep?
+</I>&gt;<i> What deserves the honor?
+</I>&gt;<i>
+</I>&gt;<i> Thanks for making a moment to consider it.
+</I>&gt;<i> No urgent requirement to rack one's brain.
+</I>&gt;<i> For over a decade the initrd and initramfs was considered
+</I>&gt;<i> a filesystem to be discarded after booting.
+</I>&gt;<i> That habit of thought is not easily discarded.
+</I>&gt;<i> Yet if something useful pops into mind
+</I>&gt;<i> then please share it.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+-Evert-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002160.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+	<LI>Next message: <A HREF="002162.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2161">[ date ]</a>
+              <a href="thread.html#2161">[ thread ]</a>
+              <a href="subject.html#2161">[ subject ]</a>
+              <a href="author.html#2161">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

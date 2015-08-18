@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20menu%20driven%20installer%20on%0A%09sorcerer-ia32-20100122%20seems%20broken%20to%20me&In-Reply-To=%3C596b75861002060538kafc7b1clb0fde9f03f77f828%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001428.html">
+   <LINK REL="Next"  HREF="001436.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20menu%20driven%20installer%20on%0A%09sorcerer-ia32-20100122%20seems%20broken%20to%20me&In-Reply-To=%3C596b75861002060538kafc7b1clb0fde9f03f77f828%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb  6 14:38:26 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001428.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+        <LI>Next message: <A HREF="001436.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1431">[ date ]</a>
+              <a href="thread.html#1431">[ thread ]</a>
+              <a href="subject.html#1431">[ subject ]</a>
+              <a href="author.html#1431">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Feb 6, 2010 at 2:02 AM, bent jakobsen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>&gt; wrote:
+&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> Just wanted to do a fresh install on a clean system out of curiosity :)
+</I>&gt;<i>
+</I>&gt;<i> I have the following observations from trying to install sorcerer by using
+</I>&gt;<i> the menu on a virtualbox and with the latest iso (sorcerer-ia32-20100122)
+</I>&gt;<i>
+</I>&gt;<i> When I had the DVD drive on secondary ide slave it listed the following:
+</I>&gt;<i>
+</I>&gt;<i> &#8221;Install/Rescue Image not found
+</I>&gt;<i>
+</I>&gt;<i> Discover the block device for
+</I>&gt;<i>
+</I>&gt;<i> the install/rescue image and
+</I>&gt;<i>
+</I>&gt;<i> mount that device on /media/IR
+</I>&gt;<i>
+</I>&gt;<i> Sorry for the inconvenience
+</I>&gt;<i>
+</I>&gt;<i> Press enter when prompted for password
+</I>&gt;<i>
+</I>&gt;<i> When complete type exit to resume
+</I>&gt;<i>
+</I>&gt;<i> Give root password for maintenance&#8221;
+</I>&gt;<i>
+</I>&gt;<i> I therefore moved it to the primary slave and it booted without any
+</I>&gt;<i> problems.
+</I>
+That is curious.
+The script for locating the I/R should check all removable media.
+Perhaps it did not show up due to the BIOS
+or due to the CDROM drive having some trouble
+reading the disk at that time?
+
+These are the commands:
+  grep -l 1 /sys/block/*/removable |
+  sed    's:/sys/block/:/dev/:
+                      s:/removable::'
+
+This is the output on the test box:
+
+/dev/fd0
+/dev/hdd
+
+If you have an opportunity to try it again
+would you please debug the /etc/init.d/find_ir script.
+It might be doing something wrong,
+but if it is that should be much easier to spot
+on a box where the problem is happening.
+Otherwise it will attempt 12 times over the course
+of about a minute to mount the removable media.
+That usually works even on somewhat faulty CDROMs
+
+
+&gt;<i> But when trying to select device in the fstab menu, it would not load
+</I>&gt;<i> anything. It can not list the devices, even though there is no problem when
+</I>&gt;<i> selecting partition and formatting it with cfdisk.
+</I>
+What exactly was on the fstab menu?
+It listed no
+/dev/hda1
+/dev/hda2
+/dev/hda3
+even if such partitions exist?
+
+I should have seen this problem while testing
+the I/R in qemu if it happens.
+
+
+&gt;<i> To me it seems like that the menu-driven installer is broken (or at least
+</I>&gt;<i> the menu item for modifying the fstab)
+</I>
+The virtual machine emulator might also be problematic.
+I test the I/R using qemu.
+If the disk can be partitioned
+and the fstab menu displays no partitions
+then that is an unexpected problem.
+Usually, after a disk is partitioned
+udev will pick up on those changes
+and automatically create the partitions in /dev/
+Is it possible that the disk was partitioned,
+yet the partitioning program was exited without
+saving the changes to disk?
+Did /dev/ really lack /dev/hda1 and other device nodes
+for partitions?
+Was udevd still running?
+
+Since I was unable to create this type of error while
+testing the I/R I suspect that the answers will be found
+if the problems are re-created again the same way as
+you did before using the same virtual machine emulator.
+I also recommend giving it a test with qemu in order to
+eliminate the possibility that the virtual machine emulator
+is causing the problem.
+
+I appreciate the bug report.
+I agree that in your circumstance it is not installable.
+However, I am still curious to know why it is so.
+The cause of these bugs might not be the menu driven installer.
+It could be the virtual machine emulator.
+
+When I test the I/R I test it using qemu with the CDROM
+image file and not a real physical CDROM.
+Consequently, qemu emulates a CDROM device.
+This gives good results and eliminates the possibility
+of physical media read error or quirky having a quirky CDROM drive.
+If you want to emulate the virtual machine
+then I also recommend emulating the CDROM
+and using the ISO9660 image directly
+with the virtual machine emulation program.
+
+Please provide further information about the problem.
+Hopefully, you will be able to amass some information
+that can be used to help improve the scripts.
+Thanks to what Evert reported about faulty CDROM drives
+the find_ir script was improved to be much better with
+working with actual quirky CDROM drives.
+So retrospect suggests that there is hope for progress.  :)
+However, at the moment I do not have a sufficient idea
+of what is happening in order to make any changes that
+could result in fixing the problems that impaired installation.
+
+If you try qemu then maybe that will work better.
+
+#!/bin/bash
+qemu-system-x86_64 -m 384  \
+-cdrom /tmp/sorcerer-x86_64-20100122.iso \
+-boot d &quot;$@&quot; -vnc :1 hda &amp;
+
+That command is sufficient to start qemu
+in order to test the most recent x86_64 I/R
+
+#!/bin/bash
+qemu -m 384 -cdrom /tmp/sorcerer-ia32-20100122.iso \
+-boot d &quot;$@&quot; -vnc :1 hda &amp;
+
+And this can be used for testing the IA32 I/R.
+
+# rm hda
+# qemu-img create hda 4G
+
+And remember to create the hda image before starting.
+And run qemu under a user account and not as root.
+
+If the images do not test out properly
+then I do not uploaded them.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001428.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+	<LI>Next message: <A HREF="001436.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1431">[ date ]</a>
+              <a href="thread.html#1431">[ thread ]</a>
+              <a href="subject.html#1431">[ subject ]</a>
+              <a href="author.html#1431">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

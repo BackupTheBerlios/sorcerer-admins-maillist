@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Documentation continues...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Documentation%20continues...&In-Reply-To=%3C596b75860810261853x5232250fsfc5f86461f881695%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000815.html">
+   <LINK REL="Next"  HREF="000820.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Documentation continues...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Documentation%20continues...&In-Reply-To=%3C596b75860810261853x5232250fsfc5f86461f881695%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Documentation continues...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Oct 27 02:53:15 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000815.html">[Sorcerer-admins] Documentation continues...
+</A></li>
+        <LI>Next message: <A HREF="000820.html">[Sorcerer-admins] Documentation continues...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#819">[ date ]</a>
+              <a href="thread.html#819">[ thread ]</a>
+              <a href="subject.html#819">[ subject ]</a>
+              <a href="author.html#819">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Way to go Evert!
+Your new docs are already posted at sorcerer.silverice.org
+It has a good feeling of unbias grit to it.
+Thanks.
+
+It touched upon an important issue that I wrote about on the list previously.
+If an x86_64 installation has an ia32 installation in a subdirectory and the
+ia32 installation is maintained then the two should be possible to
+staple together.
+
+Let us assume that the IA32 installation is /opt/ia32
+First, /lib/ld-linux.so.2 must be a symbolic link to /opt/ia32/lib/ld-linux.so.2
+Second, /etc/ld.so.conf must contain lines:
+/opt/ia32/lib
+/opt/ia32/usr/lib
+Finally, ldconfig must be run.
+
+That aught to work, but I am awaiting for anyone to report success trying it.
+I eventually plan to try it in qemu x86_64 with separate disk image for
+an ia32 sorcerer install and x86_64 install.
+However, at the moment qemu-x86_64 is busy compiling updates.
+
+An IA32 installation stapled onto an x86_64 installation
+should allow running pre-compiled IA32 executables such as AdobeReader,
+flash, and even IA32 wine for running win32 software.
+
+Due to the limitations of libtool, pkgconfig, sorcery-sentinel, and sources
+that install into lib and not lib64 directories on x86_64 architecture
+stapling separate installations of x86_64 and ia32 Sorcerer together
+should be the most sane and safe way to acquire the functionality.
+
+
+On Sun, Oct 26, 2008 at 12:40 PM, evert vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Since you are asking so nicely, I typed out some considerations for someone
+</I>&gt;<i> that have not used Sorcerer before, and is maybe thinking of giving it a
+</I>&gt;<i> spin.
+</I>&gt;<i>
+</I>&gt;<i> I hereby release the following text to Kyle Sallee to do with as he wants.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000815.html">[Sorcerer-admins] Documentation continues...
+</A></li>
+	<LI>Next message: <A HREF="000820.html">[Sorcerer-admins] Documentation continues...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#819">[ date ]</a>
+              <a href="thread.html#819">[ thread ]</a>
+              <a href="subject.html#819">[ subject ]</a>
+              <a href="author.html#819">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

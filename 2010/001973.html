@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTim8VSQjnit2Ka8R8Ka1rmMm4f5bOh%3DmnGwj2mPQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001968.html">
+   <LINK REL="Next"  HREF="001974.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTim8VSQjnit2Ka8R8Ka1rmMm4f5bOh%3DmnGwj2mPQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 28 07:19:22 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001968.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+        <LI>Next message: <A HREF="001974.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1973">[ date ]</a>
+              <a href="thread.html#1973">[ thread ]</a>
+              <a href="subject.html#1973">[ subject ]</a>
+              <a href="author.html#1973">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nearly without exclusion all init-scripts source in /lib/lsb/init-functions.
+That is a place where most of the code common to all init-scripts
+has been factored out of init-scripts and placed in /lib/lsb/init-functions.
+Therefore, deciding upon a common method for configuration files
+for init-scripts also makes sense such as
+/etc/init.d.conf/$INIT_SCRIPT
+where $INIT_SCRIPT is the same name as the init-script being run
+
+/etc/init.d/httpd
+would have it's configuration file as:
+/etc/init.d.conf/httpd
+If /etc/init.d.conf/httpd
+is present
+then it would be automatically sourced in
+when /lib/lsb/init-functions is sourced in.
+Therefore, almost no change to existing init-scripts
+would have to be made in order to support
+the additional functionality for init-script configuration files.
+
+Let us take /etc/init.d/loadkeys for example.
+Well, actually, that init-scirpt would be good to go
+with the new implementation without modification.
+So not a great example.
+
+But surely, there might be some init-script
+where a variable expected to be sourced in
+from a configuration file would have to be assigned
+a default value before or while it is being used such as:
+
+if start_daemon $SRV $OPTS ${DEFINES:-defaults}
+
+and so forth.
+
+
+Once we have a clear statement about
+exactly what should require what in the
+way of SA defined parameters/variables
+Then we should have a better idea how to handle this.
+
+A more generic approach might be to more simply
+use a default variable name when only one variable is expected
+to be set and also expected to be given as a parameter when
+a service is started.
+
+Perhaps
+
+$EXTRA
+
+Ideally, we should go with something
+that is both flexible and yet not more complicated
+than required for most scenarios.
+Since init-scripts tend to be simple
+in most cases if a SA would want to supply
+additional information
+then one variable might be reasonable.
+
+
+How does this seem as a compromise?
+This way with overall better init-scripts
+then in most cases as SA would only have to
+edit a single line in a file created in/etc/init.d.conf/
+instead of creating a custom init-script.
+In many respects it should be a bit more portable.
+Even if an init-script changes, improves, or alters slightly
+then the variable will still probably be usable from the configuration file.
+
+The benefit to this method is that it is concise and fast.
+The obviously flaw is that a change in an init-script's name
+would cause an existing configuration file to have an incorrect name
+unless the sorcery tools or SA manually fixed that.
+
+The benefit of having separate configuration files instead
+of many variables in a single file
+provides benefits such as:
+
+it reduces SA headache and information overload;
+it allows for the use of a generic variable or generic variable array.
+It should be a bit faster than repeatedly parsing a longer file
+that sets many variables where normally each variable
+is only used by a single init-script.
+
+The banes:
+SA must read /etc/init.d/README to discover
+that configuration files are in /etc/init.d.conf/
+But the benefit of having them in a different directory
+allows for faster creation of symbolic links to init-scripts
+and also a very simple rule for excluding /etc/init.d/
+from being a place that stores customizable configuration files.
+In other words the configuration files for init-scripts
+would work best when stored in a different directory.
+
+Configuration files for init-scripts could be stored in a separate directory
+such as /etc/init.d.conf/ or /etc/init.d/conf/
+
+The later version might or might not be more obvious.
+It has the benefit of probably being seen when doing
+a ls from within /etc/init.d/
+Surmising what it contains might be less intuitive than
+if a SA sees /etc/init.d/ and /etc/init.d.conf/ just below
+on a ls of /etc/
+
+If we go with this type of implementation
+to provide configuration information for init-scripts
+than I would like to hear who wants /etc/init.d.conf/
+and who wants /etc/init.d/conf/ and reasons why.
+
+I will add again that the sed statement to allow
+files in /etc/init.d/conf/ to be customizable should be
+slightly slower and also accessing files in /etc/init.d/conf/
+should be slightly slower than accessing files in
+/etc/init.d.conf/
+The speed consideration is almost insignificant.
+One might argue that one less directory in
+/etc/ provides faster accessing of files and directories in /etc/
+Configuration files for init-scripts
+perhaps seem more at home in /etc/init.d/conf/
+If it is not any less obvious to find or any less intuitive
+then /etc/init.d/conf might provide a better location
+just to keep all that stuff grouped together.
+In a way it already follows the precedent set up
+by the directories:
+/etc/init.d/log.d/
+/etc/init.d/dev.d/
+If we called it
+/etc/init.d/conf.d/
+then it would fit in very nice, yes?
+
+
+
+
+
+On Tue, Oct 26, 2010 at 10:37 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Tuesday, October 26, 2010, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+</I>&gt;&gt;<i> Regarding init-scripts, i am asking how we are handling that point that
+</I>&gt;&gt;<i> almost all daemons has some sort of options required when they are
+</I>&gt;&gt;<i> started, i am right?
+</I>&gt;<i>
+</I>&gt;<i> Some of the init.d scripts specify a CONF option which often points to /etc/*
+</I>&gt;<i> configuration file. This works fine **if** the daemon can read configuration
+</I>&gt;<i> from a config file.
+</I>&gt;<i>
+</I>&gt;<i> I believe there is at least one service where the options are sourced from a
+</I>&gt;<i> config file, i.e. the daemon does not read the configuration options. But I
+</I>&gt;<i> can't find it at the moment.
+</I>&gt;<i>
+</I>&gt;<i> Maybe there should be a standard variable, e.g.
+</I>&gt;<i> LOCAL_OPTS=/etc/daemon.local.conf, which would be then sourced for additional
+</I>&gt;<i> service start up options.
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It's almost always needed to modify eg. httpd (apache) startup parameters,
+</I>&gt;&gt;<i> eg. define -D&lt;variable&gt;, etc, SSL startup options, etc. How do we
+</I>&gt;&gt;<i> customize them if we cant modify init-scripts.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If we cant touch init-scripts directly then IMHO we need some (other) way
+</I>&gt;&gt;<i> to easily and fast to modify those startup options. Usually Red Hat
+</I>&gt;&gt;<i> related has /etc/sysconfig/&lt;daemon&gt; (or similar) file and init-scripts
+</I>&gt;&gt;<i> reads options from there, this sort of system is used in other distros
+</I>&gt;&gt;<i> too.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Terveisin/Regards,
+</I>&gt;&gt;<i> &#160; &#160;Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001968.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+	<LI>Next message: <A HREF="001974.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1973">[ date ]</a>
+              <a href="thread.html#1973">[ thread ]</a>
+              <a href="subject.html#1973">[ subject ]</a>
+              <a href="author.html#1973">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] iputils fails to build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20iputils%20fails%20to%20build&In-Reply-To=%3Cs2i8596d02a1005040128q1f614b06j5926262ec6c087a9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001588.html">
+   <LINK REL="Next"  HREF="001586.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] iputils fails to build</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20iputils%20fails%20to%20build&In-Reply-To=%3Cs2i8596d02a1005040128q1f614b06j5926262ec6c087a9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] iputils fails to build">d3ck0r at gmail.com
+       </A><BR>
+    <I>Tue May  4 10:28:52 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001588.html">[Sorcerer-admins] .xz files don't get handled right?
+</A></li>
+        <LI>Next message: <A HREF="001586.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1584">[ date ]</a>
+              <a href="thread.html#1584">[ thread ]</a>
+              <a href="subject.html#1584">[ subject ]</a>
+              <a href="author.html#1584">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I know this is definatly not a sorcerer problem, but, iputils fails to build.
+
+I deleted the sources so I would redownload them, and the sources
+still had the following...iputils builds with just make.  the makefile
+rules have
+
+
+tftpd: tftpd.o tftpsubs.o
+arping: arping.o -lsysfs
+ping: ping.o ping_common.o
+ping6: ping6.o ping_common.o -lresolv -lcrypto
+ping.o ping6.o ping_common.o: ping_common.h
+tftpd.o tftpsubs.o: tftp.h
+
+-lresolv will be considered as a filename, and of course -lresolv
+doesn't exist, -lcrypto is the same... WHY they have -l___ in their
+makefile I will never know.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001588.html">[Sorcerer-admins] .xz files don't get handled right?
+</A></li>
+	<LI>Next message: <A HREF="001586.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1584">[ date ]</a>
+              <a href="thread.html#1584">[ thread ]</a>
+              <a href="subject.html#1584">[ subject ]</a>
+              <a href="author.html#1584">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTinueqNyzqxijz5r3Vql8cd_ON6M2OLOxTDp34gr%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001664.html">
+   <LINK REL="Next"  HREF="001673.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTinueqNyzqxijz5r3Vql8cd_ON6M2OLOxTDp34gr%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun 19 18:08:51 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001664.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001673.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1666">[ date ]</a>
+              <a href="thread.html#1666">[ thread ]</a>
+              <a href="subject.html#1666">[ subject ]</a>
+              <a href="author.html#1666">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Jun 19, 2010 at 5:55 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> really interesting concept!
+</I>&gt;<i> just the name of the command is a bit confusing.... I would have looked for
+</I>&gt;<i> something like &quot;dispel -r&quot; or &quot;augur wipe&quot;
+</I>&gt;<i> anyway good news!
+</I>
+Evert also was not fond
+of my choice of naming the new augur command uproot.
+But it does seem a good analogy until someone else
+comes up with a very good name for it.
+
+dispel -r $SPELL
+
+That would be way too dangerous!
+What appears in the dispel queue
+when a SA issues:
+# augur uproot $SPELL
+might contain some surprises
+and include more software than the
+SA wants to dispel.
+
+A dispel -r $SPELL command
+tells dispel to go ahead and do an uproot
+without giving the SA any forewarning
+about what spells would be dispelled.
+Consequently, I created an augur command
+that queues spells for removal.
+
+Additionally, the SA might decide to run
+# augur uproot $SPELL
+# augur uproot $SPELL2
+
+The SA can run the command separately
+for multiple spells or run it together...
+# augur uproot $SPELL1 $SPELL2 $SPELL3
+
+That way the dispel queue can fill without
+dispel running and the SA can start the dispel by invoking:
+# dispel
+After the SA approves the list of spells that will be removed.
+
+
+
+&gt;<i> for the SID how do you manage to have spawned child have there own SID? set
+</I>&gt;<i> -m? or another method?
+</I>
+Spawned children are not normally made session leaders.
+Therefore, they inherit the SID of the session leader
+which might be their parent or a parent of their parent.
+If a spawned child should be a session leader
+then it is up to the programmer to make it so.
+I can not control that without modifying the
+source and recasting the software.
+
+However, I can have init-scripts start new processes
+as session leaders by invoking the program by providing
+the program name and it's parameters as parameters
+to the program setsid.
+
+
+&gt;<i> I think there are also room of improvement with the requirement menu....
+</I>&gt;<i> when I re-installed sorcerer, I had to re-configure every spell... however
+</I>&gt;<i> the list was long and after a while I forgot if I already selected this
+</I>&gt;<i> requirement or not.... I'm annoyed by this inconsistency, spell A opt B and
+</I>&gt;<i> C, spell D opt B and E but at the end when configuring spell D I forgot that
+</I>&gt;<i> I previously selected B...
+</I>&gt;<i> more if spell A req B and C and spell D opt B and E, I would like to only
+</I>&gt;<i> have to opt E because B is &quot;implicitly selected&quot;
+</I>&gt;<i>
+</I>&gt;<i> the rules would be :
+</I>&gt;<i> for SPELL in&#160; ${TO_CONFIGURE}; do
+</I>&gt;<i> &#160;&#160;&#160;&#160; ALL_REQUIRED_SPELLS += requirements(${SPELL})
+</I>&gt;<i> &#160;&#160;&#160;&#160; ALL_ALLREADY_SELECTED_OPT += is_optional_installed(${SPELL})
+</I>&gt;<i> done
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> if [ $(echo &quot;${ALL_REQUIRED_SPELLS} ${ALL_ALLREADY_SELECTED_OPT}&quot; | grep
+</I>&gt;<i> ${OPT} ) != &quot;&quot; ];
+</I>&gt;<i> then
+</I>&gt;<i> &#160; &#160;&#160; autoselect ${OPT}
+</I>&gt;<i> else
+</I>&gt;<i> &#160;&#160;&#160;&#160; TO_QUERY += ${OPT}
+</I>&gt;<i> fi
+</I>&gt;<i> TO_QUERY=$(echo ${TO_QUERY} | sort | uniq)
+</I>&gt;<i>
+</I>&gt;<i> SELECTED_OPT = display_all_OPT_of_all_spells_menu(${TO_QUERY})
+</I>&gt;<i> save_selected_opt_into_conf_file(${SELECTED_OPT})
+</I>&gt;<i> cast ${SELECTED_OPT}
+</I>&gt;<i>
+</I>&gt;<i> like this you can configure all the spells at once, avoiding
+</I>&gt;<i> inconsistencies....
+</I>&gt;<i> now say you dispel a spell A that REQ B is dispelled. let say that spell C
+</I>&gt;<i> has OPT B autoselected because of A, now that A isn't anymore, B is likely
+</I>&gt;<i> to be dispelled. But this won't until B is casted again (say during an
+</I>&gt;<i> update) or if a reconfiguration/clean is requested
+</I>&gt;<i> now there is also a possibility of autoclean of the box. any spell that
+</I>&gt;<i> isn't in the SELECTED_OPT (that contain also the list of spell that are
+</I>&gt;<i> casted by the user) and that isn't required isn't wanted to be installed...
+</I>&gt;<i>
+</I>&gt;<i> what do you think about this?
+</I>
+I am not that fond of it.
+For example...
+I like console only aumix.
+I do not like gtk+ aumix.
+However, for most other programs
+I would not mind using gtk+ as an optional.
+
+I can however improve the probability of
+the configure menus providing default choices
+for optional requirements that are consistent
+for what was selected for other spells.
+
+Additionally,
+you might want to check out the
+# augur always $SPELL
+command.
+More information about it is provided by invoking
+# augur help always
+
+At the moment I do not want to change
+selection of optionals to only permit global changes
+instead of allowing optionals to be selected/rejected
+on a spell by spell basis.
+But I can work towards  implementing
+a better compromise between the two.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001664.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001673.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1666">[ date ]</a>
+              <a href="thread.html#1666">[ thread ]</a>
+              <a href="subject.html#1666">[ subject ]</a>
+              <a href="author.html#1666">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

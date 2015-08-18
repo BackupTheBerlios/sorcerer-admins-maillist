@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] How do I get a GUI to run?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20do%20I%20get%20a%20GUI%20to%20run%3F&In-Reply-To=%3CCAKj5M2MLMn7puOapcbJ%3D61tDTJZy2R61dqtFBe9RwQH3%2Bmf9qw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002378.html">
+   <LINK REL="Next"  HREF="002380.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] How do I get a GUI to run?</H1>
+    <B>Demetri Salamander</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20do%20I%20get%20a%20GUI%20to%20run%3F&In-Reply-To=%3CCAKj5M2MLMn7puOapcbJ%3D61tDTJZy2R61dqtFBe9RwQH3%2Bmf9qw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] How do I get a GUI to run?">demetrisalamander at gmail.com
+       </A><BR>
+    <I>Mon Aug 20 06:23:47 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002378.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+        <LI>Next message: <A HREF="002380.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2379">[ date ]</a>
+              <a href="thread.html#2379">[ thread ]</a>
+              <a href="subject.html#2379">[ subject ]</a>
+              <a href="author.html#2379">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There was no sentient version. I'm somewhat new to the command line but I
+have a guide. I have not done much but I'll do as much as I can before
+asking for help. I need sleep but I can either get back on this tomorrow
+night or Tuesday. Thank you. I don't think I want it to start up with a GUI
+but I want to start up enlightenment or KDE someday.
+
+You should look into the Wayland replacement for X11 or Xorg. From what I
+hear it will be better but it is just developing.
+
+On Sunday, August 19, 2012, Kyle Sallee wrote:
+
+&gt;<i> The selection of software to start during boot
+</I>&gt;<i> is provided in the form of traditional runlevels.
+</I>&gt;<i> This is the description from /etc/inittab
+</I>&gt;<i>
+</I>&gt;<i> # Runlevels
+</I>&gt;<i> # 0: halt
+</I>&gt;<i> # 1: sequential init
+</I>&gt;<i> # 2: parallel   init + multi-user + networking
+</I>&gt;<i> # 3: sequential init + multi-user + networking
+</I>&gt;<i> # 4: parallel   init + multi-user + networking + GUI login
+</I>&gt;<i> # 5: sequential init + multi-user + networking + GUI login
+</I>&gt;<i> # 6: reboot
+</I>&gt;<i> # 7: initramfs
+</I>&gt;<i>
+</I>&gt;<i> On my boxes I use runlevel 3 or runlevel 5.
+</I>&gt;<i> They require longer to run, but the scroll is more clean
+</I>&gt;<i> and less confusing during runlevel execution.
+</I>&gt;<i> However, both 4 and 5 provide the gdm,kdm,xdm GUI login.
+</I>&gt;<i> If Sorcerer Sentient is installed
+</I>&gt;<i> then kdm will run if the runlevel is set to 5.
+</I>&gt;<i> Sorcerer Sentient sets the default runlevel to 4 during installation.
+</I>&gt;<i> On the previous I/R I verified that this worked.
+</I>&gt;<i>
+</I>&gt;<i> I recommend verifying that the Sorcerer Sentient installation is complete.
+</I>&gt;<i> # augur log version sorcerer-sentient
+</I>&gt;<i> If it is not installed then a version number will not print.
+</I>&gt;<i> In that event execute:
+</I>&gt;<i> # augur begin sorcerer-sentient; augur scry
+</I>&gt;<i> Then wait until all spells are successfully cast.
+</I>&gt;<i> At that point press q to leave the scry.
+</I>&gt;<i> Execute
+</I>&gt;<i> # pgrep -u root cast
+</I>&gt;<i> If not PIDs are printed then cast is not running.
+</I>&gt;<i> The box is safe to reboot.
+</I>&gt;<i> # shutdown -r now
+</I>&gt;<i> That is the proper reboot command.
+</I>&gt;<i> Upon reboot KDM will launch.
+</I>&gt;<i> If not then read and report KDM's and Xorg's logs.
+</I>&gt;<i> Those files are in /var/log/
+</I>&gt;<i>
+</I>&gt;<i> On some boxes an /etc/X11/xorg.conf is required.
+</I>&gt;<i> If so we will know from examining the logs.
+</I>&gt;<i> # X -configure
+</I>&gt;<i> will create an xorg.conf and store it in /root/
+</I>&gt;<i> or perhaps somewhere else.
+</I>&gt;<i> Edit it appropriately and move it to /etc/X11/
+</I>&gt;<i> Also verify that the device detected matches with
+</I>&gt;<i> output from lspci -v -v
+</I>&gt;<i> Feel free to adjust resolution modes to match what
+</I>&gt;<i> the monitor and graphics chipset can do.
+</I>&gt;<i> Xorg, is not guaranteed to select optimal resolutions.
+</I>&gt;<i> The resolution might be lower than maximum
+</I>&gt;<i> or it might be maximum and thus cause a monitor
+</I>&gt;<i> to go into interlace mode and flicker.
+</I>&gt;<i> Many CRTs work fine at 1024x768,
+</I>&gt;<i> but can also do 1280x960 mode interlaced.
+</I>&gt;<i> My preference is to avoid interlaced mode.
+</I>&gt;<i> A DFP, digital flat panel might be capable of 1920x1080.
+</I>&gt;<i> Some laptop displays support the same dimension but
+</I>&gt;<i> not as high a resolution.
+</I>&gt;<i> I do not know if they will be damaged by trying to force
+</I>&gt;<i> a higher resolution than designed.
+</I>&gt;<i> Therefore, be careful to read all monitor documentation
+</I>&gt;<i> before selecting modes in /etc/X11/xorg.conf
+</I>&gt;<i>
+</I>&gt;<i> If the box has a NVIDIA graphics card
+</I>&gt;<i> then using the pre-compiled proprietary binary drivers from NVIDIA
+</I>&gt;<i> might be preferred for their OpenGL performance.
+</I>&gt;<i> If so then write back about the monitors attached
+</I>&gt;<i> and a sample configuration file can be found.
+</I>&gt;<i> The other possibility is casting the spells
+</I>&gt;<i> and creating one's own xorg.conf based upon the installed documentation.
+</I>&gt;<i> Basically, that is what I did for my two workstations with NVIDIA graphics.
+</I>&gt;<i>
+</I>&gt;<i> My desire is to use the nouveau driver.
+</I>&gt;<i> But previous tests produced no usable results.
+</I>&gt;<i> And the nv driver that xorg supplies is perhaps better than svga,
+</I>&gt;<i> but without hardware accelerated OpenGL graphics.
+</I>&gt;<i> NVIDIA cards contain two chipsets,
+</I>&gt;<i> one for 2d SVGA and the other for 3D.
+</I>&gt;<i> And in the past they provided little to no information that
+</I>&gt;<i> would assist open source software authors with writing a driver
+</I>&gt;<i> for NVIDIA's 3D chipset.
+</I>&gt;<i>
+</I>&gt;<i> If the chipset is ATI then ATI also provides a pre-compiled proprietary
+</I>&gt;<i> driver.
+</I>&gt;<i> The spell for it in the grimoire is probably old and obsolete.
+</I>&gt;<i> Or perhaps even missing.
+</I>&gt;<i> I might have discarded it during the audit.
+</I>&gt;<i> I never had much luck writing a decent spell for it.
+</I>&gt;<i> But a SA can always download it from the website
+</I>&gt;<i> and try installing it as root allowing it to partially corrupt
+</I>&gt;<i> their Sorcerer box.
+</I>&gt;<i> Provided that immune-exam-integrity does not run and fix it
+</I>&gt;<i> then it might be usable.
+</I>&gt;<i>
+</I>&gt;<i> I have run both ATI and NVIDIA.
+</I>&gt;<i> And my current motherboard has built-in ATI,
+</I>&gt;<i> and I still use a NVIDIA graphics card on it.
+</I>&gt;<i> I would not say that I like either choices that depend on proprietary
+</I>&gt;<i> drivers.
+</I>&gt;<i> However, NVIDIA seems to be the lesser of evils.
+</I>&gt;<i>
+</I>&gt;<i> P.S.
+</I>&gt;<i> Although I already know how /etc/inittab should be
+</I>&gt;<i> checking it would not be a bad idea.
+</I>&gt;<i> Afterall, a person could report that they accomplished
+</I>&gt;<i> a &quot;Sorcerer Sentient&quot; installation when in fact they did a
+</I>&gt;<i> &quot;Sorcerer Modern Magic&quot; installation instead.
+</I>&gt;<i> And how would I know, right?
+</I>&gt;<i>
+</I>&gt;<i> Therefore, if KDE and firefox is desired on a &quot;Sorcerer Modern Magic&quot;
+</I>&gt;<i> installation
+</I>&gt;<i> then the SA would type
+</I>&gt;<i> # augur begin firefox kde; au scry
+</I>&gt;<i> and then wait for it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Aug 19, 2012 at 12:51 AM, Demetri Salamander
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">demetrisalamander at gmail.com</A> &lt;javascript:;&gt;&gt; wrote:
+</I>&gt;<i> &gt; So I found out that my Internet connection was faulty and it is now 3mbps
+</I>&gt;<i> &gt; download and 1mbps upload. So happy on faster Internet and got sorcerer
+</I>&gt;<i> &gt; sentient installed. How do I run KDE or...  I just casted enlightenment
+</I>&gt;<i> and
+</I>&gt;<i> &gt; can use that but I'm stuck at the command line and I can not find
+</I>&gt;<i> &gt; instructions on how to get a GUI up and running and I got the augur menu
+</I>&gt;<i> but
+</I>&gt;<i> &gt; it does not show everything that I can do. How do I get enlightenment to
+</I>&gt;<i> &gt; work so I can use it? What spell? Thank you.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A> &lt;javascript:;&gt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20120820/c7882d32/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20120820/c7882d32/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002378.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+	<LI>Next message: <A HREF="002380.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2379">[ date ]</a>
+              <a href="thread.html#2379">[ thread ]</a>
+              <a href="subject.html#2379">[ subject ]</a>
+              <a href="author.html#2379">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

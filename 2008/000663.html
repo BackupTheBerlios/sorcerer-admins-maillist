@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807301713s5bd1da3arecf0a3a0248fdbe1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000662.html">
+   <LINK REL="Next"  HREF="000683.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807301713s5bd1da3arecf0a3a0248fdbe1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 31 02:13:58 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000662.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000683.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#663">[ date ]</a>
+              <a href="thread.html#663">[ thread ]</a>
+              <a href="subject.html#663">[ subject ]</a>
+              <a href="author.html#663">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks to Jan for reporting the article.
+
+
+I do not know about those file systems described in the article.
+However, the article does imply that the block size should probably
+be larger, at least 32K.
+Maybe 64K on larger flash sizes.
+ext3 on x86_64 architecture supports block sizes larger than 4K.
+The limit may be 64K block sizes.
+However, if the filesystem blocks are not aligned with the flash blocks
+then a 32K block may involve writing to 2 32K portions of the flash drive.
+While a 64K block may require writing to 3 32K portions of the flash drive.
+Obviously, reiserfs would not be a good choice for flash drives,
+because adding file tails to directories would virtually groove the
+the flash sectors that hold frequently modified directories.
+
+Grepping ubifs in /usr/src/linux/Documentation/filesystems/
+found nothing.
+Obviously, using filesystems designed for magnetic media
+is not the ideal solution for flash drives.
+However, I expect using something provided in the vanilla linux kernel
+is a better idea than trying to patch in support which may require
+older kernels, or kernels updates to be held back while waiting
+for the patch to be rewritten for the newer kernels.
+
+Given the list of filesystems already supported by the linux kernel
+what filesystem do you expect will work best on flash drives?
+
+Obviously, journals may be bad for a flashdrive as they may
+cause data to be written twice or more.
+However, being able to delay commits long enough to
+reduce the amount of data written has potential.
+Consequently, I do not already have an opinion about
+what filesystem may be best.
+
+
+On Wed, Jul 30, 2008 at 3:33 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> More technical details about flash memories and filesystems for them:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://lwn.net/Articles/276025/">http://lwn.net/Articles/276025/</A>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000662.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000683.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#663">[ date ]</a>
+              <a href="thread.html#663">[ thread ]</a>
+              <a href="subject.html#663">[ subject ]</a>
+              <a href="author.html#663">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

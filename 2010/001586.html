@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] iputils fails to build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20iputils%20fails%20to%20build&In-Reply-To=%3Cn2o596b75861005041731sddd04df8sa0986aed5beb924d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001584.html">
+   <LINK REL="Next"  HREF="001587.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] iputils fails to build</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20iputils%20fails%20to%20build&In-Reply-To=%3Cn2o596b75861005041731sddd04df8sa0986aed5beb924d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] iputils fails to build">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May  5 02:31:35 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001584.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+        <LI>Next message: <A HREF="001587.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1586">[ date ]</a>
+              <a href="thread.html#1586">[ thread ]</a>
+              <a href="subject.html#1586">[ subject ]</a>
+              <a href="author.html#1586">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># augur from libresolv
+glibc:/lib/libresolv-2.11.1.so
+glibc:/lib/libresolv.so.2
+glibc:/usr/lib/libresolv.a
+glibc:/usr/lib/libresolv.so
+
+# augur from libresolv
+glibc:/lib64/libresolv-2.11.1.so
+glibc:/lib64/libresolv.so.2
+glibc:/usr/lib64/libresolv.a
+glibc:/usr/lib64/libresolv.so
+
+# augur compile iputils | grep resolv
+gcc  -Wl,-s  ping6.o ping_common.o /usr/lib/libresolv.so
+/usr/lib/libcrypto.so   -o ping6
+
+The compile log looks different on my box.
+Perhaps the compile worked because bind is installed
+on that box?
+
+The makefile rule does look as if it should fail.
+But perhaps GNU's make somehow handles that correctly?
+
+Since no compile error happens for me,
+I require further information in order to fix this problem.
+
+
+On Tue, May 4, 2010 at 1:28 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> I know this is definatly not a sorcerer problem, but, iputils fails to build.
+</I>&gt;<i>
+</I>&gt;<i> I deleted the sources so I would redownload them, and the sources
+</I>&gt;<i> still had the following...iputils builds with just make. &#160;the makefile
+</I>&gt;<i> rules have
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> tftpd: tftpd.o tftpsubs.o
+</I>&gt;<i> arping: arping.o -lsysfs
+</I>&gt;<i> ping: ping.o ping_common.o
+</I>&gt;<i> ping6: ping6.o ping_common.o -lresolv -lcrypto
+</I>&gt;<i> ping.o ping6.o ping_common.o: ping_common.h
+</I>&gt;<i> tftpd.o tftpsubs.o: tftp.h
+</I>&gt;<i>
+</I>&gt;<i> -lresolv will be considered as a filename, and of course -lresolv
+</I>&gt;<i> doesn't exist, -lcrypto is the same... WHY they have -l___ in their
+</I>&gt;<i> makefile I will never know.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001584.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+	<LI>Next message: <A HREF="001587.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1586">[ date ]</a>
+              <a href="thread.html#1586">[ thread ]</a>
+              <a href="subject.html#1586">[ subject ]</a>
+              <a href="author.html#1586">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

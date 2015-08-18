@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] svn ending with SIGTERM (15)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20svn%20ending%20with%20SIGTERM%20%2815%29&In-Reply-To=%3CAANLkTilcCyJ7mJN5k_8ywGnWdteSx3qcPO25nlG960OC%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001651.html">
+   <LINK REL="Next"  HREF="001658.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] svn ending with SIGTERM (15)</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20svn%20ending%20with%20SIGTERM%20%2815%29&In-Reply-To=%3CAANLkTilcCyJ7mJN5k_8ywGnWdteSx3qcPO25nlG960OC%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] svn ending with SIGTERM (15)">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Wed Jun  2 13:44:23 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001651.html">[Sorcerer-admins] svn ending with SIGTERM (15)
+</A></li>
+        <LI>Next message: <A HREF="001658.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1652">[ date ]</a>
+              <a href="thread.html#1652">[ thread ]</a>
+              <a href="subject.html#1652">[ subject ]</a>
+              <a href="author.html#1652">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>the problem is that git-svn use a perl script... maybe the developpers does
+check output for error string.....
+but it obviously prevent using git-svn
+JL
+
+On Tue, Jun 1, 2010 at 8:31 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> It is not a problem that will go away with recompilation.
+</I>&gt;<i> I have seen it for some time now, maybe longer than a year.
+</I>&gt;<i> It might have something to do with svn
+</I>&gt;<i> Even if svn is terminated with signal 15
+</I>&gt;<i> that probably should not create an adverse effect.
+</I>&gt;<i>
+</I>&gt;<i> # svn commit -m &quot;comments from a bug report&quot;; echo $?
+</I>&gt;<i> Sending        gdm
+</I>&gt;<i> Transmitting file data .
+</I>&gt;<i> Committed revision 9149.
+</I>&gt;<i> Killed by signal 15.
+</I>&gt;<i> 0
+</I>&gt;<i>
+</I>&gt;<i> 15 is a normal termination signal rather than an error
+</I>&gt;<i> such as being killed by SIGHUP, SIGINT, SIGABRT, SIGSEGV.
+</I>&gt;<i>
+</I>&gt;<i> As I demonstrated in the above example
+</I>&gt;<i> yes it prints Killed by signal 15.
+</I>&gt;<i> However, it does not return non zero.
+</I>&gt;<i>
+</I>&gt;<i> # false; echo $?
+</I>&gt;<i> 1
+</I>&gt;<i>
+</I>&gt;<i> If it returned 1, such as above
+</I>&gt;<i> then that might cause problems for something
+</I>&gt;<i> that checks it's return code.
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jun 1, 2010 at 7:13 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; I do not have the same problem with svn. Mainly because I do not use svn.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have noticed that sometimes Sorcerer throws some strange errors that go
+</I>&gt;<i> &gt; away after a complete recompile. The spells have recently been beaten
+</I>&gt;<i> into a
+</I>&gt;<i> &gt; very compilable state... so if your box has a lot of CPU, and you have
+</I>&gt;<i> not
+</I>&gt;<i> &gt; done so already, recompile everything on the box.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If the problem persists after that, it might be worth it to open a bug
+</I>&gt;<i> &gt; report at the svn developers?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; -Evert-
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Tue, Jun 1, 2010 at 1:58 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Hi!
+</I>&gt;<i> &gt;&gt; I've a problem with svn.... it always end with a message saying it
+</I>&gt;<i> &gt;&gt; received the 15 signal (that correspond to SIGTERM if I'm correct)
+</I>&gt;<i> &gt;&gt; I recasted svn with no change
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; it's not problematic for simple svn use since it seems that the commit
+</I>&gt;<i> did
+</I>&gt;<i> &gt;&gt; succeed but it's annoying with git-svn since the wrapper script does
+</I>&gt;<i> check
+</I>&gt;<i> &gt;&gt; the return code and then fails to perform it's tasks
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; does anyone has the same error?
+</I>&gt;<i> &gt;&gt; thanks
+</I>&gt;<i> &gt;&gt; JLM
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> &gt;&gt; (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &gt;&gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> &gt;&gt; simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> &gt;&gt; -----------------------------
+</I>&gt;<i> &gt;&gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> &gt;&gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+</I>&gt;<i> Reese
+</I>&gt;<i> &gt;&gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100602/310eca57/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100602/310eca57/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001651.html">[Sorcerer-admins] svn ending with SIGTERM (15)
+</A></li>
+	<LI>Next message: <A HREF="001658.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1652">[ date ]</a>
+              <a href="thread.html#1652">[ thread ]</a>
+              <a href="subject.html#1652">[ subject ]</a>
+              <a href="author.html#1652">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

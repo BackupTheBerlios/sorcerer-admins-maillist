@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20i915%20module%2C%20xf86-video-intel%2C%20initramfs%2C%0A%20init-scripts%2C%20udev%20and%20other%20important%20changes.&In-Reply-To=%3CAANLkTi%3DB%2BTJ9pPz%2B6pUh_SoOKbYMc0fE%3DdR3cACetHpD%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001953.html">
+   <LINK REL="Next"  HREF="001955.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20i915%20module%2C%20xf86-video-intel%2C%20initramfs%2C%0A%20init-scripts%2C%20udev%20and%20other%20important%20changes.&In-Reply-To=%3CAANLkTi%3DB%2BTJ9pPz%2B6pUh_SoOKbYMc0fE%3DdR3cACetHpD%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Oct 20 19:40:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001953.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+        <LI>Next message: <A HREF="001955.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1954">[ date ]</a>
+              <a href="thread.html#1954">[ thread ]</a>
+              <a href="subject.html#1954">[ subject ]</a>
+              <a href="author.html#1954">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Oct 20, 2010 at 8:48 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> see inline
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Oct 20, 2010 at 5:12 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The current linux configurations enable mode setting for i915.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # cast linux
+</I>&gt;<i>
+</I>&gt;<i> done
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The linux spell will install an additional file:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # cat /etc/modprobe.d/i915.conf
+</I>&gt;&gt;<i> blacklist i915
+</I>&gt;<i>
+</I>&gt;<i> yep done also
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This allows booting without having the console perm-blanked
+</I>&gt;&gt;<i> when udev loads module i915.ko,
+</I>&gt;&gt;<i> because udev will not load module i915.ko
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Do not pass kernel parameters to disable kernel mode setting.
+</I>&gt;&gt;<i> When xf86-video-intel loads the i915.ko
+</I>&gt;&gt;<i> it will require kernel mode setting.
+</I>&gt;<i>
+</I>&gt;<i> what is this parameter? was it included by default in lilo.conf before?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &lt;...snap...&gt;
+</I>&gt;<i>
+</I>&gt;<i> thanks and regards
+</I>&gt;<i> JLM
+</I>
+The parameter was not in lilo.conf by default.
+It was a parameter to disable kernel mode setting.
+I only learned about it because I read about it in other people's posts.
+Many people were having difficult discovering how to avoid having
+i915.ko with mode setting perm-blank the console during boot
+while at the same time being able to use xf86-video-intel.
+I guessed that screen went blank when udev loaded the console,
+so I looked through the udev source tree to discover how to
+prevent udev from loading modules while at the same time
+hoping that xf86-video-intel would load the module.
+Turned out to be an optimal combination.
+
+Prior to installing Sorcerer on a Pentium M
+I did not know about this potential problem involving i915.ko
+And the kernel was configured so that kernel mode setting support
+was disabled on that module.
+I do not know if it was an omission on my part
+or something requested by a SA.
+But since I had a the laptop to test on
+I decided to find a combination that works.
+
+Whether it works or not might be a bit iffy
+if the xf86-video-intel or i915.ko is buggy.
+It seems to work.
+I did a boot with memtest=8
+No problems with the RAM.
+However, the box did occasionally lock up.
+I suspect xf86-video-intel.
+
+However, the CPU is now running at the lowest frequency
+and that should avoid a lock-up problem caused by a bad
+design or a problem in the CPU.
+I doubt the original owner of the laptop
+did a full bore 1 week burn in test.
+Perhaps the fastest configuration is not stable
+at full bore for long periods of time.
+That is my 2nd most likely guess.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001953.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+	<LI>Next message: <A HREF="001955.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1954">[ date ]</a>
+              <a href="thread.html#1954">[ thread ]</a>
+              <a href="subject.html#1954">[ subject ]</a>
+              <a href="author.html#1954">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,381 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] compile failure on gcc 4.2.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C9104f1fb0708141428y37d6ee92q63a67e433c37a1af%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000128.html">
+   <LINK REL="Next"  HREF="000142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] compile failure on gcc 4.2.1</H1>
+    <B>John Locke</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C9104f1fb0708141428y37d6ee92q63a67e433c37a1af%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] compile failure on gcc 4.2.1">loki1725 at gmail.com
+       </A><BR>
+    <I>Tue Aug 14 23:28:13 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000128.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+        <LI>Next message: <A HREF="000142.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#139">[ date ]</a>
+              <a href="thread.html#139">[ thread ]</a>
+              <a href="subject.html#139">[ subject ]</a>
+              <a href="author.html#139">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I tried playing with this again today.  I ran augur update, and made sure my
+versions of the grimoire, gcc and glibc all matched.  Then I ran sorcery
+update and got many many failures.  I think the root failure was busybox.
+Anyway, I am going to start over again from scratch.  I think the initial
+gcc failure never got recovered from and it's messing with everything else.
+Actually, if you are currently creating a new I/R, I'll probably wait for
+that.  I wanted to switch to sorcerer partly because my debian install was
+going cooky and rather than spend time messing with it, I thought it would
+be fun/educational to try something new.  Anyway, I can wait a week to make
+the switch over.
+
+
+Thanks for you help and suggestions.  I'm very impressed at the level of
+support around here.
+
+
+
+On 8/14/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Actually, it might have failed.
+</I>&gt;<i> If there is any instability in the system or a random error
+</I>&gt;<i> or anything strange then compilation could fail.
+</I>&gt;<i> Compilation of software is the most intensive use of CPU
+</I>&gt;<i> that your box might ever do and therefore most likely
+</I>&gt;<i> to occur errors.
+</I>&gt;<i> However, I never see such errors on my boxes...
+</I>&gt;<i> but I know some hardware is horrible, especially since
+</I>&gt;<i> my Abit motherboard detonated with a large boom!
+</I>&gt;<i> Of course that was a long time ago.
+</I>&gt;<i> But before it blew up, it usually just locked up the box
+</I>&gt;<i> after about a week of uptime.
+</I>&gt;<i> I read the problem was caused by the capacitors and
+</I>&gt;<i> an incorrect formula for creating them that was acquired
+</I>&gt;<i> by some corporate espionage.
+</I>&gt;<i> But I do not know, I do not know what to believe.
+</I>&gt;<i> Motherboards blow up, power supplies catch fire,
+</I>&gt;<i> and apparently so do certain laptop batteries.
+</I>&gt;<i> I am thinking that my next computer upgrade should
+</I>&gt;<i> be a CO2 fire-extinguisher.
+</I>&gt;<i>
+</I>&gt;<i> As for sorcery, if the retry feature is enabled,
+</I>&gt;<i> which is probably the case, then it automatically
+</I>&gt;<i> retried compilation of gcc after the initial failure
+</I>&gt;<i> which it apparently logged.
+</I>&gt;<i> However, the gcc compile log snapshot that you
+</I>&gt;<i> sent shows no indication of gcc failing to compile.
+</I>&gt;<i> That looks like the files were being copied.
+</I>&gt;<i>
+</I>&gt;<i> The very strange aspect about it is that it is a compile log
+</I>&gt;<i> for gcc-v4.0, or a very old deployment of Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> First, you aught to run:
+</I>&gt;<i>
+</I>&gt;<i> # augur sync
+</I>&gt;<i> Then, compare:
+</I>&gt;<i> # augur version grimoire
+</I>&gt;<i> # augur available grimoire
+</I>&gt;<i> If it is not the same
+</I>&gt;<i> then issue:
+</I>&gt;<i> # cast grimoire
+</I>&gt;<i> Now that the grimoire is up to date issue:
+</I>&gt;<i> # cast sorcery
+</I>&gt;<i> # Now sorcery should be up to date.
+</I>&gt;<i>
+</I>&gt;<i> In the future you will only have to issue something like:
+</I>&gt;<i> # augur sync
+</I>&gt;<i> # augur newer
+</I>&gt;<i> # augur update
+</I>&gt;<i>
+</I>&gt;<i> If you want to remove a spell from the cast queue then you can issue
+</I>&gt;<i> # augur remove the_spell_name
+</I>&gt;<i> Where the_spell_name is the name of the spell to remove.
+</I>&gt;<i>
+</I>&gt;<i> The x86_64 Sorcerer I/R is so many months old now that
+</I>&gt;<i> it might not update to current without incurring a problem.
+</I>&gt;<i> But maybe it will?
+</I>&gt;<i> Best chance is to use tomorrow's grimoire.
+</I>&gt;<i> grimoire version 2007-227
+</I>&gt;<i>
+</I>&gt;<i> The reason for that is that I am currently updating the x86_64 I/R
+</I>&gt;<i> It will take me a week maybe more to update it.
+</I>&gt;<i> I started updating it last week.
+</I>&gt;<i> A couple days to compile linux
+</I>&gt;<i> a few more to compile gcc, etc...
+</I>&gt;<i> Since I am using qemu to emulate the architecture
+</I>&gt;<i> the progress of updating it is anything but fast.
+</I>&gt;<i>
+</I>&gt;<i> However, while doing the updates I detected subtle problems.
+</I>&gt;<i> A problem with the gcc spell exited, for example.
+</I>&gt;<i> As I detect those problems I fix them.
+</I>&gt;<i> However, the grimoire only rolls once per day.
+</I>&gt;<i> So you will have to wait until about 10 minutes after
+</I>&gt;<i> the next UTC 00:00 to update to the bug fixed grimoire.
+</I>&gt;<i> If not you can grab it from svn.
+</I>&gt;<i> Otherwise, I am assuming if you cast gcc now it will
+</I>&gt;<i> not properly create the LDD log and then come up to
+</I>&gt;<i> be recast periodically with the event of gcc having
+</I>&gt;<i> an ELF Failure.
+</I>&gt;<i>
+</I>&gt;<i> Sorry for the inconvenience, but I since I have 0
+</I>&gt;<i> x86_64 installations of Sorcerer deployed I rely
+</I>&gt;<i> only on bug reports to find and fix errors with it.
+</I>&gt;<i> But with that said it still runs decently, especially
+</I>&gt;<i> due to Jan Merka's timely fixing of spells to compile
+</I>&gt;<i> and install correctly on x86_64 architecture.
+</I>&gt;<i>
+</I>&gt;<i> If you are wondering why the error reports are slim....
+</I>&gt;<i> mainly that is because there is rarely anything to report,
+</I>&gt;<i> secondly many Sorcerer SAs second guess whether a report is actually
+</I>&gt;<i> required.
+</I>&gt;<i> Sorcerer boxes have a decent ability for self repair
+</I>&gt;<i> assuming the spells in the grimoire are adequate.
+</I>&gt;<i> When doing updates for example you may see
+</I>&gt;<i> event reports of such and such a spell had an
+</I>&gt;<i> &quot;ELF Failure&quot;
+</I>&gt;<i> And that can mean many things such as a dynamic
+</I>&gt;<i> link library it requires has either been updated or is
+</I>&gt;<i> no longer installed or has gone missing.
+</I>&gt;<i> And well over 99.9% of the time Sorcerer boxes
+</I>&gt;<i> detect and repair those &quot;ELF Failure&quot; without
+</I>&gt;<i> the SA having to do anything.
+</I>&gt;<i>
+</I>&gt;<i> However, if you do encounter a repeating situation
+</I>&gt;<i> and especially have a compile log that indicates a
+</I>&gt;<i> compile failure then please go ahead and bzip2
+</I>&gt;<i> that compile log and email it along with the report
+</I>&gt;<i> to this email list...
+</I>&gt;<i>
+</I>&gt;<i> Each Sorcerer box is individual in the software loadout.
+</I>&gt;<i> And that can cause certain errors to go unspotted when
+</I>&gt;<i> I check new releases of software to be integrated into the distro.
+</I>&gt;<i> At one time there was a compile error which happened when
+</I>&gt;<i> db was being compiled, but this error only happened on boxes
+</I>&gt;<i> that had emacs installed.
+</I>&gt;<i> And of course none of my deployed boxes had emacs installed.
+</I>&gt;<i> Therefore, I did not detect this problem until I was trouble shooting
+</I>&gt;<i> someone else's box over ssh.
+</I>&gt;<i> Who knew or would even expect such a potential problem, yes?
+</I>&gt;<i> But since that was years ago I may be incorrect about it being
+</I>&gt;<i> a problem with db and emacs.
+</I>&gt;<i> But the example does show that the individuality of each
+</I>&gt;<i> Sorcerer box means that not every SA will encounter the same errors.
+</I>&gt;<i> That does not imply that you will encounter errors.
+</I>&gt;<i> But if you do then you will find your skill as a senior level SA
+</I>&gt;<i> comes in handy for both fixing the problem on the spot
+</I>&gt;<i> and also making an error report that can have the problem
+</I>&gt;<i> fixed distribution wide.
+</I>&gt;<i> Sort of makes it like a text adventure game, yes?
+</I>&gt;<i>
+</I>&gt;<i> Jan's recommendation of tmpfs for /usr/src/sorcery is good
+</I>&gt;<i> for boxes with 2G of RAM or more only because tmpfs is
+</I>&gt;<i> faster than a physical filesystem, does not cause wear and
+</I>&gt;<i> tear to a physical disk, and does not cause fragmentation to
+</I>&gt;<i> the real filesystems.
+</I>&gt;<i> However, if the box has less RAM then you may want to use
+</I>&gt;<i> a mount bind from /usr/src/sorcery to /tmp/.sorcery and have
+</I>&gt;<i> /tmp reside upon a dedicated 2G ext3 partition with a high
+</I>&gt;<i> commit value, such as a 86400 about a week.
+</I>&gt;<i> That is nearly as good as tmpfs and even better on
+</I>&gt;<i> low RAM boxes because when tmpfs is pushed into
+</I>&gt;<i> swap then swap can become sufficiently fragmented
+</I>&gt;<i> that having compiling of large sources happen on tmpfs
+</I>&gt;<i> can be slower than using a dedicated real disk bound filesystem.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the error report.
+</I>&gt;<i> I hope you can get your newly deployed Sorcerer box's installed
+</I>&gt;<i> software up to fully current without experience any further problems.
+</I>&gt;<i> If you spend more than 15 minutes pondering anything
+</I>&gt;<i> then drop us an email on the list.
+</I>&gt;<i> Many problems are trivial and can be fixed easily.
+</I>&gt;<i> More serious problems usually receive a fix in the form
+</I>&gt;<i> of an updated spell going out in the following day's grimoire,
+</I>&gt;<i> which is just a fancy word for &quot;spell book.&quot;
+</I>&gt;<i> In Sorcerer grimoire is synonymous with &quot;software catalog.&quot;
+</I>&gt;<i> But the use of &quot;software catalog&quot; is a bit misleading since
+</I>&gt;<i> we do not actually supply the software.
+</I>&gt;<i> But you will see that as your Sorcerer box downloads sources
+</I>&gt;<i> as needed and source update patches when applicable.
+</I>&gt;<i>
+</I>&gt;<i> Oh lastly, I might be a bit slow to respond on the email list...
+</I>&gt;<i> Busy week, and mistakes rolling the new x86_64 I/R cost
+</I>&gt;<i> me days of waiting rather than minutes, etc...
+</I>&gt;<i> Fortunately, Jan seems to be 100% ontop of your situation.
+</I>&gt;<i> And once you get your box fully deployed you will probably
+</I>&gt;<i> be happy that you put forth the effort, because Sorcerer boxes
+</I>&gt;<i> are deployed merely unlike binary based distros.
+</I>&gt;<i> No redeployment of the new release of the distro a year later.
+</I>&gt;<i> The Sorcerer boxes deployed today you can probably continue
+</I>&gt;<i> to update for as long as Sorcerer is maintained.
+</I>&gt;<i>
+</I>&gt;<i> Second to last....
+</I>&gt;<i> Because of the unique loadout of each Sorcerer box it is recommend
+</I>&gt;<i> that a professional SA have at least one developmental box deployed
+</I>&gt;<i> with all the mission critical software installed.
+</I>&gt;<i> The dev box can be updated regularly and then checked for problems
+</I>&gt;<i> before updating the production boxes.
+</I>&gt;<i> Production boxes can have the LAG variable set in
+</I>&gt;<i> /etc/sorcery/local.config
+</I>&gt;<i> to specify the amount of days that the installed grimoire should lag
+</I>&gt;<i> behind
+</I>&gt;<i> the available grimoire.
+</I>&gt;<i> The lag can give a SA time to spot errors and circumvent and/or fix them
+</I>&gt;<i> on their developmental boxes before those errors disrupt services on
+</I>&gt;<i> the production boxes.
+</I>&gt;<i>
+</I>&gt;<i> And lastly, the docs are indeed rather old and updated almost entirely
+</I>&gt;<i> upon
+</I>&gt;<i> the need of the Sorcerer SAs rather than the actual development of
+</I>&gt;<i> Sorcerer.
+</I>&gt;<i> In the past Sorcerer development was always ahead of the documentation
+</I>&gt;<i> no matter who did what to try to keep them up to date.
+</I>&gt;<i> If you followed the installation guide
+</I>&gt;<i> then it may have read like someone's
+</I>&gt;<i> notes that they took during the installation process.
+</I>&gt;<i> That might be the best way to produce the installation documentation
+</I>&gt;<i> merely because the SA can highly and better explain the aspects of
+</I>&gt;<i> installation that seemed confusing or less than intuitive.
+</I>&gt;<i> So if your notes seem good and you want to shape them into docs
+</I>&gt;<i> then you could be the next person to release the Sorcerer installation
+</I>&gt;<i> guide if you wanted to do that.
+</I>&gt;<i>
+</I>&gt;<i> In the past I did write initial versions for all the documentation.
+</I>&gt;<i> However, since I also designed the tools the documentation problem
+</I>&gt;<i> lacks verbose and necessary explanation of the less than intuitive
+</I>&gt;<i> aspects of the tools.
+</I>&gt;<i> When the person who writes the tools writes the docs
+</I>&gt;<i> then of course ever aspect of the tools seems intuitive
+</I>&gt;<i> and therefore the documentation produced may be of
+</I>&gt;<i> less use to a SA than actually experience of running the tools, yes?
+</I>&gt;<i>
+</I>&gt;<i> If you did not already encounter it, which you probably did...
+</I>&gt;<i> The main tools are augur, cast, dispel, leech, sorcery
+</I>&gt;<i> sorcery is menu driven
+</I>&gt;<i> the rest are command line.
+</I>&gt;<i> augur has a nice help menu.
+</I>&gt;<i> cast, dispel, leech grant help if requested with the --help parameter.
+</I>&gt;<i> Initially you will probably use sorcery and augur to deploy the box.
+</I>&gt;<i> After a couple of weeks you will probably only invoke cast dispel and
+</I>&gt;<i> augur.
+</I>&gt;<i> leech can be invoked for downloading sources,
+</I>&gt;<i> but cast will do so as needed most of the time.
+</I>&gt;<i>
+</I>&gt;<i> See, that was merely one paragraph and I made it sound entirely
+</I>&gt;<i> intuitive, right?
+</I>&gt;<i> Hopefully it is.
+</I>&gt;<i> Do take the time to read the augur help screen.
+</I>&gt;<i> It offers a good interface for presenting information stored in
+</I>&gt;<i> /etc/sorcery/log in a meaningful and useful fashion.
+</I>&gt;<i> Also the # augur newer
+</I>&gt;<i> command is the easy and recommended way to ensure that
+</I>&gt;<i> installed software is updated as needed following an
+</I>&gt;<i> # augur sync
+</I>&gt;<i> command which synchronizes the installed grimoire with
+</I>&gt;<i> the currently available grimoire for the Sorcerer distribution.
+</I>&gt;<i> If you want you can even issue
+</I>&gt;<i> # augur easy
+</I>&gt;<i> Sort of like a 3 in 1 combo. ( augur sync; augur newer; augur update )
+</I>&gt;<i> But it will also probably make and/or update a backup
+</I>&gt;<i> of installed software if that feature is enabled for the
+</I>&gt;<i> configuration of that box.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, after the optional requirements for spells
+</I>&gt;<i> and perhaps also the linux configuration is complete
+</I>&gt;<i> then the downloading of source tarballs, compilation,
+</I>&gt;<i> and installation all happens in the background.
+</I>&gt;<i> When looking at the HUD, otherwise known as
+</I>&gt;<i> # augur scry
+</I>&gt;<i> You can press 'q' to quit back to console, and
+</I>&gt;<i> continue using the box as normal.
+</I>&gt;<i> sorcery related background process happen at nice 15...
+</I>&gt;<i> That leaves plenty of CPU power left over to use the box
+</I>&gt;<i> during updates or even watch movies, anime, etc... :)
+</I>&gt;<i> An optimally configured Sorcerer box has loads of available
+</I>&gt;<i> CPU to spare even during updates which is why production
+</I>&gt;<i> boxes can be updated without dropping services and switching
+</I>&gt;<i> to runlevel 1.
+</I>&gt;<i> Switching away from runlevels 3-5 for updating is not recommended,
+</I>&gt;<i> especially since a network connection with Internet access may
+</I>&gt;<i> be required for source acquisition during updates.
+</I>&gt;<i>
+</I>&gt;<i> Too much information, right?
+</I>&gt;<i> It is nothing you would not realize immediately simply by
+</I>&gt;<i> watching the output of /usr/bin/top during a sorcery update, right?
+</I>&gt;<i>
+</I>&gt;<i> Ah.... and to those who requested it...
+</I>&gt;<i> Yes the linux kernel for x86_64 will now include support for
+</I>&gt;<i> developmental drivers including the in development ext4 filesystem.
+</I>&gt;<i> Let us just hope the kernel still boots on everyone's box.  :)
+</I>&gt;<i> If you have any last minute requests for the next release of
+</I>&gt;<i> I/R both ia32 and x86_64 be sure to email them to the list.
+</I>&gt;<i> Since most of the software installed on the IR can be compiled
+</I>&gt;<i> with gcc 4.2.1 older versions of gcc might not be included this
+</I>&gt;<i> time which means that there might be a bit more space to squeeze
+</I>&gt;<i> on additional software onto the I/R.
+</I>&gt;<i> However, please limit your request to software that seems reasonably
+</I>&gt;<i> useful for installation and for use during installation rather than
+</I>&gt;<i> software
+</I>&gt;<i> that could be easily after a box is deployed.
+</I>&gt;<i> Therefore, no xorg, no httpd, no super large
+</I>&gt;<i> macro enhanced text/word/HTML processor
+</I>&gt;<i> when nano and elvis will do, etc...
+</I>&gt;<i>
+</I>&gt;<i> Oh.... as if I will ever be able to reach the finish of this email...
+</I>&gt;<i> I remembered.
+</I>&gt;<i> If the neglect immunity feature is enabled then the deployed box
+</I>&gt;<i> will update itself weekly automatically.
+</I>&gt;<i> Talk about having a back seat driver, yes?
+</I>&gt;<i> In theory you probably could neglect your boxes for months at a time
+</I>&gt;<i> and have them stay up to date with security fixes and bug fixed software.
+</I>&gt;<i> Not that I recommend handling a large amount of work-stations that way,
+</I>&gt;<i> but considering how a SA might be wearing too many hats at once
+</I>&gt;<i> it can be nice to have those boxes go fly auto-pilot during the busy
+</I>&gt;<i> season.  :)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070814/85e3f813/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070814/85e3f813/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000128.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+	<LI>Next message: <A HREF="000142.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#139">[ date ]</a>
+              <a href="thread.html#139">[ thread ]</a>
+              <a href="subject.html#139">[ subject ]</a>
+              <a href="author.html#139">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Linux kernels
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%20kernels&In-Reply-To=%3C8596d02a0706022257h49ab4bc3q1c6521f6c53f8564%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000093.html">
+   <LINK REL="Next"  HREF="000095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Linux kernels</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%20kernels&In-Reply-To=%3C8596d02a0706022257h49ab4bc3q1c6521f6c53f8564%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Linux kernels">d3ck0r at gmail.com
+       </A><BR>
+    <I>Sun Jun  3 07:57:31 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000093.html">[Sorcerer-admins] Linux kernels
+</A></li>
+        <LI>Next message: <A HREF="000095.html">[Sorcerer-admins] Linux kernels
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#94">[ date ]</a>
+              <a href="thread.html#94">[ thread ]</a>
+              <a href="subject.html#94">[ subject ]</a>
+              <a href="author.html#94">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The reason I was attempting to install hotplug.
+
+USB  drives - I would like to automount them upon plugin, and run a
+script... can bare udev handle that?
+
+
+
+On 6/2/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> On Saturday 02 June 2007, J Decker wrote:
+</I>&gt;<i> &gt; Latest kernel, seems I can no longer SSH to my box :)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 2.16.21.2 (?)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; some notes in changelog about in-place kernel CRC doing - so they're
+</I>&gt;<i> &gt; mucking about with some nasty junk.
+</I>&gt;<i> I haven't tried 2.16.21.2 but my box runs 2.16.21.1 just fine. One thing
+</I>&gt;<i> bit
+</I>&gt;<i> me though: There were some changes in iptables configuration options and
+</I>&gt;<i> so
+</I>&gt;<i> my old config was not good enough to set all necessary drivers. Upon boot,
+</I>&gt;<i> some iptable rules failed to load and it took me some time to figure out
+</I>&gt;<i> why
+</I>&gt;<i> I sort of had network but could not do anything sensible (like ssh :).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I went in to see what there was to be seen about hotplug, it seems that
+</I>&gt;<i> &gt; since I instaleld that, as I copy and propagate clones, the ETH list
+</I>&gt;<i> goes
+</I>&gt;<i> &gt; higher and higher, the newest starts with first ether module as ETH3
+</I>&gt;<i> (which
+</I>&gt;<i> &gt; makes my 00-eth0 configuration not work)... also, my editor makes backup
+</I>&gt;<i> &gt; files of 00-eth0 with a ~ (00-eth0~) which ends up getting invoked with
+</I>&gt;<i> &gt; default network startup script, any chance someone could tweak this to
+</I>&gt;<i> &gt; ignore files with ~ suffixes on them? (especially if not executable)
+</I>&gt;<i>
+</I>&gt;<i> You could use iftab (see man page installed by wireless_tools) to create
+</I>&gt;<i> network interface mappings in /etc/iftab. Then your interfaces will always
+</I>&gt;<i> have the same name. Alternatively, create udev rules to always assign the
+</I>&gt;<i> same names to the network interfaces.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any idea how to easily reset hotplug status?  (the original box after
+</I>&gt;<i> I generally ignore hotplug and rather create udev rules to obtain reliable
+</I>&gt;<i> node names every time a device is plugged in.
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;<i>
+</I>&gt;<i> &gt; installing hotplug moved its devices to eth1 and eth2, eth0 doesn't
+</I>&gt;<i> load,
+</I>&gt;<i> &gt; and I had to change the 00-eth0 interface spec (probably should ahve
+</I>&gt;<i> &gt; renamed the file also)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; /sys/class/net/* indeed lists eth1, eth2 on the parent clone (originally
+</I>&gt;<i> &gt; having installed hotplug on it) this box has two nics.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; /sys/class/net/* lists eth3 only on the cloned box (with 1 interface)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Jim
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070602/eac44518/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070602/eac44518/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000093.html">[Sorcerer-admins] Linux kernels
+</A></li>
+	<LI>Next message: <A HREF="000095.html">[Sorcerer-admins] Linux kernels
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#94">[ date ]</a>
+              <a href="thread.html#94">[ thread ]</a>
+              <a href="subject.html#94">[ subject ]</a>
+              <a href="author.html#94">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

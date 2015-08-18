@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3CAANLkTinfs%2BPE6vt2GADid6oX2Wi0BuxiGkeCRFEid%3DqN%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001949.html">
+   <LINK REL="Next"  HREF="001951.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3CAANLkTinfs%2BPE6vt2GADid6oX2Wi0BuxiGkeCRFEid%3DqN%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Oct 20 16:38:46 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001949.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+        <LI>Next message: <A HREF="001951.html">[Sorcerer-admins] changes to linux and Install/Resuce Images.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1950">[ date ]</a>
+              <a href="thread.html#1950">[ thread ]</a>
+              <a href="subject.html#1950">[ subject ]</a>
+              <a href="author.html#1950">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Wow.
+Looks like I slept through a fun time.
+
+Thanks for putting the server back into good working order, Pekka Panula.
+
+If anyone should require to debug or modify an initramfs while
+it is in memory then the kernel parameter
+rdinit=/bin/bash
+will load /bin/bash first and then files can be edited at a command prompt
+using nano, chmod, rm, etc...
+Then finally execute exec /init
+in order to boot.
+
+I am not surprised that one or more of the installations are suffering
+from the LVM2 bug.
+Not having those init-scripts run seems a far faster less problematic solution
+than doing new install and restoration from backup.
+However, installations using the current set of Install/Rescue disks
+would not suffer the LVM2 bug
+unless the SA explicitly initializes a partition as a physical volume.
+
+
+
+
+On Wed, Oct 20, 2010 at 6:55 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> managed to get up also our testing server, sorcerertest64.
+</I>&gt;<i>
+</I>&gt;<i> multipath-tools was reason why boot stalled, it locked up /dev/sda so it did
+</I>&gt;<i> not managed to remount it as root, so i dispelled multipath-tools and
+</I>&gt;<i> updated initramfs.
+</I>&gt;<i>
+</I>&gt;<i> For some reason network configuration was missing too, completely deleted,
+</I>&gt;<i> eg. /etc/networks.d/ was showing its default and was missing my networks and
+</I>&gt;<i> links, etc.
+</I>&gt;<i> No idea what deleted it.
+</I>&gt;<i>
+</I>&gt;<i> Somehow my wish list is that we could do better QA. eg, what did delete
+</I>&gt;<i> network configuration, /etc/hosts file, modified /etc/fstab to missing swap
+</I>&gt;<i> partitions and ext3 -&gt; etx3 typo, and so on.
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i> &#160; Pekka Panula, Net Servant Oy
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ppr.silverice.org is up and running again. Several errors which i
+</I>&gt;&gt;<i> discovered:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - hostname was wrong (typo)
+</I>&gt;&gt;<i> - somehow /etc/hosts was missing (dunno what deleted it)
+</I>&gt;&gt;<i> - initramfs update actually helped, all vg* scripts are now not runned
+</I>&gt;&gt;<i> - time was wrong, i am not using UTC hwclock, needed to activate
+</I>&gt;&gt;<i> hwclock with --localtime to run
+</I>&gt;&gt;<i> - fstab was messed up! eg. all my swap lines were missing, etc,
+</I>&gt;&gt;<i> dunno what deleted stuff from there
+</I>&gt;&gt;<i> - Its running now on with 1 virtual cpu, because not sure if it can
+</I>&gt;&gt;<i> lock up if i use 2, will try to increace it after i can be sure its
+</I>&gt;&gt;<i> running ok for now.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Looking now test server, i noticed that fstab inside initramfs has
+</I>&gt;&gt;<i> typo, filesystem is marked as etx3 (should be ext3), dunno how that
+</I>&gt;&gt;<i> was changed....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Terveisin/Regards,
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001949.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+	<LI>Next message: <A HREF="001951.html">[Sorcerer-admins] changes to linux and Install/Resuce Images.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1950">[ date ]</a>
+              <a href="thread.html#1950">[ thread ]</a>
+              <a href="subject.html#1950">[ subject ]</a>
+              <a href="author.html#1950">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

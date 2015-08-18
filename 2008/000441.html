@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Linux 2.6.25.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%202.6.25.2&In-Reply-To=%3C8596d02a0805151638s69bd2927j2ecc2c2dc131554b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000437.html">
+   <LINK REL="Next"  HREF="000443.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Linux 2.6.25.2</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%202.6.25.2&In-Reply-To=%3C8596d02a0805151638s69bd2927j2ecc2c2dc131554b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Linux 2.6.25.2">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri May 16 01:38:17 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000437.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+        <LI>Next message: <A HREF="000443.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#441">[ date ]</a>
+              <a href="thread.html#441">[ thread ]</a>
+              <a href="subject.html#441">[ subject ]</a>
+              <a href="author.html#441">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 5/13/08, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> There is something which eludes me:
+</I>&gt;<i>
+</I>&gt;<i> I have an unbroken compile log for NVIDIA-Linux-x86
+</I>&gt;<i>
+</I>&gt;<i> Compile log for NVIDIA-Linux-x86 169.12
+</I>&gt;<i> Built with sorcery implosion-20080510-1 and gcc 4.3.0
+</I>&gt;<i> Built on Sun May 11 04:39:55 MST 2008
+</I>&gt;<i>
+</I>&gt;<i> It was compiled with linux-modular version 2.6.25.2 installed.
+</I>
+That's a little odd - 169.12 is a driver I tried and it had the same
+global_flush_tlb and change_page_attr issues... is no matter though.
+
+&gt;<i>
+</I>&gt;<i> I will attempt to recast NVIDIA-Linux-x86 now
+</I>&gt;<i> to see if there is a compile error.
+</I>&gt;<i>
+</I>&gt;<i> It compiled fine.
+</I>&gt;<i>
+</I>&gt;<i> The title of that message thread is:
+</I>&gt;<i>
+</I>&gt;<i> &quot;Re: 169.09 Nvidia.ko build fails on newest 2.6.24 snapshot&quot;
+</I>&gt;<i>
+</I>&gt;<i> May I suggest building using linux version 2.6.25.3 ?
+</I>&gt;<i> It should work using the linux-modular spell.
+</I>&gt;<i> That is what I have installed.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the bug report.
+</I>&gt;<i> I read that you solved the problem in your last few lines.
+</I>&gt;<i> Perhaps the problem is a moot point by now for most boxes?
+</I>&gt;<i> I am not sure if there is any way I should modify the
+</I>&gt;<i> NVIDIA-Linux-x86 spell while I do not precisely understand
+</I>&gt;<i> the problem or the cause of the problem.
+</I>&gt;<i>
+</I>&gt;<i> For the moment it seems best that we continue using
+</I>&gt;<i> NVIDIA-Linux-x86 version 169.12 because it works with
+</I>&gt;<i> linux version 2.6.25.2, tested, and probably linux version 2.6.25.3
+</I>&gt;<i> Also it is the most current stable release of the
+</I>&gt;<i> NVIDIA pre-compiled Xorg graphics drivers.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, May 13, 2008 at 6:11 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> While working on this video server box, I found a place where a faulty
+</I>&gt;&gt;<i> (old, obsolete) switch caused network errors on my card.  While there
+</I>&gt;&gt;<i> was also a fix released in february for this version for my card,
+</I>&gt;&gt;<i> replacing the switch also fixed the problem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Meanwhile this box runs X, and uses an NVIDIA card.  Had to attempt to
+</I>&gt;&gt;<i> update the driver without network access (not so painful as it was)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> NVIDIA-Linux-x86 does not compile and work with 2.6.25.2  there are 2
+</I>&gt;&gt;<i> problems 1) a removed symbol global_flush_tlb() (?) and then it fails
+</I>&gt;&gt;<i> to find the symbol 'set_page_attr'.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> there is a beta driver 173.08 which does compile and work with
+</I>&gt;&gt;<i> 2.6.25.2 ( has Beta in the nvidia logo )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://www.nvnews.net/vbulletin/showthread.php?t=107144">http://www.nvnews.net/vbulletin/showthread.php?t=107144</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (there is an FTP site with these drivers)
+</I>&gt;&gt;<i> <A HREF="ftp://download.nvidia.com/XFree86/">ftp://download.nvidia.com/XFree86/</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ----------------------
+</I>&gt;&gt;<i> Okay, so with 2.6.25.2 and 173.08 (I tried most of the 169.12, 171.xx
+</I>&gt;&gt;<i> ) I had a system which seemed to not have problems from network
+</I>&gt;&gt;<i> congestion, and still ran. ..
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> but it didn't work... what has been working for a few years to launch
+</I>&gt;&gt;<i> and track vlc processes ended up with sockets stuck as open by vlc
+</I>&gt;&gt;<i> which no longer had a pid.  zombie vlc processes, and a few other
+</I>&gt;&gt;<i> zombies as things came and went.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Booted the older kernel, cleaned up now driver conflicts cause the
+</I>&gt;&gt;<i> application level X driver and the kernel were a different version,
+</I>&gt;&gt;<i> and 173.08 didn't want to build in the older linux... (maybe cause I
+</I>&gt;&gt;<i> still had 2.6.25.2 in /usr/src/linux?) got rid of all my customized
+</I>&gt;&gt;<i> spells in /usr/share/sorcery/local, recast linux, recast NVIDIA-linux,
+</I>&gt;&gt;<i> replaced the switch, and now all is well again :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Beware there may be issues with this kernel.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000437.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+	<LI>Next message: <A HREF="000443.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#441">[ date ]</a>
+              <a href="thread.html#441">[ thread ]</a>
+              <a href="subject.html#441">[ subject ]</a>
+              <a href="author.html#441">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

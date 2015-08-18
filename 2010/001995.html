@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] multipathd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20multipathd&In-Reply-To=%3C201011031116.26587.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001994.html">
+   <LINK REL="Next"  HREF="001996.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] multipathd</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20multipathd&In-Reply-To=%3C201011031116.26587.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] multipathd">merka at highsphere.net
+       </A><BR>
+    <I>Wed Nov  3 16:16:24 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001994.html">[Sorcerer-admins] multipathd
+</A></li>
+        <LI>Next message: <A HREF="001996.html">[Sorcerer-admins] multipathd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1995">[ date ]</a>
+              <a href="thread.html#1995">[ thread ]</a>
+              <a href="subject.html#1995">[ subject ]</a>
+              <a href="author.html#1995">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+I use multipathd on my sorcerer servers without any locking issues on reboot. 
+I know that very well, unfortunately, because one of the servers needs reboot 
+almost daily because it stops responding for unknown reasons, no error 
+messages, nothing in the logs and we have no idea what triggers this (any 
+suggestions are welcome).
+
+Anyway, back to mutlipathd: My configuration is
+#&gt; cat /etc/init.d/multipathd
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Required-Start: mapper
+# Should-Start: udev 
+# Default-Start: S
+# Short-Description: multipathd allows a host to access a LU by multiple paths
+# Description: mulitpathd allows a host to access 
+#       Logical Units (LU) by multiple paths. The most
+#       common multipathed environment today is Fibre
+#       Channel (FC) Storage Area Network (SAN).
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+NAME=multipathd
+PIDF=/var/run/multipathd.pid
+SERV=/sbin/multipathd
+
+parse &quot;$@&quot;
+
+log_warning_msg &quot;$NAME discovering paths&quot;
+SLEEP=30 #seconds
+for ((i=0;i&lt;$SLEEP;i++)); do
+        echo -n .
+        sleep 1
+done
+
+# Register paths that were missed by the daemon
+/sbin/multipath
+sleep 2
+log_warning_msg &quot;$NAME discovered paths:&quot;
+/sbin/multipath -l
+
+
+
+$&gt; cat /etc/multipath.conf
+defaults {
+        getuid_callout  &quot;/lib/udev/scsi_id -g -u -d /dev/%n&quot;
+}
+
+
+So there is nothing blacklisted in multipathd configuration. However, the 
+blacklist is in the LVM2 configuration file /etc/lvm/lvm.conf as 'filter = [ 
+&quot;r|^/dev/sd.*|&quot;, &quot;a|.*|&quot; }. Another server got the filter set as filter = [ 
+&quot;r/disk/&quot;, &quot;r/sd.*/&quot;, &quot;a/.*/&quot; ].
+
+I suggest to check your lvm.conf.
+
+Here is an excerpt from my /etc/init.d/log.d/sysinit:
+
+ * mapper starting                                              [ warning ]
+ * mapper started                                               [ success ]
+ * multipathd starting                                          [ warning ]
+ * multipathd started                                           [ success ]
+ * multipathd discovering paths                                 [ warning ]
+.............................. * multipathd discovered paths:   [ warning ]
+3600213a10008cfc80000000063a844af dm-2 WINSYS,SX2318R
+size=1.6T features='0' hwhandler='0' wp=rw
+|<i>-+- policy='round-robin 0' prio=-1 status=enabled
+</I>|<i> `- 4:0:1:0 sdc        8:32  active undef running
+</I>`-+- policy='round-robin 0' prio=-1 status=enabled
+  `- 4:0:5:0 sdi        8:128 active undef running
+32001000bb520916c dm-1 nStor,NexStor Wahoo
+size=1.4T features='0' hwhandler='0' wp=rw
+|<i>-+- policy='round-robin 0' prio=-1 status=enabled
+</I>|<i> `- 4:0:0:2 sdb        8:16  active undef running
+</I>`-+- policy='round-robin 0' prio=-1 status=enabled
+  `- 4:0:3:2 sdf        8:80  active undef running
+360050cc0002057290000000000000006 dm-5 XYRATEX,F5412E
+size=2.7T features='0' hwhandler='0' wp=rw
+|<i>-+- policy='round-robin 0' prio=-1 status=enabled
+</I>|<i> `- 4:0:4:1 sdh        8:112 active undef running
+</I>`-+- policy='round-robin 0' prio=-1 status=enabled
+  `- 4:0:7:1 sdl        8:176 active undef running
+3600213a10008cfc80000000023830b26 dm-3 WINSYS,SX2318R
+size=9.1T features='0' hwhandler='0' wp=rw
+|<i>-+- policy='round-robin 0' prio=-1 status=enabled
+</I>|<i> `- 4:0:2:0 sdd        8:48  active undef running
+</I>`-+- policy='round-robin 0' prio=-1 status=enabled
+  `- 4:0:6:0 sdj        8:144 active undef running
+360050cc0002057290000000000000005 dm-4 XYRATEX,F5412E
+size=2.7T features='0' hwhandler='0' wp=rw
+|<i>-+- policy='round-robin 0' prio=-1 status=enabled
+</I>|<i> `- 4:0:4:0 sdg        8:96  active undef running
+</I>`-+- policy='round-robin 0' prio=-1 status=enabled
+  `- 4:0:7:0 sdk        8:160 active undef running
+32000000bb520916c dm-0 nStor,NexStor Wahoo
+size=676G features='0' hwhandler='0' wp=rw
+|<i>-+- policy='round-robin 0' prio=-1 status=enabled
+</I>|<i> `- 4:0:0:1 sda        8:0   active undef running
+</I>`-+- policy='round-robin 0' prio=-1 status=enabled
+  `- 4:0:3:1 sde        8:64  active undef running
+ * vgscan --ignorelockingfailure --mknodes                      [ warning ]
+  Reading all physical volumes.  This may take a while...
+  Found volume group &quot;archive&quot; using metadata type lvm2
+  Found volume group &quot;data&quot; using metadata type lvm2
+  Found volume group &quot;2010sata&quot; using metadata type lvm2
+  Found volume group &quot;2010sas&quot; using metadata type lvm2
+  Found volume group &quot;wind&quot; using metadata type lvm2
+  Found volume group &quot;vho&quot; using metadata type lvm2
+ * vgscan success                                               [ success ]
+ * vgchange --ignorelockingfailure -ay                          [ warning ]
+  1 logical volume(s) in volume group &quot;archive&quot; now active
+  1 logical volume(s) in volume group &quot;data&quot; now active
+  4 logical volume(s) in volume group &quot;2010sata&quot; now active
+  1 logical volume(s) in volume group &quot;2010sas&quot; now active
+  1 logical volume(s) in volume group &quot;wind&quot; now active
+  1 logical volume(s) in volume group &quot;vho&quot; now active
+ * vgchange success                                             [ success ]
+
+I would like to include my modified multipathd script in the sorcery (after 
+some polishing of course) because it solved an issue of multipath missing SCSI 
+devices that took too long to initialize on boot. It apparently takes a while 
+for the FC HBA to find all the nodes on the FC SAN.
+
+Jan
+
+On Wednesday, November 03, 2010, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+&gt;<i> Hi
+</I>&gt;<i> 
+</I>&gt;<i> This was problem when i rebooted ppr64.silverice.org, it did locked up sda
+</I>&gt;<i> and boot process stalled there. I dispelled it and boot was again working.
+</I>&gt;<i> 
+</I>&gt;<i> I use multipath on our CentOS servers, and it does not do that sort of
+</I>&gt;<i> things under it, so there must be some reason why its locking up sda.
+</I>&gt;<i> I recall its using some sort of blacklist in its config file, maybe that
+</I>&gt;<i> config file is without blacklist so it does tries to multipath your main
+</I>&gt;<i> drive because
+</I>&gt;<i> its not forbidden.
+</I>&gt;<i> 
+</I>&gt;<i> Looking one of my CentOS servers /etc/multipath.conf there is this
+</I>&gt;<i> blacklist:
+</I>&gt;<i> 
+</I>&gt;<i> blacklist {
+</I>&gt;<i>        wwid 3600508e00000000011663a2739fbf30f
+</I>&gt;<i>         devnode &quot;^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*&quot;
+</I>&gt;<i>         devnode &quot;^hd[a-z]&quot;
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> Is this sort of blacklist also in sorcerer's multipath.conf? If there is
+</I>&gt;<i> no one i think it needs one.
+</I>&gt;<i> 
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>    Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 03.11.2010 06:29:15:
+</I>&gt;<i> &gt; From: Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> &gt; To: Sorcerer List &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>&gt;
+</I>&gt;<i> &gt; Date: 03.11.2010 06:29
+</I>&gt;<i> &gt; Subject: [Sorcerer-admins] multipathd
+</I>&gt;<i> &gt; Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Is multipath-tools or multipathd starting during sysinit causing grief?
+</I>&gt;<i> &gt; While testing new I/Rs I saw something unexpected.
+</I>&gt;<i> &gt; multipathd locked /dev/sda and all partitions on it.
+</I>&gt;<i> &gt; I could not initialize file systems nor mount file systems on those
+</I>&gt;<i> &gt; partitions.
+</I>&gt;<i> &gt; However, multipathd's death grip was released after issuing:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /sbin/multipath -F
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Therefore, I wrote an init-script called multipath-flush
+</I>&gt;<i> &gt; to do just that after multipathd is started during sysinit.
+</I>&gt;<i> &gt; This is necessary for new Install/Rescue disks that can be used for
+</I>&gt;<i> &gt; installation.
+</I>&gt;<i> &gt; Otherwise, the fixed disks will be locked up by multipathd.
+</I>&gt;<i> &gt; However, the new init-script might cause problems
+</I>&gt;<i> &gt; for deployed boxes that require multipathd.
+</I>&gt;<i> &gt; I do not know exactly since I do not use the program.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Anyone with experience with multipathd
+</I>&gt;<i> &gt; please lend insight leading to a better solution.
+</I>&gt;<i> &gt; Otherwise I intend to go with this solution for now.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; With LVM2 and multipathd taking turns at holding our partitions for
+</I>&gt;<i> 
+</I>&gt;<i> ransom,
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I am beginning to wish for simple days before such conveniences.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001994.html">[Sorcerer-admins] multipathd
+</A></li>
+	<LI>Next message: <A HREF="001996.html">[Sorcerer-admins] multipathd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1995">[ date ]</a>
+              <a href="thread.html#1995">[ thread ]</a>
+              <a href="subject.html#1995">[ subject ]</a>
+              <a href="author.html#1995">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C200807251359.56524.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000646.html">
+   <LINK REL="Next"  HREF="000648.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C200807251359.56524.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">merka at highsphere.net
+       </A><BR>
+    <I>Fri Jul 25 19:59:56 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000646.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000648.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#647">[ date ]</a>
+              <a href="thread.html#647">[ thread ]</a>
+              <a href="subject.html#647">[ subject ]</a>
+              <a href="author.html#647">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Friday 25 July 2008, Kyle Sallee wrote:
+&gt;<i> As to the question of the urban legend of 100,000 to 1,000,000
+</I>&gt;<i> writes before a USB memory stick begins to fail?
+</I>There are two different technologies: (1) flash memory sticks with ~100,000 
+writes, and (2) the SSD (solid-state disks) with &gt;1e6 writes. Furthermore, 
+some devices (SSDs, but not sure if all of them; I am pretty sure flash 
+memories do not have this) employ wear leveling alghorithms to avoid writing 
+to the same memory cells all the time.
+
+&gt;<i> Although USB memory sticks are filesystem independent
+</I>&gt;<i> and we can use ext2 or luks encrypted ext3 on them
+</I>&gt;<i> or whatever we want the probability is that distributions
+</I>&gt;<i> that are designed to be booted from USB stick do not
+</I>&gt;<i> run from the USB stick.
+</I>&gt;<i> They are probably designed to be loaded entirely into RAM.
+</I>&gt;<i>
+</I>&gt;<i> However, with the benefit of ext3 and a commit value
+</I>&gt;<i> as high as one month then all writes, yes even syslog,
+</I>&gt;<i> can be delayed until a sync command is issued
+</I>Such high commit values are not necessary. Take for example a 32GB flash 
+memory with expectancy of 100,000 writes. If you were to continuosly write to 
+this stick at 10MB/s, it would take 3.2e10^8 seconds (~10.1 years) to kill 
+it. This is however assuming that the entire memory is used (and killed). The 
+life time of the card would obviously shorten if the writes were performed to 
+a limited range of memory cells or with faster write speeds. So for a common 
+desktop use, I would not worry about killing it at all (in a reasonable time 
+frame). 
+
+&gt;<i>
+</I>&gt;<i> As for selecting any 32G USB stick at random?
+</I>Some of the flash cards (and SSDs?) are slow because they do not use DMA or 
+only older (and slower) modes. Unfortunately, this information is very 
+difficult to get unless buying some pricey memories (several hundreds dollars 
+and up). 
+
+&gt;<i> Probably not a good bet.
+</I>&gt;<i> Some may be faster.
+</I>&gt;<i> Some may re-write more.
+</I>&gt;<i> Some may be difficult to insert into the USB port.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000646.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000648.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#647">[ date ]</a>
+              <a href="thread.html#647">[ thread ]</a>
+              <a href="subject.html#647">[ subject ]</a>
+              <a href="author.html#647">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Dying boxes ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dying%20boxes%20...&In-Reply-To=%3C27f41a930810241513l3ced7b52q803990c6cab418b0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000805.html">
+   <LINK REL="Next"  HREF="000808.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Dying boxes ...</H1>
+    <B>evert vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dying%20boxes%20...&In-Reply-To=%3C27f41a930810241513l3ced7b52q803990c6cab418b0%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Dying boxes ...">evorster at gmail.com
+       </A><BR>
+    <I>Sat Oct 25 00:13:38 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000805.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+        <LI>Next message: <A HREF="000808.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#806">[ date ]</a>
+              <a href="thread.html#806">[ thread ]</a>
+              <a href="subject.html#806">[ subject ]</a>
+              <a href="author.html#806">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm, I am sort of used to things going a little pear-shaped around update
+time.
+
+With the massive changes happening in kde4, there is a lot of dust kicked up
+which might take some time to settle back down.
+
+For instance, my FAT devices now does not want to mount under KDE, as
+apparently some utf8 code page is missing. They mount fine using the mount
+command, tho.
+
+Then, of course, I am still struggling with amarok, digikam and
+openmovieeditor to fit in to the new KDE4 scheme of things.
+
+All in good time, and with little baby steps we'll get there.
+
+At the moment I am recompiling everything on my laptop, and so far I am
+quite impressed by the low rate of broken spells, so we are definitely doing
+something right somewhere!
+
+-Evert-
+
+On Fri, Oct 24, 2008 at 10:05 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Wow.
+</I>&gt;<i> Jan always has a real fun time with X.  :)
+</I>&gt;<i> If I could join that party then I might have a clue.
+</I>&gt;<i> However, I am aware of the following:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> hal-info 20081022
+</I>&gt;<i> was released recently.
+</I>&gt;<i> I suppose the nice versioned date suggests that.
+</I>&gt;<i> However, I have not introduced it into the grimoire yet.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> To populate /usr/share/X11/xkd/ :
+</I>&gt;<i> # cast xkeyboard-config xkbdata
+</I>&gt;<i>
+</I>&gt;<i> Maybe some spell aught to require the above spells
+</I>&gt;<i> to ensure that they are installed on all boxes.
+</I>&gt;<i> gdm requires xkeyboard-config
+</I>&gt;<i> I gathered that by looking at a gdm log.
+</I>&gt;<i>
+</I>&gt;<i> I have not looked into what xkeyboard-config xkbdata do
+</I>&gt;<i> However, they are probably important for something.
+</I>&gt;<i> If either of those fix the problem
+</I>&gt;<i> please report the solution so it can be implemented distribution wide.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As udev progress, with the udev all-distribution wide rules evolving,
+</I>&gt;<i> the probability of included distribution specific rules becoming
+</I>&gt;<i> incompatible
+</I>&gt;<i> with udev increases.
+</I>&gt;<i> For the moment I have decided that grimoire/udev.d/rules.d/ will contain
+</I>&gt;<i> the Sorcerer specific distribution rules not provided by udev such as rules
+</I>&gt;<i> to properly assign group and mode to audio device nodes.
+</I>&gt;<i>
+</I>&gt;<i> For the moment I suggest that we add our own distribution specific rules
+</I>&gt;<i> to udev to compensate for what the udev provided rules lack instead of
+</I>&gt;<i> relying upon the old examples which may disappear or provide more rules
+</I>&gt;<i> than need or rules that are not needed or rules that do not work.
+</I>&gt;<i>
+</I>&gt;<i> Because udev is among the more potentially troublesome updates
+</I>&gt;<i> I tend to skip updating udev about 4 versions each time: 120 125 130.
+</I>&gt;<i> I have done excellent at ensuring boxes survive the udev update and reboot,
+</I>&gt;<i> however ensuring all the rules work and are the same I will become better
+</I>&gt;<i> at.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The reason why there is a &quot;wall&quot;ed warning about dbus restarting
+</I>&gt;<i> is that usually a restart of dbus will also cause gdm/kdm to restart.
+</I>&gt;<i> That is very unfortunate I suppose.
+</I>&gt;<i> But aught not dbus be restarted after an update?
+</I>&gt;<i> If the X server should remain up,
+</I>&gt;<i> which might happen depending on how it is started and the window manager,
+</I>&gt;<i> then the keyboard might stop working if it has any connection to dbus.
+</I>&gt;<i>
+</I>&gt;<i> If the norm for dbus is such that restarting dbus is so hazardous
+</I>&gt;<i> then I will make it so that try-restart parameter is ignored and dbus
+</I>&gt;<i> is not restarted when new versions are installed.
+</I>&gt;<i> Please provide information about experiences that suggest that restarting
+</I>&gt;<i> dbus is a bad idea if you want dbus to not be automatically restarted
+</I>&gt;<i> on updates.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Sorry about the update inconveniences.
+</I>&gt;<i> However, with your feedback hopefully
+</I>&gt;<i> future updates will be smoother distribution.
+</I>&gt;<i> Thanks for the reports.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Oct 24, 2008 at 2:45 PM, evert vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi there...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have noticed some funny things with udev and the permissions of devices
+</I>&gt;<i> it
+</I>&gt;<i> &gt; creates.
+</I>&gt;<i> &gt; Check to see if the udev rules are there and uncorrupted.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hope this helps.
+</I>&gt;<i> &gt; -Evert-
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Oct 24, 2008 at 8:33 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; uhmm... I see... I don't know exactly how to fix it, X -configure,
+</I>&gt;<i> &gt;&gt; then using that file seemed to work okay. was going to try something
+</I>&gt;<i> &gt;&gt; like
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; <A HREF="http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-09/msg02190.html">http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-09/msg02190.html</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Adding the ServerFlag mentioned...
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Well.. I had the same no mouse device, no keyboard device, HAL
+</I>&gt;<i> &gt;&gt; autoconfigure mentioned in that article, since it's working now, I
+</I>&gt;<i> &gt;&gt; don't have the log.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Fri, Oct 24, 2008 at 11:12 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt; &gt; On Friday 24 October 2008, J Decker wrote:
+</I>&gt;<i> &gt;&gt; &gt;&gt; I have two boxes that recently started failing... failing in that
+</I>&gt;<i> they
+</I>&gt;<i> &gt;&gt; &gt;&gt; have no keyboard/mouse support in X.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; One box, I specifically saw 'will restart dbus soon' and after that
+</I>&gt;<i> &gt;&gt; &gt;&gt; everything stopped working.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; I had to remove a few lines from system.conf for hal to work with the
+</I>&gt;<i> &gt;&gt; &gt; latest
+</I>&gt;<i> &gt;&gt; &gt; dbus (the *.bak file is what was installed by dbus):
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; [<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at lepjmlap</A> dbus-1]$ diff -u system.conf system.conf.bak
+</I>&gt;<i> &gt;&gt; &gt; --- system.conf 2008-10-17 10:49:07.000000000 -0400
+</I>&gt;<i> &gt;&gt; &gt; +++ system.conf.bak     2008-10-16 02:28:16.000000000 -0400
+</I>&gt;<i> &gt;&gt; &gt; @@ -53,6 +53,10 @@
+</I>&gt;<i> &gt;&gt; &gt;     &lt;!-- valid replies are always allowed --&gt;
+</I>&gt;<i> &gt;&gt; &gt;     &lt;allow send_requested_reply=&quot;true&quot;/&gt;
+</I>&gt;<i> &gt;&gt; &gt;     &lt;allow receive_requested_reply=&quot;true&quot;/&gt;
+</I>&gt;<i> &gt;&gt; &gt; +    &lt;!-- disallow changing the activation environment of system
+</I>&gt;<i> &gt;&gt; &gt; services --&gt;
+</I>&gt;<i> &gt;&gt; &gt; +    &lt;deny send_destination=&quot;org.freedesktop.DBus&quot;
+</I>&gt;<i> &gt;&gt; &gt; +          send_interface=&quot;org.freedesktop.DBus&quot;
+</I>&gt;<i> &gt;&gt; &gt; +          send_member=&quot;UpdateActivationEnvironment&quot;/&gt;
+</I>&gt;<i> &gt;&gt; &gt;   &lt;/policy&gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;   &lt;!-- Config files are placed here that among other things, punch
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; On the other box, all I can tell is that X says cannot load keymap
+</I>&gt;<i> &gt;&gt; &gt;&gt; file from /usr/share/X11/xkb in which there is nothing...
+</I>&gt;<i> &gt;&gt; &gt; Install xkeyboard-config.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; I'm still on the recovery path - can only spend a little time here
+</I>&gt;<i> and
+</I>&gt;<i> &gt;&gt; &gt;&gt; there on these...
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Time flies like an arrow, fruit flies like a banana.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081024/0fdd0e49/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081024/0fdd0e49/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000805.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+	<LI>Next message: <A HREF="000808.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#806">[ date ]</a>
+              <a href="thread.html#806">[ thread ]</a>
+              <a href="subject.html#806">[ subject ]</a>
+              <a href="author.html#806">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

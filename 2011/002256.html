@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] enhanced security...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20enhanced%20security...&In-Reply-To=%3CCA%2BT4wDiOfgVi9gX7oh63t5naJUh8Ct%3DU1T3ptrf6HsfJz-TCKA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002255.html">
+   <LINK REL="Next"  HREF="002257.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] enhanced security...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20enhanced%20security...&In-Reply-To=%3CCA%2BT4wDiOfgVi9gX7oh63t5naJUh8Ct%3DU1T3ptrf6HsfJz-TCKA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] enhanced security...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep 15 08:41:28 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002255.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+        <LI>Next message: <A HREF="002257.html">[Sorcerer-admins] enhanced security...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2256">[ date ]</a>
+              <a href="thread.html#2256">[ thread ]</a>
+              <a href="subject.html#2256">[ subject ]</a>
+              <a href="author.html#2256">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nobody was interested in Sorcerer with full selinux support.
+Consequently, that subproject died a long time ago.
+
+However, the use of mandatory access control to enhance security
+is not a bad idea.
+Yet finding the best implementation may prove challenging.
+
+I recently began playing with tomoyo.
+It seems to work decently.
+It is include in the vanilla linux kernel.
+It requires no helper libraries like selinux.
+It has a learning mode like grsecurity.
+It lacks a master password like grsecurity has.
+Individual domains can be set to unenforced, learning mode, report
+mode, or enforced mode.
+
+It is effective for creating boxes for remote services.
+That way if the security of the remote service is thwarted
+then access to which files can be read, modified, and executed
+can remain limited even if the account has root access.
+Consequently, a service can be &quot;locked in the box.&quot;
+It is a bit like a chroot jail, without the chroot,
+and with the ability to disable the ability to mount a path out.
+
+What I have in mind differs somewhat.
+Rather than harden the security of individual services
+I would rather erect a diamond wall.
+Consequently, when not in a permissive domain
+then I prefer that the full illusion of root access
+be given yet with the limitations of not actually
+being able to modify files in /etc /bin /sbin /usr /opt, etc...
+
+A clever Sorcerer SA had a method for this
+by segregating file systems on different mount points
+and remounting them read-only when expected that
+they should not be modified.
+The flaw of this method is the same as security by obscurity.
+The defense is overcome by merely knowing
+that the file system must be remounted read-write.
+
+Anyway, I digress.
+What I want to explain is that I can probably achieve
+the type of security that I desire with tomoyo.
+It would involve careful implementation of domains
+that have many regular expressions.
+
+However, does anyone else have a preferred method
+that perhaps unlike tomoyo can be made to enforce
+permissively except where explicitly denied?
+
+Ultimately, what I desire is not only enhanced security
+where all services are properly locked in their boxes,
+but also where gaining full root privilege requires running /bin/sulogin
+That way if effective user ID 0 is awarded by sshd or
+by exploiting a bug in a root owned process
+then full root privilege is not granted until
+we are certain that the user
+has truly authenticated himself with the root password.
+
+Does this seem like a good idea?
+Is anyone in the boat with me on this idea?
+I am not saying that we must use tomoyo
+to implement enhanced security.
+But unless someone has a better suggestion
+then tomoyo seems like a method
+that can accomplish the task with a reasonable
+amount of headache and toil.
+
+Once enhanced security is implemented
+then nothing will differ from a user's point of view.
+However, gaining root will become slightly more
+annoying since we will be typing
+$ /sbin/sulogin -p
+instead of
+$ su -
+
+And before anyone asks why not with
+# su -
+the answer is that # su -
+does not prompt for a password
+because the effective user id is already root.
+
+Additionally, I want to provide limited default rules
+for services that should operate
+the same on all Sorcerer boxes such as ntp.
+Consequently, Sorcerer SAs that do not want to learn tomoyo,
+but want to keep the enhanced security
+will only have to learn to type
+# /sbin/sulogin -p
+and
+$ /sbin/sulogin -p
+
+Therefore, all gain and no pain for lazy Sorcerer SAs.
+And the rest of us will have a reasonable tool for
+locking each process into a form fitting box.
+
+It might not be a perfect solution.
+A user with a rootkit might be able to gain effective root access,
+but without the full privilege of root.
+Consequently, no change could be made to /etc /sbin /bin /usr /opt
+And perhaps /var and /home can also be protected.
+The unauthorized root would probably be able to
+to run processes as root, perhaps bind to port &lt; 1024,
+and maybe kill other processes.
+Yet hopefully the limit of the damage that could be done
+could be stopped short of allowing any change
+that would survive reboot.
+
+The full scope may be difficult to achieve.
+With tomoyo domain transition is achieved
+when a new process is run.
+Therefore, the controlling domain does
+not have an apparent correlation with the user id.
+Yet this transition based upon user id
+might be an a task that can be accomplished.
+Yet without it an unauthorized root acquired by exploiting
+a bug would probably gain sufficient permission to
+# rm -r /home
+Or sneakily modify/plant certain files
+in someone else's home directory.
+
+Hopefully, that explains the concept of the virtual diamond wall.
+The virtual diamond wall allows the normal level
+of user permission that one would expect.
+However an unauthorized acquisition of root encounters
+a transparent yet impenetrable wall that prohibits file modification
+until explicit authentication with sulogin is achieved.
+
+It seems like an easy concept yet unfortunately is a challenging implementation.
+Does anyone else like the idea and want for a Sorcerer box that can do that?
+
+
+P.S.
+
+grsecurity can nearly accomplish the diamond wall effect out of box
+by having an uberuser password which one must authenticate with
+before gaining the full privilege of root.
+Unfortunately, grsecurity is not part of the vanilla kernel.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002255.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+	<LI>Next message: <A HREF="002257.html">[Sorcerer-admins] enhanced security...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2256">[ date ]</a>
+              <a href="thread.html#2256">[ thread ]</a>
+              <a href="subject.html#2256">[ subject ]</a>
+              <a href="author.html#2256">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

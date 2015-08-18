@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The flags that are flying above the two kernel	camps...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20flags%20that%20are%20flying%20above%20the%20two%20kernel%0A%09camps...&In-Reply-To=%3CAANLkTi%3DzmQkSL1cWkeTiEssAWcLpJXTFpqw%2Bb2Qf2D1U%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001988.html">
+   <LINK REL="Next"  HREF="001970.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The flags that are flying above the two kernel	camps...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20flags%20that%20are%20flying%20above%20the%20two%20kernel%0A%09camps...&In-Reply-To=%3CAANLkTi%3DzmQkSL1cWkeTiEssAWcLpJXTFpqw%2Bb2Qf2D1U%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The flags that are flying above the two kernel	camps...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct 26 22:13:23 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001988.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+        <LI>Next message: <A HREF="001970.html">[Sorcerer-admins] The flags that are flying above the two	kernel camps...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1969">[ date ]</a>
+              <a href="thread.html#1969">[ thread ]</a>
+              <a href="subject.html#1969">[ subject ]</a>
+              <a href="author.html#1969">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Currently, the cowboy SAs are making camp at the valley of linux-custom
+They have a valid reasons.
+After adequate effort is spent to create a custom .config
+then a kernel can be compiled and installed in under 5 minutes.
+When new hardware is added
+then the output of lspci, lsusb, and dmesg
+can be used to assist the SA with selecting drivers
+in order to reconfigure linux-custom to use the new hardware.
+After about 5 to 10 minutes of effort
+and one compilation of linux-custom
+then the new hardware is ready for use.
+
+In the other camp resides the city slickers who use the linux spell.
+To them the kernel looks more like a supreme pizza than a horse.
+They have the kernel build driver modules for everything
+Then they allow udev load modules
+and create device nodes as needed.
+Plug 'n pray is not merely a concept,
+but the freedom to be nearly without concern
+about the installed hardware in a box
+and the external devices attached to a box.
+Yet this convenience is not without costs.
+Such boxes spent nearly 25x to 50x longer compiling linux
+as compared to compiling an ultra slim custom .config with linux-custom.
+
+Until recently nobody has offered compromises.
+But now I want that both sides to improve,
+shake hands, become neighbors and friends,
+and work together for the benefit of all Sorcerer SAs.
+Yet how does that analog translate into action?
+What follows is the technical explanation.
+
+First, when ordering a supreme pizza
+the convenience of holding the anchovies
+would be welcome when
+the pizza has yet to be made and cooked.
+Obviously some categories of hardware drivers
+will be of no use on some boxes.
+Omitting compilation of those drivers
+reduces the amount of time required to compile linux.
+With barely any computer expertise required
+and no more effort than required to glance at single screen checklist
+some categories of drivers can quickly omitted.
+
+If a box is attached to the network by wire
+and has no 802.11 wireless devices attached
+then why not save about 4 megabytes in modules
+and compile time by omitting compilation of
+802.11 wireless network interface drivers?
+If a box's is to remain a silent server
+working endless days in a cold room with loud air conditioning
+then why not omit ALSA sound drivers
+in order to save 5 megabytes in modules and compilation?
+Likewise video capture devices can be omitted
+when a box has no web camera nor analog TV tuner devices.
+That probably saves nearly 5 megabytes.
+Omitting support for digital TV adapters and their frontends
+saves nearly 2.5 megabytes.
+
+In theory this should work.
+During testing where some categories of drivers were omitted
+the total size of modules installed dropped by 30%
+That test did not exclude
+the category of wireless network drivers
+nor the category of ALSA sound drivers.
+The savings for a considerably trimmed kernel configuration for linux
+could be closer to 50% as compared with a supreme pizza style .config.
+
+Admittedly, some SAs are saying, &quot;Why bother?&quot;
+Just use linux-custom instead.
+But not everyone can create a usable custom .config.
+And there are good reasons for making a compromise.
+
+For the meager effort required to quickly examine a modest checklist
+compilation time for linux can be significantly reduced
+without sacrificing the convenience of udev hot plugging
+for devices that we might want to add to a computer.
+It is not tantamount to making a pizza by selecting each individual ingredient.
+However, it is similar to asking for a supreme pizza
+to be made while holding the anchovies and sausage.
+
+In the past
+I discourage the use of the linux-custom spell.
+Would be nice if we all could use linux with the obese load out of modules.
+However, the benefits of linux-custom are impossible to deny.
+Therefore, I do not abstain from improving linux-custom upon SA request.
+And linux-custom is likely to remain a spell in the grimoire.
+
+Recently, I have been trying to decide how or whether
+a potential improvement can or should be added to linux-custom.
+Therefore, I am asking for volunteer cowboy SAs
+to saddle up and scout this trail in advance of the caravans.
+
+Provided that one boots using a kernel from the linux spell,
+and provided that all hardware is plugged in,
+and provided that all software intended to be run has executed
+then nearly most if not all of the modules that would load on that box
+should already be loaded.
+This could be useful, because the linux kernel
+has an unusual and perhaps potentially useful make target.
+
+  localmodconfig  - Update current config disabling modules not loaded
+
+
+I have been wondering if that works.
+How close to a usable kernel .config does that create
+when the initial .config is borrowed from $GRIMOIRE/linux.d/
+
+If this works as good as one can hope
+then it could provide a method for city-slicer SAs
+to easily mount a custom horse
+without knowing the reins from the stirrups
+nor the difference between an english and a western saddle.
+Even for the dusty cowboy
+this method could enable faster generation of a custom .config
+on a new box without having to examine the output of lsmod, lspci, lsusb
+and other programs that provide information about installed hardware.
+
+What I am asking is for a someone to lead a short term sub-project/
+Please investigate and test this.
+Please decide if or how
+make localmodconfig
+should be or should not be used with linux-custom.
+
+Meanwhile, I am continuing with improvements and testing
+that involves the linux spell
+with support for omitting categories of drivers
+in order to create a leaner .config and faster compilation.
+When the changes are ready
+then they will go out with a linux spell and config files
+that are ready for compiling linux version 2.6.36
+I have been playing with this for about 2 days thus far.
+I am feeling ready for an initial release,
+perhaps in the next or later LAG=0 grimoire.
+But there is no rush to complete it.
+
+SAs who use the linux spell should be forewarned.
+The initial check list menu will have each box empty [ ]
+The empty boxes indicate that support for that
+category of module will be compiled!
+Boxes with [x] indicate that support
+for that category of module will be omitted!
+
+More simply stated,
+the full supreme pizza .config is achieved
+by a check list where all boxes are empty.
+A checklist where all box have [x]
+might be unable to connect to a network.
+Therefore, please carefully select boxes that have [x]
+
+Is that confusing?
+It should be.
+It works opposite of how most lists of switches for spells are designed.
+However, this design allows SAs to
+neglect the configuration of the linux spell on an update
+and still receive a full load out of modules.
+And that is why the [x] or &quot;on switch&quot;
+omits a category of modules instead of enabling it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001988.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+	<LI>Next message: <A HREF="001970.html">[Sorcerer-admins] The flags that are flying above the two	kernel camps...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1969">[ date ]</a>
+              <a href="thread.html#1969">[ thread ]</a>
+              <a href="subject.html#1969">[ subject ]</a>
+              <a href="author.html#1969">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

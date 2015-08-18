@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer ia32 I/R bugs found thus far:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20ia32%20I/R%20bugs%20found%20thus%20far%3A&In-Reply-To=%3C596b75860805100317y612b437fo8cb032dbe63559da%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000427.html">
+   <LINK REL="Next"  HREF="000429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer ia32 I/R bugs found thus far:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20ia32%20I/R%20bugs%20found%20thus%20far%3A&In-Reply-To=%3C596b75860805100317y612b437fo8cb032dbe63559da%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer ia32 I/R bugs found thus far:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 10 12:17:48 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000427.html">[Sorcerer-admins] 20080507 ia32 I/R
+</A></li>
+        <LI>Next message: <A HREF="000429.html">[Sorcerer-admins] 2 LA Failure lftp - 00
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Illegal instructions in p7zip ccache which
+
+So far no insurmountable problems have been found.
+However, finding those non i586 compatible executables
+has impelled me to begin a rebuild of the i586 IA32 I/R
+on a pentium mmx 233 Mhz.
+Might be a few days before I can roll it out.
+
+If you install from the current Sorcerer IA32 I/R be certain to
+# dispel --unsafe ccache; augur forget ccache; rm -f
+/var/cache/archive/ccache*; augur index; cast which p7zip
+
+That was all I had to do thus far to hop around the problematic executables.
+However, I have no simple way to tell which are good and which are not.
+Therefore, I am recompiling everything installed before the previous
+cast of gcc.
+gcc compiles without ccache, bootstraps itself, and also removes the previous
+ccache cache of compiled object files.
+Therefore, if the continuation of the problem was due to the presence and re-use
+of ccache cached object files then this should be sufficient to
+eliminate the problem.
+
+Sorry, for the inconvenience.
+I will post when the next bug fixed IA32 I/R is available for download.
+And you can still use the current IA32 I/R if you circumvent the problems
+as I did above or are nstalling it on an Athlon-XP
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000427.html">[Sorcerer-admins] 20080507 ia32 I/R
+</A></li>
+	<LI>Next message: <A HREF="000429.html">[Sorcerer-admins] 2 LA Failure lftp - 00
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#428">[ date ]</a>
+              <a href="thread.html#428">[ thread ]</a>
+              <a href="subject.html#428">[ subject ]</a>
+              <a href="author.html#428">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init... speed, control, or robustness?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTi%3DbA5tje0LBqFWOostWyf7NeOJec67HnOQ61ziM%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001874.html">
+   <LINK REL="Next"  HREF="001876.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init... speed, control, or robustness?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTi%3DbA5tje0LBqFWOostWyf7NeOJec67HnOQ61ziM%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init... speed, control, or robustness?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 30 04:01:59 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001874.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+        <LI>Next message: <A HREF="001876.html">[Sorcerer-admins] make 3.82
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1873">[ date ]</a>
+              <a href="thread.html#1873">[ thread ]</a>
+              <a href="subject.html#1873">[ subject ]</a>
+              <a href="author.html#1873">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 27, 2010 at 3:06 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> OK, some init scripts do not really play nice with the PID file.
+</I>&gt;<i>
+</I>&gt;<i> There is not much we can do about that.
+</I>&gt;<i>
+</I>&gt;<i> However, the initscript itself is a wrapper for whatever service it is
+</I>&gt;<i> calling.
+</I>&gt;<i> At the very least, it can write it's exit status to a file where another
+</I>&gt;<i> process that absolutely depends on that process having started can check to
+</I>&gt;<i> see if it did.
+</I>
+An empty file created in /var/lock/ as an indication that
+something happened successfully is called a lock file.
+And a lock file is created for /etc/init.d/networks
+
+
+&gt;<i> The mounting init-script ( for instance) does not have a PID at all, because
+</I>&gt;<i> after the script has run, it exits. However, if it's exit status was known,
+</I>&gt;<i> another script can see if it's worth it to even run.
+</I>
+If the mount script fails totally or partially
+then following init-scripts can do nothing about it.
+And naturally /etc/init.d/mount will run.
+There is no uncertainty about it.
+
+
+&gt;<i> We should define which scripts are absolutely critical to a running Sorcerer
+</I>&gt;<i> system, and those should give you a command line if they fail to run, and
+</I>&gt;<i> not run the following scripts as you may muck up a perfectly good working
+</I>&gt;<i> system.
+</I>
+What would you do with a command line
+if /proc fails to mount or / fails to mount?
+If / fails to mount
+perhaps that is due to a udev update
+and the new udev is not working as expected.
+Nothing one does to /etc/init.d/mount
+nor any amount of retries will fix that.
+However, booting with kernel parameter coldplug
+might enable the box to boot normally.
+Aside from that does anyone on the list
+know what to do if udev fails to work?
+
+Having a robust system that can automatically
+anticipate, fix and circumvent problems
+is a better solution than granting a BASH prompt
+and with a line of text telling the SA to figure out
+the problem on his own.
+If the SA is going to debug sysinit
+then the debugging should start rdinit=/bin/bash
+so the SA can observe the pre and post states
+of the box after running each init-script.
+That way the SA can discover, for example,
+if udev is working properly.
+
+
+&gt;<i> If for instance, an SA adjusted the running kernel so that the root
+</I>&gt;<i> filesystem type is no longer recognizable, there is no point in loading
+</I>&gt;<i> anything else... the system is unbootable, and the SA should be informed,
+</I>&gt;<i> and the system not try to boot until the problem has been rectified. A
+</I>&gt;<i> command line at this point would be helpful at this point too.
+</I>
+I forget about what prints when that happens.
+But the box will boot and enter runlevel with
+the initramfs mounted as /
+Then the SA can log in, try to manually mount
+the / on /media/root and discover that the filesystem
+type of / lacks an appropriate driver/module.
+
+This problem does not have to be anticipated.
+The chance of that happening is almost 0.0%.
+Sorcerer SAs should be using linux
+and not linux-custom unless they make near
+perfect config files for linux every time.
+
+
+&gt;<i> I am sure there are a few more examples of critical scripts that, if
+</I>&gt;<i> activated, must absolutely be run.
+</I>
+The init-scripts that run during sysinit that are critical
+tends to depend upon what the SA decides is critical.
+For example only on boxes that use LUKS encrypted devices is
+/etc/init.d/cryptmount
+a critical init-script.
+
+/etc/init.d/mount is critical on most boxes,
+but too late to do anything about the situation
+if mounting of / fails.
+If mounting of other filesystems fail
+then usually the box can boot
+and have those problems fixed permanently
+when the SA logs in.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001874.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+	<LI>Next message: <A HREF="001876.html">[Sorcerer-admins] make 3.82
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1873">[ date ]</a>
+              <a href="thread.html#1873">[ thread ]</a>
+              <a href="subject.html#1873">[ subject ]</a>
+              <a href="author.html#1873">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

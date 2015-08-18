@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] current I/R does not install bootloader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812110356w62fc8409jdcd041f246d2cb30%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000925.html">
+   <LINK REL="Next"  HREF="000927.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] current I/R does not install bootloader</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3C596b75860812110356w62fc8409jdcd041f246d2cb30%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] current I/R does not install bootloader">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Dec 11 12:56:36 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000925.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+        <LI>Next message: <A HREF="000927.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#926">[ date ]</a>
+              <a href="thread.html#926">[ thread ]</a>
+              <a href="subject.html#926">[ subject ]</a>
+              <a href="author.html#926">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Dec 11, 2008 at 4:06 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+
+&gt;<i> Hmm, i think it did not cast anything at any point. I partitioned disk, did
+</I>&gt;<i> format partitions, etc. and transfer files, but i dont recall it did any
+</I>&gt;<i> cast operations, so that why i suspect chroot cast did not worked (and
+</I>&gt;<i> because i did try it manually, chroot /media/root/, and it did not find
+</I>&gt;<i> shell, or something. If i recall right, there was indeed no shell at /bin...
+</I>
+Perhaps the I/Rs did not successfully transfer?
+Maybe the CDs contained errors?
+/media/root/bin/bash should have existed.
+
+&gt;<i> It did transfer files ok, atleast it did not report any errors (or i did not
+</I>&gt;<i> see any errors atleast) and when i did goto /media/root/ it was full of
+</I>&gt;<i> files/directories, looked ok. Except there was no any point /etc/lilo.conf,
+</I>&gt;<i> only those lilo.conf.head, etc, so i manually made lilo.conf using them and
+</I>&gt;<i> manually runned lilo command, it has parameter to use directory as root
+</I>&gt;<i> directory so it did not needed chrooting.
+</I>
+Okay, maybe you did what Evert was anticipating.
+Perhaps, you transferred files and then continued
+down the disk menu and selected to unmount partitions.
+If the partitions are unmounted then the compile menu
+is either not available on the main menu
+or it can not be entered.
+
+It is just a really tiny mistake that anyone could make.
+I am glad that you reported it because it reinforces
+Evert's idea of a single menu as being a good idea.
+I want to give it a try and run with it for at least a
+few releases of the I/R to see what SAs say about it.
+
+A wizard is not out of the question.
+However, it might implemented as a separate installation script.
+That way SAs have their choice between cake or pie.
+But best to finish the cake before making the pie.
+
+The newer I/R will have a nearly large single main menu design
+that should help SAs avoid the potential pitfall of unmounting
+the filesystems before compiling required software.
+
+&gt;<i> Perhaps more wizard like could be better? Like all others distros does
+</I>&gt;<i> installer, they are wizard like. That might be better approach than manually
+</I>&gt;<i> selecting menus, etc. thats confusing.
+</I>
+Senior level SAs, and especially me, tend not to like to be cornered.
+A wizard is not comfortable.
+Several years ago the design was tried.
+And for issues of it being basically impossible
+to go back any step and make corrections it was abandoned.
+
+
+&gt;<i> Well just wait when i get my new server online so we can virtualize
+</I>&gt;<i> devboxes, allthough testing I/R might be difficult to handle unless i make
+</I>&gt;<i> you an access to main linux where virtual servers are runned/created. Think
+</I>&gt;<i> i will use KVM, instead Xen.
+</I>
+Testing need not require full virtualization.
+I can simply test it using qemu running as my normal user.
+Currently, I use qemu and tightvnc to test new I/Rs.
+
+If possible I prefer not to have any access on that box higher
+than regular user otherwise encounter any problem will seriously
+tempt me to fix it myself.
+Also if the account is compromised through an exploit
+then not having it lead to a great problem is a good idea.
+Sure I know of sudo, but still I would rather not.
+A box really requires a dedicated SA
+that knows it better than the back of their own hand.
+
+
+&gt;<i> I managed to get HDD drivers yesterday, 3 * 750GB SATA 2 drivers, just
+</I>&gt;<i> testing them on software raid, RAID5, sequential read speed about 250MB/sec
+</I>&gt;<i> (thats bytes not bits) at beginning part and end part gives about 100MB/sec.
+</I>&gt;<i> Will test also RAID10... But with RAID5 i will get 1.5TB space...
+</I>
+Wow that is fast.
+The demands of the Sorcerer hosting will be slight.
+The PPR has always placed the greatest demand on a box,
+because it requires the CPU to run sdelta and p7zip.
+Getting the PPR fixed would be nice so that software
+update patches are available again.
+I suspect something has been amiss with it for a while.
+Part of the problem was in sorcery.
+But although that appears fixed the PPR web server
+appears to be displaying php files as plain text
+instead of executing them.
+If not for that it might work, maybe?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000925.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+	<LI>Next message: <A HREF="000927.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#926">[ date ]</a>
+              <a href="thread.html#926">[ thread ]</a>
+              <a href="subject.html#926">[ subject ]</a>
+              <a href="author.html#926">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

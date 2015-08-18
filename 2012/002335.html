@@ -1,0 +1,348 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDjcNwudXBs7hnVN-WjDPhs9fnS1vfxATp2p8vzbWboWzg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002334.html">
+   <LINK REL="Next"  HREF="002337.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDjcNwudXBs7hnVN-WjDPhs9fnS1vfxATp2p8vzbWboWzg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 23 21:21:54 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002334.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+        <LI>Next message: <A HREF="002337.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2335">[ date ]</a>
+              <a href="thread.html#2335">[ thread ]</a>
+              <a href="subject.html#2335">[ subject ]</a>
+              <a href="author.html#2335">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Come to think of it...
+With Evert's description I imagined
+how the screen looks when KDE or GNOME crashes or fails to start X.
+Often that results in the active virtual console lacking a getty.
+That is because Xorg will always start on a virtual console
+where a getty is not present.
+So for the sake of argument let us assume that
+xorg is crashing and the virtual console is #8.
+Not much to do on a virtual console without a getty.
+So I would press ctrl-alt-f1 or just alt-f1 in order to
+switch to virtual console #1.
+Connected to virtual machine through a vnc client
+I would switch virtual consoles
+by using alt-left-arrow-key or alt-right-arrow-key.
+There I could log in and explore the problem.
+I would definitely want to read
+# dmesg
+and the file /var/log/Xorg.0.log
+And probably also the system log.
+
+All of my boxes have an /etc/X11/xorg.conf
+Xorg is supposed to run fine without.
+But that maybe that is the exception rather than the norm.
+So I would probably execute
+# man Xorg
+Worth reading all of it.
+reading
+# man xorg.conf
+is also worthy.
+Then I would start xorg with the parameter to probe for hardware
+and write a configuration file.
+Then I would edit the configuration file and copy it to the proper location.
+Finally, I would execute a command such as
+# ( /etc/init.d/kdm stop; sleep 5; /etc/init.d/kdm start ) &amp; exit
+
+Then I could see if that solved the problem and provides the KDM login GUI.
+For detailed instructions please read the manual pages,
+since I also do not memorize that information, but merely read it as required.
+Configuring Xorg for a box is a one-time event, sort of like networking.
+So I spend between 1 and 5 minutes on the task and then am done.
+And if all else fails try reading
+# man vesa
+and configuring the driver for vesa.
+The VESA compatible extensions on most cards can provide
+nearly full access to the resolution and color depth a card
+is capable of at a small cost in reduced speed.
+Video drivers for native are faster, but vesa often works.
+Additionally, some cards have a kernel component a DRM module
+that can be loaded.
+Some can be accessed adequately through the Linux Frame Buffer.
+In some respects that is similar to VESA, but it differs.
+Read
+# man fbdev
+for information about how to modify xorg.conf to use it.
+
+Native driver, vesa, or fbdev are the 3 methods that can normally
+be used for some, but perhaps not all video cards.
+Plenty of native drivers exist and the one to select is based upon the chipset.
+Since nearly every xf86-video-* driver is installed on a Sorcerer box
+xorg can typically auto-probe and select the proper native driver.
+If it fails at that, then it typically selects vesa.
+Use of the frame buffer device is typically available to both those
+that have the hardware and know to configure xorg to use it.
+If configured with the driver then xorg will automatically load the module.
+However, xorg will not automatically load any of the modules
+associated with the linux frame buffer for probing in order to
+automatically create an xorg.conf configuration file.
+
+Probably such modules are available in
+/lib/modules/$( uname -r )/kernel/drivers/video/
+More important is the description of which module does what.
+That can be viewed by running make menuconfig
+in /usr/src/linux provided that a linux kernel was compiled
+and installed by
+# au begin linux
+or an update of installed linux.
+
+Aside from the help descriptions available when creating a kernel configuration
+I do not know where else those modules are verbosely listed.
+
+<A HREF="http://en.wikipedia.org/wiki/Linux_framebuffer">http://en.wikipedia.org/wiki/Linux_framebuffer</A>
+<A HREF="http://tldp.org/HOWTO/Framebuffer-HOWTO/">http://tldp.org/HOWTO/Framebuffer-HOWTO/</A>
+
+Unfortunately, that seems less than comprehensive.
+I recommend untarring a linux source tarball somewhere on /tmp
+and running make menuconfig and finding the drivers and reading
+the help descriptions.
+
+My ignorance is probably too great for my opinion to be worthy,
+but I have rarely had an interest in using frame buffer as opposed
+to the native chipset or vesa driver for xorg.
+However, the frame buffer device presents some interesting options
+for those who want to do graphics without the benefit of running an X server.
+The combination of linux-fusion and DirectFB can make for some nifty output.
+In many years prior, maybe even nearly a decade,
+a method existed to do svga/vga output without X.
+It was perhaps earlier versions of a frame buffer or something
+slightly different.
+My recollection does not recall the necessity of loading a module to use it.
+Maybe it involved a library such as libsvga?
+
+X is considered bulky, even more so with a window manager,
+and far more so with a desktop environment such as KDE.
+Therefore, the concept of programs with
+nearly direct access to the frame buffer
+from a reasonable sized library
+was probably of interest to those wanting to build embedded systems
+and gadgets that have limited capabilities and limited RAM and ROM space.
+
+Is using the frame buffer faster and better than native chipset xorg drivers?
+In the past it was not so.
+Whether it is still so I do not know.
+Therefore, try first with an xorg native chipset driver.
+And Evert was &quot;right-on&quot; for suggesting identifying the graphics
+chipset using output from
+# lspci -v
+If that fails then try the vesa driver.
+
+If that fails then one could always burn ample luck or hours
+trying to make xorg work with the linux frame buffer.
+Might work in 5 minutes, or require 5 hours of effort.
+And it might require no more effort than modifying just
+one line in /etc/X11/xorg.conf
+But I do not know, since years have elapsed since I last tried.
+
+The good aspect about creating an xorg.conf file is
+that almost no reasonably recent SVGA monitor
+requires mode lines in the configuration file.
+I do not know who else remembers reading monitor documentation
+and the back of monitors in order to create proper mode lines for XFree86.
+It was something of a problem back in early days.
+And setting a mode that was impossible to accomplish
+had the possibility of destroying some monitors
+or detonating/frying important monitor components.
+So what I wrote about creating an xorg.conf file above
+might seem complicated,
+but today is way easier than a decade or more ago.
+
+BTW, if the problem of booting to a KDE GUI persists,
+because xorg crashes
+then the way to boot the box without going into runlevel 4 or 5,
+which launches the login GUI,
+is to boot into runlevel 3.
+And that is easily accomplished.
+Just give 3 as an additional parameter to the linux.
+
+When the countdown displays during booting,
+press down arrow
+then select the label to boot
+press tab to receive a boot password prompt.
+If the password is correctly entered
+then the kernel's command line parameters are displayed.
+Now press space and add &quot;3&quot;
+Type 3 without the double quotes and press enter.
+And just like that the box will boot into run level 3.
+
+The default run level can be changed by editing file
+/etc/inittab
+
+That might seem advanced or esoteric,
+but one gains an idea of how those things work after reading:
+linux kernel documentation;
+extlinux from the syslinux project documentation;
+and the manual page for inittab.
+Perhaps everyone eventually reads those.
+They are both useful and somewhat fascinating.
+Or at the very least I find
+/usr/src/linux/Documentation/kernel-parameters.txt
+to be fascinating.
+
+Historically, BIOS would perform a check of RAM on every boot.
+Back in the 1980-90s period this check could be set to fast
+or a rather slow several minute test.
+I do not know if modern BIOS will do this.
+However, the kernel for example supports the memtest parameter
+which the kernel-parameters.txt file explains
+I have yet to try it.
+But if I had doubts about instability and segmentation faulting
+being caused by faulty RAM
+then I would probably want to give this a try.
+Other possibilities would be slightly lowering the drive speed of the RAM,
+or slightly increasing the the voltage to the RAM.
+Some BIOS/CMOS configuration programs permit that and others do not.
+Replacing faulty RAM is always the best choice.
+However, linux might be able to spot and circumvent regions of bad memory.
+Nifty things such as the memtest parameter
+can be learned from reading files in
+/usr/src/linux/Documentation/
+
+
+On Sun, Jul 22, 2012 at 11:23 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there...
+</I>&gt;<i>
+</I>&gt;<i> As Kyle said, 3000+ spells is a lot to keep track of, and as long as a spell
+</I>&gt;<i> works, it sticks around, even if its a little old.
+</I>&gt;<i>
+</I>&gt;<i> Demetri, from your description of the problem, it sounds like you have a
+</I>&gt;<i> video driver problem.
+</I>&gt;<i> If you give us your hardware configuration, I might be able to give you some
+</I>&gt;<i> pointers on how to set it up.
+</I>&gt;<i>
+</I>&gt;<i> When you see the blinking cursor, Hold down &quot;Ctrl&quot; and hit &quot;C&quot;
+</I>&gt;<i>
+</I>&gt;<i> You should now be able to log in.
+</I>&gt;<i> Enter lspci and hit &quot;Enter&quot;
+</I>&gt;<i>
+</I>&gt;<i> This will give you a list of what hardware is in your system.
+</I>&gt;<i> If you feel like troubleshooting this issue for yourself, read:
+</I>&gt;<i>
+</I>&gt;<i> /var/log/Xorg.0.log
+</I>&gt;<i> See what modules are being loaded to get your X going, and where it is
+</I>&gt;<i> failing.
+</I>&gt;<i>
+</I>&gt;<i> You can edit /etc/X11/xorg.cfg, but please read the manual on that first, by
+</I>&gt;<i> running man xorg.cfg
+</I>&gt;<i>
+</I>&gt;<i> You can test various configurations by running &quot;startx&quot; When successful, you
+</I>&gt;<i> will get a very basic window manager instead of that blinking cursor. If you
+</I>&gt;<i> get the cursor again, you get to try again, free of charge.
+</I>&gt;<i>
+</I>&gt;<i> When you finally have a working X config, exit out of the window manager by
+</I>&gt;<i> either pressing &quot;Ctrl&quot; and &quot;Backspace&quot; together, or typing &quot;exit&quot; into the
+</I>&gt;<i> left-most terminal.
+</I>&gt;<i>
+</I>&gt;<i> Once you exit there, you can start the proper window manager by entering:
+</I>&gt;<i> /etc/init.d/kdm restart
+</I>&gt;<i> and hitting Enter.
+</I>&gt;<i>
+</I>&gt;<i> Good luck.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 22 July 2012 12:51, Demetri Salamander &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">demetrisalamander at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have not visited the Sorcerer IRC channel in ages.
+</I>&gt;&gt;<i> First, xchat is broke.
+</I>&gt;&gt;<i> I might try fixing it again,
+</I>&gt;&gt;<i> but the software authors have not released a new tarball
+</I>&gt;&gt;<i> since 20100529 which is just over 2 years ago.
+</I>&gt;&gt;<i> I wonder if the software authors are not interested
+</I>&gt;&gt;<i> in providing maintenance for it?
+</I>&gt;&gt;<i> It may be suffering from more crushing bugs rather than merely
+</I>&gt;&gt;<i> being incompatible with current glib headers.
+</I>&gt;&gt;<i> -------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I keep up with the news. You are 2 years behind on xchat, sir. They
+</I>&gt;&gt;<i> stopped supporting it 2 years ago and only want money now and only for
+</I>&gt;&gt;<i> Windows. They no longer contribute for Linux and Windows people have to pay
+</I>&gt;&gt;<i> for xchat. I know a lot and hear a lot about programs all the time. I keep
+</I>&gt;&gt;<i> up with the news on programs when I use them. I've had to find alternative
+</I>&gt;&gt;<i> IRC instead. I used to go out searching for new programs all the time and
+</I>&gt;&gt;<i> try out a lot of programs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Right now I cannot install Sorcerer. It is not working properly enough and
+</I>&gt;&gt;<i> I have already reinstalled several times with the same results of just a
+</I>&gt;&gt;<i> black screen with a blinking cursor as a result. You are telling me to fix
+</I>&gt;&gt;<i> the installation issue and this will take a long while for me. I am trying
+</I>&gt;&gt;<i> to find a recording desktop software and then once I can do that then I can
+</I>&gt;&gt;<i> show you. I only have my desktop right now and would have to find a program
+</I>&gt;&gt;<i> that can do that in Linux until I can get my Windows machine that has that
+</I>&gt;&gt;<i> stuff. Or maybe anyone here can find out how to record the desktop on Linux?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> I am useful but it's also good to keep up on the news instead of being
+</I>&gt;&gt;<i> behind by a few years. Also, going back to square one: Trying to fix your
+</I>&gt;&gt;<i> installation issue.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Demetri Salamander
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Those who do not understand UNIX are doomed to reinvent it, poorly.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I></PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002334.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+	<LI>Next message: <A HREF="002337.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2335">[ date ]</a>
+              <a href="thread.html#2335">[ thread ]</a>
+              <a href="subject.html#2335">[ subject ]</a>
+              <a href="author.html#2335">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

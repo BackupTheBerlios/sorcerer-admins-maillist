@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/pts%20fails%20to%20mount%20/dev/pts%20%3F%3F&In-Reply-To=%3C596b75860806271447l62d6da95u348d059b72c36966%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000567.html">
+   <LINK REL="Next"  HREF="000577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/pts%20fails%20to%20mount%20/dev/pts%20%3F%3F&In-Reply-To=%3C596b75860806271447l62d6da95u348d059b72c36966%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jun 27 23:47:02 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000567.html">[Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??
+</A></li>
+        <LI>Next message: <A HREF="000577.html">[Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#573">[ date ]</a>
+              <a href="thread.html#573">[ thread ]</a>
+              <a href="subject.html#573">[ subject ]</a>
+              <a href="author.html#573">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jun 26, 2008 at 2:52 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> 'sides that the pts is attempted to run at levels 1 2 3 4 5, so that
+</I>&gt;<i> shoudl be well after the real file system is mounted.....
+</I>
+Ah good point.
+/dev/pts will not be mounted on the initramfs
+unless the initramfs is the real root filesystem.
+I have no clue why /dev/pts is not mounted on that box.
+/dev/pts is mounted on all of my boxes.
+
+
+# ls -lah /dev/pts
+total 0
+drwxr-xr-x  2 root root       0 2008-06-27 13:32 .
+drwxr-xr-x 10 root root    3.1K 2008-06-27 13:32 ..
+crw--w----  1 root tty  136,  0 2008-06-27 13:44 0
+crw--w----  1 root tty  136,  1 2008-06-27 13:44 1
+crw--w----  1 root tty  136,  2 2008-06-27 13:58 2
+crw--w----  1 root tty  136,  3 2008-06-27 13:44 3
+crw--w----  1 root tty  136,  4 2008-06-27 13:50 4
+crw--w----  1 root tty  136,  5 2008-06-27 13:49 5
+crw--w----  1 root tty  136,  6 2008-06-27 14:06 6
+crw--w----  1 root tty  136,  7 2008-06-27 14:02 7
+crw--w----  1 root tty  136,  8 2008-06-27 14:11 8
+crw--w----  1 root tty  136,  9 2008-06-27 14:29 9
+
+
+Does anyone else have a stock box
+where /dev/pts is not being properly mounted
+during runlevel execution by
+/etc/init.d/pts
+?
+
+If /etc/fstab
+contains an entry for /dev/pts
+then that might cause the problem,
+especially if something else invokes mount -a
+instead of /etc/init.d/mount
+
+# cat /etc/fstab
+/dev/sr0        /media/cd       iso9660 ro,users,noauto 0 0
+/dev/dvd        /media/dvd      udf     ro,users,noauto 0 0
+/dev/fd0        /media/floppy   auto    rw,users,noauto 0 0
+/dev/sda1       /               ext3    defaults,noatime,commit=600 0 1
+
+
+/etc/fstab
+should look something like the above example:
+Standard virtual filesystems are not included in /etc/fstab
+
+Having /dev/pts, binds, and other entries in /etc/fstab
+should not cause a problem since
+/etc/init.d/mount executes the mount -a
+chrooted to the real filesystem.
+
+The problem of /dev/pts not being mounted during
+runlevel startup on a stock Sorcerer box is not a
+distribution wide problem.
+However, it also should not happen,
+unless /etc/init.d/pts is non executable.
+I am eager to learn why it is not mounted
+or why it is not mounted properly within
+the /dev virtual filesystem on the root filesystem.
+
+Please report more information about the problem.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000567.html">[Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??
+</A></li>
+	<LI>Next message: <A HREF="000577.html">[Sorcerer-admins] /etc/init.d/pts fails to mount /dev/pts ??
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#573">[ date ]</a>
+              <a href="thread.html#573">[ thread ]</a>
+              <a href="subject.html#573">[ subject ]</a>
+              <a href="author.html#573">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

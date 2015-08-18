@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] cgroup modified and explained...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cgroup%20modified%20and%20explained...&In-Reply-To=%3CCA%2BT4wDhNWepXO9ne_f-JyoxRNWGhVFVnZ6yPj0g%3DsFqQvWpkjg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002364.html">
+   <LINK REL="Next"  HREF="002366.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] cgroup modified and explained...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cgroup%20modified%20and%20explained...&In-Reply-To=%3CCA%2BT4wDhNWepXO9ne_f-JyoxRNWGhVFVnZ6yPj0g%3DsFqQvWpkjg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] cgroup modified and explained...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Aug 13 21:40:38 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002364.html">[Sorcerer-admins] Cosmetic changes...
+</A></li>
+        <LI>Next message: <A HREF="002366.html">[Sorcerer-admins] cgroup modified and explained...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2365">[ date ]</a>
+              <a href="thread.html#2365">[ thread ]</a>
+              <a href="subject.html#2365">[ subject ]</a>
+              <a href="author.html#2365">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I modified cgroup to be a bit more like cpufreq.
+Therefore, cgroup-{affine,fast,idle,slow} were removed in favor of
+/usr/bin/cgroup
+It accepts parameters and provides bash completion.
+Additionally, I checked to ensure that all aspects of it work properly.
+And finally, they do.
+Previously, there were some ownership/permission problems.
+
+This change along with the aforementioned change to cpufreq
+will be available in the next UTC 00:00 grimoire.
+And since most boxes typically lag a day behind,
+expect to be able to enjoy the benefits no sooner than about 30 hours from now.
+
+Basically, one of the final set of changes before releasing new I/Rs
+is to revise implementations that have been awaiting revision
+and to hunt bugs, almost any bugs.
+That way the next I/Rs provide maximum functionality and minimal annoyance.
+
+For those who have not used the cgroup helper program
+it combines a bit of the functionality
+that was previously provided by nice and taskset
+on a purely POSIX box without cgroups enabled.
+
+However, on a cgroup box, nice does not work exactly as expected
+and that is the reason for the existence of top level control groups:
+fast; norm; slow; idle.
+By default users will not have access to fast unless enabled.
+However on a quad core box user cgroups will look something like
+
+/sys/fs/cgroup/{norm,slow,idle}/user/$USER/{0,1,2,3}
+
+When a user logs in via ssh or kdm, gdm, xdm
+then the user's processes run in
+/sys/fs/cgroup/norm/user/$USER
+However, transition from /sys/fs/group
+for user owned processes
+is provided when a user logs in via getty.
+
+Let us say that the user wants his virtual server to run slower
+$ cpufreq slow $( pgrep qemu )
+Easy yes?
+What if the user wants to xz compress a file, but for minimal processing usage?
+$ xz huge.tar &amp;
+$ cpufreq idle $( pgrep -u $USER xz )
+And if the user also wants xz to run on a specific processor such as
+the last one?
+$ cpufreq affine 3 $( pgrep -u $USER xz )
+
+Easy.
+But of course the user can
+always echo user owned PIDs
+to the tasks files owned by the user.
+Therefore, the use of /usr/bin/cgroup
+is optional for a SA that already understands
+the use of control groups and the default implementation on Sorcerer.
+
+If expecting to use maximum processing power for a long duration on a
+multi-user box
+then moving one's own processes to the slow or idle hierarchy of control groups
+allows those processes to defer processing power to other processing
+running on the box.
+Doing so would be considered polite.
+
+Someone might yet wonder what happens
+if a user starts xz in the above example and
+then executes:
+$ renice +19 $( pgrep -u $USER xz )
+
+The answer that if the scheduler will prefer to allocate
+more processing power to the other processes that
+are in the same control group as xz.
+Therefore, if processing power is in short supply
+then xz's share will be diminished relative to other
+processes within the same control group.
+
+Therefore, if users bill jane and john are competing
+for an insufficient amount of processing power.
+And each is running their processes from
+/sys/fs/cgroup/user/{bill,jane,john}, respectively
+then each user will receive approximately an equal portion of processing power.
+If bill nices his xz process then bill still receives approximately
+1/3rd total for his processes.
+However, if bill moves xz's PID into /sys/fs/cgroup/slow/user/bill/tasks
+then bill's processes in /sys/fs/cgroup/norm/user/bill/tasks will run faster.
+However, his xz process will run much slower than previously.
+
+Perhaps the above explanation might seem confusing?
+However, it is a very good implementation for directing processing power
+for both uniprocess or SMP boxes regardless of whether the box has one
+or more concurrent users.
+And additionally, the default implementation should prevent
+the condition of X starving for processing power.
+Therefore, a number of tasks that contribute to a high load
+should not impact the visual performance of X.
+However, in extreme circumstances the user's firefox or video player
+might be starving.
+And that situation can be solved by using &quot;nice&quot; or the &quot;cgroup&quot;
+utility as described above.
+
+Most system started services will run in cgroups such as:
+/sys/fs/cgroup/norm/sys/$SERVICE
+where $SERVICE is the name of the service.
+However, some variation exists in order to make some services receive preferred
+or deferred scheduling of processing power.
+For example, gdm, kdm, xdm will run from
+/sys/fs/cgroup/fast/sys/{gdm,kdm,xdm}, respectively.
+
+
+For those who prefer a more simple to understand implementation that
+works more like POSIX
+then rejoice because Evert is designing that implementation.
+However, lament because I am coding it, so it might have bugs.  :)
+Evert wants for all user owned processes to always run in /sys/fs/cgroup/tasks
+Additionally, Evert wants for system started services to run in
+/sys/fs/cgroup/$SERVICE
+Succinctly stated, it is an implementation that sacrifices the
+benefits of hierarchy.
+
+Also it does not install a /usr/bin/cgroup to assist users.
+Users will control allocation of processing power using the &quot;nice&quot; and
+&quot;taskset&quot; utilities.
+And it will not maintain a fair allocation of processing power among users.
+If john has 5 processes running full bore, and jane has one process
+running full bore
+then john will receive 5 times more processing power than jane.
+It is old style where user with the most full bore processes wins.
+Controlling the allocation of processing power among services
+is not accomplished with nice but instead by changing
+the value of cpu.shares for one or more service cgroups.
+
+After the implementation is debugged, tested, honed, revised, etc...
+then it will be available from the spells {init-functions,cgroup}-evert
+Until then those spells will retain the broke attribute.
+
+Anyone with an opinion about the default cgroup implementation or Evert's
+is welcome to state reasons, observations, tests on the email list.
+If we can use that information to make the cgroup implementation better
+then we will.
+
+I might have already stated in a previous message,
+but if I forgot then please be aware that
+# /etc/init.d/cgroup configure
+has been improved.
+It now allows creation of a cgroup at any level instead of merely top level.
+And it allows editing of controls in any control group.
+And it can display the control groups that are defined and initialized at boot.
+And the newest ability is to select which subsystems are enabled
+when the cgroup file system is mounted on /sys/fs/cgroup/
+
+For example, why bother mounting the cpuset subsystem on a uniprocessor box?
+And the default cgroup implementation no longer mounts the blkio subsystem
+because I changed the default io scheduler from CFQ back to deadline.
+Therefore, if a SA wants to use blkio then the blkio subsystem can be enabled
+and the default scheduler can be selected per device or at boot by
+kernel parameter.
+And those with no concern for controlling memory and who do not install
+immune-sentinel-memory
+can for example disable the memory subsystem.
+Those who want to use &quot;nice&quot; exclusively for scheduling processing power,
+and still want the default cgroup implementation could choose to
+mount the cgroup file system without the cpu subsystem.
+The possibilities are plentiful.
+
+I hope that everyone will feel satisfied with the default implementation
+or be able to suitably modify it in order to achieve desired
+performance and functionality.
+Of course dissatisfaction can impel change and possibly improvement.
+Therefore, please also provide suggestions
+for ways in which the functionality can be improved.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002364.html">[Sorcerer-admins] Cosmetic changes...
+</A></li>
+	<LI>Next message: <A HREF="002366.html">[Sorcerer-admins] cgroup modified and explained...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2365">[ date ]</a>
+              <a href="thread.html#2365">[ thread ]</a>
+              <a href="subject.html#2365">[ subject ]</a>
+              <a href="author.html#2365">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

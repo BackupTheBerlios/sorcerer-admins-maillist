@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] DESTDIR related install problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20DESTDIR%20related%20install%20problem&In-Reply-To=%3CAANLkTik4NJlDu_qVx1ZgE-QGBErVhzC1GNm9f6zK5bEh%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001719.html">
+   <LINK REL="Next"  HREF="001725.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] DESTDIR related install problem</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20DESTDIR%20related%20install%20problem&In-Reply-To=%3CAANLkTik4NJlDu_qVx1ZgE-QGBErVhzC1GNm9f6zK5bEh%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] DESTDIR related install problem">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jul 11 23:26:23 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001719.html">[Sorcerer-admins] DESTDIR related install problem
+</A></li>
+        <LI>Next message: <A HREF="001725.html">[Sorcerer-admins] DESTDIR related install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1723">[ date ]</a>
+              <a href="thread.html#1723">[ thread ]</a>
+              <a href="subject.html#1723">[ subject ]</a>
+              <a href="author.html#1723">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># augur install at | grep atd
+/etc/init.d/atd
+/usr/sbin/atd
+/usr/share/man/man8/atd.8
+
+# ls -lah /etc/sorcery/log/version/at
+-rw-r--r-- 1 root root 7 Jul 10 13:25 /etc/sorcery/log/version/at
+
+Has me stumped.
+Looks okay on the test box.
+Since the error happens on that box
+then that box might be the only place to track it down.
+&gt;<i>From my perspective the spell seems adequate
+</I>for properly installing at.
+
+
+On Sun, Jul 11, 2010 at 5:42 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> I compiled at
+</I>&gt;<i> it did compile
+</I>&gt;<i> in the compile log I see
+</I>&gt;<i> /usr/bin/install -c -g root -o root -m 755 -s atd
+</I>&gt;<i> /usr/src/sorcery/.meta/at.install/usr/sbin
+</I>&gt;<i>
+</I>&gt;<i> so the install step did install it right using the DESTDIR
+</I>&gt;<i>
+</I>&gt;<i> augur install at :
+</I>&gt;<i> /etc.ori/sorcery/log/compile
+</I>&gt;<i> /etc.ori/sorcery/log/elf
+</I>&gt;<i> /etc.ori/sorcery/log/install
+</I>&gt;<i> /etc.ori/sorcery/log/la
+</I>&gt;<i> /etc.ori/sorcery/log/md5sum
+</I>&gt;<i> /etc.ori/sorcery/log/version
+</I>&gt;<i> /etc/init.d/atd
+</I>&gt;<i> /etc/sorcery/log/compile
+</I>&gt;<i> /etc/sorcery/log/compile/at
+</I>&gt;<i> /etc/sorcery/log/compile/at.gz
+</I>&gt;<i> /etc/sorcery/log/elf
+</I>&gt;<i> /etc/sorcery/log/elf/at
+</I>&gt;<i> /etc/sorcery/log/install
+</I>&gt;<i> /etc/sorcery/log/install/at
+</I>&gt;<i> /etc/sorcery/log/la
+</I>&gt;<i> /etc/sorcery/log/la/at
+</I>&gt;<i> /etc/sorcery/log/md5sum
+</I>&gt;<i> /etc/sorcery/log/md5sum/at
+</I>&gt;<i> /etc/sorcery/log/version
+</I>&gt;<i> /etc/sorcery/log/version/at
+</I>&gt;<i> /usr
+</I>&gt;<i> /usr/doc
+</I>&gt;<i> /usr/doc/at.tar.bz2
+</I>&gt;<i> /var/cache/archive
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> so no atd.... seems that nothing installed by the make install did
+</I>&gt;<i> install.....
+</I>&gt;<i> any idea how to fix this?
+</I>&gt;<i> thanks
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+</I>&gt;<i> et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001719.html">[Sorcerer-admins] DESTDIR related install problem
+</A></li>
+	<LI>Next message: <A HREF="001725.html">[Sorcerer-admins] DESTDIR related install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1723">[ date ]</a>
+              <a href="thread.html#1723">[ thread ]</a>
+              <a href="subject.html#1723">[ subject ]</a>
+              <a href="author.html#1723">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

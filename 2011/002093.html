@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] arbitrary version progress important to read
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20arbitrary%20version%20progress%20important%20to%20read&In-Reply-To=%3CAANLkTinjapHoYrBfYqb0zpOqmvYkTB43W%3DMhE%3DmuVujY%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002092.html">
+   <LINK REL="Next"  HREF="002094.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] arbitrary version progress important to read</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20arbitrary%20version%20progress%20important%20to%20read&In-Reply-To=%3CAANLkTinjapHoYrBfYqb0zpOqmvYkTB43W%3DMhE%3DmuVujY%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] arbitrary version progress important to read">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Mar 12 22:07:08 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002092.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+        <LI>Next message: <A HREF="002094.html">[Sorcerer-admins] semi-derailed augur newer and augur sync...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2093">[ date ]</a>
+              <a href="thread.html#2093">[ thread ]</a>
+              <a href="subject.html#2093">[ subject ]</a>
+              <a href="author.html#2093">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First, the important stuff.
+# augur progress $spell $version
+That no longer sets a custom version.
+Instead:
+# augur progress $spell custom $version
+# That set's the version progress for $spell to custom
+and the version for $spell to $version.
+
+And now for some good examples:
+
+# echo rsyslog | augur avail
+rsyslog av      5.6.4
+rsyslog beta    5.7.8
+rsyslog devel   6.1.5
+rsyslog iv      5.6.4
+rsyslog stable  5.6.4
+
+iv happens to be what I am using for installed version.
+av is used for available version.
+However, beta and devel are available version progress.
+
+# augur progress rsyslog devel
+
+# augur progress
+rsyslog devel
+
+# echo rsyslog | augur avail
+rsyslog av      6.1.5
+rsyslog beta    5.7.8
+rsyslog devel   6.1.5
+rsyslog iv      5.6.4
+rsyslog stable  5.6.4
+
+
+And now the available version for syslog has changed to version 6.1.5
+
+# echo rsyslog | augur avail av
+rsyslog 6.1.5
+
+That also verifies the change.
+
+Notice also that I am not typing
+
+# augur available rsyslog
+6.1.5
+
+Although I can type that it provides less information.
+Short of looking at a spell
+the avail augur command provides quick and easy to read information
+about available version progress.
+
+If wondering why &quot;iv&quot; and &quot;av&quot;
+for &quot;installed version&quot; and &quot;available version&quot;, respectively
+then that choice was to further minimize the size of the grimoire's index.
+Perhaps at least installed version information did not have to be included
+in the index, but it it is useful to see when using augur's &quot;avail&quot; command.
+
+For software projects where the use of progress such as
+&quot;secure&quot; &quot;unstable&quot; and &quot;legacy&quot; applies
+then those spells can still use those version progress.
+
+# echo libX11 | augur avail
+libX11  av      1.4.0
+libX11  iv      1.4.0
+libX11  stable  1.4.0
+libX11  unstable        1.4.1
+
+
+And for SAs that dislike typing shift backslash to create the | pipe symbol
+The above command can be typed by typing
+augur avail
+then type libX11
+finally press ctrl-d to end input.
+
+That nearly makes augur seem interactive.
+
+Now to regress to the first paragraph of this email.
+Using the version progress of custom to set a custom version makes sense.
+But since this is arbitrary version progress
+then an arbitrary name can be used also.
+
+# augur progress rsyslog weird 6.2.0
+# augur progress | grep rsyslog
+rsyslog weird 6.2.0
+
+# echo rsyslog | augur avail
+Indexing Complete
+rsyslog av      6.2.0
+rsyslog beta    5.7.8
+rsyslog devel   6.1.5
+rsyslog iv      5.6.4
+rsyslog stable  5.6.4
+
+That example sets rsyslog's version progress to weird
+and set's rsyslog's version to 6.2.0
+Yes, it is custom, but it is also weird, is it not?
+The same effect would happen if using devel or beta
+as long an additional parameter follows the version progress.
+That additional parameter becomes the version.
+
+# augur progress
+wine    unstable
+rsyslog weird 6.2.0
+
+In this example rsyslog's version progress is weird
+while wine's version progress is unstable.
+However, notice how the version for wine is not listed.
+And yet the version is listed for rsyslog.
+This indicates straight away that rsyslog's version
+is fixed at version 6.2.0
+So when subscribing to a version progress
+please be careful to not include the version
+or it will become fixed instead of updating
+with the version progress.
+
+
+Is not arbitrary version progress complex?
+And yet this was a SA requested feature
+by SAs that want me to do more work and
+for them to do less spell editing and customization.  :)
+Fortunately, arbitrary version progress is entirely optional.
+When version progress is not specified for a spell
+then that spell follows the stable version progress for updates.
+
+So in summary arbitrary version progress can be used to
+exile spells, to set to custom version,
+to follow version progress the spell provides,
+and to order delivery pizza.
+Unfortunately, the pizza functionality is not included in this version
+of sorcery.
+However, please read augur's help screen
+and the help screens for individual commands
+to stay apprised of what they do.
+
+# augur help progress
+
+
+That will display a rather lengthy help screen
+which explains how to use augur progress.
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002092.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+	<LI>Next message: <A HREF="002094.html">[Sorcerer-admins] semi-derailed augur newer and augur sync...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2093">[ date ]</a>
+              <a href="thread.html#2093">[ thread ]</a>
+              <a href="subject.html#2093">[ subject ]</a>
+              <a href="author.html#2093">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

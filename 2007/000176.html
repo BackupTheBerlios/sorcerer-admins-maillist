@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C596b75860708181000h515daeby720fa8384fab30af%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000174.html">
+   <LINK REL="Next"  HREF="000186.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt-x11-opensource</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C596b75860708181000h515daeby720fa8384fab30af%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt-x11-opensource">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug 18 19:00:11 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000174.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+        <LI>Next message: <A HREF="000186.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#176">[ date ]</a>
+              <a href="thread.html#176">[ thread ]</a>
+              <a href="subject.html#176">[ subject ]</a>
+              <a href="author.html#176">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>By disabling demos and examples and
+removing my previous ccache for qt-x11-opensource
+it was able to compile within the 2G limit.
+Therefore, I replaced the attribute &quot;new&quot; with &quot;solo&quot;
+Maybe it is now good for use on ia32?
+Also it will probably compile faster.  :)
+
+However, updating it while using the previously
+saved ccache cached object files might exceed the 2G limit.
+I suppose I will find out on the next update.
+
+Lastly, 2G might still not be enough on x86_64 platforms.
+Many default data sizes are twice as large, so is some of the code.
+If the 1.5x round up is roughly accurate I expect it will exceed 2G.
+
+Anyone want to give it a try on x86_64, with the spell from svn,
+and report how much space is required prior to installation.
+Adding something like:
+
+du -sm /usr/src/sorcery &amp;&amp;
+
+on the line above prepare_install &amp;&amp;
+aught to print the size required into the compile log.
+
+
+Interesting comparisons:
+
+The uncompressed ccache tarball for qt-x11-opensource is 230M !!!
+For contrast the uncompressed firefox ccache tarball is merely 70M
+For contrast the uncompressed qt-x11-free ccache is  a meager 31M
+The qt-x11-free ccache probably does contain cached object files
+for demos and examples while the qt-x11-opensource one does not.
+Likewise the the archive caches for qt-x11-free and qt-x11-opensource
+are also approximately a magnitude difference in size.
+
+Makes me wonder.
+I guess we shall see how it performs near the end of this year.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000174.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+	<LI>Next message: <A HREF="000186.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#176">[ date ]</a>
+              <a href="thread.html#176">[ thread ]</a>
+              <a href="subject.html#176">[ subject ]</a>
+              <a href="author.html#176">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

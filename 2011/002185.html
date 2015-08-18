@@ -1,0 +1,705 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%0A%09mandatory.&In-Reply-To=%3CBANLkTinik5TJc7rgPGDMXLX0F7VZqfy74g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002184.html">
+   <LINK REL="Next"  HREF="002181.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%0A%09mandatory.&In-Reply-To=%3CBANLkTinik5TJc7rgPGDMXLX0F7VZqfy74g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jun  5 13:11:43 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002184.html">[Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.
+</A></li>
+        <LI>Next message: <A HREF="002181.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2185">[ date ]</a>
+              <a href="thread.html#2185">[ thread ]</a>
+              <a href="subject.html#2185">[ subject ]</a>
+              <a href="author.html#2185">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> That might sound silly, but I still do not understand why someone would
+</I>&gt;<i> want a swap file, instead of a swap partition.
+</I>
+Swap files have good uses.
+First, they can be created when required
+to provide additional swap that is beyond
+the normal amount of swap that a box runs with.
+Secondly, they can be removed to provide additional space.
+Third, instead of using an encrypted swap partition
+a SA could have swap files on an encrypted partition.
+Swap makes for an interesting read.
+Therefore boxes that have encrypted file systems
+should also have encrypted swaps.
+
+When I built a box with 4G of RAM on it,
+I was uncertain about whether I wanted dedicated swap partitions.
+Thinking in a limited way I decided to omit swap partitions.
+However, I discovered that I might often
+cast software concurrently in different roots,
+run several virtual machines concurrently,
+and/or do other things that consume RAM.
+Consequently, I usually run with 2G of swap.
+And most of the time a 2G swap is 90% overkill.
+
+However, a swap file is not always a less preferable idea.
+When the swap is rarely used
+then the performance drain for a swap file
+barely differs from a swap partition.
+
+Traditionally, and especially so on boxes without tmpfs,
+a swap should be created that is large enough to hold
+nearly all the memory consumed by all the processes
+that continue running during and after boot.
+That way nearly all available memory
+can be granted to a single user process.
+That can be useful when doing compression with
+very large block values which is possible with xz.
+
+However, since we gained the Sorcerer's keep,
+boxes now have an additional 100M of swappable memory.
+Although the complimentary 256M swap file that is
+created during installation can be deleted
+it is not a bad size for a minimal swap.
+In general linux will tend to swap from RAM
+bytes that probably will not be required again.
+But there is no guarantee.
+Therefore, a minimal swap that is about twice
+the size of an actual minimal swap helps
+avoid having a minimal swap experience
+significant shuffling and fragmentation.
+
+I advise 1G of RAM per core.
+However, when not compiling large sources on tmpfs
+then the extra RAM might soak
+what would normally be displaced to swap
+on boxes with less RAM.
+Consequently, if a box has a large loadout of RAM
+and a reasonably dedicated role
+then the SA might choose to allocate
+a minimum amount of space to a swap file
+rather than dedicate gigabytes of disk space to a swap partition.
+However, laptops designed for suspend to disk require
+a somewhat large unencrypted swap partition.
+Jan Merka knows more.
+
+So in summary a power-monging box with plenty of RAM
+has no requirement for swap.
+However, when a box is used as a workstation by an aggressive SA
+who has no concern for loadavg
+then that SA might add additional swap files when
+memory consumption is expected to peak.
+
+Fortunately, there is now a faster way to create a swap file
+
+# fallocate -l1g /swap.1g
+# mkswap         /swap.1g
+# chmod   0      /swap.1g
+
+The fallocate is like a ftruncate except that
+it pre-allocates blocks to a file
+instead of making the file sparse.
+Consequently, it is faster than dd from /dev/zero because
+the blocks are allocated, but requires no significant disk I/O.
+
+I have some plans for making Sorcerer a bit more swap file friendly.
+I want to create swap files in /swap/ as I do on my boxes.
+And I want to introduce a shell script that can be run
+to automatically create and add a swap file.
+If I can hook it onto the OOM killer
+then perhaps boxes can prevent grinding to a halt
+by creating more swap rather than semi-randomly killing processes.
+
+
+&gt;<i> Okay, moving on. From what it sounds like (and I'll create a new VM in
+</I>&gt;<i> vmware &#160;to see it for myself in a few minutes here), the requirement now
+</I>&gt;<i> is that an SA *must* create a /boot of *at least* 2GB &quot;if&quot; he chooses
+</I>&gt;<i> something like xfs, which needs one - perfect!
+</I>
+I have not rolled the I/R yet,
+but essentially the next sinstall will fight SAs
+that are trying to create a boot that is less than 2G.
+
+
+&gt;<i> Anything more isn't 'novice', IMO, but rather, n00b, and deserves to be
+</I>&gt;<i> below in your proposed *Automatic* mode ;)
+</I>
+I agree, but that did not stop me from dreaming about it.
+I probably would not go as far as to call it noob mode,
+because some people might take offense.
+But there is no shame in it because we all enjoyed
+the splendid experience of being noob at some time or another.
+
+The first few years that I started into computing
+almost nobody owned a personal computer,
+unless it was an Atari 2600,
+which was merely a television game console.
+Normal people did not know what to do with a computer,
+and did not know how to operate nor program computers.
+Consequently, I knew nobody who I could ask for assistance
+and nobody that I could ask for help.
+Programming skill was rare even among
+the few people that frequented BBSes in those days.
+There was no Internet, no email,
+and 640K was a huge amount of RAM!
+So in contrast to my experience
+of being noob with 64K RAM computers
+being a noob these days is awesome!
+
+Children of this new era are not born
+with a silver spoon in their mouth,
+but instead a cordless mouse in the hand.  :)
+But they still require training.
+Computer skills should be as basic as literacy.
+I knew that eventually computer skills would become
+as commonly known as the skill to utilize a pencil.
+Yet for the moment many people only have sufficient
+skill to use a mouse, keyboard, and webrowser,
+and they can just barely do web based email.
+
+Even if Sorcerer can be made to install for such people
+they will be unable to fix unexpected problems.
+The only way to fix those boxes would be
+to have a competent SA do a remove ssh login
+and do proper trouble shooting technique.
+Consequently, I feel uncertain about the viability
+of Sorcerer for a growing population of gadget gurus.
+These gadget gurus expect everything electronic
+to work as simple as a light switch
+and they have no hope of fixing anything
+that goes wrong in any of their gadgets.
+
+So the question has never been whether or not
+I am able to create a totally automatic installation for Sorcerer.
+Introducing the modular linux kernel to Sorcerer
+was the final piece of that puzzle.
+The question is, can I live with the consequences of making
+Sorcerer installable by non SAs?
+Is it not the purchase of massive disappointment
+on a lay-away plan for non SAs?
+
+&gt;&gt;<i> The novice mode could be made to query an installation device from the SA
+</I>&gt;&gt;<i> and automatically create a 2G ext2 /boot partition, 4G swap, and to put
+</I>&gt;&gt;<i> the rest on an ext4 / or is that too harsh?
+</I>&gt;<i>
+</I>&gt;<i> To reiterate and clarify, too harse, IMO :)
+</I>
+Yes, I agree that is too harsh for novice mode.
+The menu driven installer should have 3 modes.
+Automatic, Novice, and Expert.
+And the the SA should be made to choose the mode
+when the installer starts instead of merely receiving
+a menu entry for changing mode.
+
+
+&gt;<i> I'll never use an *automatic* mode, but yes, I think that's a good idea...
+</I>
+Automatic installation adds another 12 feet of rope
+for that extra long fall from grace.
+*lol*
+
+
+&gt;<i> Okay this isn't something that most of us will use, yet I think perhaps
+</I>&gt;<i> it's not a bad idea so people coming to the distro can just say, install
+</I>&gt;<i> on /dev/sda and off it goes. Yes. for &quot;Automatic&quot; - something I would
+</I>&gt;<i> never use.
+</I>
+After solving all the bugs on an I/R and doing a final roll of it
+then I will probably lazily use the automatic install for the final test.
+Even after solving all bugs I still do one final installation and reboot
+test of each I/R prior to it being distributed from the web server.
+That way I do not merely expect that it works.
+I know that it works.
+
+
+&gt;<i> I believe it will make it more palatable for some to adopt Sorcerer.
+</I>&gt;<i> They just want to see a box light up. Then, hopefully, they fdisk and do
+</I>&gt;<i> it right later once they know it's bitchen.
+</I>
+The automatic installation provides
+an example that the SA might learn from.
+Unfortunately, people who do not know
+about manual pages do not read manual pages.
+People who do not know
+about fdisk do not read/edit partition tables.
+Ultimately, an automatic installation
+could grant a Sorcerer box
+to people who do not merit the reward
+by reason of skill nor tenacity.
+Therefore, I conjecture that there
+will become more dissatisfied SAs.
+And that is why I have not implemented an automatic installation.
+But at least providing an automatic installation
+would cease the flow of emails that read,
+&quot;Sorcerer is too difficult to install.&quot;
+
+What is it about this generation that expects everything to be easy
+without any training, without any skill, without any practice?
+Why do they want to play guitar hero type video games
+instead of learning how to play an actual musical instrument?
+Why do they cheat on their academic exams?
+I hesitate at the thought of creating a Sorcerer
+for gadget gurus that expect that hard work
+is removing a gadget from it's original packaging
+and that trouble shooting
+is remembering to recharge the batteries.
+
+Do I seem a little bit more than irritated about it?
+That is because I am.
+But I suppose if helping the total noobs turns into a disaster
+then I can always rip out the code.
+The novice install is not bad as simple exam
+to determine who becomes a Sorcerer SA.
+Sorcerer is not an elite, nor prestigious, nor an expensive
+organization to join.
+But not every 2 finger typist
+deserves an engraved invitation card.
+Being a SA should require a little bit more than
+than knowing how to press the power button
+and knowing how to insert a CDROM disk.
+
+
+&gt;<i> for example, back in the 386 days, it was enough to create a /boot of
+</I>&gt;<i> 8MBytes &#160;on a Maxtor 514MByte drive that had more than 1024 Cylinders ;)
+</I>
+Yes, I fondly remember my first 500M disk.
+The size was beyond huge!
+But I also had the experience of using 10M fixed-disks
+and those chirped like birds.
+The 10M to 80M fixed-disks seemed more like
+an expensive convenience instead of a mass-storage device.
+But 500M seemed sufficiently massive!
+
+I nearly fail to comprehend how the space of 4
+500M fixed disk is now required for an adequate /boot
+But that is how times have changed.
+A super-awesome machine is no longer a
+80286 with 640K of RAM with 10M fixed-disks and EGA graphics.
+But that was far better than 384K RAM 8088 with 1 floppy disk and CGA graphics.
+
+Does not considering the near exponential growth
+of computer resources in the past
+give cause to wonder how many years a 2G /boot
+will remain sufficient?
+In retrospect we might yet discover that 2G was too small.
+
+
+&gt;<i> That's a judgement call on your part Kyle. I'll never use an automatic.
+</I>&gt;<i> In fact, I looked at an automatic install once in the Redhat 4 or 5
+</I>&gt;<i> days, just to see - it was ugly, but perhaps necessary for the sake of
+</I>&gt;<i> adoption. As I recall, it would build a system that wasn't even usable
+</I>&gt;<i> for longer than a month or so.
+</I>
+I can see how that experience would create a prejudice.
+However, the Sorcerer automatic install would not be doomed to failure.
+I could provide an automatic installation that would be decent
+for use as a KDE workstation.
+Overall, I expect that the goal can be narrowed to that end,
+because non SAs would not be expected
+to deploy an Apache HTTPD web server, for example.
+
+However, a SA could hand a Sorcerer I/R CD
+to a user and tell him to go install it on a new box
+by using the automatic install option.
+Not all users would be pleased
+to be required to do something that resembled IT labor.
+But the ability to delegate that task would not be without an advantage.
+First, if the SA did the install then the user would
+be somewhere else wasting time and learning nothing.
+Secondly, if the SA can delegate the task of installation
+then the SA can still enjoy the benefits of being admin
+of a Sorcerer box without having personally endured
+the lengthy installation.  :)
+
+Consequently, when we realize that the professional SA
+often has more to do than can be done
+then the potential for delegating the duty of an automatic installation
+to noob might give that SA minutes or even hours
+to race ahead of the avalanche of work that threatens to bury them.
+
+Given that consideration we realize that the automatic installation
+is not to omit the necessity of a competent SA.
+Also it is not an option that a competent SA
+would want to use unless deploying a low security workstation.
+Yet an automatic installation grants the SA
+the option to delegate the task to unskilled people.
+And I have yet to work in an office
+that had a shortage of unskilled labor.
+
+Consequently, I can not make an expectation that
+an automatic installation would go completely unused.
+Rather I expect that it might be occasionally mis-used
+by someone who expects that Sorcerer has a niche for noobs.
+However, one perplexing thought defies expectation.
+If Sorcerer takes on the characteristics of a noob friendly distro
+then how will noobs hone their skill?
+I suppose as usual the answer remains the same.
+It is up to each SA to find their own way to hone skills.
+
+
+&gt;<i> And I was also totally freaked out around the RH 6 time, when I first
+</I>&gt;<i> saw that disk druid thingy. Gawd I hate it when a company insists that
+</I>&gt;<i> we use those distros.
+</I>
+Ah, I am clueless..
+<A HREF="http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/3/html/Installation_Guide_x8664/s1-diskpartitioning.html">http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/3/html/Installation_Guide_x8664/s1-diskpartitioning.html</A>
+
+Ah, I see.
+It looks somewhat like Sorcerer's fstab menu,
+except that in Sorcerer partitioning is done in a separate
+step using a separate program.
+
+I can allow SAs to do partitioning or to do partitioning for them.
+Either way is just as easy.
+My reason for allowing the SA to access partition programs such
+as a fdisk, cfdisk, parted is because those are the partitioning programs
+that a SA would use if doing a manual installation.
+My intention behind the menu driven installer
+was not to give the SA an alternate method for accomplishing
+the tasks for installation, but rather to help illuminate and guide
+the SA to those programs traditionally used during installation.
+But maybe the compromise has shifted towards automation
+rather than a firm shove in the proper direction.
+
+If Redhat calls their fancy menu drive program &quot;Disk Druid&quot;
+then should Sorcerer's fstab menu be called the &quot;Fstab Fairy?&quot;
+*lol*
+Actually, I am surprised they did not call their utility rhdd.
+I am glad to see an end to pointless acronyms.
+The continuation of such practice would suggest that we
+never stopped using 8.3 file systems.
+
+
+&gt;<i> Although I would really like to try a Sorcerer workstation out and see
+</I>&gt;<i> how all that comes together, it didn't happen for me starting with the
+</I>&gt;<i> I/R's I was using as late as six or eight months ago.
+</I>
+Sometimes the KDE compilation breaks.
+Evert most frequently spots and reports those problems.
+Doing software upgrades as they occur can lead to unexpected problems.
+Evert discovered that kdepim-runtime-v4 version 4.6.3 requires
+shared-desktop-ontologies version 0.5
+and that later versions will cause kdepim-runtime-v4 to not compile.
+That was the most recent problem discovered concerning KDE.
+Probably KDE-v4 compilation works.
+But if not, please report the problem in order to receive a fix.
+
+
+&gt;<i> But having come from Jolix, SLS, Slack, Yggdrasil, etc., I just don't
+</I>&gt;<i> see any other way to manipulate a disk other than fdisk - I don't even
+</I>&gt;<i> like the cfdisk front end, or care much for that grub stuff either LOL.
+</I>
+I always use fdisk.
+If a distribution install method
+does not allow an opportunity to learn how to use
+one of the standard disk partitioning programs
+then the installer is doing a disservice to the SA.
+
+Of course some distros seem to prefer if SAs only learn
+their distribution specific tools and therefore become
+incapable of transitioning to a distro that uses
+traditional command line tools.
+I suspect as much because there is no shortage
+of SAs that do not know how to configure
+a network interface by using command line tools.
+Personally, I dislike that fluff.
+Always riding in the side car
+does not teach a person
+how to operate a motorcycle.
+
+&gt;<i> The problem with making novice too n00b, is I often mount my /home off
+</I>&gt;<i> somewhere in the distance and traditionally like a /var on it's own
+</I>&gt;<i> partition too (for no good reason anymore). having /usr/local separate
+</I>&gt;<i> is nice too sometimes ;)
+</I>
+I failed to recognize how that is a problem.
+Sorcerer boxes can have as many partitions
+as the SA wants to create.
+
+
+&gt;<i> Just the prompts telling me what I should be doing next, and yes, to
+</I>&gt;<i> avoid the botching of an install, your safeguard to require a 2GB+ /boot
+</I>&gt;<i> when necessary is all I need. More importantly, I think that's all most
+</I>&gt;<i> people need.
+</I>
+I used to have that thought.
+I thought that removing the make menuconfig on linux skill check
+from the Sorcerer installation
+would be enough to allow anyone to be able to install Sorcerer.
+Yet in retrospect &quot;enough&quot; always falls short of being enough for everyone.
+
+
+&gt;<i> Once more, the ONLY thing I had a problem with before, was figuring out
+</I>&gt;<i> how to get through the /etc/fstab process by deleting the swap file and
+</I>&gt;<i> having a swap partition instead.
+</I>
+It is something that can be handled post installation.
+The installer creates a swap file merely to help ensure
+that the box is not depleted of all available RAM during
+the transfer, unarchiving, and compilation steps of installation.
+
+
+&gt;<i> It will. But... perhaps (If you think it's desirable to move forward
+</I>&gt;<i> with such an endeavor) you could call it an Automatic *Trial* install,
+</I>&gt;<i> or *Test Drive* install, to enforce the principle that such an install
+</I>&gt;<i> is merely a peek, and only that.
+</I>
+I would if not for fear that the extra word &quot;trial&quot;
+would somehow confuse an inexperienced SA.
+They might expect that the installation made
+was only for test purpose rather than being suitable
+for actual deployment of the box.
+
+
+&gt;<i> As far as helping. um... Well just a couple of things. First, I heard
+</I>&gt;<i> that you used to yell at your developers sometimes. Just hearsay, and I
+</I>&gt;<i> don't know the context or if they were being pricks themselves.
+</I>
+:<i>)  I yell as much now as I always have.
+</I>The abuse and disrespect that
+I unleash with every blood letting word is incredible is it not?
+How can anyone possibly get along with me?
+
+
+&gt;<i> Second, I have limited time, so progress on such a thing would move
+</I>&gt;<i> slowly, yet would be a kewl project for me nevertheless to work on.
+</I>
+Already, the perspective and questions
+and dialog has moved the sub-project forward.
+When I previously expected that an automatic installation
+would merely cause more problems
+then I could not form sufficient determination to try it.
+But from our discussion I have come to realize
+that the menu driven installer could also be used by
+SAs that want to delegate a task to an idle user.
+And also I am hoping this can become a compromise
+where SAs will finally assume responsibility for the outcome
+rather than casting blame with words such as,
+&quot;the menu driven installer is too difficult.&quot;
+
+
+&gt;<i> Third, I do have, once again ;), unlimited bandwidth, resources, my own
+</I>&gt;<i> Portable IPs under direct assignment from nic.ddn.mil (No, think back
+</I>&gt;<i> way further than internic.net)
+</I>
+About decade ago I worked at nic.mil.
+I know exactly what it was then.  :)
+We also hosted g.root-servers.net
+before the introduction of gtld servers.
+It was a long time ago.
+
+
+&gt;<i> so I have a perfect platform for distro
+</I>&gt;<i> devel in a vmware environment. And I'm at One Wilshire now :)
+</I>
+Basically, we discuss ideas,
+I eventually write some sort of an implementation, we try it,
+and then we discuss how pathetic and disappointing it is.
+After repeating the process
+and finally achieving what seems passable
+then we run with it for a few years.
+As with most things 90% is discussion and 10% is implementation.
+
+
+&gt;<i> I'm a believer in giving back. You can call me a collector, or a
+</I>&gt;<i> believer, but I always keep a Slackware subscription, not because I want
+</I>&gt;<i> the official DVDs (I never open them), but because Pat needs money to
+</I>&gt;<i> feed his family and continue that distro.
+</I>
+Interesting.
+I somehow expected that Slackware
+had 3 people as the main developers.
+Does Pat do everything?
+
+
+&gt;<i> I like Sorcerer, and I apologize for not having been able to offer more
+</I>&gt;<i> support related articles about it on my website.
+</I>
+Thanks for the response.
+As usual there is more to do than can be done.
+If a SA does not want to contribute to one of my current sub-projects
+then they are welcome to begin their own sub-projects
+based upon what they perceive should be done
+and whether or not the task can be accomplished
+and seems sufficiently amusing.
+
+The most noteworthy sub-project of Sorcerer was probably
+Jan's initial port of Sorcerer IA32 to x86_64.
+It was not easy to accomplish, not fast to accomplish,
+but he stuck it out with heroic tenacity and made it happen!
+That goes to show that I do not always have to [*lol*]
+&quot;yell at developers&quot; to get something done.
+
+With as many sub-projects as I allow glide into vaporware
+one might expect that I never crack a whip on anyone's head.
+That is because I realize that the best outcome will come
+from those who feel self-motivated to do the task.
+Anyone that could benefit from me cracking the whip
+obviously was not the person destined to accomplish the task.
+
+So I realize that some people want to help,
+but most will not be able to complete what they start.
+There is no shame in it.
+That is just how it goes.
+It is not worth becoming upset about.
+
+The worst real developer contention that happened with Sorcerer
+was during the era of companion grimoires.
+I would change the definition of a spell
+and these independent grimoire gurus
+were neglecting to maintain and update the spells
+that they provided in their companion grimoires.
+My perspective was that
+I was continuing the evolution of Sorcerer
+according to what SAs expect and request.
+Grimoire gurus point of view was that I was making pointless
+changes in order to further increase their workload.
+
+I can barely think of a good analogy to describe it.
+It would be as if the farmer's horse, named Mr. Ed, said,
+&quot;Wilbur, we already discussed this last year.
+This year we will not be planting new seed.
+Instead I will be eating hay, sleeping in late,
+and making telephone calls from my stall.&quot;
+
+Eventually, all the external companion grimoires came to an end
+because SAs were unwilling to maintain their grimoires
+at the same quality level as I maintained the 2000+ official grimoire.
+
+Maybe some people felt that I was being unreasonable and hostile?
+However, Sorcerer boxes were malfunctioning
+after SAs decided to install companion grimoires.
+At first I tried to write additional functions to detect and
+correct some generic errors in spells from companion grimoires.
+
+Let us entertain a hypothetical scenario.
+Let us assume that Kyle is so generous with his time
+as to allocate an entire week once a year to Sorcerer development.
+What then would Sorcerer be?
+Would Kyle still merit the title of distribution leader?
+Would any such person who devotes
+a whole entire week each year
+merit the title of grimoire guru?
+
+&gt;<i>From my point of view grimoire gurus were demanding zero change,
+</I>expecting zero change, allocating less than minimal time to their duty,
+and were causing problems for Sorcerer SAs.
+&gt;<i>From their point of view, Kyle was making unnecessary changes
+</I>for his own personal whims that were destabilizing the distribution
+and causing the grimoire guru's generous effort to goto waste.
+Which point of view is correct?
+I do not know.
+I only knew who was doing their work
+and who was flaming the email lists.
+
+Hindsight is 20/20.
+If I could have done it again
+then I would have immediately rejected the idea of
+anyone maintaining an additional external Sorcerer grimoire.
+But I did not properly anticipate their commitment level.
+Consequently, good effort went to waste.
+
+Did I crack the whip on people?
+I only wanted Sorcerer boxes to work.
+Should I have halted development of the entire distribution
+for a few people who refused to march forward?
+What would anyone else have done
+if they were in my position?
+What does anyone expect that I did?
+
+The only thing that I can be certain about is
+that nobody affiliated with Sorcerer ever has
+nor ever will have as much dedication to the project as I do.
+Therefore, when I properly expect a 0% outcome from each volunteer
+then I can be pleasantly surprised when I am wrong.
+Consequently, I delegate no permanent duties to anyone
+where the falter in their performance will wreck Sorcerer.
+It is as the old cliche suggests,
+&quot;If I want something done right then I must do it myself.&quot;
+
+Anything worth losing a night's sleep over
+I will do by myself.
+So there is no reason to yell, argue, crack whips.
+I am the kind of boss that says,
+&quot;If you want...
+then go ahead and take a year long paid vacation from work.
+Do not worry about it.
+I have your back covered.
+And I will do everything
+that you said that you would do.
+So have yourself a good time
+and waste no time thinking about me.&quot;
+Is that the wrong attitude for a boss?
+
+This might seem like a complaint,
+but I never wanted a distribution.
+If I wanted a distro I would have forked Debian or Redhat.
+Instead, I wanted sorcery, a tool for source based distribution.
+And originally, I intended to have it as an addon to
+pre-compiled based distros.
+I wanted something like zero-install-injector,
+but for sources rather than pre-compiled software.
+Yet SAs convinced me to create Sorcerer.
+And so here it is.
+
+Managers tend to be people who lack skill
+and enjoying cracking whips.
+Instead I enjoy achieving accomplishment from my own effort.
+Please carefully contrast the difference
+between the people who fork a distribution
+because they want to become a distribution leader
+with a person who has had the burden
+of distribution managerial duties thrust upon him.
+
+Perhaps contributing to Sorcerer is like a party?
+When it is no longer fun
+then people go home.
+Yet I remain to clean things up.
+And if it was a party where people
+wear excessive leather, metal chains, and crack whips
+then that would not be my type of party.  :)
+
+*ssshhhhwack!*
+*lol*
+Just joking.  ;)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002184.html">[Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.
+</A></li>
+	<LI>Next message: <A HREF="002181.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2185">[ date ]</a>
+              <a href="thread.html#2185">[ thread ]</a>
+              <a href="subject.html#2185">[ subject ]</a>
+              <a href="author.html#2185">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

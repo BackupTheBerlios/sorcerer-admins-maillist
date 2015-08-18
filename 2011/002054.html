@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Binary distro?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Binary%20distro%3F&In-Reply-To=%3CAANLkTinp1Evdt9%3D%2Bf01vtiH91mDJKganyvKWd2BQ8sVM%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002049.html">
+   <LINK REL="Next"  HREF="002057.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Binary distro?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Binary%20distro%3F&In-Reply-To=%3CAANLkTinp1Evdt9%3D%2Bf01vtiH91mDJKganyvKWd2BQ8sVM%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Binary distro?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan  7 03:30:14 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002049.html">[Sorcerer-admins] Binary distro?
+</A></li>
+        <LI>Next message: <A HREF="002057.html">[Sorcerer-admins] Binary distro?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2054">[ date ]</a>
+              <a href="thread.html#2054">[ thread ]</a>
+              <a href="subject.html#2054">[ subject ]</a>
+              <a href="author.html#2054">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jan 6, 2011 at 12:10 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there...
+</I>&gt;<i>
+</I>&gt;<i> Just my two cents...
+</I>&gt;<i>
+</I>&gt;<i> On the I/R size:
+</I>&gt;<i>
+</I>&gt;<i> I prefer the smaller download, and don't mind the time it takes to
+</I>&gt;<i> grow the Sorcerer into a workstation.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On the install menu:
+</I>&gt;<i> I would have preferred a wizard based approach, but this is quite
+</I>&gt;<i> difficult to do in bash/dialog, and prone to bugs. So, no go.
+</I>
+It is not difficult to do with dialog.
+The problem is that 60+ menus to visit in wizard mode
+would annoyingly try the frustration of anyone.
+Also making a mistake can require going backwards through
+a huge number of wizard screens.
+Wizard screens grant no possibility of doing part
+of the installation manually and part by the menu driven installer.
+A wizard would also further limit the possible amount of installation types.
+
+The novice menu install mode is somewhat like a wizard mode.
+Already the lack of installation types is evident.
+But instead of doing back and next one uses the up and down arrow keys
+on the main menu to progress or revert to previous steps.
+And it also checks and disallows certain actions such as:
+&quot;The fstab menu can not be accessed while file systems are mounted.&quot;
+I suppose I can make the highlighted menu option bounce around
+automatically based upon what steps are completed or desired.
+That way the SA might not have to use up and down arrow keys on the main menu.
+It will be more self-guiding.
+How would that be for intuitive?
+
+
+&gt;<i> The next best in my humble opinion would be a completely manual
+</I>&gt;<i> install coupled with some clear documentation, like LFS does. With
+</I>&gt;<i> maybe a helper script or two to automate the more tedious tasks that
+</I>&gt;<i> simply cannot vary, like transferring over the data.
+</I>
+There are so many tiny things that a SA could forget
+such as marking a partition as bootable,
+regenerating symbolic links to init-scripts,
+regenerating the initramfs, writing a bootable MBR,
+editing /etc/lilo/head, running /etc/init.d/lilo, etc...
+The menu driven installer grants a higher probability
+that the first boot to fixed disk will be successful.
+However, SAs can do a manual install if they know
+everything that must be run chrooted and run it.
+
+Maybe it can be blamed on Sorcerer,
+but it seems to me that the minimum requirements
+for a decently modern bootable box these days
+makes for a somewhat more complicated installation.
+/dev is generated and not static;
+symbolic links to init-scripts are not pre-numbered but generated instead;
+new boxes boot by initramfs,
+initramfs images are generated and not static.
+Sorcerer tailors all of those things because it is not
+a one-size fits all pre-compiled binary based distro.
+Each Sorcerer box will have it's own unique initramfs images.
+So there is a bit to do in order to deploy a box.
+
+
+&gt;<i> However... these days I just restore a backup of a Sorcerer root
+</I>&gt;<i> partition into a clean partition, fiddle with fstab and lilo to
+</I>&gt;<i> reflect the new computer Sorcerer will be running on, and make it
+</I>&gt;<i> bootable and off I go...
+</I>
+That works easily because the backup is just like a deployed Sorcerer box,
+while the I/R is not like a deployed Sorcerer box.
+The only similarity is that the I/R has a linux kernel and initramfs.
+I doubt making a file system and copying the content of the I/R raw
+to that file system will produce something bootable,
+let alone usable as a deployed Sorcerer box.
+The I/R is not like a &quot;live CD&quot;
+therefore &quot;some assembly is required.&quot;
+
+xor ax,ax
+push dx
+call   ds:[0x4a4]
+
+Wait no; not that type of assembly!  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002049.html">[Sorcerer-admins] Binary distro?
+</A></li>
+	<LI>Next message: <A HREF="002057.html">[Sorcerer-admins] Binary distro?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2054">[ date ]</a>
+              <a href="thread.html#2054">[ thread ]</a>
+              <a href="subject.html#2054">[ subject ]</a>
+              <a href="author.html#2054">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] login getty and virtual consoles...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20login%20getty%20and%20virtual%20consoles...&In-Reply-To=%3CCA%2BT4wDhuuSSFZmT9bwxBS0SMpKmY8kjdqUiA8aLtha%3DdY318Nw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002422.html">
+   <LINK REL="Next"  HREF="002424.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] login getty and virtual consoles...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20login%20getty%20and%20virtual%20consoles...&In-Reply-To=%3CCA%2BT4wDhuuSSFZmT9bwxBS0SMpKmY8kjdqUiA8aLtha%3DdY318Nw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] login getty and virtual consoles...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 18 20:17:26 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002422.html">[Sorcerer-admins] greetings and a glimpse of the future.
+</A></li>
+        <LI>Next message: <A HREF="002424.html">[Sorcerer-admins] more flexibility with linux-* spells
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2423">[ date ]</a>
+              <a href="thread.html#2423">[ thread ]</a>
+              <a href="subject.html#2423">[ subject ]</a>
+              <a href="author.html#2423">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>For a while now I have been wondering how to scratch a certain itch.
+That itch is how to easily log into one of various root file systems
+using a virtual console.
+And also itchy, but less so, was the desire to use more than a few,
+even more than 12 virtual consoles.
+Consequently, I researched it.
+
+Writing my own getty type program would require about 4 ioctl function calls,
+which makes the task less than suitable for bash.
+However, I discovered that kbd provides programs that will invoke
+these required function calls.
+Hurray for that.
+So I was able to create something like a getty that is a BASH script.
+
+What I created was a tty daemon, or ttyd for short,
+that provides a root selection prompt on a virtual console.
+The person at the keyboard selects which root.
+Then /bin/login is executed chrooted within the selected root.
+And now the person can attempt to log into that root.
+
+That scratches the first itch of creating something like a getty
+which allows selection of a root file system
+and then chroot into it before running /bin/login
+One might expect that functionality to already exist,
+but apparently it does not.
+Perhaps not many people have boxes with multiple root file systems?
+
+The implementation also scratches the second itch.
+Who already knew that linux provides by default up to 64 virtual consoles?
+Right, that is already evident from /dev/tty*
+However, not many people create an /etc/inittab that runs 64 gettys.
+And I did not want that either.
+I only want two gettys specified in /etc/inittab and launched by /sbin/init
+The first getty logs into /media/root/real/
+And the second getty logs into /  &lt;-- the rootfs.
+I want that much because ttyd is launched as a service during sysinit
+and the slight probability exists that for some reason or another
+ttyd does not start or malfunctions.
+So always good to have a backup method for launching gettys.
+Of course a box can be fixed even if it launches no gettys,
+but not many SAs might realize what to do in that situation.
+
+So does ttyd launch a getty on all 64 virtual consoles.
+Not at all.
+Does ttyd launch a getty on a virtual console already being used by
+another program?
+Not at all.
+ttyd will launch a getty on the first available virtual console.
+The moment that root selection is made
+then ttyd launches a getty on the first available virtual console.
+Consequently, gettys are only launched at the moment required
+to ensure that another virtual console is available for login.
+
+Periodically, about once per hour or whenever a new getty is started
+then kbd's deallocvt is invoked.
+That allows linux to reclaim memory in use by unused virtual consoles
+and therefore deactivate virtual consoles.
+It is also useful for removing the blanks in between activate virtual consoles.
+
+For those who are wondering, I do not select virtual consoles by pressing
+alt F1, alt F2, alt F3 and so forth.
+Instead I hold the alt key down and tap arrow or right arrow keys
+in order to cycle through active virtual consoles.
+That way I can visit all 64 virtual consoles if I am using that many.
+
+I realize that some people are thinking,
+&quot;This is pointless because I use pts instead of tty and a virtual
+terminal emulation program.&quot;
+Certainly that is one way to have many login sessions.
+However, running X, a window manager, and possibly a desktop environment
+can consume a considerable amount of memory.
+
+I realize that some people are thinking,
+&quot;I wish he would re-enable back buffering video memory to allow virtual consoles
+to retain more than the displayed amount of lines when switching back and forth
+among virtual consoles.&quot;
+Since unused virtual consoles can now be deactivated
+I considered that might be worthy functionality.
+And besides the amount of RAM used to back buffer a virtual console
+is almost insignificant compared to the amount of installed RAM on a
+typical box.
+However, apparently that functionality was dropped from the linux kernel.
+Consequently, if back buffering of the virtual console is desired
+then a program such as screen must be run.
+And screen itself is a rather nifty program because
+it will allow up to 64 concurrent shell sessions.
+
+The new spell is called ttyd.
+I wanted something that did not require /etc/inittab
+to be manually adjusted
+for selecting virtual consoles and roots where gettys run,
+and could also provide the capacity of utilizing
+all of the virtual consoles that linux will provide.
+I am uncertain this implementation is best,
+but it at least scratches those two itches
+and works as a starting point.
+
+Those who want to use ttyd should cast it,
+do all the updates that are pending because
+some additional software must have it's install locations
+adjusted so that it's programs become available on the initramfs.
+Then adjust /etc/inittab as desired.
+Then the next time the box boots ttyd should be able to run.
+Remember to leave at least two two gettys in /etc/inittab
+such as the getty for real and rootfs running.
+That way if ttyd fails to start
+then login via virtual console will still be possible.
+
+Please remember that using terminal emulators
+such as xterm, konsole, gnome-terminal
+utilize pts instead of tty and is entirely separate from virtual consoles.
+However, X will run on one of the virtual consoles.
+Or if X is started within more than one root or kdm and gnome
+are started with in the same root
+then X might be running on one or more virtual consoles.
+
+Now for one last nifty trick.
+A fast method to gain a bash shell running on another virtual console
+is to type openvt -l /bin/bash
+But that probably only works correctly if EUID is root.
+
+Hope everyone has fun getting virtual with consoles.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002422.html">[Sorcerer-admins] greetings and a glimpse of the future.
+</A></li>
+	<LI>Next message: <A HREF="002424.html">[Sorcerer-admins] more flexibility with linux-* spells
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2423">[ date ]</a>
+              <a href="thread.html#2423">[ thread ]</a>
+              <a href="subject.html#2423">[ subject ]</a>
+              <a href="author.html#2423">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

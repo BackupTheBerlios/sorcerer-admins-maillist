@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20Mesa%20should%20EPROVIDE%0A%09opengl&In-Reply-To=%3C596b75860708210832r41437ea1gad025335ca421699%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000206.html">
+   <LINK REL="Next"  HREF="000111.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20Mesa%20should%20EPROVIDE%0A%09opengl&In-Reply-To=%3C596b75860708210832r41437ea1gad025335ca421699%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 21 17:32:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000206.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl
+</A></li>
+        <LI>Next message: <A HREF="000111.html">[Sorcerer-admins] howl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#208">[ date ]</a>
+              <a href="thread.html#208">[ thread ]</a>
+              <a href="subject.html#208">[ subject ]</a>
+              <a href="author.html#208">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I do not know if NVIDIA-Linux-x86 provides glut.
+Does it?
+If not then glut may require adjustment?
+
+
+# augur from /glu.h
+MesaLib:/usr/include/GL/glu.h
+
+Someone said that NVIDIA-Linux-x86 provides MesaLib.
+Therefore, it should install a GL/glu.h
+since MesaLib installs GL/glu.h
+If it does not then perhaps both MesaLib and NVIDIA-Linux-x86
+must be installed concurrently on a box?
+I do know that MesaLib provides glut.
+So if you have MesaLib installed you will not require glut to be installed.
+
+Your best bet is having someone who uses the NVIDIA-Linux-x86
+pre-compiled binary drivers help you trouble-shot the problem.
+My nvidia card malfunctioned, sorry.
+If I had one I would fix it and probably make the spell work.
+For now you may want to try using the nvidia driver provided
+by xorg while taking a good look at what is provided by nvidia
+and seeing if there is an easy way to integrate it.
+The xorg driver will not have 3D accelerated OpenGL,
+however it will probably still work.
+It will probably even work in SVGA mode.
+The nvidia cards appear to have a two separate chipsets
+one for just 2d SVGA and the other for the OpenGL.
+It was the OpenGL chipset that died on my card.
+Since I switched over to ATI I have enjoyed only
+marginal success with OpenGL performance.
+
+However, since we are on the topic of the troubles of closed
+source pre-compiled binary drivers for graphics cards
+I have written a new spell called:
+
+ati-driver-installer
+
+I have not had a chance to test it yet,
+because I am still waiting on
+two compilations to complete in qemu.
+Never tried saving and restoring a state of
+the virtual machine using qemu, although I suspect it is possible,
+therefore already more than 24 hours into compilation
+I would rather just let it complete.
+However, the spell is probably not far wrong as is.
+And although I gave it the attribute of broken
+it will go out in today's grimoire.
+My hope is that it should slide right into place with our
+xorg X11R7.2 installation and provide top quality accelerated
+OpenGL graphics for both ia32 and x86_64 architectures.
+
+I wish I could be more help, but at the moment it seems
+that the obvious problem is a lack of GL/glu.h.
+If not from MesaLib or NVIDIA-Linux-x86
+then I am uncertain what would install GL/glu.h
+
+Something else to know about glut is that it is extremely old.
+There have not been any new releases of glut source in a long time.
+The glut spell has not been edited since Oct 30, 2006
+and even then it was probably merely a cosmetic change.
+
+If I were in your shoes I would probably take a look at MesaLib
+It has something interesting about it:
+
+    SOURCE=( &quot;mesa3d/MesaLib-$VERSION.tar.bz2&quot;
+             &quot;mesa3d/MesaGLUT-$VERSION.tar.bz2&quot;
+             &quot;mesa3d/MesaDemos-$VERSION.tar.bz2&quot; )
+
+If it is possible then perhaps the MesaGlut can be compiled
+separately without MesaLib and installed to provide glut.
+If that is the case then perhaps a new spell can be created
+called MesaGLUT that acts as a drop in replacement for glut?
+
+Well MesaGLUT does contains some Makefile tucked away within
+a few layers of subdirectories, but not a configure script.
+Perhaps if all 3 sources are combined together as they would
+be to compile MesaLib a modified installation could be used
+to install merely the glut header files and libraries following compilation?
+
+I probably would choose that road before trying to fix glut,
+because MesaLib is newer and probably better maintained than glut.
+
+However, if you want to get up and running ASAP I would probably
+try casting MesaLib first and adjusting NVIDIA-Linux-x86 so that
+it no longer EPROVIDE MesaLib, updating the index, and then
+casting NVIDIA-Linux-x86 so that it installs,
+perhaps even overwriting some of the files installed by MesaLib
+and then manually correcting any symbolic links that should be corrected.
+
+Anyway, someone told me that NVIDIA-Linux-x86 provides MesaLib.
+Apparently, that information was incorrect.
+So I will adjust NVIDIA-Linux-x86 spell so that it no longer has an
+EPROVIDE=&quot;MesaLib&quot;
+
+Before anyone tells me to make a change in the grimoire
+I expect that they have thoroughly tested it and confirmed it to be correct.
+For me to second guess every recommendation and test it
+myself would be insulting and impolite to my fellow SAs.
+
+Long ago there was a modification made to gettext based upon a SA
+absolutely assertion that it had to be have the library and header
+components installed, although the same functionality was provided by glibc.
+And not longer after change and after almost every installed spell on every
+Sorcerer box was dynamically linked with gettext's library
+then glibc's version went out of sync with gettext.
+Consequently, a large amount of deployed Sorcerer boxes
+had to be re-deployed from Install/Rescue CDs in order to correct that mess.
+In my recollection that was the single biggest mistake in Sorcerer history,
+because most senior level SAs had neither the experience nor intuition
+required to untangle all the requirements on gettext's ELF SO.
+It was not as simple as forcibly dispelling gettext
+and recompilation what broke.
+The breaks were far to extensive and involving
+core programs used during the compilation process.
+It was a far worse mess than having chewing gum stuck in one's hair.
+However, this is just a minor inconvenience by comparison.
+
+I prefer someone who has a NVIDIA graphics card
+to do the fix and thoroughly test it, and make the changes.
+If you want me to take a blind stab at it I can make
+some time to fix it following the next release of the
+x86_64 and ia32 I/R and source CD images.
+
+As for me I went a full year without OpenGL graphics
+when the OpenGL component of my NVIDIA card flaked out.
+I kept thinking it was just bugs in the stupid drivers
+since my card worked fine with non OpenGL programs.
+Afterall it seemed that the card worked fine until a short while
+after I did an update of the NVIDIA drivers and then after
+never worked in OpenGL for more than 6 minutes without flaking
+and finally crashed right away when attempting to do OpenGL.
+NVIDIA's tech support did not help one bit
+nor did the countless hours I spent searching
+message boards and emails lists for a solution.
+By the time I decided the card had malfunctioned
+the card was already past the manufacturer's warranty limit.
+Proprietary closed source drivers are not at all friendly for us to use.
+Most of the time we can not tell if the malfunction is the driver's fault
+or because the graphics card is about to catch fire.
+For the moment I suggest trying to get an Xserver running
+on the box without using NVIDIA-Linux-x86,
+assuming you have no OpenGL programs that you must run.
+The performance for non OpenGL programs will be excellent.
+Watching movies and video will be excellent.
+All non OpenGL ways it will be excellent.
+I remember.  :)
+You will not be displeased.
+
+For the moment I will again mark the NVIDIA-Linux-x86 spell as broken.
+Sorry for the inconvenience.
+
+
+On 8/21/07, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> MesLib gone but now glut fail and jdk autofail by glut:
+</I>&gt;<i>
+</I>&gt;<i> make[1]: Leaving directory `/usr/src/sorcery/glut/glut-3.7/progs'
+</I>&gt;<i> rm -f glut_8x13.o
+</I>&gt;<i> gcc -c -march=athlon-xp -O2 -pipe -ansi -fPIC   -I../../include -I../..
+</I>&gt;<i> -I/usr/X11R6/include  -Dlinux -D__i386__ -D_POSIX_SOURCE -D_BSD_SOURCE
+</I>&gt;<i> -D_GNU_SOURCE -DX_LOCALE  -DFUNCPROTO=15 -DNARROWPROTO    glut_8x13.c
+</I>&gt;<i> In file included from glutbitmap.h:10,
+</I>&gt;<i>                  from glut_8x13.c:5:
+</I>&gt;<i> ../../include/GL/glut.h:59:20: error: GL/glu.h: No such file or directory
+</I>&gt;<i> make: *** [glut_8x13.o] Error 1
+</I>&gt;<i> ! Problem Detected !
+</I>&gt;<i> Source moved to /var/tmp/failed/glut-3.7
+</I>&gt;<i> Fail:   Tue Aug 21 15:47:00 CEST 2007   glut    3.7     build/compile error
+</I>&gt;<i>
+</I>&gt;<i> # augur install NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/compile/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/id/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/install/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/ldd/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/md5sum/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/snap/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/stat/NVIDIA-Linux-x86
+</I>&gt;<i> /etc/sorcery/log/version/NVIDIA-Linux-x86
+</I>&gt;<i> /lib
+</I>&gt;<i> /lib/modules
+</I>&gt;<i> /lib/modules/2.6.22.3
+</I>&gt;<i> /lib/modules/2.6.22.3/kernel
+</I>&gt;<i> /lib/modules/2.6.22.3/kernel/drivers
+</I>&gt;<i> /lib/modules/2.6.22.3/kernel/drivers/video
+</I>&gt;<i> /lib/modules/2.6.22.3/kernel/drivers/video/nvidia.ko
+</I>&gt;<i> /usr
+</I>&gt;<i> /usr/bin/nvidia-bug-report.sh
+</I>&gt;<i> /usr/bin/nvidia-settings
+</I>&gt;<i> /usr/bin/nvidia-xconfig
+</I>&gt;<i> /usr/include/GL
+</I>&gt;<i> /usr/include/GL/gl.h
+</I>&gt;<i> /usr/include/GL/glext.h
+</I>&gt;<i> /usr/include/GL/glx.h
+</I>&gt;<i> /usr/include/GL/glxext.h
+</I>&gt;<i> /usr/lib
+</I>&gt;<i> /usr/lib/libGL.la
+</I>&gt;<i> /usr/lib/libGL.so
+</I>&gt;<i> /usr/lib/libGL.so.1
+</I>&gt;<i> /usr/lib/libGL.so.1.0.9755
+</I>&gt;<i> /usr/lib/libGLcore.so
+</I>&gt;<i> /usr/lib/libGLcore.so.1
+</I>&gt;<i> /usr/lib/libGLcore.so.1.0.9755
+</I>&gt;<i> /usr/lib/libXvMCNVIDIA.a
+</I>&gt;<i> /usr/lib/libXvMCNVIDIA.so.1.0.9755
+</I>&gt;<i> /usr/lib/libXvMCNVIDIA_dynamic.so.1
+</I>&gt;<i> /usr/lib/libnvidia-cfg.so.1
+</I>&gt;<i> /usr/lib/libnvidia-cfg.so.1.0.9755
+</I>&gt;<i> /usr/lib/libnvidia-tls.so.1
+</I>&gt;<i> /usr/lib/libnvidia-tls.so.1.0.9755
+</I>&gt;<i> /usr/lib/tls
+</I>&gt;<i> /usr/lib/tls/libnvidia-tls.so.1
+</I>&gt;<i> /usr/lib/tls/libnvidia-tls.so.1.0.9755
+</I>&gt;<i> /usr/lib/xorg/modules
+</I>&gt;<i> /usr/lib/xorg/modules/drivers
+</I>&gt;<i> /usr/lib/xorg/modules/drivers/nvidia_drv.so
+</I>&gt;<i> /usr/lib/xorg/modules/extensions
+</I>&gt;<i> /usr/lib/xorg/modules/extensions/libglx.so
+</I>&gt;<i> /usr/lib/xorg/modules/extensions/libglx.so.1.0.9755
+</I>&gt;<i> /usr/lib/xorg/modules/libnvidia-wfb.so.1.0.9755
+</I>&gt;<i> /usr/src
+</I>&gt;<i>
+</I>&gt;<i> On an other box:
+</I>&gt;<i> # augur from glu.h
+</I>&gt;<i> MesaLib:/usr/include/GL/glu.h
+</I>&gt;<i>
+</I>&gt;<i> ?What is the next step? My only idea bring back MesaLib with a local spell.
+</I>&gt;<i> Kyle, sorry but I can not give access to this box.
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> madar
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Kyle Sallee wrote:
+</I>&gt;<i> &gt; Hmmm....
+</I>&gt;<i> &gt; That is odd.
+</I>&gt;<i> &gt; Normally, I would say
+</I>&gt;<i> &gt; # augur index
+</I>&gt;<i> &gt; But perhaps regenerating the index does not help?
+</I>&gt;<i> &gt; I would try it first to see if it does.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If regenerating the index is insufficient
+</I>&gt;<i> &gt; then that would suggest that sorcery is misbehaving.
+</I>&gt;<i> &gt; Such a problem could be difficult to debug without access
+</I>&gt;<i> &gt; to the box that it is happening on.
+</I>&gt;<i> &gt; It could be specific to that box.
+</I>&gt;<i> &gt; For the meanwhile I suggest:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; # augur dispel --unsafe MesaLib
+</I>&gt;<i> &gt; # augur forget MesaLib
+</I>&gt;<i> &gt; # augur exile MesaLib
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; After that it aught to stay gone.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On 8/17/07, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Hello!
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I have problems with MesaLib after the changes. I have nvidia vga card
+</I>&gt;<i> &gt;&gt; and would like to use NVIDIA-Linux-x86 but whenever I cast something
+</I>&gt;<i> &gt;&gt; MesaLib is the first spell is compiled and it dispels NVIDIA-Linux-x86.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # augur event MesaLib
+</I>&gt;<i> &gt;&gt; Cast Reason      123
+</I>&gt;<i> &gt;&gt; Compile Failure  4
+</I>&gt;<i> &gt;&gt; Compile          96
+</I>&gt;<i> &gt;&gt; Dispel           96
+</I>&gt;<i> &gt;&gt; Download         3
+</I>&gt;<i> &gt;&gt; ELF Failure      6
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Fri Aug 17 08:51:42 CEST 2007   Missing
+</I>&gt;<i> &gt;&gt; Fri Aug 17 08:37:17 CEST 2007   Missing
+</I>&gt;<i> &gt;&gt; Thu Aug 16 09:34:35 CEST 2007   Missing
+</I>&gt;<i> &gt;&gt; Thu Aug 16 08:57:18 CEST 2007   Command Line Parameter to Cast
+</I>&gt;<i> &gt;&gt; Thu Aug 16 08:52:58 CEST 2007   Missing
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; And
+</I>&gt;<i> &gt;&gt; # augur cur_provider MesaLib
+</I>&gt;<i> &gt;&gt; NVIDIA-Linux-x86
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; How can I stop recasting MesaLib?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Thanks
+</I>&gt;<i> &gt;&gt; madar
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000206.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl
+</A></li>
+	<LI>Next message: <A HREF="000111.html">[Sorcerer-admins] howl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#208">[ date ]</a>
+              <a href="thread.html#208">[ thread ]</a>
+              <a href="subject.html#208">[ subject ]</a>
+              <a href="author.html#208">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

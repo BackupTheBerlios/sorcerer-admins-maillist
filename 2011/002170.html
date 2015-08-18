@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] # augur sync now replaces # augur easy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%23%20augur%20sync%20now%20replaces%20%23%20augur%20easy&In-Reply-To=%3CBANLkTimA1cHTx9cG1ZvLkcskTZyXj%3Dq%3Dcg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002169.html">
+   <LINK REL="Next"  HREF="002171.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] # augur sync now replaces # augur easy</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%23%20augur%20sync%20now%20replaces%20%23%20augur%20easy&In-Reply-To=%3CBANLkTimA1cHTx9cG1ZvLkcskTZyXj%3Dq%3Dcg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] # augur sync now replaces # augur easy">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 26 05:12:56 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002169.html">[Sorcerer-admins] login during sysinit; yes we can.
+</A></li>
+        <LI>Next message: <A HREF="002171.html">[Sorcerer-admins] # augur sync now replaces # augur easy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2170">[ date ]</a>
+              <a href="thread.html#2170">[ thread ]</a>
+              <a href="subject.html#2170">[ subject ]</a>
+              <a href="author.html#2170">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The reason for having the separate augur commands for:
+# augur sync
+# augur newer
+# augur update
+was understood only by SAs
+that understood the significance
+of the &quot;grimoire,&quot; &quot;sorcery,&quot; and other installed &quot;spells.&quot;
+
+However, not all SAs want to understand.
+They wanted to execute
+a single command updates
+all the installed software on a box.
+That was why I eventually created
+# augur easy
+
+However, after a significant elapse of time
+I decided that I am no longer satisfied with
+the implementation of
+# augur sync
+
+Consequently, I redesigned
+# augur sync
+to replace
+# augur easy
+
+And hindsight suggests that I should
+have implemented it that way from the start,
+although I never use
+# augur easy
+
+# augur sync
+now updates all installed software on a box.
+
+This seems easier to grasp than
+having several commands
+used when updating a box.
+
+The next anticipated question is...
+&quot;What command updates only
+the installed grimoire and installed sorcery?&quot;
+
+# augur begin grimoire
+
+# augur newer
+is still available.
+However, most SAs will not invoke it.
+Additionally, it queues spells with a current
+time stamp instead of a future time stamp.
+
+# augur easy
+is deprecated.
+However, it will still invoke
+# augur sync
+for 6 months.
+
+# augur update
+is deprecated.
+However, it will still invoke
+# augur begin
+for 6 months.
+
+Deprecated augur command module
+are removed after 6 months.
+
+# augur configure was modified.
+Previously, it configured spells that
+were provided as command line parameters,
+that were provided on stdin,
+or were already queued in the cast queue.
+However, it now also grants complimentary
+configuration for all installed software.
+
+Here is a simple example.
+Let us assume that the aumix spell is already installed.
+
+# augur forget opts aumix; augur configure
+
+augur presents a question
+allowing confirmation or denial
+of the use of gtk+ during the compilation of aumix.
+
+Therefore,
+# augur configure
+enables a SA to both check and configure
+all installed spells and gain assurance that
+no pending configuration questions
+involving installed spells are left unanswered.
+
+However, there might be only one spell
+in the entire grimoire that is unable to cast
+without the SA first answering configuration questions.
+That spell would be linux-custom
+Therefore, what sorcery does not know
+will normally not hurt it.
+It will conjecture for itself which optionals to enable
+when the SA has not supplied a previous answer.
+
+And now for the summary.
+# augur sync
+replaces the functionality of
+# augur easy
+
+# augur update
+and
+# augur easy
+will entirely vanish in 6 months
+
+# augur begin grimoire
+is an alternative to
+# augur easy
+in order to prevent additional spells
+from being added to the cast queue.
+
+These changes better approximate
+how augur grimoire and sorcery
+should have been implemented years ago.
+However, I am always hesitate about changing
+the code and interface that involves
+how boxes are updated.
+That is why I originally implemented
+# augur easy
+as an entirely separate command
+instead of revising
+# augur sync
+That eliminated the probability that adding
+# augur easy
+would break
+# augur sync
+# augur newer
+and
+# augur update
+
+However, I am now accepting the risk
+of derailing Sorcerer boxes in order
+to make updating an easy concept
+for new Sorcerer SAs to learn and accomplish.
+
+I hope that everyone can be happy about this change.
+Nothing is being sacrificed,
+except for potential confusing concerning
+which commands should be executed
+in order to update installed software.
+
+# augur sync
+
+That command alone is sufficient.
+Remember that the action happens in the background.
+So follow with
+# augur scry
+to enjoy the show.
+
+I apologize in advance for any boxes that
+I accidentally derail.
+Best to check that boxes are still updating automatically
+or as expected in a week from now.
+
+These changes will require approximately two days
+before they reach most Sorcerer boxes.
+Because I tend to derail updating of Sorcerer boxes
+approximately once every 3 to 4 years
+please remain vigil because
+there is no more probable time that now
+for me to derail the distribution.
+And I will try to be very careful to not break it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002169.html">[Sorcerer-admins] login during sysinit; yes we can.
+</A></li>
+	<LI>Next message: <A HREF="002171.html">[Sorcerer-admins] # augur sync now replaces # augur easy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2170">[ date ]</a>
+              <a href="thread.html#2170">[ thread ]</a>
+              <a href="subject.html#2170">[ subject ]</a>
+              <a href="author.html#2170">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

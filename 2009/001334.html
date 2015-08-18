@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kde v3 related spells fail to compile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%20v3%20related%20spells%20fail%20to%20compile&In-Reply-To=%3C596b75860910061402v560e1dd2n28c1acc080b798e5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001333.html">
+   <LINK REL="Next"  HREF="001311.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kde v3 related spells fail to compile</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%20v3%20related%20spells%20fail%20to%20compile&In-Reply-To=%3C596b75860910061402v560e1dd2n28c1acc080b798e5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] kde v3 related spells fail to compile">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct  6 23:02:31 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001333.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+        <LI>Next message: <A HREF="001311.html">[Sorcerer-admins] curl doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1334">[ date ]</a>
+              <a href="thread.html#1334">[ thread ]</a>
+              <a href="subject.html#1334">[ subject ]</a>
+              <a href="author.html#1334">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am uncertain that --disable-dnssd is required
+In my compile log it prints:
+
+You're missing Apple mDNSResponder 85 or later, therefore
+dnssd will be compiled as stub, without any real functionality.
+If you want zeroconf support (www.zeroconf.org), you should install
+mDNSResponder first.
+See dnssd/INSTALL for details.
+
+
+Therefore, I expect it can be left as a stub.
+
+The problem with the missing libxcb library
+is because a reference exists to it in a
+*.la file somewhere.
+Those files need to be fixed by having the spells
+that own them to recast before kdelibs-v3
+To be more precise.
+The problem is not caused by kdelibs-v3
+kdelibs-v3 only inherits the problem.
+That is why I tried to make the libxcb spell's post_install()
+detect all the spells that must be recast that contain
+a *.la file with a reference to that library which no longer exists.
+
+My guess is that the appropriate fix
+is add use_gcc function call
+inside a case statement
+in kde-v3
+and qt-x11-free
+to ensure that both
+use the same version of gcc in order to compile.
+
+This way you will not have to modify
+every kde*-v3 spell
+
+Thanks for spotting and solving this.
+
+I am still extracting tarball path/names from
+the raw data I downloaded from sourceforge yesterday.
+I am 616 of about 750
+So far so good.
+
+I should have run that script at nice 20
+firefox is crawling.  :)
+
+
+On Tue, Oct 6, 2009 at 12:41 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> Kyle,
+</I>&gt;<i>
+</I>&gt;<i> I have managed to fix the issue by forcing kdelibs-v3 to compile using gcc
+</I>&gt;<i> v4.2 and by using an option --disable-dnssd, see the snippet below:
+</I>&gt;<i>
+</I>&gt;<i> case $VERSION in
+</I>&gt;<i>
+</I>&gt;<i> 3.5.10) opts --disable-inotify --disable-dnssd
+</I>&gt;<i>
+</I>&gt;<i> conflicts kdelibs-v3 ;; # Added due to the complicated update of libxcb
+</I>&gt;<i>
+</I>&gt;<i> esac
+</I>&gt;<i>
+</I>&gt;<i> use_gcc gcc-v4.2
+</I>&gt;<i>
+</I>&gt;<i> Let me know if you want me to commit this changes to the repository.
+</I>&gt;<i>
+</I>&gt;<i> Now the rationale of --disable-dnssd is partially a guesswork but it works
+</I>&gt;<i> :)
+</I>&gt;<i>
+</I>&gt;<i> The problem was that kdelibs-v3 installed /opt/kde3/lib/libkdnssd.la which
+</I>&gt;<i> referenced libxcb-xlib.so that is no more installed by the libxcb spell.
+</I>&gt;<i> Then I noticed this warning in the compile log:
+</I>&gt;<i>
+</I>&gt;<i> You're missing Apple mDNSResponder 85 or later, therefore
+</I>&gt;<i>
+</I>&gt;<i> dnssd will be compiled as stub, without any real functionality.
+</I>&gt;<i>
+</I>&gt;<i> If you want zeroconf support (www.zeroconf.org), you should install
+</I>&gt;<i>
+</I>&gt;<i> mDNSResponder first.
+</I>&gt;<i>
+</I>&gt;<i> See dnssd/INSTALL for details.
+</I>&gt;<i>
+</I>&gt;<i> The message said that dnssd will be a stub only and that made me guess that
+</I>&gt;<i> this must be responsible
+</I>&gt;<i>
+</I>&gt;<i> for pointing to a non-existent library libxcb-xlib.so. The --disable-dnssd
+</I>&gt;<i> option disables the check (and creation of the
+</I>&gt;<i>
+</I>&gt;<i> stub), so the resultion libkdnssd.la library does not point to
+</I>&gt;<i> libxcb-xlib.so anymore.
+</I>&gt;<i>
+</I>&gt;<i> I have also noticed that avahi is not detected (or used) by kdelibs-v3
+</I>&gt;<i> anymore as far as can tell and to enable zeroconf,
+</I>&gt;<i>
+</I>&gt;<i> mDNSResponder would have to be installed (there are newer versions available
+</I>&gt;<i> then what is in the grimoire, see
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://www.opensource.apple.com/tarballs/mDNSResponder/">http://www.opensource.apple.com/tarballs/mDNSResponder/</A>). But I don't use
+</I>&gt;<i> zeroconf and don't have time to figure this out so
+</I>&gt;<i>
+</I>&gt;<i> I am fine with disabling dnssd in kdelibs-v3.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>&gt;<i>
+</I>&gt;<i> On Monday 05 October 2009, Kyle Sallee wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I only tested the libxcb spell on IA32.
+</I>&gt;<i>
+</I>&gt;&gt;<i> Apparently there are libtool la files that it is not finding.
+</I>&gt;<i>
+</I>&gt;&gt;<i> Are there some *.la files in /usr/lib64/ ?
+</I>&gt;<i>
+</I>&gt;&gt;<i> I will add that check to the spell.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I am adjusting the post_install to read:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> post_install(){
+</I>&gt;<i>
+</I>&gt;&gt;<i> default_post_install
+</I>&gt;<i>
+</I>&gt;&gt;<i> # the -lxcb-xlib in LA files avoided being logged in the LA logs
+</I>&gt;<i>
+</I>&gt;&gt;<i> case $VERSION in
+</I>&gt;<i>
+</I>&gt;&gt;<i> 1.4) ( LC_ALL=C grep -l xcb-xlib /usr/lib/*.la; [ -d /usr/lib64/ ] &amp;&amp;
+</I>&gt;<i>
+</I>&gt;&gt;<i> LC_ALL=C grep -l xcb-xlib /usr/lib64/*.la
+</I>&gt;<i>
+</I>&gt;&gt;<i> ) |
+</I>&gt;<i>
+</I>&gt;&gt;<i> from_spell | pipe_queue $CAST_QUEUE com ;;
+</I>&gt;<i>
+</I>&gt;&gt;<i> esac
+</I>&gt;<i>
+</I>&gt;&gt;<i> }
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> That might work.
+</I>&gt;<i>
+</I>&gt;&gt;<i> I just checked.
+</I>&gt;<i>
+</I>&gt;&gt;<i> And there are some /usr/lib64/*.la files
+</I>&gt;<i>
+</I>&gt;&gt;<i> on the x86_64 IR
+</I>&gt;<i>
+</I>&gt;&gt;<i> That will probably fix it.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> On Thu, Oct 1, 2009 at 2:15 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; On Monday 28 September 2009, Kyle Sallee wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;&gt; Please recast the
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;&gt; libxcb spell
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;&gt; It should take care of adding to the cast queue
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;&gt; all the spells that require recompilation
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;&gt; in order to make references to that library go away.
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;&gt; That library is no longer installed by libxcb.
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; Reinstalling libxcb did not help. Still the same problem, below for
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; example from kdegames-v3. Yes, cast put some spells in the queue after
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; installing libxcb but those were only kde-v3 spells and those failed
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; because of xcb.
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;&gt;<i> &gt; What now?
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;<i>
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001333.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+	<LI>Next message: <A HREF="001311.html">[Sorcerer-admins] curl doesn't work
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1334">[ date ]</a>
+              <a href="thread.html#1334">[ thread ]</a>
+              <a href="subject.html#1334">[ subject ]</a>
+              <a href="author.html#1334">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

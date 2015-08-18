@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please be aware that booting is receiving another	revision.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%20another%0A%09revision.&In-Reply-To=%3CCA%2BT4wDj8AgU4Bwc%3D9kfAzR4B5DfeHkfYktBnQZ7O6xQW%2B6Q9sw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002210.html">
+   <LINK REL="Next"  HREF="002229.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please be aware that booting is receiving another	revision.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%20another%0A%09revision.&In-Reply-To=%3CCA%2BT4wDj8AgU4Bwc%3D9kfAzR4B5DfeHkfYktBnQZ7O6xQW%2B6Q9sw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please be aware that booting is receiving another	revision.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jul  3 01:04:36 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002210.html">[Sorcerer-admins] breaking the bottlenecks...
+</A></li>
+        <LI>Next message: <A HREF="002229.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2211">[ date ]</a>
+              <a href="thread.html#2211">[ thread ]</a>
+              <a href="subject.html#2211">[ subject ]</a>
+              <a href="author.html#2211">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># find /boot/initrf/ /boot/*/modules -type f
+/boot/initrf/bin
+/boot/initrf/etc
+/boot/initrf/lib
+/boot/initrf/lib64
+/boot/initrf/sbin
+/boot/initrf/usr
+/boot/2.6.39.1/modules
+/boot/2.6.39.2/modules
+
+In a couple of days files such as those will appear on boxes that update.
+The initramfs is no longer a concatenation of 2 large cpio files.
+Rather it is the concatenation of several small files.
+
+Boxes that boot with lilo will have initramfs files concatenated into
+/boot/$VERSION/initrf
+
+Boxes that boot with extlinux will references
+each compressed cpio file
+individually in the extlinux.conf
+Consequently, boxes booting with extlinux will save some space on /boot/
+while boxes booting with lilo must have the individual files cpio files
+concatenated into a single file.
+
+Segregating the initramfs into several cpio files
+allows for individual checking
+to discern which cpio file must be updated.
+Regenerating only some of the cpio files
+is faster than regenerating all of them.
+Therefore, 7 cpio files seems to be
+a reasonable division along directory boundaries.
+
+Boxes that boot with lilo
+require no special adjustment.
+It is already tested.
+
+However, boxes booting with extlinux
+will require a newer extlinux.conf.
+Therefore, run
+# /etc/init.d/extlinux force
+on those boxes to ensure that the configuration files update.
+
+Basically, until the next I/R release
+there should be no Sorcerer boxes that are booting with extlinux.
+However, for SAs that manually switched
+please also manually regenerate extlinux.conf
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002210.html">[Sorcerer-admins] breaking the bottlenecks...
+</A></li>
+	<LI>Next message: <A HREF="002229.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2211">[ date ]</a>
+              <a href="thread.html#2211">[ thread ]</a>
+              <a href="subject.html#2211">[ subject ]</a>
+              <a href="author.html#2211">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

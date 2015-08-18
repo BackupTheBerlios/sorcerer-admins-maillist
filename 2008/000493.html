@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] howto prevent a module from loading	automatically?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howto%20prevent%20a%20module%20from%20loading%0A%09automatically%3F&In-Reply-To=%3C596b75860806090702n1df29a99qd8c5ba47bd0e488b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000491.html">
+   <LINK REL="Next"  HREF="000489.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] howto prevent a module from loading	automatically?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howto%20prevent%20a%20module%20from%20loading%0A%09automatically%3F&In-Reply-To=%3C596b75860806090702n1df29a99qd8c5ba47bd0e488b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] howto prevent a module from loading	automatically?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jun  9 16:02:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000491.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+        <LI>Next message: <A HREF="000489.html">[Sorcerer-admins] Welcome to 2009
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#493">[ date ]</a>
+              <a href="thread.html#493">[ thread ]</a>
+              <a href="subject.html#493">[ subject ]</a>
+              <a href="author.html#493">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jun 9, 2008 at 3:13 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On Tue, Jun 3, 2008 at 1:24 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Writing a rule to prevent a module from loading maybe possible.
+</I>&gt;&gt;<i> However, init-scripts can also unload modules.
+</I>&gt;&gt;<i> And modules listed in
+</I>&gt;&gt;<i> /etc/modules.rm
+</I>
+As far as I know,
+distros either do or do not have init-scripts
+that load and unload modules during boot.
+
+# grep -ri autoload module-init-tools-3.2.2
+module-init-tools-3.2.2/FAQ:Q) I'm using RedHat and modules don't
+autoload any more.
+module-init-tools-3.2.2/FAQ:A) Old versions of RedHat turns module
+autoloading off if /proc/ksyms
+
+Neither of those two lines seemed useful.
+
+udev rules can probably stop automatic module loading.
+
+However, you may want to first look at &quot;blacklist&quot; in
+
+$ man modprobe.conf
+
+       blacklist modulename
+              Modules can contain their own aliases: usually these are aliases
+              describing  the  devices  they  support,  such  as &quot;pci:123...&quot;.
+              These &quot;internal&quot; aliases can be  overridden  by  normal  &quot;alias&quot;
+              keywords,  but  there  are  cases where two or more modules both
+              support the same devices, or a module invalidly claims  to  sup-
+              port  a  device:  the  blacklist keyword indicates that all of a
+              particular module's internal aliases are to be ignored.
+
+
+<A HREF="http://www.linuxfoundation.org/spec/refspecs/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/book1.html">http://www.linuxfoundation.org/spec/refspecs/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/book1.html</A>
+
+Unfortunately, the LSB appears to lack
+documentation that is specific about how
+modules should be automatically loaded and unloaded.
+
+
+&gt;<i> where is this documented?
+</I>
+Let me know when you find it, please.  :)
+
+
+&gt;<i> and how is this controlled cause there's
+</I>&gt;<i> like a /etc/modules.autoload.d/xxx sort of thing implemented on other
+</I>&gt;<i> systems to specify modules which should be loaded (uvesafb for
+</I>&gt;<i> instance )
+</I>
+There is probably variance among distributions about
+what files in /etc control automatic module loading and unloading.
+Sorcerer is very simple only slightly extending what can
+be done in /etc/modprobe.conf and with udev rules by
+supporting the files:
+
+/etc/modules
+/etc/modules.rm
+
+/etc/modules is an idea influenced by Debian.
+/etc/modules.rm is something I added a few years later.
+If you want something better
+the it is possible to change.
+
+After the introduction of linux-modular I added
+additional functionality to init-functions to support
+easy module loading and unloading by init-scripts.
+
+For example: the /etc/init.d/nvidiafb
+init-script installed by NVIDIA_Linux-x86
+unloads a module during boot.
+
+# cat /etc/init.d/nvidiafb
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides: nvidiafb
+# Required-Start: $local_fs
+# Should-Start: udev
+# Default-Start: 1 2 3 4 5
+# Default-Stop:
+# Short-Description: nvidiafb unloads the module
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+NAME='-r nvidiafb'
+
+parse &quot;$@&quot;
+
+
+Very easy, yes?
+
+In this situation, as with most situations,
+Sorcerer does what the SAs ask of it,
+because not every aspect of how distros
+work is indelibly chiseled in stone.
+
+If you describe in details how methods work in other distros
+then Sorcerer can have init-scripts that support those methods.
+Booting will become a little bit slower.
+And SAs may become confused about
+&quot;the right way&quot; to do it, as if a &quot;right way&quot; ever existed.
+
+My opinion about automatic module loading is
+that there is nothing ideal, optimal, correct nor right
+about the way Sorcerer handles it.
+It was merely a choice to add something simple and functional.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000491.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+	<LI>Next message: <A HREF="000489.html">[Sorcerer-admins] Welcome to 2009
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#493">[ date ]</a>
+              <a href="thread.html#493">[ thread ]</a>
+              <a href="subject.html#493">[ subject ]</a>
+              <a href="author.html#493">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

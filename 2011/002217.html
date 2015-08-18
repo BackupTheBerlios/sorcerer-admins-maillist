@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] blame it on the init system changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20blame%20it%20on%20the%20init%20system%20changes...&In-Reply-To=%3CCA%2BT4wDiqREXTd21rDochVYFfLK8uj8qqNeiYLFXADoLGbp%3DqYA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002216.html">
+   <LINK REL="Next"  HREF="002218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] blame it on the init system changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20blame%20it%20on%20the%20init%20system%20changes...&In-Reply-To=%3CCA%2BT4wDiqREXTd21rDochVYFfLK8uj8qqNeiYLFXADoLGbp%3DqYA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] blame it on the init system changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 16 02:20:52 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002216.html">[Sorcerer-admins] sysvinit changes...
+</A></li>
+        <LI>Next message: <A HREF="002218.html">[Sorcerer-admins] Want a faster Sorcerer's parallel init system?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2217">[ date ]</a>
+              <a href="thread.html#2217">[ thread ]</a>
+              <a href="subject.html#2217">[ subject ]</a>
+              <a href="author.html#2217">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If anything unexpected happens check this first.
+A few spells might require recasting if they install files into /etc/init.d/
+
+I reverted some previous changes to the init-system.
+There is no more logging output per init-script run.
+Instead an entire log of all output to console
+is generated and stored as /var/log/console
+
+These files now contain the numeric output for a given action
+
+/var/log/init/{passed,failed}/$SPELL/$ACTION
+
+For example if
+
+/etc/init.d/loadkeys start runs
+
+and it returns 0
+
+then an empty file
+
+/var/log/init/passed/loadkeys/start
+will be created.
+
+However, if there was an error code instead
+then
+/var/log/init/failed/loadkeys/start
+contains the numeric error code.
+
+Hopefully, that and the console log /var/log/console
+will provide sufficient clues
+to surmise what happened before it raced off the screen.
+
+These newer init-scripts give a proper response for
+# /etc/init.d/$script help
+Not only is the response proper,
+but the init-script will only accept as parameters
+those which it says it will accept when asked for help.
+
+Therefore, an init-script that will not accept try-restart
+as a parameter will not restart itself
+after the spell which installed it casts
+even if the init-script is installed mode 510
+
+init-scripts no longer have a line that invokes the parse function.
+The init-script's parse function runs implicitly.
+replacement functions for start() stop() and other functions
+can still be added in the init-script beneath the line that reads:
+
+. /lib/lsb/init-functions
+
+These changes are balanced with the previous revision.
+Some code was removed and some code introduced.
+Consequently, the overall level of complexity remains unchanged.
+However, init-scripts themselves are better controlled.
+
+Additionally, I fixed parallel runlevels.
+Discovering exactly what generated
+an error message might prove challenging
+when booting runlevel 2 or 4.
+If something unusual happens during boot
+then try booting runlevel 3 or 5 to examine it.
+
+Anyone who wants to re-cast all spells that installed init-scripts
+can execute a command such as:
+
+# augur from /etc/init.d/ | cut -d : -f1 | augur begin
+
+Is not augur a fine tool?
+
+The above changes will require a couple of days to reach boxes.
+Therefore, check for them on or after Monday.
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002216.html">[Sorcerer-admins] sysvinit changes...
+</A></li>
+	<LI>Next message: <A HREF="002218.html">[Sorcerer-admins] Want a faster Sorcerer's parallel init system?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2217">[ date ]</a>
+              <a href="thread.html#2217">[ thread ]</a>
+              <a href="subject.html#2217">[ subject ]</a>
+              <a href="author.html#2217">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

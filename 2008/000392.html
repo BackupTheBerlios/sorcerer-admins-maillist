@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MesaLib failling compilation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20failling%20compilation&In-Reply-To=%3C596b75860802101743oc4290dfu407994a183e1e307%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000391.html">
+   <LINK REL="Next"  HREF="000393.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MesaLib failling compilation</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20failling%20compilation&In-Reply-To=%3C596b75860802101743oc4290dfu407994a183e1e307%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MesaLib failling compilation">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Feb 11 02:43:34 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000391.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+        <LI>Next message: <A HREF="000393.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#392">[ date ]</a>
+              <a href="thread.html#392">[ thread ]</a>
+              <a href="subject.html#392">[ subject ]</a>
+              <a href="author.html#392">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the info.
+However, those messages about:
+
+cannot find include file &quot;stddef.h&quot;
+
+are common in MesaLib.
+They do not break compilation.
+
+I have already compiled MesaLib
+Compile log for MesaLib 7.0.1c
+Built with sorcery implosion-20080206-0 and gcc 4.2.3
+Built on Wed Feb  6 13:54:13 MST 2008
+...
+make[1]: Leaving directory `/usr/src/sorcery/MesaLib/Mesa-7.0.1/progs'
+`progs/xdemos/glxgears' -&gt; `/usr/bin/glxgears'
+`progs/xdemos/glxinfo' -&gt; `/usr/bin/glxinfo'
+`/root/.sorcery/grimoire/MesaLib.d/drirc' -&gt; `/etc/drirc'
+
+If MesaLib fails compilation
+then you may want to include the lines from
+the compile log towards the end
+that sometimes show a useful error message.
+Or you can send the gziped compile log
+directly to me as an attachment.
+
+Probably the most recent change to MesaLib was:
+
+ # According to Evert Vorster
+ # MesaLib should be compiled with -fno-strict-aliasing added to CFLAGS
+ # in order for OpenGL to work with xf86-video-intel drivers
+ CFLAGS+=' -fno-strict-aliasing'
+
+Did adding that to CFLAGS
+cause a compile error?
+Is the error happening on ia32
+or x86_64 architecture, please?
+
+
+&gt;<i> why are the gcc's include path not in the seeked path of MesaLib spell?
+</I>
+MesaLib may have a bit of legacy code in it
+that was inherited from XFree86.
+For example it requires makedepend to compile.
+Almost nothing from xorg still uses makedepend.
+And that appears to be somehow related to
+the messages about stdef.h
+
+makedepend: warning:  glcontextmodes.c (reading
+/usr/X11R6/include/sys/types.h, line 147): cannot find include file
+&quot;stddef.h&quot;
+
+However, as long as warnings are not being
+regarded as errors this should not create a problem.
+stddef.h is a header file from gcc.
+gcc always knows where to find it's own headers.
+They can be included using include lines in sources
+and other headers without requiring an appropriate
+hyphen capital I to indicate what directory that are in.
+Even if that is given to MesaLib those warning
+messages might still occur since they are comming
+from makedepend and no gcc.
+Because as I mentioned above gcc and g++
+always knows where to find it's own header files.
+That is why there are no significant gcc caused
+problems by installing gcc in /opt
+
+On the other hand libtool causes all sorts of problems.
+That is why the current version of gcc is now
+installed in /usr while older versions are installed in /opt
+First, that avoids some libtool problems.
+But libtool may create additional problems when
+compiling a source that uses libtool with a different
+version of gcc than was used to compile the libraries
+that the currently compiling source requires.
+Given that libtool can still cause problems.
+Second, new Sorcerer SAs sometimes start asking
+me why gcc is installed in /opt/gcc/ and so forth...
+Novice SAs are a bit confused by it.
+Third, I since modern releases of gcc support
+the -march=native I feel inspired to add support
+to cast for correctly selecting optimizations
+in the event that an expected cpref file is not
+discovered in /etc/sorcery/cpref/
+
+This you may find amusing.
+Nearly all sources will compile with something like
+-march=native -O
+-Wl,-s
+
+That yields a moderately fast compile time
+while stripping ELF libraries and executables.
+
+However, for some spells I have specified
+CFLAGS and/or LDFLAGS in the spell definition.
+MesaLib, for example,
+now has:
+
+    CFLAGS='-O3'
+   LDFLAGS='-Wl,-O1'
+
+That would be the most recent change to MesaLib
+which might cause a compile error.
+However, it probably does not effect your
+compilation because
+If a cpref file exists then the cpref file is used
+instead of the in spell recommendations.
+And the automatic optimization would naturally
+add the appropriate -march to the CFLAGS
+and CXXFLAGS
+
+Moving along to the point of the change is
+that by not using cpref files a box can compile
+with the higher level of optimization in sources
+that are expected to benefit from it.
+Sources that install libraries or executables
+capable of running the CPU at full bore for
+seconds or minutes at a time receive higher
+levels of optimization:
+gzip, bzip2, p7zip, bash, MesaLib, sed, coreutils,
+etc....
+
+Normally, a SA might set aggressive or fast
+for cpref for those spells, but now without
+a default cpref file the SA can go along with
+the recommended CFLAGS, CXXFLAGS, and
+LDFLAGS that are specified in the spell.
+Naturally, very few spells have CFLAGS,
+CXXFLAGS, or LDFLAGS specified.
+
+Therefore, this change amounts to
+decreased SA effort,
+improved performance,
+and reduced compile time.
+And SAs that want to continue using cpref
+files may continue to use cpref files.
+The functionality we now enjoy is not going away.
+
+Also changed is ccache behavior.
+gcc* attribute kde3 spells no longer
+compile with ccache when ccache is installed.
+Also spells with estimates less than 500
+will compile without ccache.
+There are numerous reasons for this change.
+However, I will skip the explanation.
+This change like the cpref change should
+overall reduce compilation time
+and conserve disk space
+and reduce amount of CPU spent re-compressing
+ccache archive files in /var/cache/ccache/
+
+The trend of these changes is to make sorcery
+more innately do what SAs want by providing
+a good compromise between stability
+performance and compilation time
+with less effort from from the SA.
+
+Also in newer versions of sorcery is a slightly
+modified appearance for # augur scry
+It provides less information.
+But the appearance is more uniform.
+This makes reading the state of progress
+faster to accomplish in a single glance.
+
+Because gcc is migrating from /opt/gcc/current
+to /usr this will cause many ELF failures.
+These are actually pseudo failures.
+Installed ELFs that link with libstdc++
+will still continue to work just fine.
+However, cast will consider the errors real.
+And it will recast almost every spell
+that installs ELFs that are linked with libstdc++
+As long as future versions of
+gcc are installed into /usr
+then this forced recompilation will be the last.
+
+I debated about whether to sedit the sorcery
+logs in /etc/sorcery/log/ldd/ to prevent the
+massive amount of ELF failures.
+You can elect to do so if you want.
+However, I decided that for those who may
+have been holding installed spells for a long time
+that this may be a good opportunity to shake
+the dust off the fixed disks.
+This is about as close as Sorcerer boxes ever
+come to having to be re-installed from a newer
+Install/Rescue release.
+
+In addition to the improvements in sorcery tools
+some previous functionality has been moved
+into spells:
+
+sorcery-bgz  for background compression daemon
+sorcery-alien for monthly check for alien files
+sorcery-defrag for monthly file de-fragmentation
+sorcery-md5sum for weekly md5sum checks
+
+Having these as spells provides
+a good convenience for SAs.
+
+For example to view the alien list
+I merely type:
+# augur compile sorcery-alien
+The compile log from the last time it ran
+shows what aliens were discovered.
+
+The monthly de-fragmentation provides a
+good way to keep performance up and drive
+wear and tear down.
+Tested on ext3 each cast eliminated
+fragmentation from 1/3 of the installed
+fragmented files.
+
+As for the weekly md5sum check.
+It locates unexpected modified and/or corrupt files,
+enters into the cast queue
+those spells owning those files
+and since cast is already running
+cast recompiles those spells.
+For the SA that regularly does md5sum checks
+hanging the md5sum check on a weekly spell
+gains a &quot;fire and forget&quot; solution for maintaining
+file integrity.
+
+All of these improvements come with a slight
+chance of instability and bugs.
+Please make bug reports as you encounter the bugs.
+For the cost of some cooperation
+we can achieve better performance,
+improved functionality while decreasing
+the overall workload upon the SA.
+If Sorcerer was a wheel
+then one might say we are truing it up for 2008.
+Once the transition is complete
+prepare for a smooth fast ride.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000391.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+	<LI>Next message: <A HREF="000393.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#392">[ date ]</a>
+              <a href="thread.html#392">[ thread ]</a>
+              <a href="subject.html#392">[ subject ]</a>
+              <a href="author.html#392">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /boot/linux/$VERSION/{kernel,modules}
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot/linux/%24VERSION/%7Bkernel%2Cmodules%7D&In-Reply-To=%3CCA%2BT4wDis1M1p%3DyPito27AgtHb_oKOOqz_PQrkH9m80rkuyOifA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002480.html">
+   <LINK REL="Next"  HREF="002488.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /boot/linux/$VERSION/{kernel,modules}</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot/linux/%24VERSION/%7Bkernel%2Cmodules%7D&In-Reply-To=%3CCA%2BT4wDis1M1p%3DyPito27AgtHb_oKOOqz_PQrkH9m80rkuyOifA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /boot/linux/$VERSION/{kernel,modules}">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Nov 26 06:22:54 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002480.html">[Sorcerer-admins] changes and bugs
+</A></li>
+        <LI>Next message: <A HREF="002488.html">[Sorcerer-admins] mrgetty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2487">[ date ]</a>
+              <a href="thread.html#2487">[ thread ]</a>
+              <a href="subject.html#2487">[ subject ]</a>
+              <a href="author.html#2487">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Is it entirely proper, currently broke, or just messy?
+I wondered that for a short while,
+because of some excellent bug reports by Evert.
+Two additional related observations were included.
+First, the I/R may be too old for use as repair.
+Second, would be nice to be able to regenerate
+the entire content of /boot/ without casting spells.
+I completely concur.
+And so here is what I propose.
+
+First, this is how to craft a rescue boot label.
+Assuming that the current boot works then try:
+
+# rm -fr /boot/linux/rescue
+# cp -r /boot/linux/$(uname -r) /boot/linux/rescue
+# cp -r /boot/initrf /boot/linux/rescue/
+
+The closer the kernel and initramfs images are to current
+then the more useful they will be for rescue.
+
+The first obvious aspect about the commands is that
+linux specific files in /boot/linux/$VERSION/
+That change can be considered cosmetic.
+
+linux-kernel now installs files:
+/usr/share/linux/$VERSION/{System.map,kernel}
+
+/etc/initramfs-kernel
+copies /usr/share/linux/ to /boot/
+For the most part it is that simple.
+
+If /boot becomes wrecked or removed
+then the only commands to type are:
+# mkdir -p /boot/
+# /etc/init.d/initramfs force-reload
+# /etc/init.d/extlinux force-reload
+
+Not all root file systems will have a /boot/
+Therefore, init-scripts will not create /boot/
+when /boot/ does not already exist.
+
+As previously discussed,
+configuration files for the rootfs
+that have the same name as configuration
+files for a root file system yet different content
+should be installed in /etc/rootfs/
+Therefore, common entries in /etc/rootfs/ could be:
+/etc/rootfs/{fstab,shadow}
+
+I am restating information in the above paragraph
+for anyone who missed the importance of it in the previous email.
+And now onto the more subtle changes.
+The remainder is optional reading.
+
+/lib/modules/ is no longer protected from reaping.
+Consequently, /lib/modules/ is expected to contain
+merely the modules for the most recently installed Linux.
+I am expecting the next question to be, &quot;why.&quot;
+
+Software projects that install kernel modules
+are only able to create modules for the installed linux
+because that is the only Linux source which is installed.
+Consequently, if the Linux booted is older than installed
+then modules for the older Linux are not created.
+So why keep it around?
+
+Still require a module loaded?
+No problem.
+The easiest method is to ssh to port 30 for the computer's name
+and log into the rootfs and run modprobe there.
+The rootfs always retains modules for the booted kernel.
+However, if /boot/linux/$(uname -r)/modules exists
+then the cpio file can be decompressed and extracted
+to re-populate /lib/modules/
+
+The final solution is to not update /+/base/
+until nearly ready to reboot.
+What was formerly known as /media/root/main/ is now /+/base/
+It is a minimal deployment of software adequate for
+generating initramfs images and updating.
+It should never require long to update.
+And it will certainly retain /lib/modules/$(uname -r)/
+until it is updated.
+
+Consequently, maintaining a tidy /lib/modules/
+costs minimal inconvenience.
+
+Every reported seeing a looping with extlinux,
+where the kernel loaded or did not load
+and then extlinux looped back to the 3 second timer
+as if POST just completed.
+I had never seen that behavior before.
+I played around with extlinux before discovering
+that the behavior happens when encountering
+either a kernel or perhaps more likely a initramfs image
+that is not where the configuration file states.
+As a result, I carefully examined and rewrote parts of
+/etc/init.d/extlinux
+After the 20131127 UTC 00:00 update
+if any doubt exists then the /boot/extlinux/extlinux.conf
+can be regenerated with the command:
+# /etc/init.d/extlinux force-reload
+
+Lastly, no spells should install files within /boot/
+/etc/init.d/extlinux is responsible for populating
+/boot/extlinux/ with the 32-bit com files from /usr/share/syslinux/
+Some curiosity might exist about that.
+
+lrwxrwxrwx 1 root root 13 Nov 25 18:06 /boot/extlinux/syslinux.conf -&gt;
+extlinux.conf
+lrwxrwxrwx 1 root root  8 Nov 25 18:06 /boot/syslinux -&gt; extlinux
+
+Noticed the symbolic links yet?
+When booting from a USB SSD the latest version of extlinux
+can sometimes mistake itself for syslinux instead.
+Or at least that was how it appeared.
+After adding some symbolic links
+the bootloader reported no problem locating configuration files.
+May be a paranoid solution but it works for now.
+It seems innocuous for booting computers
+that do not require the symbolic links.
+So as the cliche suggests,
+&quot;Better safe than unable find bootloader configuration file.&quot;  ;)
+
+Hopefully, the recent changes with regard to booting
+will make booting more robust.
+And /boot/ organization should inspire confidence.
+It looks like it has no chance of not working.  :)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131125/b6a866ca/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131125/b6a866ca/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002480.html">[Sorcerer-admins] changes and bugs
+</A></li>
+	<LI>Next message: <A HREF="002488.html">[Sorcerer-admins] mrgetty
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2487">[ date ]</a>
+              <a href="thread.html#2487">[ thread ]</a>
+              <a href="subject.html#2487">[ subject ]</a>
+              <a href="author.html#2487">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

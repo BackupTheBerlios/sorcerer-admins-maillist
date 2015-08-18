@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] libXext compile fail
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXext%20compile%20fail&In-Reply-To=%3C596b75860910081533u59856faduf166a1d303bda498%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001338.html">
+   <LINK REL="Next"  HREF="001340.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] libXext compile fail</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXext%20compile%20fail&In-Reply-To=%3C596b75860910081533u59856faduf166a1d303bda498%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] libXext compile fail">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Oct  9 00:33:08 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001338.html">[Sorcerer-admins] libXext compile fail
+</A></li>
+        <LI>Next message: <A HREF="001340.html">[Sorcerer-admins] libXext compile fail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1339">[ date ]</a>
+              <a href="thread.html#1339">[ thread ]</a>
+              <a href="subject.html#1339">[ subject ]</a>
+              <a href="author.html#1339">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was unaware of the update.
+That is why nothing broke for me.
+
+Thanks for reporting the problem G&#225;sp&#225;r &#193;kos.
+
+Updating xorg related spells is tricky.
+The version numbers on the tarballs have
+practically no meaning.
+There has not been a full release of
+an xorg version in a long time.
+And because the last full release of xorg
+contained some drivers that were somewhat faulty
+it is unlikely that any distro provides only what
+was part of the original X11R7.4 release.
+So everyone has a mix of tarballs
+with a mix of benefits and problems.
+
+Jan Merka was probably trying to solve one problem
+when he accidentally created a new problem.
+Sometimes I accidentally create new problems
+by updating to the most recently released
+source tarballs that the software authors declared stable.
+Often major updates of libraries like poppler are
+best to hold back for while so that software authors
+can adjust their sources to properly work with
+the newer stable library versions.
+Finding out what works is often try and see.
+
+Since Jan Merka started this ball rolling and
+knows what spells were modified
+I am going to relax, do nothing, and wait
+for him to retest and fix them.
+If he can make a combination of newer xorg
+related spells work better than the current lot
+then that would be an improvement.
+
+
+Everything below this line is old information
+that is not directly related to the problem of
+making the current combination of xorg spells work together.
+However, it might be useful reading for those who have
+a moment to spare.
+
+
+For now spells/grimoire/sorcery support 4+ version progresses.
+The primary 4 are:
+stable
+secure
+unstable
+latest
+legacy
+
+stable specifies the version recommended for use.
+
+secure specifies the most recent version that was released
+in order to fix a security problem.
+The stable and secure version might be the same.
+However, the secure version will usually be older,
+and never newer than the stable version.
+
+unstable specifies versions that the software author released
+as developmental or unstable.
+Sometimes I might add a version to unstable
+if I tested it and discovered that it does not work.
+That is a bad habit.
+I really aught to add a version such as that to latest.
+
+latest specifies versions of tarballs
+that the software author released
+that the software author considered stable.
+However the version specified by latest
+often create some problems if deployed.
+So versions specified in latest
+are something in between stable and unstable.
+
+legacy specifies versions that were formerly stable
+and in some cases beneficial to use at least
+for a short while for SAs that would cringe at
+the pain caused by an update to stable.
+
+If an update of installed software using the
+the stable version progress causes some bad breaks
+and the spell has a legacy version available
+then that is a subtle hint by someone that you
+might want to try the legacy version.
+
+Currently only the jpeg spell has a legacy version specified.
+This is because there is a problem evident when using
+gqview with the stable version of jpeg.
+However, all other programs seem okay with
+using the stable version of jpeg.
+So it might be a bug in gqview.
+
+When testing updates to the xorg related spells
+using the latest version progress is probably best.
+After one is certain that the new versions play nice
+together then the changes can be made to the stable
+version progress.
+It is a bit more difficult to test this way.
+But it allows some longer term testing
+without causing pain for others,
+because almost nobody will specify the
+the latest version progress for their installed spells.
+Using the &quot;latest version progress&quot; in this way
+makes it sort of like a testing slot.
+By using latest is implies that an understanding
+that the version should be stable,
+yet a hunch that something could go wrong
+if it is deployed as stable.
+
+I created the different version progress to
+grant a bit of flexibility for SAs and grimoire gurus
+without making it overly complex.
+
+Some addition information is available by typing
+# augur help progress
+
+However, for the most part the version progress information
+is not documented in official docs,
+because we are using it with a &quot;try and see&quot; attitude.
+It seems better than what we used to have.
+But it was not over-planned and therefore
+we might change anything and everything about it
+if it becomes necessary and beneficial to do so.
+
+For example the &quot;legacy version progress&quot;
+was probably only added especially for the
+jpeg spell because during the time that we
+have had version progress only for two spells
+did legacy version progress seem like it might be a god idea.
+
+I apologize if my reply is a bit verbose
+and seems like a bit of a digression to
+the matter at hand.
+I do not know if using different version progresses
+would have been useful in this situation.
+However, if it could be useful in future testing
+then I prefer SAs and grimoire gurus to know about
+the possibility of using version progress.
+
+It is true that sometimes problems happen because
+Sorcerer evolves spell by spell
+instead of mega huge re-install everything from new CD leap.
+However, the infrequent tiny headaches are often
+small and easy to cope with
+compared to the head-spliters we would have
+if many things were messed up concurrently following
+a full wipe and re-install from new CDs.
+
+That is why Sorcerer has only one grimoire
+instead of something like Debian's 3 different distribution
+branches named after characters in the movie &quot;Toy Story.&quot;
+Or at least that is what I thought they were doing previously.
+
+Fortunately, the version progress provides a good
+compromise for SAs and grimoire gurus.
+Since Sorcerer is source based
+we can cut the design of the distribution
+as precisely as a single spell.
+In contrast pre-compiled binary based distros
+must keep huge masses of packages
+in sync with the libraries they require
+because pre-compiled binary based distros
+can not detect problems and
+do trivial healing following an update
+like Sorcerer boxes do.
+
+However, in order to maximize Sorcerer's advantage
+we must make use of the version progress.
+The way it is now is basically how it occurred to me.
+I do not recall much discussion contributing to how it became.
+Or maybe I forgot.
+Basically I am eager to admit that it could become better.
+
+However, if upon looking at what I wrote
+you are thinking, &quot;Hmm that is not exactly intuitive
+and it really aught to be this way instead...&quot;
+Then please state your opinion and reasoning
+on the list email so that it can be discussed
+and therefore sorcery version progress can
+evolve in a way that will encourage and help
+SAs and grimoire gurus want to use it.
+
+The current functionality of version progress
+is stable and reliable.
+Yes, it really works.
+And we like that.
+However, it is still &quot;try and see.&quot;
+So there it is not definite that it will continue
+forever especially if something thinks of something better.
+
+Last year most of the discussion about version progress
+had to do with how to integrate better support for
+downloading from repositories instead of tarballs.
+There were many good ideas.
+I remember Jan Merka had an elaborate idea involving
+storing repositories open somewhere in /var/cache/repo/
+or in /var/cache/sources/
+instead of converting repositories into tarballs.
+But somehow we fell short of making any big changes
+in sorcery to bring about better repository support.
+
+There are a few spells in the grimoire that use repositories.
+As expected they are held together with chewing gum
+and scotch tape.
+Sorcery has just enough modification to make it work.
+And probably for the lack of having many spells that
+use repository nobody has collected a huge amount of
+data and experience that provides a clear indication
+of how support for tarballs, svn, cvs, git, etc...
+should all be integrated into an improved &quot;version progress system.&quot;
+However, if one is considering about how it should be improved
+then considering support for other methods of source
+tree acquisition might also be a good idea.
+Chances all that it will all have to play nice together
+in the future if more software authors become
+too lazy to roll tarballs.  :)
+
+
+
+
+On Thu, Oct 8, 2009 at 5:39 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> xextproto is now currently
+</I>&gt;<i> &#160; &#160;stable 7.0.3 7.0.2 X11R7.0-7.0.2
+</I>&gt;<i> &#160;unstable 7.1.1 7.1.0 7.0.99.3 7.0.99.1 7.0.5 7.0.4 7.0.3 7.0.2
+</I>&gt;<i>
+</I>&gt;<i> I believe that the stable should be now 7.1.1
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thursday 08 October 2009, G&#225;sp&#225;r &#193;kos wrote:
+</I>&gt;&gt;<i> Then the problem for me comes from libXext
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> augur details libXext
+</I>&gt;&gt;<i> &#160; &#160; stable 1.1 1.0.4 1.0.2 X11R7.2-1.0.2 X11R7.1-1.0.1 X11R7.0-1.0.0
+</I>&gt;&gt;<i> &#160; unstable 1.1 1.0.99.4 1.0.99.3 1.0.5 1.0.4 1.0.2
+</I>&gt;&gt;<i> ...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and it is in official grimoire /usr/share/sorcery/grimoire.tar too.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> madar
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kyle Sallee wrote:
+</I>&gt;&gt;<i> &gt; Well it is true that
+</I>&gt;&gt;<i> &gt; xextproto is verison 7.0.3
+</I>&gt;&gt;<i> &gt; and that libXext is version 1.0.4
+</I>&gt;&gt;<i> &gt; However I just completed a cast of libXext that worked.
+</I>&gt;&gt;<i> &gt; I was hoping that by casting libXext
+</I>&gt;&gt;<i> &gt; that I would recreate
+</I>&gt;&gt;<i> &gt; and see the error that you saw.
+</I>&gt;&gt;<i> &gt; But at the moment it eludes me.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Are you absolutely certain about the version
+</I>&gt;&gt;<i> &gt; progresses that you have set and forced for
+</I>&gt;&gt;<i> &gt; software installed on that box?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; By executing:
+</I>&gt;&gt;<i> &gt; # augur progress
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; it will remind the SA about what version progress is set.
+</I>&gt;&gt;<i> &gt; However, if certain version progress was changed,
+</I>&gt;&gt;<i> &gt; but a newer and update was not completed after
+</I>&gt;&gt;<i> &gt; then unexpected previously selected versions
+</I>&gt;&gt;<i> &gt; might be installed instead of having it all congruent.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Most of the versions listed as the most current version
+</I>&gt;&gt;<i> &gt; in stable are tested once known to work and usually
+</I>&gt;&gt;<i> &gt; continue to work.
+</I>&gt;&gt;<i> &gt; However, versions listed in the unstable progress
+</I>&gt;&gt;<i> &gt; are not tested and probably will not work.
+</I>&gt;&gt;<i> &gt; Some might work if all the appropriate spells
+</I>&gt;&gt;<i> &gt; are forced to unstable version progress.
+</I>&gt;&gt;<i> &gt; However, since xorg related spells often have
+</I>&gt;&gt;<i> &gt; different source trees that install headers
+</I>&gt;&gt;<i> &gt; and different source trees that install libraries
+</I>&gt;&gt;<i> &gt; it is usually a less than trivial task to use
+</I>&gt;&gt;<i> &gt; unstable versions of xorg related spells.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; However, since this is Sorcerer the SA
+</I>&gt;&gt;<i> &gt; does receive the final say about what is installed.
+</I>&gt;&gt;<i> &gt; But if any of it are from non stable version progress
+</I>&gt;&gt;<i> &gt; then I probably will not know what to expect or why
+</I>&gt;&gt;<i> &gt; something went wrong.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; So far my best guess is
+</I>&gt;&gt;<i> &gt; the most obvious and easiest way to make it fail.
+</I>&gt;&gt;<i> &gt; Perhaps a version progress is being forced?
+</I>&gt;&gt;<i> &gt; Please double check.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Thu, Oct 8, 2009 at 2:46 AM, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt;&gt; Hello,
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; after augur sync(lag=0), upgrading libXext fail with:
+</I>&gt;&gt;<i> &gt;&gt; ...
+</I>&gt;&gt;<i> &gt;&gt; checking for XEXT... configure: error: Package requirements (xproto &gt;=
+</I>&gt;&gt;<i> &gt;&gt; 7.0.13 x11 &gt;= 1.1.99.1 xextproto &gt;= 7.0.99.2) were not met:
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Requested 'xextproto &gt;= 7.0.99.2' but version of XExtProto is 7.0.3
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; &#160;&gt; augur details xextproto
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; &#160; &#160;stable 7.0.3 7.0.2 X11R7.0-7.0.2
+</I>&gt;&gt;<i> &gt;&gt; &#160;unstable 7.1.1 7.1.0 7.0.99.3 7.0.99.1 7.0.5 7.0.4 7.0.3 7.0.2
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Has xexproto stable version greater than 7.0.3? Maybe 7.1.1, 7.1.0 in
+</I>&gt;&gt;<i> &gt;&gt; wrong line?
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; madar
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001338.html">[Sorcerer-admins] libXext compile fail
+</A></li>
+	<LI>Next message: <A HREF="001340.html">[Sorcerer-admins] libXext compile fail
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1339">[ date ]</a>
+              <a href="thread.html#1339">[ thread ]</a>
+              <a href="subject.html#1339">[ subject ]</a>
+              <a href="author.html#1339">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

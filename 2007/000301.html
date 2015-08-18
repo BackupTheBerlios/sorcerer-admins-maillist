@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Something you may want to be aware of...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Something%20you%20may%20want%20to%20be%20aware%20of...&In-Reply-To=%3C596b75860710052043w40d6cf2ava57d6b036f9c4896%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000300.html">
+   <LINK REL="Next"  HREF="000302.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Something you may want to be aware of...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Something%20you%20may%20want%20to%20be%20aware%20of...&In-Reply-To=%3C596b75860710052043w40d6cf2ava57d6b036f9c4896%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Something you may want to be aware of...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Oct  6 05:43:13 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000300.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+        <LI>Next message: <A HREF="000302.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#301">[ date ]</a>
+              <a href="thread.html#301">[ thread ]</a>
+              <a href="subject.html#301">[ subject ]</a>
+              <a href="author.html#301">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 10/5/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+
+&gt;<i> I have just found out that the archive cache is being regenerated completely
+</I>&gt;<i> and I don't understand why.
+</I>
+Ah, good, that works.
+I announced that change, or at least I thought that I did.
+
+
+&gt;<i> About two days ago, the full archive cache was
+</I>&gt;<i> created, now, after casting a single spell, the archives are produced again.
+</I>
+Yes.  That is correct.  That is how it works.
+
+
+&gt;<i> The problem is that there are only today's files in the archive cache, i.e.
+</I>&gt;<i> all of them have been just created. Where did the 'old' archives go? Were
+</I>&gt;<i> they removed by immune? And if yes why? The ARCHIVE_KEEP on the box is 20%.
+</I>
+Hmm.... the old archives?  Gone?
+That is strange.
+The old archives do not disappear.
+Perhaps they were merely renamed?
+
+
+&gt;<i> I don't mind to generate archives once but creating archives of all spells
+</I>&gt;<i> frequently would be excessive, especially for a laptop. Maybe I missed some
+</I>&gt;<i> configuration option.
+</I>
+As far as I know it does not continually regenerate.
+If it regenerated the archive cache after each spell cast,
+I surely would have realized it on my test box.
+First, the newly generated archives would have the extension of .tar,
+because they are not compressed when they are created.
+Second, I would realize the slowdown after each spell finishes casting.
+However, let's see.
+
+After checking the archive cache on two boxes I see that the archive files
+have different dates on them.
+On one box 2007-09-28 was a very busy day for archive creation, apparently.  :)
+
+Thanks for the report.
+However, I am not noticing anything out of the ordinary.
+
+The mass generation of archives has a single purpose,
+yes to save SAs the trouble of having to figure out how
+to transfer installed spells from the I/R to the fixed disk filesystem
+in the event that something important is dispelled, or corrupts,
+or a compilation break happens during make install of a spell
+that might not have an archive already created for it.
+
+When a box is 1st deployed there is no archive cache.
+If binutils, make, gcc, or other such spell were dispelled
+or during an update had some unexpected failure during make install
+then cast would be unable to restore them automatically from
+the archive cache if no archive existed for those spells.
+
+However, having the essential spells that should be in the archive cache
+cached in the archive cache as soon as possible virtually eliminates
+the possibility that a box should be without gcc installed, almost.
+A SA could still make it so and it might not be repaired until they
+issue cast gcc, simply because all requirements on gcc are implicit rather
+than explicit, but the SA can at least have the gcc from the archive
+cache restored without having to use the I/R.
+
+The archive cache has 1 major drawbacks now.
+It can not be trimmed.
+If you try to reclaim space from the archive cache
+then soon after a spell is cast there will be even less
+space available on that partition since missing archives
+will be created automatically.
+However, it can be allowed to overgrow by the ARCHIVE_KEEP percent value.
+That should help minimize the chance that an old yet suddenly important archive
+will have already been removed too soon.
+
+Fortunately, with excellent 7za compression the archive cache
+should occupy less than 1G on almost any box.
+It is a worthy use of disk space.
+
+If the problem persists that the archive cache is continually regenerated
+after any spell is cast, please double check that is the case and
+report it to me.
+As a temporary solution you could disable the archive feature.
+But I would have no idea why the archive cache would continually regenerate
+unless &quot;find&quot; or some other utility is malfunctioning?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000300.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+	<LI>Next message: <A HREF="000302.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#301">[ date ]</a>
+              <a href="thread.html#301">[ thread ]</a>
+              <a href="subject.html#301">[ subject ]</a>
+              <a href="author.html#301">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

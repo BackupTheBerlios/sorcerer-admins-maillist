@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] prior planning prevents PIDF performance...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20prior%20planning%20prevents%20PIDF%20performance...&In-Reply-To=%3CBANLkTi%3D1iLUG2QYMN%3DTHov%2BGM3oeGtDchg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002174.html">
+   <LINK REL="Next"  HREF="002176.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] prior planning prevents PIDF performance...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20prior%20planning%20prevents%20PIDF%20performance...&In-Reply-To=%3CBANLkTi%3D1iLUG2QYMN%3DTHov%2BGM3oeGtDchg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] prior planning prevents PIDF performance...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jun  2 10:57:35 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002174.html">[Sorcerer-admins] An important change involving ssh security...
+</A></li>
+        <LI>Next message: <A HREF="002176.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2175">[ date ]</a>
+              <a href="thread.html#2175">[ thread ]</a>
+              <a href="subject.html#2175">[ subject ]</a>
+              <a href="author.html#2175">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Most experienced SAs already know that
+process identification files can be problematic.
+Daemons, such as gdm, do not go background,
+do not separate from stdout and stderr,
+and do not write PID files.
+ntpd provides an incorrectly written PID file.
+udev writes a PID file, but writes only one
+number of it's many process IDs to the PID file.
+The existence of a PID file does not guarantee
+that that a daemon is running.
+Nor are the numbers within guaranteed
+to belong to the daemon's process.
+There is much that can go wrong with PID files.
+
+To PIDF or to not PIDF that was the question.
+Fortunately, I can stop wishing for PID files
+to work as good in reality as they do in theory.
+cgroup's lasso provides a near perfect tool for
+wrangling those ornery daemons into separate corrals.
+
+Once a process is assigned to a cgroup
+then all it's children will belong to the same cgroup.
+Consequently, the tasks file for a cgroup
+contains a complete list of PIDs.
+Processes that terminate are
+automatically removed from the tasks list.
+Effectively, the tasks list becomes
+a dynamically updating PID file
+that has no possibility of being incorrect.
+Is this not an awesome boon
+beyond what can be expected
+from meager static PID files?
+
+However, two drawbacks exist.
+First, no daemon uses cgroupping by default.
+A daemon must be started with an init-script.
+This is not a problem is it?
+Secondly, a daemon has no concept
+of what file system it runs upon
+and neither does cgroup.
+Whether a daemon runs on the &quot;keep&quot;
+or on the &quot;real root file system&quot;
+or on a &quot;chrooted root file system&quot;
+can not be determined using cgroup,
+because even the daemon would not know.
+The only advantage a PID file has over cgroup
+is that PID files are written to the file system
+upon which the daemon is running.
+
+I speculate that the only time when using a PID file
+is preferable to using cgroup is
+when the PID file is expected to be correct
+and when we want to know exactly
+what file system a daemon runs upon.
+Consequently, PID files are not entirely useless.
+I revised Sorcerer's init system
+according to this new expectation.
+
+init-scripts that fail to explicitly state
+a PID file for use when starting a daemon
+will track the daemon's PIDs with a cgroup tasks list.
+Consequently, daemons such as gdm,
+which used to be problematic to control with PID files,
+can now be completely killed off by simultaneously
+killing all the PIDs listed in gdm's cgroup's tasks list.
+
+gdm and kdm-v4 init-scripts were updated.
+Please complain about other init-scripts
+that should also be adjusted
+for using cgroup instead of PID files.
+Otherwise I only intend to adjust init-scripts
+after observing a problem with using PID files.
+
+cgroup is not mentioned in LSB documentation.
+Consequently, the LSB does not explicitly forbid
+an init system from using cgroup tasks list
+instead of or in addition to PID files.
+So as usually we are pushing out the envelope
+in order to gain a new magnitude of functionality.
+Although Sorcerer's init-scripts
+are not LSB compatible;
+Sorcerer's init-system remains LSB compatible
+for running LSB compatible init-scripts.
+Therefore, we continue enjoying forward looking innovations
+while not discarding backward compatibility.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002174.html">[Sorcerer-admins] An important change involving ssh security...
+</A></li>
+	<LI>Next message: <A HREF="002176.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2175">[ date ]</a>
+              <a href="thread.html#2175">[ thread ]</a>
+              <a href="subject.html#2175">[ subject ]</a>
+              <a href="author.html#2175">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

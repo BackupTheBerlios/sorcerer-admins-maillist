@@ -1,0 +1,335 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W5704975113BA90EF423C3DAEBC0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001764.html">
+   <LINK REL="Next"  HREF="001768.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W5704975113BA90EF423C3DAEBC0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Fri Jul 16 13:40:13 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001764.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001768.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1766">[ date ]</a>
+              <a href="thread.html#1766">[ thread ]</a>
+              <a href="subject.html#1766">[ subject ]</a>
+              <a href="author.html#1766">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello Kyle.
+
+ 
+
+That did not work.
+
+I think to big mess.
+
+So I'm going for a reinstall
+
+ 
+
+But now another problem arise.
+
+ 
+
+I have two partitions for sorcerer.
+
+ 
+
+/dev/hdc1 is swap of 2G.
+
+/dev/hdc2 is / is the rest of a 60G disk.
+
+ 
+
+So I boot from the dvd I burned.
+
+Started up the install programm.
+
+ 
+
+Goto adjusting fstab 
+
+And now I only see the swap partition.
+
+And when I choose for device , I get another screen but never can I say the installer must look for /dev/hdc2
+
+ 
+
+Can it be that I first must format it or do i something wrong here.
+
+ 
+
+Roelof
+
+
+ 
+&gt;<i> Date: Fri, 16 Jul 2010 01:17:34 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> On Fri, Jul 16, 2010 at 12:31 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I have a sad message.
+</I>&gt;<i> &gt; I can't boot my box anymore.
+</I>&gt;<i> &gt; I get a message that i can't find my disk anymore.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; And when I boot of the dvd and reboot I see suddenly a choice fast
+</I>&gt;<i> &gt; When booting is done I see this message :
+</I>&gt;<i> 
+</I>&gt;<i> Yeah,
+</I>&gt;<i> adjusting an init-script
+</I>&gt;<i> and introducing an error into it
+</I>&gt;<i> can cause the entire init-script to not run.
+</I>&gt;<i> I forget how dangerous those are
+</I>&gt;<i> and why I prefer SAs not to customize them.
+</I>&gt;<i> However, if the /etc/init.d/mount init-script
+</I>&gt;<i> is the only init-script that was modified
+</I>&gt;<i> then the problem is exactly in that init-script.
+</I>&gt;<i> It might seem really bad, but the problem is not dire.
+</I>&gt;<i> 
+</I>&gt;<i> The easiest fix is to boot from I/R.
+</I>&gt;<i> That contains a perfectly fine /etc/init.d/mount init-script.
+</I>&gt;<i> So when the rescue menu displays
+</I>&gt;<i> select the device that contains the real
+</I>&gt;<i> root filesystem and mount that.
+</I>&gt;<i> Then it should boot the box almost as normal.
+</I>&gt;<i> After that
+</I>&gt;<i> 
+</I>&gt;<i> # cast init-scripts
+</I>&gt;<i> 
+</I>&gt;<i> That will fix it.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Init : Entering runlevel 3
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hostname.unknown login : acpid starting up
+</I>&gt;<i> &gt; acpid: 3 rules loaded
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; acpid : waiting for events : event logging is off.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Then I have to press the enter key so I can log in properly.
+</I>&gt;<i> &gt; These messages I see everytime I boot of the cd of from my harddisk.
+</I>&gt;<i> 
+</I>&gt;<i> Booting into the initramfs is not terrible.
+</I>&gt;<i> Just log in and then mkdir /media/root
+</I>&gt;<i> and try mounting the real root filesystem.
+</I>&gt;<i> If it mounts, then bind virtual filesystems to it
+</I>&gt;<i> then chroot in, something like:
+</I>&gt;<i> 
+</I>&gt;<i> # mount /dev/sda3 /media/root
+</I>&gt;<i> # mount --bind /dev /media/root/dev
+</I>&gt;<i> # mount --bind /proc /media/root/proc
+</I>&gt;<i> # mount /dev/sda1 /media/root/boot
+</I>&gt;<i> # chroot /media/root
+</I>&gt;<i> 
+</I>&gt;<i> Once chrooted make fixes
+</I>&gt;<i> then afterward break the chroot
+</I>&gt;<i> and umount the filesystems.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; When I log in the directory .sorcery is empty.
+</I>&gt;<i> 
+</I>&gt;<i> /root/.sorcery/ is normally empty
+</I>&gt;<i> until the sorcery tools are run.
+</I>&gt;<i> A tmpfs filesystem is mounted on /root/.sorcery/
+</I>&gt;<i> That provides extremely fast access to the files
+</I>&gt;<i> and directories created on /root/.sorcery/
+</I>&gt;<i> 
+</I>&gt;<i> &gt; So I think a reinstall is needed here.
+</I>&gt;<i> 
+</I>&gt;<i> Yeah, during my first couple of years I bricked my shorts
+</I>&gt;<i> at any tiny problem and went for a re-install.
+</I>&gt;<i> But there is more to be learned by trying to fix it.
+</I>&gt;<i> If the problem occurred due to an edit of /etc/init.d/mount
+</I>&gt;<i> then that problem can be circumvented by booting using
+</I>&gt;<i> the I/R and selecting to mount the real root filesystem.
+</I>&gt;<i> Then,
+</I>&gt;<i> # cast init-scripts
+</I>&gt;<i> After that finishes and the loadavg drops down
+</I>&gt;<i> issue a shutdown command and that will cause
+</I>&gt;<i> the initramfs to be rebuilt and lilo to be reinstalled
+</I>&gt;<i> to the boot block or MBR.
+</I>&gt;<i> 
+</I>&gt;<i> With a bit of courage and tenacity the problem can be solved.
+</I>&gt;<i> Booting happens in these states:
+</I>&gt;<i> Power on.
+</I>&gt;<i> BIOS runs.
+</I>&gt;<i> BIOS loads and runs the master boot record
+</I>&gt;<i> of the primary fixed disk.
+</I>&gt;<i> Unless LILO is installed in the MBR
+</I>&gt;<i> then the MBR usually loads the boot sector
+</I>&gt;<i> of the first partition on the disk flagged as bootable.
+</I>&gt;<i> Then LILO, the linux loader runs.
+</I>&gt;<i> Lilo loads the initramfs and kernel into memory.
+</I>&gt;<i> Lilo passes execution to the kernel.
+</I>&gt;<i> The kernel decompresses and unpacks the initramfs
+</I>&gt;<i> onto the ramfs mounted as / which is also called rootfs.
+</I>&gt;<i> /init on the rootfs/initramfs is executed by the kernel.
+</I>&gt;<i> /init executes /etc/init.d/rcS
+</I>&gt;<i> This begins the sysinit stage.
+</I>&gt;<i> All the init-scripts in /etc/rc.d/rcS.d/ execute
+</I>&gt;<i> Eventually, a symbolic link in /etc/rc.d/rcS.d/ is executed
+</I>&gt;<i> which points to /etc/init.d/mount
+</I>&gt;<i> This mounts the root filesystem.
+</I>&gt;<i> But on your box /etc/init.d/mount contains an error
+</I>&gt;<i> So it probably does not run.
+</I>&gt;<i> Therefore, when sysinit ends the runlevel execution
+</I>&gt;<i> begins without being able to switch to the real root filesystem.
+</I>&gt;<i> 
+</I>&gt;<i> Now if you want to fix the error directly.
+</I>&gt;<i> At the lilo prompt type
+</I>&gt;<i> the kernel to load followed by
+</I>&gt;<i> initrd=/bin/bash
+</I>&gt;<i> 
+</I>&gt;<i> Instead of executing /init
+</I>&gt;<i> a BASH prompt will appear.
+</I>&gt;<i> Now execute:
+</I>&gt;<i> # nano /etc/init.d/mount
+</I>&gt;<i> 
+</I>&gt;<i> Fix the bugs introduced into the mount script.
+</I>&gt;<i> Save the file.
+</I>&gt;<i> Now at the BASH prompt type:
+</I>&gt;<i> exec /init
+</I>&gt;<i> 
+</I>&gt;<i> This passes control of process 1 to /init
+</I>&gt;<i> and booting continues as normal.
+</I>&gt;<i> If /etc/init.d/mount was successfully fixed
+</I>&gt;<i> then the box will be able to boot into the real root filesystem.
+</I>&gt;<i> However, that change will only work for that boot,
+</I>&gt;<i> unless you log in and then also edit
+</I>&gt;<i> /etc/init.d/mount again
+</I>&gt;<i> and make the same changes that fixed
+</I>&gt;<i> /etc/init.d/mount while on the initramfs.
+</I>&gt;<i> That permanently fixes the problem.
+</I>&gt;<i> 
+</I>&gt;<i> I like this second method, the direct
+</I>&gt;<i> hands-on approach fix.
+</I>&gt;<i> It is fun.
+</I>&gt;<i> 
+</I>&gt;<i> Next time one edits an init-script
+</I>&gt;<i> and provided that it accepts parameters
+</I>&gt;<i> such as start and stop
+</I>&gt;<i> then best to try to run it without parameters.
+</I>&gt;<i> That way it should print an error message
+</I>&gt;<i> if a BASH syntax error is introduced
+</I>&gt;<i> otherwise it will probably print a message about
+</I>&gt;<i> the parameters the init-script accepts.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; I find it the most wierd that I get a message that I can log in and the same
+</I>&gt;<i> &gt; time acpid is taken over the control.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Regards
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> 
+</I>&gt;<i> I realize it seems scary the first time
+</I>&gt;<i> one breaks a sysinit init-script,
+</I>&gt;<i> especially one as important as mount
+</I>&gt;<i> or when glibc ncurses or readline breaks.
+</I>&gt;<i> But short of a lilo error, or a corrupt initramfs,
+</I>&gt;<i> or a fixed disk turning to swiss on rye
+</I>&gt;<i> then most problems are easy to fix.
+</I>&gt;<i> 
+</I>&gt;<i> I apologize for the inconvenience.
+</I>&gt;<i> It is my fault, because I asked you
+</I>&gt;<i> to help debug the problem.
+</I>&gt;<i> I did not at all consider how incredibly dangerous
+</I>&gt;<i> my request to edit /etc/init.d/mount was.
+</I>&gt;<i> I was hoping it would be a positive experience
+</I>&gt;<i> that would help you get your feet wet right
+</I>&gt;<i> away with the Sorcerer experience and
+</I>&gt;<i> be able to help out.
+</I>&gt;<i> Since you spotted the problem I did not
+</I>&gt;<i> want to deprive you of the opportunity to track
+</I>&gt;<i> down the bug and squish it.
+</I>&gt;<i> Asking a new Sorcerer SAs to do something
+</I>&gt;<i> that derails their box and prevents gets
+</I>&gt;<i> top plaque on my personal wall of shame.
+</I>&gt;<i> I never did anything that brainless before.
+</I>&gt;<i> 
+</I>&gt;<i> Still depending upon you the outcome could be good.
+</I>&gt;<i> I would prefer that nobody develops an init-script phobia.
+</I>&gt;<i> Confronting and fixing that sort of problem creates confidence.
+</I>&gt;<i> Re-installing creates the stuff of nightmares.
+</I>&gt;<i> I am hoping you charge straight at the problem
+</I>&gt;<i> and fix it by booting.
+</I>&gt;<i> 
+</I>&gt;<i> # rdinit=/bin/bash
+</I>&gt;<i> # nano /etc/init.d/mount
+</I>&gt;<i> # exec /init
+</I>&gt;<i> 
+</I>&gt;<i> If the problem was introduced by bugging up the
+</I>&gt;<i> /etc/init.d/mount init-script
+</I>&gt;<i> then unbugging it will surely fix the problem.
+</I>&gt;<i> 
+</I>&gt;<i> I normally have this rule to not ask others to do
+</I>&gt;<i> what I would be unwilling to do for myself.
+</I>&gt;<i> And I stuck to the rule.
+</I>&gt;<i> And not even one drop of sweat would roll off my
+</I>&gt;<i> forehead if I bugged up /etc/init.d/mount on my test box.
+</I>&gt;<i> But I sure failed to consider how it might ruin your day.
+</I>&gt;<i> For that I am very sorry.
+</I>&gt;<i> 
+</I>&gt;<i> Wow hindsight is 20/20
+</I>&gt;<i> and I sure feel like an idiot.
+</I>&gt;<i> How could I fail to anticipate this.
+</I>&gt;<i> You can find me sitting in the corner wearing the dunce cap.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+Een netbook met Windows 7? Hier vind je alles dat je moet weten.
+<A HREF="http://www.windows.nl/netbook">http://www.windows.nl/netbook</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100716/d13845b7/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100716/d13845b7/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001764.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001768.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1766">[ date ]</a>
+              <a href="thread.html#1766">[ thread ]</a>
+              <a href="subject.html#1766">[ subject ]</a>
+              <a href="author.html#1766">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

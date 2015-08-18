@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20changes...&In-Reply-To=%3CCA%2BT4wDi9LK4moVymotEQQWo04-y191V63TB1_T1u9DVi7kXGeA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002395.html">
+   <LINK REL="Next"  HREF="002397.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20changes...&In-Reply-To=%3CCA%2BT4wDi9LK4moVymotEQQWo04-y191V63TB1_T1u9DVi7kXGeA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep 22 16:43:09 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002395.html">[Sorcerer-admins] directories reassigned
+</A></li>
+        <LI>Next message: <A HREF="002397.html">[Sorcerer-admins] subtle changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2396">[ date ]</a>
+              <a href="thread.html#2396">[ thread ]</a>
+              <a href="subject.html#2396">[ subject ]</a>
+              <a href="author.html#2396">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The &quot;familiar&quot; was a good idea, but a lackluster implementation.
+Therefore, &quot;familiar&quot; is already ancient history.
+
+With the next sorcery release these are the utilities:
+
+augur, command line tool;
+cast compilation and installation tool;
+dispel software removal tool;
+expedite for untarring and preparing ccache directories for use by cast;
+leech for downloading files;
+oust for copying installed files for a spell into /aux/old/;
+provision for untarring and preparing source directory for use by cast;
+sorcery menu driven configuration and source administration tool.
+
+Basically, the 3 new utilities are expedite, oust, and provision.
+As usual they are invoked automatically instead of by the SA.
+The reason for the additional programs and additional queues
+is to be able to more effectively task additional processes.
+Processes such as untarring a source and ccache tarballs
+are rate limited to 1 megabyte per second output if not immediately required.
+And when sources or ccaches are required for immediate use
+then those are provided at near rate unlimited speeds.
+
+ousting of software which copies installed files into /aux/old/
+is a useful because ELF libraries that are required by installed software
+are still available for use after that software was uninstalled.
+Ousting of an installed spell is only required before dispel reaps it's files.
+Therefore, if dispel does not explicitly invoke oust
+then oust will be ousting all spells in the cast queue
+at a meager rate of 1 megabyte per second.
+
+So in general almost all the tasks that previously ran at rate unlimited speeds
+now run at 1 megabyte per second when the outcome is not immediately required.
+The effect is that I/O is both lighter and spread over a longer duration
+while at the same time spells queued for casting gain an opportunity to begin
+compilation ASAP because their sources and ccache directories
+were probably already untarred in advance.
+
+Evert's response to these improvements was,
+&quot;gigabytes of directories are accumulating within /usr/src/sorcery/ccache/&quot;
+Consequently, I revised the functioning of sentinels-space
+to allow it to tar /usr/src/sorcery/ccache/$SPELL/ directories
+when the spell is not in the cast queue.
+Naturally, it does this tarring at a rate of 1 megabyte per second.
+The effect is that about every 900s the amount of directories in
+/usr/src/sorcery/ccache/
+are thinned and translated into tarballs in /var/cache/ccache/
+
+Additionally, immune-sentinel-space was granted special dispensation
+for running xz at 5% memory consumption
+on tarballs in /var/cache/{archive,ccache,sources}
+when available disk space in those directories is low.
+In the past sentinel-space was not allowed to run xz concurrently with cast.
+But now it can when disk space is low.
+
+In general the way to avoid depleting disk space
+is to allow the 5% reserve for root
+and make file systems sufficiently large.
+Do not do rebuilds while the root file system or
+/var/cache/ file systems are obviously low on space.
+Ousting of installed spells could deplete available space on /
+Please remain aware of this possibility
+when processing a cast queue that has many entries.
+
+The performance benefit of performing tasks before they are required
+mitigates I/O spiking but also requires more disk space.
+If 4 spells are casting
+then 4 additional source and cacche directories might already be prepared
+in /usr/src/sorcery/ to handle the spells that come next in the cast queue.
+
+In the very distant past boxes tended to be low on RAM.
+In the distant past boxes tended to have surplus of RAM.
+But now boxes tend to be a bit low on RAM again
+especially considering that an invocation of the linker
+might require a gigabyte of RAM while linking some programs.
+These changing tendencies influenced how Sorcerer changed.
+Sorcerer for example no longer uses a tmpfs on /usr/src/sorcery/
+And the preference for I/O is anticipatory rate limited output.
+
+Anyone who wants near ideal performance for sorcery might consider
+granting a non encrypted dedicated 40G ext3 to /usr/src/sorcery/
+Also the possibility of a non encrypted dedicated 4G ext4 /tmp/ could
+be beneficial.
+
+Lastly, a reminder.
+In a previous email I mentioned that failed casts
+have their sources moved into /usr/src/sorcery/failed/
+and downloading now happens in /var/cache/download/
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002395.html">[Sorcerer-admins] directories reassigned
+</A></li>
+	<LI>Next message: <A HREF="002397.html">[Sorcerer-admins] subtle changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2396">[ date ]</a>
+              <a href="thread.html#2396">[ thread ]</a>
+              <a href="subject.html#2396">[ subject ]</a>
+              <a href="author.html#2396">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

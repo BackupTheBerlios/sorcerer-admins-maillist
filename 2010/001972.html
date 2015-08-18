@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTintyE-wkKNRErYBNnNvs2vpATtZr-UPa%2BYwuCLo%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001991.html">
+   <LINK REL="Next"  HREF="001967.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTintyE-wkKNRErYBNnNvs2vpATtZr-UPa%2BYwuCLo%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 28 06:50:27 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001991.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+        <LI>Next message: <A HREF="001967.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1972">[ date ]</a>
+              <a href="thread.html#1972">[ thread ]</a>
+              <a href="subject.html#1972">[ subject ]</a>
+              <a href="author.html#1972">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I also agree that init-scripts that require variables
+should source those in from a separate modifiable configuration file.
+However, in the past there has been a lack of consensus about that.
+A few years ago SAs wanted everything in one file.
+Therefore, with maybe one or few exceptions each init-script
+has any or all of it's variables defined within the init-script.
+
+There are also init-scripts such as /etc/init.d/kbd
+that is modified by the spell before it is installed.
+That way the SA can enter the keymap to use
+during the configuration portion of the spell
+and have that automatically go into /etc/init.d/kbd
+
+If many of the init-scripts do not work as is
+then they should be revised to be better.
+I would not be opposed to seeing
+a separate directory such as
+/etc/init.d.conf/
+that contains files with the same name as an init-script
+yet have those files are automatically sourced in as a configuration
+file for the init-script.
+Therefore, files in /etc/init.d.conf/
+would be customizable configuration files.
+
+Assuming we go with an implementation such as above
+then what init-scripts require improvement please?
+/etc/init.d/httpd we can definitely do.
+Any more specific information about
+what variable or variables should be used where/when, please?
+
+
+On Tue, Oct 26, 2010 at 5:38 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Regarding init-scripts, i am asking how we are handling that point that
+</I>&gt;<i> almost all daemons has some sort of options required when they are started,
+</I>&gt;<i> i am right?
+</I>&gt;<i>
+</I>&gt;<i> It's almost always needed to modify eg. httpd (apache) startup parameters,
+</I>&gt;<i> eg. define -D&lt;variable&gt;, etc, SSL startup options, etc. How do we customize
+</I>&gt;<i> them if we cant modify init-scripts.
+</I>&gt;<i>
+</I>&gt;<i> If we cant touch init-scripts directly then IMHO we need some (other) way to
+</I>&gt;<i> easily and fast to modify those startup options. Usually Red Hat related has
+</I>&gt;<i> /etc/sysconfig/&lt;daemon&gt; (or similar) file and init-scripts reads options
+</I>&gt;<i> from there, this sort of system is used in other distros too.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001991.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+	<LI>Next message: <A HREF="001967.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1972">[ date ]</a>
+              <a href="thread.html#1972">[ thread ]</a>
+              <a href="subject.html#1972">[ subject ]</a>
+              <a href="author.html#1972">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

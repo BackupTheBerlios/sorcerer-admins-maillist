@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] BinUtils and gcc 4.3.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20BinUtils%20and%20gcc%204.3.2&In-Reply-To=%3C8596d02a0811251224y1de23020n255f1079cbfd4422%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000855.html">
+   <LINK REL="Next"  HREF="000857.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] BinUtils and gcc 4.3.2</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20BinUtils%20and%20gcc%204.3.2&In-Reply-To=%3C8596d02a0811251224y1de23020n255f1079cbfd4422%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] BinUtils and gcc 4.3.2">d3ck0r at gmail.com
+       </A><BR>
+    <I>Tue Nov 25 21:24:26 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000855.html">[Sorcerer-admins] rmdir //dev?
+</A></li>
+        <LI>Next message: <A HREF="000857.html">[Sorcerer-admins] Other Package failures...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#856">[ date ]</a>
+              <a href="thread.html#856">[ thread ]</a>
+              <a href="subject.html#856">[ subject ]</a>
+              <a href="author.html#856">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Was doing an update, and binutils was wanting to be recompiled.
+
+Binutils fails to compile in readelf.c line 10829 claiming 'index
+outside of array bounds'  the indexer is a variable, and really should
+be valid, but, the comparison is wrong...
+
+while( ( something[j] != '/' ) &amp;&amp; j &lt; 16 )
+  j++;
+
+something is a 16 byte character array, so that should be valid... the next line
+
+somethting[j] = 0;
+
+would be wrong if there was no slash, and the data ran to the end of
+the buffer... but, the compiler throws the error on the while()
+statement.  I did a augur retry binutils, after it had extracted, I
+modified the while to
+
+while( ( something[j] != '/' ) &amp;&amp; j &lt; 15 )
+  j++;
+
+and it compiles fine. (And is more correct)
+
+Also, I still have a box that startxfce4 has no mouse/keyboard, but
+startx has a mouse.... and xkbdata is having issues, because it's not
+finding...err... I gues it's claming to be newer, but no longer exists
+in the grimoire?  dispel xkbdata says it did, augur forget xkbdata
+seems to have worke.d.. what's the other thing I need to do to tell it
+xkbdata no longer exists?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000855.html">[Sorcerer-admins] rmdir //dev?
+</A></li>
+	<LI>Next message: <A HREF="000857.html">[Sorcerer-admins] Other Package failures...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#856">[ date ]</a>
+              <a href="thread.html#856">[ thread ]</a>
+              <a href="subject.html#856">[ subject ]</a>
+              <a href="author.html#856">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

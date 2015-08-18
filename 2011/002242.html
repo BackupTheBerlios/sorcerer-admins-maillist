@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please be aware that booting is receiving another revision.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCAMjKNNPOpL%2B-_T-AgKhSCp%3DPuvVM5orkfbQaZtbLPJGdgaRr4Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002239.html">
+   <LINK REL="Next"  HREF="002243.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please be aware that booting is receiving another revision.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCAMjKNNPOpL%2B-_T-AgKhSCp%3DPuvVM5orkfbQaZtbLPJGdgaRr4Q%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please be aware that booting is receiving another revision.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Aug  5 09:11:37 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002239.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+        <LI>Next message: <A HREF="002243.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2242">[ date ]</a>
+              <a href="thread.html#2242">[ thread ]</a>
+              <a href="subject.html#2242">[ subject ]</a>
+              <a href="author.html#2242">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>found the issue, an windows7 compatible mbr was installed...
+seems that extlinux is incompatible with that
+thanks and regards
+JLM
+
+On Thu, Aug 4, 2011 at 8:32 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> That is an excellent point.
+</I>&gt;<i> /boot is protected from reaping by dispel.
+</I>&gt;<i> I forgot about that.
+</I>&gt;<i> Thanks for the reminder.
+</I>&gt;<i> Sorry about the inconvenience.
+</I>&gt;<i>
+</I>&gt;<i> I fixed /etc/init.d/{initramfs,lilo,extlinux}
+</I>&gt;<i> so that they will also check for /sbin/extlinux
+</I>&gt;<i> I was using a check on /boot/extlinux/menu.c32
+</I>&gt;<i> to ensure that syslinux was properly installed.
+</I>&gt;<i> However, I did not consider the possibility
+</I>&gt;<i> of someone installing syslinux and then uninstalling it.
+</I>&gt;<i> That is because I transition boxes to extlinux rather than to lilo.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, the potential for supporting booting
+</I>&gt;<i> with either lilo or extlinux turned into an implementation
+</I>&gt;<i> that was slightly more complicated and problematic than intended.
+</I>&gt;<i> I avoided every potential for failure during transitioning,
+</I>&gt;<i> but not everyone achieved success on their first attempt.
+</I>&gt;<i> When Evert mentioned a problem due to lilo being installed in the MBR,
+</I>&gt;<i> I arrogantly expected that a stale or useless MBR
+</I>&gt;<i> could be the only problem.
+</I>&gt;<i>
+</I>&gt;<i> Fortunately, thanks to the excellent feedback
+</I>&gt;<i> each potential for a failed transition can be identified and fixed.
+</I>&gt;<i> I would be pleased if Sorcerer box is transitioned to extlinux.
+</I>&gt;<i> That way I can deprecate the lilo method and remove the code.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, I must wait at least 2 years before considering
+</I>&gt;<i> the possibility of removing support for lilo.
+</I>&gt;<i> Deprecating support for lilo breaks boxes
+</I>&gt;<i> that are unprepared for transitioning.
+</I>&gt;<i> And most pre-compiled binary based distros
+</I>&gt;<i> last no longer than 2 years before requiring re-deployment
+</I>&gt;<i> from new Install/Rescue disks.
+</I>&gt;<i>
+</I>&gt;<i> Since the switch away from lilo
+</I>&gt;<i> can not be an automatic change
+</I>&gt;<i> guaranteed to succeed on all boxes
+</I>&gt;<i> it differs from the Sorcerer's policy of seamless updates.
+</I>&gt;<i> Therefore, it might eventually become the next big break in Sorcerer.
+</I>&gt;<i> And by &quot;big brake&quot; I am suggesting an event of transition
+</I>&gt;<i> that is sufficiently significant as to require re-deployment of a box.
+</I>&gt;<i>
+</I>&gt;<i> The former big break in Sorcerer happened because
+</I>&gt;<i> I followed the recommendation from a SA
+</I>&gt;<i> who insisted that gettext libraries must be installed.
+</I>&gt;<i> This was dumb on my part because I knew glibc was sufficient
+</I>&gt;<i> and yet was allowing the modification of the gettext spell.
+</I>&gt;<i> However, the problem did not appear instantly.
+</I>&gt;<i>
+</I>&gt;<i> Eventually, glibc's headers and gettext's libraries became incompatible.
+</I>&gt;<i> I was able to remove gettext's libraries from all of my boxes.
+</I>&gt;<i> And I rolled new I/R without gettext libraries installed.
+</I>&gt;<i> Not every SA achieved success with repairing their box.
+</I>&gt;<i> Many SAs decided that re-installing with a newer I/R
+</I>&gt;<i> provided an easier and faster solution.
+</I>&gt;<i> And some SAs quit using Sorcerer.
+</I>&gt;<i> Some mistakes and/or transitions are painful like that.
+</I>&gt;<i>
+</I>&gt;<i> In general Sorcerer has a decent history of dodging the bullet.
+</I>&gt;<i> Every major distribution eventually releases
+</I>&gt;<i> install images that are useless for deployment,
+</I>&gt;<i> provides segfaulting ppp or segmentation faults in other essential
+</I>&gt;<i> utilities,
+</I>&gt;<i> and derails their package manager or update system.
+</I>&gt;<i> Fortunately, it happens infrequently with Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> sorcery derailed only a few times.
+</I>&gt;<i> gettext's library was a really big mistake.
+</I>&gt;<i> multipathd's initial inclusion on I/Rs created
+</I>&gt;<i> I/Rs that were useless for installation on SCSI boxes.
+</I>&gt;<i> And the presence of a floppy disk device caused
+</I>&gt;<i> a problem with using on old I/R.
+</I>&gt;<i> And most recently there was a version of bind approved
+</I>&gt;<i> in the grimoire which was did not work on deployed boxes.
+</I>&gt;<i> Being without a recursive DNS resolver
+</I>&gt;<i> is a considerable inconvenience.
+</I>&gt;<i> Yet, I suppose we can add the transition to extlinux
+</I>&gt;<i> as yet another Sorcerer blunder.
+</I>&gt;<i> With as smoothly as the distribution has been progressing
+</I>&gt;<i> perhaps we were just about due for another?
+</I>&gt;<i>
+</I>&gt;<i> I have not made up my mind about deprecating lilo support.
+</I>&gt;<i> Either way I  have 23 more months to consider it.
+</I>&gt;<i> However, SAs that invest time to learn extlinux
+</I>&gt;<i> and transition their boxes will gain several good benefits
+</I>&gt;<i> and have nothing to fear if lilo support is discontinued.
+</I>&gt;<i>
+</I>&gt;<i> If all the problems are identified and solved
+</I>&gt;<i> then both can be made to work.
+</I>&gt;<i> Sustaining lilo support is not without a potential benefit.
+</I>&gt;<i> If either extlinux or lilo becomes unsupported and unusable
+</I>&gt;<i> then the other option remains available.
+</I>&gt;<i>
+</I>&gt;<i> Sometimes original software authors discontinue a project
+</I>&gt;<i> and then nobody decides to host and maintain the software.
+</I>&gt;<i> Debian provides a massive collection of software that
+</I>&gt;<i> no longer hosted on external websites.
+</I>&gt;<i> Sorcerer software policy differs.
+</I>&gt;<i> When hosting and support stops for software
+</I>&gt;<i> then the spells are eventually removed from the grimoire.
+</I>&gt;<i>
+</I>&gt;<i> Sorry for the digression.
+</I>&gt;<i> My point is that having a supported bootloader is good.
+</I>&gt;<i> Having a choice is beneficial.
+</I>&gt;<i>
+</I>&gt;<i> I hope the transition goes more smoothly for others
+</I>&gt;<i> thanks to the fixes introduced from feedback.
+</I>&gt;<i> Supporting both bootloaders is an ideal situation.
+</I>&gt;<i> However, if problematic then the eventual discontinuation
+</I>&gt;<i> of support for lilo would be the lesser of two evils.
+</I>&gt;<i>
+</I>&gt;<i> Having everyone using the same bootloader makes
+</I>&gt;<i> troubleshooting easier.
+</I>&gt;<i> If we were all using different compilers
+</I>&gt;<i> or merely different versions of gcc
+</I>&gt;<i> then imagine the additional difficulty.
+</I>&gt;<i> Many reported compile problems would not be distribution wide.
+</I>&gt;<i>
+</I>&gt;<i> Obviously having choices is good.
+</I>&gt;<i> Yet the more each box diverges
+</I>&gt;<i> then the greater the probability of encountering
+</I>&gt;<i> specific non-distribution wide problems.
+</I>&gt;<i> Therefore support for 2 boot loaders is a mixed blessing.
+</I>&gt;<i> However, the benefits of using extlinux as compared to lilo
+</I>&gt;<i> seem too great to be ignored.
+</I>&gt;<i> Hopefully, we can iron out the wrinkles together.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Aug 4, 2011 at 10:27 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; I still haven't fixed the issue,
+</I>&gt;<i> &gt; however I found something interesting...
+</I>&gt;<i> &gt; In /etc/init.d/initramfs it checks for extlinux... however it only check
+</I>&gt;<i> for
+</I>&gt;<i> &gt; some config files that aren't striped from the system when syslinux is
+</I>&gt;<i> &gt; dispelled....
+</I>&gt;<i> &gt; I tried to go back to lilo since it was still thoses config files it
+</I>&gt;<i> detect
+</I>&gt;<i> &gt; extlinux but there is no more /sbin/extlinux.....
+</I>&gt;<i> &gt; I managed to run the system using the IR, is currently doing an augur
+</I>&gt;<i> &gt; sync... will see if the issure is still there after that
+</I>&gt;<i> &gt; thanks and regards
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Thu, Aug 4, 2011 at 10:28 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Thanks for researching it.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Maybe I coded something slightly backwards?
+</I>&gt;<i> &gt;&gt; If the left foot is walking left and the right foot is walking right
+</I>&gt;<i> &gt;&gt; then the system does the splits.
+</I>&gt;<i> &gt;&gt; My simple solution for now is to make conflicts.
+</I>&gt;<i> &gt;&gt; syslinux conflicts with lilo.
+</I>&gt;<i> &gt;&gt; lilo conflicts with syslinux.
+</I>&gt;<i> &gt;&gt; Therefore, installing one will dispel the other.
+</I>&gt;<i> &gt;&gt; Or I could have them both exclusively provide a boot loader.
+</I>&gt;<i> &gt;&gt; But I will go with conflicts for now.
+</I>&gt;<i> &gt;&gt; Sorry for the inconvenience caused
+</I>&gt;<i> &gt;&gt; by not having them conflict until now.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Wed, Aug 3, 2011 at 9:13 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt; &gt; When you have both lilo and syslinux installed,
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Lilo takes preference in booting, but the initramfs that get updated
+</I>&gt;<i> &gt;&gt; &gt; is from syslinux.
+</I>&gt;<i> &gt;&gt; &gt; I had a very confusing time because I had both syslinux  and lilo
+</I>&gt;<i> &gt;&gt; &gt; installed. ( I was doing some testing with syslinux )
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Now, I just run syslinux, and lilo has been stripped from this system.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; -Evert-
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110805/9675feff/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110805/9675feff/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002239.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+	<LI>Next message: <A HREF="002243.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2242">[ date ]</a>
+              <a href="thread.html#2242">[ thread ]</a>
+              <a href="subject.html#2242">[ subject ]</a>
+              <a href="author.html#2242">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

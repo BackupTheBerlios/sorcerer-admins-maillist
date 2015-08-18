@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MACHTYPE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MACHTYPE&In-Reply-To=%3Cj2l596b75861004161611zee2d9a14tda2b0d4676424ff%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001561.html">
+   <LINK REL="Next"  HREF="001563.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MACHTYPE</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MACHTYPE&In-Reply-To=%3Cj2l596b75861004161611zee2d9a14tda2b0d4676424ff%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MACHTYPE">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr 17 01:11:32 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001561.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+        <LI>Next message: <A HREF="001563.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1562">[ date ]</a>
+              <a href="thread.html#1562">[ thread ]</a>
+              <a href="subject.html#1562">[ subject ]</a>
+              <a href="author.html#1562">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A box that is installed from the x86_64 I/R
+and boots with that kernel will return
+x86_64 for
+$ uname -m
+
+A box installed from the Sorcerer IA32 I/R
+will return i586 or i686
+for uname -m depending upon the architecture.
+It however, will not return x86_64 for uname -m
+because the running kernel is not 64 bit capable.
+
+If uname -m does not return x86_64
+and the box has an x86_64 CPU
+and you want the additional headaches
+additional RAM consumption and
+slight speed increases of x86_64
+then the correct solution is to install
+Sorcerer from the x86_64 I/R and not the IA32 I/R
+
+If a person already knows to migrate from
+IA32 to x86_64 without asking questions
+then go ahead and do it.
+Most SAs would not be able to accomplish the task.
+As for me I would lack the time to accomplish it.
+Since I already created a port of Sorcerer to x86_64,
+thanks to help from Jan Merka,
+I would simply install from the x86_64 I/R.
+
+Do not expect that that the BASH spell can be edited
+so that it sets MACHTYPE to x86_64-pc-linux-gnu
+and that automatically makes it an x86_64 installation.
+No that just causes additional problems in the grimoire
+for spells that use $MACHTYPE as a fast way to
+detect if a box is IA32 or x86_64 in order to properly
+adjust a spell.
+
+Setting MACHTYPE incorrectly creates problems.
+The bash spells is doing the correct thing
+by the method of how it sets MACHTYPE.
+The only reason that it sets MACHTYPE in bash
+instead of using what is already set
+is because the MACHTYPE for IA32 installs
+begins as i586-pc-linux-gnu
+After bash casts it changes to i686-pc-linux-gnu
+Does that change anything about the way code is
+optimized for the installed CPU?
+In almost all situations it changes nothing
+except for very few sources
+that disregard CFLAGS and CXXFLAGS
+and attempt to set their own based upon $MACHTYPE
+
+Please do not mess with MACHTYPE
+:<i>)
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001561.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+	<LI>Next message: <A HREF="001563.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1562">[ date ]</a>
+              <a href="thread.html#1562">[ thread ]</a>
+              <a href="subject.html#1562">[ subject ]</a>
+              <a href="author.html#1562">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

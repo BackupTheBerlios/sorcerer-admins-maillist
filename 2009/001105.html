@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C4A05F219.6020901%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001100.html">
+   <LINK REL="Next"  HREF="001111.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C4A05F219.6020901%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sat May  9 23:14:01 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001100.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001111.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1105">[ date ]</a>
+              <a href="thread.html#1105">[ thread ]</a>
+              <a href="subject.html#1105">[ subject ]</a>
+              <a href="author.html#1105">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>you have another side that you have to take into account when making 
+tests.... the lazyness of the ld.so.... ld.so can resolve symbols at 
+runtime (lazy) or at loadtime (now), it can be set by an env variable if 
+i'm correct
+lazy resolv is usefull if you won't likely have to resolv lot of 
+fuctions, for example :
+if (choice ==1)
+{
+     functionA();
+     functionB();
+}
+else
+{
+      functionC();
+      functionD();
+}
+if we are in the case choice ==1 then resolving C and D is only a waste 
+of time..... that's why lazy is the default, however lazy resolving has 
+a lot overhead on runtime....
+I never made bench with thoses 2 resolv.... maybe it's a good idea
+JLM
+
+Kyle Sallee wrote:
+&gt;&gt;<i> so I prefer by far using dynamic linked library, it don't waste disk
+</I>&gt;&gt;<i> size, when a library upgrade you don't have to recast everything (yes
+</I>&gt;&gt;<i> consider this : if you statically linked with a lib that have an issue,
+</I>&gt;&gt;<i> you don't have simply to cast the lib again to fix the issue, you have
+</I>&gt;&gt;<i> to cast all spell that have been statically linked with those)
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> For the above reason I have never wanted Sorcerer to
+</I>&gt;<i> be an entirely statically linked distribution.
+</I>&gt;<i> However, if security issues in uClibc are infrequent
+</I>&gt;<i> then the probability of a complete rebuild is unlikely,
+</I>&gt;<i> if uClibc was provided only for static linking.
+</I>&gt;<i> However, if Sorcerer did transition to uClibc
+</I>&gt;<i> then there would be both static and ELF linking to libc.so.0
+</I>&gt;<i>
+</I>&gt;<i> Obviously the gain for static linking is most apparent
+</I>&gt;<i> on executables that are loaded frequently.
+</I>&gt;<i> And by frequently, I mean several times a second.
+</I>&gt;<i> static linking firefox, for example, would grant no benefit
+</I>&gt;<i> that could be easily recognized.
+</I>&gt;<i> Therefore, for user apps such firefox and desktop environments
+</I>&gt;<i> static linking wastes while providing a negligible speed increase.
+</I>&gt;<i> Jan provide a good insight about SDD drives.
+</I>&gt;<i> With no seek time they read multiple files nearly as fast as single files.
+</I>&gt;<i> Statically linked executables would still start faster on SDD drives,
+</I>&gt;<i> but the initial reading of files from ?disk? to RAM would be no faster.
+</I>&gt;<i>
+</I>&gt;<i> When I did my speed test with a hello.c program.
+</I>&gt;<i> Naturally, those 1000 consecutive executions of the program
+</I>&gt;<i> were done from cached RAM and not from disk.
+</I>&gt;<i> statically linked executables start faster not for having to
+</I>&gt;<i> read less files on disk, but because there is less runtime linking.
+</I>&gt;<i> Dynamically linked ELFs are like a puzzle that must be assembled
+</I>&gt;<i> everytime one wants to look at the picture.
+</I>&gt;<i> Statically linked executables are like a puzzle already glued together.
+</I>&gt;<i> Since runtime linking happens quickly on modern computers,
+</I>&gt;<i> the time required for runtime linking is not usually considered.
+</I>&gt;<i> But it exists.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I would be more happy to see the .a removed from my disk... their
+</I>&gt;&gt;<i> presence not only waste disk space but also drop performance since a
+</I>&gt;&gt;<i> directory with a large set of object is slower to access.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> I agree.
+</I>&gt;<i> About half a year ago I went through the grimoire making more
+</I>&gt;<i> libraries install only shared versions and thus eliminating the
+</I>&gt;<i> presence of the static .a libraries on updates.
+</I>&gt;<i> Yet even for the benefit of RAM conversation and reduce disk consumption
+</I>&gt;<i> there are times when using static linking provides better performance.
+</I>&gt;<i>
+</I>&gt;<i> However, when using only glibc
+</I>&gt;<i> I waffled about the benefit of static linking.
+</I>&gt;<i> static linking with glibc creates executables that are huge!
+</I>&gt;<i> I want to infer from that that glibc is not intended for static linking.
+</I>&gt;<i> However uClibc is intended for static linking.
+</I>&gt;<i> When it comes to sinking a screw
+</I>&gt;<i> a screw driver is better tool than a claw hammer.
+</I>&gt;<i> Likewise, uClibc is a better tool for static linking.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090509/e5fe1c64/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090509/e5fe1c64/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001100.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001111.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1105">[ date ]</a>
+              <a href="thread.html#1105">[ thread ]</a>
+              <a href="subject.html#1105">[ subject ]</a>
+              <a href="author.html#1105">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

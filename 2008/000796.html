@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] To dash or to bash?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20dash%20or%20to%20bash%3F&In-Reply-To=%3C596b75860810221940k12aebf10s2fa18829a336828b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000795.html">
+   <LINK REL="Next"  HREF="000797.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] To dash or to bash?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20dash%20or%20to%20bash%3F&In-Reply-To=%3C596b75860810221940k12aebf10s2fa18829a336828b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] To dash or to bash?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 23 04:40:24 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000795.html">[Sorcerer-admins] Should have mentioned it sooner...
+</A></li>
+        <LI>Next message: <A HREF="000797.html">[Sorcerer-admins] Faster booting?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#796">[ date ]</a>
+              <a href="thread.html#796">[ thread ]</a>
+              <a href="subject.html#796">[ subject ]</a>
+              <a href="author.html#796">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Someone on the libtool email list mentioned that dash is a fast shell.
+I compiled and compared multiple executions of a short quick script using
+dynamically linked bash and statically linked dash.
+dash was 6x faster for a meager cost of 600K space.
+Not a bad choice for booting boxes that run many tiny init-scripts.
+Therefore, I rewrote the init-scripts that execute during sysinit to use dash.
+
+Init-scripts can be written either using dash or bash.
+I am not forcing the use of just one or the other.
+
+init-scripts that use bashism should begin with
+#!/bin/bash
+
+and init-scripts using merely dash syntax should begin with
+#!/bin/dash
+
+However, beware that dash does not support the exact same syntax as bash.
+Also paths of code that do not execute
+may contain bugs that dash does not report.
+
+Because of the wonderfulness of bash
+the sorcery tools will not be converted to dash.
+Doing so would cause a loss of speed and performance as some
+functionality that can be performed internally in bash must be delegated
+to external helper programs such as sed when scripts are re-written for dash.
+
+The modifications, bug fixes, and optimizations related to expediting
+the execution of sysinit have been thoroughly tested multiple times on
+a box that boots using initramfs.
+It should work also on traditional boxes that boot without initramfs.
+However, that has not been tested.
+
+When boxes update and receive the new init-fuctions, initramfs,
+init-scripts spells, etc...
+please also check that dash compiles and installs properly.
+Not having /bin/dash would halt a box during boot
+and require a skilled SA booting with kernel parameters:
+
+rdinit=/bin/bash
+
+or
+
+init=/bin/bash
+
+to sedit all the /bin/dash to /bin/bash in /etc/init.d/* such as:
+
+# sed -i 's:/bin/dash:/bin/bash:' $( find /etc/init.d -maxdepth 1 -type f )
+
+Then execute; if booting with initramfs
+
+# exec /init
+
+or booting traditionally
+
+# exec /sbin/init
+
+Since nobody wants to take the pain,
+be certain that dash installs properly.
+If not then sedit the scripts in
+/etc/init.d/ before issuing the shutdown -r reboot
+
+Now for the simple explanation.
+dash scripts are compatible with bash.
+bash scripts are not necessarily compatible with dash.
+Therefore, reverting to bash is possible and not problematic for
+init-script execution.
+
+Please report problems.
+A hard copy of the above instructions would
+be useful for fixing a box that derailed during sysinit.
+
+Since dash is also used by ubuntu for running init-scripts
+I expect that dash will probably be maintained and bug-fixed
+at least until a better method or shell becomes prevalent.
+However, since bash is dash compatible
+should dash become unavailable
+then boxes can be switched back to /bin/dash
+for execution of init-scripts.
+Therefore, this change gains both a bit of speed
+while not denying an expeditious retreat should
+the change become woeful.
+
+Boons: faster; easy to undo
+Banes: loss of convenient familiar bashism syntax; bugs may be more
+difficult to spot
+
+The change balances about 50/50.
+Was the effort to make it happen worth the benefit?
+Probably not.
+However, as more init-scripts are added
+the speed benefit increases.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000795.html">[Sorcerer-admins] Should have mentioned it sooner...
+</A></li>
+	<LI>Next message: <A HREF="000797.html">[Sorcerer-admins] Faster booting?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#796">[ date ]</a>
+              <a href="thread.html#796">[ thread ]</a>
+              <a href="subject.html#796">[ subject ]</a>
+              <a href="author.html#796">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

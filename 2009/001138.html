@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udevsettle%20hangs%20indefinately%20on%202.6.29.1&In-Reply-To=%3C596b75860905110821k44da2e43v874b4e5329e5360a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001133.html">
+   <LINK REL="Next"  HREF="001140.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udevsettle%20hangs%20indefinately%20on%202.6.29.1&In-Reply-To=%3C596b75860905110821k44da2e43v874b4e5329e5360a%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon May 11 17:21:34 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001133.html">[Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1
+</A></li>
+        <LI>Next message: <A HREF="001140.html">[Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1138">[ date ]</a>
+              <a href="thread.html#1138">[ thread ]</a>
+              <a href="subject.html#1138">[ subject ]</a>
+              <a href="author.html#1138">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The default value is 180 seconds.
+However, it requires no more than a few seconds in qemu.
+Waiting for it is probably best.
+But if you prefer
+then a sleep statement can be used instead.
+However, if important devices such as disks
+are not yet detected, drivers loaded, and have device nodes
+then premature continuation of booting will cause the proper
+/ to not be mounted.
+Instead it may end up at a menu or with initramfs mounted as /
+
+Instead of using udevadm settle
+there is udevadm monitor
+If running the init-scripts one at a time
+then after starting udevadm trigger
+udevadm monitor can be started to view what is happening.
+The manual page for udevadm has written:
+
+   udevadm monitor [options]
+       Listens to the kernel uevents and events sent out by a udev
+rule and prints the
+       devpath of the event to the console. It can be used to analyze
+the event timing, by
+       comparing the timestamps of the kernel uevent and the udev event.
+
+       --environment
+           Print the complete environment for all events. Can be used
+to compare the
+           kernel supplied and the udev added environment values.
+
+       --kernel
+           Print the kernel uevents.
+
+       --udev
+           Print the udev event after the rule processing.
+
+       --help
+           Print help text.
+
+
+
+Because having udev complete cold plug device detect and provisioning
+is important to successful booting I should not circumvent udevadm settle.
+However, if one were to detect what device emulation in vmware is
+causing udevadm settle to delay for so long
+then it might be possible to start vmware without that device emulation
+and thus avoid the 180 second udevadm settle delay during boot.
+
+Therefore, this problem is best solved by either the SA,
+vmware team, or udev team.
+
+Lastly udevadm settle also support an optional timeout value.
+However, I do not know if coldplug events are handled parallel
+or serial by udev.  Having udevadm settle exit prematurely
+may cause unhandled events and thus the disks may not yet be ready.
+Then again, maybe they are ready and booting could continue.
+ I merely go with the 180 second default,
+because that is what udev is programmed with
+and is probably reasonably safe.
+
+If it really does hang (forever) as in longer than 5 minutes
+then please report that on the udev email list.
+
+Thanks for the report.
+
+
+On Sun, May 10, 2009 at 8:37 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> udevsettle hangs indefinately on 2.6.29.1 (vmware box)
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001133.html">[Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1
+</A></li>
+	<LI>Next message: <A HREF="001140.html">[Sorcerer-admins] udevsettle hangs indefinately on 2.6.29.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1138">[ date ]</a>
+              <a href="thread.html#1138">[ thread ]</a>
+              <a href="subject.html#1138">[ subject ]</a>
+              <a href="author.html#1138">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

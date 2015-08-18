@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] relatime...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20relatime...&In-Reply-To=%3CCA%2BT4wDjnfiF3PGVFaMUr5aJwjffZ2eFB7cNyt_RKfb6h0Yg45A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002275.html">
+   <LINK REL="Next"  HREF="002277.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] relatime...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20relatime...&In-Reply-To=%3CCA%2BT4wDjnfiF3PGVFaMUr5aJwjffZ2eFB7cNyt_RKfb6h0Yg45A%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] relatime...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 13 13:23:10 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002275.html">[Sorcerer-admins] immune-boot-blaze blazes better than ever.
+</A></li>
+        <LI>Next message: <A HREF="002277.html">[Sorcerer-admins] another benefit of tomoyo...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2276">[ date ]</a>
+              <a href="thread.html#2276">[ thread ]</a>
+              <a href="subject.html#2276">[ subject ]</a>
+              <a href="author.html#2276">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I invariably used noatime for over a decade.
+Perhaps like many SAs I was ignorant of relatime,
+failed to notice when the linux default switched to relatime,
+and was bewildered why file atimes were not updating as I expected.
+relatime is a compromise between atimes and noatimes.
+It reduces the amount of atime writes
+by updating atime sloppily.
+
+Consequently, immune-boot-blaze will temporarily mount the monitored
+file systems with strictatime to restore traditional behavior.
+After the observation phase duration elapses
+then the file systems are remounted with relatime.
+This enables immune-boot-blaze to properly locate
+the files that were accessed during the first 15 minutes of uptime.
+
+I am providing this additional information
+to clarify that no special modification of /etc/fstab
+is required in order to receive the benefit of immune-boot-blaze.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002275.html">[Sorcerer-admins] immune-boot-blaze blazes better than ever.
+</A></li>
+	<LI>Next message: <A HREF="002277.html">[Sorcerer-admins] another benefit of tomoyo...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2276">[ date ]</a>
+              <a href="thread.html#2276">[ thread ]</a>
+              <a href="subject.html#2276">[ subject ]</a>
+              <a href="author.html#2276">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

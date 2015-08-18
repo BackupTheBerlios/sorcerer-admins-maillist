@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20problem%20with%20sorcerer%20-%20might%20be%20unstable%0A%09libraries&In-Reply-To=%3C596b75860704111738x5673fb31p8c3cbba4cce45d70%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000086.html">
+   <LINK REL="Next"  HREF="000087.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] problem with sorcerer - might be unstable	libraries</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20problem%20with%20sorcerer%20-%20might%20be%20unstable%0A%09libraries&In-Reply-To=%3C596b75860704111738x5673fb31p8c3cbba4cce45d70%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] problem with sorcerer - might be unstable	libraries">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Apr 12 02:38:41 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000086.html">[Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+</A></li>
+        <LI>Next message: <A HREF="000087.html">[Sorcerer-admins] NVIDIA-Linux-x86 working with Xgl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 4/11/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> I run IBM Lotus Domino servers under Sorcerer. I know its not officially
+</I>&gt;<i> supported by IBM, but i havent got previously no problems running Domino
+</I>&gt;<i> under it. Problem is that when irebooted servers now my Dominos always
+</I>&gt;<i> crashes after it launches its tasks.
+</I>&gt;<i>
+</I>&gt;<i> I dont idea why it crashes as its own crashlogs does not make any sense (to
+</I>&gt;<i> me), nor its error information what it puts to console. its always prints
+</I>&gt;<i> out something like this:
+</I>&gt;<i> Stack base = 0xb1f64590, Stack size = 5156 bytes
+</I>&gt;<i> Fatal Error signal = 0x0000000b PID/TID = 2532/-1309258832
+</I>&gt;<i>
+</I>&gt;<i> I think it could be glibc issue... maybe... or some other library issue...
+</I>&gt;<i> tried even different kernels, no help there...
+</I>&gt;<i>
+</I>&gt;<i> I tried to re-compile glibc, but it does not compile because binutils 2.17
+</I>&gt;<i> seems to include some sort of bug, so you cant re-compile glibc if you got
+</I>&gt;<i> binutils 2.17. Hah.
+</I>
+# grep &quot;binutils\|glibc&quot; /etc/sorcery/log/snap/gcc
+binutils        2.17
+glibc   2.3.6
+
+Or maybe it does compile with 2.17?
+
+
+&gt;<i> Okay, then i tried to re-compile binutils 2.15, but it does not compile with
+</I>&gt;<i> gcc v4.x.x it seems, Hah.
+</I>&gt;<i> So i modified spell to use gcc-v3.4, it did compile binutils 2.15, then i
+</I>&gt;<i> re-compiled glibc 2.3.5, it uses also gcc-v.3.4. Now it compiled ok.
+</I>
+Strange, but possible.
+
+
+&gt;<i> Rebooted but my problem still stays... meaning always my Domino crashes. I
+</I>&gt;<i> suspect there are some sort of library problems with sorcerer as i got 2
+</I>&gt;<i> machines which got this problem, they are different models, etc... I have no
+</I>&gt;<i> idea why it crashes...
+</I>
+It may not be glibc related.
+If it was me, I would find every file from domino.
+Check if it is a dynamically linked ELF.
+Determine all it's dynamic link libraries from an objdump.
+Determine if it uses system installed versions of those libraries
+or whether it uses the libraries that it provides.
+Then, check them one by one against snapshot logs to see
+what updated when might be causing the break.
+Afterall, it could be any of 80 or more installed
+software programs updated in the last 30 days.
+If you can find out when it last started without error, from a log file.
+And you find a snapshot log in /etc/sorcery/log/snap or /etc/sorcery/log/snapy
+that is from just a moment before the server was started
+then you will know exactly what software was installed when it worked correctly.
+
+Then you can do something like:
+
+# cat $OLD_SNAP $CURRENT_SNAP | sort | uniq -u
+
+That will display any software that has since been uninstalled,
+installed, or updated.
+It may provide good clues.  If the problem is caused by a software update
+then the culprit will definitely be on the list.
+However, glibc might not be on that list.
+glibc has not updated in a long time.
+We have been using glibc 2.3.6 since probably around Nov 04, 2005
+since that is the date of the tarball on the gnu ftp server.
+
+I do not recommend using any of the experimental releases of glibc which are:
+versions 2.4 and 2.5
+
+
+&gt;<i> Any ideas, OS seems to be stable otherwise... allthough Domino is only big
+</I>&gt;<i> problem i run inside those machines, but otherwise shell &amp; utils seems to
+</I>&gt;<i> work flawlessly - except my Dominos...
+</I>
+I also would check for a library problem first.
+However, I would not suspect or expect it to be glibc.
+There are some very old pre-compiled commercial software
+that for some reason or another require an ancient version of glibc.
+Software from loki-games comes to mind.
+Gentoo has a FAQ on how to get that stuff to run, if at all possible.
+However, chances are you would not be using software that old
+for a database server, simply because by now it would have so
+many known bugs and vulnerabilities in it, but maybe not if it is
+closed source?
+Even so it would be strange if it was that old.
+
+For most of the commercial software you are running your version of
+glibc is ideal.
+If the glibc was too old then more recent software could not run
+because of missing symbols.
+Likewise since your box has all the installed software compiled with
+some version of glibc 2.3.x you could not downgrade glibc 2.2.x and
+expect programs to run.
+
+However, many binary based distros do not have as current support
+libraries as Sorcerer has, such as libcurl and openssl.
+Consequently, commercial software intended to run on binary based distros
+which are dynamically linked were probably compiled with and linked with
+older versions of those libraries.  Usually that is not a problem if
+the commercial
+software is statically linked with those libraries or provides those
+libraries to
+itself privately within it's installation.  However, a problem might
+occur when it
+uses a system wide installed library instead of a privately installed one,
+if that can occur which probably does not.
+
+Optimal running of commercial software requires providing the libraries that
+it was intended to run with, however that does not require that those versions
+of those libraries be system installed on a Sorcerer box.
+You can install, for example, some libraries in /opt/lib
+which is not normally in /etc/ld.so.conf nor should it be.
+Then before you run the commercial software do
+export LD_LIBRARY_PATH=&quot;/opt/lib&quot;
+Then, when the runtime linker tries to load libraries to run the
+commercial software
+it will first use the libraries in /opt/lib before loading any of the
+libraries with the
+same names that can be found in /usr/local/lib and /usr/lib
+/usr/lib64, .... and so forth.
+
+Here is something that will help make better sense:
+
+Commercial software X is compiled and dynamically linked to glibc version 2.1.2
+Commercial software X runs on boxes that have the following versions
+of glibc installed:
+2.1.2
+2.1.3
+2.2.1
+2.2.2
+2.2.3
+2.2.4
+2.2.5
+2.3
+2.3.1
+2.3.2
+2.3.3
+2.3.4
+2.3.5
+2.3.6
+
+That is a wide range of distributions of various modern and decrepit ages that
+software X can run on.
+
+Compare that to commercial software Y that is linked with glibc 2.3
+Commercial software Y runs on boxes with installed versions of glibc:
+2.3.0
+2.3.1
+2.3.2
+2.3.3
+2.3.4
+2.3.5
+2.3.6
+
+That is far less than software X.
+
+That is why when it comes to pre-compiled binary commercial software it is often
+linked with some of the oldest glibc and support libraries available anywhere.
+The expectation is that by doing so it will run on a greater amount of distros
+those that are old and those that are new.
+However, we have seen that even when it comes to glibc that somewhere there
+exists a great divide and that software that is sufficiently old enough can not
+be run on modern boxes without a few glitches or aspects that a SA must fix
+by providing some of those ancient libraries.
+
+glibc is supposed to be backward compatible all the way back to the
+first release.
+Oddly enough it is not.  This may be in part due to changes with the
+linux kernel?
+But glibc provides sufficient backward compatibility that we can
+update our boxes
+as infrequently as yearly and still be able to run software compiled last year
+with the glibc compiled yesterday.
+Therefore, we experience very few library problems on Sorcerer boxes since
+all the software tends to level up to current at about the same time.
+Also the sorcery tools automatically handle recompilation and installation
+of software when required to match a library update.
+It is a nice convenience.
+But it does not work for pre-compiled commercial software.
+That is why extra care must be taken to provide pre-compiled
+software with the exact libraries that were used when it compiled
+in order to achieve optimal performance.
+And as I mentioned above, this does not require
+down-compiling a Sorcerer box to a state of years past.
+If you do not want to compile the old libraries yourself,
+and easy way to get them is to fetch them from Debian's ftp server.
+Then, pry the libraries out of the debian package.
+When it comes to old libraries Debian has them.
+
+Hope you can spot the problem.
+Do keep in mind that it may not be a library problem.
+But it might.  It might also invoke some installed software/program
+on the box that has changed it's parameters, for example,
+and that might cause a crash.
+The crash may be due to an update from Lotus Domino?
+There might be a bug in the database that your loadout has triggered?
+Either of the databases may be compromised or sabotaged?
+Either of the boxes may be compromised or sabotaged?
+It might not like bash 3.2.010, I had some problems making
+sorcery compatible with the newer bash.
+But if I had no clues to go on then I would start with a snapshot log comparison
+comparing the last time the server started correctly with a snapshot from
+the first time the server did not start correctly.
+
+If you expect that it may become a problem
+then you might want to create a wrapper for starting the server
+that automatically makes a snapshot of installed software on the box
+and deposits it in a directory so that you have those snapshots for
+comparison instead of having to select snapshots from approximately
+the same times from the directories in /etc/sorcery/log/
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000086.html">[Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+</A></li>
+	<LI>Next message: <A HREF="000087.html">[Sorcerer-admins] NVIDIA-Linux-x86 working with Xgl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

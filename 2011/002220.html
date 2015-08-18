@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Some augur commands that used to be but not	anymore
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Some%20augur%20commands%20that%20used%20to%20be%20but%20not%0A%09anymore&In-Reply-To=%3CCA%2BT4wDiKNZQjpMqqDSTAn0p8i6Le_6jKt6yVFKK%2BYRMrR8%2BvAA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002219.html">
+   <LINK REL="Next"  HREF="002221.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Some augur commands that used to be but not	anymore</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Some%20augur%20commands%20that%20used%20to%20be%20but%20not%0A%09anymore&In-Reply-To=%3CCA%2BT4wDiKNZQjpMqqDSTAn0p8i6Le_6jKt6yVFKK%2BYRMrR8%2BvAA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Some augur commands that used to be but not	anymore">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 29 18:56:07 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002219.html">[Sorcerer-admins] Some augur commands that used to be but not	anymore
+</A></li>
+        <LI>Next message: <A HREF="002221.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2220">[ date ]</a>
+              <a href="thread.html#2220">[ thread ]</a>
+              <a href="subject.html#2220">[ subject ]</a>
+              <a href="author.html#2220">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jul 29, 2011 at 1:35 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Some dummy questions.
+</I>&gt;<i>
+</I>&gt;<i> There used to be:
+</I>&gt;<i> augur compile &lt;spell&gt; which showed compile log for &lt;spell&gt;
+</I>
+# augur log compile $SPELL
+
+&gt;<i> augur install &lt;spell&gt;, this showed all files that &lt;spell&gt; installed
+</I>
+# augur log install $SPELL
+
+&gt;<i> also there was command which showed what version of &lt;spell&gt; you did have
+</I>&gt;<i> installed, i did not found that too.
+</I>
+# augur log version $SPELL
+
+
+&quot;# augur help log
+
+Provide specified log for spell
+
+Examples:
+
+# augur  log  compile   atk
+# augur  log  download  bash
+# augur  log  elf       curl
+# augur  log  estimate  gawk
+# augur  log  event     gedit
+# augur  log  install   gtk+
+# augur  log  md5sum    firefox
+# augur  log  version   ncurses&quot;
+
+
+# augur log event
+
+is one of the newer additions to the &quot;log&quot; command.
+It provides the content of the most recent event log for a spell.
+Therefore,
+
+# augur log event firefox
+
+will give the reason for why firefox autofailed if firefox autofailed.
+
+
+&gt;<i> I used those often but now their seemed to be missing, how they are
+</I>&gt;<i> implemented today?
+</I>
+# augur | grep -vx '' | wc -l
+86
+
+86 lines provide information concerning
+
+# find /usr/libexec/sorcery/augur.d/ -type f | wc -l
+62
+
+62 augur commands.
+However, almost all augur commands have
+verbose help available by typing
+
+# augur help $COMMAND
+
+
+&gt;<i> BTW: Kyle, maybe you should do some sort of man -pages for sorcery tools?
+</I>
+I do not create a manual pages, and web pages for augur commands
+because then when I change/improve a command
+then I must edit documentation in 3 places instead of just 1 place.
+
+The reason for concatenation of similar commands into sub-commands
+such as &quot;augur compile&quot; into &quot;augur log compile&quot;
+was to both make the method of execution of similar commands more consistent
+and also to improve the readability of augur's main help screen.
+
+# augur | grep log
+log        type spell            selected log type for spell
+
+that probably says too little about what it does.
+But I have a difficult time squeezing the 8 sub commands into that space.
+
+Perhaps a compromise I can create an
+
+# augur tutorial
+
+command?
+And it can provide a multi-page tutorial that with examples
+of the usage of the most command and frequently used augur commands?
+
+I rather not create a manual page for augur
+unless it can be created using a script.
+That way it can auto run when I roll the sorcery tarball.
+
+I copied the above into my todo list.
+It is something I want to allocate time to consider.
+
+&gt;<i> I am kinda lost when i look todays sorcery tools, they are changed so much if
+</I>&gt;<i> you compare them what they were year or too ago.
+</I>
+I agree.
+It is more confusing that intuitive.
+The compromise that gained improved maintainability
+also cost a significant amount of simplicity
+by concealing the familiar log viewing commands
+as sub-commands under the &quot;log&quot; command.
+
+There are 58 augur commands
+that include nearly the entire functionality
+of all the augur commands of 2 years ago
+and also the newer functionality.
+
+Newer augur commands exist such as:
+a; freezer; info; monolib; undispel; queue; uproot.
+Consequently, the older commands were
+collected into similar groups and compacted.
+If left flat out then augur would have more than 100 commands.
+And choice of word overlap would be more difficult
+for dissimilar augur commands.
+Previously there existed
+# augur install $SPELL
+and
+# augur installed $SPELL
+The first gave the log file
+and the second indicated if the spell is installed.
+It is a little bit confusing.
+Now there is
+# augur log install $SPELL
+and
+# augur installed $SPELL
+That newer is a bit more explicit.
+
+However, I feel tempted to remove
+# augur installed $SPELL
+however
+# augur installed
+is useful for displaying a list of installed spells.
+Yet more frequently I type
+# augur snapshot | grep $SOMETHING
+
+I agree that the help for augur is inadequate.
+Someone new to Sorcerer must dive
+into each command with
+# augur help
+in order to gain sufficient understanding.
+However, I want a solution that
+which I can implement without
+requiring constant repeated effort.
+So perhaps I will write a script
+to capture the output of each
+# augur help $COMMAND
+into a manual page?
+First, I must learn the format for a manual page
+because it is not something that
+I already know such as HTML.
+Manual pages in HTML might be an improvement,
+but I can not yet judge without knowing the merits
+of groff and troff.
+
+Ah, here it is
+# man roff
+
+Ah, so this is why someone would want to use Emacs?
+Unfortunately, the manual page does not contain information
+about how to make manual pages.
+I wonder what is the canonical method for creating manual pages?
+Perhaps I can learn faster by dissecting a manual page in nano?
+Looks as if it might require more than a half hour to accomplish.
+Perhaps I can allocate the time after the next I/R release.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002219.html">[Sorcerer-admins] Some augur commands that used to be but not	anymore
+</A></li>
+	<LI>Next message: <A HREF="002221.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2220">[ date ]</a>
+              <a href="thread.html#2220">[ thread ]</a>
+              <a href="subject.html#2220">[ subject ]</a>
+              <a href="author.html#2220">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

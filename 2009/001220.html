@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] (doing week updates) gmp fails...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%28doing%20week%20updates%29%20gmp%20fails...&In-Reply-To=%3C596b75860905231455x265649fbmbeb15cf7ea300e78%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001218.html">
+   <LINK REL="Next"  HREF="001221.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] (doing week updates) gmp fails...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%28doing%20week%20updates%29%20gmp%20fails...&In-Reply-To=%3C596b75860905231455x265649fbmbeb15cf7ea300e78%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] (doing week updates) gmp fails...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 23 23:55:45 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001218.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+        <LI>Next message: <A HREF="001221.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1220">[ date ]</a>
+              <a href="thread.html#1220">[ thread ]</a>
+              <a href="subject.html#1220">[ subject ]</a>
+              <a href="author.html#1220">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I do not know what is going on with gmp.
+However, perhaps the -march=native
+in CFLAGS might effect what tests configure runs?
+Is the compile error for gmp only on x86_64?
+What about trying the gmp from the version before current?
+
+
+On Sat, May 23, 2009 at 2:36 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> ## --------- ##
+</I>&gt;<i> ## Platform. ##
+</I>&gt;<i> ## --------- ##
+</I>&gt;<i>
+</I>&gt;<i> hostname = hostname.unknown
+</I>&gt;<i> uname -m = i686
+</I>&gt;<i> uname -r = 2.6.27.9
+</I>&gt;<i> uname -s = Linux
+</I>&gt;<i> uname -v = #1 SMP Thu Dec 18 22:14:07 MST 2008
+</I>&gt;<i>
+</I>&gt;<i> &lt;cut &#160;(both logs are the same here )&gt;
+</I>&gt;<i> abilist=64 32
+</I>&gt;<i> cclist=gcc icc cc
+</I>&gt;<i> configure:3829: gcc 2&gt;&amp;1 | grep xlc &gt;/dev/null
+</I>&gt;<i> configure:3832: $? = 1
+</I>&gt;<i> ------------&lt;./configure&gt;--------------
+</I>&gt;<i> configure:3886: checking compiler gcc -O2 -pedantic -m64
+</I>&gt;<i> ------------&lt;sorcery cast config.log&gt;--------------
+</I>&gt;<i> configure:3886: checking compiler gcc &#160;-Os
+</I>&gt;<i> -------------&lt;differs from here... ./configure shown&gt;-------------
+</I>&gt;<i> Test compile:
+</I>&gt;<i> configure:3900: gcc -O2 -pedantic -m64 &#160;conftest.c &gt;&amp;5
+</I>&gt;<i> conftest.c:1: sorry, unimplemented: 64-bit mode not compiled in
+</I>&gt;<i> configure:3903: $? = 1
+</I>&gt;<i> failed program was:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, May 23, 2009 at 2:27 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> if I go to /var/tmp/failed/gmp* then ./configure;make
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> it builds very well.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (hmm... do a short ./configure &gt;log )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> cat /etc/sorcery/log/compile/gmp*.gz | gzip -d &gt; log2
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and compare the logs....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -------- Log (works) -----------
+</I>&gt;&gt;<i> checking whether make sets $(MAKE)... yes
+</I>&gt;&gt;<i> checking whether to enable maintainer-specific portions of Makefiles... no
+</I>&gt;&gt;<i> checking ABI=64
+</I>&gt;&gt;<i> checking compiler gcc -O2 -pedantic -m64 ... no
+</I>&gt;&gt;<i> checking ABI=32
+</I>&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer ... yes
+</I>&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer has
+</I>&gt;&gt;<i> sizeof(long)==4... yes
+</I>&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer
+</I>&gt;&gt;<i> -mtune=core2... yes
+</I>&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer
+</I>&gt;&gt;<i> -mtune=core2 &#160;-march=core2... yes
+</I>&gt;&gt;<i> checking for gcc... gcc
+</I>&gt;&gt;<i> checking for C compiler default output file name... a.out
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --------- Log2 ( built by sorcerer )
+</I>&gt;&gt;<i> checking whether make sets $(MAKE)... yes
+</I>&gt;&gt;<i> checking whether to enable maintainer-specific portions of Makefiles... no
+</I>&gt;&gt;<i> checking ABI=64
+</I>&gt;&gt;<i> checking compiler gcc &#160;-Os ... yes
+</I>&gt;&gt;<i> checking for gcc... gcc
+</I>&gt;&gt;<i> checking for C compiler default output file name... a.out
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> why does ./configure test 64bit, and size of long etc? where it only
+</I>&gt;&gt;<i> checks -Os with sorcerer build?
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001218.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+	<LI>Next message: <A HREF="001221.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1220">[ date ]</a>
+              <a href="thread.html#1220">[ thread ]</a>
+              <a href="subject.html#1220">[ subject ]</a>
+              <a href="author.html#1220">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

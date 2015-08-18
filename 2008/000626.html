@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] grimore-miffe questionaire and important	changes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grimore-miffe%20questionaire%20and%20important%0A%09changes&In-Reply-To=%3C596b75860807222032s3b89fccfx703266b86ea6c17b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000631.html">
+   <LINK REL="Next"  HREF="000627.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] grimore-miffe questionaire and important	changes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grimore-miffe%20questionaire%20and%20important%0A%09changes&In-Reply-To=%3C596b75860807222032s3b89fccfx703266b86ea6c17b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] grimore-miffe questionaire and important	changes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 23 05:32:15 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000631.html">[Sorcerer-admins] MPlayer skins leech issue
+</A></li>
+        <LI>Next message: <A HREF="000627.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#626">[ date ]</a>
+              <a href="thread.html#626">[ thread ]</a>
+              <a href="subject.html#626">[ subject ]</a>
+              <a href="author.html#626">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I agree with Jan about porting spells from contrib grimoires.
+
+Also when porting spells...
+Please move all url functions to directly above the
+source function that it requires.
+
+
+Example from xorg-server:
+
+       url $XORG_URL
+    source xserver/xorg-server-$VERSION.tar.bz2
+       url $SOURCEFORGE_URL
+    source mesa3d/MesaLib-$MVERSION.tar.bz2
+
+
+
+Also url can be omitted:
+
+The above can be written as:
+
+    source $XORG_URL xserver/xorg-server-$VERSION.tar.bz2
+    source $SOURCEFORGE_URL mesa3d/MesaLib-$MVERSION.tar.bz2
+
+
+In that example the URL proceeds the filename separated only by a space.
+
+Also a simple common sense syntax
+is supported as shown in the ccache spell:
+
+    source <A HREF="http://samba.org/ftp/ccache/ccache-$VERSION.tar.gz">http://samba.org/ftp/ccache/ccache-$VERSION.tar.gz</A>
+
+
+In that example the source contains the full protocol::path/filename
+
+No longer think of URL as a persistent array.
+It is not.
+
+I was considering removing support for url() entirely.
+However, chaffing the URL using source() during indexing is a bit slower,
+and I did not have an itch to again edit 3000+ spells for such a small change.
+
+The new grimoire and sorcery will become available soon.
+Yes you will be des-stroyed! by how much faster it is!
+
+These changes are not just about performance.
+I am checking many spells and fixing bugs and providing
+the design we will require to easily support a grimoire 4x the current size.
+Best to make these changes now when the grimoire is a meager 3000+ spells.
+
+Because google is still not fixing their broken download servers
+I am adjusting leech so that it no longer requests
+nor requires headers before attempting to download files.
+This will probably make curl stall indefinitely
+when attempting to download from some broken servers.
+We shall see.
+
+leech should be faster with fewer invocations of find.
+Indexing will be about 2x as fast.
+cast and dispel will become a bit faster.
+
+sorcery photon will be nearly fast enough
+to escape the massive gravity of /dev/null
+for yet another year.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000631.html">[Sorcerer-admins] MPlayer skins leech issue
+</A></li>
+	<LI>Next message: <A HREF="000627.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#626">[ date ]</a>
+              <a href="thread.html#626">[ thread ]</a>
+              <a href="subject.html#626">[ subject ]</a>
+              <a href="author.html#626">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

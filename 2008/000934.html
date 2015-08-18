@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] current I/R does not install bootloader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3COF8E04EC5E.61207075-ONC225751E.006F2CFA-C225751E.00726D83%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000930.html">
+   <LINK REL="Next"  HREF="000940.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] current I/R does not install bootloader</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3COF8E04EC5E.61207075-ONC225751E.006F2CFA-C225751E.00726D83%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] current I/R does not install bootloader">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Sat Dec 13 21:49:45 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000930.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+        <LI>Next message: <A HREF="000940.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#934">[ date ]</a>
+              <a href="thread.html#934">[ thread ]</a>
+              <a href="subject.html#934">[ subject ]</a>
+              <a href="author.html#934">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> &quot;Kyle Sallee&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; 
+</I>&gt;<i> &gt; Hmm, i am sure i did not unmounted (i only do unmount when i want to 
+</I>reboot,
+&gt;<i> &gt; so its last thing i do before Done) but might be some other error what 
+</I>i
+&gt;<i> &gt; did...
+</I>&gt;<i> 
+</I>&gt;<i> Well, if I did chew gum then navigating the Sorcerer menu driven 
+</I>installer
+&gt;<i> would be just as automatic and thoughtless for me.
+</I>
+At this point i think transfer routine is broken. 
+For a next version of I/R ISO installer could you make a verify option 
+available to check if transfer was ok or not. I think older versions did 
+have verify but its gone from current versions?
+Also using compile menu and its chroot casting goes show so quickly errors 
+so you dont have time to read what error message chroot is saying so also 
+could you make some error checking if chroot was ok or not also and 
+perhaps capture errors from chroot itself. It would help debugging where 
+errors might lie. 
+
+&gt;<i> &gt; But there is shell always available for senior SA's so i dont think 
+</I>wizard
+&gt;<i> &gt; style installer would be that bad, you can always do manual install 
+</I>using
+&gt;<i> &gt; shell screen :)
+</I>&gt;<i> 
+</I>&gt;<i> Only a few people would anticipate every step required for a manual
+</I>&gt;<i> installation.
+</I>&gt;<i> Of course if they either knew the Sorcerer init-scripts
+</I>&gt;<i> or the lsb specifications for the names for scripts/programs used
+</I>&gt;<i> for generating initramfs images
+</I>&gt;<i> then it would probably be successful.
+</I>&gt;<i> However, generating those initramfs images is essential.
+</I>
+Just make a chroot_cast shell script so if you are using shell to make 
+some sort of manual install there is easy way to chroot_cast init-scripts, 
+functions, etc...
+
+BTW offtopic question: are we moving some day to use GRUB instead of LILO? 
+I like GRUB more because it's boot loader has more flexibility than lilo 
+has. 
+
+&gt;<i> &gt; What happened back then, why was it not possible to go back any steps?
+</I>&gt;<i> 
+</I>&gt;<i> No it was just like Bob Finch asked for.
+</I>&gt;<i> It was a one way street.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Was it limitations because of installer being a shell script?
+</I>&gt;<i> 
+</I>&gt;<i> Actually, because it was a wizard it did not have the same menus.
+</I>
+Too bad it was not succesfull. 
+
+&gt;<i> &gt; am ok to use wizard like installer, there should be no objections to 
+</I>get
+&gt;<i> 
+</I>&gt;<i> I am not convinced about that.
+</I>&gt;<i> For example more advanced things might not necessarily be wizard 
+</I>supported,
+&gt;<i> such as encrypted filesystems, LVM2, mdadm, etc...
+</I>
+Except for encrypted root, other major distro's wizard like installers do 
+support LVM2 and software raid (in a expert mode), they are actually basic 
+stuff nowdays, not some advanced senior level stuff ;)
+Some distro's like Red Hat Enterprise distro and it's clones like CentOS 
+are using LVM2 as default, so normal installer is actually doing LV root, 
+etc. 
+
+&gt;<i> &gt; Think i'll just disable password authentication and rely logon only 
+</I>with SSH
+&gt;<i> &gt; keys.
+</I>&gt;<i> &gt; Also SSH listening with a different port than 22 helps agains 
+</I>scanners.
+&gt;<i> Actually not at all.
+</I>&gt;<i> I knew someone who set up an office thinking that.
+</I>&gt;<i> Just telnet to a port running ssh and see what it says.  :)
+</I>
+My point was that there are lot's of SSH scanners, i mean lots of them, 
+who does scan port 22 and tries to login with some accounts and passwords, 
+thousands and thoudands times in a day. 
+So currently it helps to put ssh to different port than 22. And because 
+they are using username + password so disabling normal password 
+authentication scanners do not have any change to break in if someone is 
+using bad password.
+
+&gt;<i> &gt; Thinks its pretty safe unless SSH private key is compromised but they 
+</I>are
+&gt;<i> &gt; usually password protected (i hope).
+</I>&gt;<i> &gt; So attacker needs to stole private key and then also your private 
+</I>password
+&gt;<i> &gt; for a key... Not easy task to accomblish.
+</I>&gt;<i> 
+</I>&gt;<i> Not everyone puts a password on their ssh keys, right?
+</I>
+Yes, there are some cases where you take password out of private key, like 
+if you use SSH connections in crontab etc.
+But anyway i dont see any major problem if using SSH keys instead of 
+normal passwords, i dont see that any major security risk. 
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081213/8cc5da52/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081213/8cc5da52/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000930.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+	<LI>Next message: <A HREF="000940.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#934">[ date ]</a>
+              <a href="thread.html#934">[ thread ]</a>
+              <a href="subject.html#934">[ subject ]</a>
+              <a href="author.html#934">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

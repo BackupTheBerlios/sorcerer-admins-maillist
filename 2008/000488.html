@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] howto prevent a module from loading	automatically?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howto%20prevent%20a%20module%20from%20loading%0A%09automatically%3F&In-Reply-To=%3C596b75860806030124r4fec1f3du3f89c97c21ea14fb%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000487.html">
+   <LINK REL="Next"  HREF="000491.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] howto prevent a module from loading	automatically?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howto%20prevent%20a%20module%20from%20loading%0A%09automatically%3F&In-Reply-To=%3C596b75860806030124r4fec1f3du3f89c97c21ea14fb%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] howto prevent a module from loading	automatically?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jun  3 10:24:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000487.html">[Sorcerer-admins] howto prevent a module from loading automatically?
+</A></li>
+        <LI>Next message: <A HREF="000491.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#488">[ date ]</a>
+              <a href="thread.html#488">[ thread ]</a>
+              <a href="subject.html#488">[ subject ]</a>
+              <a href="author.html#488">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Writing a rule to prevent a module from loading maybe possible.
+However, init-scripts can also unload modules.
+And modules listed in
+/etc/modules.rm
+are unloaded during boot.
+
+NVIDIA-Linux-x86.d/init.d.on/nvidiafb
+
+Above is an init-script that unloads the
+nvidiafb module during boot so that pre-compiled
+binary module provided by NVIDIA-Linux-x86 can
+be loaded instead.
+In that instance using an init-script is easiest.
+
+There are only a few modules that can not be unloaded.
+And those require udev rules to avoid.
+
+Most modules do not use much RAM.
+If the box has plenty and there is no module conflict
+then it may be easiest to leave modules installed.
+
+# lsmod | sort -k2rg | head
+
+Those modules eat the most RAM.
+
+
+On Mon, Jun 2, 2008 at 11:02 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> hi,
+</I>&gt;<i> I read several ways on the net to prevent a module from beeing
+</I>&gt;<i> automatically loaded through udev/hotplug....
+</I>&gt;<i> but none worked...
+</I>&gt;<i> does someone know how to do that?
+</I>&gt;<i> does also someone know how to remove all modules that have been loaded
+</I>&gt;<i> through module dependencies? I have a wifi card that I barelly use and
+</I>&gt;<i> that load tons of modules... just want to load them through the network
+</I>&gt;<i> scrip and have all those unloaded also on stop....
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000487.html">[Sorcerer-admins] howto prevent a module from loading automatically?
+</A></li>
+	<LI>Next message: <A HREF="000491.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#488">[ date ]</a>
+              <a href="thread.html#488">[ thread ]</a>
+              <a href="subject.html#488">[ subject ]</a>
+              <a href="author.html#488">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

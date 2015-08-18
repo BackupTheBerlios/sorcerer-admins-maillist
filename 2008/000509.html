@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init-scripts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-scripts&In-Reply-To=%3C596b75860806161956s92e0aa7n4ecf28216dd7865c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000508.html">
+   <LINK REL="Next"  HREF="000510.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init-scripts</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-scripts&In-Reply-To=%3C596b75860806161956s92e0aa7n4ecf28216dd7865c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init-scripts">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jun 17 04:56:48 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000508.html">[Sorcerer-admins] gdm
+</A></li>
+        <LI>Next message: <A HREF="000510.html">[Sorcerer-admins] /etc/xinetd.d/ explained.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#509">[ date ]</a>
+              <a href="thread.html#509">[ thread ]</a>
+              <a href="subject.html#509">[ subject ]</a>
+              <a href="author.html#509">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have listened to feedback about the init-script changes.
+Not everyone is pleased.
+Neither am I.
+
+The original design for cast handling of init-scripts
+was overly elaborate, overly complex, and less than intuitive.
+Therefore, I excised it.
+
+I continued to ponder the original purpose of the changes,
+&quot;Have cast ask fewer questions about init-scripts.&quot;
+How about instead,
+&quot;Have cast ask no questions about init-scripts?&quot;
+
+Instead cast will install init-scripts from
+$GRIMOIRE/$SPELL.d/init.d.on  as mode 700 and
+$GRIMOIRE/$SPELL.d/init.d       as mode 600.
+
+What used to be optional will not be installed mode 600
+so that it does not run automatically at boot and shutdown.
+What used to be mandatory is now installed mode 700
+so that it will automatically run at boot and shutdown.
+Makes sense?
+
+Here is the part that you will like.
+The sorcery tools will remember the modes
+that you assign to init-scripts.
+init-scripts are still not customizable.
+However, their permission mode is!
+Want an init-script to not run at boot?
+chmod 600 it.
+The sorcery tools will remember and
+preserve that mode across updates.
+Want an optional init-script on?
+chmod 700 it.
+sorcery will keep it on across updates.
+
+Very intuitive, yes?
+
+The modes already set for init-scripts
+by the overly elaborate method will stick,
+because the init-scripts in /etc/init.d/
+already have those modes.
+
+Yes, I will preserve custom modes for mandatory init-scripts.
+Turning off an init-script that is
+essential for the box to properly boot is possible.
+Please be careful.
+
+For those who may not be reading this far
+nor intend to remember it.
+I will be adding instructions regarding init-scripts
+to /etc/init.d/README
+SAs can read README to know exactly what will work
+and what will not work when modifying init-scripts.
+
+Short docs right where they are needed most makes
+for a better solution than remember the ever changing
+methods of sorcery, right?
+
+Hope everyone is having a fine week thus far.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000508.html">[Sorcerer-admins] gdm
+</A></li>
+	<LI>Next message: <A HREF="000510.html">[Sorcerer-admins] /etc/xinetd.d/ explained.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#509">[ date ]</a>
+              <a href="thread.html#509">[ thread ]</a>
+              <a href="subject.html#509">[ subject ]</a>
+              <a href="author.html#509">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

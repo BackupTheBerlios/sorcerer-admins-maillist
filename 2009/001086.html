@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] run requirements vs build requirements
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C596b75860904201406o67c8ff0exfc8dd738a6fdda1a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001082.html">
+   <LINK REL="Next"  HREF="001087.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] run requirements vs build requirements</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C596b75860904201406o67c8ff0exfc8dd738a6fdda1a%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] run requirements vs build requirements">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 20 23:06:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001082.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+        <LI>Next message: <A HREF="001087.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1086">[ date ]</a>
+              <a href="thread.html#1086">[ thread ]</a>
+              <a href="subject.html#1086">[ subject ]</a>
+              <a href="author.html#1086">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Apr 20, 2009 at 4:35 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> On Mon, Apr 20, 2009 at 5:54 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>
+&gt;<i> a compile requirement is composed of 2 things :
+</I>&gt;<i> - build requirements
+</I>&gt;<i> - runtime requirements
+</I>&gt;<i>
+</I>&gt;<i> a function like CreateRescue() would look like
+</I>&gt;<i>
+</I>&gt;<i> CreateRescue()
+</I>&gt;<i> {
+</I>&gt;<i> &#160; &#160; &#160;leech $(augur runtime_aarof core) $(augur build_aarof core)
+</I>&gt;<i> &#160; &#160; &#160;copySourcesToCache $(augur runtime_arof core) $(augur build_arof core)
+</I>&gt;<i> &#160; &#160; &#160;copyArchivesToCache $(augur runtime_arof core) $(augur build_arof core)
+</I>&gt;<i> &#160; &#160; &#160;makeImage $(augur runtime core)
+</I>&gt;<i> }
+</I>
+Why does that to me seem that it would make something
+that is larger than the current I/R?
+
+
+&gt;&gt;<i> Almost nothing can cast without gcc installed.
+</I>&gt;<i>
+</I>&gt;<i> That's why gcc is a CORE spell like libc.... almost everything can be
+</I>&gt;<i> rebuild from them....
+</I>&gt;<i> however that's a waste to have cmake installed and scons... look at
+</I>&gt;<i> the few spells that are using them
+</I>&gt;<i> on a sorcerer box almost 70% of spells will be used once a year... and
+</I>&gt;<i> will be installed 365 day a year....
+</I>
+Good idea, but understated.
+If atimes were enabled on Sorcerer boxes, which normally they are not,
+then the filesystem would reveal that over 90% of the installed files
+are not accessed over a long period of time.
+Here is a fun fact:
+
+# du -sm /boot/{2.6.29.1,fast}
+83      /boot/2.6.29.1
+13      /boot/fast
+
+Both directories have the same kernel image.
+However, the initramfs image is different.
+The one in /boot/fast consists of only the files
+that are used on the initrf the last time a boot occurred
+using the full initrf provided in /boot/2.6.29.1/
+That is why /boot/fast is a meager 15% the size of /boot/2.6.29.1
+
+Although Sorcerer boxes could be made to delete files
+that are not used that solution might not be best.
+For example, manual pages might not normally be used.
+But when one wants to read one, it is good to have them installed.  :)
+
+Too bad atimes are bad for a fixed disk lifespan,
+otherwise they might have potential usefulness.
+
+&gt;<i> 300M?!? you're kiding! linux is made for developpers! and what do
+</I>&gt;<i> developpers like? development tools of course! look at perl, python,
+</I>&gt;<i> ruby, java, yacc, byacc, bison..... how many time are theses tools
+</I>&gt;<i> used a year? to be frank on my 9G / partition I use 7G and I'm almost
+</I>&gt;<i> certain that I can discard 4G of them without even carring...
+</I>
+At first Python, perl, ruby, java, etc... seem unessential.
+However, sometimes tools such as those are used for
+even trival tasks such as reading manual pages.
+Perl might still be required for reading manual pages.
+Who know what Python might be used for?
+Before Debian boxes switched to dash all their init-scripts were perl.
+Programmers use these scripting, editing, and macro languages
+for convenience and now we are stuck with having to install them.
+Years ago there was a time when I supplied a Sorcerer I/R disk
+that did not have perl installed.
+Now it even has such perl, tcl, tk, probably even Python installed.
+Without a very careful selection of installed software
+discarding the heavy requirements is difficult.
+
+
+&gt;<i> my box use xfce, fluxbox, and few other binaries that will weight at
+</I>&gt;<i> most 100M, ok there are dependencies... a typical xubuntu cdrom is
+</I>&gt;<i> 650M _EVERYTHING_BUILD_ ie with lot of tools, the runtime env is only
+</I>&gt;<i> 650M (by the way this is my average memory usage... strange isn't it?)
+</I>&gt;<i> this means that on my 7G partition, I only require 650M to run the
+</I>&gt;<i> system... the rest... is only for building
+</I>&gt;<i> however as you mentioned bellow sorcery as lot of advantages upon
+</I>&gt;<i> binary based distro and I won't swap to binary based distro because I
+</I>&gt;<i> know the asle of LinuxFromScratch when you use such distro (it always
+</I>&gt;<i> miss some header... or library archive... or yadayada)
+</I>
+I do not know what LinuxFromScratch as evolved into,
+but originally it was a tiny document that described how
+to install some very old versions of about 30 software projects.
+According to some reports from other SAs who tried LFS,
+putting together a box that way requires months of effort and work.
+And then it would only boot.
+In contrast Sorcerer only requires a few hours which are mostly
+non interactive compilation time.
+Hardly a headache.
+But probably less informative than doing it without a distro.
+I would be curios to know if anyone with a LFS box
+can keep installed software up to date like a Sorcerer box.
+
+
+&gt;&gt;<i> by being able to dispel build only requirements
+</I>&gt;&gt;<i> they would soon come to regret the decision
+</I>&gt;&gt;<i> for blowing big holes that must be repaired
+</I>&gt;&gt;<i> before the box can update properly again.
+</I>&gt;<i>
+</I>&gt;<i> THAT'S their problem! to be franck nothing prevent me to do
+</I>&gt;<i> augur install gcc | xargs rm
+</I>
+:<i>)
+</I>
+
+&gt;<i> or rm -rf /var/cache and try to cast without network.....
+</I>
+:<i>)
+</I>
+
+&gt;<i> sorcery won't ever prevent me to do that...
+</I>
+Should it?
+
+
+&gt;<i> the changes required on sorcery and spell is really low compared to
+</I>&gt;<i> the possibilities
+</I>&gt;<i> you always complain about taking time to recompile x86_64 software on
+</I>&gt;<i> qemu... yes qemu is great... but as all emulation it's slow!
+</I>&gt;<i> why do you think that most of the time developers use cross-compilers?
+</I>&gt;<i> &#160;cross compiling isn't an easy setup, but once set crosscompile is a
+</I>&gt;<i> boon because you can use plain power of the system... however not all
+</I>&gt;<i> will crosscompile fine and the env shall be enough robust
+</I>&gt;<i> same the problem with crosscompile is that it require 2 level of
+</I>&gt;<i> dependencies, build dependencies that will be provided by crosscompile
+</I>&gt;<i> host, and runtime requirements that will be provided by the target fs
+</I>&gt;<i> and that won't run on the host (can be for example arm binaries...)
+</I>
+I do not have to speculate about cross-compiling.
+I have done enough cross-compiling to know exactly
+why I would rather wait for qemu to do it instead of
+cross-compiling software.
+And yes I do probably still have archived cross-compile
+tool chains for x86_64 architecture.
+
+
+&gt;&gt;<i> I hate to seem so uncompromising about it.
+</I>&gt;&gt;<i> However, having separate concepts of build and
+</I>&gt;&gt;<i> runtime requirements is something borrowed from
+</I>&gt;&gt;<i> pre-compiled binary based distros.
+</I>&gt;<i>
+</I>&gt;<i> WRONG, it is a concept that is mandatory when creating a rescue disk,
+</I>&gt;<i> as well as when crosscompiling.... as explained before...
+</I>&gt;<i> same it could even be used to provide chrooted installs....
+</I>&gt;<i> imagine that you could install without having to use a 3rd party lib
+</I>&gt;<i> to track changes on filesystem, and that this install is performed
+</I>&gt;<i> into a chrooted env? how can you perform that? hummm what if in build
+</I>&gt;<i> requirements I have install and gcc.... what do I need to perform
+</I>&gt;<i> install step? well in fact only what is in build requirement, simply
+</I>&gt;<i> copy them to some dir, do chroot to this dir and perform the install.
+</I>&gt;<i> after that clean the dir by removing all file copied and you have a
+</I>&gt;<i> perfect safe install... it works even on systems that don't support
+</I>&gt;<i> DESTDIR....
+</I>
+It is actually easier than that.
+Simply create a union fileystem using fuse
+Make the all the files in the / filesystem appear within the chroot
+filesystem without them actually being there.
+That way there is no copying involved.
+Yet why do I not do that?
+Because dispel has to executed outside of the chroot.
+Some sources will not install properly until
+the previously installed files are removed.
+
+Currently, sorcery dispels previously installed software
+just before the newly compiled software is installed.
+This is a great boon/convenience that we take for granted.
+It minimizes the amount of time and probability that a program
+will be executed and fail execution.
+
+For example, we can run firefox while updating firefox.
+But if firefox is not running and we start to run it while
+firefox is installing
+then firefox would be unavailable.
+However, since firefox is not dispelled before it compiles,
+it is available to start, right up until the point at which
+the new firefox begins installing.
+It is not 100% availability, but it is better than having
+to bring a box to runlevel 1, kick off all the users,
+and create an hour or two of downtime while installed
+software is updated.
+
+As far as I recall no SA has complained about software
+being unavailable and not starting during updates.
+There is a probability for problems to happen.
+But in actuality they rarely happen.
+
+The current system using sentinel's pre-load library
+requires less overhead and CPU cycles than a fuse overlay
+or union filesystem and it also is far more reliable and disk friendly
+than doing a cp of all files that may be required in order to compile
+a source tree.
+There are far more files required to compile a source than
+most SAs would expect.
+Identifying and copying all those files into a chroot would
+be a chore of epic proportions.
+No one would want for that to happen each time a source is compiled.
+And it would require separate chroots for concurrently compiling sources.
+It would require a tremendous amount of disk space.
+
+Obviously, if a cut down embedded
+installation of Sorcerer suitable only for runtime is desired
+then the easiest way is still to start with a proper and full Sorcerer
+installation,
+copy it, and then delete the files that would not be required such as
+/usr/lib/*.a and /usr/include/
+
+If someone runs that cut down box for a time with atimes enabled
+then it would probably be possible to eliminate another 90% of files
+that are not used during normal operations.
+Yet if a user or application requested it to do something unusual
+that had not been done before
+then it would probably break for trying to access a file
+that is not present, but should be.
+
+
+&gt;<i> same for crosscompiling, some host binaries has to be present during
+</I>&gt;<i> the install step, however to prevent having a missbehaving spell
+</I>&gt;<i> overwrite the host binaries with target binaries, the install shall be
+</I>&gt;<i> performed in a chroot jail with only a minimal copy of mandatory BUILD
+</I>&gt;<i> tools....
+</I>&gt;<i> sorcerer is a source based distro, this means that it shall permit all
+</I>&gt;<i> what is allowed by such distro : COMPILE, and even crosscompile...
+</I>
+cross-compilation is not normally performed chrooted.
+Merely the target of installation is changed so that
+the installed files do not go into / nor /usr
+
+
+&gt;<i> even with this actual design of sorcerer won't warants that some
+</I>&gt;<i> missbehaving source will not modify some files outside it's source
+</I>&gt;<i> tree during compilation time, and since tracking can't be activated
+</I>&gt;<i> all time because of slowness, if some spell do modification before
+</I>&gt;<i> prepare_install it won't be tracked... hopefully by activating md5sums
+</I>&gt;<i> you can be on the safe side... most of the time... imaging that glibc
+</I>&gt;<i> has a bug during install and create an empty /lib/libc.so? ahaha I
+</I>&gt;<i> wonder how will your box will behave....
+</I>
+glibc can not be installed ontop of a running glibc.
+That is why the library cache is present so that installed libraries
+can be moved out of their normal installed positions, yet be made
+available for use while newer libraries are installed.
+
+As for chrooting...
+Any program running with the root account can break free of a chroot,
+if it was programmed to do so.
+That is why services that run inside a chroot also switch
+the user and group away from root after it is started.
+
+
+Interesting ideas.
+I would like to summarize.
+Yes, a Sorcerer box can be chopped down into what is absolutely necessary.
+But do not expect to be able to easily repair and update it that way.
+Cut it back if desired,
+but do not fail to maintain also a complete master installation for updating.
+This concept is the same concept that is used when
+creating the /boot/fast/initrf
+
+/boot/fast/initrf is a cut down initramfs image.
+Although it can be used during boot
+I do not attempt to replace the initramfs image
+in /boot/2.6.29.1/initrf with the /boot/fast/initrf
+Why?
+Because if there is a problem with/ boot/fast/initrf
+then /boot/2.6.29.1/initrf is the one that should be booted,
+because it is far easier to trouble-shoot.
+Simply changing the installed motherboard could
+render /boot/fast/initrf unusable, for example.
+But /boot/2.6.29.1/initrf would still work if the SA selects it.
+Consequently, it shows that the convenience and speed
+of a cut down filesystem can be enjoyed.
+But the proper filesystem must still be available somewhere
+in the event that the cut down filesystem becomes inadequate.
+
+Because it is possible to cut down a filesystem upwards of 90%
+the concept of having build-only requirements is but a drop
+in the bucket compared to what could be achieved if the SA
+knows exactly what files can be removed and does so.
+Asking for build-only requirements is like asking for grapes,
+when really you want grapefruit.
+And the way to enjoy the bigger fruit is to know how to
+cut a filesystem.
+However, do not epxect to be able to repair a cut down filesystem.
+It is not impossible, but it is complicated.
+Therefore, still maintain a proper Sorcerer installation somewhere.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001082.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+	<LI>Next message: <A HREF="001087.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1086">[ date ]</a>
+              <a href="thread.html#1086">[ thread ]</a>
+              <a href="subject.html#1086">[ subject ]</a>
+              <a href="author.html#1086">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

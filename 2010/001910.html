@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Wifi?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Wifi%3F&In-Reply-To=%3CAANLkTi%3Dt1HLxEBygTk40JKbYp%2B-LPnSqqG1KY-adUJEk%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001898.html">
+   <LINK REL="Next"  HREF="001896.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Wifi?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Wifi%3F&In-Reply-To=%3CAANLkTi%3Dt1HLxEBygTk40JKbYp%2B-LPnSqqG1KY-adUJEk%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Wifi?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Aug 29 21:19:03 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001898.html">[Sorcerer-admins] Wifi?
+</A></li>
+        <LI>Next message: <A HREF="001896.html">[Sorcerer-admins] Manual?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1910">[ date ]</a>
+              <a href="thread.html#1910">[ thread ]</a>
+              <a href="subject.html#1910">[ subject ]</a>
+              <a href="author.html#1910">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good that you asked on the list.
+Some only work with older kernels.
+The NetGear WG111v2 is supported,
+although the range is somewhat limited
+and it tends to disconnect frequently.
+It uses the rtl8187 module
+
+Assuming one has /usr/src/linux/
+One could enter that directory and run
+make menuconfig
+then goto
+Device Drivers ---&gt;
+Network device support ---&gt;
+Wireless LAN ---&gt;
+
+And the drivers there are a mixed selection.
+Some are for PCI/ISA and others for USB.
+The important thing to know is chipset.
+But chipset is often not written on a commercial box.
+The Atmel at76c50* for USB might currently be broke.
+I do not recommend it.
+
+The incomplete list at:
+<A HREF="http://linuxwireless.org/en/users/Devices/USB">http://linuxwireless.org/en/users/Devices/USB</A>
+might somehow be useful?
+
+Sometimes drivers might work only IPv4 and not IPv6
+or might not support the type of encryption desired.
+Nothing like plugging it in to check.
+Before plugging on in run
+lsmod &gt; /tmp/before.txt
+That way /tmp/before.txt has a listing of modules loaded
+before the USB wireless network adapter was plugged in.
+After it is pluged in
+lsmod &gt; /tmp/after.txt
+That way the list can be compared to see what loaded or did not load.
+
+diff /tmp/before.txt /tmp/after.txt
+
+Also check dmesg
+just run it.
+See what information was printed into the kernel ring buffer
+about the detected hardware and modules loaded.
+udev will handle the hotplug event.
+If successful something new should print
+when using the command
+ip addr show
+It might be something like wlan0
+If so then try configuring it and connecting to the wireless network.
+
+Hardware detection, module loading, and firmware loading
+is as plug-n-pray on linux as it would be on any operating system.
+However, network configuration is still up to the SA.
+
+A real possibility is that the driver you want to use
+is present for the linux kernel, but the firmware is not installed.
+There are spells for some firmware in the grimoire.
+If you write a new spell for firmware please send me the
+spell if you want it to be in the grimoire for other SAs
+to also be able to use.
+
+# augur attribute firmware
+alsa-firmware
+at76_usb-firmware
+atmel-firmware
+bluez-firmware
+iwlwifi-1000-ucode
+iwlwifi-3945-ucode
+iwlwifi-4965-ucode
+iwlwifi-5000-ucode
+iwlwifi-5150-ucode
+iwlwifi-6000-ucode
+prism54-firmware
+ralink-firmware
+
+That lists some spells for firmware.
+alsa-firmware is probably only for sound cards.
+bluez-firmware is probably only for bluetooth.
+The rest are for network cards.
+firmware is usually easy to find in the grimoire,
+because the spell will likely have the same
+name as the filename for download at
+the manufacturer's website.
+
+The firmware is not likely to be available as a spell
+unless another Sorcerer SA is already
+using that type of network device.
+Sorry for the inconvenience of the find your own firmware game.
+
+If it was a device intended for a windoze operating system
+it might sort of work out of box, but in the past I would
+always visit manufacturer's websites to download the
+latest drivers, firmware, and software for any device
+including motherboards.
+For linux only the firmware will be required if
+firmware is required at all,
+and most devices do not require firmware.
+
+Hope that helps explain it.
+Doing a google search might provide a list
+that would be useful.
+I started with linux USB wireless
+
+ndiswrapper, if it compiles, is a lesser known trick
+for being able to use windows drivers with a linux kernel.
+See the description of the spell and homepage for more information.
+It probably comes pre-installed on a Sorcerer I/R
+I have never tried it.
+
+
+On Sat, Aug 28, 2010 at 12:42 PM, Nathan Allen
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_jeffrey_allen at yahoo.com</A>&gt; wrote:
+&gt;<i> Could someone please email me a list of compatible usb wireless antennas for
+</I>&gt;<i> Sorcerer?
+</I>&gt;<i> Thanks.
+</I>&gt;<i> Nathan Jeffrey Allen.
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Nathan_Jeffrey_Allen at yahoo.com</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001898.html">[Sorcerer-admins] Wifi?
+</A></li>
+	<LI>Next message: <A HREF="001896.html">[Sorcerer-admins] Manual?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1910">[ date ]</a>
+              <a href="thread.html#1910">[ thread ]</a>
+              <a href="subject.html#1910">[ subject ]</a>
+              <a href="author.html#1910">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

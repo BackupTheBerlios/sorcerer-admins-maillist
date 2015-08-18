@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Happy Holidays,
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Happy%20Holidays%2C&In-Reply-To=%3C45B8B490.7030505%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000029.html">
+   <LINK REL="Next"  HREF="000031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Happy Holidays,</H1>
+    <B>jlm alias cityhunter</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Happy%20Holidays%2C&In-Reply-To=%3C45B8B490.7030505%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] Happy Holidays,">jlm_devel at laposte.net
+       </A><BR>
+    <I>Thu Jan 25 14:45:52 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000029.html">[Sorcerer-admins] jdk spell problem
+</A></li>
+        <LI>Next message: <A HREF="000031.html">[Sorcerer-admins] seamonkey : can someone reproduce?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee wrote:
+&gt;<i> Wondering what I gift I have for you?
+</I>&gt;<i> The brave amongst you can be the first to try it.
+</I>&gt;<i> It is a transparent decompression fuse filesystem overlay.
+</I>&gt;<i>
+</I>&gt;<i> To put it simply when activated the kernel and processes can
+</I>&gt;<i> read gzip compressed files and will see only the uncompressed content.
+</I>&gt;<i> But it is a bit more complicated and technical than that.
+</I>&gt;<i> Fortunately, with full sorcery integration already available
+</I>&gt;<i> for it you will only need to cast the fuse.gunzip spell
+</I>&gt;<i> and then enable the feature and extended features for it.
+</I>&gt;<i> After that it is as automatic as the ccache archive.
+</I>&gt;<i>
+</I>&gt;<i> The more important question is not how, but why.
+</I>&gt;<i> Why goes all the way back to the discussion of why
+</I>&gt;<i> does it takes some programs a long time to start up.
+</I>&gt;<i> Some of us took the side that it is dynamic runtime
+</I>&gt;<i> linking that slows down program startup.
+</I>&gt;<i> Others of us took the side that it is slow disk
+</I>&gt;<i> performance that slows down program startup.
+</I>&gt;<i> Perhaps this program can help us decide.
+</I>&gt;<i>
+</I>&gt;<i> The idea is simple.
+</I>&gt;<i> CPU and RAM are fast.
+</I>&gt;<i> Disks are slow.
+</I>&gt;<i> It is even slower when files being read are fragmented.
+</I>&gt;<i> So why not offload some of the disk work to the processor?
+</I>&gt;<i> That way the disk does less work to read the file,
+</I>&gt;<i> the processor covers the difference and the file is read
+</I>&gt;<i> in 1/2 to 3/4 the time of reading the whole uncompressed file.
+</I>&gt;<i> Of course, the actual speed up depends on how slow the drives
+</I>&gt;<i> are and how fast the processor is.
+</I>&gt;<i>
+</I>&gt;<i> Probably one of the most obvious questions is am I going
+</I>&gt;<i> to answer all your questions about it in this email.
+</I>&gt;<i> No, there is a nice README file in the tarball.
+</I>&gt;<i> It is worth reading,
+</I>&gt;<i> but completely optional for the Sorcerer SA that only
+</I>&gt;<i> does the steps recommended above for activating it.
+</I>&gt;<i>
+</I>&gt;<i> The second most obvious question is does repeated
+</I>&gt;<i> decompression of the file each time it is read slow down a box.
+</I>&gt;<i> The answer to that is no.  That is because a file transparently
+</I>&gt;<i> decompressed hangs out in POSIX shared memory for a while.
+</I>&gt;<i> That way if it is required again it can be read from
+</I>&gt;<i> POSIX shared memory in usually between 1 to 7 nano seconds.
+</I>&gt;<i>
+</I>&gt;<i> But now back to configuring it in sorcery extended features.
+</I>&gt;<i> While a bit more complex than explained here to make it simple
+</I>&gt;<i> you will either want to go with the default selection of reducing
+</I>&gt;<i> files installed to /usr that are fragmented or the notebook
+</I>&gt;<i> selection for reducing any file installed to /usr that can be reduced.
+</I>&gt;<i>
+</I>&gt;<i> After it is installed and configured what happens?
+</I>&gt;<i> Nothing until spells are cast.
+</I>&gt;<i> When they are cast, files that are installed in /usr
+</I>&gt;<i> that meet the criteria for reduction are reduced.
+</I>&gt;<i> For example, some installed software may be updated.
+</I>&gt;<i> After the update the df -a free block count for / or /usr
+</I>&gt;<i> may be higher than it was before the update.
+</I>&gt;<i> Hence the box was on the brink of running out of space
+</I>&gt;<i> and moved /opt to /var and added a bind line for it in
+</I>&gt;<i> /etc/fstab like I did on a few of my boxes, then after
+</I>&gt;<i> some updates there may be enough space to move /opt back
+</I>&gt;<i> and release the bind.
+</I>&gt;<i>
+</I>&gt;<i> If you encounter anything strange
+</I>&gt;<i> please execute # uncache.
+</I>&gt;<i> Then, check if it solved the problem.
+</I>&gt;<i> Finally, email me all about it, please.
+</I>&gt;<i> I am probably being paranoid in telling you that,
+</I>&gt;<i> but you may feel more at ease that should a problem
+</I>&gt;<i> occur that you can probably fix it by running one
+</I>&gt;<i> program rather than rebooting the box.
+</I>&gt;<i>
+</I>&gt;<i> Also if an installed spell has reduced files and you
+</I>&gt;<i> want it unreduced then simply unarchive the
+</I>&gt;<i> archive file into /
+</I>&gt;<i> Files in archives would not be reduced.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, there are some augur commands for reduction of spells
+</I>&gt;<i> that are already installed and also for inhibiting reducing
+</I>&gt;<i> of spells that you do not want reduced when they are cast.
+</I>&gt;<i> As expected it works on a spell by spell basis rather than
+</I>&gt;<i> a file by file basis.
+</I>&gt;<i> Therefore, if you want to reduce some installed software
+</I>&gt;<i> without recasting it then augur it.
+</I>&gt;<i> While you could run the reduce program directly,
+</I>&gt;<i> please do not do so without reading the README
+</I>&gt;<i> since you would not want to reduce files in directories
+</I>&gt;<i> such as /etc /bin /sbin /lib /lib64 /boot and so forth where
+</I>&gt;<i> transparent decompression will not be enabled.
+</I>&gt;<i>
+</I>&gt;<i> I hope you enjoy fuse.gunzip as much as I do.
+</I>&gt;<i> For some of you, maybe the ones sporting over 700 installed spells
+</I>&gt;<i> or the ones with slow disks, or a notebook loaded to the limit
+</I>&gt;<i> may benefit from the added speed or increased block counts.
+</I>&gt;<i> If anyone can gain a performance boost
+</I>&gt;<i> using SATA drives please let me know.
+</I>&gt;<i> While I have heard of outstanding throughput rates for SATA drives,
+</I>&gt;<i> I have no idea what the track to track seek times are.
+</I>&gt;<i> It might not make an improvement on those boxes.
+</I>&gt;<i>
+</I>&gt;<i> The oddest aspect about fuse.gunzip is that the reduce program
+</I>&gt;<i> creates sparse files where the block count is less than expected
+</I>&gt;<i> for the size of the file recorded in the inode.
+</I>&gt;<i> It should work with filesystems that support sparse files.
+</I>&gt;<i> fuse.gunzip has only been tested with ext3.
+</I>&gt;<i> reiserfs should not present a problem,
+</I>&gt;<i> but please let me know if it does.  :)
+</I>&gt;<i>
+</I>&gt;<i> Happy Holidays,
+</I>&gt;<i> Kyle
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>I'm just flushing 1 year of unread mails (yes I know I have a lag) and 
+well this is a great idea! I think that this mail should be put into 
+sorcerer's web as an adavantage for sorcerer because this is truly an 
+advantage especially on notebooks for saving power and on box like mine 
+that run on 2&quot;1/2 hard drives for noise reduction
+that's a good news
+thx for that
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000029.html">[Sorcerer-admins] jdk spell problem
+</A></li>
+	<LI>Next message: <A HREF="000031.html">[Sorcerer-admins] seamonkey : can someone reproduce?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

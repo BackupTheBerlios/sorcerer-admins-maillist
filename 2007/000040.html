@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] some bug reports, fuse, db, samba
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20some%20bug%20reports%2C%20fuse%2C%20db%2C%20samba&In-Reply-To=%3C596b75860702151114x16f1fb8ftda196ca3680f465f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000039.html">
+   <LINK REL="Next"  HREF="000041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] some bug reports, fuse, db, samba</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20some%20bug%20reports%2C%20fuse%2C%20db%2C%20samba&In-Reply-To=%3C596b75860702151114x16f1fb8ftda196ca3680f465f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] some bug reports, fuse, db, samba">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Feb 15 20:14:49 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000039.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+        <LI>Next message: <A HREF="000041.html">[Sorcerer-admins] libxcb  1.0     build/compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> About db, there is no that line &quot;patchin file&quot;, and cast -c db does not
+</I>&gt;<i> help, i have tried that many times.
+</I>&gt;<i> I looked my /var/cache/sources/db/4.5.20/ and there is indeed 2 patch files,
+</I>&gt;<i> patch.4.5.20.1 and .2, any ideas why it does not patch them? Maybe some
+</I>&gt;<i> error in build()?
+</I>
+Perhaps it is?
+I rewrote the two lines which apply the patch file.
+It now uses what is expected to be the precise path/name to the patch file.
+
+PCX=1
+while  [  -n  &quot;${SOURCE[$PCX]}&quot;  ];  do
+  patch  -p0  &lt;  $SOURCE_CACHE/$SPELL/$VERSION/${SOURCE[$PCX]}
+  ((  PCX++  ))
+done
+
+That should also be faster than before.
+
+Next time you cast the spell you could try inserting a
+set -x
+at the top of the build.
+It will however, end up with many lines of cast execution also
+dumped into the compile log.
+But if you at least encompass the part where it begins
+the patch to the part where it finishes the patch with:
+set -x
+...
+...
+set +x
+
+Then, whatever it is doing that is unexpected shall be revealed.
+:<i>)
+</I>
+Also...
+You could check out those files in the source cache.
+Those two files that are supposed to be patch files?
+Are they patch files?
+Or are they some poorly configured server that wrote
+Some type of error 404 message into a text or HTML file
+instead of actually throwing an error 404 back to the browser.
+When patch is invoked on a file that is not a patch file,
+patch usually process it silently and produces no line
+stating that any file was patched or if there was a problem
+with the patch file.
+That is most likely the problem that the files in the source
+cache which are supposed to be patch files are not patch files.
+Therefore, no matter how many times the spell casts the
+source is not properly patched.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000039.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+	<LI>Next message: <A HREF="000041.html">[Sorcerer-admins] libxcb  1.0     build/compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

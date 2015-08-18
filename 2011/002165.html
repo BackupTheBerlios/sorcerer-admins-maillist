@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The evolution of Sorcerer initramfs.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTinomDo5hNC-kf%2BX4JN76zX9VFeKCg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002163.html">
+   <LINK REL="Next"  HREF="002164.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The evolution of Sorcerer initramfs.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTinomDo5hNC-kf%2BX4JN76zX9VFeKCg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The evolution of Sorcerer initramfs.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 20 08:38:04 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002163.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+        <LI>Next message: <A HREF="002164.html">[Sorcerer-admins] ssh on the move
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2165">[ date ]</a>
+              <a href="thread.html#2165">[ thread ]</a>
+              <a href="subject.html#2165">[ subject ]</a>
+              <a href="author.html#2165">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 19, 2011 at 10:41 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Heh...
+</I>&gt;<i>
+</I>&gt;<i> Just a bit later something destroyed /etc/init.d and /etc/rc.d
+</I>&gt;<i>
+</I>&gt;<i> Without those two directories rebooting becomes... &#160;interesting. I
+</I>&gt;<i> still have no clue as to how that happened, and I pasted /etc from a
+</I>&gt;<i> week ago over the hole where my /etc used to be. It's not a fix I am
+</I>&gt;<i> too fond of, so now I am in the process of another rebuild to rebuild
+</I>&gt;<i> the config files for everything that's installed now. Once that
+</I>&gt;<i> succeeds I'll back up this file system.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the tips. Next time I'll use the shutdown method to kill
+</I>&gt;<i> all the running processes, and then be able to do the unmounting of
+</I>&gt;<i> root.
+</I>&gt;<i>
+</I>&gt;<i> On Solaris machines you can switch to runlevel 1, and it does pretty
+</I>&gt;<i> much the same. Not that I get much time to play in that runlevel, our
+</I>&gt;<i> production machines are usually very busy.
+</I>&gt;<i>
+</I>&gt;<i> Don't you think it might be advantageous to have an init 7 command to
+</I>&gt;<i> drop a user into the keep? Or maybe use init 1 to drop one back into
+</I>&gt;<i> the keep without the shutdown trick.
+</I>&gt;<i>
+</I>&gt;<i> Thanks again for the tips...
+</I>
+I never use run level 1.
+I understand the concept.
+Yet I do not like the idea of a Sorcerer box
+entering runlevel 1,
+because the distro is designed to update
+without requiring a change in runlevel.
+
+Yes, telinit 7 could be made to close all getty
+and do an automatic root autologin on virtual console #1
+That provides a certain eloquence.
+Yet that method is also abrupt.
+
+A SA might want to login using virtual console #7
+before deciding to switch to runlevel 7.
+And if the SA makes that decision
+then the SA might not want the sudden change in view
+and the loss of command history
+for what was typed on virtual console #7.
+
+Switching to runlevel 1 is fine.
+It might not stop everything.
+It is not like runlevel 0 and 6.
+And runlevel 1 definitely does not stop the
+getty that are running on the real root file system.
+So it might not be as useful as running killall from runlevel 7.
+
+However, please beware that the last time I checked,
+which was about a decade ago,
+that the killall command does something different on Solaris.
+I vaguely remember a day when I vowed
+never again to invoke &quot;killall&quot; on a Solaris.
+And I rarely used &quot;killall&quot; in years except in an init-script.
+The subtle variations in command parameter arguments
+and order of parameters and the functions of commands
+gives me a preference for GNU's utilities over Solaris.
+It is almost like having two know separate dialects
+of a single language such as being able to communicate
+both in kantou ben and kansai ben of the Japanese language.
+Sorry, I digressed.
+
+Perhaps most of /etc/init.d/
+is also available in
+/etc.ori/init.d/
+
+/etc/rc.d/ can be regenerated from /etc/init.d/
+by running /lib/lsb/install_initd
+
+If I wanted to restore /etc/init.d/
+that I accidentally deleted
+then I would first use what exists in /etc.ori/init.d/
+And next I would probably allow cast to do the rest:
+
+# grep -r /etc/init.d/ /etc/sorcery/log/install/ |
+tr ':' '\t' | while read SPELL FILE; do
+[ -f $FILE ] || echo $SPELL; done |
+sed 's:.*/::' | augur begin
+
+Takes a little bit of time to recast software,
+so for an extra two lines I could have written
+the statement to extract from archives.
+Yet I normally consider archives to be the
+last possible choice before restoring from backup.
+If I accidentally dispelled &quot;make&quot;
+then naturally I would restore it from archive
+since a box can not make make without make.  :)
+
+Normally,
+# augur begin sorcery-md5sum
+
+would do all that fixing that I want.
+But it might currently be instructed
+to ignore checking the md5sums and
+existence of files in /etc/init.d/
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002163.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+	<LI>Next message: <A HREF="002164.html">[Sorcerer-admins] ssh on the move
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2165">[ date ]</a>
+              <a href="thread.html#2165">[ thread ]</a>
+              <a href="subject.html#2165">[ subject ]</a>
+              <a href="author.html#2165">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

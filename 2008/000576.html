@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lib64 references....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lib64%20references....&In-Reply-To=%3C8596d02a0806271626x68c1efa9jf902aefcf935cabb%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000574.html">
+   <LINK REL="Next"  HREF="000579.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lib64 references....</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lib64%20references....&In-Reply-To=%3C8596d02a0806271626x68c1efa9jf902aefcf935cabb%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lib64 references....">d3ck0r at gmail.com
+       </A><BR>
+    <I>Sat Jun 28 01:26:27 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000574.html">[Sorcerer-admins] lib64 references....
+</A></li>
+        <LI>Next message: <A HREF="000579.html">[Sorcerer-admins] lib64 references....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#576">[ date ]</a>
+              <a href="thread.html#576">[ thread ]</a>
+              <a href="subject.html#576">[ subject ]</a>
+              <a href="author.html#576">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay... so I am assuming that files in /etc/sorcery/log are what
+sorcery-alien uses to determine whether a given spell is known or
+alien... is that the only place to find such info?  cause like I said
+I did a 'grep libblk /etc/sorcery/log/* -R' and I don't see any
+reference to /lib64/libblk anything...
+
+it is a symlink... are you perhaps ignoring symlinks somehow?
+
+
+On Fri, Jun 27, 2008 at 3:02 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> aliens in /lib64 that
+</I>&gt;<i> do not show up from augur alien check?
+</I>&gt;<i> Very strange...
+</I>&gt;<i>
+</I>&gt;<i> # grep /lib64 /root/.sorcery/grimoire/sorcery-alien.d/alien
+</I>&gt;<i> DIRS='/bin /boot /etc /lib /sbin /usr /var /opt'; [ -d /lib64 ] &amp;&amp;
+</I>&gt;<i> DIRS+=' /lib64'
+</I>&gt;<i>
+</I>&gt;<i> Looks like it is included in the check.
+</I>&gt;<i>
+</I>&gt;<i> Modified configuration files causing sorcery-md5sum
+</I>&gt;<i> to recast spells merely due to configuration file changes?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> # grep /etc /root/.sorcery/grimoire/sorcery-md5sum.d/md5sum
+</I>&gt;<i> . /etc/sorcery/config
+</I>&gt;<i> SKIP='\:^/etc/init.d/:p;\:^/etc/:d'
+</I>&gt;<i>
+</I>&gt;<i> Looks like they are properly being skipped.
+</I>&gt;<i>
+</I>&gt;<i> I am baffled.
+</I>&gt;<i> Thanks for the bug reports,
+</I>&gt;<i> but I require more information
+</I>&gt;<i> or at the least to be able to recreate them.
+</I>&gt;<i> I will start by checking sorcery-alien.
+</I>&gt;<i> I just created /lib64
+</I>&gt;<i> and a file within it.
+</I>&gt;<i>
+</I>&gt;<i> # augur compile sorcery-alien | grep /lib64
+</I>&gt;<i> /lib64/hoho
+</I>&gt;<i>
+</I>&gt;<i> Worked as expected.
+</I>&gt;<i>
+</I>&gt;<i> I will check sorcery-md5sum now
+</I>&gt;<i> and send a follow up email if it
+</I>&gt;<i> detects any modified files in
+</I>&gt;<i> /etc/ ( and not /etc/init.d ) and
+</I>&gt;<i> attempts to recast those spells
+</I>&gt;<i> due to those files being modified.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000574.html">[Sorcerer-admins] lib64 references....
+</A></li>
+	<LI>Next message: <A HREF="000579.html">[Sorcerer-admins] lib64 references....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#576">[ date ]</a>
+              <a href="thread.html#576">[ thread ]</a>
+              <a href="subject.html#576">[ subject ]</a>
+              <a href="author.html#576">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

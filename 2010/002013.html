@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Was incommunicado for a while, but I am back.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Was%20incommunicado%20for%20a%20while%2C%20but%20I%20am%20back.&In-Reply-To=%3CAANLkTi%3D9njj2yaGJ%3D19kjNYW%2Bvj3329565nfdoEdVRFU%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002012.html">
+   <LINK REL="Next"  HREF="002014.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Was incommunicado for a while, but I am back.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Was%20incommunicado%20for%20a%20while%2C%20but%20I%20am%20back.&In-Reply-To=%3CAANLkTi%3D9njj2yaGJ%3D19kjNYW%2Bvj3329565nfdoEdVRFU%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Was incommunicado for a while, but I am back.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Nov 12 23:41:22 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002012.html">[Sorcerer-admins] 2g /boot
+</A></li>
+        <LI>Next message: <A HREF="002014.html">[Sorcerer-admins] Was incommunicado for a while, but I am back.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2013">[ date ]</a>
+              <a href="thread.html#2013">[ thread ]</a>
+              <a href="subject.html#2013">[ subject ]</a>
+              <a href="author.html#2013">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>My venerable computers have been falling apart.
+Unfortunately, the traditional fixes of scotch tape and bubble gum
+have been to no avail.
+So I bought a new case, motherboard, RAM, CPU and cobbled it together.
+I totally expected that would all I required, but I was wrong about that.
+
+First, I can not say enough bad things about ATI's pre-compiled binary
+drivers and/or chipset.
+Therefore, I will just begin with what seems most irritating.
+First, sometimes what they distribute is not always installable,
+compilable, or useable.
+Second, what they currently distribute is unable to compile
+the required kernel module that is required for OpenGL graphics.
+Fortunately, I found 3rd party patches that fixed that.
+Third, unless one uses the ATI catalyst control center in order to properly
+set the over-scan to 0% then ATI's graphics card sets a default
+over-scan of -15%
+which creates annoying black boarders making the screen smaller than
+it should be.
+The fix requires the X server to be configured without xinerama.
+If xinerama is enabled
+then compositing is disabled
+and all the beautiful KDE eye candy does not work.
+The mutually exclusive xinerama compositing support is the 4th irritation.
+ATI chipset can do OpenGL and play games.
+However, when pixel shading is enabled then
+it often displays images with black textures
+instead of the proper textures.
+That 5th issue would be sufficient to become
+the proverbial one too many hay straws
+that breaks the camel's back.
+However, a free game such as Perfect World International
+can be played with black textures
+for about 15 minutes before the X server locks up.
+The 6th issue of having the X server lock up is beyond tolerable.
+And if the X server locks up or must be restarted
+then there is a high probability that X will not be killed
+and that ATI's driver will print a message that
+&quot;[kernel] Fixing recursive fault but reboot is needed!&quot;
+ATI graphics cards and drivers are questionably or barely suitable for
+use on linux.
+Having the graphics card tell me to reboot my computer
+is the 7th final unacceptable miserable failed excuse
+for a manufacturer provided driver!
+
+Consequently, I bought a NVIDIA graphics card today.
+Although I have not installed it yet,
+NVDIA performance seemed satisfactory in the past.
+Provided the fan does not melt into place right away
+then perhaps it will last for a whole 6 months?
+Among the choices between ATI, Intel, and NVIDIA chipsets
+I am the least dissatisfied with NVIDIA's performance and
+quality of pre-compiled driver.
+
+The good news is that I now have an x86_64 workstation.
+I compiled an x86_64 Sorcerer and
+then moved that from /opt/x86_64/ to /
+while moving the old IA32 Sorcerer to /opt/ia32/
+So now I have a much better opportunity to do both
+compile and runtime testing of x86_64 software
+and also to make improvements concerning the
+installation of software on x86_64
+and also hone the method for keeping a choorted installation
+of Sorcerer IA32 in /opt/ia32/
+
+Probably with the exception of the people with legacy boxes
+and those who purchased laptops or mini-notes with early versions of the Atom
+microprocessors which lacked long mode support
+then almost everyone has at least one x86_64 box.
+And now I am also on-board due to my favorite 10+ year old computers
+dying in ways which standard solutions failed to fix.
+
+Not everyone would understand the value of keeping an IA32
+installation in /opt/ia32.
+And yes, doing so is completely optional.
+However, it is useful for running win32 applications in wine
+or any pre-compiled commercial software that requires ELF32 libraries.
+Some software a SA will have to chroot into /opt/ia32/ to run
+as I did when testing the ELF32 vs ELF64 firefox with macromedia flash plugin.
+However, some ELF32 software can be run directly without chrooting
+and it will run because the directories holding ELF32 libraries
+are also included in /etc/ld.so.conf
+and therefore indexed in /etc/ld.so.cache
+
+The reason I was testing firefox was for Evert,
+who wants flashplugin to work to work with x86_64 firefox.
+And the results are that flashplugin works just as good or just as
+lousy in both.
+The x86_64 box has nearly the same software available for installation
+with less than a 1% difference as compared to IA32.
+Software tends to work equally good in both installations.
+So SAs are welcome to run either one.
+
+So what are the advantages to using x86_64 over IA32.
+I only know a few of them.
+First, programs can address up to nearly 64G memory.
+On IA32, even with a PAE enabled kernel,
+an individual program was still limited
+to the amount of memory it could address.
+Therefore the amount of data that an individual program
+could have in RAM at a time was about 3G
+Fortunately, that is not usually a concern unless somone
+is running a GTLD name server on bind
+or some other program that uses an enormous amount of RAM.
+
+Secondly, x86_64 has more CPU registers available.
+In theory this enables the compiler to store more data
+in the CPU registers at a time and thus possibly use
+the stack space in RAM less often for pushing and popping registers.
+Saving on the use of push and pop instructions is a possible gain
+although data saved on the stack is more likely to remain in the CPU's RAM cache
+than be transferred all the way out to the RAM chips and back when needed again.
+
+Third, floating point mathematics is accomplished
+with SSE instructions by default on x86_64.
+On IA32 the 80x87 instructions are used instead.
+Although I have only tested the speed of SSE vs 80x87 instructions on
+an Athlon-XP
+the performance of floating point intensive programs was identical.
+So what are the advantages of using SSE instead of 80x87 on x86_64?
+First, there are more SSE registers.
+Secondly, the MMX instructions share the same registers
+as used by the 80x87 on all architectures.
+Therefore, if the 80x87 is not in use
+then those registers can be dedicated for exclusive use by MMX instructions
+instead of having to switch modes to use it for one or the other.
+
+Some people might say that the 64 bit registers of an x86_64 are an advantage.
+However, most sources are designed
+to be able to compile and run on both
+IA32 and x86_64 architectures.
+Consequently, most programs are entirely sufficient
+with using 32-bit integers and 32-bit pointers.
+However, by default on x86_64 architecture
+unless a program's source specifies that an integer should be 32-bit
+then both integers and pointers are 64-bit.
+Is this good?
+Technically, storing 64-bit integers and 64-bit pointers in RAM
+requires twice as much RAM as using 32-bit integers and 32-bit pointers.
+When more RAM is used then programs must page fault more often
+to have RAM mapped into address space.
+Consequently, programs run slower.
+Whether 64 bit integers and 64 bit pointers is a boon or a bane
+becomes more a matter of preference and programming style.
+However, I can not estimate if the boon of additional registers
+more than compensates for the use of additional memory.
+It probably would vary depending upon the program being run.
+
+Overall an x86_64 operating system is not all cake and candy.
+However, in some important ways it exceeds IA32.
+SAs that do an x86_64 installation with separate IA32 installation in /opt/ia32/
+can enjoy a good compromise of both types
+that should be capable of running nearly anything desired.
+
+Augur has a useful command
+for assisting a SA with an /opt/ia32/ installation.
+Please see
+# augur help ia32
+for a detailed description of how it works.
+
+In summary no need to run out and buy new boxes to run Sorcerer on.
+IA32 support is not going away.
+However, the lowest architecture supported with
+the next set of Install/Rescue images
+will be the i686 architecture.
+Initially I wanted 3 Install/Rescue images.
+x86_64 which is SMP,
+ia32-SMP which is SMP
+ia32-UP which has a non SMP and non PAE enabled kernel.
+The reason for IA32-UP is most useful only for the pentium-M
+microprocessor which was the only microprocessor of the i686
+generation that lacked PAE instructions.
+
+Currently, I am waffling about whether I want to create and provide
+the IA32-UP Install/Rescue disk.
+I will skip the long explanation.
+A pentium-m with 1G of 400Mhz DDR2 RAM is a formidable and useful laptop
+that is even powerful enough to be used to watch shows on hulu at
+adequate frame rate,
+while running at the lowest CPU clock speed of 600Mhz.
+However, the use of such laptops today might be rare.
+I administrate just one laptop like that.
+Does anyone want to admit running Sorcerer on a pentium-m?
+If not then I might choose not to provide an IA32 UP-non-PAE
+Install/Rescue image
+since most distributions provide PAE enabled kernels by default.
+Pentium-M became useless for deploying most linux distributions
+merely for that one minor omission of the PAE instructions.
+That decision long ago probably forced pentium-m out of the consideration
+for use of of running distributions which provide and run the linux kernel.
+
+
+Due to computer failures and
+my purchase of parts to create an x86_64 workstation
+the November 1st target for new Install/Rescue ISO9660 images
+was completely not met and now considered aborted.
+Sorry for anyone holding out for the multipathd related fix
+for the Install/Rescue images.
+After the dust settles
+then we can aim for a December 1st release.
+Sorry for the inconvenience.
+
+If I am slow in answering emails,
+sorry, I was neglecting my box for a few days.
+I was transferring disks from my old workstation
+to my new workstation and due to the complications
+with ATI's drivers I was most of the time
+without a usable X server and could not run mozilla firefox.
+But I did commit some useful bug fixes into the svn grimoire
+while I was compiling software.
+Hopefully that will help squish bugs that were inferred,
+but not reported in detail.
+And to be blunt about it
+starting with an x86_64 I/R and compiling a full box
+with KDE and xorg was very straight forward and simple.
+It was a good experience.
+Yet I was slightly dismayed.
+I hope to dig uncover bad bugs and make many fixes.
+The grimoire is in good condition.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002012.html">[Sorcerer-admins] 2g /boot
+</A></li>
+	<LI>Next message: <A HREF="002014.html">[Sorcerer-admins] Was incommunicado for a while, but I am back.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2013">[ date ]</a>
+              <a href="thread.html#2013">[ thread ]</a>
+              <a href="subject.html#2013">[ subject ]</a>
+              <a href="author.html#2013">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

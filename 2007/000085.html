@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/networks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C596b75860704121935t3077ac76s7119add7c81d1437%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000081.html">
+   <LINK REL="Next"  HREF="000088.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/networks</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C596b75860704121935t3077ac76s7119add7c81d1437%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/networks">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Apr 13 04:35:55 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000081.html">[Sorcerer-admins] /etc/networks
+</A></li>
+        <LI>Next message: <A HREF="000088.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#85">[ date ]</a>
+              <a href="thread.html#85">[ thread ]</a>
+              <a href="subject.html#85">[ subject ]</a>
+              <a href="author.html#85">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 4/12/07, malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+&gt;<i> Kyle Sallee a &#233;crit :
+</I>&gt;<i> &gt; On 4/11/07, malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> well I don't think so, anyway when you install sorcerer you read the
+</I>&gt;<i> readme and well it's not difficult to understand that each directory in
+</I>&gt;<i> /etc/networks.d represent a network and each script in that network is
+</I>&gt;<i> tried until one success
+</I>
+It was not obvious to me and I designed it and wrote the readme file.
+each file directly in /etc/networks.d/
+represents either a network or networks.
+Each file is executed with start on start and stop on stop.
+It should return 0 if successful 1 if not successful.
+There is need for a nest of subdirectories in /etc/networks.d/
+
+Yes templates can not merely be cat together.
+Having a template raise more than one network
+can require significant modification.
+
+However, let us say that I redo it.
+Any directory, except the example directory
+under /etc/networks.d/ becomes a directory that
+represents a group of networks to be started and stopped together.
+
+For this example let
+/etc/networks.d/0_home/eth0
+/etc/networks.d/0_home/pppoe
+
+/etc/networks.d/1_office/dhcp
+/etc/networks.d/1_office/wlan0
+
+Something like the above.
+
+The box is at home
+The box is booted.
+The ISP is flaking.
+However, eth0 comes up fine.
+Should the networks in /etc/networks.d/1_office also be raised or not?
+
+The box is at the office.
+It is booted.
+It starts with /etc/networks.d/0_home/eth0
+success even though the box is at home.
+The SA did not modify the script correctly to check DNS.
+/etc/networks.d/0_home/pppoe fails
+Does /etc/init.d/networks try to raise networks in
+/etc/networks.d/office ?
+It already raised one network in /etc/networks.d/0_home.
+
+As I stated before.
+There is far too much ambiguity in what is proper to be done
+with multiple networks being raised from modified templates
+stored in a directory that represents a location.
+
+Now let us say there are just these two
+
+/etc/networks.d/0_home
+/etc/networks.d/1_office
+
+/etc/init.d/networks does not care if one or more networks is raised
+by 0_home or 1_office.
+All it cares about is the exit value when run.
+So it first runs 0_home
+does it exit 0?
+Yes.  no need to run 1_office.
+No, time to run 1_office
+
+That is simple.
+That is clear.
+This way the SA can define whether or not if one only one network
+is raised in 0_home if that constitutes a success or a failure.
+For example eth0 might be possible to establish at both home and office.
+However, home is not home unless pppoe also raises.
+Therefore, the SA can modify the template so that a failure of pppoe
+exits 1 and therefore 1_office receives a chance at being raised.
+
+
+&gt;<i> all networks have to be considered independant and should be tried to get up
+</I>&gt;<i> if fact the current method is by far less usefull than the previous
+</I>
+All networks are not independent.
+They may depend upon location.
+pppoe may depend on eth0 being raised first.
+pppoe may create and use a virtual device by virtual device
+runs through the actual hardware device eth0, yes?
+Likewise if one us using many wlan wireless networks
+then the network to connect to probably depends on
+where the box happens to be.
+Therefore, if connecting to one fails
+then the attempt of another
+depends on the first attempt failing.
+
+
+&gt;<i> /etc/init.d/network one....  because you can't have several network up
+</I>&gt;<i> and catenate template isn't a solution... what if I want to restart my
+</I>&gt;<i> pppoe without dropping my eth0?
+</I>
+That is an excellent point.
+And it is not something that is addressed by this design.
+/etc/init.d/networks is supposed to run at startup and shutdown.
+It connects to all the networks it is supposed to and disconnects
+from all the networks it is supposed to.
+That is what it is designed to do.
+It is not designed to be invoked:
+/etc/init.d/networks stop pppoe
+/etc/init.d/networks start pppoe
+But it would have to be in order to satisfy your request.
+Because an invocation of /etc/init.d/networks stop
+would attempt to drop all your connected networks
+irregardless of whether they are defined as:
+
+/etc/networks.d/0
+/etc/networks.d/1
+or
+/etc/networks.d/0/a
+/etc/networks.d/0/b
+/etc/networks.d/1/a
+/etc/networks.d/1/b
+
+You would require something more like
+
+/etc/init.d/networks stop 0/a
+in order to specify the precise network to be disconnected.
+
+If you want that then please make and test the
+changes to networks in the svn grimoire.
+Please maintain backward compatibility
+so that after the spell updates boxes continue
+to be able to start their networks upon boot as they
+are currently defined by files directly within /etc/networks.d/
+Please exclude /etc/networks.d/templates/ directory
+Please only invoke executables located in /sbin and /bin
+Do not invoke /usr/bin/find, for example.
+Please try to keep it simple.
+The way /etc/init.d/networks is now is very easy for me to see
+at a glance what it does and to be able to modify it.
+The next person would appreciate if it could remain equally as easy to follow.
+
+Good luck with the modifications.
+
+
+&gt;<i> maybe the best is to provide templates to copy to /etc/init.d....
+</I>
+It might be a bit difficult to have them execute in proper order
+if they existed in /etc/init.d/
+Modified templates are fine within /etc/networks.d/
+The control for what should execute in /etc/networks.d/
+should be supplied by /etc/init.d/networks
+If it were easier the other way around I would have kept
+it the way it was before when such things as
+
+/etc/init.d/eth0
+/etc/init.d/network
+/etc/init.d/ppp0
+/etc/init.d/dhcpcd
+
+and such existed in the /etc/init.d/ directory
+Tried it, ran with it, discard it.
+/etc/networks.d/ is better.
+
+
+&gt;<i> no, I created the spell recently after getting my ipv6 tunnel and beeing
+</I>&gt;<i> unable to use ifconfig to set ip
+</I>
+created the iproute2 spell?
+
+   VERSION=(                 &quot;2.6.19-061214&quot; &quot;2.6.18-061002&quot;
+&quot;2.6.16-060323&quot; &quot;2.6.15-060110&quot; &quot;2.6.15-060110&quot; &quot;2.6.14-051107&quot;
+&quot;051007&quot; )
+
+It has many old versions in the version array.
+Am I misunderstanding?
+
+
+&gt;<i> well net-tools lack lot of ipv6 features in fact.... all people I asked
+</I>&gt;<i> told me to drop it....
+</I>
+Okay then.
+Let's go over to iproute2.
+Please make iproute2 a requirement for networks
+and go ahead and modify the templates accordingly.
+
+&gt;<i> no we don't althought it's better to have uniform interface....
+</I>&gt;<i> the good thing with ip is also that it can handle route, providing a
+</I>&gt;<i> single way to configure everything related to ip
+</I>
+That probably shaves 5 thousands of a second off the boot time.  :)
+But what if we want to change the routing table on the fly to add or
+remove a default route for example.
+Must we also adjust an interface?
+
+
+&gt;<i> you can use ipv6 and ipv4 at the same time without problem
+</I>&gt;<i> for example I have both since I use a tunnel to connect to the 6thbone....
+</I>
+That is how I used to do it, a long time ago.
+However, I wonder if tunneling IPv6 through IPv4 looses
+some of the advantages of IPv6 such as multi-casting?
+Anything interesting on the mbone these days?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000081.html">[Sorcerer-admins] /etc/networks
+</A></li>
+	<LI>Next message: <A HREF="000088.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#85">[ date ]</a>
+              <a href="thread.html#85">[ thread ]</a>
+              <a href="subject.html#85">[ subject ]</a>
+              <a href="author.html#85">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] cast : some annoying problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cast%20%3A%20some%20annoying%20problems&In-Reply-To=%3C596b75860702020426y538ba664o5b08714fc0c50c2d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000033.html">
+   <LINK REL="Next"  HREF="000034.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] cast : some annoying problems</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cast%20%3A%20some%20annoying%20problems&In-Reply-To=%3C596b75860702020426y538ba664o5b08714fc0c50c2d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] cast : some annoying problems">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Feb  2 13:26:00 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000033.html">[Sorcerer-admins] cast : some annoying problems
+</A></li>
+        <LI>Next message: <A HREF="000034.html">[Sorcerer-admins] Sorcerer in 2007...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have 4 boxes deployed with transparent decompression.
+cast supports it if:
+
+1. fuse is installed
+2. fuse.gunzip is installed
+3. reduce feature is enabled
+4. Sufficiently, larger enough /tmpfs mounted on /dev/shm
+    providing POSIX SHM.
+5. fuse.gunzip is actively providing the overlay for /usr
+   when a spell is cast
+6. Then, the files reduced will depend upon
+    what function is used to identify which files should be compressed.
+7. The default is not to reduce files that are not fragmented.
+
+It is entirely possible that it can be active and have do nothing.
+If /dev/shm is entirely filled because it is smaller than 96M
+then fuse.gunzip may cause some very spectacular
+malfunctions when reading files.
+
+A sure way to see if it active is to:
+
+# ls -lah /dev/shm
+-rw-------  1 root root  11K Feb  2 02:50 .10864.1169611210.349557.773.0.fguz
+-rw-------  1 root root 109K Feb  2 04:32 .110796.1170356374.362727.773.0.fguz
+-rw-------  1 root root  12K Feb  2 02:51 .11348.1166657081.334546.773.0.fguz
+-rw-------  1 root root 112K Feb  2 00:58 .114252.1168607572.311994.773.0.fguz
+
+If it is working then files such as those above with the
+leading dot and the extention of .fguz will be present.
+Chances are it is not working if you saw no changes
+in the disk free space as reported by df -a
+
+Problems with cast glibc are usually do to either:
+1. Untracked glibc library files exist in /lib or /lib64
+2. The install log for the currently installed glibc is incorrect.
+
+Unlike other spells cast glibc can malfunction
+spectacularly if the above 2 conditions exist.
+Generally, the combination of the library cache
+along with sorcery's immune system should not
+allow for a box to break so bad that bash can not be run.
+That would be a problem that could require an I/R to fix
+when no root login shell is currently open when it happens.
+
+Here is a simple tests you can try to verify transparent
+decompression works, after you verify the tmpfs on
+/dev/shm is at least 128M.  :)
+
+reduce /usr/bin/eject
+/usr/bin/eject --help
+A .fguz file for /usr/bin/eject will appear in /dev/shm
+The name of it will not be eject, of course.
+The name shows information that is used to identify the file
+and ensure that the cached result presented transparently
+matches for /usr/bin/eject.
+Therefore, if /usr/bin/eject was modified, such as a new one
+was installed by cast eject, then the old cached results would
+not be used by mistake instead of providing transparent
+decompression for the newly installed /usr/bin/eject
+
+Transparent decompression for /usr is rather dramatic
+after a box has time to get used to it.
+Savings upwards of 2/3rds can be achieved
+while providing faster than normal file access.
+It's like a win/win scenario.
+
+The only thing that transparent decompression takes a big hit for
+is using reduced files for ELF libraries when ldconfig is executed.
+Consequently, the default method for selecting files to reduce is
+to omit the reduction of ELF libraries installed in /usr/lib and /usr/lib64
+I will skip the technical explanation why this is so.
+
+Using fuse.gunzip on my new versions testing box practically means
+that I never have to uninstall software in order to regain space.
+I originally made the / partition smaller than what the box's current task,
+because I expected to deploy it as a workstation instead.
+
+It is a much better solution than backup, re-installation,
+and re-deployment of a box if one wants to stretch out
+a few more years out of it.
+You can even remove the mount --binds from /etc
+that mount for example /var/opt as /opt.  :)
+
+In my next release of fuse.gunzip I will probably make it
+so that fuse.gunzip automatically limits the cache size
+to 3/4th the size of the tmpfs mounted on /dev/shm in
+order to avoid a potential problem with /dev/shm
+becoming full on boxes with little RAM installed.
+
+
+On 2/1/07, jlm alias cityhunter &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jlm_devel at laposte.net</A>&gt; wrote:
+&gt;<i> hello! today is again the day of problems (I love thoses days!)
+</I>&gt;<i> ok I activate compression of /usr (by the way I see no diff  :
+</I>&gt;<i>
+</I>&gt;<i> fuse.gunzip           3.8G  2.7G  1.1G  73% /media/fuse/gunzip
+</I>&gt;<i> /dev/root             3.8G  2.7G  1.1G  73% /media/fuse/usr
+</I>&gt;<i> none                  2.0G  8.0K  2.0G   1% /media/fuse/usr/src/sorcery
+</I>&gt;<i> fuse.gunzip           3.8G  2.7G  1.1G  73% /usr
+</I>&gt;<i> /dev/hda7              23G  3.8G   19G  17% /media/fuse/home
+</I>&gt;<i> fuse.gunzip            23G  3.8G   19G  17% /home
+</I>&gt;<i>
+</I>&gt;<i> )
+</I>&gt;<i>
+</I>&gt;<i> and I decided to recast everything (for the fun!)  so I done a
+</I>&gt;<i> # cast -c $(augur installed)
+</I>&gt;<i>
+</I>&gt;<i> it started fine but once again when glibc comes into play it's dramatic !
+</I>&gt;<i> this morning when I came back I had most of my application killed and
+</I>&gt;<i> hopefully one still running terminal in root (else I will have had real
+</I>&gt;<i> trouble)
+</I>&gt;<i>
+</I>&gt;<i> first I had ncurses dispelled and then no new bash available hopefully
+</I>&gt;<i> tar was still working and I could untar it from /var/cache/archive
+</I>&gt;<i> after grep required libpcre and then cast wasn't working and same
+</I>&gt;<i> problem same solution....
+</I>&gt;<i> and well after that I could launch some xterm again and tried a su....
+</I>&gt;<i> shadow was missing! same problem same solution
+</I>&gt;<i> after that some cast were failing.... looking compile log I found that
+</I>&gt;<i> there was include problem... looking /usr/X11R6 directory.... I had bin
+</I>&gt;<i> include and man file instead of symlinks to ../bin ../include ../man
+</I>&gt;<i>
+</I>&gt;<i> after that everything gone fine
+</I>&gt;<i>
+</I>&gt;<i> it's not the first time that I have this problem... and most of the time
+</I>&gt;<i> it comes after glibc cast.....
+</I>&gt;<i>
+</I>&gt;<i> I thinks that for packages that support DESTDIR install it would be
+</I>&gt;<i> great to use this feature to install brand new compiled packages into
+</I>&gt;<i> some temporary dir, to create an archive from this and AFTER to dispell
+</I>&gt;<i> and untar.... this will prevent partial installs and risk of having
+</I>&gt;<i> something required dispelled that will prevent install to complete....
+</I>&gt;<i>
+</I>&gt;<i> $ldd $(which tar)
+</I>&gt;<i>         linux-gate.so.1 =&gt;  (0xffffe000)
+</I>&gt;<i>         librt.so.1 =&gt; /lib/librt.so.1 (0xb7eca000)
+</I>&gt;<i>         libc.so.6 =&gt; /lib/libc.so.6 (0xb7db8000)
+</I>&gt;<i>         libpthread.so.0 =&gt; /lib/libpthread.so.0 (0xb7da6000)
+</I>&gt;<i>         /lib/ld-linux.so.2 (0xb7eef000)
+</I>&gt;<i> $ldd $(which rm)
+</I>&gt;<i>         linux-gate.so.1 =&gt;  (0xffffe000)
+</I>&gt;<i>         libc.so.6 =&gt; /lib/libc.so.6 (0xb7e45000)
+</I>&gt;<i>         /lib/ld-linux.so.2 (0xb7f69000)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> so those 2 utils required to dispell and to install only require
+</I>&gt;<i> glibc... the less requirement the less problems we will have...
+</I>&gt;<i>
+</I>&gt;<i> best regards,
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000033.html">[Sorcerer-admins] cast : some annoying problems
+</A></li>
+	<LI>Next message: <A HREF="000034.html">[Sorcerer-admins] Sorcerer in 2007...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#36">[ date ]</a>
+              <a href="thread.html#36">[ thread ]</a>
+              <a href="subject.html#36">[ subject ]</a>
+              <a href="author.html#36">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

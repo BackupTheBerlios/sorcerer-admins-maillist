@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] plan c...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20plan%20c...&In-Reply-To=%3C596b75860812101418h71526349v1094c92c2c534df9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000914.html">
+   <LINK REL="Next"  HREF="000893.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] plan c...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20plan%20c...&In-Reply-To=%3C596b75860812101418h71526349v1094c92c2c534df9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] plan c...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Dec 10 23:18:32 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000914.html">[Sorcerer-admins] plan c...
+</A></li>
+        <LI>Next message: <A HREF="000893.html">[Sorcerer-admins] network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#918">[ date ]</a>
+              <a href="thread.html#918">[ thread ]</a>
+              <a href="subject.html#918">[ subject ]</a>
+              <a href="author.html#918">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Dec 9, 2008 at 12:52 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> What is estimate to build whole world with 2 or 4 CPU cores (Q6600) and 1 or
+</I>&gt;<i> 2 GB RAM?
+</I>&gt;<i> Just thinking when we get buildboxes would be better to build eg. whole
+</I>&gt;<i> world weekly/dayly/monthly and of course we need to build both 32-bit and
+</I>&gt;<i> 64-bit versions. Thats a lot of CPU cycles there.
+</I>
+It is many CPU cycles.
+Unfortunately, there is no estimate on compiling the entire grimoire.
+Even the amount of time required to compile individual spells is not
+entirely known because it depends on unknown factors such as
+the overall power of the box, the filesystem type, the additional load,
+and of course which optional requirements are selected for spells.
+
+&gt;<i> I actually do run several Sorcerer based servers on production here, SMTP
+</I>&gt;<i> gateways, Reverse proxy servers, Web servers, Repository servers, etc you
+</I>&gt;<i> name it.
+</I>&gt;<i> So on those boxes i like stability (=if its working i dont have urge to
+</I>&gt;<i> update it, perhaps couple times a year only at most) and security fixes but
+</I>&gt;<i> on other hand got couple dev boxes too where i could update daily or weekly.
+</I>
+Could yes, should maybe not.
+The dev boxes should have the same configuration as the production boxes
+to ensure that the compilation success on the production boxes is
+commensurate with compilation success on the dev boxes.
+However, if a dev box has spare CPU cycles
+then it can be used to compile Sorcerer chrooted
+and have an entirely different loadout of software.
+In this fashion one dev box can exist and be tested
+for all the production boxes.
+However, that might or could still cut corners a bit since
+services should also run on a dev box so that the SA can
+also check to see how the webserver continues to run or crash
+following updates, etc...
+
+Now that virtual machine emulation is becoming more trivial with
+CPU extensions on more modern CPUs
+One physical dev box can stand be used more easily to test
+many production boxes.
+
+&gt;<i> It can be difficult to run augur sync on servers where you have ancient
+</I>&gt;<i> version of sorcery tools and ancient grimoire, so what i would like to have
+</I>&gt;<i> is also that we support better server environments too, like it would be
+</I>&gt;<i> nice to maintain sorcerer infrastructure on up-to-date on those boxes but
+</I>&gt;<i> perhaps i like to run old versions if they do run ok, i dont have always
+</I>&gt;<i> need to run latest versions but of course security fixes i like to run to
+</I>&gt;<i> production more often if needed and they are available.
+</I>
+I really am trying to do what I can about that.
+The sorcery spell for example has lines it it such as:
+
+    stable photon-20081128-1 photon-20081121-0
+[[ -z $VERSION ]] &amp;&amp;
+ VERSION=( photon-20081128-1 )
+       url <A HREF="http://sorcerer.silverice.org/download/sorcery/">http://sorcerer.silverice.org/download/sorcery/</A>
+       URL=<A HREF="http://sorcerer.silverice.org/download/sorcery/">http://sorcerer.silverice.org/download/sorcery/</A>
+    source sorcery-$VERSION.tar.bz2
+    SOURCE=sorcery-$VERSION.tar.bz2
+
+That way boxes updating from a sorcery so old that it does not
+support the function driven grimoire can sitll have VERSION URL and SOURCE
+set correctly for being able to download the newer sorcery.
+But eventually even that should be dropped.
+I was thinking about dropping it sometime in December.
+Oh look, it is December already.
+
+The more backward compatibility that I try to maintain
+the more strange unexpected problems can become.
+
+
+&gt;<i> So to me transition between sorcerer versions is important.
+</I>
+Leaping sorcery more than 3 months at a time is hazardous.
+The larger the leap the larger the risk.
+
+Chances are glibc does not compile at the moment.
+It is probably due to the update of some other software
+that is used during glibc compilation.
+So if a box is so old that it leaps up a new sorcery and
+a new glibc then chances are the new glibc might not compile.
+It is on my extremely long list of things todo
+to check and fix glibc compilation.
+
+Sorcerer is optimal for doing monthly updates.
+Even 3 month updates provides reasonable performance.
+But long leaps encounter unanticipated problems because
+there is not a Sorcerer box doing regular full compilations
+of the grimoire to check if updates cause instability with
+software that previously compiled fine.
+
+&gt;<i> Like if i have one year old server
+</I>&gt;<i> not in sync and i would like to sync it then i would like to be sure its
+</I>&gt;<i> going to be ok todo. So i tend to freeze my versions quite an often and like
+</I>&gt;<i> to have more support on that. There is &quot;augur progress&quot; and its good to have
+</I>&gt;<i> after so long time, just wondering how to bring my machines to up to date
+</I>&gt;<i> and convert them to use augur progress on easy way.
+</I>
+The conversion code is probably still in the sorcery spell.
+But other code may not still be there or it may be commented out.
+The ldd or elf logs of the older boxes may be in an old format
+that either should be converted to the new format or will not
+work properly at all and simply be ignored.
+Therefore, such boxes may update software yet not automatically
+detect and repair spells that have ELF breaks.
+
+Please take a good look at the sorcery spells post_install and
+see if there is something in there that looks as if it should be
+re-enabled for the update of your boxes.
+Over the course of a year or maybe longer....
+1. single column ldd logs became single column elf logs.
+2. later single column elf logs became dual column elf logs.
+3. later dual column elf logs became 3 column elf logs.
+Sometime or another id logs entirely vanished.
+And of course other changes have happened.
+Logs that were previously kept in /etc/sorcery/log/
+have been moved to /var/log/sorcery/
+because those logs can be safely removed withot
+disrupting sorcery's performance.
+
+And one of the larger changes of 2008 was the fixing of
+kde3 to install in /opt/kde3 and the introduction of kde4
+to install in /opt/kde4
+Also Sorcerer gained much better init-scripts and init-script handling
+and awesome support for booting from initramfs.
+
+2008 was supposed to be a sleepy year at first,
+but instead everything changed.
+Even sorcery changed a great deal with the introduction of
+modularized methods for cast leech and especially augur.
+
+
+&gt;<i> Could it be also possible to split security related information out from
+</I>&gt;<i> full sync?
+</I>
+Only if spell format was set in stone.
+And it is not.
+The format for spells is always open for improvement.
+
+&gt;<i> If you are admin you might want to know if there are security
+</I>&gt;<i> related updates available in grimoire. Sort of process where it would
+</I>&gt;<i> compare installed versions against secure version progress, &quot;augur
+</I>&gt;<i> newer_secure&quot; ?
+</I>
+One can always download a newer grimoire and grep
+for the word security and see.
+There were plenty of security updates in 2008.
+I understand this a big pain.
+
+However, what was originally intended is for SAs to continue
+syncing on a regular basis and to control what software was updated
+by using hold and sold.
+Now it is intended that boxes regular sync
+and that the update of installed software is controlled using version progress.
+See # augur help progress
+If a box is not synced then many benefits are lost.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000914.html">[Sorcerer-admins] plan c...
+</A></li>
+	<LI>Next message: <A HREF="000893.html">[Sorcerer-admins] network
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#918">[ date ]</a>
+              <a href="thread.html#918">[ thread ]</a>
+              <a href="subject.html#918">[ subject ]</a>
+              <a href="author.html#918">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

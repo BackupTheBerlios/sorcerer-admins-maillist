@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery scan
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20scan&In-Reply-To=%3CCA%2BT4wDh-xJPb_pf-2L2ue0wbV2MByZvirOOLKFz-4PMr%3DxSJfA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002467.html">
+   <LINK REL="Next"  HREF="002469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery scan</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20scan&In-Reply-To=%3CCA%2BT4wDh-xJPb_pf-2L2ue0wbV2MByZvirOOLKFz-4PMr%3DxSJfA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery scan">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Oct 11 04:53:44 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002467.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+        <LI>Next message: <A HREF="002469.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2468">[ date ]</a>
+              <a href="thread.html#2468">[ thread ]</a>
+              <a href="subject.html#2468">[ subject ]</a>
+              <a href="author.html#2468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>More exciting useful functionality is arriving with sorcery scan.
+Foremost as the name indicates; it provides scanning.
+Scanning provides verification of integrity and existence
+for significant spell installed files.
+If the outcome of scanning is Fail Scan
+then the spell is added to load and moil queues
+so that it can be re-installed.
+This helps protect against both accidental modification and file corruption.
+
+Scanning of important files per installed spell is I/O intensive.
+Therefore, scanning happens no more frequently
+than once per boot or once per day.
+Running # augur begin
+either directly or tacitly also begins scanning.
+Scan runs as a sorcery utility that avoids competition for I/O
+with other potentially I/O intensive utilities such as:
+lade; post; reap; rush; save; sign; till.
+Therefore, it's utilization of I/O should not cause a performance to
+decline.
+
+Also scanning of spell installed files attempts
+to avoid deluging the kernel's block cache.
+That way scanning concurrently with moiling
+should mitigate additional cycles delegated to waiting
+while ensuring that the file content being checked
+is retrieved from a block device
+rather than being provided by the kernel's block cache.
+
+The scan utility of sorcery deprecates the usefulness
+of the spell: immune-exam-scan.
+The spell with the solo trait required both time and resources
+to accomplish it's task no more frequently than weekly.
+In contrast the opportunity to more frequently scan spell installed files
+via the scan sorcery utility provides faster detection and remedy
+of potential problems involving installed spells.
+
+Root file systems that are updated weekly instead of daily
+will be running scans weekly instead of daily.
+Consequently, most fixed disks will not receive additional
+stress and utilization beyond what is currently expected
+when the spell immune-exam-integrity is installed.
+
+With that much written, perhaps I seem excited about scanning?
+Actually, I am glad to have the functionality re-integrated with sorcery.
+It fully benefits from the modular task delegated design
+of the modern sorcery utilities.
+
+However, I am excited about something new
+which I call spell ownership of files.
+I began using Linux when the maximum amount of UID was 2^16.
+I knew it would increase someday, but I failed to pay attention.
+Linux always provides plenty of new and exciting features to entice
+attention.
+However, it did increase.
+It is now 2^32.
+For most forms of utilization 2^32 seems tiny.
+It is approximately 4 billion which is not unimaginably large as compared
+to 2^64 which is the typical size of registers for most of our CPUs.
+Even so 4 billion is plenty large when compared
+to the amount of user accounts typically provided on a root file system.
+It was large enough for me to consider that plenty of space
+would remain available if spells were allowed
+to own the files that spells installed.
+
+The idea sounds good thus far, does it not?
+The only few exceptions would be files that require
+a special user or group ownership and that perhaps also have
+the SUID or GUID bits set.
+And some other additional exceptions would exist.
+However, primarily most files are ownership 0:0 mode 644 or 755
+The file's UID ownership could be 0 or any other number provided
+that number is not assigned to a user account.
+Consequently, I decided to allot the upper 2^20th potential UIDs to sorcery.
+That grants approximately a million UIDs to sorcery utilization.
+That might seem small, especially compared to 4 billion,
+but a million is more than sufficient.
+
+For the sake of mitigating kernel RAM utilization;
+the ownership of those UIDs are not recorded in /etc/{group,passwd} files.
+I briefly considered the idea and decided that the convenience
+of having ownership displayed when invoking ls -la is unworthy
+of the cost in caching /etc/passwd and resolving the number
+to name association when utilities request it.
+Consequently, the ownership is not recorded there,
+but instead recorded in file /aux/log/own
+That way if a file exists and seems to be an alien
+then the UID of the file resolved with the help of /aux/log/own
+might reveal the name of the spell and it's version which installed the
+file.
+That is a potential exciting way of identifying aliens
+especially when old Pass Post event logs were disposed.
+And the truly mysterious aliens would be those
+which have a UID ownership of 0 rather than a UID
+within the spell owned range.
+
+The idea of expressing ownership with the installation of a file
+has been on my mind for a considerable time.
+Originally, I wanted to implement the functionality using
+the extended attribute system provided for EXT and XFS file systems.
+However, extended attributes are not supported on all file systems.
+And extended attributes create an additional invisible file
+that utilizes additional disk space.
+I forgot the amount of utilization.
+However I determined that extended attributes
+utilized excessive file system space
+when granting extended attributes for every spell installed file.
+
+Fortunately, the re-purposing of the UID ownership of a file
+provides nearly full functionality while at the same time
+mitigating additional file system space utilization.
+The one drawback is the necessity of an uncorrupted
+mapping file to resolve the association between UIDs
+and the spell name and version which installed it.
+
+The new spell ownership of installed files is enabled by the &quot;own&quot; feature.
+Those who dislike the idea can omit enabling the feature.
+Newly deploy root file systems where the SA has not selected
+a feature set will have the &quot;own&quot; feature enabled by default.
+That is because the feature is better to enable than to not have.
+
+Since I was excited about the new &quot;own&quot; feature I implemented it.
+I have not yet implemented an augur command that allows a SA
+to display the ownership of a file based upon the UID of the file
+and the information contained in the map.
+However, the thought is on my mind.
+
+My hope is that the mapping information will become more useful
+for the task of automatic disposal of aliens.
+Eventually, I plan to upgrade the init-script that allows
+aliens to be discovered and for the SA to select
+a disposition for those aliens such as to allow the alien to remain
+by granting a visa or to deport the alien to a location that resides
+outside of PATH and library directories specified in /etc/ld.so.conf
+Ideally, I want for most aliens to be automatically disposed of
+when the origin of the alien can be discovered by examining the map file.
+That way the most mysterious aliens will be those that arrived
+by a means other than posting such as a file created
+during the EUID 0 execution of a process.
+
+Probably since I wrote the init-script
+that allows for selecting the disposition of aliens
+the assumption could be that I appreciate it's interface.
+Actually, it is cumbersome lengthy to process.
+It is only barely adequate for accomplishing the task.
+That is a motivation for wanting for automatic disposal
+of a majority of alien files that are obviously
+not spell owned nor expected configuration files for spells.
+
+Consequently, I am open to suggestions.
+I expect that we all want a comfortable level of maintained
+security and integrity for our root file systems.
+Unessential aliens should be deported or deleted.
+Corrupted or unintentionally modified files should be replaced
+by spell installed files.
+A reasonably amount of file system integrity verification
+helps ensure that any exploits are utilized to bore passage
+into a root file system will most likely be quickly and automatically sealed
+soon after the vulnerable software is updated.
+Any root file system that is not locked down securely within a tomoyo domain
+becomes potentially vulnerable to unauthorized modification.
+However, anything that is not specifically designed to thwart sorcery
+methods
+should at least be detected and remedied soon enough.
+Therefore, Sorcerer SAs can rest
+with slightly less concern and anxiety each night.
+
+So in summary, scanning runs concurrently with # augur begin.
+Seeing plenty of additional disk activity during an update?
+Do not be alarmed.
+That helps ensure that installed files are commensurate
+with expectations derived from reading the log files.
+
+Want to put a meager range of that 2^20 UIDs to good use
+and to be able to identify aliens that somehow escaped reaping?
+Then enable the &quot;own&quot; feature by executing
+# augur feature own
+
+After the &quot;own&quot; feature has been granted significant use
+such as the creation of a new utility or a new duty for scan
+that automatically deports or disposes of aliens on a weekly basis
+then the &quot;own&quot; feature might be removed in favor of mandatory functionality.
+For the moment the feature provides a technology demonstration.
+The potential usefulness is up for discussion.
+
+The implementation is sleek.
+If the feature is enabled
+then the additional duration for post will be insignificant.
+Mostly find runs and some files are chowned.
+Very simple, right?
+Finally, glad to have this in the open.
+Evert has read about my desire for it
+in several emails and until recently
+I always reject an implementation because
+the costs outweigh the potential benefits.
+But now something good can come from it.
+I want to use it for alien hunting.
+However, I am also eager to listen to
+other potential uses for it.
+
+I realize some might want for functionality
+that could potentially deprecate the necessity of a log file.
+However, scanning the entire root file system for files that
+are owned by a specific UID is not at all quickly accomplished.
+In fact each directory accessed while scanning a file system
+is entirely tantamount to reading the content of a file.
+And while a modern computer has sufficient RAM
+to cache all the dentries
+that task might not be the  best use of the kernel's block cache.
+
+Consequently, the utilization of UID or even extended attributes
+is not designed to replace log files.
+However, the ability to determine something about a file's origin
+from both a log file and from examining the file is a tantalizing idea.
+
+For the moment the use of log files might seem antiquated.
+And I partially expect that in some distant future the idea
+might become deprecated.
+However, for the moment log files provide information
+that can be accessed faster and requires less disk space to store
+as opposed to using extended attributes and all other methods
+that I have recently considered.
+
+As usual please pardon my verbosity.
+I express the ideas as they appear to be
+rather than providing a succinct synopsis that
+is most appropriate for a SA's understanding and utilization.
+I do so to entice discussion and encourage relevant ideas to be voiced.
+
+I hope everyone can appreciate that sorcery is evolving
+into a utility that provides a very comprehensive level
+of source based administration.
+And while the functionality is improving the resource utilization is
+decreasing.
+By now SAs who were interested in the changes have received
+an opportunity to examine the new style of post logs.
+Approximately 5% of the post logs for a workstation exceed 4 kilobytes.
+That means the majority of the post logs
+utilize the minim block size
+and therefore can not be fragmented.
+And if a root file system has approximately 512 spells installed
+then the utilization for the post logs requires approximately
+2 megabytes of file system space.
+That is a good compromise.
+Not everyone is pleased about low file system utilization overhead
+especially when disks come measured in terabytes.
+However, I am pleased with the sleek utilization
+which allows fast indexing and the majority of file system space
+to be allocated to the task of providing the programs we use and require.
+
+Post logs is not new functionality.
+By now all deployed boxes should have converted to post logs.
+The above paragraph is merely me enjoying a hearty boast.
+2013 is more than nearly a quarter from completion
+and yet already sorcery utilities
+and even the types of possible deployments
+have evolved considerably from 2012 expectations.
+Enough was accomplished that already
+more is forgotten than can be recalled.
+Therefore, we can already raise or glasses
+and toast another productive year.
+
+Those who want to promote ideas should do so sooner rather than
+later.December will be the month where the development focus
+is almost entirely upon additional improvements and refinements
+concerning the I/R and the deployment docent.
+December will also be the month when newer glibc and newer make are tested.
+Yes we know it exist and we are sitting on those updates
+because of their importance and the consequence that arise
+from updating the current version of glibc or the current version of make.
+Both critically important software projects.
+
+Hope everyone is having as good a 2013.
+And that is what is new and available soon.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131010/d9def75c/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131010/d9def75c/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002467.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+	<LI>Next message: <A HREF="002469.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2468">[ date ]</a>
+              <a href="thread.html#2468">[ thread ]</a>
+              <a href="subject.html#2468">[ subject ]</a>
+              <a href="author.html#2468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

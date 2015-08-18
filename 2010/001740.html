@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CAANLkTikisTSdNU7o69j3ujeMEEHhfRnNjgyT_WC-LaJc%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001737.html">
+   <LINK REL="Next"  HREF="001742.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CAANLkTikisTSdNU7o69j3ujeMEEHhfRnNjgyT_WC-LaJc%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">evorster at gmail.com
+       </A><BR>
+    <I>Tue Jul 13 05:26:13 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001737.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001742.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1740">[ date ]</a>
+              <a href="thread.html#1740">[ thread ]</a>
+              <a href="subject.html#1740">[ subject ]</a>
+              <a href="author.html#1740">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Roedolf, thanks for trying Sorcerer.
+
+We have recently switched over to a new way of installing our software, and
+are still ironing out the bugs.
+
+99% of the software compiles now, thanks to Kyle's hard work.
+
+If you plan on running KDE, you will run into a bug in
+qt-everywhere-opensource. This spell can't be compiled if it's not installed
+already. The way around this is to use an earlier version of the spell, but
+unfortunate;y the earlier version has a different source name, so the spell
+needs to be modified a little to allow for the first time cast. Oh, and it's
+a few hours to cast this spell, btw.
+
+I can mail you the modified spell. Are you planning to use KDE?
+
+Kind regards,
+-Evert Vorster-
+
+On Mon, Jul 12, 2010 at 10:26 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> I could tell you how to debug it,
+</I>&gt;<i> but it may be easier just to gzip the template
+</I>&gt;<i> and attach it to an email.
+</I>&gt;<i>
+</I>&gt;<i> First, I would double check the template.
+</I>&gt;<i> Then, I would
+</I>&gt;<i> # /etc/init.d/networks stop
+</I>&gt;<i> # bash -x /etc/init.d/networks start 1&gt;&amp;2 | tee /tmp/read.me
+</I>&gt;<i>
+</I>&gt;<i> Then I would follow the trace looking for a problem.
+</I>&gt;<i> If there is a problem in the functions that parse the templates
+</I>&gt;<i> then I would be able to find it from this.
+</I>&gt;<i>
+</I>&gt;<i> Probably not in over a year has anyone mentioned
+</I>&gt;<i> a problem with the network template method
+</I>&gt;<i> so I have no way to begin debugging this without
+</I>&gt;<i> also having the template that was used.
+</I>&gt;<i> Also I recommend just using dhcpcd instead of dhclient.
+</I>&gt;<i> For some unknown reason the functions tries dhclient first.
+</I>&gt;<i> I never use dhclient.
+</I>&gt;<i>
+</I>&gt;<i> If manually starting
+</I>&gt;<i> # dhcpcd eth0
+</I>&gt;<i> works then go ahead and
+</I>&gt;<i>
+</I>&gt;<i> # dispel dhcp
+</I>&gt;<i>
+</I>&gt;<i> and try stopping and starting networks again.
+</I>&gt;<i> Oh, that is interesting.
+</I>&gt;<i> I or someone else probably made the switch
+</I>&gt;<i> to put dhcpcd first in the functions,
+</I>&gt;<i> but then never updated the available version
+</I>&gt;<i> of the networks spell.
+</I>&gt;<i>
+</I>&gt;<i> I will update that now to be certain that
+</I>&gt;<i> the installed network functions and templates
+</I>&gt;<i> are the same distribution wide.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for reporting a potential problem.
+</I>&gt;<i> Hopefully, it was trying dhclient
+</I>&gt;<i> and dhclient is bugged.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jul 12, 2010 at 10:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I did copy the template to the networks dir,
+</I>&gt;<i> &gt; Uncomment the IF= rule.
+</I>&gt;<i> &gt; Then saved it
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But when I do /etc/init.d/networks start.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I get a message that's it's failed.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/efbdb57e/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/efbdb57e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001737.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001742.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1740">[ date ]</a>
+              <a href="thread.html#1740">[ thread ]</a>
+              <a href="subject.html#1740">[ subject ]</a>
+              <a href="author.html#1740">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

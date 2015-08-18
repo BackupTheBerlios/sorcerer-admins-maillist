@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /dev population problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/dev%20population%20problem&In-Reply-To=%3C596b75860909091250r654730a3x7df1dedc7e397887%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001306.html">
+   <LINK REL="Next"  HREF="001309.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /dev population problem</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/dev%20population%20problem&In-Reply-To=%3C596b75860909091250r654730a3x7df1dedc7e397887%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /dev population problem">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep  9 21:50:00 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001306.html">[Sorcerer-admins] /dev population problem
+</A></li>
+        <LI>Next message: <A HREF="001309.html">[Sorcerer-admins] /dev population problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1307">[ date ]</a>
+              <a href="thread.html#1307">[ thread ]</a>
+              <a href="subject.html#1307">[ subject ]</a>
+              <a href="author.html#1307">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Opps.
+That box is messed up.
+Hope you have a complete older copy of the udev
+installation in /etc in order to copy out into the initramfs /
+and run.
+Because if an older version of udev was compiled
+with the current udev build() or a newer version of
+udev was compiled with the older udev build()
+then it will probably be unusable.
+You can blame the udev authors for changing
+the build method, but also thank them for
+documenting the current proper build method
+in the INSTALL or README file.
+
+I tested the udev with the udev spell
+and rebooted the box to be satisfied that it works.
+
+If I were in your situation then I would probably
+boot with parameter rdinit=/bin/bash
+Then after landing at a shell prompt I would
+manually load modules.
+Then I would run:
+# /etc/init.d/dev start
+# /etc/init.d/dev-cp start
+After that I would start creating device nodes
+for the disks and partitions.
+After it looks good I would do:
+exec /init
+And hopefully the box would boot almost normally.
+
+After the real filesystems are mounted and the box
+is in it's normal runlevel I would make certain that
+udev version progress is stable.
+Because my guess is that it is set to latest
+or a specific version.
+Therefore,
+# augur progress udev stable
+Then,
+# cast udev
+
+After that the box can be shutdown normally
+which will cause the initramfs images to regenerate
+with the fixed udev and the box should be able to
+reboot normally.
+
+Sorry for the inconvenience.
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001306.html">[Sorcerer-admins] /dev population problem
+</A></li>
+	<LI>Next message: <A HREF="001309.html">[Sorcerer-admins] /dev population problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1307">[ date ]</a>
+              <a href="thread.html#1307">[ thread ]</a>
+              <a href="subject.html#1307">[ subject ]</a>
+              <a href="author.html#1307">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

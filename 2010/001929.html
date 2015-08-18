@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Today, even now
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Today%2C%20even%20now&In-Reply-To=%3CAANLkTimhfM%3DgugmdoVxaJxYDHZVRZTrNr0Qfiggi5vL2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001937.html">
+   <LINK REL="Next"  HREF="001938.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Today, even now</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Today%2C%20even%20now&In-Reply-To=%3CAANLkTimhfM%3DgugmdoVxaJxYDHZVRZTrNr0Qfiggi5vL2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Today, even now">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep 25 15:44:28 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001937.html">[Sorcerer-admins] Probable bug in LVM2
+</A></li>
+        <LI>Next message: <A HREF="001938.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1929">[ date ]</a>
+              <a href="thread.html#1929">[ thread ]</a>
+              <a href="subject.html#1929">[ subject ]</a>
+              <a href="author.html#1929">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>new Install/Rescue images can be downloaded.
+The best reason to download and burn a new CD
+is avoid problems with bugs in LVM2.
+
+Thanks to some conversation with Evert Vorster;
+installation can be even easier or more complex
+depending upon the SA's preference.
+The first selection on the main menu is the skill mode.
+Novice skill provides just enough in order to accomplish
+disk partitioning, creating file systems, and installation.
+I hope that before 2011 I will have a chance to see
+if my mother can manage to install Sorcerer using novice menus.
+That would achieve a new level of Sorcerer novice SA friendliness
+that would be beyond my expectations.
+
+In contrast to the novice skill mode is the expert skill mode.
+That is definitely the mode for SAs that want
+MDRAID, LVM2, LUKS encryption or any combination of
+one, more, or all of the above choices.
+
+Also as an alternative to creating separate MDRAIDs
+or slicing and dicing a MDRAID with LVM2
+a MDRAID can now be partitioned like a disk; yes with fdisk.
+That way a SA could elect for a RAID-5 for redundancy protection
+of data across 3 or more fixed disks while at the same time
+enjoying the simplicity of being able to partition the end result.
+
+Thanks to Evert voicing his interest in BTRFS,
+I added initial support for installing Sorcerer onto BTRFS.
+BTRFS is still an experimental file system.
+It's on disk format is changing.
+Therefore, the question is not what to do if BTRFS breaks,
+but what to do when BTRFS breaks.
+So, please no BTRFS on production boxes
+and make backups of files stored on BTRFS,
+and yes make separate backups and not a COW on the BTRFS.
+
+BTRFS is rather odd when compared to other file systems.
+First, sub volumes can be created on BTRFS.
+That is a bit like logical volumes with LVM2,
+except that a BTRFS sub volume will not
+require file system initialization.
+Also a COW, copy on write, sub-volume can be created on BTRFS.
+Although I have not made time to thoroughly play with BTRFS,
+I read bits and pieces while using google to gather information
+that suggest that some SAs have high hopes for the future of BTRFS
+and that some expect that BTRFS might even dethrone ext
+as the default file system.
+We shall see.
+And if it happens the Sorcerer menu driven installer
+is nearly ready for the transition as is.
+
+However, currently, installations involving some types of MDRAIDs,
+any type of LVM2, XFS or BTRFS should also have a dedicated
+/boot partition of file system type ext2 size 2G.
+XFS lacks a dedicated boot block.
+I do not know if LILO can locate kernels and initramfs on XFS.
+LVM2 logical volumes might have a dedicated boot block,
+depending upon the file system installed,
+yet since a logical volume since it is not a partition
+a boot-able MBR would not be able to chain to and load
+a lilo in the boot block of a file system on a LVM2 logical volume.
+I do not know if lilo can locate kernels and initramfs
+on a familiar file system when installed on a logical volume
+rather than a partition.
+
+Although installation of lilo into the MBR is possible
+I am not supporting it.
+Having lilo installed in the MBR
+might enable the use of some installation types
+without a dedicated /boot block.
+I am not testing this.
+Therefore, when using a combination that is not tested
+be sure to test it and expect that it might fail.
+Most combinations that are guaranteed to work
+will have a dedicated /boot ext2 partition of size 2G.
+Rather than complain
+please accept it as a tiny investment in the probability of success.
+
+If a SAs feels confused or uncertain about what to do or what can be done
+then selecting the skill menu presents not only a choice to select skill mode,
+but that choice is also followed by useful information that is easy to forget.
+Or should I say easily forgotten useful information?
+Although this does not fully accomplish
+my initial intention to add help screens
+to almost every menu
+this addition should still be useful
+in helping SAs decide what to do.
+
+When available RAM during installation permits
+a few extra archives will be extracted to the initramfs.
+And also some menus will offer the SA
+the opportunity to read a manual page before proceeding.
+It might be useful.
+
+I tested nearly every combination of of installation
+that I expected should demonstrate problems
+if bugs exist in the menu driven installer.
+After about a half dozen tests or more
+I started tracking them in my todo list to avoid repeating tests.
+
+Part -&gt;         LUKS         -&gt; FS
+Part -&gt;         LVM2         -&gt; FS
+Part -&gt;         LVM2 -&gt; LUKS -&gt; FS
+Part -&gt; RAID -&gt;                 FS
+Part -&gt; RAID -&gt; LVM2 -&gt; LUKS -&gt; FS
+Part -&gt; RAID -&gt; Part -&gt; LUKS -&gt; FS
+
+Partitions are simple for installation.
+Software RAIDs could be very useful.
+LVM2 is mostly a matter of SA preference,
+for SAs that would prefer not to do partitions.
+And LUKS encryption is essential
+when encryption of file systems or swaps is desired.
+
+UUIDs are used for addressing file systems,
+except when LUKS encrypted.
+Device names are used to address swaps
+and LUKS encrypted file systems and
+LUKS encrypted swaps.
+Hopefully this does not cause inconvenience.
+
+Last and definitely not least
+we again have Pekka Panula to thank
+for the awesome bandwidth and virtual
+hosting provided for Sorcerer.
+Due to this awesome hosting
+we enjoy fast downloading with
+and no waiting and competing for
+anonymous login slots on a ftp server.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001937.html">[Sorcerer-admins] Probable bug in LVM2
+</A></li>
+	<LI>Next message: <A HREF="001938.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1929">[ date ]</a>
+              <a href="thread.html#1929">[ thread ]</a>
+              <a href="subject.html#1929">[ subject ]</a>
+              <a href="author.html#1929">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

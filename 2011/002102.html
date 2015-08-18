@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Removing modules for current kernel...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTikpjBbCwARx1WYfmXCyanon5c3sDw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002101.html">
+   <LINK REL="Next"  HREF="002103.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Removing modules for current kernel...</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Removing%20modules%20for%20current%20kernel...&In-Reply-To=%3CBANLkTikpjBbCwARx1WYfmXCyanon5c3sDw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Removing modules for current kernel...">d3ck0r at gmail.com
+       </A><BR>
+    <I>Wed Apr 13 07:30:23 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002101.html">[Sorcerer-admins] Help w/IRC chan
+</A></li>
+        <LI>Next message: <A HREF="002103.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2102">[ date ]</a>
+              <a href="thread.html#2102">[ thread ]</a>
+              <a href="subject.html#2102">[ subject ]</a>
+              <a href="author.html#2102">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at tower2</A>:/lib/modules# uptime
+ 22:18pm  up 97 days 12:52,  2 users,  load average: 0.01, 0.06, 0.01
+
+I'm usually of the opinion that if it's not broken, don't fix it...
+and this system has been steadily running for 97 days.  I'm currently
+out of town, and if there is an issue if I cause the box to reboot, I
+won't be able to fix it - I have occasionally had to put a monitor on
+it and keyboard, and I'm not entirely sure I have all the startup
+working 100%.....
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at tower2</A>:/lib/modules# uname -a
+Linux tower2 2.6.36.2 #1 SMP Sun Dec 19 01:00:26 PST 2010 x86_64 GNU/Linux
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at tower2</A>:/lib/modules# ls
+2.6.26.5  2.6.36.3  2.6.37.4  2.6.38.2
+
+There are no modules for 2.6.36.2, nor is there a kernel image for it in /boot
+
+I would really really like it if sorcerer didn't delete the modules of
+the kernel currently in use; I need a module for cifs so I can mount
+my other computer's drive which is shared; but since I haven't yet
+done that on this boot of the box (in last 97 days) that module wasn't
+loaded, and now I have no way to load the module.
+
+Jim
+
+
+
+
+Sat 18 Dec 2010 09:37:38 PM PST  linux  2.6.36.2  Yore  Cast New
+Sat 18 Dec 2010 09:40:20 PM PST  linux  2.6.36.2  Yore  Pass Load
+Sun 19 Dec 2010 01:03:12 AM PST  linux  2.6.36.2  Yore  Pass Oust
+Sun 19 Dec 2010 01:04:08 AM PST  linux  2.6.36.2  Yore  Pass Cast
+Tue 18 Jan 2011 10:54:29 PM PST  linux  2.6.36.3  Yore  Cast New
+Tue 18 Jan 2011 10:58:37 PM PST  linux  2.6.36.3  Yore  Pass Load
+Wed 19 Jan 2011 02:54:54 AM PST  linux  2.6.36.3  Yore  Pass Oust
+Wed 19 Jan 2011 02:55:46 AM PST  linux  2.6.36.3  Yore  Pass Cast
+Wed 23 Mar 2011 11:01:54 PM PDT  linux  2.6.37.4  Yore  Cast New
+Wed 23 Mar 2011 11:05:40 PM PDT  linux  2.6.37.4  Yore  Pass Load
+Thu 24 Mar 2011 01:22:26 AM PDT  linux  2.6.37.4  Yore  Pass Oust
+Thu 24 Mar 2011 01:22:43 AM PDT  linux  2.6.37.4  Yore  Pass Cast
+Thu 31 Mar 2011 11:02:23 PM PDT  linux  2.6.38.2  Yore  Cast New
+Thu 31 Mar 2011 11:05:52 PM PDT  linux  2.6.38.2  Fore  Pass Load
+Fri 01 Apr 2011 01:45:36 AM PDT  linux  2.6.38.2  Yore  Pass Oust
+Fri 01 Apr 2011 01:45:48 AM PDT  linux  2.6.38.2  Fore  Pass Cast
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at tower2</A>:/lib/modules# uprecords
+     #               Uptime | System                                     Boot up
+----------------------------+---------------------------------------------------
+-&gt;   1    97 days, 12:58:40 | Linux 2.6.36.2            Wed Jan  5 00:26:10 2011
+----------------------------+---------------------------------------------------
+NewRec    97 days, 12:58:39 | since                     Wed Jan  5 08:25:25 2011
+    up    97 days, 12:58:40 | since                     Wed Jan  5 00:26:10 2011
+  down     0 days, 00:00:00 | since                     Wed Jan  5 00:26:10 2011
+   %up              100.000 | since                     Wed Jan  5 00:26:10 2011
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002101.html">[Sorcerer-admins] Help w/IRC chan
+</A></li>
+	<LI>Next message: <A HREF="002103.html">[Sorcerer-admins] Removing modules for current kernel...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2102">[ date ]</a>
+              <a href="thread.html#2102">[ thread ]</a>
+              <a href="subject.html#2102">[ subject ]</a>
+              <a href="author.html#2102">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

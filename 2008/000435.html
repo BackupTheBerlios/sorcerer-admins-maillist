@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C8596d02a0805131753l27e5d0e8o6bfb3bfd4cd61f78%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000433.html">
+   <LINK REL="Next"  HREF="000436.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C8596d02a0805131753l27e5d0e8o6bfb3bfd4cd61f78%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">d3ck0r at gmail.com
+       </A><BR>
+    <I>Wed May 14 02:53:40 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000433.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000436.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#435">[ date ]</a>
+              <a href="thread.html#435">[ thread ]</a>
+              <a href="subject.html#435">[ subject ]</a>
+              <a href="author.html#435">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, May 13, 2008 at 2:10 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Mon, May 12, 2008 at 10:52 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; On Monday 12 May 2008, Kyle Sallee wrote:
+</I>&gt;<i> &gt;  I can see a potential problem for wireless networking because various
+</I>&gt;<i> &gt;  utilities are needed for proper configuration. For example, wpa_supplicant is
+</I>&gt;<i> &gt;  often needed and that in turn may need to run some local scripts.
+</I>&gt;<i> &gt;  Furthermore, many wireless cards must load firmware from /lib/firmware when
+</I>&gt;<i> &gt;  the proper kernel module is loaded. In short, I am afraid of this change.
+</I>&gt;<i>
+</I>&gt;<i> wpa_supplicant must be installed to / instead of /usr
+</I>&gt;<i> /lib/firmware is already included on the initramfs.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;  BTW, what about ppp connections? Are those going to be affected in any way? I
+</I>&gt;<i> &gt;  found recently how handy it is to have this functionality still available,
+</I>&gt;<i> &gt;  especially when on travel.
+</I>&gt;<i>
+</I>&gt;<i> ppp will also be installed to / rather than /usr
+</I>&gt;<i>
+</I>&gt;<i> Thanks for spotting and reporting these important omissions.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Having networking start from sysinit has yet another advantage
+</I>&gt;<i> that is more generally useful than potential for thin clients.
+</I>&gt;<i> If for some reason a box can boot into the initramfs,
+</I>&gt;<i> but yet the / can not be mounted then additional programs
+</I>&gt;<i> to help identify and fix the problem can be scp or NFSed
+</I>&gt;<i> into the running initramfs from another box on the network.
+</I>&gt;<i>
+</I>&gt;<i> Banes: Longer before console login prompt
+</I>&gt;<i> Boons: Thin client support
+</I>&gt;<i> Boons: Network support for the initramfs.
+</I>&gt;<i>
+</I>&gt;<i> Since the initramfs already had networking modules on it,
+</I>&gt;<i> and already had most of the networking tools upon it
+</I>&gt;<i> making this transition increases the volume of the initramfs
+</I>&gt;<i> image by a ratio similar to tossing a rock in a lake.
+</I>&gt;<i>
+</I>&gt;<i> Although networking and NFS client support
+</I>&gt;<i> now start on the initramfs
+</I>&gt;<i> The NFS server and sshd do not start until the runlevel
+</I>&gt;<i> after all the filesystems are mounted.
+</I>&gt;<i> Therefore, the change is not overkill.
+</I>&gt;<i>
+</I>&gt;<i> For a long time I have felt apprehensive about starting anything
+</I>&gt;<i> that is less than absolutely essential from within sysinit.
+</I>&gt;<i> sysinit executes linearly and if a problem occurs then
+</I>&gt;<i> then that problem also occurs before console login prompts
+</I>&gt;<i> become available.
+</I>&gt;<i> Therefore, a serious enough problem during sysinit could
+</I>&gt;<i> prevent console login and therefore make the SA have to
+</I>&gt;<i> resort to something like kernel parameter:
+</I>&gt;<i> rdinit=/bin/bash
+</I>&gt;<i> and then editing or removal of the bugged script in /etc/init.d/
+</I>&gt;<i> before exec /init
+</I>&gt;<i>
+</I>&gt;<i> However, I now feel as if the move of networking and NFS
+</I>&gt;<i> client support from runlevel to sysinit is 51% better than
+</I>&gt;<i> letting it start from a runlevel.
+</I>&gt;<i> However, be advised of the following:
+</I>&gt;<i>
+</I>&gt;<i> Any NFS mounted during boot can seriously stall a box
+</I>&gt;<i> during sysinit if the filesystem can not be mounted.
+</I>&gt;<i> Therefore, noauto is recommended if the filesystem
+</I>&gt;<i> does not have to be mounted during boot and is NFS.
+</I>&gt;<i>
+</I>&gt;<i> Having ppp start from boot may incur a wait state
+</I>&gt;<i> if the template is designed to wait until the
+</I>&gt;<i> PPP connection is established.
+</I>&gt;<i> Therefore, when starting PPP at boot, fire and forget, is suggested.
+</I>&gt;<i> However, that may prevent certain services that require networking
+</I>&gt;<i> from being able to bind to the virtual PPP network device.
+</I>&gt;<i> sshd and samba can not bind to the PPP
+</I>&gt;<i> before the PPP device exists.
+</I>&gt;<i> Therefore, there are yet still potential problems that can happen
+</I>&gt;<i> from starting PPP networking during sysinit.
+</I>&gt;<i>
+</I>&gt;<i> When using PPP I recommend that the SA or user
+</I>&gt;<i> start PPP sometime after booting has completed.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+Uhmm... Sounds like networking should have individual levels ....
+
+I ran into problems with networking starting in runlevel 3 because of
+X.  I start X in runlevel 3 from inittab, which causes it to start
+without network (sometimes start) and sometimes just die.
+
+I solved my problem by implementing a script to start x also in
+runlevel 3 and depended it on the network.
+
+The problem with this is that X doesn't happily restart.
+xdm has no auto login feature.
+
+
+  - what's the official good way to have a process restart when it
+dies?  init takes care of this very wll.
+
+and a side question
+  - what is the environment of an init script?  startx came up with
+some strange configuration rather than /root/.xinitrc even though
+whoami reported 'root'.  had to otherwise su root - startx.
+
+what does su do that it gets an appropriate environment? (home directory?)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000433.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000436.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#435">[ date ]</a>
+              <a href="thread.html#435">[ thread ]</a>
+              <a href="subject.html#435">[ subject ]</a>
+              <a href="author.html#435">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

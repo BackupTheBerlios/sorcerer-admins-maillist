@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Dying boxes ...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dying%20boxes%20...&In-Reply-To=%3C200810242120.08920.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000808.html">
+   <LINK REL="Next"  HREF="000810.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Dying boxes ...</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dying%20boxes%20...&In-Reply-To=%3C200810242120.08920.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] Dying boxes ...">merka at highsphere.net
+       </A><BR>
+    <I>Sat Oct 25 03:20:08 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000808.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+        <LI>Next message: <A HREF="000810.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#809">[ date ]</a>
+              <a href="thread.html#809">[ thread ]</a>
+              <a href="subject.html#809">[ subject ]</a>
+              <a href="author.html#809">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The problem is most likely due to using udev 130 with hal 0.5.11. That hal 
+version requires udevinfo command but udev 130 does not provide it anymore.
+My solution was to install hal 0.5.12 from git repository on the assumption 
+that the 0.5.11 release was in May 2008 and so I am hoping for 0.5.12 to be 
+out soon.
+
+Alternatively, we could hold udev at version 125 until hal catches up. 
+
+The situation is further complicated by dbus, which I have fixed by removing a 
+few lines from the config, see my previous email.
+
+The hal/udev problem symptoms: 
+Coldplug does not work anymore, thus the X11 won't get any device through HAL 
+on startup. 
+
+If you run lshal, you will probably see only a very limited number of devices 
+right after boot (only 8 on my laptop) while normally there should be dozens 
+(more than one hundred on the same laptop). It is possible to force HAL to 
+register the devices by re-running udevtrigger (either the init script 
+or 'udevadm trigger'), afterwards you should see many more devices in the 
+output of lshal.
+
+Hotplug works, but I there were some smaller issues so I rather installed that 
+0.5.12 development version of hal to make my life easier. 
+
+Jan
+
+
+On Friday 24 October 2008, J Decker wrote:
+&gt;<i> uhmm... I see... I don't know exactly how to fix it, X -configure,
+</I>&gt;<i> then using that file seemed to work okay. was going to try something
+</I>&gt;<i> like
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-09/msg02190.html">http://linux.derkeiler.com/Mailing-Lists/Fedora/2008-09/msg02190.html</A>
+</I>&gt;<i>
+</I>&gt;<i> Adding the ServerFlag mentioned...
+</I>&gt;<i>
+</I>&gt;<i> Well.. I had the same no mouse device, no keyboard device, HAL
+</I>&gt;<i> autoconfigure mentioned in that article, since it's working now, I
+</I>&gt;<i> don't have the log.
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Oct 24, 2008 at 11:12 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; On Friday 24 October 2008, J Decker wrote:
+</I>&gt;<i> &gt;&gt; I have two boxes that recently started failing... failing in that they
+</I>&gt;<i> &gt;&gt; have no keyboard/mouse support in X.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; One box, I specifically saw 'will restart dbus soon' and after that
+</I>&gt;<i> &gt;&gt; everything stopped working.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I had to remove a few lines from system.conf for hal to work with the
+</I>&gt;<i> &gt; latest dbus (the *.bak file is what was installed by dbus):
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; [<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at lepjmlap</A> dbus-1]$ diff -u system.conf system.conf.bak
+</I>&gt;<i> &gt; --- system.conf 2008-10-17 10:49:07.000000000 -0400
+</I>&gt;<i> &gt; +++ system.conf.bak     2008-10-16 02:28:16.000000000 -0400
+</I>&gt;<i> &gt; @@ -53,6 +53,10 @@
+</I>&gt;<i> &gt;     &lt;!-- valid replies are always allowed --&gt;
+</I>&gt;<i> &gt;     &lt;allow send_requested_reply=&quot;true&quot;/&gt;
+</I>&gt;<i> &gt;     &lt;allow receive_requested_reply=&quot;true&quot;/&gt;
+</I>&gt;<i> &gt; +    &lt;!-- disallow changing the activation environment of system services
+</I>&gt;<i> &gt; --&gt; +    &lt;deny send_destination=&quot;org.freedesktop.DBus&quot;
+</I>&gt;<i> &gt; +          send_interface=&quot;org.freedesktop.DBus&quot;
+</I>&gt;<i> &gt; +          send_member=&quot;UpdateActivationEnvironment&quot;/&gt;
+</I>&gt;<i> &gt;   &lt;/policy&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;   &lt;!-- Config files are placed here that among other things, punch
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; On the other box, all I can tell is that X says cannot load keymap
+</I>&gt;<i> &gt;&gt; file from /usr/share/X11/xkb in which there is nothing...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Install xkeyboard-config.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; I'm still on the recovery path - can only spend a little time here and
+</I>&gt;<i> &gt;&gt; there on these...
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000808.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+	<LI>Next message: <A HREF="000810.html">[Sorcerer-admins] Dying boxes ...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#809">[ date ]</a>
+              <a href="thread.html#809">[ thread ]</a>
+              <a href="subject.html#809">[ subject ]</a>
+              <a href="author.html#809">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

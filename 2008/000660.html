@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kernel 2.6.26
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kernel%202.6.26&In-Reply-To=%3C8596d02a0807291012l266cf5cdq460065f899d4cf31%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000659.html">
+   <LINK REL="Next"  HREF="000661.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kernel 2.6.26</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kernel%202.6.26&In-Reply-To=%3C8596d02a0807291012l266cf5cdq460065f899d4cf31%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] kernel 2.6.26">d3ck0r at gmail.com
+       </A><BR>
+    <I>Tue Jul 29 19:12:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000659.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+        <LI>Next message: <A HREF="000661.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#660">[ date ]</a>
+              <a href="thread.html#660">[ thread ]</a>
+              <a href="subject.html#660">[ subject ]</a>
+              <a href="author.html#660">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jul 28, 2008 at 6:11 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> linux executes modprobe directly before
+</I>&gt;<i> it executes /init?
+</I>&gt;<i>
+</I>
+Actually it's as a result of udevtrigger firing... then a whole slew of
+devices get loaded...
+
+eh anyhow here's the link that applies to my predicament...
+
+<A HREF="http://www.gossamer-threads.com/lists/linux/kernel/946278?page=last">http://www.gossamer-threads.com/lists/linux/kernel/946278?page=last</A>
+
+it's specific hardware in this system.
+
+
+&gt;<i>
+</I>&gt;<i> If you want to arrest the boot of a box with an initramfs image
+</I>&gt;<i> before it begins execution of /init
+</I>&gt;<i> then issue the kernel parameter:
+</I>&gt;<i>
+</I>&gt;<i> rdinit=/bin/bash
+</I>&gt;<i>
+</I>&gt;<i> Please let me know what more you can discover about it.
+</I>&gt;<i>
+</I>&gt;<i> # uname -r
+</I>&gt;<i> 2.6.26
+</I>&gt;<i>
+</I>&gt;<i> I have done about 30 reboots with linux-modular version 2.6.26.
+</I>&gt;<i> I did not encounter problems yet.
+</I>&gt;<i>
+</I>&gt;<i> Also NVIDIA-Linux-x86 works with linux-modular 2.6.26
+</I>&gt;<i> I tested it.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for the bug report.
+</I>&gt;<i> I hope this is easy to fix on your boxes.
+</I>&gt;<i> If I encounter the bug
+</I>&gt;<i> then I will try to debug it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jul 28, 2008 at 11:31 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i>  &gt; On this box, I cannot boot 2.6.26 kernel.  Before init is run
+</I>&gt;<i> (overrided by
+</I>&gt;<i> &gt; lilo option init=/bin/sh ) the kernel crashes during startup with a
+</I>&gt;<i> failure
+</I>&gt;<i> &gt; in modprobe.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This makes running X a little difficult, since there is no nvidia driver
+</I>&gt;<i> in
+</I>&gt;<i> &gt; my previousl 2.6.25.9 kernel. and when I re-cast NVIDIA-Linux-x86 it
+</I>&gt;<i> doesn't
+</I>&gt;<i> &gt; build for (uname -r)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I see that the nvidia-linux spell uses 'get_provider' there doens't seem
+</I>&gt;<i> to
+</I>&gt;<i> &gt; be an augur interface to get the provider of linux-kernel I know it's not
+</I>&gt;<i> &gt; linux ...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've re-cast linux-modular a few times... still just crashes on boot
+</I>&gt;<i> &gt; though...
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080729/26e4c1d5/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080729/26e4c1d5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000659.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+	<LI>Next message: <A HREF="000661.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#660">[ date ]</a>
+              <a href="thread.html#660">[ thread ]</a>
+              <a href="subject.html#660">[ subject ]</a>
+              <a href="author.html#660">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

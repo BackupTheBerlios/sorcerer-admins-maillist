@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20preserve%20or%20to%20backup%2C%20that%20is%20the%20question%2C%0A%09no%20longer%21&In-Reply-To=%3C596b75860902181108l3594af44l87350dd23bfd161%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001007.html">
+   <LINK REL="Next"  HREF="001021.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20preserve%20or%20to%20backup%2C%20that%20is%20the%20question%2C%0A%09no%20longer%21&In-Reply-To=%3C596b75860902181108l3594af44l87350dd23bfd161%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Feb 18 20:08:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001007.html">[Sorcerer-admins] New server is finally up and running
+</A></li>
+        <LI>Next message: <A HREF="001021.html">[Sorcerer-admins] To preserve or to backup, that is the question, no longer!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1010">[ date ]</a>
+              <a href="thread.html#1010">[ thread ]</a>
+              <a href="subject.html#1010">[ subject ]</a>
+              <a href="author.html#1010">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>For a while I considered that preserve/backup feature was confusing.
+I barely remembered which was which nor which did what.
+Consequently, I am removing it.
+
+I do not recall the original purpose of the backup/preserve feature.
+I tend to expect that the SA or SAs that requested it did
+were not clear about what they wanted.
+This is what happens when an idea
+is not carefully considered prior to implementation.
+It creates something that is confusing, difficult, and probably less
+than desired.
+Therefore, I am removing it.
+
+The following will be the current rules regarding most files in /etc/
+The rules below do not apply to files in /etc/{gconf,sorcery,init.d}/
+
+When a spell is dispelled,
+it's modified files from /etc/
+are transferred to /etc.sav/
+where only /etc.sav/ renames /etc/
+This way after the the updated spell finishes installing
+modified /etc/ files can be transferred back into /etc/
+Convenient, yes?
+
+The original /etc/ files for spells are now installed in both
+/etc/ and also /etc.ori/
+This way diffing a modified and original /etc/ file
+is as easy as executing the diff command.
+Yes, /etc.ori/ is a bit non standard.
+And so is /etc.sav/
+However, these aught to give SAs
+greater convenience than the choice between
+a preserve and backup rules.
+And most boxes have plenty of space to nearly replicate /etc/
+
+The files in /etc.ori/ are merely for SA convenience.
+They have no checksums.
+Consequently, removing them should not create problems.
+
+Although not /etc/ files,
+all files installed in /usr/doc/ /usr/share/doc/ /usr/share/locale/LC_MESSAGES/
+can also be removed anytime.
+No CPU cycles or disk wear and tear is wasted on
+checking the content of files that are often unessential.
+
+
+Did someone ask how to reconfigure all the installed spells on a Sorcerer box.
+
+# rm /etc/sorcery/log/config/*/sorcery /etc/sorcery/log/opt.{on,off}/*
+# cast --deps $( augur installed )
+
+However, I have not tried it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001007.html">[Sorcerer-admins] New server is finally up and running
+</A></li>
+	<LI>Next message: <A HREF="001021.html">[Sorcerer-admins] To preserve or to backup, that is the question, no longer!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1010">[ date ]</a>
+              <a href="thread.html#1010">[ thread ]</a>
+              <a href="subject.html#1010">[ subject ]</a>
+              <a href="author.html#1010">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

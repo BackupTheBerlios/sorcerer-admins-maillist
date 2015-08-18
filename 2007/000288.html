@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Something you may want to be aware of...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Something%20you%20may%20want%20to%20be%20aware%20of...&In-Reply-To=%3C596b75860709280135g15d306f6sb1db6480613c3371%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000281.html">
+   <LINK REL="Next"  HREF="000300.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Something you may want to be aware of...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Something%20you%20may%20want%20to%20be%20aware%20of...&In-Reply-To=%3C596b75860709280135g15d306f6sb1db6480613c3371%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Something you may want to be aware of...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Sep 28 10:35:58 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000281.html">[Sorcerer-admins] Did I forge to mention stall immunity?
+</A></li>
+        <LI>Next message: <A HREF="000300.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#288">[ date ]</a>
+              <a href="thread.html#288">[ thread ]</a>
+              <a href="subject.html#288">[ subject ]</a>
+              <a href="author.html#288">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The way the archive cache works has changed.
+No longer is an individual archive created for the
+spell that just completed casting.
+Instead, all installed spells for which archives should
+exist, but do not exist, have their archives created.
+
+Immune still cleans old archives from the archive cache periodically.
+However, to do so manually to save space may end up costing more space.
+If you removed a few p7zip compressed archives for the current version
+of installed spells then those archives would be immediately regenerated
+with fresh uncompressed tarballs replacing those ones you removed.
+Therefore, do not expect to be able to save any space on /var
+by trimming files from the archive cache.
+At best you could set the ARCHIVE_KEEP to 5 or 10
+in order to maintain 5% or 10% old archives in the archive cache.
+
+The next obvious question is why did I change the way the archive cache works?
+You can thank me later for deleting several paragraphs and making this
+long story short.
+Basically, the adjustment to the way the archive cache works is to
+more than fulfull a SA
+request and make Sorcerer boxes more difficult to break.
+Also 7za was changed from a dynamic linked ELF executable
+to a statically linked ELF executable.
+That removes the runtime requirement for the ELF libstdc++
+without even doubling the size of 7za
+It is a good compromise between size and reliability since
+most Sorcerer boxes will have their tarballs in the archive
+cache compressed by 7za.
+
+While I was at it I modified the 7za spell to install the self extractor.
+Basically, you can create a 7za archive then cat it together with
+the extractor in the front and then that archive can self extract
+on any compatible linux ELF architecture.
+Also the self extractor stub is statically linked.
+Therefore, no libstdc++ or glibc problems should occur when using it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000281.html">[Sorcerer-admins] Did I forge to mention stall immunity?
+</A></li>
+	<LI>Next message: <A HREF="000300.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#288">[ date ]</a>
+              <a href="thread.html#288">[ thread ]</a>
+              <a href="subject.html#288">[ subject ]</a>
+              <a href="author.html#288">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

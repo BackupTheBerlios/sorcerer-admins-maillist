@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] run requirements vs build requirements
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C1de9d39c0904200435y36974ecao692130a0b2ae3601%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001085.html">
+   <LINK REL="Next"  HREF="001086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] run requirements vs build requirements</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C1de9d39c0904200435y36974ecao692130a0b2ae3601%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] run requirements vs build requirements">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Apr 20 13:35:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001085.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+        <LI>Next message: <A HREF="001086.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1082">[ date ]</a>
+              <a href="thread.html#1082">[ thread ]</a>
+              <a href="subject.html#1082">[ subject ]</a>
+              <a href="author.html#1082">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Apr 20, 2009 at 5:54 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Sun, Apr 19, 2009 at 3:15 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hi,
+</I>&gt;&gt;<i> long time ago I discussed about that.... I know that some of you don't
+</I>&gt;&gt;<i> see difference between both... I see lot of differences and would like
+</I>&gt;&gt;<i> to have 2 requirements in spells :
+</I>&gt;&gt;<i> &#160;- build requirements are what is mandatory to build the spell, not to
+</I>&gt;&gt;<i> run it, a build requirement can be removed from the system without
+</I>&gt;&gt;<i> causing a crash, however it has to be present on build
+</I>&gt;&gt;<i> &#160;- run requirements is what is mandatory to run without a crash
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> why do I come back?
+</I>&gt;&gt;<i> I want to use core spell to build automaticaly and usb rescue drive
+</I>&gt;&gt;<i> using what is on drive, looking at the graph I provided I saw lot of
+</I>&gt;&gt;<i> spells that aren't mandatory for running the rescue disc, like cmake
+</I>&gt;&gt;<i> that cause gcc-v4.1 to be installed as well.
+</I>&gt;<i>
+</I>&gt;<i> cmake has no requirement on gcc-v4.1!
+</I>&gt;<i> I edited that out of the spell and put a comment in it
+</I>&gt;<i> to prevent anyone from adding that to cmake.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> ... AFAIK gcc-v4.1 and cmake
+</I>&gt;&gt;<i> can be rebuild from gcc... so they don't have to be on the rescue disk
+</I>&gt;&gt;<i> as well there is a difference when doing crosscompiling (and this is one
+</I>&gt;&gt;<i> of the reason I couldn't go further on crosscompiling) because a build
+</I>&gt;&gt;<i> requirement is a software that have to be run on host, then have to be
+</I>&gt;&gt;<i> compiled for host arch and then should not be put on target FS....
+</I>&gt;<i>
+</I>&gt;<i> If anything did require something that required something
+</I>&gt;<i> that required something that required cmake and cmake required gcc-v4.1
+</I>&gt;<i> then the compilation of that end something would also require gcc-v4.1
+</I>&gt;<i> to be installed.
+</I>
+WRONG!
+make require gcc to be build, any spell that use make don't obligatory
+require gcc
+there are tons of such exemple, almost one for every code generator,
+flex, yacc.....
+
+build and runtime are by essence different, you might need to have a
+code generator like yacc to create a file that will eventualy be
+compiled and stored into a library.... why all the user that link to
+this library will depend on yacc? AFAIK only this spell require it...
+once build it will no more ever be used, NOT EVEN FOR COMPILING
+same with make (appart hugin for example that will use it at run time)
+
+
+&gt;<i> Therefore, the requirement chains must be without broken links
+</I>&gt;<i> when it comes to having installed software.
+</I>&gt;<i> This is especially important when it comes to doing any compilation
+</I>&gt;<i> of software during the installation of the I/R.
+</I>&gt;<i> Since the network is not yet configured by the SA
+</I>&gt;<i> new source tarballs can not simply be downloaded as required.
+</I>&gt;<i> All that are available on the I/R is all that can be compiled.
+</I>
+a compile requirement is composed of 2 things :
+- build requirements
+- runtime requirements
+
+a function like CreateRescue() would look like
+
+CreateRescue()
+{
+      leech $(augur runtime_aarof core) $(augur build_aarof core)
+      copySourcesToCache $(augur runtime_arof core) $(augur build_arof core)
+      copyArchivesToCache $(augur runtime_arof core) $(augur build_arof core)
+      makeImage $(augur runtime core)
+}
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> as well I find strange that some spell have dependencies upon autotools
+</I>&gt;&gt;<i> (automake and autoconf) since all autotooled package have a pecular
+</I>&gt;&gt;<i> version of autotools built-in.... thoses spells are only required if you
+</I>&gt;&gt;<i> want to create a software that use autotools, else you don't require
+</I>&gt;&gt;<i> them normaly
+</I>&gt;<i>
+</I>&gt;<i> Some sources do require libtool or autoconf or automake installed.
+</I>&gt;<i> Many sources have enough in their tree to compile without having
+</I>&gt;<i> the above 3 spells installed.
+</I>&gt;<i>
+</I>&gt;<i> There are two reasons that Sorcerer has only required and optional spells
+</I>&gt;<i> and not build required and run-time required spells.
+</I>&gt;<i> The first reason is simplicity.
+</I>&gt;<i> The current system is simple and fast.
+</I>&gt;<i> Because it does not try to do anything complicated
+</I>&gt;<i> it tends to work properly.
+</I>&gt;<i> If it were to do fancy stuff
+</I>&gt;<i> then unanticipated problems could occur.
+</I>&gt;<i>
+</I>&gt;<i> The second reason is that Sorcerer boxes must update.
+</I>&gt;<i> Because Sorcerer boxes update there is a good chance
+</I>&gt;<i> that over time every installed spell will recompile.
+</I>&gt;<i> If nearly all the installed software will recompile
+</I>&gt;<i> then the build requirements will be needed again.
+</I>&gt;<i>
+</I>&gt;<i> There is not normally a good reason to have
+</I>&gt;<i> spells required only for compilation to not be installed.
+</I>&gt;<i> Let us examine gcc and make for examples.
+</I>&gt;<i> Feel free to dispel them.
+</I>&gt;<i> A box does not require thme to run.
+</I>&gt;<i> But if a box lacks archives for them
+</I>&gt;<i> then what will will be required when it is time to update?
+</I>&gt;<i> Almost nothing can cast without gcc installed.
+</I>
+That's why gcc is a CORE spell like libc.... almost everything can be
+rebuild from them....
+however that's a waste to have cmake installed and scons... look at
+the few spells that are using them
+on a sorcerer box almost 70% of spells will be used once a year... and
+will be installed 365 day a year....
+
+&gt;<i> What can parase makefiles if make is not installed?
+</I>&gt;<i> Allowing SAs to dispel gcc and make is not a convenience.
+</I>&gt;<i> It is a delayed super head-ache!
+</I>
+NO, core profile is there to ensure that core spell ie spell that will
+brake sorcery installation will ever been present, because thoses
+spells are requirements of sorcery
+
+&gt;<i>
+</I>&gt;<i> They day will come when they say,
+</I>&gt;<i> &quot;Oh that was dumb, why did I dispel gcc?
+</I>&gt;<i> I require it now for updates.
+</I>&gt;<i> I have to manually install it from the I/R
+</I>&gt;<i> Oh wait, that is an older gcc.
+</I>&gt;<i> Now I have to compile it again.
+</I>&gt;<i> At least my c++ programs did not quit starting,
+</I>&gt;<i> thanks to the libstdc++ libraries stored in the library cache.
+</I>&gt;<i> Ah, I installed the older gcc provided on the I/R.
+</I>&gt;<i> Great.
+</I>&gt;<i> But now my c++ program will not run due to missing symbols.
+</I>&gt;<i> They require the newer libstdc++ provided by the newer gcc.
+</I>&gt;<i> Ah, I have to compile gcc first before I can do anything.
+</I>&gt;<i> I wish I had just left it installed to begin with.&quot;
+</I>&gt;<i>
+</I>&gt;<i> Even if SAs could save 300M on a installed system
+</I>
+300M?!? you're kiding! linux is made for developpers! and what do
+developpers like? development tools of course! look at perl, python,
+ruby, java, yacc, byacc, bison..... how many time are theses tools
+used a year? to be frank on my 9G / partition I use 7G and I'm almost
+certain that I can discard 4G of them without even carring...
+my box use xfce, fluxbox, and few other binaries that will weight at
+most 100M, ok there are dependencies... a typical xubuntu cdrom is
+650M _EVERYTHING_BUILD_ ie with lot of tools, the runtime env is only
+650M (by the way this is my average memory usage... strange isn't it?)
+this means that on my 7G partition, I only require 650M to run the
+system... the rest... is only for building
+however as you mentioned bellow sorcery as lot of advantages upon
+binary based distro and I won't swap to binary based distro because I
+know the asle of LinuxFromScratch when you use such distro (it always
+miss some header... or library archive... or yadayada)
+
+&gt;<i> by being able to dispel build only requirements
+</I>&gt;<i> they would soon come to regret the decision
+</I>&gt;<i> for blowing big holes that must be repaired
+</I>&gt;<i> before the box can update properly again.
+</I>
+THAT'S their problem! to be franck nothing prevent me to do
+augur install gcc | xargs rm
+
+or rm -rf /var/cache and try to cast without network.....
+
+sorcery won't ever prevent me to do that...
+
+sorcery only warrants that
+1) on cast all needed software will be present
+2) the installation will be safe
+
+the changes required on sorcery and spell is really low compared to
+the possibilities
+you always complain about taking time to recompile x86_64 software on
+qemu... yes qemu is great... but as all emulation it's slow!
+why do you think that most of the time developers use cross-compilers?
+ cross compiling isn't an easy setup, but once set crosscompile is a
+boon because you can use plain power of the system... however not all
+will crosscompile fine and the env shall be enough robust
+same the problem with crosscompile is that it require 2 level of
+dependencies, build dependencies that will be provided by crosscompile
+host, and runtime requirements that will be provided by the target fs
+and that won't run on the host (can be for example arm binaries...)
+
+&lt;....&gt;
+
+&gt;<i> I hate to seem so uncompromising about it.
+</I>&gt;<i> However, having separate concepts of build and
+</I>&gt;<i> runtime requirements is something borrowed from
+</I>&gt;<i> pre-compiled binary based distros.
+</I>
+WRONG, it is a concept that is mandatory when creating a rescue disk,
+as well as when crosscompiling.... as explained before...
+same it could even be used to provide chrooted installs....
+imagine that you could install without having to use a 3rd party lib
+to track changes on filesystem, and that this install is performed
+into a chrooted env? how can you perform that? hummm what if in build
+requirements I have install and gcc.... what do I need to perform
+install step? well in fact only what is in build requirement, simply
+copy them to some dir, do chroot to this dir and perform the install.
+after that clean the dir by removing all file copied and you have a
+perfect safe install... it works even on systems that don't support
+DESTDIR....
+same for crosscompiling, some host binaries has to be present during
+the install step, however to prevent having a missbehaving spell
+overwrite the host binaries with target binaries, the install shall be
+performed in a chroot jail with only a minimal copy of mandatory BUILD
+tools....
+sorcerer is a source based distro, this means that it shall permit all
+what is allowed by such distro : COMPILE, and even crosscompile...
+
+even with this actual design of sorcerer won't warants that some
+missbehaving source will not modify some files outside it's source
+tree during compilation time, and since tracking can't be activated
+all time because of slowness, if some spell do modification before
+prepare_install it won't be tracked... hopefully by activating md5sums
+you can be on the safe side... most of the time... imaging that glibc
+has a bug during install and create an empty /lib/libc.so? ahaha I
+wonder how will your box will behave....
+
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001085.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+	<LI>Next message: <A HREF="001086.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1082">[ date ]</a>
+              <a href="thread.html#1082">[ thread ]</a>
+              <a href="subject.html#1082">[ subject ]</a>
+              <a href="author.html#1082">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

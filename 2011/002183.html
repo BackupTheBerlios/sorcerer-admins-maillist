@@ -1,0 +1,267 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%0A%09mandatory.&In-Reply-To=%3CBANLkTimdMCDdtBQ_TpNiZHyuWECRZvrNqA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002181.html">
+   <LINK REL="Next"  HREF="002177.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%0A%09mandatory.&In-Reply-To=%3CBANLkTimdMCDdtBQ_TpNiZHyuWECRZvrNqA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun  4 14:24:36 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002181.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+        <LI>Next message: <A HREF="002177.html">[Sorcerer-admins] event logs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2183">[ date ]</a>
+              <a href="thread.html#2183">[ thread ]</a>
+              <a href="subject.html#2183">[ subject ]</a>
+              <a href="author.html#2183">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jun 3, 2011 at 2:12 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Thursday, June 02, 2011, Kyle Sallee wrote:
+</I>&gt;&gt;<i> However, I have decided that a 2G /boot partition
+</I>&gt;&gt;<i> will become mandatory when a /boot partition is required.
+</I>&gt;<i> What about existing boxes where repartitioning would be a hassle? Is the
+</I>&gt;<i> change going to break them? For example, my laptop has 1GB boot partition that
+</I>&gt;<i> I considered really generous only two years back.
+</I>
+500M still seems enormous to me!
+So yes, I agree that a 1G /boot seems more than generous.
+With 5 labels I anticipate that a 1G /boot is currently
+barely sufficient to support the /boot/*/initrf.old.
+When the initrf grows to be a bit larger
+then the potential benefit of /boot/*/initrf.old will be sacrificed.
+
+I anticipate that a 1G /boot will continue to be usable
+for a long time at the present rate of growth for /boot
+However, sometimes there are unexpected leaps forward
+in space usage such as the inclusion of linux-firmware
+instead of using individual spells to provide specific firmware.
+Also for as long as linux retains options to prune
+potentially unwanted sections from the linux kernel compilation
+then that technique can reduce consumption of space on /boot
+
+For example,
+
+# cat /etc/sorcery/log/opt.on/linux
+:<i>OMIT_ATM_DRIVERS:
+</I>:<i>OMIT_WAN:
+</I>:<i>OMIT_NETDEV_10000:
+</I>:<i>OMIT_INFINIBAND:
+</I>:<i>OMIT_ISDN:
+</I>:<i>OMIT_NETFILTER:
+</I>:<i>OMIT_BTRFS_FS:
+</I>:<i>OMIT_XFS_FS:
+</I>:<i>OMIT_OCFS2_FS:
+</I>:<i>OMIT_NETWORK_FILESYSTEMS:
+</I>:<i>OMIT_RADIO_ADAPTERS:
+</I>:<i>OMIT_VIDEO_CAPTURE_DRIVERS:
+</I>:<i>OMIT_DVB_CAPTURE_DRIVERS:
+</I>
+# ls -lah /boot/2.6.39.1/{linux,initrf*}
+-rw------- 1 root root  62M Jun  3 08:34 /boot/2.6.39.1/initrf
+-rw------- 1 root root  62M Jun  3 07:08 /boot/2.6.39.1/initrf.old
+-rw------- 1 root root 1.7M Jun  3 06:43 /boot/2.6.39.1/linux
+
+And a SA can manually remove old /boot/$VERSION and /lib/modules/$VERSION
+directories and run /etc/init.d/lilo
+in order to further minimize usage.
+And initramfs regeneration can be forced with
+/etc/init.d/initramfs force
+Also the SA can gzip /boot/*/initrf
+and rename it without the .gz extension
+in order to conserve a bit of space.
+
+# time gzip -3 initrf
+
+real    0m10.470s
+user    0m10.289s
+sys     0m0.140s
+
+# ls -lah initrf.gz /boot/2.6.39.1/initrf
+-rw------- 1 root root 62M Jun  3 08:34 /boot/2.6.39.1/initrf
+-rw------- 1 root root 39M Jun  4 04:33 initrf.gz
+
+That was at 800 MHz 400MHz bus speed with light compression.
+We can see compression made a difference.
+The difference seems more significant than usual because
+the initramfs already contained an incomplete selection of linux modules.
+If SAs request it then changes can be made to
+/etc/init.d/initramfs
+that allow the SA request that initramfs images are compressed.
+It would save about 20M per each initramfs image.
+However, the compressed image, in the above example,
+now requires an addition 40M for a box to boot.
+That is because the compressed initramfs and kernel image
+are loaded into memory and then the kernel must uncompress
+the initramfs image before providing it on rootfs.
+
+On a deployed box only the linux modules are compressed.
+That is because the modules can be compressed merely once
+and not require compression each time an initramfs is generated.
+On the Sorcerer I/R the linux modules are not compressed.
+Instead the entire initramfs image is xz compressed.
+The I/R's initramfs allows for faster downloading of the I/R.
+A deployed box's uncompressed initramfs with compressed modules
+allows for faster boot and lower memory consumption.
+
+The above demonstrates that
+I am bending in both directions
+to allow the SA more benefits
+than could be acquired without compression.
+As always the compromises can be adjusted.
+Conserving more space on /boot requires that
+/etc/init.d/initramfs requires longer to run.
+
+As it stands Sorcerer boxes use considerable space on /boot
+because it enables a considerably fast boot
+with an extravagant and potentially useful initramfs.
+The amount of dots printed is not excessive
+while lilo loads the initramfs.
+And since the initramfs is not decompressed
+then there is almost no delay
+from when linux begins until /init runs.
+
+For the moment I like the balance.
+I rather waste 20% more space on /boot
+rather than have slower initramfs generation and slower booting.
+But this is merely my preference.
+If a SA requests then I will adjust /etc/init.d/initramfs to allow
+SAs to specify compression.
+If I select the compression automatically
+then the best possible compromise would be a level of gzip compression
+where the CPU can compress nearly as fast as the the data can be read from disk.
+In that event the creation of an initramfs without the benefit of cached data
+would require nearly the same amount of time regardless of providing
+compression.
+Unfortunately, boot time would differ.
+However, gzip uncompression would be fastest for the kernel.
+
+I do not know if anyone clearly remembers
+the earlier I/R from the start of this year and earlier versions.
+They provided a bzip2 compressed initramfs.
+And there was a significant delay
+while the kernel decompressed the initramfs.
+
+The current compromise allows boxes to shutdown without
+appearing to hang during initramfs regeneration
+and to boot without appearing to hang from an initramfs decompression.
+Yet we pay for that speed by providing a nice large /boot/
+This we can adjust to some extent.
+However, a large /boot remains somewhat of a necessity since
+Sorcerer provides excellent fluffy initramfs images.
+
+As usual this is open to debate.
+What is ideal remains subjective.
+I will try to make adjustments according to SA feedback.
+However, a /boot smaller than 1G will not be possible.
+I can give no assurance that such boxes
+will not eventually fail to boot.
+However, as usual I will give notice when /boot usage is on the rise.
+That way boxes that were adequately prepared will endure.
+As for my boxes that had 256M /boot partitions,
+I re-partitioned those a long time ago.
+My boxes now have either no /boot or a 2G /boot
+However, a 1G /boot should be survivable.
+I recommend running df on it and monitor
+exactly how close it come to the limit.
+
+For example:
+
+# df /boot
+Filesystem     1K-blocks   Used Available Use% Mounted on
+/dev/sda1        2064208 650404   1308948  34% /boot
+
+3 labels, each with initrf.old and an additional rescue label.
+The files still fragment, but not terribly so.
+As we can see this /boot is in no danger overflow.
+
+And that is what we want to see.
+There is room for growth and room for performance.
+Hopefully, 2G /boot will continue to provide plenty of space even in 2038.
+However, I am not betting on it.
+
+I hope that helps further demystify the 2G /boot
+With compressed initramfs images
+Sorcerer could not manage on a smaller /boot.
+However, expectations and performance and growth
+require reasonable expectations.
+When I first recommended 2G for /boot
+what I was really thinking was,
+&quot;1G should be sufficient for a while
+so best to double the recommendation.&quot;
+
+Probably our 2G /boot partitions will not reach even 66% full this year.
+However, that is not a bad thing.
+That is a good thing!
+Having free space on /boot relaxes our woes
+about whether we must re-partition.
+
+Boxes that can not afford 2G on /boot
+can go ext3 or ext4 entirely for /
+with no fancy LVM2 nor mdadm.
+That way lilo can be installed in the boot block of /
+and will have no problem mapping the blocks
+for linux and initramfs images.
+Therefore, to /boot or not to /boot
+depends very much on what the SA
+decides to do with /
+/boot is something that was forced upon SAs.
+It was their choice.
+
+I want to say in conclusion that because Sorcerer is a distribution
+that progresses seamlessly from past to present to future
+that when deploying a /boot then a 2G /boot
+makes good sense to avoid future growing pains.
+If Sorcerer was a pre-compiled binary based distro
+then we would all be doing backups, re-partitioning,
+and doing complete fresh re-installations
+every year or every other year.
+But we are spared that agony.
+Consequently, we must pay for it by being generous
+in the space we allocate to partitions.
+A 2G /boot probably seems excessive for any distro.
+However, for the Sorcerer design
+a 2G /boot is the outcome of adequate forethought.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002181.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+	<LI>Next message: <A HREF="002177.html">[Sorcerer-admins] event logs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2183">[ date ]</a>
+              <a href="thread.html#2183">[ thread ]</a>
+              <a href="subject.html#2183">[ subject ]</a>
+              <a href="author.html#2183">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

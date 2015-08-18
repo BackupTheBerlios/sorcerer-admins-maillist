@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] libXau (from prior message)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXau%20%28from%20prior%20message%29&In-Reply-To=%3C596b75860701041216s7d72b1d3udd495f2769e8c20f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000023.html">
+   <LINK REL="Next"  HREF="000025.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] libXau (from prior message)</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXau%20%28from%20prior%20message%29&In-Reply-To=%3C596b75860701041216s7d72b1d3udd495f2769e8c20f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] libXau (from prior message)">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jan  4 21:16:07 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000023.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+        <LI>Next message: <A HREF="000025.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 1/3/07, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> Ahh it wasn't.. it was still //usr/X11R6/lib/X11/modules
+</I>&gt;<i>
+</I>&gt;<i> - with that, and the keyboard, mouse and nvidia module and I have X working
+</I>&gt;<i> again :) thanx
+</I>&gt;<i> - still are some depenancy issues with required libraries for newly
+</I>&gt;<i> modularized xorg...
+</I>
+Those might yet be caused by trying to export a previous
+XFree86 configuration file instead of generating a new one
+with xorgconfig
+You could save what you have and try generating a new one
+based upon the information in the old one to see if it helps.
+
+If you can spot missing requirements for spells with attribute
+X11R7 then please do.
+My guess is that they are most likely
+involving spells that install only header files.
+In those instances an augur lddof spell_name
+would not detect spells requirements that are
+not of an ELF library nature.
+
+The last time I did tests were the initial cast of xorg
+on a completely fresh deployment of Sorcerer.
+Unfortunately, I did not detect any problems.
+It could be in some cases that a potential problem
+may be hidden merely due to the difference in order
+of which spells being or finish compilation on different boxes.
+Sorcerer does not enforce a strict order, but rather an order
+that requires only explicitly related spells to compile and
+install in order.
+So if at no point in a requirement chain
+does spell A requires spell B nor does spell B require spell A.
+Then, either spell B or spell A could be cast first depending
+upon which already has a source downloaded for it.
+However, if all the required sources were already downloaded,
+which was the case with my testing
+then the order that spells A and B would cast in would be specific
+to the order in which they appear in /root/.sorcery/index/order
+
+I hope that is not upsetting.
+However, knowing that fact may help identify why
+cast xorg may work flawlessly on one box, but could
+potentially trip on an unexpectedly required but not
+spell that provides required header files for compilation.
+So if you encounter it, please report specifically what spells are involved.
+To circumvent add in those requirements if they are obvious,
+but if not, download all the sources for spells with
+proto as part of their name, regenerate the index,
+and restart the cast of xorg.
+That will probably step around any problems
+involving required xorg header files not being installed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000023.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+	<LI>Next message: <A HREF="000025.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

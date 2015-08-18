@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] updates...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20updates...&In-Reply-To=%3CAANLkTi%3D8G5dqky-7rmaVGvmWgsPuXcH%3D8EJ5OS8hRLTd%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002075.html">
+   <LINK REL="Next"  HREF="002079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] updates...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20updates...&In-Reply-To=%3CAANLkTi%3D8G5dqky-7rmaVGvmWgsPuXcH%3D8EJ5OS8hRLTd%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] updates...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Feb 15 10:48:32 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002075.html">[Sorcerer-admins] Maybe this is a good forum for this discussion...
+</A></li>
+        <LI>Next message: <A HREF="002079.html">[Sorcerer-admins] updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2078">[ date ]</a>
+              <a href="thread.html#2078">[ thread ]</a>
+              <a href="subject.html#2078">[ subject ]</a>
+              <a href="author.html#2078">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The valentine's day, February 14, release of sorcery has a tiny bug.
+So some spells will fail stating that the compiler can not create
+executable files.
+But then recasting the spell works.
+Please update any of those installed sorcery to version event-20110215-0
+That has the bug fix.
+I apologize that I did not notice that bug soon enough while testing.
+
+augur modules have changed slightly.
+Some of the old methods are deprecated.
+Some new methods are introduced.
+Please review the augur help screen
+in order to decide if any scripts require updating.
+Deprecated methods do not display on augur's help screen.
+However, they will remain functional for 6 months.
+After that they will be removed.
+
+These revision to sorcery are intended to factorize common code
+making sorcery and grimoire more flexible.
+The revision of methods for information acquisition from augur
+is also intended to make the appearance of augur's help
+to have a tighter focus on commands of a similar nature.
+
+For example, commands involving requirements used to have names such as:
+
+aarof
+arof
+aron
+iron
+elfof
+elfon
+static
+
+and so forth.
+
+Therefore, they were scattered up and down augur's helps screen.
+Yet now they appear as:
+
+req        aarof           *      spells that these spells can require
+req        arof            *      spells that these spells do  require
+req        arofni          *      uninstalled requirements for spells
+req        aron            *      spells that require these spells
+req        elfof           *      spells that these spells require by ELF libs
+req        elfon           *      spells that require these spells by ELF libs
+req        iron            *      installed spells that require these spells
+req        lclof           *      identify required spells from compile log
+req        static          *      spells that statically link with these spells
+
+
+Yet now they are conveniently grouped together.
+And all of the &quot;req&quot; based commands expect
+that spell names should be given on stdin
+just as the actual functions in sorcery require.
+
+Therefore, what used to be invoked as:
+# augur arof bash
+can now be invoked as:
+# echo bash | augur arof
+
+As Sorcerer SAs we are all familiar with the convenience of piping
+stdout of one command to the stdin of another command.
+So a change such as this should not cause inconvenience.
+
+And back by popular demand is:
+
+avail        latest        *        latest version for spells
+avail        legacy        *        legacy version for spells
+avail        secure        *        secure version for spells
+avail        stable        *        stable version for spells
+avail      unstable        *      unstable version for spells
+
+Likewise it only accepts input of spell names on stdin.
+
+Example:
+
+# echo -e &quot;gedit\nwarzone2100&quot; | augur avail unstable
+gedit   2.91.6
+warzone2100     3.0_beta4
+
+
+Remember if an augur method is invoked from the tty
+and it is waiting for input
+then the SA can type what they want and press ctrl-d to end input.
+
+# augur avail unstable
+gedit
+gedit   2.91.6
+
+In the above example I invoked
+# augur avail unstable
+and then I typed:
+
+gedit
+
+It immediately responded with the information.
+Then I pressed ctrl-d and returned to command line.
+
+Pressing ctrl-c while running any sorcery script
+will cause the merged grimoire and index to be
+removed before exit.
+
+Using ctrl-d instead of or before trying ctrl-c avoids causing problems.
+
+Last but not least, the augur commands also have verbose help.
+If the &quot;req&quot; command module seems confusing then type:
+
+# augur help req
+
+Hopefully the help screen for &quot;req&quot; and provided examples
+will demystify the confusing parts.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002075.html">[Sorcerer-admins] Maybe this is a good forum for this discussion...
+</A></li>
+	<LI>Next message: <A HREF="002079.html">[Sorcerer-admins] updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2078">[ date ]</a>
+              <a href="thread.html#2078">[ thread ]</a>
+              <a href="subject.html#2078">[ subject ]</a>
+              <a href="author.html#2078">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

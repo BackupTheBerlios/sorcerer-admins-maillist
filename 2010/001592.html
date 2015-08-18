@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] iputils fails to build
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20iputils%20fails%20to%20build&In-Reply-To=%3Cj2r8596d02a1005051620s9df3ef34zd28f77fc583b4130%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001590.html">
+   <LINK REL="Next"  HREF="001593.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] iputils fails to build</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20iputils%20fails%20to%20build&In-Reply-To=%3Cj2r8596d02a1005051620s9df3ef34zd28f77fc583b4130%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] iputils fails to build">d3ck0r at gmail.com
+       </A><BR>
+    <I>Thu May  6 01:20:57 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001590.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+        <LI>Next message: <A HREF="001593.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1592">[ date ]</a>
+              <a href="thread.html#1592">[ thread ]</a>
+              <a href="subject.html#1592">[ subject ]</a>
+              <a href="author.html#1592">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>:<i>( but it doesn't compile
+</I>
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at tower2</A>:/var/tmp/failed/iputils/iputils-s20100418# make
+make: *** No rule to make target `-lresolv', needed by `ping6'.  Stop.
+
+how do I touch a file with a '-' in it?
+like if I touch '-lresolv' and '-lcrypto' it might build...
+
+okay after doing
+echo &gt; '-lresolv'
+echo &gt; '-lcrypto'
+
+then it finishes building....
+
+I don't understand why it would compile anywhere since it's looking
+literally for '-lresolv' and '-lcrypto' as dependant files....
+
+On Wed, May 5, 2010 at 5:21 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> The makefile rule does seem strange,
+</I>&gt;<i> and yet it compiles.
+</I>&gt;<i> If there is not a compile problem
+</I>&gt;<i> then is this something we should change?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, May 4, 2010 at 5:44 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> No :) the makefile rule is
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> target: dependancy_file_names
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -lresolv is NOT a filename, it is an option used to get to libresolv,
+</I>&gt;&gt;<i> but it is not a filename, the makefile is messed up.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, May 4, 2010 at 5:31 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> # augur from libresolv
+</I>&gt;&gt;&gt;<i> glibc:/lib/libresolv-2.11.1.so
+</I>&gt;&gt;&gt;<i> glibc:/lib/libresolv.so.2
+</I>&gt;&gt;&gt;<i> glibc:/usr/lib/libresolv.a
+</I>&gt;&gt;&gt;<i> glibc:/usr/lib/libresolv.so
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> # augur from libresolv
+</I>&gt;&gt;&gt;<i> glibc:/lib64/libresolv-2.11.1.so
+</I>&gt;&gt;&gt;<i> glibc:/lib64/libresolv.so.2
+</I>&gt;&gt;&gt;<i> glibc:/usr/lib64/libresolv.a
+</I>&gt;&gt;&gt;<i> glibc:/usr/lib64/libresolv.so
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> # augur compile iputils | grep resolv
+</I>&gt;&gt;&gt;<i> gcc &#160;-Wl,-s &#160;ping6.o ping_common.o /usr/lib/libresolv.so
+</I>&gt;&gt;&gt;<i> /usr/lib/libcrypto.so &#160; -o ping6
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The compile log looks different on my box.
+</I>&gt;&gt;&gt;<i> Perhaps the compile worked because bind is installed
+</I>&gt;&gt;&gt;<i> on that box?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The makefile rule does look as if it should fail.
+</I>&gt;&gt;&gt;<i> But perhaps GNU's make somehow handles that correctly?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Since no compile error happens for me,
+</I>&gt;&gt;&gt;<i> I require further information in order to fix this problem.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Tue, May 4, 2010 at 1:28 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> I know this is definatly not a sorcerer problem, but, iputils fails to build.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I deleted the sources so I would redownload them, and the sources
+</I>&gt;&gt;&gt;&gt;<i> still had the following...iputils builds with just make. &#160;the makefile
+</I>&gt;&gt;&gt;&gt;<i> rules have
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> tftpd: tftpd.o tftpsubs.o
+</I>&gt;&gt;&gt;&gt;<i> arping: arping.o -lsysfs
+</I>&gt;&gt;&gt;&gt;<i> ping: ping.o ping_common.o
+</I>&gt;&gt;&gt;&gt;<i> ping6: ping6.o ping_common.o -lresolv -lcrypto
+</I>&gt;&gt;&gt;&gt;<i> ping.o ping6.o ping_common.o: ping_common.h
+</I>&gt;&gt;&gt;&gt;<i> tftpd.o tftpsubs.o: tftp.h
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> -lresolv will be considered as a filename, and of course -lresolv
+</I>&gt;&gt;&gt;&gt;<i> doesn't exist, -lcrypto is the same... WHY they have -l___ in their
+</I>&gt;&gt;&gt;&gt;<i> makefile I will never know.
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001590.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+	<LI>Next message: <A HREF="001593.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1592">[ date ]</a>
+              <a href="thread.html#1592">[ thread ]</a>
+              <a href="subject.html#1592">[ subject ]</a>
+              <a href="author.html#1592">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

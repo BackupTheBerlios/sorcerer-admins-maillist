@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Accessing the internet
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Accessing%20the%20internet&In-Reply-To=%3CAANLkTilaV82fIbvq0JB9BKrBICiJMPQ-C27tGvGONYES%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001800.html">
+   <LINK REL="Next"  HREF="001817.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Accessing the internet</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Accessing%20the%20internet&In-Reply-To=%3CAANLkTilaV82fIbvq0JB9BKrBICiJMPQ-C27tGvGONYES%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Accessing the internet">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul 20 06:24:54 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001800.html">[Sorcerer-admins] Accessing the internet
+</A></li>
+        <LI>Next message: <A HREF="001817.html">[Sorcerer-admins] cairo install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1803">[ date ]</a>
+              <a href="thread.html#1803">[ thread ]</a>
+              <a href="subject.html#1803">[ subject ]</a>
+              <a href="author.html#1803">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jul 19, 2010 at 5:35 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">wyatt_w at juno.com</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">wyatt_w at juno.com</A>&gt; wrote:
+&gt;<i> Greetings! &#160;I saw a screenshot of Sorcerer on deviantart and had to try it.
+</I>
+I had no idea anyone was advertising.
+Sorcerer tends to be a trial by invitation type thing.
+
+&gt;<i>&#160;I got it installed no problem. &#160;My problem is with a dialup connection to the internet. &#160;Wvdial would not compile.
+</I>
+Although it passed most recent tests
+the software itself is ancient.
+Not much interest in dial up,
+however Sorcerer would not be a bad choice
+to use on dial up due to the ability to download
+sdelta3 patches for software updates.
+
+
+&gt;<i>&#160;I brought in pppsetup--which is the fine dialup setup program used in Slackware and by me for 5 years.
+</I>
+Have not tried it.
+I used to write my own chat script for connecting
+with an ISP and starting a PPP connection.
+It is not difficult to do.
+
+
+&gt;<i> The messages at var/log/messages indicate that a connection gets established, internet addresses get assigned dynamically, and all appears to be fine.
+</I>
+That is good.
+Did you try using the lynx web browser,
+lftp, or curl to download files?
+Is DNS okay, can names be resolved to IP addresses?
+
+
+&gt;<i>&#160;When I run augur sync or cast a spell the modem begins to redial and continues to do so until I kill the process.
+</I>
+augur and cast have no ability to dial.
+However, if a PPP on demand program is set up
+then perhaps the disconnecting and dialing is also upon demand?
+Depending upon how it is configured I suppose that
+the dialing and disconnecting could be very frequent.
+Although I have heard of on-demand PPP
+I have never tried it.
+So I know nothing about it.
+I would just use a simple chat script,
+establish a connection and keep it until
+either the ISP hung up on me or I hung up on them.
+
+
+&gt;<i>&#160;This puzzles me since pppsetup usually has no problems
+</I>&gt;<i> whatsoever. &#160;I've also brought in chatscripts from linux mint to
+</I>&gt;<i> generate a &quot;pppd call provider&quot; means of accessing the web.
+</I>&gt;<i> &#160;Pap authentication and ip address assignment again no
+</I>&gt;<i> problem. &#160;Try doing anything and the modem begins to redial.
+</I>&gt;<i>&#160;I've added the ppp -c and ppp -d commands to the network
+</I>&gt;<i> configuration so ppp0 can be started through the network start
+</I>&gt;<i>command.
+</I>&gt;<i> &#160;Nothing effects the persistent modem redialing. &#160;I'm perplexed. Any ideas would be helpful. Thanks.
+</I>&gt;<i> Wyatt Wagner
+</I>
+At the moment I have no guess about it.
+However, I can tell you that the sorcery tools
+do all the their web/ftp access using curl.
+Even if some information must be post
+to a CGI script on a website
+then the sorcery tools do so using curl.
+So what I would want to to test first
+would be to establish a connection
+and then trying to download some files
+using curl from the command line.
+
+The sorcery tools have no method for
+automatically detecting a network connection
+nor creating a network connection nor dialing an ISP.
+
+What I do remember is that
+ppp installs
+/bin/pon
+/bin/poff
+
+One might start by looking at that file
+and then by deciding if the chat script
+is called isp and where in /etc/ppp/
+that should be located.
+Oh, probably /etc/ppp/chat
+
+A chat script should look something like:
+
+# cat /etc/ppp/chat/isp
+ABORT 'BUSY'
+ABORT 'NO CARRIER'
+ABORT 'VOICE'
+ABORT 'NO DIALTONE'
+ABORT 'NO DIAL TONE'
+ABORT 'NO ANSWER'
+'' AT&amp;N16&amp;U12
+SAY  &quot;\n  Dialing ISP.\n&quot;
+OK-AT-OK ATDT5291937
+TIMEOUT 120
+SAY  &quot;\n  Waiting up to 2 minutes for connection.\n&quot;
+CONNECT ''
+SAY  &quot;\n  Connection established.\n&quot;
+ogin: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">roland at somwhere.net</A>
+ssword: \qbluemoon
+SAY  &quot;\n  Transmitted username and password.\n&quot;
+'' \d\c
+
+/etc/ppers/isp
+would contain something like:
+
+# cat isp
+noauth
+/dev/modem
+115200
+defaultroute
+usepeerdns
+connect &quot;chat -v -e -f /etc/ppp/chat/isp&quot;
+
+/etc/ppp/options
+should be something like:
+
+# cat options
+# mru 1280
+# mtu 1280
+mru 768
+mtu 768
+nobsdcomp
+deflate 15,15
+persist
+vj-max-slots 16
+
+And if PAP is used then
+a pap secret should be specified in
+/etc/pap-secrets
+see manual page for what that should be like.
+
+I do not remember much else about PPP.
+While it is not lengthy to set up
+it can be a bit tricky to set up and test.
+
+Previously, I was of the opinion that
+writing the files myself was easier than
+using a PPP configuration program.
+But go ahead and try whatever seems easy
+and then probably take a look at the above
+mentioned files to see if they are as expected.
+
+There is probably a PPP HowTo
+at the Linux Documentation Project.
+There is definitely
+
+# augur install ppp | grep man
+/usr/share/man
+/usr/share/man/man8
+/usr/share/man/man8/chat.8
+/usr/share/man/man8/pppd-radattr.8
+/usr/share/man/man8/pppd-radius.8
+/usr/share/man/man8/pppd.8
+/usr/share/man/man8/pppdump.8
+/usr/share/man/man8/pppstats.8
+
+some ppp related manual pages.
+And if all else fails there is the ppp
+source tarball that might contain
+some additional documentation.
+
+# augur category network/ppp
+diald
+ppp
+slmodem
+wvdial
+
+Not much in the network/ppp category of software.
+More is welcome if anyone wants to write spells
+for the software that they use.
+diald well is a dial on demand type program.
+I have no idea how it is supposed to work.
+It might cause problems or solve problems.
+
+# LC_ALL=C grep -ril PPP /usr/src/linux/Documentation
+/usr/src/linux/Documentation/Changes
+/usr/src/linux/Documentation/logo.gif
+/usr/src/linux/Documentation/ABI/testing/sysfs-bus-pci
+/usr/src/linux/Documentation/feature-removal-schedule.txt
+/usr/src/linux/Documentation/networking/README.sb1000
+/usr/src/linux/Documentation/networking/eql.txt
+/usr/src/linux/Documentation/networking/PLIP.txt
+/usr/src/linux/Documentation/networking/arcnet.txt
+/usr/src/linux/Documentation/networking/l2tp.txt
+/usr/src/linux/Documentation/networking/ipddp.txt
+/usr/src/linux/Documentation/networking/generic-hdlc.txt
+/usr/src/linux/Documentation/networking/ip-sysctl.txt
+/usr/src/linux/Documentation/networking/ppp_generic.txt
+/usr/src/linux/Documentation/isdn/00-INDEX
+/usr/src/linux/Documentation/isdn/README.hysdn
+/usr/src/linux/Documentation/isdn/README.concap
+/usr/src/linux/Documentation/isdn/syncPPP.FAQ
+/usr/src/linux/Documentation/isdn/README.HiSax
+/usr/src/linux/Documentation/isdn/INTERFACE
+/usr/src/linux/Documentation/isdn/README.gigaset
+/usr/src/linux/Documentation/isdn/README.syncppp
+/usr/src/linux/Documentation/isdn/README
+/usr/src/linux/Documentation/isdn/README.sc
+/usr/src/linux/Documentation/isdn/CREDITS
+/usr/src/linux/Documentation/magic-number.txt
+/usr/src/linux/Documentation/usb/usb-serial.txt
+/usr/src/linux/Documentation/usb/acm.txt
+/usr/src/linux/Documentation/kbuild/makefiles.txt
+/usr/src/linux/Documentation/m68k/kernel-options.txt
+/usr/src/linux/Documentation/devices.txt
+/usr/src/linux/Documentation/powerpc/qe_firmware.txt
+/usr/src/linux/Documentation/ioctl/ioctl-number.txt
+/usr/src/linux/Documentation/DocBook/dvb/dvbstb.png
+/usr/src/linux/Documentation/DocBook/writing-an-alsa-driver.tmpl
+/usr/src/linux/Documentation/DocBook/v4l/vbi_hsync.gif
+/usr/src/linux/Documentation/filesystems/proc.txt
+
+
+If I am really stumped I like to look at
+files that might prove insightful stored in
+/usr/src/linux/Documentation/
+Maybe none of it is useful?
+
+# zcat /proc/config.gz | grep -i ppp
+CONFIG_HDLC_PPP=m
+CONFIG_PPP=m
+CONFIG_PPP_MULTILINK=y
+CONFIG_PPP_FILTER=y
+CONFIG_PPP_ASYNC=m
+CONFIG_PPP_SYNC_TTY=m
+CONFIG_PPP_DEFLATE=m
+CONFIG_PPP_BSDCOMP=m
+CONFIG_PPP_MPPE=m
+CONFIG_PPPOE=m
+CONFIG_PPPOATM=m
+CONFIG_PPPOL2TP=m
+CONFIG_ISDN_PPP=y
+CONFIG_ISDN_PPP_VJ=y
+CONFIG_IPPP_FILTER=y
+CONFIG_ISDN_PPP_BSDCOMP=m
+
+Kernel options at compile time that relate to PPP.
+Does the kernel have what is expected?
+Are required modules loading automatically?
+
+I have a box with a modem in it.
+But I do not have a PPP account to test with.
+I suspect Sorcerer still works fine with dial up PPP,
+but it is something that requires testing.
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001800.html">[Sorcerer-admins] Accessing the internet
+</A></li>
+	<LI>Next message: <A HREF="001817.html">[Sorcerer-admins] cairo install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1803">[ date ]</a>
+              <a href="thread.html#1803">[ thread ]</a>
+              <a href="subject.html#1803">[ subject ]</a>
+              <a href="author.html#1803">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

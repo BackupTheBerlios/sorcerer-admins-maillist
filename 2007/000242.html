@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIDIA-Linux-x86
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86&In-Reply-To=%3C9104f1fb0708260003p5a31df8eueadafac528ec80ca%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000238.html">
+   <LINK REL="Next"  HREF="000223.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIDIA-Linux-x86</H1>
+    <B>John Locke</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86&In-Reply-To=%3C9104f1fb0708260003p5a31df8eueadafac528ec80ca%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] NVIDIA-Linux-x86">loki1725 at gmail.com
+       </A><BR>
+    <I>Sun Aug 26 09:03:09 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000238.html">[Sorcerer-admins] NVIDIA-Linux-x86
+</A></li>
+        <LI>Next message: <A HREF="000223.html">[Sorcerer-admins] bug report follow up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#242">[ date ]</a>
+              <a href="thread.html#242">[ thread ]</a>
+              <a href="subject.html#242">[ subject ]</a>
+              <a href="author.html#242">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The kernel module loads properly, and runs properly.  It is the driver
+library for the Xserver that seems to be put in the wrong spot.  For my box,
+installing the NVIDIA spell put the kernel module in
+/lib/modules/2.6.22.5/kernel/drivers/video/nvidia.ko
+
+I also had files installed to
+/usr/X11R6/lib/modules/libnvidia-wfb.so.100.14.11
+
+/usr/X11R6/lib/modules/drivers/nvidia_drv.so
+
+and a few other .so in
+/usr/X11R6/lib/modules/extensions
+
+This apparently is the default directory for Xorg 7.0
+Xorg 7.2 is now looking by default in
+/usr/lib/xorg/modules
+
+So I created links from /usr/lib/xorg/modules to thier respective files in
+/usr/X11R6/lib/modules and it now works.  I probably could have changed the
+directory in xorg.conf as well.
+
+Either way, I agree that it is best to not change the install directories
+from NVIDIA.  I think too many other programs depend on those locations.
+Also, I like the fact that the module builds for the most current install of
+the kernel.  That makes updating a lot easier.  Just tonight I did a linux
+update and an NVIDIA update and just had to restart to get everthing working
+perfectly with the new kernel.  Very nice work.
+
+
+
+On 8/25/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> As for nvidia.ko, it might be installed in the wrong location.
+</I>&gt;<i> But in my tests it installed in the proper location
+</I>&gt;<i>
+</I>&gt;<i> /lib/modules/2.6.22.5/kernel/drivers/video/nvidia.ko
+</I>&gt;<i>
+</I>&gt;<i> Keep in mind, if I had a nvidia card and I wanted to load the module
+</I>&gt;<i> that uname -r
+</I>&gt;<i> would have to print
+</I>&gt;<i> 2.6.22.5
+</I>&gt;<i> and not 2.6.22.2, which it does currently.
+</I>&gt;<i>
+</I>&gt;<i> That means in order to load the module I would have
+</I>&gt;<i> to first reboot into the newer kernel.
+</I>&gt;<i> When writing these spells I intentionally modify the ?source?
+</I>&gt;<i> so that it builds a module for the currently installed linux
+</I>&gt;<i> and not the currently running linux as it would do otherwise.
+</I>&gt;<i>
+</I>&gt;<i> /usr/lib/modules/drivers/nvidia_drv.so
+</I>&gt;<i>
+</I>&gt;<i> That may seem like an unusual locaiton considering
+</I>&gt;<i> where the other DRI drivers installed by MesaLib are located.
+</I>&gt;<i> However, I discovered with ati-driver-installer that
+</I>&gt;<i> I could not merely move that so file around and hope that
+</I>&gt;<i> DRI would work.
+</I>&gt;<i> It did not.
+</I>&gt;<i> Only after I exported LIBGL_DRIVERS_PATH to the directory
+</I>&gt;<i> where fglrx_dri.so was located did it work.
+</I>&gt;<i> Therefore, in the case of NVIDIA-Linux-x86 I left everything
+</I>&gt;<i> to install where it would normally install, except the documentation.
+</I>&gt;<i>
+</I>&gt;<i> If you have a problem starting xorg due to the unusual location of a
+</I>&gt;<i> module
+</I>&gt;<i> the best way to handle that is to add into /etc/X11/xorg.conf
+</I>&gt;<i> in the
+</I>&gt;<i> Section &quot;Files&quot;
+</I>&gt;<i>         ModulePath   &quot;/usr/lib/modules/drivers&quot;
+</I>&gt;<i>         ModulePath   &quot;/usr/lib/modules&quot;
+</I>&gt;<i>
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> Or put in whatever paths are required for xorg to be able to location
+</I>&gt;<i> modules at startup.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 8/25/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Ok, I think I got it working.  Apparently there is an issue with the
+</I>&gt;<i> nvidia
+</I>&gt;<i> &gt; driver and Xorg v 7.2  The NVidial install script puts the librarys and
+</I>&gt;<i> &gt; drivers in /usr/X11R6/lib/modules/  and Xorg looks for the modules in
+</I>&gt;<i> &gt; /usr/lib/xorg/modules.  So you have to create links for the installed
+</I>&gt;<i> &gt; drivers and libraries.  I can now get an xserver working, so I'm in the
+</I>&gt;<i> &gt; process of installing KDE.  I have a feeling that in the next set of
+</I>&gt;<i> drivers
+</I>&gt;<i> &gt; from NVIDIA they will either change the install directory, or make the
+</I>&gt;<i> links
+</I>&gt;<i> &gt; for you.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On 8/25/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; Has anyone used this and gotten it to run?  I downloaded and cast the
+</I>&gt;<i> &gt; spell and it ran ok.  Then I ran the nvidia-xconfig to generate an
+</I>&gt;<i> xorg.conf
+</I>&gt;<i> &gt; file.  It all seems to be ok but when I try and startx I get an error
+</I>&gt;<i> that
+</I>&gt;<i> &gt; says it can't load the module 'nvidia'.  I do a lsmod and 'nvidia' is
+</I>&gt;<i> &gt; running.  And in /lib/modules/2.6.22./kernel/drivers/video
+</I>&gt;<i> &gt; is a nvidia.ko  I'm wondering what I'm missing here.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Thanks
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070826/f717f4b4/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070826/f717f4b4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000238.html">[Sorcerer-admins] NVIDIA-Linux-x86
+</A></li>
+	<LI>Next message: <A HREF="000223.html">[Sorcerer-admins] bug report follow up
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#242">[ date ]</a>
+              <a href="thread.html#242">[ thread ]</a>
+              <a href="subject.html#242">[ subject ]</a>
+              <a href="author.html#242">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

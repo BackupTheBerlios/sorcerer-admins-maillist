@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] syslog-ng 2.x
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20syslog-ng%202.x&In-Reply-To=%3C46E69743.7030305%40hnp.hu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000262.html">
+   <LINK REL="Next"  HREF="000263.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] syslog-ng 2.x</H1>
+    <B>G&#225;sp&#225;r &#193;kos</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20syslog-ng%202.x&In-Reply-To=%3C46E69743.7030305%40hnp.hu%3E"
+       TITLE="[Sorcerer-admins] syslog-ng 2.x">madar at hnp.hu
+       </A><BR>
+    <I>Tue Sep 11 15:25:23 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000262.html">[Sorcerer-admins] NVIdia 64 manual install
+</A></li>
+        <LI>Next message: <A HREF="000263.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#261">[ date ]</a>
+              <a href="thread.html#261">[ thread ]</a>
+              <a href="subject.html#261">[ subject ]</a>
+              <a href="author.html#261">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello!
+
+syslog-ng 2.x needs some extra work. It requires a new spell eventlog, I 
+attached a starting one.
+
+And it has some gnome requirements I got this on compile:
+checking for static GLib libraries... no
+configure: error: static GLib libraries not found (a file named 
+libglib-2.0.a), either link GLib dynamically using the 
+--enable-dynamic-linking or install a static GLib
+
+I found this FAQ:** <A HREF="http://www.campin.net/syslog-ng/faq.html">http://www.campin.net/syslog-ng/faq.html</A>
+Q: Syslog-ng 2.x requires glib and eventlog which reside in /usr, thus 
+cannot be used on systems where /usr is mounted during boot time, after 
+syslog-ng starts.**
+// A: The latest snapshots (and future releases) of syslog-ng 2.x links 
+to GLib and EventLog statically, thus it will not require those 
+libraries to be present at boot time.//
+
+Should I compile static libs for glib? How can I do that?
+Or configure syslog-ng with --enable-dynamic-linking option?
+
+Thanks for your help!
+madar
+
+-------------- next part --------------
+An embedded and charset-unspecified text was scrubbed...
+Name: eventlog
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070911/9ba17f9c/attachment.ksh">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070911/9ba17f9c/attachment.ksh</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000262.html">[Sorcerer-admins] NVIdia 64 manual install
+</A></li>
+	<LI>Next message: <A HREF="000263.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#261">[ date ]</a>
+              <a href="thread.html#261">[ thread ]</a>
+              <a href="subject.html#261">[ subject ]</a>
+              <a href="author.html#261">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

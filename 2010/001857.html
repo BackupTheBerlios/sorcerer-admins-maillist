@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTi%3DERObnApi3WjMfK8ZmiEg_7QzaCyhUtBL6xyRX%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001856.html">
+   <LINK REL="Next"  HREF="001862.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTi%3DERObnApi3WjMfK8ZmiEg_7QzaCyhUtBL6xyRX%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 26 22:56:12 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001856.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001862.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1857">[ date ]</a>
+              <a href="thread.html#1857">[ thread ]</a>
+              <a href="subject.html#1857">[ subject ]</a>
+              <a href="author.html#1857">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jul 26, 2010 at 8:44 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Sounds like there's really a specific point - udev - which is actually
+</I>&gt;<i> critical for system startup success. &#160;Personally, if such a thing
+</I>&gt;<i> fails, I just add initsh=/bin/sh on the boot line and then hand run
+</I>&gt;<i> the init scripts to see what was caused; so there is a ctrl-d to
+</I>&gt;<i> repair.
+</I>
+initrd=/bin/bash is the best way to debug init.
+The Sorcerer init-scripts are designed so that each
+one should so one simple primary task.
+Discovering where a problem happened is usually easy.
+Finding the init-script that failed is usually easy.
+Knowing why it failed is not usually immediate
+and often requires a bit of exploration both before
+and after running an init-script to see what
+actually happened.
+
+ctrl-d to repair is taking a blind poke at a hornets' nest.
+
+
+&gt;<i>&#160;But I don't want the press ctrl-d prompt to come up every
+</I>&gt;<i> time and waste 5 seconds. &#160;I also thought startup consoles were
+</I>&gt;<i> redirected to /etc/init.d/log.d... so I don't see a problem checking
+</I>&gt;<i> which services started....
+</I>
+Only the output of init-scripts and immediate output of
+services through stdout and stderr are redirected
+to a TTY and a log file.
+Anything written directly to console goes to console.
+
+
+&gt;&gt;<i> regarding speed... I still believe that the overhead isn't that much as kyle
+</I>&gt;&gt;<i> is saying.... what will we loss? 1? 2s? on a netbook? anyway using a &quot;super
+</I>&gt;&gt;<i> service&quot; process written in C/C++ using a client/server model and then only
+</I>&gt;&gt;<i> communication through unix sockets, I'm confident that the cost won't be
+</I>&gt;&gt;<i> ever noticeable...
+</I>
+And it will not ever be debuggable by SAs during boot
+unless we start including gcc, make,
+and source files on the initramfs.
+
+
+&gt;&gt;<i> another point regarding speed :
+</I>&gt;&gt;<i> say you have 5 starting services :
+</I>&gt;&gt;<i> S00_1 : 10s
+</I>&gt;&gt;<i> S00_2 : 50s
+</I>&gt;&gt;<i> S01_3 : require S00_1, 1s
+</I>&gt;&gt;<i> S01_4 : require S00_1, 30s
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> with current design using parallel start : S00 time : 50s, S01 time : 30s,
+</I>&gt;&gt;<i> whole time 80s
+</I>&gt;&gt;<i> with a start/stop controled on requirements : S01_4 total start (most time
+</I>&gt;&gt;<i> consuming on the S00_1 branch) 10+30s = 40s,&#160; S00_2 total time : 50s, whole
+</I>&gt;&gt;<i> start time 50s......
+</I>&gt;&gt;<i> =&gt; 80s versus 50s, who is winner?
+</I>
+That logic almost works on Jan's computers that
+have 16 cores and RAM based disks with
+0 milisecond access time.
+On real computers with mechanical disk devices
+and only a few processor cores
+the total time to boot depends upon the time required
+to read files from disks and the time required
+for the CPU cores to do the work of starting
+and running the services.
+And as we already know
+not everything can start immediately.
+All parallel init implementations must have at least a few
+order specific services or tasks that must be accomplished
+before any serious level of parallelization can begin.
+
+
+&gt;&gt;<i> another point regarding speed :
+</I>&gt;&gt;<i> S00_1 : no requirement, might take 3s to fail
+</I>&gt;&gt;<i> S01_2 : require S00_1, might take 40s to fail
+</I>&gt;&gt;<i> S02_3 : require S01_2, might take 1s to fail
+</I>&gt;&gt;<i> imagine now that S00_1 fails, in controled start way, S01_2, S02_3 won't
+</I>&gt;&gt;<i> start and then won't consume resources, won't make the other S01* and S02*
+</I>&gt;&gt;<i> wait (since the are waiting on their branches and not on a runlevel start
+</I>&gt;&gt;<i> step), overall cost of the failure : 3s
+</I>&gt;&gt;<i> now with the current design, S00_1 fails, cost 3s, we're moving to the S01
+</I>&gt;&gt;<i> layer, S01_2 fails (because of S00_1) on integrated time out of 40s, cost :
+</I>&gt;&gt;<i> 40s, moving to the S02 layer, S02_3 is started, fail, cost 1s.&#160; OVERALL
+</I>&gt;&gt;<i> start time 3+40+1 = 43s
+</I>&gt;&gt;<i> =&gt; 3s versus 43s.... wo is winner?
+</I>
+*lol*  Who cares how fast a totally failed boot can happen
+when the box will not be usable in that scenario?
+
+
+&gt;&gt;<i> controled start service is winner in both failure and success scenario....
+</I>
+If an operating system was different and services
+had no order requirements, and disks are RAM based,
+and CPU cores are unlimited then it wins.
+Yet on a real computer it loses
+and the fixed disk device loses also.
+So many requests for files at once will cause
+excessive disk seeking as the kernel will
+not read entire unfragmented files entirely on first seek,
+because the demand for disk sectors is so high.
+Trying to simultaneously load sectors from 300 files
+is high abuse for a traditional fixed disk device.
+
+The fact that most Sorcerer init-scripts are
+under 4096 bytes is not a coincidence.
+By design they are intended to be that small
+so that they can not become fragmented
+and can be entirely read with that first seek
+to the part of the disk that holds them.
+Consequently, all the factorized out code
+that exists in /lib/lsb/init-functions
+need only be read once and then remains
+in the kernel's disk cache.
+Unfortunately, the rest of the files loaded
+during boot are not few nor tiny.
+
+Perhaps on most boxes deployed today
+the largest single factor which effects boot speed
+is fixed disk performance.
+When I tried a program I created call bootblaze
+to force the disks to read files into the kernel's
+RAM cache in correct order as fast as possible
+the improvement in boot speed was not significant.
+I quit using bootblaze because I expected the tiny
+amount of speed gained might not be worth the
+extra wear and tear on disks during boot.
+And that is also why I am using the serial boot
+runlevels instead of parallel boot runelvels.
+
+The conjecture of speed suggested is incommensurate
+with what would be realized if implemented.
+80s to boot would not reduce to 50s to boot.
+On anything except RAM based disk drives
+the time to boot might increase rather than decrease,
+because the fixed disk would be dancing a jig.
+On RAM based disk drives
+a reduction of 80s to 75s might be possible.
+Much more would not be possible since CPU cores
+are not an unlimited resource even with perfect parallelization.
+
+Abiding with the design limitations of using shell based
+init-scripts with LSB comments
+Sorcerer's implementation of a parallel execution
+of init-scripts during runlevel is within 25% maximum speed,
+and likely within 10% the maximum possible speed
+while still requiring only a simple:
+
+# wc -cl /etc/init.d/prc
+ 40 847 /etc/init.d/prc
+
+40 line / 847 byte control script.
+Does that compromise excessively favor simplicity
+instead of speed?
+
+&gt;<i>From my experience a 40% increase
+</I>in boot speed comes at the cost of
+installing a faster disk device.
+
+Another possibility for improving disk performance
+is to allow sorcery-defrag to periodically defrag disk devices.
+It does make the parts of a file fit together logically on a disk,
+which usually makes all parts of a file physically close on disk
+and therefore the file itself may be faster to access.
+However, in some cases associated files that would be read
+sequentially during the start of a program can become widely
+spaced on disk after defrag.
+Provided that it is not already in the kernel cache
+or has the kernel cache has been dropped
+then firefox might start slower after defrag.
+Files that might have been initially close to firefox
+when firefox first installed might have moved apart
+from it during defrag.
+That is why it slowed down.
+
+Experience teaches that our expectations for
+improved performance are often far grander
+than what can actually be achieved.
+Probably the only time when the outcome
+significantly exceeded my expectation was
+when I created compressed sdelta3 patch files.
+Those are seriously tiny!
+My initial goal was an average savings of 85%
+Yet measured savings are often in the high 90 percentile.
+Stranger things have happened.
+A 40% speed increase in parallel execution
+of runlevel init-scripts would be very strange.
+And it would not happen on my boxes,
+because my ancient disk drives
+are not able to supply disks sectors
+commensurate with the speed of demand.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001856.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001862.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1857">[ date ]</a>
+              <a href="thread.html#1857">[ thread ]</a>
+              <a href="subject.html#1857">[ subject ]</a>
+              <a href="author.html#1857">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

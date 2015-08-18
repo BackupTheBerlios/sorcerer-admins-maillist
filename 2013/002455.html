@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] 2013 install dvd question.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%202013%20install%20dvd%20question.&In-Reply-To=%3CCA%2BT4wDj%3Dk6KVD6hYo1CmsZZpOhx5DhQ_6O92QCXZvciADcmTwQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002453.html">
+   <LINK REL="Next"  HREF="002456.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] 2013 install dvd question.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%202013%20install%20dvd%20question.&In-Reply-To=%3CCA%2BT4wDj%3Dk6KVD6hYo1CmsZZpOhx5DhQ_6O92QCXZvciADcmTwQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] 2013 install dvd question.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Aug  9 22:37:58 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002453.html">[Sorcerer-admins] 2013 install dvd question.
+</A></li>
+        <LI>Next message: <A HREF="002456.html">[Sorcerer-admins] 2013 install dvd question.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2455">[ date ]</a>
+              <a href="thread.html#2455">[ thread ]</a>
+              <a href="subject.html#2455">[ subject ]</a>
+              <a href="author.html#2455">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The deployment docent only describes the tools and methods
+that are useful for achieving a GPT deployment.
+However, anyone who has legacy partitions already has
+a bootable MBR installed and already has a partitioned fixed disk.
+
+If the second fixed disk is to be used entirely by modern magic
+and if the bootloader that chains to modern magic does so by
+loading and running the code in the MBR of the disk containing modern magic
+then no reason exists for not transitioning that disk to GPT.
+
+However, if legacy partition tables are desired
+then simply use the fdisk program provided by util-linux.
+I made no attempt to document the legacy partitioning tools.
+However, I also made not attempt to remove from the from the I/Rs
+in order to conserve space.
+As I previously said, deploying the 2013 I/R is not unlike driving
+a F22 air superiority aircraft 4 blocks to the grocery store.
+It is over-loaded or over over-kill for the meager task of deployment.
+
+My computer boots by having the BIOS load the MBR from the first fixed disk.
+I can switch it to have the BIOS load the MBR from other disks or SSDs if I
+want or CDROM.
+Anything works fine.
+However, if someone is dual booting and therefore using a 3rd party boot
+management program
+in order to select an operating system to boot
+then the best choice is to have that program be programmed to chain to the
+MBR
+of the disk that contains Modern Magic 2013 if it exists on it's own disk.
+If it does not exist on it's own disk
+then the bootloader must chain to the code in the boot block of the
+partition designated
+to hold /boot/ for the POSIX.
+
+As Evert previously mentioned the boot block will be updated.
+However, the MBR for the POSIX is not updated.
+The MBR's content is set at deployment time based upon what
+the SA writes to it or whatever existed the from a previous deployment.
+I always recommend installing fresh code to the MBR.
+That way one will know that that the MBR is not empty,
+nor contains a virus from a previous operating system,
+nor contains some odd grubby, lilo, or otherwise unexpected bootloader
+program that was installed to the MBR instead of the boot block, etc...
+The installed syslinux on the I/R provides image files suitable for both
+legacy and for GPT.
+However, it does not provide a single MBR code file that is suitable for
+both.
+So the code in the MBR must be appropriate for the type of partition table.
+
+Legacy MBR code can not boot GPT partitions.
+GPT MBR code can not boot legacy partitions.
+The only requirement for making it work
+is that the code in the MBR matches the partition table type.
+BIOS age should be irrelevant.
+
+Both GTP and legacy partitions work equally fine in a HVM qemu virtual
+machine
+as long as the code installed to the MBR of the virtual disk is compatible.
+
+In order to avoid that length explanation and any confusion concerning it
+then deployment docent only provides documentation that describes
+the use of the tools and methods for doing GPT partitioning.
+Simply ignore that and instead use the tools installed by util-linux
+and use the pre-existing MBR or the legacy MBR provided by the syslinux
+project.
+ms-sys is no longer provided on the I/R
+and so ms-sys can not be used to install bootable MBR code.
+I removed ms-sys from the I/R because ms-sys
+was only useful for legacy partitions and had not been updated
+with code suitable for booting GPT disks.
+Therefore, doing a deployment with legacy partitions
+is only slightly less convenient than in 2012.
+
+
+On Fri, Aug 9, 2013 at 12:56 PM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+
+&gt;<i> Sorry for the wrong name.
+</I>&gt;<i> But can the deployment docent also work with MBR layout because a GPT
+</I>&gt;<i> layout is not working on my computer. It will reboot constantly with a GPT
+</I>&gt;<i> based layout.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> &gt; Date: Fri, 9 Aug 2013 12:48:21 -0700
+</I>&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; Subject: Re: [Sorcerer-admins] 2013 install dvd question.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; No; not exactly.
+</I>&gt;<i> &gt; Maybe it says install docent.
+</I>&gt;<i> &gt; It should say deployment docent.
+</I>&gt;<i> &gt; It does nothing except wait for the person at the keyboard type type
+</I>&gt;<i> &gt; commands.
+</I>&gt;<i> &gt; As previously, mentioned it is an interactive shell
+</I>&gt;<i> &gt; and not a menu driven program.
+</I>&gt;<i> &gt; Try typing docs
+</I>&gt;<i> &gt; It should display some recommended commands to type
+</I>&gt;<i> &gt; for displaying relevant documentation.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Fri, Aug 9, 2013 at 11:58 AM, Roelof Wobben
+</I>&gt;<i> &gt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;&gt; wrote:
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt;&gt; Date: Fri, 9 Aug 2013 11:39:29 -0700
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; To:
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] 2013 install dvd question.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; It is an ISO9660 and capable of begin burned onto a CDROM.
+</I>&gt;<i> &gt;&gt; It does not require a DVD.
+</I>&gt;<i> &gt;&gt; Please describe weird screens or attach screen shot.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; OKe, I burned it into a dvd.
+</I>&gt;<i> &gt; What I mean with wierd screens is I think you call it the installation
+</I>&gt;<i> agent.
+</I>&gt;<i> &gt; I try it several times but never I see that something is installed.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I hope this is clear.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>&lt;mailto:<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________ Sorcerer-admins mailing
+</I>&gt;<i> &gt; list <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130809/7e616419/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130809/7e616419/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002453.html">[Sorcerer-admins] 2013 install dvd question.
+</A></li>
+	<LI>Next message: <A HREF="002456.html">[Sorcerer-admins] 2013 install dvd question.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2455">[ date ]</a>
+              <a href="thread.html#2455">[ thread ]</a>
+              <a href="subject.html#2455">[ subject ]</a>
+              <a href="author.html#2455">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

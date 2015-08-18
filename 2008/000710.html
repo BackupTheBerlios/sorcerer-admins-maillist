@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C48974E43.10705%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000706.html">
+   <LINK REL="Next"  HREF="000712.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C48974E43.10705%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Aug  4 20:45:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000706.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000712.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#710">[ date ]</a>
+              <a href="thread.html#710">[ thread ]</a>
+              <a href="subject.html#710">[ subject ]</a>
+              <a href="author.html#710">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jan Merka wrote:
+&gt;<i> On Friday 01 August 2008, Kyle Sallee wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> The traditional linux spell can be used with initramfs
+</I>&gt;&gt;<i> if the configuration is proper.
+</I>&gt;&gt;<i> That way support for entire categories of hardware drivers
+</I>&gt;&gt;<i> can easily be disabled in the make menuconfig.
+</I>&gt;&gt;<i> For the moment it is the most sane and safe way to
+</I>&gt;&gt;<i> exclude modules from the initramfs.
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Yeah, that is what I happily use on my systems.
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I><A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# ls -lh /boot/2.6.26/
+total 38M
+-rw------- 1 root root  35M ao&#251;  2 13:28 initrf
+-rw-r--r-- 1 root root 2,3M jui 21 22:26 linux
+-rw-r--r-- 1 root root 1,4M jui 21 22:26 System.map
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# du -hs /lib/modules/2.6.26
+16M    /lib/modules/2.6.26
+
+
+35 - 16 = 19.... not sure that 19Mo is really required to boot the box....
+telling what shall be put into the initramfs could be provided as a file 
+containing lines that can contain wildcards....
+for example
+/bin
+/lib/modules/${KVERSION}
+/lib64/*
+...
+
+the files could be copied on creation with cp -a
+
+JL
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080804/4d41ee62/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080804/4d41ee62/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000706.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000712.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#710">[ date ]</a>
+              <a href="thread.html#710">[ thread ]</a>
+              <a href="subject.html#710">[ subject ]</a>
+              <a href="author.html#710">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

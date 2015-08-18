@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important updates...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDhNL6Aki_LvzOfaa2kmGXVBZQ_KMt8sdXJ%3DW6qKPFc5xQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002483.html">
+   <LINK REL="Next"  HREF="002485.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important updates...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDhNL6Aki_LvzOfaa2kmGXVBZQ_KMt8sdXJ%3DW6qKPFc5xQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important updates...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Nov 23 22:47:19 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002483.html">[Sorcerer-admins] important updates...
+</A></li>
+        <LI>Next message: <A HREF="002485.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2484">[ date ]</a>
+              <a href="thread.html#2484">[ thread ]</a>
+              <a href="subject.html#2484">[ subject ]</a>
+              <a href="author.html#2484">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>For anyone joining this conversation mid-way
+an important primer is to read:
+
+/usr/src/linux/Documentation/filesystems/ramfs-rootfs-initramfs.txt
+
+rootfs must be completely demystified.
+That document explains.
+
+
+On Sat, Nov 23, 2013 at 12:37 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi there...
+</I>&gt;<i>
+</I>&gt;<i> I am still no closer to figuring out how to do this multi-root properly.
+</I>&gt;<i> Some examples would be helpful.
+</I>&gt;<i>
+</I>
+The deployment docent plan provides examples.
+
+
+
+&gt;<i> Let's take my system layout, for instance, and start as simple as possible.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have one boot partition, with a label of dv7_Boot
+</I>&gt;<i>
+</I>&gt;<i> Main partitions are called dv7_Main and dv7_Main_Aux
+</I>&gt;<i>
+</I>&gt;<i> does my /etc/fstab look something like this:
+</I>&gt;<i>
+</I>&gt;<i> LABEL=dv7_Main          /+/base          auto    defaults 0 0
+</I>&gt;<i> LABEL=dv7_Boot          /+/base/boot   auto    defaults 0 0
+</I>&gt;<i> LABEL=dv7_Main_Aux  /+/base/aux    auto    defaults 0 0
+</I>&gt;<i>
+</I>
+I normally would not go with auto as a file system description.
+In all other respects that looks fine so far.
+Rename the file to
+/etc/rootfs/fstab
+It obviously must be acted upon during sysinit
+which executes on the rootfs
+If it exists as /etc/fstab
+then it is processed both during sysinit and during runlevel.
+Obviously, those mounts must happen on the rootfs
+and have no relevance during runlevel execution.
+
+
+
+&gt;<i> or:
+</I>&gt;<i>
+</I>&gt;<i> in /etc/fstab
+</I>&gt;<i> LABEL=dv7_Main          /+/base          auto    defaults 0 0
+</I>&gt;<i>
+</I>&gt;<i> and in /etc/rootfs on dv7_Main:
+</I>&gt;<i> LABEL=dv7_Boot          /boot   auto    defaults 0 0
+</I>&gt;<i> LABEL=dv7_Main_Aux  /aux    auto    defaults 0 0
+</I>&gt;<i>
+</I>&gt;<i> Let's start there, for now
+</I>&gt;<i>
+</I>
+Okay.
+I see the cause for confusion immediately.
+A computer has only one rootfs.
+Typically, only one root file system generates the
+the cpio initramfs images used to populate the rootfs.
+That root file system should probably be called /+/base/
+/+/base/etc/rootfs/
+should exist.
+It should contain the files that have the same names
+as files found in /etc/
+Yet the content of files in /etc/rootfs/
+should be appropriate for what happens during sysinit.
+
+For example, let us assume the existence of files
+/etc/shadow
+/etc/rootfs/shadow
+
+When logging in on the root file system
+then the valid password for the root account
+is found in /etc/shadow
+
+When logging in on the rootfs the valid password
+for the root account is found in /etc/rootfs/shadow
+
+The tools on the rootfs are not adjusted to search /etc/rootfs/
+Rather the content of /etc/rootfs/ is copied to /etc/
+early during sysinit.
+
+Just as two password files can exist
+so can two fstab files.
+
+# cat /+/base/etc/rootfs/fstab
+LABEL=dv7_Main          /+/base          auto    defaults 0 0
+
+# cat /+/base/etc/fstab
+LABEL=dv7_Boot          /boot   auto    defaults 0 0
+LABEL=dv7_Main_Aux  /aux    auto    defaults 0 0
+
+I would not normally mount /aux/ that way.
+However, for the purpose of an example
+the method described immediately above works.
+Configuration files intended for use on the rootfs belong in /etc/rootfs/
+Configuration files intended for use on a root file system belong in /etc/
+
+I am uncertain how the understanding of that became reversed.
+If that can be relayed to me
+then perhaps the documentation can be adjusted
+to circumvent that possible point of confusion?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131123/08eee688/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131123/08eee688/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002483.html">[Sorcerer-admins] important updates...
+</A></li>
+	<LI>Next message: <A HREF="002485.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2484">[ date ]</a>
+              <a href="thread.html#2484">[ thread ]</a>
+              <a href="subject.html#2484">[ subject ]</a>
+              <a href="author.html#2484">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

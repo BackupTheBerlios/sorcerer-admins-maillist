@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] GPT Disk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3CCA%2BT4wDg9fKnfgzbAiWf6zoa6u48CHjuWoZQYAdAi7jUaBLT%2B7Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002414.html">
+   <LINK REL="Next"  HREF="002416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] GPT Disk</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3CCA%2BT4wDg9fKnfgzbAiWf6zoa6u48CHjuWoZQYAdAi7jUaBLT%2B7Q%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] GPT Disk">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Feb 18 20:45:39 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002414.html">[Sorcerer-admins] GPT Disk
+</A></li>
+        <LI>Next message: <A HREF="002416.html">[Sorcerer-admins] GPT Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2415">[ date ]</a>
+              <a href="thread.html#2415">[ thread ]</a>
+              <a href="subject.html#2415">[ subject ]</a>
+              <a href="author.html#2415">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm, reading now:
+<A HREF="http://en.wikipedia.org/wiki/GUID_Partition_Table">http://en.wikipedia.org/wiki/GUID_Partition_Table</A>
+
+See the table with Unix class operating systems?
+Sorcerer Modern Magic provides a linux kernel
+with nearly every available driver compiled as a module
+and extlinux from the syslinux software project
+is provided as the bootloader.
+
+I can write a spell for:
+<A HREF="http://sourceforge.net/projects/gptfdisk/files/gptfdisk/0.8.6/">http://sourceforge.net/projects/gptfdisk/files/gptfdisk/0.8.6/</A>
+
+and include that on the next I/R
+Otherwise parted might be able to partition GPT
+
+The next I/R has an installer docent
+rather than a menu driven installer.
+I will try to find some docs that explain GPT partitioned disks,
+but one might not come with the TLDP HowTos.
+The Partition.xz doc does not cover GPT.
+
+<A HREF="http://www.rodsbooks.com/gdisk/">http://www.rodsbooks.com/gdisk/</A>
+
+Perhaps that might be useful?
+That could be useful as a GPT HowTo if included in TLDP's bundle of docs.
+
+On <A HREF="http://www.rodsbooks.com/gdisk/booting.html">http://www.rodsbooks.com/gdisk/booting.html</A>
+it states:
+
+&quot;The SYSLINUX&lt;<A HREF="http://syslinux.zytor.com/wiki/index.php/The_Syslinux_Project">http://syslinux.zytor.com/wiki/index.php/The_Syslinux_Project</A>&gt;boot
+loader is another Linux boot loader that includes GPT support. This
+support resides in the MBR and redirects the boot process to a partition
+with the Legacy BIOS Bootable flag set. AFAIK, no Linux distribution relies
+on SYSLINUX to boot from a GPT disk, but you could set yours up to use this
+boot method if you liked.&quot;
+
+Sorcerer Modern Magic typically installs extlinux
+to the boot block of /boot/ or the boot block of the /
+So apparently a GPT aware MBR must be installed to the MBR
+of the fixed disk to boot BIOS method rather than EFI?
+
+ms-sys is recommended for installing a bootable MBR,
+but I must re-check the docs to determine if it is a GPT aware MBR.
+Otherwise, perhaps the MBR provided by syslinux can do?
+Evert mentioned that syslinux provides a bootable MBR image
+and that he installed it and used it,
+but I tend to use ms-sys instead.
+I do not know if the MBR provided by the syslinux project
+is exclusively in the source tarball or also installed
+when syslinux or extlinux is installed.
+If necessary I might want to modify those spells to ensure
+that it is available.
+
+I feel inclined to expect that Sorcerer Modern Magic
+could be installable on GPT partitioned disks
+provided that the SA contributes slightly more effort than typical.
+Definitely, do not use the Sorcerer Sentient installation,
+because it will do a simple installation utilizing the entire disk
+while doing MBR partitioning.
+
+I have no experience with GPT formatted disks.
+I wonder if I can do a simulation using qemu?
+If so that could be helpful.
+I have not built any new boxes in a few years,
+Consequently, I am woefully ignorant of newer things like GPT.
+Thanks for making a report about it.
+
+Sharing of any additional suggestions, experiences, insights
+concerning GPT would be appreciated if possible.
+I have no bias against GPT.
+Typical of functionality might not be introduced
+until a Sorcerer SA requests support for it.
+That was true of tools and firmware in the past.
+However, these days firmware is less of a problem because
+a large collection of firmware for use with the linux kernel
+is downloaded monthly from a git repository.
+
+I hope we can collaborate so that the next Sorcerer I/R
+is plenty adequate for installing on GPT partitioned disks.
+But otherwise I will try to give it a decent shot
+and at the very least provide the gptfdisk software tools.
+Sorry for the inconvenience.
+Thanks again for the report.
+
+
+On Mon, Feb 18, 2013 at 11:43 AM, Marc Grondin &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">marcfgrondin at gmail.com</A>&gt;wrote:
+
+&gt;<i> Hello,
+</I>&gt;<i> I am interested in trying Sorcerer my only problem is that the installer
+</I>&gt;<i> does not see the partitions on my 2TB GPT drive. How can i install sorcerer
+</I>&gt;<i> on this drive?
+</I>&gt;<i>
+</I>&gt;<i> Thank you
+</I>&gt;<i> Marc Grondin
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130218/a039b44b/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130218/a039b44b/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002414.html">[Sorcerer-admins] GPT Disk
+</A></li>
+	<LI>Next message: <A HREF="002416.html">[Sorcerer-admins] GPT Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2415">[ date ]</a>
+              <a href="thread.html#2415">[ thread ]</a>
+              <a href="subject.html#2415">[ subject ]</a>
+              <a href="author.html#2415">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

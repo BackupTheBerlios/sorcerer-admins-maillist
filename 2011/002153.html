@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Read now or wonder later.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Read%20now%20or%20wonder%20later.&In-Reply-To=%3CBANLkTi%3DQzd2o2sMtRjuLgk5FDCfDTFvxcA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002152.html">
+   <LINK REL="Next"  HREF="002154.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Read now or wonder later.</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Read%20now%20or%20wonder%20later.&In-Reply-To=%3CBANLkTi%3DQzd2o2sMtRjuLgk5FDCfDTFvxcA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Read now or wonder later.">evorster at gmail.com
+       </A><BR>
+    <I>Tue May  3 08:04:47 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002152.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+        <LI>Next message: <A HREF="002154.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2153">[ date ]</a>
+              <a href="thread.html#2153">[ thread ]</a>
+              <a href="subject.html#2153">[ subject ]</a>
+              <a href="author.html#2153">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>So, I reboot with the new init-scripts installed.
+
+Suddenly I am unable to log in at all, in KDE and on the command line,
+and in the new shiney tty7 login.
+
+Seems that for some reason my /etc/pam.d/login file was modified to
+use selinux which I do not have installed, and thus did not work at
+all.
+
+It was only the (s)ulogin at the reboot prompt that would allow me in
+to fix this glaring error.
+
+Also, never once this year have I been able to rebuild my system and
+just log in with no problems.... NVIDIA_Linux_x86_64 just does not
+have a module in the initramfs that works..
+
+Only after I cast it twice and reboot twice does it start to work.
+
+This is also the case for a kernel upgrade.
+
+Need to reboot once with the new kernel, then build the nvidia kernel
+module and get it on the initramfs... then only will X start working
+for me again...
+
+It's a bit of a pain.
+
+-Evert-
+
+On Mon, May 2, 2011 at 8:26 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Wow, really?
+</I>&gt;<i> Sorry about that.
+</I>&gt;<i> util-linux spell looks fine.
+</I>&gt;<i> It should install /sbin/cgetty
+</I>&gt;<i> It has a current function that ensures it.
+</I>&gt;<i> But just in case chroot into /media/root
+</I>&gt;<i> and cast util-linux manually in order
+</I>&gt;<i> to gain /sbin/cgetty
+</I>&gt;<i>
+</I>&gt;<i> I am double checking util-linux now.
+</I>&gt;<i> Yes, the current() ensured that util-linux was added to the cast queue.
+</I>&gt;<i>
+</I>&gt;<i> util-linux cast and
+</I>&gt;<i>
+</I>&gt;<i> # augur from /cgetty
+</I>&gt;<i> util-linux:/sbin/cgetty
+</I>&gt;<i>
+</I>&gt;<i> My best guess is that util-linux did not cast on that box.
+</I>&gt;<i> If so then perhaps other spells important for the transition did not cast.
+</I>&gt;<i> Please check the logs and indicate if this might be a local problem
+</I>&gt;<i> or a distribution wide problem.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, May 2, 2011 at 5:12 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;&gt;<i> Well, I got a problem: The new inittab calls /sbin/cgetty for vc1-6 but what
+</I>&gt;&gt;<i> provides cgetty? I don't have it installed and don't see it as a spell either.
+</I>&gt;&gt;<i> On boot, I do get 'INIT cannot execute /sbin/cgetty' messages...
+</I>&gt;&gt;<i> Fortunately, the vc7 starts agetty which is installed by util-linux.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Should I replace cgetty with agetty in inittab? Or how to install cgetty?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+-Evert-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002152.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+	<LI>Next message: <A HREF="002154.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2153">[ date ]</a>
+              <a href="thread.html#2153">[ thread ]</a>
+              <a href="subject.html#2153">[ subject ]</a>
+              <a href="author.html#2153">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

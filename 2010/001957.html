@@ -1,0 +1,418 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20i915%20module%2C%20xf86-video-intel%2C%20initramfs%2C%0A%20init-scripts%2C%20udev%20and%20other%20important%20changes.&In-Reply-To=%3CAANLkTinZROMfOQ5RJ_qApUPCqeTaz%3DTXt5ud7%2BK33qu4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001955.html">
+   <LINK REL="Next"  HREF="001939.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20i915%20module%2C%20xf86-video-intel%2C%20initramfs%2C%0A%20init-scripts%2C%20udev%20and%20other%20important%20changes.&In-Reply-To=%3CAANLkTinZROMfOQ5RJ_qApUPCqeTaz%3DTXt5ud7%2BK33qu4%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 21 15:20:26 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001955.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+        <LI>Next message: <A HREF="001939.html">[Sorcerer-admins] Unexpected Maintenance
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1957">[ date ]</a>
+              <a href="thread.html#1957">[ thread ]</a>
+              <a href="subject.html#1957">[ subject ]</a>
+              <a href="author.html#1957">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm....
+I am uncertain if that gnome problem is i915.ko related
+or related to the xf86-video-intel update.
+I have started gdm on the laptop and logged in without problem.
+So I am expecting that gnome should work.
+
+However, some useful part of gnome might not be installed
+or GConf related files might not be in good order...
+
+Is gsettings-desktop-schemas installed?
+Is deskbar-applet installed?
+Is gnome-icon-theme-symbolic installed?
+
+Does directory /etc/gconf/gconf.xml.system exist?
+Is /etc/gconf/gconf.xml.system mode 755?
+
+Is GConf's schemas database properly updated?
+Easy enough to accomplish from command line.
+
+# GCONF_CONFIG_SOURCE=xml:merged:/etc/gconf/gconf.xml.defaults
+gconftool-2 --makefile-install-rule /etc/gconf/schemas/*.schemas
+# for REPLY in /etc/gconf/schemas/*.entries
+# do gconftool-2  --direct
+--config-source=xml:merged:/etc/gconf/gconf.xml.defaults --load $REPLY
+# done
+
+
+I had to research and run those commands on the laptop,
+because many of the gnome spells were imported from another box
+rather than compiled directly on the laptop.
+Gnome sources do something incorrect when they compile.
+Although they do support a DESTDIR style installation
+they run programs that directly modify content of /etc/gconf/
+I am still undecided what I want to do about that.
+If a spell is installed from archive then the schemas file installed
+in /etc/gconf/schemas/ is not necessarily newer than generated files
+in /etc/gconf/gconf.xml.defaults/
+If I discover a way to know when /etc/gconf/gconf.xml.defaults/
+requires updating
+then I can write an init-script for it.
+
+Although /etc/gconf/gconf.xml.defaults/
+can be updated with one schemas file at a time,
+I tried on a whim to pass all the schemas files on the command line.
+It worked, and it was far faster than single processing.
+It is still considerably slow as would be expected since
+
+# du -sm /etc/gconf
+70      /etc/gconf
+
+For all the eloquence of gconf
+it does have it's drawback that it's merged database.
+# du -sm /etc/gconf/gconf.xml.defaults/
+25      /etc/gconf/gconf.xml.defaults/
+Does not become part of packages or archives of installed software.
+My opinion is that since GConf runs as a daemon
+then it should create a per user gconf.xml.defaults as necessary
+from processing the schemas.
+But I suppose that they do not want to do that,
+because the time required to create it is a bit embarrassing.
+
+Anyway, I expect most gnome related problems,
+especially if KDM works just fine for login,
+are related to GConf databases or some important
+piece of gnome software that is not installed,
+but should be installed.
+Something to be irritated about is that gnome software,
+especially when it is new,
+is often rolled into a tarball with an empty README file.
+So perhaps something might be important to install,
+but the gnome authors offered no clue to reveal it.
+However, that said I have successfully tested gnome.
+
+
+# ( augur aarof gnome | sed p; augur attribute gnome ) | sort | uniq -u | wc -l
+257
+
+257 additional spells with the gnome attribute would not be installed
+by the gnome profile.
+Some of these are spells for obsolete gnome software.
+Some spells are for additional language support wrappers for gnome libraries
+such as libxml++
+Trying to install them all would not be wise,
+however reading their descriptions might provide insight.
+
+Also please check that the installed GConf
+is actually being provided by GConf.
+For a while there were some alternative GConf to use,
+however with the gnome 2.32.0 release the GConf to use
+was definitely GConf.
+
+Lastly, here is a 100 spell manifest of installed spells with gnome attribute:
+
+# ( augur installed; augur attribute gnome ) | sort | uniq -d
+GConf
+NetworkManager
+ORBit2
+PolicyKit-gnome
+at-spi
+atk
+brasero
+deskbar-applet
+eel
+evince
+evolution-data-server
+gconf-editor
+gdk-pixbuf-query-loaders
+gdm
+gedit
+glade3
+gmime
+gnome
+gnome-applets
+gnome-audio
+gnome-backgrounds
+gnome-common
+gnome-control-center
+gnome-desktop
+gnome-doc-utils
+gnome-icon-theme
+gnome-icon-theme-symbolic
+gnome-keyring
+gnome-media
+gnome-menus
+gnome-mime-data
+gnome-panel
+gnome-python
+gnome-python-desktop
+gnome-session
+gnome-settings-daemon
+gnome-terminal
+gnome-themes
+gnome-utils
+gnome-vfs
+gobject-introspection
+gsettings-desktop-schemas
+gst-plugins-bad
+gst-plugins-base
+gst-plugins-good
+gst-python
+gstreamer
+gtk+
+gtk-engines
+gtk-query-immodules-2.0
+gtkhtml
+gtksourceview
+gucharmap
+intltool
+libIDL
+libart_lgpl
+libbonobo
+libbonoboui
+libepc
+libgail-gnome
+libgdata
+libgee
+libglade
+libgnome
+libgnome-keyring
+libgnomecanvas
+libgnomecups
+libgnomekbd
+libgnomeprint
+libgnomeprintui
+libgnomeui
+libgsf
+libgtkhtml
+libgtop
+libgweather
+librsvg
+libslab
+libsoup
+libunique
+libwnck
+libxklavier
+linphone
+metacity
+nautilus
+nautilus-cd-burner
+pango
+pango-querymodules
+polkit
+polkit-gnome
+pygobject
+pygtk
+pyorbit
+rarian
+startup-notification
+totem
+totem-pl-parser
+tracker
+vala
+vte
+zenity
+
+
+I took that from the laptop rather than the test box.
+Therefore, the list should be more concise,
+although some of the software might not be necessary.
+
+One could also cross-reference installed manifest with
+the list of source tarballs provided at:
+<A HREF="ftp://ftp.gnome.org/pub/gnome/desktop/2.32/2.32.0/sources/">ftp://ftp.gnome.org/pub/gnome/desktop/2.32/2.32.0/sources/</A>
+That is what is official.
+However, the list is often incomplete
+and some of the software is optional.
+
+Since &quot;gnome&quot; is provided as a profile spell
+if the SA suspects that some important part of gnome is not installed
+then issuing # cast gnome
+should often install what is missing.
+However, broken components, will be auto-failed.
+
+One possible snag in gnome is eel
+
+# augur iron eel
+brasero
+deskbar-applet
+gedit
+gnome
+gnome-applets
+gnome-media
+gnome-python-desktop
+nautilus-cd-burner
+totem
+
+It is currently not compiling and therefore broke,
+yet a bit of gnome software requires eel.
+It might not be a problem since eel is not listed
+in the destkop/2.32/2.32.0/sources/ directory.
+The last release of eel was from 2009.
+There was no new release of eel for the gnome 2.32.0 2010.
+So perhaps those spells which require eel
+will be able to compile without it.
+However, if not then it is something
+that gnome authors should fix.
+
+
+Last of all check that required fonts are installed.
+
+Hopefully, that will provide enough useful information
+in order to convince gnome to work.  :)
+
+
+
+On Thu, Oct 21, 2010 at 3:59 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Oct 20, 2010 at 7:40 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Oct 20, 2010 at 8:48 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; see inline
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Wed, Oct 20, 2010 at 5:12 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; The current linux configurations enable mode setting for i915.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; # cast linux
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; done
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; The linux spell will install an additional file:
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; # cat /etc/modprobe.d/i915.conf
+</I>&gt;&gt;<i> &gt;&gt; blacklist i915
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; yep done also
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; This allows booting without having the console perm-blanked
+</I>&gt;&gt;<i> &gt;&gt; when udev loads module i915.ko,
+</I>&gt;&gt;<i> &gt;&gt; because udev will not load module i915.ko
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Do not pass kernel parameters to disable kernel mode setting.
+</I>&gt;&gt;<i> &gt;&gt; When xf86-video-intel loads the i915.ko
+</I>&gt;&gt;<i> &gt;&gt; it will require kernel mode setting.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; what is this parameter? was it included by default in lilo.conf before?
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; &lt;...snap...&gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; thanks and regards
+</I>&gt;&gt;<i> &gt; JLM
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The parameter was not in lilo.conf by default.
+</I>&gt;&gt;<i> It was a parameter to disable kernel mode setting.
+</I>&gt;&gt;<i> I only learned about it because I read about it in other people's posts.
+</I>&gt;&gt;<i> Many people were having difficult discovering how to avoid having
+</I>&gt;&gt;<i> i915.ko with mode setting perm-blank the console during boot
+</I>&gt;&gt;<i> while at the same time being able to use xf86-video-intel.
+</I>&gt;&gt;<i> I guessed that screen went blank when udev loaded the console,
+</I>&gt;&gt;<i> so I looked through the udev source tree to discover how to
+</I>&gt;&gt;<i> prevent udev from loading modules while at the same time
+</I>&gt;&gt;<i> hoping that xf86-video-intel would load the module.
+</I>&gt;&gt;<i> Turned out to be an optimal combination.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Prior to installing Sorcerer on a Pentium M
+</I>&gt;&gt;<i> I did not know about this potential problem involving i915.ko
+</I>&gt;&gt;<i> And the kernel was configured so that kernel mode setting support
+</I>&gt;&gt;<i> was disabled on that module.
+</I>&gt;&gt;<i> I do not know if it was an omission on my part
+</I>&gt;&gt;<i> or something requested by a SA.
+</I>&gt;&gt;<i> But since I had a the laptop to test on
+</I>&gt;&gt;<i> I decided to find a combination that works.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Whether it works or not might be a bit iffy
+</I>&gt;&gt;<i> if the xf86-video-intel or i915.ko is buggy.
+</I>&gt;&gt;<i> It seems to work.
+</I>&gt;&gt;<i> I did a boot with memtest=8
+</I>&gt;&gt;<i> No problems with the RAM.
+</I>&gt;&gt;<i> However, the box did occasionally lock up.
+</I>&gt;&gt;<i> I suspect xf86-video-intel.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, the CPU is now running at the lowest frequency
+</I>&gt;&gt;<i> and that should avoid a lock-up problem caused by a bad
+</I>&gt;&gt;<i> design or a problem in the CPU.
+</I>&gt;&gt;<i> I doubt the original owner of the laptop
+</I>&gt;&gt;<i> did a full bore 1 week burn in test.
+</I>&gt;&gt;<i> Perhaps the fastest configuration is not stable
+</I>&gt;&gt;<i> at full bore for long periods of time.
+</I>&gt;&gt;<i> That is my 2nd most likely guess.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> it's now working.... however I can't login on gnome for some obscure
+</I>&gt;<i> reason....
+</I>&gt;<i> gdm launch, I can select my user, I type the password in blind mode (only a
+</I>&gt;<i> blank box is on screen) and after ages it display a kind of desktop (3 white
+</I>&gt;<i> icons on top left corner) whith a dialog box that popup and popout so fast
+</I>&gt;<i> that I can't read what is displayed.... and this eats 100% CPU
+</I>&gt;<i> looking the logs it seems that the gnome battery applet is segfaulting. one
+</I>&gt;<i> time in libc one time in glib....
+</I>&gt;<i> I did try to recast gnome-applets spell.... no change
+</I>&gt;<i> I did try to recast glib spell.... no change
+</I>&gt;<i> I'm trying a whole recompilation of the box, hopping all won't&#160;collapse...
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+</I>&gt;<i> et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001955.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+	<LI>Next message: <A HREF="001939.html">[Sorcerer-admins] Unexpected Maintenance
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1957">[ date ]</a>
+              <a href="thread.html#1957">[ thread ]</a>
+              <a href="subject.html#1957">[ subject ]</a>
+              <a href="author.html#1957">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

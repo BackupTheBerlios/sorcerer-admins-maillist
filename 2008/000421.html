@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] libgcrypt problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libgcrypt%20problem&In-Reply-To=%3C596b75860805082143k719220al69f10e2f846d4682%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000420.html">
+   <LINK REL="Next"  HREF="000419.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] libgcrypt problem</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libgcrypt%20problem&In-Reply-To=%3C596b75860805082143k719220al69f10e2f846d4682%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] libgcrypt problem">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May  9 06:43:50 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000420.html">[Sorcerer-admins] libgcrypt problem
+</A></li>
+        <LI>Next message: <A HREF="000419.html">[Sorcerer-admins] New IA32 I/R Available for Download.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#421">[ date ]</a>
+              <a href="thread.html#421">[ thread ]</a>
+              <a href="subject.html#421">[ subject ]</a>
+              <a href="author.html#421">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for reporting the problem.
+This is about the 4th report.
+I am still considering a solution,
+since the problem did not occur on my
+test box nor work stations.
+
+I recommend:
+# augur clear
+# cast grimoire
+
+cast itself should spot installed spells that require
+recompilation and recompile, relink, and reinstall
+that software so that it now uses libgcrypt from /lib
+However, if that fails...
+
+cast -c $( grep -l /usr/lib/libgcrypt.la /usr/lib /usr/lib/*.la |
+while read; do augur from &quot;$REPLY&quot;; done |
+cut -d : -f1 | sort -u )
+
+Or if you do not want to recast them
+then you can merely sedit all the /usr/lib/*.la files
+that contain reference to /usr/lib/libgcrypt.la
+and adjust that to /lib/libgcrypt.la
+
+
+cast does not check .la files.
+Instead it checks ELF NEEDED
+section in libraries and executables.
+It is possible that some of the references
+not being corrected are inherited from other .la files
+because libgcrypt is a low level library it occurs early
+in a chain of recursively referencing .la files.
+
+Sorry for the trouble this is causing.
+I did not expect this problem to occur when
+switching the install location of libgcrypt to /lib64 or /lib
+Since software already installed will continue to run
+even if libgcrypt is moved from /usr/lib to /lib
+I encourage you to simply ignore the problem for another
+update and see if cast does not fix it?
+
+Perhaps it might?  Perhaps maybe not?
+But if you want a manual fix
+then go ahead and sedit the *.la files.
+
+What I have thus far in my todo list is
+to write some code that quickly
+checks all installed .la files after each cast in
+order to thrust into the cast queue spells that
+have invalid references in their .la files.
+Therefore, in addition to the ELF Failure check
+there will be another libtool failure check.
+That way I can rest more easily knowing
+there will be one less way for libtool
+to cause problems.
+
+With the urgency of releasing the bug fixed IA32 I/R
+this problem received lower priority and has been sitting
+on my todo list practically since the day after I moved
+the install location of libgcrypt.
+Sorry for the delay everyone.
+I usually have bugs fixed for spells within 2 days.
+Updating and checking an I/R keeps me very busy.
+
+
+
+On Thu, May 8, 2008 at 7:01 AM, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+&gt;<i> Hello!
+</I>&gt;<i>
+</I>&gt;<i> At least gss, php, evolution-data-server fail with
+</I>&gt;<i> libtool: link: `/usr/lib/libgcrypt.la' is not a valid libtool archive
+</I>&gt;<i> becouse it is in /lib.
+</I>&gt;<i> If I create a link gss compile but I thing this is not the best solution
+</I>&gt;<i> but I don't now other.
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> madar
+</I>&gt;<i>
+</I>&gt;<i> Oh and ktorrent inherits version from kde-v4 but it back to 3.0.2
+</I>&gt;<i> (<A HREF="http://ktorrent.org">http://ktorrent.org</A>)
+</I>&gt;<i> Thanks again!
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000420.html">[Sorcerer-admins] libgcrypt problem
+</A></li>
+	<LI>Next message: <A HREF="000419.html">[Sorcerer-admins] New IA32 I/R Available for Download.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#421">[ date ]</a>
+              <a href="thread.html#421">[ thread ]</a>
+              <a href="subject.html#421">[ subject ]</a>
+              <a href="author.html#421">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

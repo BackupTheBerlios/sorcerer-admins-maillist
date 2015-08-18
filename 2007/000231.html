@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] grep taking all CPU
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grep%20taking%20all%20CPU&In-Reply-To=%3C596b75860708240708i69e6ad79hd315342867cc8301%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000230.html">
+   <LINK REL="Next"  HREF="000234.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] grep taking all CPU</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20grep%20taking%20all%20CPU&In-Reply-To=%3C596b75860708240708i69e6ad79hd315342867cc8301%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] grep taking all CPU">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Aug 24 16:08:30 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000230.html">[Sorcerer-admins] grep taking all CPU
+</A></li>
+        <LI>Next message: <A HREF="000234.html">[Sorcerer-admins] LOCALE stuff
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#231">[ date ]</a>
+              <a href="thread.html#231">[ thread ]</a>
+              <a href="subject.html#231">[ subject ]</a>
+              <a href="author.html#231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually, grep is that slow.
+The slowness of grep is the reason why I have been rewriting parts of
+sorcery in order to use sed instead of grep in instances where sed can
+substitute instead of grep.
+
+Unfortunately, there still are plenty of places where grep is still used.
+Some of them may be unavoidable.
+Meanwhile if you suspect something is broken
+then I advise that you do an augur md5sum.
+The check will look for unexpected modifications
+of files from installed spells.
+If there are any abnormal ones it will thrust them into the cast queue.
+Just follow it with a cast
+and it should repair any problems detected.
+
+As for the slowness of grep I am unsure if that is caused
+by the newer versions of grep available or the newer glibc.
+Surely, someone more knowledgeable about such things
+have noticed and is working on a solution.
+
+However, for the moment a huge speed increase in using sed
+over grep for certain operations can be observed.
+Therefore, I rewrote several grep statements into sed statements.
+It was because of that which caused the introduction of the bug
+into md5sums() that caused files in /etc to be accidentally omitted.
+
+Periodically, I profile parts of sorcery operations to make them faster.
+dispel aught to be much faster than it used to be.
+However, it might not be easily noticed since dispel runs
+for a very short time anyway, relative to compilation of spells.
+
+In a few instances using grep may be faster than sed probably
+involving the cases of invoking sed with the -r parameter.
+However, grep is incredibly slow now, so slow that I am
+have rewritten part of my version tracking scripts and
+intend to do a total revision eliminating almost every
+use of grep in favor of using sed instead.
+The slowdown in grep is mysterious indeed that we can
+watch top and view grep burn out seconds after seconds of CPU cycles.
+One would not expect modern computers to require so much time
+to complete relatively simple tasks.
+
+As the expression goes I probably beat that horse to death and then some.
+All I can do at this point is advise the use of sed where possible over grep,
+because grep has taken such a downhill slide that the difference in execution
+time is more than a magnitude greater than it used to be in the past.
+
+
+On 8/24/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> One of my machine is doing this grep when using sorcery, like while casting
+</I>&gt;<i> spells, or augur scry, it shows grep is running that command and using all
+</I>&gt;<i> CPU.
+</I>&gt;<i>
+</I>&gt;<i> root     28439 95.3  0.1   4240  1072 pts/1    RN   10:54   0:10 grep -xf -
+</I>&gt;<i> /root/.sorcery/index/order
+</I>&gt;<i>
+</I>&gt;<i> It still does work, but eg. augur scry is so slow that actually compile is
+</I>&gt;<i> over when its about to show augur scry.
+</I>&gt;<i> I tried to re-cast grep, no help. Something is broke on that machine.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000230.html">[Sorcerer-admins] grep taking all CPU
+</A></li>
+	<LI>Next message: <A HREF="000234.html">[Sorcerer-admins] LOCALE stuff
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#231">[ date ]</a>
+              <a href="thread.html#231">[ thread ]</a>
+              <a href="subject.html#231">[ subject ]</a>
+              <a href="author.html#231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

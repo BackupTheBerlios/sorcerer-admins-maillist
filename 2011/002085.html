@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/sbin/lilo round 1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTikXrOUoQeKx%2B-cCjG%2Bf0xg_DSuyYccmGJ6Fio6y%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002084.html">
+   <LINK REL="Next"  HREF="002086.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/sbin/lilo round 1</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTikXrOUoQeKx%2B-cCjG%2Bf0xg_DSuyYccmGJ6Fio6y%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/sbin/lilo round 1">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Mar  9 15:35:37 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002084.html">[Sorcerer-admins] CAST_RATE
+</A></li>
+        <LI>Next message: <A HREF="002086.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2085">[ date ]</a>
+              <a href="thread.html#2085">[ thread ]</a>
+              <a href="subject.html#2085">[ subject ]</a>
+              <a href="author.html#2085">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Evert and I are at opposite ends about whether /usr/sbin/lilo
+is a boon or a bane.
+Yet on most boxes it probably does not yet exist.
+But if it exists then it should look something like:
+
+# cat /usr/sbin/lilo
+#!/bin/bash
+[ -x /etc/init.d/rc.d      ] &amp;&amp; /etc/init.d/rc.d stop
+[ -x /etc/init.d/initramfs ] &amp;&amp; /etc/init.d/initramfs stop
+[ -x /etc/init.d/lilo      ] &amp;&amp; /etc/init.d/lilo stop
+
+exec /sbin/lilo &quot;$@&quot;
+
+
+The purpose of /usr/sbin/lilo is to provide a convenience for Sorcerer SAs.
+It will run 3 init-scripts to ensure that:
+1. Symbolic links in /etc/rc.d/rc*.d/ are correct and current;
+2. The initramfs images are correct and current;
+3. /etc/lilo.conf and /etc/lilo/{conf,fast} are correct and current.
+Finally, the script invokes /sbin/lilo with the same parameters
+as the SA gave on the command line.
+
+This assures that the lilo being installed to the boot block
+will be the final installation of lilo if the SA is planning on
+rebooting or shutting down the box after executing lilo.
+After this would is executed then probably the init-scripts
+run during shutdown/reboot would complete quickly
+since initramfs regeneration would not be necessary.
+
+Every will present reasons why /usr/sbin/lilo is confusing
+and how it departs from traditional lilo behavior.
+However, as an anticipated response I want to add in advance:
+
+# man lilo 2&gt;/dev/null | grep /sbin/lilo
+        /sbin/lilo - install boot loader
+        /sbin/lilo -A - activate/show active partition
+        /sbin/lilo -E - edit header or update a bitmap file
+        /sbin/lilo -I - inquire path name of current kernel
+        /sbin/lilo -M - write a Master Boot Loader on a device
+        /sbin/lilo -q - query map
+        /sbin/lilo -R - set default command line for next reboot
+        /sbin/lilo -T - tell more about specified topic
+        /sbin/lilo {-u|-U} - uninstall LILO boot loader
+
+SAs that read and do as the manual page suggests
+will be running /sbin/lilo which is the compiled C executable file
+which is installed during the make install of the lilo source.
+Therefore, /sbin/lilo has not changed.
+It is still the same.
+And it still behaves the same when the SA types /sbin/lilo
+and not merely lilo without an absolute path name
+at a shell prompt.
+
+I hope that by moving this topic to the email list
+that SAs might provide insight that neither Evert nor I have considered.
+For the moment I assess  one boon for convenience
+while Evert assess one bane for confusion.
+Therefore, there is yet no clear consensus as to whether
+/usr/sbin/lilo is worthy.
+So if no clear logic aids in the decision
+then it's existence can be decided by popular vote.
+
+I want to keep /usr/sbin/lilo as a convenience for SAs.
+Evert wants /usr/sbin/lilo eliminated.
+Please await and read his point of view.
+After that please post opinions in favor or against keeping /usr/sbin/lilo
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002084.html">[Sorcerer-admins] CAST_RATE
+</A></li>
+	<LI>Next message: <A HREF="002086.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2085">[ date ]</a>
+              <a href="thread.html#2085">[ thread ]</a>
+              <a href="subject.html#2085">[ subject ]</a>
+              <a href="author.html#2085">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

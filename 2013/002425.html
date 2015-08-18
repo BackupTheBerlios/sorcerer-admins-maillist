@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] summary of changes that require SA interaction:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20summary%20of%20changes%20that%20require%20SA%20interaction%3A&In-Reply-To=%3CCA%2BT4wDg%2BkbXY-THAkVW402VrHs5jhU3NAKgOMrU_kpwOV8VvqA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002424.html">
+   <LINK REL="Next"  HREF="002426.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] summary of changes that require SA interaction:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20summary%20of%20changes%20that%20require%20SA%20interaction%3A&In-Reply-To=%3CCA%2BT4wDg%2BkbXY-THAkVW402VrHs5jhU3NAKgOMrU_kpwOV8VvqA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] summary of changes that require SA interaction:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr 20 22:07:55 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002424.html">[Sorcerer-admins] more flexibility with linux-* spells
+</A></li>
+        <LI>Next message: <A HREF="002426.html">[Sorcerer-admins] summary of changes that require SA	interaction:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2425">[ date ]</a>
+              <a href="thread.html#2425">[ thread ]</a>
+              <a href="subject.html#2425">[ subject ]</a>
+              <a href="author.html#2425">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Reading this summary of changes will help SAs make the required changes
+so that boxes function correctly after updating and rebooting.
+
+First and foremost the most important change is that
+all root file systems will run in an unshared
+IPC MNT NET PID UTS namespace.
+This has many effects.
+
+Each root file system will have it's own hostname,
+which will be referred to below as rootname.
+
+PIDs inside a root file system will have their own number system
+and also different numbers when viewed from rootf's namespace.
+Processes running inside an unshared PID namespace of a root file system
+will not see the PIDs that are running on rootfs nor the PIDs that are running
+on other root filesystems.
+Consequently, the unshared PID namespace creates an effect as if
+each root file system was it's own virtual machine.
+
+The unshared network namespace for rootfs and root file systems differ.
+The network adapters in rootfs' net namespace will stay there
+and not be visible from each root file system's unshared net namespace.
+A VETH, virtual ethernet adapter is created.
+Creating 1 veth creates 2 adapters that are linked like a tunnel.
+One VETH for each root file system stays in rootfs' net namespace.
+The other VETH goes into the root file system's unshared net namespace.
+&gt;<i>From the point of view of each root file system,
+</I>each root file system will have it's own unique VETH adapter.
+
+The VETH adapter in a root file system can be assigned a static IP address.
+Doing so requires writing the IP address followed by the FQDN of the
+root file system
+in /etc/hosts of that root file system.
+If that is done then the VETH inside the root file system is assigned
+the static IP address and a route is created in the rootfs' network namespce
+to direct packets destined for that IP address to the correct VETH adapter.
+Assigning a static IP address then allows all the ports on the VETH
+instant accessibility.
+
+Regardless of whether the VETH is assigned a static IP address
+it will be assigned an IP address from the 169.254.2.0-255 range.
+Those IP addresses are local to each box and therefore not routed
+across the LAN.
+However, ports for the network adapters in the rootfs name space
+can be forwarded to the VETH in a root file system.
+Therefore, FQDN www.happy.net which
+is the root file system mounted as /media/root/www/
+can have port 80 of the network adapter forwarded to port 80 of it's VETH.
+And that way it can provide web pages.
+
+All packets leaving the box receive a SNAT translation
+which allows each root file system to connect to the outside world
+and have packets properly return to the network adapter in the rootfs
+and then sent to the VETH.
+Without the SNAT then the packets would not correctly route back
+to the 169.254.2.0-255 IP addresses.
+
+So in summary, the rootfs network name space acts like a NATing firewall.
+DHCP assignment of IP address within root file systems will not work,
+unless the SA discovers the IP assigned and uses the /sbin/ip tool
+to create a route to the proper VETH.
+The 169.254.2.0 IP address are just as good as DHCP assigned
+when the intention is to NAT a port offering a service.
+And the static assignment of IP address will grant access to
+all the ports without doing the NAT port forwarding.
+
+As previously mentioned ports can be forwarded.
+Two files and two init-scripts control this.
+/etc/init.d/port.forward reads /etc/port.forward
+/etc/port.forward contains lines such as:
+
+www.happy.com 80 80
+
+The first field will be a FQDN.
+The FQDN will be the same as the content of /etc/rootname in the root
+file system.
+The port or port ranges are specified using the same notation as allowed
+with the /sbin/ip tools.  Therefore, a range of ports can be specified
+if desired.
+Or the port specification can use service name such as:
+
+www.happy.com www www
+www.happy.com ssh ssh
+
+The other configuration file and init-scripts are
+/etc/port.receive /etc/init.d/port.receive
+The configuration format for /etc/port.receive is nearly the same
+as the configuration syntax for /etc/port.forward except
+the no FQDN field exists.
+That is because /etc/port.receive is a file read from each root file system
+where the SA of that root file system can request that those
+ports be forwarded to it's VETH during boot.
+If allowing that is LAX security then the SA can disable it
+by executing the command
+chmod 400 /etc/init.d/port.receive
+in the root file system that is used to create the initramfs images
+that are extracted onto rootfs during boot.
+
+The root file system used to create the initramfs images used during boot
+is typically the first root file system specified in /etc/fstab.rootfs
+It can have any name.
+Initially, I was calling it real.
+Now I call it main.
+So each box will have a root file system mounted on /media/root/main/
+And that root file system will have a FQDN that is specified in
+/etc/rootname of it's file system.
+
+Sow with the FQDN specified in /etc/rootname then what is the use of
+/etc/hostname?
+/etc/hostname specifies the FQDN for the rootfs.
+So the rootname is very much like hostname and in the unshared namespace
+of each root file system each root file system receives it's own hostname
+that is specified in file /etc/rootname
+
+If /etc/hostname for a box is happy.com
+then must the FQDN for the main root file system and www root file system be
+main.happy.com and www.happy.com
+And the answer to that is no.
+whatever the single line content of /etc/rootname specifies
+becomes the FQDN for the root file system.
+Consequently, if many web servers for sites are hosted
+then each site can have it's own root file system
+and can have it's own FQDN.
+Nothing about the mount point of a root file system
+must correlate with the FQDN.
+Whenever possible, making them similar could help avoid confusion.
+
+Obviously, these changes that make use of VETH,
+NATing firewall rules, unshared name space and more
+are part of the overall transition to multiroot.
+Consequently, what follows is a brief discussion an suggestions
+for the names for root file systems and their role.
+
+/media/root/main/ root file system can be populated
+with only what is required in order to update it it
+and the software that is required for booting.
+The initramfs images used to populate the rootfs can come from main.
+Keeping the file system trimmed helps keep the rootfs smaller.
+Less will be swapped.
+Running fewer network services from rootfs is advised
+because the rootfs is acting as firewall.
+So in a weird sort of way the main file system has a strong
+correlation with the purpose of a /boot/ file system.
+However, the portions of the main root file system that enter
+into the initramfs images are still mostly from /bin/ /etc/ /lib/ /lib64/ /sbin/
+and not much from the /usr/ /var/ /opt/ and other areas.
+
+/media/root/work/ is a fine mount point for the root file system
+that contains workstation related files, to include xorg KDE firefox
+and all the fun software approved for work use.
+
+/media/root/user/ could be the mount point for a root file system
+on a mobile computer issued to employees.
+Employees can be granted the root account password for /media/root/user/
+and be allowed to install, upgrade, maintain, uninstall the software that
+would be used for personal use.
+Because the software for personal use and work use exists
+in two separate root file systems
+no conflicts or problems should result from what the user wants
+to install and run in the /media/root/user/ file system.
+
+So why allow the user his own root file system on a company owned computer?
+Obviously, the user would run a qemu virtual machine
+in his home directory if not provided with the root account password
+for his box.
+By running a virtual machine the user gains that root level ability
+within his virtual machine, but at the cost of performance,
+perhaps also 3D accelerated graphics, and significant RAM overhead.
+
+In contrast a user with his own root file system gains the file system
+isolation for his own processes, PID isolation, network adapter isolation,
+accelerated graphics, and as much access to RAM as allowed by control groups
+without the RAM overhead that would occur
+for running a virtual computer and 2 linux kernels!
+And running a single linux kernel provides more efficient caching and swapping,
+way better than can be achieved using virtual computers with multiple
+linux kernels
+and memory ballooning.
+
+/media/root/www/
+Is the obvious location for a box to run it's web server.
+Having nothing else there except web server related files
+and what is required to update the root file system
+makes it almost like a running the web server chrooted.
+And in actuality that is what is happening.  :)
+
+Web servers do not typically run as UID 0.
+Exploiting a bug not create a compromise
+that allows escalation to EUID 0.
+However, to truly prevent damage from nasty interlopers;
+immune-security-tomoyo has been revised for multi-root support.
+It will keep interlopers locked in the domain box, typically either
+the user or limited domains.
+Those domains will allow files to be viewed according to one's EUID and EGID.
+However, modification of files in system owned areas such as:
+/bin/ /etc/ /lib/ /lib64/ /opt/ /sbin/ /usr/ /var/ are prohibited.
+Such an interloper must also be able to authenticate with a proper password
+to escape into the freedom domain before gaining
+the freedom required to wreak havoc.
+Consequently, immune-security-tomoyo helps enforce the traditional
+linux security model.
+
+If only one computer was purchased
+and that computer was intended to host several Sorcerer computers
+then that computer will also have a /media/root/dev/ root file system.
+The /media/root/dev/ root file system can contain a loadout of software
+that is installed on all of the other root file systems.
+And /media/root/dev/ can be updated before the other root file systems.
+That way the update can be observed, the services can be observed,
+and problems can be discovered and expected or circumvented
+before performing updates on the other root file systems.
+
+So in summary, the root file systems mounted on /media/root/
+should be granted a name that easily identifies the role.
+Each root file system will act like a virtual computer without
+actually requiring virtual computer software and without
+booting additional linux kernels.
+Up to 255 root file systems are supported.
+But I would not recommend doing more than 62.
+The linux kernel provides 64 virtual consoles.
+Each of the root file systems will run a logind
+that will select the first available virtual console
+and present a prompt which will run the login program
+when a key is pressed.
+So if running more than 62 root file systems
+then some of those root file systems will require
+chmod 400 /etc/init.d/logind or the kernel source will require
+modification for creating more than 64 virtual consoles.
+Either way would work.
+
+The control group implementation is partially aware of PID name spaces.
+To simplify any confusion, each root file system
+receives it's own control group hierarchy.
+The rootfs file system is at the top of the hierarchy and can peer
+into the control group hierarchy of each root file system.
+Therefore, controls can be set for the rootfs' /sys/fs/cgroup/
+that limit the amount of processes and RAM and swap
+that is provided to each root file system.
+So if a box had 8 processors and 6 root file systems.
+Then some of those root file systems might be granted dedicated
+use of only a single processor if the SA desires.
+However, by default no limitations are created.
+Therefore, each of the root file systems can equally compete
+for the processing power of all 8 processors.
+
+As an example let us assume that a SA is deploying a company mobile computer.
+So he creates
+/media/root/{main,work,user,dev}
+He configures the dev root file system to automatically update.
+But he does not want it to SAP the user's processing power.
+So he grants only one processor and to /media/root/dev/
+and sets the cpu.shares so that /media/root/dev/ receives
+1/64th the total processing power when competing with other root file systems.
+dev could require a while to update.
+But the resource usage will be so slightly
+that the user will be unaware of any activity
+that is automatically happening on /media/root/dev/
+
+For added security in the above example
+the 3 or all four of root file systems can be created
+on LUKS encrypted devices.
+Therefore, during boot selection of which file systems are mounted
+depends on giving the proper password.
+The user can be provided with LUKS passphrases that unlock
+the encryption key for /media/root/user/ and /media/root/work/
+Or those passphrases can even be the same.
+And by having different passphrases for /media/root/main/
+and /media/root/dev/
+then those file systems will mount only when the SA can enter
+those pass phrases during boot.
+However, if /media/root/dev/ is not on a LUKS encrypted device
+then it can be mounted on each boot and run that way.
+
+Eventually, the time for updates arrives.
+The user hands the mobile computer to the SA.
+The SA examines the event logs in /media/root/dev/
+and examines the services to see if they are functioning.
+If it all looks good then the SA can begin the updates
+on /media/root/{main,user,work}/
+Slick right?
+The sources are already downloaded.
+And ccache archive tarballs could already exist.
+And those can be shared among root file systems
+by using the bind command.
+
+After specifying root file systems to mount in /etc/fstab.rootfs
+additional lines can provide some convenient binds such as:
+
+/media/root/dev/aux/can /media/root/main/aux/can none bind 0 0
+/media/root/dev/aux/can /media/root/user/aux/can none bind 0 0
+/media/root/dev/aux/can /media/root/work/aux/can none bind 0 0
+
+Now all root file systems share the same view of /aux/can/
+That helps prevent the waste of disk space.
+
+I apologize for the complexity introduced by the changes.
+I have made the implementations with nearly the least complexity as possible
+that still achieve full utilization of unshared namespace.
+This way computers can gain many of the best features of running
+virtual computers,
+with none of the drawbacks nor resource overhead.
+
+Some SAs might expect that this sort of configuration
+has been available for years with other POSIX.
+However, I doubt it.
+To use the unshared namespace boxes must boot with these new linux-* spells
+soon to be available in the svn grimoire, must be upgraded to glibc version 2.17
+and must be upgraded to util-linux version 2.23-rc1
+Yes, that is the release candidate from the developmental branch of util-linux.
+However, it provides the utilities that are required.
+Failure to do all the required upgrades might create a box that can boot,
+but will definitely lack the unshared namespace and consequently
+maybe not all things will work as expected.
+My recommendation is don't try don't see.
+Be certain that the updates pass.
+
+I have not yet completed the code for upgrading paradigm support to
+unshared namespace.
+I will eventually.
+So paradigm support will initially be broke for a short while.
+Paradigms can be created and shifted and that is about it.
+Paradigms are still an excellent way to backup a root file system
+before upgrading it.
+That way it could be more quickly and effectively downgraded
+to the pre-update state if desired.
+
+Archive support is deprecated.
+/aux/can/archive/ is a junk directory now.
+If not desired then it can be deleted after the update.
+When grep -q ARCHIVE_CACHE /etc/sorcery/config
+has no output then the /aux/can/archive/ is nothing but an ancient reminder.
+The best abilities of archives is now available using paradigms.
+And paradigms provide a complete hard linked mirror for
+how a file system was loaded at a given time.
+That is far superior to a collection of archives.
+
+Extraction of a program or library from archive was never a guarantee
+that the program or library would be usable.
+The files from the archive could be sufficiently old that the available
+sonames for installed libraries differ from what the software in the
+archive requires.
+Consequently, in those situations those spells must be moiled.
+And nothing indicated when an archive went from useful to junk.
+At best they might be used to immediately roll back the version
+of software that was updated just recently.
+And then because of the interdependency of ELF libraries
+perhaps installed libraries would also require reversion to a previous archive.
+It was too tedious for most SAs to do.
+The archive cache wasted disk space and processing cycles.
+I am glad to see it go.
+
+The changes described above will become available sometime
+between now and the end of April.
+Testing looks fine, the situation looks good, everything that should
+be working seems to be working.
+However, any mistake in the implementation could cause a significant
+inconvenience.
+
+For example, until I created the SNAT firewall rules everything about
+the root file system on a box
+seemed to work properly, except that it could not download files via
+FTP, HTTP, nor SSH out, etc...
+And the SNAT rule fixed that.
+However, if SAs updated their boxes, rebooted, logged in, and discovered that
+browsing the WWW, doing email, and more was not working
+then would that not be a tremendous inconvenience?
+
+As a result of the sweeping changes made to init-scripts, linux
+related spells, spells that install linux modules,
+and much more; I have been testing my checked out copy of the svn
+grimoire and sitting on the changes
+rather than trying to commit pieces.
+If I tried to commit pieces, or individual spells and their $SPELL.d/
+directories
+then I might make a mistake and commit the entire grimoire to svn,
+then moments later berlios.de would have one of it's outages
+and then I would be unable to commit fixes for the bugs
+and the rolled grimoire would be a mess if installed on a box.
+Because berlios.de might only give me one chance at a commit
+I must make absolutely certain that the grimoire that goes out
+is thoroughly tested and the spells are excellent.
+
+I am uncertain when I last committed to svn grimoire.
+Probably, I have been sitting on changes for about a month.
+Maybe some people expected that I went on vacation?
+Anyone who conjectures that Modern Magic became abandon-ware think AGAIN!
+Just because I work nearly incessantly for a month
+making all aspects commensurate
+with the awesome new features in the linux kernel
+does not mean that I abandoned the POSIX.
+I apologize for the bugs that had to be endured
+and the updates that had to be sacrificed
+while I designed and implemented the new code.
+
+BTW, after computers are updated,
+please do not reboot them unattended.
+A possibility exists that the old init-scripts
+are sufficiently incompatible with the new init-scripts
+that boxes will not be run the command:
+reboot -d -f -i
+Please look for that.
+
+Until the updates arrive in the rolled grimoire
+each SA should update the /etc/rootname for each file system.
+Remember that /etc/rootname for each file system should be unique.
+And /etc/rootname and /etc/hostname should not be the same.
+Also edit /etc/fstab.rootfs for the main root file system.
+Remember that mount points in it for root file systems start with /media/root/
+An /etc/fstab.rootfs will be required.
+Then edit /etc/port.forward
+Specify what should be forwarded.
+At the very least a line such as:
+
+main.something.tld ssh ssh
+will allow port 22 to be forwarded into the real root file system.
+The sshd running on rootfs will still listen on port 30.
+
+After the first reboot with the new update
+probably some error messages might scroll concerning init
+and the starting of gettys and such.
+The solution is to comment out the lines in /etc/inittab
+of the main root file system so that gettys are not started.
+logind will provide the ability to log in and all root file systems
+including the rootfs.
+
+Finally, for some unknown reason /dev/tty1
+the very first virtual console does not become available
+even after no process has /dev/tty1 as it's controlling tty.
+So it will have the scroll from sysinit and runlevel startup on it.
+But it will not prompt for login unless a getty is specified for it in
+/etc/inittab
+Consequently, use alt right arrow to switch to the next virtual console
+in the list of active virtual consoles.
+Keep switching until the virtual console is discovered
+that can provide a login for the desired root file system.
+The dynamic allocation of virtual consoles for root file system login
+means that a login for a root file system might not
+always appear on the same virtual console as it did before.
+If SysRq K is used to kill the login prompt on the virtual console
+then it will appear on some other virtual console.
+That makes it a bit tricky to securely kill.
+However, kill it once, find it's new virtual console, kill it there
+and it should re-appear on it's original virtual console.
+
+Likewise GUI logins for multiple root file systems can appear on
+different virtual consoles.
+If running more than one then look around to carefully select
+the correct GUI login prompt for the desired root file system.
+
+The mount --bind thing suggested previously with multiple binding of /aux/can/
+can also be used to mount --bind the same /home in several root file systems.
+
+Hopefully, that conveys everything essential.
+Comprehension will be easier after the upgrade happens.
+Remember that before the upgrade modify
+/etc/rootname
+/etc/fstab.rootfs
+/etc/port.forward
+and if a static IP address is desired
+/etc/hosts
+
+The same static IP address can not be used for an ethernet adapter
+as is used for the VETH inside of a name space.
+So 2 will be required if the box had previously only one.
+However, the IP address assigned to the ethernet adapter
+can be non globally routable if desired.
+And the globally routable IP address could be assigned to the VETH
+in /media/root/main/ if desired
+Of course forwarding desired ports makes it all work again
+without having 2 static IP addresses.
+So please consider that as an option.
+
+If confusion or questions arise from reading this
+then please post inquires on the email list.
+If one person wondered something
+then probably many more people wondered the same.
+That way Q&amp;A can be handled as follow up
+and everyone's understanding can become sufficient
+for acclimating to the changes.
+And that alone is another good reason to allow a week
+for discussion before I commit the changes to svn.
+
+I already have the new implementations running
+on two workstations and one test box.
+So if anyone wants me to test if something is possible
+then I can test it and report the results.
+
+For those wanting a verbose description of unshared namespace
+then a series of articles on LWN seems to have the most verbose explanation.
+Some documentation exists in /usr/src/linux/Documentation/
+but it seems less than adequate for gaining comprehension.
+The tools provided by util-linux provide manual pages.
+Those are only helpful to someone who already understands unshared namespace.
+
+None of the changes require that SA run the tools
+/sbin/ip /sbin/iptables to accomplish any tasks.
+Lore about VETH are, IP address assignment, routing, and firewalling
+are a prudent acquisition for anyone who wants
+to be able to debug any problem that might occur.
+
+Of course knowledge about control groups is useful for every SA,
+and yet the implementation is so smooth that anyone can deploy and run a box
+without making any adjustments to control groups.
+Hopefully, the multi-root implementation will also be that smooth.
+If /etc/rootname /etc/port.forward /etc/hosts /etc/fstab.rootfs
+are the only files requiring adjustment
+then that is a very tiny cost for gaining
+the awesome power of single kernel pseudo virtualization.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002424.html">[Sorcerer-admins] more flexibility with linux-* spells
+</A></li>
+	<LI>Next message: <A HREF="002426.html">[Sorcerer-admins] summary of changes that require SA	interaction:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2425">[ date ]</a>
+              <a href="thread.html#2425">[ thread ]</a>
+              <a href="subject.html#2425">[ subject ]</a>
+              <a href="author.html#2425">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

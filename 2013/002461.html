@@ -1,0 +1,399 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] changes arriving with updates are as follows:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes%20arriving%20with%20updates%20are%20as%20follows%3A&In-Reply-To=%3CCA%2BT4wDiB2aZbPs8RwyFQPFNxTVhqvnSmNFvvG%3DHRG55o97Tuqw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002460.html">
+   <LINK REL="Next"  HREF="002462.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] changes arriving with updates are as follows:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes%20arriving%20with%20updates%20are%20as%20follows%3A&In-Reply-To=%3CCA%2BT4wDiB2aZbPs8RwyFQPFNxTVhqvnSmNFvvG%3DHRG55o97Tuqw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] changes arriving with updates are as follows:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep  5 08:56:29 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002460.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 84, Issue 9
+</A></li>
+        <LI>Next message: <A HREF="002462.html">[Sorcerer-admins] The software catalog transfer method changed	slightly.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2461">[ date ]</a>
+              <a href="thread.html#2461">[ thread ]</a>
+              <a href="subject.html#2461">[ subject ]</a>
+              <a href="author.html#2461">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The benefit of testing and rebuilding on uniprocessor IA32 computers
+revealed the inefficiencies of sorcery.
+Enjoy the improvements.  :)
+
+Foremost worth mentioning is that current logs are deprecated.
+Updates of existing software and installation
+of new software projects creates post logs.
+Post logs are xz compressed UTF8 files
+that differ somewhat from traditional install logs,
+version logs, md5sum logs, etc...
+However, all of that important information
+is stored more concisely in a post log.
+Most post logs have a size less than 4K.
+Most file systems store files in units of 4K
+Consequently,
+# du -sk /aux/log/post/
+2604
+should not come as a surprise since
+all of those tiny logs must round up to 4K.
+Still post logs seems like a good compromise,
+because parsing them is very fast,
+creating them is reasonably fast,
+and space utilization is minimal.
+The main difference is that SAs
+are not expected to be able to edit post logs.
+
+Updating from current logs to post logs
+will happen gradually at least for a while
+until current logs support should be deprecated
+in favor of a leaner faster sorcery.
+The leisurely transition can be permitted because
+information from current logs and post logs
+are parsed and stored in indices when generating
+the main index or when merging software catalogs.
+That mitigates the potential performance deficit since
+when the data is required without processing
+then it is already available in indices.
+
+Post logs and event logs were wasting file system space.
+Especially some very small timing event logs
+were rapidly consuming file system space.
+Consequently, the SA request was modified
+to provide the additional functionality
+in the form of two new features.
+
+event_time     additional logs that display duration for event
+event_verbose  additional logs useful for POSIX admins
+
+If duration required for processing events is desired
+then Time Event type logs can be enabled with event_time.
+It actually is not useful or perhaps not as useful
+as the information contained in Max Stat logs
+which are always created upon successful moil completion.
+event_verbose will generate some empty event logs
+that merely indicate that at event happened.
+That might be useful if the SA wondered if events
+happened in proper order or if an expected event did not happen.
+
+Those two new features are of interest
+only to those who want to debug sorcery, probably.
+No reason exists to expect a bug in sorcery event transition.
+A SA curious about the order of event processing;
+requested the functionality.
+I previously did not implement it as a feature.
+But it aught to be a feature because it costs inodes
+and some additional event logs cost additional file system space.
+
+A more noteworthy change in events is that
+the &quot;Pass Moil&quot; or &quot;Fail Moil&quot; event log contains
+scroll accumulated during compilation.
+It effectively replaces compile logs.
+Access the content with the:
+# au event-menu $SPELL
+That might seem inconvenient at first,
+but it creates cause for SAs to become familiar
+with event logs and to learn and know what information
+to expect in each type of event log.
+
+The performance deficit for transitioning event logs from fore to yore
+was not easily detected until doing a rebuild on a uniprocessor IA32.
+However, after realizing the problem
+the solution became obvious from retrospect.
+And no surprise should exist that the solution involves directories.
+Originally, I did not want a hierarchy involving directories.
+Directories cost both inode and file system space.
+However, the performance gain is worth the expense.
+
+The immune-exam-transition spell transitions event logs
+from the old hierarchy to the newer hierarchy.
+Should require around a minute or less on most computers.
+Duration depends on how many event logs exist.
+
+If only the essential event logs are desired
+then after the transition is achieved
+the command to remove all yore event logs is:
+# rm -fr /aux/log/event/yore/
+Too easy right?
+However, when the time comes when trying
+to decide how something should be installed
+based upon how something previously was installed
+then having those yore event logs provides a welcome resource.
+Yore event logs also become valuable when wanting
+to view a previous compilation log to compare with current.
+They store good information.
+But it is way too much information
+to be crammed into the system log.
+And that is why event logs exist.
+
+After watching a rebuild I realized that my eyes
+were darting between the top and bottom of the terminal.
+I want is all the interesting action close together.
+Consequently, I reverted the scroll direction
+from my odd selection of top to bottom
+to the traditional direction of bottom to top.
+That way when looking at the status lines at the bottom
+then the future and then current action is located just above.
+The scroll of elapsed events is above the current action
+and extends to the top of the screen.
+
+The change in scroll direction might assist neophytes.
+It might create cause for irritation for those who prefer
+reverse direction scrolling.
+But the change is worth the strain of adjusting.
+
+I forgot why I decided to scroll from top to bottom,
+but maybe it was because at one time or another
+the status lines for augur scry appeared at the top?
+Implementing scroll in either direction is easily achieved,
+however this method has the advantage that anything unexpected
+about the amount of rows on the terminal emulation
+will not cause important information to have scrolled off the top.
+I could have moved the status lines to the top,
+but changing the scroll direction for events
+seemed a potentially more robust decision.
+
+The many changes part of this sorcery update
+will provide a sorcery that executes with far fewer CPU cycles
+spent on overhead tasks such as logging.
+The improvement can be observed
+on both uniprocessor and SMP computers.
+Because changing the status of an event log
+from fore to yore is nearly instantaneous;
+the queues tend not to accumulate.
+And mass processing of spells in reap's queue
+executes as rapidly as expected.
+Events process so quickly now
+that watching the action
+is almost like watching corn pop
+especially when processing many tiny software projects
+such as those which provide perl modules.
+
+Speaking of perl
+I adjusted the spell to help mitigate if not eliminate
+the possibility of perl having installed perl modules
+that are also installed by perl--* module type spells.
+That is important for the way spell owned file integrity is determined.
+Consequently, using a utility instead of sorcery
+to install and update perl modules will be somewhat
+more problematic following an update of perl.
+But that provides incentive for writing spells for perl modules.
+
+Python and Python3 were also adjusted.
+The main difference is that /usr/bin/python
+is no longer installed.
+That solves a few problems.
+However, it creates many more problems than it solves.
+Many spells were tested and discovered and repaired.
+That was part of the purpose of doing rebuild testing.
+After modifying the perl and Python spells;
+I wanted to know exactly what was broke,
+and of course to add additional lines to those spells
+which circumvents problems.
+
+/usr/bin/python is a deprecated concept.
+Python does not provide backward compatibility like BASH and glibc.
+The elimination of /usr/bin/python probably should have been decided
+and made the norm with the update from Python 1.x versions
+to Python 2.x versions instead of now at the time when
+software projects are slowly transition to Python 3.
+A few amount of software projects utilize Python 3.
+It might be more problematic than Python 2,
+because the method for providing multilib Python 3
+was less than apparent.
+The situation will be wait and see what becomes problematic
+and then fix the source trees using spells
+so those software projects can compile and install.
+However, at the moment no such problems exist.
+
+As a result to the change in perl and Python
+problems might become evident following updates or a rebuild.
+The fastest way to achieve a fix might be to report
+the problem on the email list.
+Then everyone can benefit.
+KDE and gnome seems good to go with the changes.
+I tested over 1000 spells.
+However, the software catalog has more than 3000 spells.
+Consequently, I am expecting that not all breaks were discovered.
+
+I already began work on the improvements for the 2014 I/R.
+Everyone can thank Evert for reminding me
+to not update the stable version of glibc
+until I am ready to roll and distribute new I/R ISO9660 images.
+That is because the update of glibc on root file systems
+will likely render the glibc on the Install/Rescue CDs
+unusable for repairing root file systems.
+It would also be unusable for running software on root file system
+that was linked with a newer glibc than the version on the I/R.
+
+glibc provides excellent and far better than average backward compatibility.
+That is why re-compiling and re-linking all the installed software
+on a root file system is not required following a glibc update.
+Unfortunately, very few software projects provide forward compatibility.
+glibc does not provide forward compatibility.
+Symbols and functions would be missing from an older glibc library
+required by software that compiled and linked with a newer glibc.
+This is easy to forget.
+Anytime I update the stable version of glibc
+without concurrently releasing new I/Rs images
+is a perfect example of me forgetting about
+the lack of forward compatibility.
+Sorry about that.
+I added a note to the top of the glibc spell
+to remind myself not to test and update glibc
+until ready to release new I/R.
+Consequently, that should no longer become problematic.
+
+So if anyone was wondering why I am sitting on
+a potential glibc update instead of processing it
+then the answer is that I am not yet ready
+to release newer Install/Rescue images.
+Consequently, expect glibc to update to a newer version
+perhaps once, maybe twice, but no more than twice a year.
+
+So in summary logging changed,
+sorcery became faster,
+augur scry scrolls in reverse,
+and installation for perl and Python
+changed hopefully for the better.
+However, I probably omitted many
+other potentially interesting changes.
+One just came to mind.
+Consequently, I will mention it.
+
+A profile spell called &quot;static&quot; was created.
+# au begin static
+can allow the selection of installing
+statically linked executable files
+for a few software projects.
+The statically linked executable files
+land in /usr/{,s}bin/ while the dynamically linked
+executable files land in /{,s}bin/
+Therefore, no file overlap exists.
+
+Statically linked executable files
+require more disk space than dynamically linked executable files.
+And more memory is required during execution.
+However, the main benefit is that execution
+could begin 3 to perhaps 5 times faster
+than a dynamically linked executable file.
+That is because ld.so the dynamic linker
+does not run when the process begins.
+
+ld.so has the task of locating and loading
+shared object libraries into memory and then
+adjusting locations in a program to call the functions
+provided in shared libraries.
+More succinctly stated
+dynamically linked programs require more CPU cycles to run.
+Therefore, when the task being performed is minimal
+then having the program begin sooner
+allows the task to be completed sooner.
+For programs such as find, sed, grep,
+and several utilities installed by coreutils
+a performance benefit can be realized
+by providing some of the utilities
+also as statically linked executable files.
+
+In the past I added switches to certain spells
+to allow the SA to select if the installed executable
+files for a spell were statically or dynamically linked.
+That method was more efficient and required less
+CPU cycles for compilation and linking when compared
+with the current method that uses separate spells.
+Using separate spells provides simplicity and flexibility.
+Due to the requirement of having certain static libraries,
+also called ar libraries or archive libraries or .a files,
+a spell such as static--pcre
+can install that libpcre.a file
+without having pcre install it by default.
+Therefore, the potential convenience
+of statically linked executable files can be offered
+without increasing the minimal installation size
+of other spells such as
+pcre, ncurses, readline, e2fsprogs, zlib, bzip2, etc...
+
+Please forgive if the explanation is overkill.
+Executable files that are statically linked with glibc
+become bloated where 90% of the code in the program never executes.
+That could be called a design or defect of glibc.
+Consequently, the benefit of a statically linked executable file
+might not be easily surmised by a typical SA.
+What is to like about a program
+that requires a magnitude more file system space
+and probably that much more memory when running?
+However, having the process complete
+3 to 5 times faster is the likable quality.
+
+The benefit of statically linked executable files
+has the least drawbacks on a computer with plenty of RAM.
+That is because the larger utilities
+require more space in the kernel's block device cache.
+With an insufficient amount of installed RAM
+then statically linked executable files
+could be forcing out potentially valuable data from the kernel's cache.
+Consequently, only install the statically linked executable files
+on computers that always have plenty of RAM for the kernel's cache.
+
+True enough executable files statically linked with uClibc
+would be a magnitude smaller than the same linked with glibc.
+But the cost in CPU cycles to compile and cost in file system space
+to store the tool chain for creating those few statically linked utilities
+seemed to mitigate if not defeat the benefit.
+Creating that tool chain is tempting.
+Yet, for the meanwhile we can wish for glibc development
+to achieve a better compromise with it's performance to size ratio.
+
+Most software projects tend to bloat over time
+rather than staying lean and efficient.
+Fortunately, sorcery development includes re-evaluation
+of the code and performance to ensure a favorable compromise
+between speed, size, and functionality continues to exists.
+Consequently, many of the changes in this newer sorcery
+ensure that performance remains adequate
+on both legacy uniprocessor computers
+and also more modern 64-bit SMP computers.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130904/85396f5e/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130904/85396f5e/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002460.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 84, Issue 9
+</A></li>
+	<LI>Next message: <A HREF="002462.html">[Sorcerer-admins] The software catalog transfer method changed	slightly.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2461">[ date ]</a>
+              <a href="thread.html#2461">[ thread ]</a>
+              <a href="subject.html#2461">[ subject ]</a>
+              <a href="author.html#2461">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

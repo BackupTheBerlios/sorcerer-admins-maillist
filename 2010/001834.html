@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] module init-tools error
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20module%20init-tools%20error&In-Reply-To=%3CAANLkTil2wtLfZEKYlq7XRcDwA3Lo5rqL1oXKod_j7NwC%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001829.html">
+   <LINK REL="Next"  HREF="001846.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] module init-tools error</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20module%20init-tools%20error&In-Reply-To=%3CAANLkTil2wtLfZEKYlq7XRcDwA3Lo5rqL1oXKod_j7NwC%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] module init-tools error">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 22 08:10:50 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001829.html">[Sorcerer-admins] module init-tools error
+</A></li>
+        <LI>Next message: <A HREF="001846.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1834">[ date ]</a>
+              <a href="thread.html#1834">[ thread ]</a>
+              <a href="subject.html#1834">[ subject ]</a>
+              <a href="author.html#1834">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm, someone must have not liked how
+it overwrite /etc/modules?
+Best guess is that someone removed
+the file from module-init-tools.d/
+and so now that file might not be tracked
+on some installations of module-init-tools.
+Therefore, next time module-init-tools casts
+it will overwrite /etc/modules on every box.
+And ones that did not have a tracked /etc/modules
+will not have a preserved /etc/modules
+Good thinking.  :)
+I fixed the spell.
+I added module-init-tools.d/modules
+Everyone should make a copy of their /etc/modules
+if they definitely want to keep it.
+
+If spells have config files
+then those config files should be installed
+and should be tracked.
+Tracked files receive a md5sum.
+If the config file is modified
+the md5sum will be used to detect that
+and preserve the modification.
+Files not being tracked receive no md5sum
+are not preserved when modified
+and are overwritten.
+
+Thanks for the report.
+
+2010/7/21 Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;:
+&gt;<i> hello,
+</I>&gt;<i>
+</I>&gt;<i> When I cast module-init-tools I see this message at the end.
+</I>&gt;<i>
+</I>&gt;<i> grimoire/modules-init-tools.d/modules does not exist.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001829.html">[Sorcerer-admins] module init-tools error
+</A></li>
+	<LI>Next message: <A HREF="001846.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1834">[ date ]</a>
+              <a href="thread.html#1834">[ thread ]</a>
+              <a href="subject.html#1834">[ subject ]</a>
+              <a href="author.html#1834">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

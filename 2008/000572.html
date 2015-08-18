@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] networks startup script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20networks%20startup%20script&In-Reply-To=%3C596b75860806271413i3eff19d3x25f10f448122b558%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000566.html">
+   <LINK REL="Next"  HREF="000582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] networks startup script</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20networks%20startup%20script&In-Reply-To=%3C596b75860806271413i3eff19d3x25f10f448122b558%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] networks startup script">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jun 27 23:13:52 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000566.html">[Sorcerer-admins] networks startup script
+</A></li>
+        <LI>Next message: <A HREF="000582.html">[Sorcerer-admins] networks startup script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#572">[ date ]</a>
+              <a href="thread.html#572">[ thread ]</a>
+              <a href="subject.html#572">[ subject ]</a>
+              <a href="author.html#572">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/etc/init.d/networks is like cron
+
+cron will run a program at a specific time.
+cron will not pass command line parameters
+to the program that cron executes.
+How can the cronjob executed program
+receive command line parameters?
+Have cron invoke a bash script.
+Have the bash script invokes the program
+with proper command line parameters.
+This is exactly the same thing.
+
+Why make an ultra complicated
+/etc/init.d/networks script that supports EVERYTHING?
+All the SA must do is write a single bash script fragment
+that raises the networking devices
+whether it be 1 2 or 65536 network adapters.
+It does not matter.
+Just put that one script in
+/etc/networks.d/
+And it is done.
+
+I have exactly an example where I raise two network adapters.
+The script is called go
+
+# cat /etc/networks.d/go
+. /etc/networks.d/both/wlan0-static $1
+. /etc/networks.d/both/eth0-static $1
+
+Very simple, yes?
+I am not trying to make networking difficult.
+I am trying to make it easy.
+This is easy, yes?
+
+The above point excluded,
+I agree with you that  networking should be improved.
+Although /etc/init.d/networks is considerably long
+for a Sorcerer init-script that part seems okay.
+The troublesome part obviously is for SAs being
+able to figure out how to set up networking using
+the templates.
+
+Perhaps the networks spell should include a menu
+driven process that asks SAs plenty of questions
+in order to automatically fill out those templates
+and move them properly so that networking can
+be configured without the SA having to visit
+/etc/networks.d/
+
+However, the aspect that lacks consensus
+is the networking templates!
+I suspect that most SAs do not
+merely fill in the variables in the network templates,
+but also modify the network templates.
+And it was designed to be completely modifiable so
+that SAs can configure networking exactly as they want.
+But that is what causes the problem.
+The absolute maximum amount of configuration provided
+requires too great of a skill check.
+It should have a better compromise between
+the ability to configure and simplicity.
+
+I know at least one Sorcerer SA that dislikes the networks
+method for use on his notebook that he starts networking
+using something else entirely.
+
+And SAs who are familiar with udev may have already
+written rules so that udev can start networking.
+
+There is not as if there is one way to do this
+nor a proper way, nor a proper time to start networking.
+That is why I want this discussion re-opened.
+Ideas for improvement are invited, please.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000566.html">[Sorcerer-admins] networks startup script
+</A></li>
+	<LI>Next message: <A HREF="000582.html">[Sorcerer-admins] networks startup script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#572">[ date ]</a>
+              <a href="thread.html#572">[ thread ]</a>
+              <a href="subject.html#572">[ subject ]</a>
+              <a href="author.html#572">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091239s2010bd43tade3c66bc5e4c0e6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001096.html">
+   <LINK REL="Next"  HREF="001102.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091239s2010bd43tade3c66bc5e4c0e6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May  9 21:39:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001096.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001102.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1101">[ date ]</a>
+              <a href="thread.html#1101">[ thread ]</a>
+              <a href="subject.html#1101">[ subject ]</a>
+              <a href="author.html#1101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, May 9, 2009 at 11:59 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there, Kyle.
+</I>&gt;<i>
+</I>&gt;<i> Just for your info, I am re-compiling on my laptop at the moment. 32 bit on
+</I>&gt;<i> Core2.
+</I>&gt;<i>
+</I>&gt;<i> 600 spells compiled flawlessly so far, 200 to go, no failures.
+</I>
+That is good.
+I am still testing gcc 4.4.0
+I probably ran into some disappointing results before,
+because I forgot to break gcc's fix-includes.
+I really hate that.
+I wonder if there is anyone who benefits and wants gcc
+modified header files?
+
+
+&gt;<i> mc for some reason cannot download it's newest source, but compiled fine on
+</I>&gt;<i> the last one.
+</I>
+Perhaps the website is down?
+We do not exactly have a public source cache at the moment.
+I have mc-4.6.2.tar.7z
+Want me to email it to you?
+
+
+&gt;<i> in ffmpeg opts I still need to remove --enable-libswscale to have it
+</I>&gt;<i> compile.
+</I>
+In addition to there being newer ffmpeg
+the latest version of linphone requires the newer ffmpeg.
+Do you expect any problems with updating ffmpeg?
+Or should we still sit on it?
+
+
+&gt;<i> From the glibc spell I can see that it is no simple task to get glibc to
+</I>&gt;<i> compile &amp; install.
+</I>
+In some ways uclibc will be easier,
+yet it other ways more difficult.
+Most libraries when they break binary compatibility
+they change the soname so that the new so has a
+different soname than the old so.
+For example:
+
+/lib/libform.so.5.7
+is a library from ncurses.
+Above is the full name of the library.
+The soname is libform.so.5
+If binary compatibility breaks with the next version of ncurses released
+then the library will probably be named
+/lib/libform.so.6.0
+And the so name would be
+libform.so.6
+
+uClibc changes the library name on each release,
+but not the sonames.
+I probably require a far more clever and complex method
+than the library cache for handling re-installation of
+the currently installed version of uClibc with ELF libraries.
+Probably I would require a statically linked mv,
+perhaps from busybox.
+That way I could do some sort of a fast switch,
+moving the old directory to a different name
+and the new directory to the proper name
+and then eliminating the old directory.
+It really is dreadful and I would require at least
+a week to think about it and decide how to
+do it eloquently without causing any libc ELF
+library breaks.
+
+I was just thinking that if uClibc made the soname
+the same as the library name
+then that would not be half bad.
+Afterall why only go halfway along with the disguise
+of being an ELF library when it does not properly
+change the soname on each binary incompatible release?
+Perhaps I can write a patch for that.
+
+
+&gt;&gt;<i> An entirely static linked executable would also not depend upon
+</I>&gt;&gt;<i> ld.so nor libc.so.6 in order to run.
+</I>&gt;&gt;<i> Even if /lib/ or /lib64/ were missing the program would run if invoked.
+</I>&gt;<i>
+</I>&gt;<i> Maybe it would be a good idea to make at least the core utilities that
+</I>&gt;<i> Sorcerer needs statically linked? That way you can cast your way out of
+</I>&gt;<i> trouble like I had with my other box.
+</I>
+I am considering providing a uClibc statically linked busybox.
+However, coreutils or at least most of coreutils I want to keep
+dynamically linked.
+That way I can intercept invocations of libc functions in programs
+such as cp, install, mkdir
+That convenience is essential for sentinel to be able to track
+the files and directories that compiled sources install and modify.
+I do not yet want to give up on using sentinel.
+
+
+&gt;&gt;<i> Speaking of stability.
+</I>&gt;&gt;<i> I suspect that the recent instability you noticed was from gcc
+</I>&gt;&gt;<i> 4.4.0 being installed without first breaking fix-includes.
+</I>&gt;&gt;<i> gcc copying and modifying installed header files for other software
+</I>&gt;&gt;<i> is a very unfortunate thing that causes terrible problems.
+</I>&gt;<i>
+</I>&gt;<i> So, will we try gcc 4.4.0 again sometime in the future?
+</I>
+Maybe.
+If so, I will add in a check to make certain that the installed
+version is one without fix-includes in case any boxes or SAs
+want to simply restore the previous archive from /var/cache/archive/
+But for the moment it might not be a bad idea to wait for gcc 4.4.1
+Besides, I have a new linux-modular to compile,
+and I want to recompile glibc and a few other software projects
+for the next I/R release.
+
+I recently encountered some problems with libcap,
+and so I am making libcap go away.
+Seems to have compile issues.
+It might not be compatible with the latest linux kernel.
+
+I am not forcing boxes to recompile glibc.
+However, it might not be a bad idea.
+The newer glibc spell, which will be arriving soon,
+requires a linux-headers spell to be installed.
+Consequently, glibc no longer installs headers for linux.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001096.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001102.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1101">[ date ]</a>
+              <a href="thread.html#1101">[ thread ]</a>
+              <a href="subject.html#1101">[ subject ]</a>
+              <a href="author.html#1101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

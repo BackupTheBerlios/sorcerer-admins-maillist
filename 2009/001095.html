@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091144l7aa8955ckfbaf00dc8b894e7b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001092.html">
+   <LINK REL="Next"  HREF="001096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091144l7aa8955ckfbaf00dc8b894e7b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May  9 20:44:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001092.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001096.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1095">[ date ]</a>
+              <a href="thread.html#1095">[ thread ]</a>
+              <a href="subject.html#1095">[ subject ]</a>
+              <a href="author.html#1095">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, May 9, 2009 at 9:38 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there...
+</I>&gt;<i>
+</I>&gt;<i> Am I right in assuming that statically linked programs can also never suffer
+</I>&gt;<i> from ELF failure?
+</I>
+An executable can be linked with several libraries.
+Some of those libraries can be ELF, some can be static.
+The content of static libraries becomes part of the executable.
+Therefore, if an executable is entirely static linked
+then it ca not suffer an ELF failure.
+An entirely static linked executable would also not depend upon
+ld.so nor libc.so.6 in order to run.
+Even if /lib/ or /lib64/ were missing the program would run if invoked.
+
+
+&gt;<i> I would be willing to do a test on a fully loaded system in a few weeks when
+</I>&gt;<i> I get back home to my testing station back home.
+</I>
+I am not planning any big changes.
+I am just trying a few programs at a time.
+
+
+&gt;<i> I am particularly interested in what the overall size increase will be.
+</I>&gt;<i> If it's only a gig or so for a fully installed machine the speed and
+</I>&gt;<i> stability improvements might make it worthwhile.
+</I>
+Speaking of stability.
+I suspect that the recent instability you noticed was from gcc
+4.4.0 being installed without first breaking fix-includes.
+gcc copying and modifying installed header files for other software
+is a very unfortunate thing that causes terrible problems.
+
+
+&gt;<i> It might even not be so bad to link with glibc. I would certainly like to
+</I>&gt;<i> give it a go...
+</I>
+If Sorcerer transitions entirely to uClibc,
+which I am only saying may be a possibility,
+then glibc and libstdc++ ELF libraries
+would still be provided in order to run some
+software that is distributed in pre-compiled binary packages
+that are not entirely statically linked.
+However, one such program comes to mind that might be problematic.
+I do not know if macromedia's firefox flash plugin that is
+ELF linked with libc.so.6 and libstdc++.so.6 can be made
+to work with a firefox linked with uClibc.
+My guess is yes that it will work.
+But still everything should be tried and discovered to work or not work,
+rather than making any assumptions that become difficult to back out of.
+
+&gt;<i> I don't particularly care for different languages to my own... besides,
+</I>&gt;<i> since Sorcerer is compiled from source all the programs will have the
+</I>&gt;<i> language preference of the SA in there already.
+</I>&gt;<i>
+</I>&gt;<i> I am also curious about the Debian moving their distro over to eglibc (
+</I>&gt;<i> mainly because those maintainers are actually willing to receive patches )
+</I>
+When I was searching for alternative glibcs
+I did not discover eglibc.
+Thanks for providing the information.
+I will look it up.
+Also I was unaware of Debian's transition to eglibc.
+Has it just begun or is it already complete?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001092.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001096.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1095">[ date ]</a>
+              <a href="thread.html#1095">[ thread ]</a>
+              <a href="subject.html#1095">[ subject ]</a>
+              <a href="author.html#1095">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

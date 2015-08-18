@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2045%2C%20Issue%202&In-Reply-To=%3C596b75861003061134nc60ef5fld06f10f743d92bc3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001497.html">
+   <LINK REL="Next"  HREF="001501.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2045%2C%20Issue%202&In-Reply-To=%3C596b75861003061134nc60ef5fld06f10f743d92bc3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Mar  6 20:34:18 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001497.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2
+</A></li>
+        <LI>Next message: <A HREF="001501.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1498">[ date ]</a>
+              <a href="thread.html#1498">[ thread ]</a>
+              <a href="subject.html#1498">[ subject ]</a>
+              <a href="author.html#1498">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Because of the size/download requirement of a &quot;Live CD&quot;
+and also the fact that Sorcerer is a source based compile
+if installed type distribution, Sorcerer does not provide a &quot;Live CD&quot;
+We have only an Install/Rescue CD image
+for IA32 and x86_64 architecture.
+
+As far as I know they work.
+Usually the process is.
+Download, burn, boot, login as root using no password,
+run sinstall, visit the menus, complete the installation,
+reboot, configure networking, raise networking,
+do initial set up updates, select software for installation,
+wait a few hours and check it see if it is done.
+
+When I test the menu driven installer I do not do a fancy install.
+I usually do one or two partitions with ext3 filesystems.
+Usually a 1G /boot and the rest for /
+
+The last error reported with the I/R occurred due to
+a bu that only showed up when a box also has a
+floppy drive installed.
+However, almost immediately after that bug was reported
+I rolled new I/Rs and uploaded them.
+Therefore, they should be ready for download and use.
+
+While I could roll new I/Rs within a few days...
+I an contemplating on postponing any new I/R release
+until after I write a new kernel config
+and after I finish rewriting the server code for the
+Public Patch Repository.
+
+Someone might have a step by step guide for
+navigating the install menus, but I only write the
+menu driven installer.
+Hopefully, on the next release of it
+I will have added more documentation
+directly into the installer that helps explain
+in detail how each menu works.
+Already I wrote a generic dialog tutorial
+that will help new SAs learn how to use dialog
+to make choices and input information.
+
+If anyone spots a bug during the process of
+booting and using the menu driven installer
+then please report it for a prompt fix.
+If no bugs are reported
+then the next release of the I/R
+becomes a low priority item that will be delayed
+often until after a newer glibc is released.
+Currently, the I/R is the lowest priority item in the todo list
+and that is why I have not yet written and tested improvements
+to the menu driven install program that I described above.
+
+Because I do not test the I/R on the thousands of possible
+hardware combinations; I rely upon bug reports in order to
+make fixes and improvements to it.
+I of course do limited testing on the I/R each time using qemu.
+Therefore, whatever is currently available for download
+is expected to work.
+Please give it a try.
+If bugs are encountered please report the bugs.
+And the shifts the I/R back to high priority on the todo list.
+
+Currently, top priority is the testing and release of KDE version 4.4.1
+So far the probability for it going out in the next
+LAG=0 grimoire is looking good.
+
+I know there are a few live distro available.
+Ubuntu might still be a live distro.
+But I am not knowledgeable enough to
+make a recommendation about what distro to use.
+The closest that Sorcerer will become to a live CD distro
+is to install Sorcerer onto a USB thumb drive.
+A 32G thumb drive would be adequate,
+but even 16G would do with a limited loadout of software.
+Once it is installed on a USB thumb drive it should
+be bootable and usable on any computer that has
+BIOS that can boot from removable USB media.
+Generally, those are computers with motherboards
+manufactured on or after 2004.
+
+Good luck in creating a Sorcerer live USB installation
+if you want to give that a try.
+However, a traditional install to a fixed disk
+is still the recommended installation method.
+Although disk devices are now mounted according to UUID
+which should allow for a live installation of Sorcerer to
+be portable and usable among several different computers;
+as far as I know this is not tested extensively.
+I do not know if anyone carries their Sorcerer box's filesystem
+on their keychain to use on multiple computers.  :)
+However, with Sorcerer's support for LUKS encrypted filesystems
+the possibility for carrying Sorcerer on a keychain yet keeping
+all the installed data free from theft and modification
+is very good.
+
+
+On Sat, Mar 6, 2010 at 12:07 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> could you please tell me when you have all the bugs worked out of the sorcerer linux live cd download as well as a step by step guide to install it on a formerly windows xp computer as the only operating system? I have already erased all the partitions and xp system and all I need is the bug less live cd to download and a step by step guide to install it on an empty computer.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001497.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2
+</A></li>
+	<LI>Next message: <A HREF="001501.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1498">[ date ]</a>
+              <a href="thread.html#1498">[ thread ]</a>
+              <a href="subject.html#1498">[ subject ]</a>
+              <a href="author.html#1498">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

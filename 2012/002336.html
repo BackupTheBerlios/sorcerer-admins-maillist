@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] extlinux, the 7 initramfs images, boot &amp; shutdown, and why Sorcerer does it this way.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20extlinux%2C%20the%207%20initramfs%20images%2C%20boot%20%26%20shutdown%2C%0A%20and%20why%20Sorcerer%20does%20it%20this%20way.&In-Reply-To=%3CCA%2BT4wDijbwLLhHfQr5hO-1Xs43Kdc6m_5%2Bc5y%2Btw1OP5a_WKMQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002330.html">
+   <LINK REL="Next"  HREF="002342.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] extlinux, the 7 initramfs images, boot &amp; shutdown, and why Sorcerer does it this way.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20extlinux%2C%20the%207%20initramfs%20images%2C%20boot%20%26%20shutdown%2C%0A%20and%20why%20Sorcerer%20does%20it%20this%20way.&In-Reply-To=%3CCA%2BT4wDijbwLLhHfQr5hO-1Xs43Kdc6m_5%2Bc5y%2Btw1OP5a_WKMQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] extlinux, the 7 initramfs images, boot &amp; shutdown, and why Sorcerer does it this way.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul 24 01:06:18 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002330.html">[Sorcerer-admins] SPR services restored...
+</A></li>
+        <LI>Next message: <A HREF="002342.html">[Sorcerer-admins] a couple of spells...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2336">[ date ]</a>
+              <a href="thread.html#2336">[ thread ]</a>
+              <a href="subject.html#2336">[ subject ]</a>
+              <a href="author.html#2336">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In the previous email I mentioned extlinux.
+However, I realized that I forgot to mention something about extlinux.
+Something that appears to be a bug has been in extlinux for a while,
+and although I reported that the global append did not seem to function properly
+I have not yet seen a stable release of syslinux where this problem is fixed.
+Anyway....
+I wrote a little bit extra into the bootloader config file generator to allow
+the content from /etc/extlinux/append to appear in each label on an APPEND line
+The per label append works.
+Therefore something such as:
+acpi_enforce_resources=lax
+can be appended at each label.
+
+Instead of allowing a bootloader configuration that will boot anything
+the person at the keyboard
+is willing to type without prompting for passwords, etc...
+the Sorcerer method is to generate when required a fresh bootloader
+configuration file
+that has each possible label and reasonable restrictions to prevent
+anyone from booting
+the non default label or adding additional kernel parameters without
+also specifying the boot password.
+This provides a good compromise between the convenience of being able
+to boot/reboot unattended,
+the convenience of a menu for selecting alternate kernels or the rescue label,
+and the ability append/modify kernel parameters when permission is granted.
+
+The implementation might seem a bit much in terms of effort,
+but it might also be the minimal reasonable effort for the intended outcome
+considering that the Sorcerer linux kernels
+are not adulterated with files from the file system.
+Everything that becomes part of Sorcerer's initramfs images
+exist in compressed or uncompressed cpio files
+that are separate from the linux kernel.
+But that is what one comes to expect from Sorcerer.
+
+The design for Sorcerer is like fine dining
+where each course comes on a separate plate.
+Likewise each portion of the &quot;Sorcerer's Keep&quot;
+is a carefully crafted separately generated file,
+from the freshest ingredients available on an installed box.
+
+Fast food dining is fried potatoes slung into a paper box
+crushed beneath a paper wrapped greasy slab of mystery carcass
+coated with condiments and bread.
+Forget about &quot;hold the pickles.&quot;
+Forget about &quot;I want it cooked now,&quot;
+instead sizzling for 45 minutes under an infrared lamp.&quot;
+Fast food is get it fast, do not complain, do not ask questions service.
+
+If the components of the &quot;Sorcerer's Keep&quot;
+were included as part of the kernel's internal initramfs
+then modification might not be possible without at the very least
+relinking the previously compiled kernel.
+And since Sorcerer boxes are capable
+of booting multiple labels for different kernel version;
+updating the internal initramfs of each kernel
+would not be easily accomplished without also
+retaining the compiled source trees for all those kernels.
+
+We have all seen the 1 kernel and 7 initramfs load on each boot.
+If BIOS is slow with reading the device
+then the appearance of those dots might seem a short eternity.
+That may diminish SA interest when box's BIOS is slow
+when booting from a USB SSD.
+And I also have a box where booting the backup from a USB SSD
+seems to require around a quarter of an hour and has a tiny
+probability of failure.
+The first time I tried it booting it;
+I conjectured that it froze,
+but I decided to walk away and check it later.
+And somehow it progressed,
+but not unlike watching water come to a boil.
+A 10 year old BIOS is probably required
+in order to witness a boot which is that lethargic.
+Please pardon the digression.
+
+The reason for the level of bootloader configuration complexity
+and loading of the 7 initramfs images is because
+the Sorcerer experience is designed to be resume fine dining
+prepared on demand from the freshest ingredients.
+Therefore, after updates and when a box is shutdown/rebooted
+then init-scripts run that check to and determine if a newer bootloader
+configuration file or newer initramfs images are required.
+If so then those are generated before the current session ends.
+That way the next boot has the freshest available software on the
+initramfs images.
+And that helps eliminate the persistence of both security and annoying
+type bugs.
+
+Not only is the installed versions of software on a Sorcerer box a
+moving target,
+but also the initramfs is a moving target.
+Rebooting every other month can be help maintain the quality,
+because for the moment, newer initramfs are only loaded into memory upon boot.
+Why is this so?
+It is this way because also the running kernel does not change version
+to a newer installed kernel version unless a box reboots.
+
+Lastly, something about rebooting...
+When is rebooting and shutdown safe?
+Provided that cast is not running then issuing a shutdown/reboot
+command is reasonably safe.
+And if xz is running, in order to compress files in
+/var/cache/{archive,ccache,sources}/ ,
+then this too is also a safe time to reboot.
+If file compression is unable to complete
+then another attempt is commenced at a later time when the box is running.
+
+The thing not to do is to force power off during shutdown.
+Although the scripts have been carefully crafted to avoid the possibility
+of crafting a corrupted initramfs image, in theory an impossible probability
+exists that a shutdown during the execution of the mv command
+that renames the new initramfs might cause a problem.
+The worst possible problem might wreck booting,
+but is simply more likely that a box might boot a mixture
+of old and newer initramfs images.
+So forcing a the power off is not something I would do,
+but it is also not something I expect to cause a catastrophic problem.
+
+Very rarely a box will detect a problem when running shutdown
+and then abort the shutdown/reboot sequence, beep loudly
+and rebound itself into a runlevel.
+This is usually worth of investigating.
+At the very least check logs in /var/log/init to see what happened.
+If a box refuses to shutdown/reboot
+then the box also expects that it will be unable survive.
+In other the box anticipates a strong probability that an Install/Rescue
+image will be required on the next boot in that rare situation.
+
+I hope this email demystifies some aspects about booting, shutdown,
+and the near 100M of files loaded by BIOS calls from the bootloader on
+each boot.
+And while it might seem lavish in comparison to other distros;
+it provides the high quality of functionality and freshness that we crave.
+</PRE>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002330.html">[Sorcerer-admins] SPR services restored...
+</A></li>
+	<LI>Next message: <A HREF="002342.html">[Sorcerer-admins] a couple of spells...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2336">[ date ]</a>
+              <a href="thread.html#2336">[ thread ]</a>
+              <a href="subject.html#2336">[ subject ]</a>
+              <a href="author.html#2336">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

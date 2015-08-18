@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Moot bug, coreutils 6.12, touch: setting times of &lt;filename&gt;: Function not implemented
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Moot%20bug%2C%20coreutils%206.12%2C%0A%20touch%3A%20setting%20times%20of%20%3Cfilename%3E%3A%20Function%20not%20implemented&In-Reply-To=%3COFAA9808B4.2D0BB75C-ONC2257464.001EF49D-C2257464.001F7651%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000492.html">
+   <LINK REL="Next"  HREF="000495.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Moot bug, coreutils 6.12, touch: setting times of &lt;filename&gt;: Function not implemented</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Moot%20bug%2C%20coreutils%206.12%2C%0A%20touch%3A%20setting%20times%20of%20%3Cfilename%3E%3A%20Function%20not%20implemented&In-Reply-To=%3COFAA9808B4.2D0BB75C-ONC2257464.001EF49D-C2257464.001F7651%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Moot bug, coreutils 6.12, touch: setting times of &lt;filename&gt;: Function not implemented">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Tue Jun 10 07:43:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000492.html">[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+</A></li>
+        <LI>Next message: <A HREF="000495.html">[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#494">[ date ]</a>
+              <a href="thread.html#494">[ thread ]</a>
+              <a href="subject.html#494">[ subject ]</a>
+              <a href="author.html#494">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yeah i did go back to older coreutils, btw, downgrade spells is not 
+anymore possible with Sorcerer?
+
+Really not happy about this, atleast think about to add that patch which 
+can be found under that Gentoo bugzilla.
+
+All kernels under version 2.6.22 have this problem and indeed that 
+particular server is running v2.6.21.x kernel. Hey, i dont update kernels 
+on my servers too often :) Anyway i really hope that we do not force to 
+run always a newest kernel.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 09.06.2008 16:28:43:
+ 
+&gt;<i> Fascinating.
+</I>&gt;<i> However, do not panic.
+</I>&gt;<i> The bug report is made by people who
+</I>&gt;<i> almost never boot to a new kernel.
+</I>&gt;<i> touch on ia32 and x86_64 architectures
+</I>&gt;<i> from coreutils 6.12 on Sorcerer booted with
+</I>&gt;<i> linux-modular version 2.6.25.5 works.
+</I>&gt;<i> 
+</I>&gt;<i> I am uncertain how old of a linux kernel one must run
+</I>&gt;<i> in order to encounter the error.
+</I>&gt;<i> The easy solution is to reboot boxes with outlandish
+</I>&gt;<i> uptimes before updating to the new coreutils.
+</I>&gt;<i> 
+</I>&gt;<i> I would expect that the coreutils authors
+</I>&gt;<i> would avoid using something
+</I>&gt;<i> that has been available in the kernel
+</I>&gt;<i> for less than 3 months.
+</I>&gt;<i> 
+</I>&gt;<i> If you are not booted with a version +2.6.25
+</I>&gt;<i> please do so before updating coreutils.
+</I>&gt;<i> For such a rare bug I am not adjusting the spell.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Jun 9, 2008 at 3:09 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hi
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Do not update coreutils 6.12 if you run older kernel, you get borked.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Getting lots of:
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/services': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-alien': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-backup': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-clean': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-defrag': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-md5sum': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/talloc': Function not
+</I>&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/index.d/tomorrow': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/Linux-HOWTOs': 
+</I>Function not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/grimoire': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/protocols': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/services': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-alien': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-backup': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-clean': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-defrag': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-md5sum': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/talloc': Function not
+</I>&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/index.d/tomorrow': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/Linux-HOWTOs': 
+</I>Function not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/grimoire': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/protocols': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/services': Function 
+</I>not
+&gt;<i> &gt; implemented
+</I>&gt;<i> &gt; touch: setting times of `/root/.sorcery/grimoire/sorcery-alien': 
+</I>Function
+&gt;<i> &gt; not implemented
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Eg. touch is not working, also couple more commands do not work.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Here is nice bugreport from Gentoo:
+</I>&gt;<i> &gt; <A HREF="http://bugs.gentoo.org/show_bug.cgi?id=224483">http://bugs.gentoo.org/show_bug.cgi?id=224483</A> which says whats 
+</I>happening.
+&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080610/b278b64c/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080610/b278b64c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000492.html">[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+</A></li>
+	<LI>Next message: <A HREF="000495.html">[Sorcerer-admins] Moot bug, coreutils 6.12,	touch: setting times of &lt;filename&gt;: Function not implemented
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#494">[ date ]</a>
+              <a href="thread.html#494">[ thread ]</a>
+              <a href="subject.html#494">[ subject ]</a>
+              <a href="author.html#494">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

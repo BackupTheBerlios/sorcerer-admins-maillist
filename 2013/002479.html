@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important updates...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDjsefDpnLiv%3DU2gcXKHfzTo%2Bwd__kmuZiS3w_v21it2yA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002478.html">
+   <LINK REL="Next"  HREF="002481.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important updates...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDjsefDpnLiv%3DU2gcXKHfzTo%2Bwd__kmuZiS3w_v21it2yA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important updates...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Nov 16 13:41:17 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002478.html">[Sorcerer-admins] more new exciting features...
+</A></li>
+        <LI>Next message: <A HREF="002481.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2479">[ date ]</a>
+              <a href="thread.html#2479">[ thread ]</a>
+              <a href="subject.html#2479">[ subject ]</a>
+              <a href="author.html#2479">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Please grant extra attention to reboot testing following updates available
+on 20131117.
+I began implementing changes for the 2014 release.
+
+The most prominent change is that /media/root/ became /+/
+
+Root file systems should mount on direct sub directories of /+/
+
+For deployed boxes /media/root/main becomes /+/main
+
+The future recommendation is deployment with /+/main as /+/base
+That is because that root file system tends to most resemble a skeletal
+or base root file system since it tends to be pruned rather than having
+additional software projects installed following deployment.
+
+How I choose /+/ was complicated.
+It involved looking at an ASCII table.  :)
+It provides many boons.
+But it can look somewhat confusing at first.
+
+On the topic of confusion...
+Having /etc/rootname used as the file for storing the hostname for root
+file systems
+became confusing for SAs that did not fully understand the purpose of a
+hostname.
+Since IP addresses can be assigned to a root file system's VETH
+based upon the hostname; the hostname becomes useful rather inconsequential.
+
+The solution was to deprecate existing methods in favor for my second
+consideration.
+/etc/$file.rootfs is now deprecated.
+Files that should be available in /etc/ when on the rootfs should be within
+/etc/rootfs/
+While not exactly so the effect during rootfs is something similar to
+cp -a /etc/rootfs/* /etc/
+Therefore, /etc/hostname describes the hostname for the root file system
+while /etc/rootfs/hostname describes the hostname for the rootfs.
+Still slightly confusing?
+
+The benefit of /etc/rootfs/ allows separate
+/etc/rootfs/{passwd,group,shadow} files.
+Or any possible useful and different files can be used on the rootfs.
+Perhaps the most important file stored in /etc/rootfs/ will be
+/etc/rootfs/fstab
+
+/etc/fstab is the file for file system table for the root file system.
+However, on the rootfs /etc/rootfs/fstab is copied to /etc/
+and therefore becomes the file system table.
+
+Wonderful, terrible?
+Some of the support code for using /etc/rootfs/ has been in init-scripts
+for months.
+I have been testing it would advertising it.
+However, more recently I did reboot testing to verify that
+unmodified boxes should survive rebooting.
+It seems to work.
+However, if time permits
+then I recommend moving and renaming configuration files appropriately.
+That can help mitigate confusion later when trying to decide
+whether /etc/fstab /etc/fstab.rootfs or /etc/rootfs/fstab
+becomes the file that fstab file utilized during sysinit.
+
+After the rootfs fstab file is installed in /etc/rootfs/fstab
+then it can be easily sedited with the command
+# sed -i 's:/media/root/:/+/:' /etc/rootfs/fstab
+But probably better to edit with nano
+if not comfortable using sed.
+
+At my rate of progress I expect to have all my computers updated
+to current file placement trends by first quarter 2014.
+Consequently, I am not anticipating deprecating current methods.
+However, in 6 months I might.
+When I do so I will attempt to provide automatic update of configuration
+files
+using immune-exam-transition.
+Still, better to make the changes oneself than to allow
+me the opportunity to bug the files with sedit.
+By the time I write the automatic transition code
+I will have no deployed computers with with the deprecated placements
+that I can use for actual testing of the code.
+
+I might seem to be changing plenty for no good reason.
+The reasons are good.
+As the cliche suggests, &quot;hindsight is 20-20.&quot;
+2013 offered plenty of opportunities for observation.
+And I expect that these changes will help expedite deployment
+and help mitigate confusion.
+
+Consider that /+/ is faster to type than /media/root/
+Would be nice if the shift could be avoided.
+Using the keypad avoids the shift.
++ is the ASCII character with the lowest value
+that is not anticipated to become problematic for most utilization.
+However, + does become problematic when using pgrep, but not with grep and
+sed.
+So the answer to why use + is discovered by answering the question,
+&quot;why to not use any of the ASCII values that proceed +?&quot;
+
+I still have more changes to implement before 2014.
+A large amount of it involves documentation revision docent revision.
+Some of it scratches tiny itches like evolving from /media/root/ to /+/
+for the location of root file systems.
+
+For anyone who recently joined /media/root/ itself was the mount point
+for the root file system when this POSIX supported booting only a single
+root file system.
+However, in 2013 that changed just slightly to add additional functionality
+while not changing the location where SAs look.
+However, retaining /media/root/ becomes an inconvenience
+and cause for errors among slow typists.
+
+Through most of 2013 I have wanted for a more concise path.
+I considered /r/ for months.
+However, I decided upon /+/
+After sysinit completes
+then most of the files being accessed
+will be from the /+/ hierarchy.
+Having such a tiny path with a low ASCII value
+should enable it to be quickly parsed.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131116/e2f632a2/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131116/e2f632a2/attachment.html</A>&gt;
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002478.html">[Sorcerer-admins] more new exciting features...
+</A></li>
+	<LI>Next message: <A HREF="002481.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2479">[ date ]</a>
+              <a href="thread.html#2479">[ thread ]</a>
+              <a href="subject.html#2479">[ subject ]</a>
+              <a href="author.html#2479">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

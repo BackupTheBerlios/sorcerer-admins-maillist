@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes...&In-Reply-To=%3CCA%2BT4wDi_5NJM1Bk2EOC4aj-_SzNZfH54AUR%3DAGFss%2Be%3DHGME8Q%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002405.html">
+   <LINK REL="Next"  HREF="002407.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes...&In-Reply-To=%3CCA%2BT4wDi_5NJM1Bk2EOC4aj-_SzNZfH54AUR%3DAGFss%2Be%3DHGME8Q%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Nov 21 20:07:43 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002405.html">[Sorcerer-admins] sorcery paradigm
+</A></li>
+        <LI>Next message: <A HREF="002407.html">[Sorcerer-admins] changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2406">[ date ]</a>
+              <a href="thread.html#2406">[ thread ]</a>
+              <a href="subject.html#2406">[ subject ]</a>
+              <a href="author.html#2406">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>We are charging forward with the deployment of sorcery-paradigm.
+When the paradigm feature is not enabled
+then it should perform nearly identical to sorcery-delegate
+but with fewer bugs.  :)
+Do not enable the paradigm feature unless prepared to be baffled.
+The
+# a p
+command prefix will be useful for paradigm enabled box.
+Be sure to read:
+
+# au help paradigm
+# au help a
+
+if the paradigm feature is enabled.
+
+Spell immune-exam-clean was deprecated.
+Spells immune-clean-{archive,ccache,event,failed,source}
+
+Those 5 spells have been delegated the cleaning duties.
+If the SA wants box specific cleaning for the source cache,
+yet is satisfied with automatic cleaning of ccache and archive cache
+then the SA could omit the election of immune-clean-source.
+Simple, yes?
+
+That way SAs, such as Evert, who prefer
+the source cache to not be cleaned
+can enable cleaning for other areas
+while omitting the installation of immune-clean-source.  :)
+
+When the source cache transitioned from
+/var/cache/sources/ to /aux/can/source/
+A few boxes ate their source tarballs.
+Sorry for the inconvenience.
+
+For the transition to sorcery-delegate and sorcery-paradigm
+the source tarballs and ccache tarballs can be reused.
+The new directories are:
+/aux/can/{source,ccache}/ , respectively.
+However, old archives MUST be discarded.
+That is because archives for old software
+have the installation log locations set to the old location.
+If sorcery tries to raise them
+then it might loop, maybe infinitely.
+So any archives remaining in /var/cache/archive/
+can be safely deleted because they have no further use.
+
+Due to a bug
+immune-sentinel-resume could drive the utilities harder than intended.
+The bug in immune-sentinel-resume will be fixed in the next LAG=0 grimoire.
+Due to the heavy reliance upon pgrep
+the utilities could berserk slightly while
+procps is dispelled.
+This was fixed by protecting pgrep from reaping.
+
+sorcery-delegate and sorcery-paradigm utilities are event driven.
+And if an event happens then a utility such as &quot;moil&quot; could be invoked
+merely because it has queued content.
+However, moil might be waiting for spells to post
+be processing a solo spell, or already have plenty to do.
+In such a situation moil exits without causing an event.
+When a utility is invoked, decides to accomplish nothing and exits
+then I call this &quot;venting.&quot;
+It vents pressure.
+Pressure is created when a utility completes a task
+or every 5 minutes.
+This ensures that the utilities do not stall.
+Berserking is a state when a utility
+is invoked more frequently than it can vent pressure.
+
+The purpose of testing hundreds of spells through
+sorcery delegate and sorcery paradigm was to spot bugs,
+and especially spot bugs that caused berserking.
+However, the berserking specific to procps was not
+spotted until after procps was tried and the outcome monitored.
+This suggests that most, but perhaps not all conditions
+or bugs that could cause berserking, have been squished.
+
+Until sorcery-delegate I rarely used pstree.
+However, it has since become a powerful tool to spot berserking.
+Berserking left unattended might eventually vent over time
+or might cause a fork bomb like effect.
+So when transitioning to sorcery-delegate and sorcery-paradigm
+then checking for berserking might be a good idea
+when loadavg becomes excessively high.
+For example, 32 load processes suggests berserking.
+
+If a box is berserking then please send to me in an email
+the files created by running:
+
+# pstree &gt; /tmp/pstree.txt
+# ps -Af &gt; /tmp/ps.txt
+# find /aux/run/queue -type f &gt; /tmp/queue.txt
+
+If reported with that information
+then that aught to reveal a clue that could
+be used to recreate the conditions and
+then identify the bug or circumvent the condition.
+
+Frankly, I am not expecting any reports.
+I did plenty of testing on sorcery.
+However, each SA sees something different
+because they might be doing something different
+and have a different set of spells queued.
+Experiences can vary depending upon whether doing
+a first time deployment, upgrades, rebuilds,
+or individual spell testing.
+So I provided the above information so that a SA
+will know what to do if berserking happens.
+
+BTW, if tempted to run pkill
+then most of the utilities can be pkilled safely.
+However, do not pkill post.
+That could create aliens or perhaps cause
+important spells to not be installed.
+Also please do not power cycle a berserking box.
+That also is reckless.
+The utilities should be able to resume on reboot
+due to the state of the queues.
+However, I have done no testing to determine
+what happens when power cycling while posting spells.
+
+I am yet again pounding on new I/Rs.
+I will be going with a different design
+that should provide a faster installation
+of the base system.
+However, I will be upgrading the
+minimum specifications for Sorcerer to 2G.
+And if unable to reduce the content of the I/Rs
+then perhaps 3G will be required merely for installation
+Sorcerer x86_64 multilib.
+I am hammering on that yesterday, today, and maybe tomorrow.
+
+Sorcerer Sentient installation is changing.
+The nearly no questions asked installation method remains.
+Speed enhanced installation by installing some software
+from downloaded archives is discontinued.
+And Sorcerer Sentient will be run
+on the same grimoire as Sorcerer.
+
+This address and circumvents some of the problems
+that entered into the Sorcerer Sentient installation over time.
+Sorcerer Sentient installation will be slower
+and perhaps much slower on legacy boxes.
+However, this compromise will allow me
+to complete I/Rs with less time and effort.
+
+These compromises might not seem favorable for everyone.
+But they help the distro to move forward.
+
+Because of the specific overhead involved in a source based distro,
+which is the installation of large software projects such as
+gcc, and smaller software projects such as bintuils, make, cmake,
+automake, autoconf, libtool, and the inclusion of static link libraries,
+header files, pkgconfig files, libtool la files, documentation,
+API specific manual pages and more...;
+a source based distro such as Sorcerer always begins
+with an overwhelming disadvantage when competing
+with a pre-compiled binary based distro
+and especially those distros with the sole niche
+of being a &quot;Live DVD&quot; based distro.
+Consequently, a &quot;Live CD&quot; distro must install less
+and can install it faster for less downloading
+than a &quot;Sorcerer I/R&quot; attempting to provide a &quot;Live CD&quot;
+that would exceed 1 gigabyte in size.
+Therefore, Sorcerer is not intended to compete in that niche.
+The previous implementation of &quot;Sorcerer Sentient&quot;
+was a compromise granted to the SAs that begged
+for a &quot;Sorcerer Live CD&quot; every year.
+However, the best suited distro
+for the task of being a &quot;Live CD&quot; distro
+will always remain a distro with the sole niche
+of being a workstation or server &quot;Live CD&quot; based distro.
+
+Sorry if that explanation was a bit like the cliche,
+&quot;beating a dead horse.&quot;
+However, I clearly wanted to explicate that
+&quot;Sorcerer Sentient&quot; is not an attempt to compete
+in the niche of &quot;Live CD&quot; distros.
+&quot;Sorcerer Sentient&quot; will become slower to accomplish
+and be granted the same probability of encountering error
+as expected when deploying &quot;Sorcerer Modern Magic&quot;
+with the same loadout of software.
+Sorry for any inconvenience this may cause.
+However, it will grant me about 2 weeks of productivity
+to allocate differently.
+
+&quot;Sorcerer Sentient&quot; boxes will transition
+to bouncing and floating upon the choppy waters
+of the same uncertain seas of free software
+that &quot;Sorcerer Modern Magic&quot; boxes traverse.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20121121/ed7d1de2/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20121121/ed7d1de2/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002405.html">[Sorcerer-admins] sorcery paradigm
+</A></li>
+	<LI>Next message: <A HREF="002407.html">[Sorcerer-admins] changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2406">[ date ]</a>
+              <a href="thread.html#2406">[ thread ]</a>
+              <a href="subject.html#2406">[ subject ]</a>
+              <a href="author.html#2406">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

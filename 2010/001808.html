@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CSNT118-W38A8129BB19FB4741DFD32AEA00%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001807.html">
+   <LINK REL="Next"  HREF="001809.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CSNT118-W38A8129BB19FB4741DFD32AEA00%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">rwobben at hotmail.com
+       </A><BR>
+    <I>Tue Jul 20 22:34:44 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001807.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001809.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1808">[ date ]</a>
+              <a href="thread.html#1808">[ thread ]</a>
+              <a href="subject.html#1808">[ subject ]</a>
+              <a href="author.html#1808">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+ Hello Bradley,
+
+ 
+
+Yes, youre right.
+
+I have now a lot of experience in installing Sorcerer.
+
+ 
+
+Now trying to solve a problem with module.dep is not found.
+
+ 
+
+Roelof
+
+ 
+
+ 
+&gt;<i> Date: Tue, 20 Jul 2010 13:32:09 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at NorthTech.US</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> 
+</I>&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 7/20/2010 7:13 AM, Roelof Wobben wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; A reinstall with this scheme did it :
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; hdc1 /boot ext2 1G
+</I>&gt;<i> &gt; hdc2 / xfs 54G
+</I>&gt;<i> &gt; hdc3 swap 2G
+</I>&gt;<i> &gt; 
+</I>&gt;<i> 
+</I>&gt;<i> Excellent. I figured that was the issue you were having ;)
+</I>&gt;<i> 
+</I>&gt;<i> This all started back when HDDs exceeding 1024 cylinders needed a
+</I>&gt;<i> workaround. So we started creating a /boot on an /XdX1 primary, bootable
+</I>&gt;<i> flagged partition.
+</I>&gt;<i> 
+</I>&gt;<i> SGI boxes were RISC machines, not CISC boxes, similar to how Sun boxes
+</I>&gt;<i> boot, so it wasn't an issue for XFS until people started wanting to make
+</I>&gt;<i> / an XFS filesystem on x86 machines.
+</I>&gt;<i> 
+</I>&gt;<i> I've never cared much for Ext3 or Ext4 filesystems, although in truth it
+</I>&gt;<i> is just because I haven't really given them a chance and started using
+</I>&gt;<i> other filesystems before they were introduced.
+</I>&gt;<i> 
+</I>&gt;<i> Ext2 had/has a filesize limit of I believe 2GB, which, gave me problems
+</I>&gt;<i> when I started mastering the .COM zone myself for failsafe reasons years
+</I>&gt;<i> ago. Once that zonefile reached the limit of what Ext2 could accommodate
+</I>&gt;<i> I had to look for another filesystem to use, and since I was already
+</I>&gt;<i> using a special partition to accommodate /boot I never ran into the
+</I>&gt;<i> issue which slammed you.
+</I>&gt;<i> 
+</I>&gt;<i> Nowadays, most folks don't understand the significance of a /boot on its
+</I>&gt;<i> own partition, but there are nevertheless still a lot of good reasons
+</I>&gt;<i> for the implementation of that practice :)
+</I>&gt;<i> 
+</I>&gt;<i> Sorry that you ran up against this, but hey, you got some kewl practice
+</I>&gt;<i> in Sorcerer installs eh?
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt; Date: Tue, 20 Jul 2010 03:20:03 -0700
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at NorthTech.US</A>
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On 7/19/2010 7:57 PM, Kyle Sallee wrote:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt;&gt; Sorcerer as an operating system is usually rather stable
+</I>&gt;<i> &gt;&gt; often for many months to nearly years at a time.
+</I>&gt;<i> &gt;&gt; The DESTDIR transition is one of
+</I>&gt;<i> &gt;&gt; the few exciting moments when the
+</I>&gt;<i> &gt;&gt; bug reports are popping faster
+</I>&gt;<i> &gt;&gt; than corn in the microwave.
+</I>&gt;<i> &gt;&gt; Usually the list is quiet.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; This is true. The list is usually quiet, but major innovations must
+</I>&gt;<i> &gt; occur from time to time and a little weathering of the elements is
+</I>&gt;<i> &gt; necessary until the spring flowers bloom once again.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; I plug Sorcerer a lot. People say, &quot;Oh, that's new&quot;. Nope. As far as
+</I>&gt;<i> &gt; Linux distros go it is prolly well below the 10th percentile in newness
+</I>&gt;<i> &gt; - I just looked at the Linux distro timeline again and there really
+</I>&gt;<i> &gt; aren't that many distros at all (in existence) that predate Sorcerer :)
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> 
+</I>&gt;<i> &gt; ------------------------------------------------------------------------
+</I>&gt;<i> &gt; Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> &gt; &lt;<A HREF="http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=MessengerHyves&amp;WT.mc_id=msn3">http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=MessengerHyves&amp;WT.mc_id=msn3</A>&gt;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> 
+</I>&gt;<i> - -- 
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703 (US)
+</I>&gt;<i> TEL: +44.702.405.1909 (UK)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i> 
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> 
+</I>&gt;<i> iQEcBAEBAwAGBQJMRgfJAAoJEE1wgkIhr9j3u6cH/iE7w3Cu4qhvYP2/l2sBLqnW
+</I>&gt;<i> h/JpjCUjTyD/KSknkz5Wn03afppMf8C+4qZOYHI8Osymj0NTRinzfv9145dhi1G5
+</I>&gt;<i> jivK0KuUJyT8naBWu2X0MdqMmW7ec3Lq/oHjiMiCAn+l+CLS8XIOMg9PoJrDUnW8
+</I>&gt;<i> KwVs5HbDd+7dEcmCNDtWcfl0tbCEn4DH0sXBsUKRvOB6bhM42cG+3VA7/v/n3kZk
+</I>&gt;<i> p0JyRES6Z+8tMRChQJZGF1edaqArfgZubDMOhlZSsM35gBr58nbg8xdYV7Z58I09
+</I>&gt;<i> PZ67GR/LL2EeT0LMSKOOQJBL6KbOqJaDVDJtuVFDLmLrrrsLXKFi52wvTd/8PCw=
+</I>&gt;<i> =1Vn+
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+De Nieuwste Internet Explorer speciaal voor Hotmail, download nu gratis
+<A HREF="http://www.microsoft.com/netherlands/ie8/hotmail.htm">http://www.microsoft.com/netherlands/ie8/hotmail.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100720/13c4b6a1/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100720/13c4b6a1/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001807.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001809.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1808">[ date ]</a>
+              <a href="thread.html#1808">[ thread ]</a>
+              <a href="subject.html#1808">[ subject ]</a>
+              <a href="author.html#1808">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

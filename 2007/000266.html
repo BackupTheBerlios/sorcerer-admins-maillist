@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] seamonkey 1.4 fails to compile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20seamonkey%201.4%20fails%20to%20compile&In-Reply-To=%3C200709201746.16695.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000265.html">
+   <LINK REL="Next"  HREF="000267.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] seamonkey 1.4 fails to compile</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20seamonkey%201.4%20fails%20to%20compile&In-Reply-To=%3C200709201746.16695.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] seamonkey 1.4 fails to compile">merka at highsphere.net
+       </A><BR>
+    <I>Thu Sep 20 23:46:16 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000265.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+        <LI>Next message: <A HREF="000267.html">[Sorcerer-admins] seamonkey 1.4 fails to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#266">[ date ]</a>
+              <a href="thread.html#266">[ thread ]</a>
+              <a href="subject.html#266">[ subject ]</a>
+              <a href="author.html#266">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+
+Just to give you heads up, seamonkey 1.4 fails to compile and it may be due to 
+using the latest versions of pango (1.18.1) and gtk+ (2.12.0). The error is 
+
+d pointer will break strict-aliasing rules
+In file included from /usr/include/gtk-2.0/gdk/gdkcairo.h:26,
+                 from /usr/include/gtk-2.0/gdk/gdk.h:31,
+                 from ../../../dist/include/system_wrappers/gdk/gdk.h:4,
+                 from nsCanvasRenderingContext2D.cpp:148:
+/usr/include/pango-1.0/pango/pangocairo.h: At global scope:
+/usr/include/pango-1.0/pango/pangocairo.h:71: error: 'cairo_font_type_t' was 
+not
+ declared in this scope
+/usr/include/pango-1.0/pango/pangocairo.h:73: error: 'cairo_font_type_t' does 
+no
+t name a type
+
+
+Note that the above error was obtained when casting a modified spell 
+with --with-system-cairo as an attempt to solve the problem. The message is 
+very similar even without the modification.
+
+No solution at this moment, sorry.
+
+Jan 
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000265.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+	<LI>Next message: <A HREF="000267.html">[Sorcerer-admins] seamonkey 1.4 fails to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#266">[ date ]</a>
+              <a href="thread.html#266">[ thread ]</a>
+              <a href="subject.html#266">[ subject ]</a>
+              <a href="author.html#266">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] up left rigth and down arrow don't work in xorg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%20xorg&In-Reply-To=%3C492DD659.1050106%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000859.html">
+   <LINK REL="Next"  HREF="000864.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] up left rigth and down arrow don't work in xorg</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%20xorg&In-Reply-To=%3C492DD659.1050106%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] up left rigth and down arrow don't work in xorg">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Nov 27 00:06:01 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000859.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+        <LI>Next message: <A HREF="000864.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#863">[ date ]</a>
+              <a href="thread.html#863">[ thread ]</a>
+              <a href="subject.html#863">[ subject ]</a>
+              <a href="author.html#863">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jan Merka wrote:
+&gt;&gt;&gt;&gt;<i> still no change
+</I>&gt;&gt;&gt;&gt;<i> I don't use kde but fluxbox, so there is no &quot;keyboard handler&quot; (explain
+</I>&gt;&gt;&gt;&gt;<i> me what have a keyboard handler have to do with a desktop, this is the
+</I>&gt;&gt;&gt;&gt;<i> role of the X11 server)
+</I>&gt;&gt;&gt;&gt;<i>         
+</I>&gt;&gt;&gt;<i> Xorg.0.log?
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> nothing interesting in WW or EE
+</I>&gt;&gt;<i>     
+</I>&gt;<i> Good, the other interesting thing is what driver is used for the keyboard but 
+</I>&gt;<i> that I can see from the xinput output - it is evdev.
+</I>&gt;<i>   
+</I>&gt;&gt;&gt;<i> xinput list ?
+</I>&gt;&gt;&gt;<i> xinput test &lt;device&gt; ?
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# xinput list
+</I>&gt;&gt;<i> &quot;AT Translated Set 2 keyboard&quot;    id=4    [XExtensionKeyboard]
+</I>&gt;&gt;<i>     Num_keys is 248
+</I>&gt;&gt;<i>     Min_keycode is 8
+</I>&gt;&gt;<i>     Max_keycode is 255
+</I>&gt;&gt;<i>     
+</I>&gt;<i> Yeah, that's the keyboard controlled by the evdev driver.
+</I>&gt;<i>   
+</I>&gt;&gt;<i> mer nov 26 00:57:08
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# xinput test 4
+</I>&gt;&gt;<i> key release 36
+</I>&gt;&gt;<i> /key press   61
+</I>&gt;&gt;<i> key release 61
+</I>&gt;&gt;<i> key press   111
+</I>&gt;&gt;<i> key release 111
+</I>&gt;&gt;<i> key press   113
+</I>&gt;&gt;<i> key release 113
+</I>&gt;&gt;<i> key press   114
+</I>&gt;&gt;<i> key release 114
+</I>&gt;&gt;<i> key press   116
+</I>&gt;&gt;<i> key release 116
+</I>&gt;&gt;<i> key press   37
+</I>&gt;&gt;<i> key release 37
+</I>&gt;&gt;<i> key press   37
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> That looks correct (113 is left, 114 right, 111 up and 116 down arrow on my 
+</I>&gt;<i> box). Could you please describe what is the remaining problem? The arrow keys 
+</I>&gt;<i> should work fine now, do they?
+</I>&gt;<i>  
+</I>&gt;<i> Jan
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i>   
+</I>Hi,
+so it seems that there is no hw issue....
+but I'm almost certain that the keyboard used is the keyboard1 (id=3) 
+and not the 4
+however keyboard1 display keysyms while keyboard4 display key numbers....
+the keycode to keysyms translation is done with the following rule :
+xkb_keymap {
+    xkb_keycodes  { include &quot;xfree86+aliases(qwerty)&quot;    };
+    xkb_types     { include &quot;complete&quot;    };
+    xkb_compat    { include &quot;complete&quot;    };
+    xkb_symbols   { include &quot;pc(pc105)+us(intl)&quot;    };
+    xkb_geometry  { include &quot;pc(pc105)&quot;    };
+};
+so what is appearing is that the arrow keys are working at keycode 
+level, but not at keysyms level it seems
+the result is that the arrow keys are NOT WORKING
+any idea? maybe in xkb_symbols there miss something?
+thanks
+JLM
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081127/23ff1816/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081127/23ff1816/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000859.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+	<LI>Next message: <A HREF="000864.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#863">[ date ]</a>
+              <a href="thread.html#863">[ thread ]</a>
+              <a href="subject.html#863">[ subject ]</a>
+              <a href="author.html#863">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

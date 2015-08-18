@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important updates...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCAER78vTBhq-DS-bPT%3D%3DUvdczP_jniWhDkF-ASp%3D6ANuT5gL%2BDw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002484.html">
+   <LINK REL="Next"  HREF="002486.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important updates...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCAER78vTBhq-DS-bPT%3D%3DUvdczP_jniWhDkF-ASp%3D6ANuT5gL%2BDw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important updates...">evorster at gmail.com
+       </A><BR>
+    <I>Sat Nov 23 23:02:04 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002484.html">[Sorcerer-admins] important updates...
+</A></li>
+        <LI>Next message: <A HREF="002486.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2485">[ date ]</a>
+              <a href="thread.html#2485">[ thread ]</a>
+              <a href="subject.html#2485">[ subject ]</a>
+              <a href="author.html#2485">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> # cat /+/base/etc/rootfs/fstab
+</I>&gt;<i>
+</I>&gt;<i> LABEL=dv7_Main          /+/base          auto    defaults 0 0
+</I>&gt;<i>
+</I>&gt;<i> # cat /+/base/etc/fstab
+</I>&gt;<i>
+</I>&gt;<i> LABEL=dv7_Boot          /boot   auto    defaults 0 0
+</I>&gt;<i> LABEL=dv7_Main_Aux  /aux    auto    defaults 0 0
+</I>&gt;<i>
+</I>&gt;<i> I would not normally mount /aux/ that way.
+</I>&gt;<i> However, for the purpose of an example
+</I>&gt;<i> the method described immediately above works.
+</I>&gt;<i> Configuration files intended for use on the rootfs belong in /etc/rootfs/
+</I>&gt;<i> Configuration files intended for use on a root file system belong in /etc/
+</I>&gt;<i>
+</I>&gt;<i> I am uncertain how the understanding of that became reversed.
+</I>&gt;<i> If that can be relayed to me
+</I>&gt;<i> then perhaps the documentation can be adjusted
+</I>&gt;<i> to circumvent that possible point of confusion?
+</I>Hmm...
+
+Maybe it's just because it's not what I expected.
+In this example above, won't /etc/rootfs/fstab overwrite /etc/fstab
+when the computer boots?
+
+So many different things are called root.
+
+My confusion stems from what goes on to the initramfs vs. what goes on
+to the main/base filesystem.
+
+Would it not be much simpler to have a /etc/initramfs directory, and
+in this directory is the fstab, hostname and shadow files and whatever
+is required on the initramfs, and then each and every root will have
+it's own /etc, including the base root?
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002484.html">[Sorcerer-admins] important updates...
+</A></li>
+	<LI>Next message: <A HREF="002486.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2485">[ date ]</a>
+              <a href="thread.html#2485">[ thread ]</a>
+              <a href="subject.html#2485">[ subject ]</a>
+              <a href="author.html#2485">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

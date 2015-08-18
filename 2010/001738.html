@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] installing Xorg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20installing%20Xorg&In-Reply-To=%3CAANLkTik70oljvLSDt1TNen1ARyGxZSdbX1GqFFr1Luh0%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001736.html">
+   <LINK REL="Next"  HREF="001765.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] installing Xorg</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20installing%20Xorg&In-Reply-To=%3CAANLkTik70oljvLSDt1TNen1ARyGxZSdbX1GqFFr1Luh0%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] installing Xorg">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul 13 00:38:17 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001736.html">[Sorcerer-admins] installing Xorg
+</A></li>
+        <LI>Next message: <A HREF="001765.html">[Sorcerer-admins] umount -lr /
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1738">[ date ]</a>
+              <a href="thread.html#1738">[ thread ]</a>
+              <a href="subject.html#1738">[ subject ]</a>
+              <a href="author.html#1738">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oops, sorry about that.
+Spells are case sensitive.
+
+# cast xorg gnome
+
+Why not configure them both and put them
+into the queue so that you can go out for lunch
+while it compiles.
+It is a very heavy compile and likely
+not all of gnome will compile,
+but enough of it should install to be usable.
+
+If then you want a GDM login prompt on boot
+edit /etc/inittab and change the default runlevel
+to 4 or 5, depending upon your preference.
+A description of the runlevels is in /etc/inittab
+Not certain if that description is correct.
+However, runlevels 0 1 3 5 6
+are the same as they would be in any distro.
+2 is like 3, but with parallel execution of init-scripts.
+4 is like 5, but with parallel execution of init-scripts.
+Provided that the disk drive can keep up,
+and it will probably bottleneck booting,
+using runlevels with parallel init-script execution
+can be a bit faster to boot than sequential.
+But it might only shave off a few seconds.
+
+If a problem that the SA wants to debug occurs
+during runlevel execution
+then such problems should be debug using
+a sequential init-script runlevel.
+That is the only way to be certain that an
+error happened while a certain init-script was running.
+The logs runlevel log for 4 and 5 look different,
+merely because of when init-scripts start and complete.
+
+
+On Mon, Jul 12, 2010 at 10:16 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> When I do cast Xorg I get a message that Xorg is not compiled or installed.
+</I>&gt;<i>
+</I>&gt;<i> How can I take care of it so I can install gnome 2.30 after that.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001736.html">[Sorcerer-admins] installing Xorg
+</A></li>
+	<LI>Next message: <A HREF="001765.html">[Sorcerer-admins] umount -lr /
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1738">[ date ]</a>
+              <a href="thread.html#1738">[ thread ]</a>
+              <a href="subject.html#1738">[ subject ]</a>
+              <a href="author.html#1738">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] GPT Disk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3C51238FD1.1090302%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002417.html">
+   <LINK REL="Next"  HREF="002420.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] GPT Disk</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3C51238FD1.1090302%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] GPT Disk">Bradley at NorthTech.US
+       </A><BR>
+    <I>Tue Feb 19 15:44:33 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002417.html">[Sorcerer-admins] GPT Disk
+</A></li>
+        <LI>Next message: <A HREF="002420.html">[Sorcerer-admins] GPT Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2419">[ date ]</a>
+              <a href="thread.html#2419">[ thread ]</a>
+              <a href="subject.html#2419">[ subject ]</a>
+              <a href="author.html#2419">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+
+
+On 02/18/2013 10:43 AM, Marc Grondin wrote:
+&gt;<i> Hello,
+</I>&gt;<i> I am interested in trying Sorcerer my only problem is that the installer
+</I>&gt;<i> does not see the partitions on my 2TB GPT drive. How can i install sorcerer
+</I>&gt;<i> on this drive?
+</I>
+Here are three methods to fix your drive so you can install Linux on it:
+
+Method #1:
+1. From root shell prompt...
+2. Type &quot;parted /dev/&lt;devicename&gt;&quot;, usually &quot;parted /dev/sda&quot;.
+3. Once inside parted type &quot;mktable&quot;:
+  -&gt; Table type: msdos
+  -&gt; Destroy data: yes
+  -&gt; quit
+4. GPT should now be removed.
+5. Continue with install.
+
+Method #2:
+1. fdisk -s /dev/&lt;devicename&gt; --- This gets the blocksize of the device.
+  Make the last five digits of this number zeros. Example: fdisk -s /dev/sda
+  Will show an error about GPT, and then the block size: 39078144
+  Change to 39000000 which equals our blockcount
+2. dd if=/dev/zero of=/dev/devicename bs=1k seek=blockcount
+3. dd if=/dev/zero of=/dev/devicename bs=1k count=20
+
+Method #3:
+1. From root shell...
+2. Type: &quot;dd if=/dev/&lt;devicename&quot; of=/dev/zero bs=4k&quot;
+3. When done, continue with install.
+
+Method #1 has worked everytime for me :) Method #3 might also work for
+you in Sorcerer's sinstall.
+
+I hope that helps :)
+
+Kindest regards,
+
+
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.310.388.9469  (US)
+TEL: +44.203.318.2755 (UK)
+TEL: +41.43.508.05.10 (CH)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+
+iQEcBAEBAwAGBQJRI4/RAAoJEE1wgkIhr9j3ytMH/jarG5U4/GcdXpnnQphNZqaP
+Q1d9P/37r3XMl5sBvjDT6pK6jPC1V5th4VL7PCfWrXCZHaBUF4IxX9puYOHfQiZu
+/WYYuRapdQhFpjwRePlR10mVeOZU7PKVuxmlJRS4WP4iCMbewl2PU6O2T3wQc9JI
+7+EpMnIq2jaRwYi68VZ8DASKUSgwm8KhCItHB4KqQimX40XSFEbINd6OiKA3I+83
+xyrGWrLDMByHko9hHeALgKzbq4fVD2OWCZ39I0/dTUETl/eTkrEaD6E7hSS9/1XT
+KAYtrC+y4J11fDopcCnbCeruIkZwGnGCkUaoSvQwLWC/IIFKZ1uecmV3p3zArqc=
+=jMAY
+-----END PGP SIGNATURE-----
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002417.html">[Sorcerer-admins] GPT Disk
+</A></li>
+	<LI>Next message: <A HREF="002420.html">[Sorcerer-admins] GPT Disk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2419">[ date ]</a>
+              <a href="thread.html#2419">[ thread ]</a>
+              <a href="subject.html#2419">[ subject ]</a>
+              <a href="author.html#2419">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

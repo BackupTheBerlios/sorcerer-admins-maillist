@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] changes to linux and Install/Resuce Images.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes%20to%20linux%20and%20Install/Resuce%20Images.&In-Reply-To=%3CAANLkTimEE0wuxrz-jxwZaQYNQbR6W8v0JHpbhLbYmxPT%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001950.html">
+   <LINK REL="Next"  HREF="001956.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] changes to linux and Install/Resuce Images.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes%20to%20linux%20and%20Install/Resuce%20Images.&In-Reply-To=%3CAANLkTimEE0wuxrz-jxwZaQYNQbR6W8v0JHpbhLbYmxPT%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] changes to linux and Install/Resuce Images.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Oct 20 16:56:42 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001950.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+        <LI>Next message: <A HREF="001956.html">[Sorcerer-admins] network sometime up sometimes won't.....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1951">[ date ]</a>
+              <a href="thread.html#1951">[ thread ]</a>
+              <a href="subject.html#1951">[ subject ]</a>
+              <a href="author.html#1951">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The AT power supply on my i586 gave up the ghost.
+And I am not in the mood to buy an antique power supply,
+since none were for sale last time I went to my local computer store.
+Therefore, I no longer have a reliable way of creating i586
+Install/Rescue images
+that I could expect would be usable on i586
+since not all software that compiles uses what is specified in CFLAGS
+and CXXFLAGS.
+The next set of Install/Rescue disks will be:
+
+ia32-SMP;
+ia32-UP;
+x86_64.
+
+The IA32-SMP will be PAE enabled and support up to 64M of RAM
+and will be bootable on most boxes, but not a Pentium-M.
+The Pentium-M is perhaps the only modern microprocessor that lacks PAE.
+The IA32-UP, will boot a uni-processor kernel that lacks PAE.
+It can use 4G of installed RAM.
+It is useful for installing on Pentium-M computers
+or computers where something is sufficiently broken
+about the BIOS that would prevent using a SMP kernel.
+Years ago I had an Athlon that was like that.
+It was unusable when booted with APIC support.
+
+So in summary, there will be 3 Install/Rescue disks to select from,
+and the minimum computer supported will be the i686 Pentium Pro, hopefully.
+
+
+Recently, I was trying to get a grip on which microprocessor does what.
+And it is way beyond confusing.
+Names like &quot;Celeron&quot; and 'Atom&quot; can refer to several generations of
+Pentium microprocessors and even now x86_64 enabled microprocessors.
+They should have names like 80386 where I can know the difference
+between an 80286 and an 80386,
+but instead they have meaningless names that prevent
+almost anything being inferred about the microprocessors capabilities.
+
+However, I wrote something that might be able to identify the CPU
+from /proc/cpuinfo so that the answer can be used to modify linux's .config
+in order to compile CPU optimizations for the installed CPU.
+That is how the linux spell is now.
+Before, it compiled for i586 or generic x86_64
+and included optimizations to help it run better other types of microprocessors.
+I do not know whether compiling for the exact installed CPU
+will boost performance or not.
+However, it should be more to the liking of SAs
+that would otherwise want to use linux-custom
+with a custom created .config.
+
+Anyone who has Sorcerer deployed on i586 can continue using it
+provided that they create a custom config or salvage an older config
+from one of the linux spells that supports i586.
+The linux spell is changed and the next set of I/Rs will be different also.
+However, everything else should work much the same as it does now.
+
+
+Also as a reminder from a previous email
+the init-scripts used for fast booting should
+run more like they would on a full boot.
+Hopefully, this will eliminate all of
+the current outstanding problems
+involving fast booting.
+So any SA who had a problem
+is welcome to try a fast boot
+to see if the problem persists.
+If problems persist
+then please provide verbose reports
+so that we can chase down those
+bugs and properly squish them.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001950.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+	<LI>Next message: <A HREF="001956.html">[Sorcerer-admins] network sometime up sometimes won't.....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1951">[ date ]</a>
+              <a href="thread.html#1951">[ thread ]</a>
+              <a href="subject.html#1951">[ subject ]</a>
+              <a href="author.html#1951">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

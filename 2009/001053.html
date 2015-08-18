@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /dev/rtc : no such file or directory
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/dev/rtc%20%3A%20no%20such%20file%20or%20directory&In-Reply-To=%3C8596d02a0904131444h48d3e86dnb57b839947c93011%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001050.html">
+   <LINK REL="Next"  HREF="001055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /dev/rtc : no such file or directory</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/dev/rtc%20%3A%20no%20such%20file%20or%20directory&In-Reply-To=%3C8596d02a0904131444h48d3e86dnb57b839947c93011%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /dev/rtc : no such file or directory">d3ck0r at gmail.com
+       </A><BR>
+    <I>Mon Apr 13 23:44:26 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001050.html">[Sorcerer-admins] /dev/rtc : no such file or directory
+</A></li>
+        <LI>Next message: <A HREF="001055.html">[Sorcerer-admins] /dev/rtc : no such file or directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1053">[ date ]</a>
+              <a href="thread.html#1053">[ thread ]</a>
+              <a href="subject.html#1053">[ subject ]</a>
+              <a href="author.html#1053">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I noticed in browsing /etc/init.d that there was a rtc-cmos script?
+was this added cause I did the modprobe?  Maybe this is fixing the
+issue, cause I haven't had to load the module by hand for a couple
+boots?
+
+On Mon, Apr 13, 2009 at 2:39 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Perhaps that are two methods for rtc.
+</I>&gt;<i> There is the old module,
+</I>&gt;<i> and there is the set of many new rtc modules.
+</I>&gt;<i> I am hoping that linux developers for this on their end.
+</I>&gt;<i> Just about everything else autodetects and has modules
+</I>&gt;<i> properly loaded by udev.
+</I>&gt;<i> Why not rtc?
+</I>&gt;<i>
+</I>&gt;<i> Currently I have a rtc devices for my workstation.
+</I>&gt;<i> Consequently, I am wondering if it is already fixed.
+</I>&gt;<i> Or does the problem persist on x86_64 architecture?
+</I>&gt;<i> Please double check with linux-modular 2.6.29.1 booted
+</I>&gt;<i>
+</I>&gt;<i> # augur version linux-modular
+</I>&gt;<i> 2.6.29.1
+</I>&gt;<i>
+</I>&gt;<i> # ls -lah /dev/rtc*
+</I>&gt;<i> lrwxrwxrwx 1 root root &#160; &#160; &#160;4 2009-04-06 22:41 /dev/rtc -&gt; rtc0
+</I>&gt;<i> crw-rw---- 1 root root 253, 0 2009-04-06 22:41 /dev/rtc0
+</I>&gt;<i>
+</I>&gt;<i> The problem might already be solved.
+</I>&gt;<i>
+</I>&gt;<i> # lsmod | grep -i rtc
+</I>&gt;<i> rtc_cmos &#160; &#160; &#160; &#160; &#160; &#160; &#160; 10284 &#160;0
+</I>&gt;<i> rtc_core &#160; &#160; &#160; &#160; &#160; &#160; &#160; 14348 &#160;1 rtc_cmos
+</I>&gt;<i> rtc_lib &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; 2292 &#160;1 rtc_core
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Or maybe my box does not have one of the newer rtc
+</I>&gt;<i> that are supported by the newer rtc modules?
+</I>&gt;<i> Not sure.
+</I>&gt;<i>
+</I>&gt;<i> # zcat /proc/config.gz | grep RTC
+</I>&gt;<i> CONFIG_HPET_EMULATE_RTC=y
+</I>&gt;<i> CONFIG_RTC_LIB=m
+</I>&gt;<i> CONFIG_RTC_CLASS=m
+</I>&gt;<i> # RTC interfaces
+</I>&gt;<i> CONFIG_RTC_INTF_SYSFS=y
+</I>&gt;<i> CONFIG_RTC_INTF_PROC=y
+</I>&gt;<i> CONFIG_RTC_INTF_DEV=y
+</I>&gt;<i> # CONFIG_RTC_INTF_DEV_UIE_EMUL is not set
+</I>&gt;<i> # CONFIG_RTC_DRV_TEST is not set
+</I>&gt;<i> # I2C RTC drivers
+</I>&gt;<i> CONFIG_RTC_DRV_DS1307=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1374=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1672=m
+</I>&gt;<i> CONFIG_RTC_DRV_MAX6900=m
+</I>&gt;<i> CONFIG_RTC_DRV_RS5C372=m
+</I>&gt;<i> CONFIG_RTC_DRV_ISL1208=m
+</I>&gt;<i> CONFIG_RTC_DRV_X1205=m
+</I>&gt;<i> CONFIG_RTC_DRV_PCF8563=m
+</I>&gt;<i> CONFIG_RTC_DRV_PCF8583=m
+</I>&gt;<i> CONFIG_RTC_DRV_M41T80=m
+</I>&gt;<i> CONFIG_RTC_DRV_M41T80_WDT=y
+</I>&gt;<i> CONFIG_RTC_DRV_S35390A=m
+</I>&gt;<i> CONFIG_RTC_DRV_FM3130=m
+</I>&gt;<i> CONFIG_RTC_DRV_RX8581=m
+</I>&gt;<i> # SPI RTC drivers
+</I>&gt;<i> CONFIG_RTC_DRV_M41T94=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1305=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1390=m
+</I>&gt;<i> CONFIG_RTC_DRV_MAX6902=m
+</I>&gt;<i> CONFIG_RTC_DRV_R9701=m
+</I>&gt;<i> CONFIG_RTC_DRV_RS5C348=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS3234=m
+</I>&gt;<i> # Platform RTC drivers
+</I>&gt;<i> CONFIG_RTC_DRV_CMOS=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1286=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1511=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1553=m
+</I>&gt;<i> CONFIG_RTC_DRV_DS1742=m
+</I>&gt;<i> CONFIG_RTC_DRV_STK17TA8=m
+</I>&gt;<i> CONFIG_RTC_DRV_M48T86=m
+</I>&gt;<i> CONFIG_RTC_DRV_M48T35=m
+</I>&gt;<i> CONFIG_RTC_DRV_M48T59=m
+</I>&gt;<i> CONFIG_RTC_DRV_BQ4802=m
+</I>&gt;<i> CONFIG_RTC_DRV_V3020=m
+</I>&gt;<i> CONFIG_RTC_DRV_WM8350=m
+</I>&gt;<i> CONFIG_RTC_DRV_PCF50633=m
+</I>&gt;<i> # on-CPU RTC drivers
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Apr 12, 2009 at 11:58 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Did you get this? &#160;The module for the rtc is not loaded very well, and
+</I>&gt;&gt;<i> I have had to handload 'modprobe rtc-cmos' &#160;there are a whole bunch of
+</I>&gt;&gt;<i> rtc-* modules in /lib/modules/....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Apr 7, 2009 at 12:49 AM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> I investigate an issue I have with a hwclock init script
+</I>&gt;&gt;&gt;<i> it seems that I have no /dev/rtc file....
+</I>&gt;&gt;&gt;<i> does anyone know how to make it appears?
+</I>&gt;&gt;&gt;<i> thanks
+</I>&gt;&gt;&gt;<i> JLM
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001050.html">[Sorcerer-admins] /dev/rtc : no such file or directory
+</A></li>
+	<LI>Next message: <A HREF="001055.html">[Sorcerer-admins] /dev/rtc : no such file or directory
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1053">[ date ]</a>
+              <a href="thread.html#1053">[ thread ]</a>
+              <a href="subject.html#1053">[ subject ]</a>
+              <a href="author.html#1053">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

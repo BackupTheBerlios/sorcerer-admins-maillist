@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Changes:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2014/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Changes%3A&In-Reply-To=%3CCA%2BT4wDhwS90J-5QvAgs1AYgYk8wp9Gtxu73fN1PObGS3V%3Dtxkw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002520.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Changes:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Changes%3A&In-Reply-To=%3CCA%2BT4wDhwS90J-5QvAgs1AYgYk8wp9Gtxu73fN1PObGS3V%3Dtxkw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Changes:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Feb  4 09:26:02 CET 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002520.html">[Sorcerer-admins] Goodbye, and thanks for all the fish!
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2521">[ date ]</a>
+              <a href="thread.html#2521">[ thread ]</a>
+              <a href="subject.html#2521">[ subject ]</a>
+              <a href="author.html#2521">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>features have changed.
+Have a look at
+# au help feature
+
+atimes for files are disabled by default.
+If desired then the atime feature enables atimes.
+
+makej is now a feature toggle.
+I hate parallel make, or to be more precise...
+Parallel make requires makefiles with proper rules.
+However, not all software projects provide makefiles
+with the proper rules for parallel make.
+Then when one part completes in parallel make
+sooner than it would in linear make
+then compilation ends with an error.
+
+SAs that want to chase after compile errors
+caused by inadequate makefiles are invited
+to enable the makej feature.
+However, I am turning it off.
+I will no longer add the makej trait to technics.
+I will only remove makej trait
+when someone reports that it is problematic.
+I prefer that we all forget about parallel make FOREVER,
+because not all software authors are testing
+their makefiles for proper compatibility with parallel make.
+
+colorized messages are enabled by default.
+Enable the monochrome feature if color codes are not desired.
+
+Automatic optimization is switching to my preference.
+The conservation of RAM by -Os increases performance
+not merely by swapping less, but more importantly
+by page faulting less.
+Anytime 4K of RAM is required; Linux page faults.
+Less page faulting allows more processing.
+
+The dubious benefit of link time optimization
+mostly seems to produce smaller code that runs slower.
+Testing LTO requires additional testing
+at both compile-time and run-time.
+The performance benefit is often uncertain
+and not easily if at all measured on interactive programs.
+Therefore, support for link time optimization is disabled.
+
+Oh, that said clang is not a drop in replacement for gcc
+and will only be used in preference of gcc for software projects
+that require clang for compilation.
+All sub-projects involving clang are discontinued.
+
+Security is a benefit and is important.
+I can completely escape from
+a chroot and unshared name spaces
+by executing 2 commands with a EUID = 0 shell.
+Anyone who knows the lore can.
+Therefore, I allocated effort to repairing
+immune-security-tomoyo.
+
+The original implementation of immune-security-tomoyo
+provided 5 benefits.
+First, tomoyo could provide a write barrier
+for the system areas of the file system during compilation.
+Second, or tomoyo could be used to observe compilation
+and report all the software involved in compilation
+which was useful writing requirement lists.
+The first two benefits were mutually exclusive.
+The third benefit was to provide a write barrier
+for system areas of the file system
+that prevent modification even by EUID 0 processes
+unless authenticating to switch into the freedom domain.
+Forth, a user domain was provided to grant login users
+with write access to user owned areas.
+Fifth, a limited domain was provided to grant limited
+write permission to areas of the file system used by services.
+Yes, it was originally awesome.
+
+However, the transition from compilation on /usr/src/
+to /aux/run/source/ broke the barrier during compilation.
+I was never using tomoyo this way so I failed to notice.
+For about half a year I was using tomoyo
+to help write requirement lists.
+
+The transition to multi-root file systems broke
+all aspects of the tomoyo implementation.
+
+I should have fixed it; I was intended to fix it;
+but someone was saying that security beyond
+what Linux provides by default is unimportant.
+Therefore, my attention was constantly diverting.
+After seeing how easily I can escape from a chroot
+and unshared namespace I completely DISAGREE!
+Tomoyo is essential for closing that hole
+otherwise the compromise of one realfs
+may allow compromise of all realfs.
+
+The current tomoyo implementation can proide domains:
+freedom; limited; moil; /sbin/init; user.
+The moil domain is for compiling software
+while denying it ability to modify system owned areas
+of the file system.
+
+The one aspect I did not fix was the ability to use tomoyo
+to record files accessed during compilation.
+This utilization of tomoyo requires the ability
+for policies to be loaded/modified
+from within a realfs such as /+/base/ or /+/work/
+
+The ability to load/modify policies grants
+a EUID 0 interloper the possibility of defeating tomoyo
+by loading a policy.
+In theory of execution of the policy loading program
+is not permitted by the rules for a tomoyo domain
+then loading/modifying policy should be impossible.
+Still at least one domain would be able.
+If a bug could be exploited to transition domains
+then better if the kernel refuses modification from:
+/+/*/sbin/tomoyo-{edit,load}policy
+
+If I omitted mentioning changes sorry about that.
+More changes are pending.
+Certain concessions are no longer compulsory.
+Ah, I just remembered something I forgot to mention above.
+
+I do software development on separate realfs.
+Everyone should.
+Why would a software developer not want
+to create a realfs merely for development
+and have all the installed software compiled
+without optimization and with debugging information?
+If enabled then the &quot;debug&quot; feature
+disables automatic optimization
+and instead adds tor CFLAGS and CXXFLAGS
+the content of $DFLAGS
+DFLAGS can be set by
+# au dflags &quot;-g -O0&quot;
+for example.
+hyphen gee space hypen oh zero is the default for DFLAGS
+
+The main drawback to debug information
+is that it makes executable files and libraries larger.
+They use more memory and therefore execute slower,
+because of additional page faults,
+and perhaps additional jmp statements.
+
+The cpref system is deprecated and removed.
+I have not used cpref code
+since I coded automatic optimization.
+I forgot how many years since I last used cpref.
+
+So why did I disable cpref?
+The average performance difference
+between -O0 and ( -O2 or -O3 or -Os )
+is approximately 5%
+The single most important factor
+for run time performance is the skill of the programmer.
+The next most important factor is computer hardware.
+The next most important factor is proper BIOS/CMOS configuration.
+The next most important factor is Linux,
+because Linux has superior VMM.
+The next most important factor is locales,
+because almost anything runs faster in the C locale.
+And if the program is graphic intensive
+then the graphics hardware effects performance.
+Configuration of programs to make better use of SMP
+can also improve the performance of the programs.
+
+Compiler optimization is so far down the list of factors
+that it is unworthy of a SA's consideration.
+However, neophyte SAs are fascinated by compiler optimization.
+They select the most dangerous and unsafe optimizations.
+Then installed software segmentation faults.
+Finally, they flame me for their own unrealized culpability.
+That ends now and forever.
+
+So to explain that last change succinctly.
+Enable the &quot;optimize&quot; or the &quot;debug&quot; feature if desired.
+&quot;debug&quot; is dominant if enabled.
+If neither &quot;debug&quot; nor &quot;optimize&quot; is enabled
+then the optimization flag will be -O0
+or hyphen oh zero.
+-O0 means compile quick.
+And by far -O0 is the best optimization.
+But do not believe me.
+Compile and test 1000 software projects
+with and without optimization and see.
+
+Oh, I nearly forgot.
+I removed the init-scripts for gdm kdm and xdm.
+Several reasons were involved in that decision.
+gdm kdm and xdm are not disallowed.
+SAs must assume full responsibility if using them.
+When logging in at a virtual console;
+I press alt shift a getty;
+use arrow keys select a root file system and press space to enter it;
+enter user name;
+enter pass word;
+press space to launch enlightenment.
+
+I have no intention of writing a DirectFB nor wayland
+graphical user interface getty
+that runs from rootfs and displays aesthetically pleasing
+yet entirely useless graphics while
+allowing a person to select a realfs and enter credentials.
+
+The problem with GUI logins are:
+no choice of realfs is provided;
+multiple realfs GUI logins may launch
+on different virtual consoles which a neophyte
+might not know how to switch to and view;
+a GUI for selecting realfs must run on rootfs
+and a GUI on the rootfs would increase greatly
+increase the memory consumed by rootfs
+and the size of the initrf.
+
+So yes there is a choice.
+If wanting to have a GUI login launch
+then BYOIS, bring yer own init script.
+And anyone who wants optimization -O666 can go to...
+well, we know the expression already.  :)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20140204/8a3fc8c5/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20140204/8a3fc8c5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002520.html">[Sorcerer-admins] Goodbye, and thanks for all the fish!
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2521">[ date ]</a>
+              <a href="thread.html#2521">[ thread ]</a>
+              <a href="subject.html#2521">[ subject ]</a>
+              <a href="author.html#2521">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

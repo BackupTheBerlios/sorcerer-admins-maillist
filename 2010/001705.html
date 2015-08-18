@@ -1,0 +1,565 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] issue when rebooting boards.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTimKANnm8D7_HCEbaW7q6_JHFK00tdmFplvQ02NO%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001704.html">
+   <LINK REL="Next"  HREF="001706.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] issue when rebooting boards.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTimKANnm8D7_HCEbaW7q6_JHFK00tdmFplvQ02NO%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] issue when rebooting boards.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue Jul  6 13:23:45 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001704.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+        <LI>Next message: <A HREF="001706.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1705">[ date ]</a>
+              <a href="thread.html#1705">[ thread ]</a>
+              <a href="subject.html#1705">[ subject ]</a>
+              <a href="author.html#1705">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>well I didn't read all the mail (I'm upset at work so I'm not sure I'll not
+flame)
+... but the first part I read was for me saying &quot;sorcerer is a fast car
+without brakes&quot;
+
+what prevent us to have some runlevel dedicated to interactive statup? in
+what is it not doable? As far as I know it's allready working when I was
+prompted for fsck issue.... and the logs were in
+/etc/init.d/log.d/{sysinit,runlevel.$RUNLEVEL}
+I ask it only in a sequential runlevel.... not in parallel ones....
+I still believe that we won't have to give up on all that you said...
+&quot;prompt the user and then?&quot; well I'll answer &quot;have someone maybe fix it?&quot;
+from what I see now, is that we run services without control, it might work,
+it might not work, if some service crash we have no way to fix it easely....
+we have a fast car, without brake, and we force the driver to blind
+himself.... good luck!
+
+
+what prevent us to use locks? for me the concept of &quot;required&quot; and &quot;started
+before&quot; has nothing different... this is only you that interpret it as such
+for me that /var/locks shall be mounted tmps before starting someservice
+means that the service somervice require service mount_locks_fs
+for me if one service that require something to be run before it's run even
+if it's to have a touched file (not relying on a process to be executing at
+the same time) it require this service to be started....
+
+
+I'm even more sure that we can achieve &quot;out of order stating&quot; : lauch ALL
+/etc/rc.d/rc*.d/ scripts in parallel without ordering and if dependencies
+are correct, have the services unlocking themselves in the right order.....
+
+A requ B C D E
+B req C
+F req E
+
+A &amp; B &amp; C &amp; D &amp; E &amp; F &amp;
+
+A wait on B
+B wait on C
+C =&gt; free to run!
+D =&gt; free to run!
+E =&gt; free to run!
+F wait on E
+D free the lock...
+E free the lock
+F =&gt; free to run!
+C free the lock...
+B =&gt; free to run!
+B free the lock
+A =&gt; free to run!
+
+execution order C D E F B A
+C service if failing? D E F services will be executed, B and A who depends
+on it won't.... this is safety!
+
+as you see I don't even have to care about numbers..... it runs as fast as
+possible! even the sorcery parallel boot won't achieve such speed
+
+all we need is to have all startup scripts have the following line at end of
+startup
+
+setsid session_leader $0 $*
+
+in session_leader script
+------------------------------------
+signal_handler() {
+     kill -$sessionID
+     sleep 2s
+     kill -9 $sessionID
+}
+
+trap SIGTERM SIG.... signal_handler
+required_service=parse_required $1;
+service_name=$(basename $1);
+#prevent same service to be run twice at the same time
+if [ $2 == start ]; then
+  lock /var/lock/$service_name;
+  wait_on_lock ${required_service};
+  #get back the start()/stop() function in namespace
+  source $1;
+  #execute the command
+  $2;
+  #free the other services
+  echo $$ &gt; /var/PID/$service_name;
+  #wait for child to end
+  wait
+  #free the service
+  unlock /var/lock/$service_name;
+else
+  $2
+  sleep 2s
+  kill $(cat /var/PID/$service_name)
+fi
+--------------------------------------------------
+wait_on_lock() {
+  for args in $*; do
+      while ! [ -e /var/PID/$arg ]; do
+             #arctive poling? I don't know the lock mecanism
+             sleep 1s
+     done
+}
+
+
+with such script we unsure :
+- all service are run in their own session leader
+- killing the session leader will kill the spawned childs
+- the PID file is reliable
+- services can be run out of order
+- you can even implement a timeout on starting scripts
+
+JLM
+
+
+
+On Mon, Jul 5, 2010 at 9:15 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> On Sun, Jul 4, 2010 at 4:26 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt;- there is no way to have a boot and &quot;stop on error&quot; process
+</I>&gt;<i>
+</I>&gt;<i> Correct, because output is not interactive,
+</I>&gt;<i> but instead re-directed into a log file.
+</I>&gt;<i> In some runlevels the process run backgrounded.
+</I>&gt;<i> That is definitely non-interactive.
+</I>&gt;<i> And while the controlling script might stay attached
+</I>&gt;<i> to the console for runlevels the virtual console gettys
+</I>&gt;<i> are always started prior to starting the runlevel.
+</I>&gt;<i> That way a hang during runlevel execution can
+</I>&gt;<i> not cause a situation where the no one can log into the box.
+</I>&gt;<i>
+</I>&gt;<i> To implement a step by step interactive boot
+</I>&gt;<i> requires that all of the above be sacrificed.
+</I>&gt;<i> No more /etc/init.d/log.d/{sysinit,runlevel.$RUNLEVEL}
+</I>&gt;<i> No more parallel execution of init-scripts during boot.
+</I>&gt;<i> No more starting login gettys before completing runlevel.
+</I>&gt;<i> It must all stay attached and sequential.
+</I>&gt;<i> That is a lot to give up!
+</I>&gt;<i>
+</I>&gt;<i> Also if a problem becomes evident because something ran
+</I>&gt;<i> such as dmsetup
+</I>&gt;<i> then is there is no error report, because it ran just fine,
+</I>&gt;<i> and the problem already exists by the time that
+</I>&gt;<i> a problem due to it is encountered.
+</I>&gt;<i> Instead of a &quot;stop on error&quot;
+</I>&gt;<i> are you not wishing more for a &quot;stop before error?&quot;
+</I>&gt;<i> Not so easy to do?
+</I>&gt;<i>
+</I>&gt;<i> You want to prompt before each init-script is run?
+</I>&gt;<i> # ls /etc/init.d | wc -l
+</I>&gt;<i> 154
+</I>&gt;<i>
+</I>&gt;<i> That is approximately a meager 150 pauses
+</I>&gt;<i> for SA input during boot.
+</I>&gt;<i>
+</I>&gt;<i> &gt; 2) if you deactivate partially some start service (for exemple the
+</I>&gt;<i> &gt; first dm service) other service depending on it might be run,
+</I>&gt;<i> &gt; there is no real check if a required service
+</I>&gt;<i> &gt; has or not effectively started or not.
+</I>&gt;<i>
+</I>&gt;<i> There is a check.
+</I>&gt;<i> It is done by the use of lock files.
+</I>&gt;<i> I ommitted implementing those checks on purpose,
+</I>&gt;<i> because it merely makes init-scripts slower.
+</I>&gt;<i> And I would also have to mount a tmpfs on /var/lock.
+</I>&gt;<i>
+</I>&gt;<i> In the situation you describe I could also have the
+</I>&gt;<i> init-script dmsetup check that the dm-mod module is loaded.
+</I>&gt;<i> But that is pointless since it would be loaded unless
+</I>&gt;<i> the SA disabled that init-script.
+</I>&gt;<i>
+</I>&gt;<i> At one time all of the dm stuff would be in one hard
+</I>&gt;<i> to understand slow to execute init-script.
+</I>&gt;<i> However, by breaking it up into separate init-scripts
+</I>&gt;<i> then I gain the full benefit of using role specific init-script
+</I>&gt;<i> design where the entire role of an init-script is to load a module
+</I>&gt;<i> or is to mount a filesystem.
+</I>&gt;<i> Then if something does not go according to plan
+</I>&gt;<i> then a little red string prints instead of silently
+</I>&gt;<i> not acknowledging the error as if it was a single modprobe
+</I>&gt;<i> line in a much larger and more complicated init-script.
+</I>&gt;<i>
+</I>&gt;<i> &gt; in my case mdadm--assemble has not stated because
+</I>&gt;<i> &gt; I've no config file... however all service that rely
+</I>&gt;<i> &gt; upon this service are still launched!
+</I>&gt;<i> &gt; in cryptsetup script I see : required-start : dmsetup
+</I>&gt;<i>
+</I>&gt;<i> cryptsetup does require a device mapper,
+</I>&gt;<i> but does not require the use of LVM2.
+</I>&gt;<i> In many cases the requirement you see
+</I>&gt;<i> does not specify that the afore mentioned
+</I>&gt;<i> service is required.
+</I>&gt;<i> Instead it merely ensure that the afore mentioned
+</I>&gt;<i> service starts before this service.
+</I>&gt;<i>
+</I>&gt;<i> &gt; BUT if I remove dmsetup from the /etc/rc.d/rcS directory.
+</I>&gt;<i> &gt; ... then do exec /init, then login as root on password prompt,
+</I>&gt;<i> &gt; cat /etc/init.d/log.d/sysinit | grep crypt,
+</I>&gt;<i> &gt; I see that the service has started!
+</I>&gt;<i> &gt; a required service has never started but the script
+</I>&gt;<i> &gt; is still launched! OUCH!
+</I>&gt;<i>
+</I>&gt;<i> That is a complaint that should be filed with the people
+</I>&gt;<i> who created the design for LSB init-scripts, because
+</I>&gt;<i> there is no separate way to specify the difference between
+</I>&gt;<i> a service that is required and a service that should be
+</I>&gt;<i> started prior.
+</I>&gt;<i>
+</I>&gt;<i> dmsetup should be started before LUKS encryption.
+</I>&gt;<i> However, dmsetup is not required to implement LUKS encryption.
+</I>&gt;<i> Only the device-mapper module must be loaded.
+</I>&gt;<i> And sometimes modules such as dm-mod
+</I>&gt;<i> would be load automatically when required
+</I>&gt;<i> by a program that needs them.
+</I>&gt;<i>
+</I>&gt;<i> &gt; 2) there shall be an entry stepbystep_init in
+</I>&gt;<i> &gt; lilo menu that prompt the root for password
+</I>&gt;<i> &gt; at beginning of /init and ask him at each start
+</I>&gt;<i> &gt; of a service if he wants to start it and stop if error
+</I>&gt;<i>
+</I>&gt;<i> While not impossible to accomplish
+</I>&gt;<i> it can not simply be laid ontop of what already exists.
+</I>&gt;<i> The implementation would likely require the specification
+</I>&gt;<i> of a runlevel as kernel parameter.
+</I>&gt;<i> For example, nothing is defined as runlevel 7.
+</I>&gt;<i> So the necessary code could be added as runlevel 7.
+</I>&gt;<i> Why the new runlevel?
+</I>&gt;<i>
+</I>&gt;<i> 1: init-scripts must be run wrapped.
+</I>&gt;<i> 2: they must be run sequentially.
+</I>&gt;<i> 3: they must be run attached
+</I>&gt;<i> 4: if it is even possible then
+</I>&gt;<i>   the start of virtual console login gettys
+</I>&gt;<i>   must be postponed until the runlevel finishes execution.
+</I>&gt;<i> 5: this probably requires a new or modified installation
+</I>&gt;<i>   of /etc/inittab to accomplish 4:
+</I>&gt;<i>
+</I>&gt;<i> And what to do in the case of an error?
+</I>&gt;<i> Allow the person at console to temporarily open
+</I>&gt;<i> a shell and then
+</I>&gt;<i>
+</I>&gt;<i> &gt; 4)/etc/init.d/log.d/* files shall be stripped of any color escaping
+</I>&gt;<i> &gt; characters that are sure beautiful at console
+</I>&gt;<i> &gt; but pain in the less....
+</I>&gt;<i>
+</I>&gt;<i> try:
+</I>&gt;<i> cat /etc/init.d/log.d/runlevel.* | sed 's:.\[[0-9][0-9]m::g'
+</I>&gt;<i> The sed statement will probably only remove color codes.
+</I>&gt;<i>
+</I>&gt;<i> &gt; this is just an idea, but instead of
+</I>&gt;<i> &gt; creating symlinks into /etc/rc.d/*/
+</I>&gt;<i> &gt; why not create a whole bash script which will have lines like
+</I>&gt;<i>
+</I>&gt;<i> If you want to create a BSD style init
+</I>&gt;<i> where one absurdly complicated script controls everything
+</I>&gt;<i> then go ahead and try.
+</I>&gt;<i>
+</I>&gt;<i> But it would be a huge step backwards on Sorcerer .
+</I>&gt;<i> Tthe modular System-V style init enables components
+</I>&gt;<i> to be easily added or removed.
+</I>&gt;<i> For example:
+</I>&gt;<i> cryptsetup can be removed.
+</I>&gt;<i> LVM2 used to be removable, but is currently held down by lilo.
+</I>&gt;<i> However, the init-scripts installed by LVM2
+</I>&gt;<i> can still be disabled.
+</I>&gt;<i>
+</I>&gt;<i> The beauty of the symbolic link sysvinit style with runlevel directories
+</I>&gt;<i> is that the scripts are pre-ordered to execute in proper order.
+</I>&gt;<i> It is not as if the the scripts execute in random order.
+</I>&gt;<i>
+</I>&gt;<i> &gt; -----------------snap
+</I>&gt;<i> &gt; start_service /etc/init.d/dm-mod
+</I>&gt;<i> &gt; started_service dm-mod &amp;&amp; cryptsetup
+</I>&gt;<i> &gt; ----------------end snap
+</I>&gt;<i>
+</I>&gt;<i> I could have every init-script that requires dm-mod module
+</I>&gt;<i> to be loaded to execute a mod-probe
+</I>&gt;<i> or check for a lock file in /var/lock
+</I>&gt;<i> However, it is not something of such great importance
+</I>&gt;<i> that it requires the additional time every boot
+</I>&gt;<i> to redundantly and repeatedly check.
+</I>&gt;<i> Probably the only way dm-mod module does not load
+</I>&gt;<i> is if the SA disabled the init-script.
+</I>&gt;<i>
+</I>&gt;<i> # chmod 600 /etc/init.d/dm-mod
+</I>&gt;<i>
+</I>&gt;<i> I can create lock files in /var/lock/
+</I>&gt;<i> to track the successful execution of every init-script
+</I>&gt;<i> I never implemented the code because it seemed to be
+</I>&gt;<i> a waste that slows down booting.
+</I>&gt;<i> Besides the outcome of many init-scripts can either
+</I>&gt;<i> be checked with a grep or a process ID.
+</I>&gt;<i> Not states that I must do locking to indicate
+</I>&gt;<i> what services have successfully started and/or
+</I>&gt;<i> which have failed.
+</I>&gt;<i> Consequently, I do not do it.
+</I>&gt;<i> For the most part it only requires some modifications
+</I>&gt;<i> to /lib/lsb/init-functions rather than having to
+</I>&gt;<i> modify every init-script in /etc/init.d/
+</I>&gt;<i> However, checking for lock files does require
+</I>&gt;<i> specific init-script modification.
+</I>&gt;<i> The LSB specifications do not specify the difference
+</I>&gt;<i> between an init-script that is listed merely for
+</I>&gt;<i> ordering purposes as compared with an init-script
+</I>&gt;<i> that is listed because it must successfully complete
+</I>&gt;<i> prior to starting the current init-script.
+</I>&gt;<i>
+</I>&gt;<i> I understand what you are communicating.
+</I>&gt;<i> You do not want to be run-over and run-down
+</I>&gt;<i> by a non-stop-able init train of events.
+</I>&gt;<i> The alternative is purty much a 100 to 200
+</I>&gt;<i> stopping stations inserted on the line.
+</I>&gt;<i> Then the SA must fully conduct and steer
+</I>&gt;<i> the init-process approving each stop
+</I>&gt;<i> before it happens.
+</I>&gt;<i> Booting a box would become a serious chore
+</I>&gt;<i> in that fashion.
+</I>&gt;<i>
+</I>&gt;<i> Assuming that it is set to stop on error instead
+</I>&gt;<i> of pause before each init-script executes
+</I>&gt;<i> then an error must be correctable to be of any use.
+</I>&gt;<i> And if the SA is expecting an error to happen
+</I>&gt;<i> then the SA must carefully step through each init-script
+</I>&gt;<i> to intercept and pre-empt the error.
+</I>&gt;<i> If not handled on a script-by-script basis
+</I>&gt;<i> then a menu must be displayed before booting
+</I>&gt;<i> that allows the SA to select stop points and
+</I>&gt;<i> to selectively disable init-scripts.
+</I>&gt;<i> And it would have to be done twice,
+</I>&gt;<i> once for sysinit and once for runlevel.
+</I>&gt;<i>
+</I>&gt;<i> From my perspective:
+</I>&gt;<i> Problems that occur during runlevel
+</I>&gt;<i> are not worth correcting until runlevel completes.
+</I>&gt;<i> Usually such problems are not catastrophic.
+</I>&gt;<i> The worst problems reported thus far is that
+</I>&gt;<i> the X server starts without keyboard/pointer input.
+</I>&gt;<i> And that could be avoided by putting 3
+</I>&gt;<i> on the kernel command line to boot runlevel 3,
+</I>&gt;<i> fix the problem then reboot into default runlevel 4 or 5.
+</I>&gt;<i>
+</I>&gt;<i> Problems that occur during sysinit are rare
+</I>&gt;<i> and can be the most problematic since
+</I>&gt;<i> such problems might prevent mounting of
+</I>&gt;<i> the real root filesytem.
+</I>&gt;<i> In that situation I want full control.
+</I>&gt;<i> And full control over what happens means
+</I>&gt;<i> that I must start using rdinit=/bin/bash
+</I>&gt;<i> That way I gain a prompt and can control
+</I>&gt;<i> what executes.
+</I>&gt;<i> I can set the PATH and then begin executing
+</I>&gt;<i> init-scripts in /etc/rc.d/rcS.d/ up until the point
+</I>&gt;<i> where I expect a problem.
+</I>&gt;<i>
+</I>&gt;<i> SAs aught not be afraid of doing some trouble-shooting
+</I>&gt;<i> using a command prompt instead of a menu.
+</I>&gt;<i> A menu is both a convenience and a crutch,
+</I>&gt;<i> because it exposes and makes easy certain pre-determined
+</I>&gt;<i> paths while obscuring alternatives that might be better to use.
+</I>&gt;<i>
+</I>&gt;<i> If SAs agree
+</I>&gt;<i> then I can implement locking that shows from inspecting
+</I>&gt;<i> of /var/lock/{fail,work}/ the outcome of init-scripts.
+</I>&gt;<i> Since it will likely be implemented by wrapping init-scripts
+</I>&gt;<i> to check the return value
+</I>&gt;<i> then it will cost approximately twice the usually PID allocation
+</I>&gt;<i> and /bin/dash execution of the current method of booting.
+</I>&gt;<i>
+</I>&gt;<i> Anything that interactively modifies the execution of runlevel
+</I>&gt;<i> requires a new /etc/inittab and new runlevel 7 to implement.
+</I>&gt;<i> Does not seem a good choice
+</I>&gt;<i> since a SA should be able to correct errors that happen
+</I>&gt;<i> during runlevel after runlevel execution completes.
+</I>&gt;<i>
+</I>&gt;<i> sysinit always runs in series.
+</I>&gt;<i> The init-scripts run during sysinit tend to be tiny and fast.
+</I>&gt;<i> Since virtual consoles are not started until after sysinit ends
+</I>&gt;<i> then sysinit can be made more or less interactive.
+</I>&gt;<i> I prefer to debug it with initrd=/bin/bash
+</I>&gt;<i> However, if desired I can create
+</I>&gt;<i> /init.debug
+</I>&gt;<i> /init.debug would be like init except it would contain
+</I>&gt;<i> extra menus for selection of such things as:
+</I>&gt;<i> which init-scripts to execute;
+</I>&gt;<i> option menu before execution;
+</I>&gt;<i> shell on failures, etc...
+</I>&gt;<i>
+</I>&gt;<i> There are about 40 to 50 init-scripts that execute during sysinit.
+</I>&gt;<i> Although I do not know exactly how interactive debugging
+</I>&gt;<i> of sysinit should happen by menus I can at least try to
+</I>&gt;<i> hack an initial implementation.
+</I>&gt;<i> Naturally, after trying it,
+</I>&gt;<i> improvements would be made due to SA feedback.
+</I>&gt;<i> And it could be selected during boot by adding:
+</I>&gt;<i> rdinit=/init.debug
+</I>&gt;<i>
+</I>&gt;<i> LSB comment controlled style System 5 init
+</I>&gt;<i> has some short-comings.
+</I>&gt;<i> Yet overall it seems more flexible than a BSD style init.
+</I>&gt;<i> I rather not create a system for controlling init
+</I>&gt;<i> that relies upon a single file.
+</I>&gt;<i>
+</I>&gt;<i> For example, merely having /etc/inittab is troublesome.
+</I>&gt;<i> A single file controls too much of what happens during init.
+</I>&gt;<i> I can not replace /etc/inittab distribution wide
+</I>&gt;<i> because some SAs have modified
+</I>&gt;<i> more than merely the default runlevel.
+</I>&gt;<i> The number of gettys and the getty programs
+</I>&gt;<i> might also be modified.
+</I>&gt;<i> Replacing /etc/inittab yet preserving the default
+</I>&gt;<i> runlevel might still inconvenience some SAs.
+</I>&gt;<i>
+</I>&gt;<i> Therefore, changes that involve modifying
+</I>&gt;<i> /etc/inittab seem nearly too high a cost
+</I>&gt;<i> compared to providing a convenience that
+</I>&gt;<i> many SAs might never use.
+</I>&gt;<i>
+</I>&gt;<i> Lastly the overhead for using lockfiles and checks
+</I>&gt;<i> still outweighs the benefits and therefore will
+</I>&gt;<i> not be implemented without a compelling arugment
+</I>&gt;<i> that illuminates all the banes and boons and shows
+</I>&gt;<i> how the boons significant outweigh the banes.
+</I>&gt;<i>
+</I>&gt;<i> In summary I will create an alternate:
+</I>&gt;<i> /init.debug
+</I>&gt;<i> It can be selected during boot by using a kernel parameter:
+</I>&gt;<i> rdinit=/init.debug
+</I>&gt;<i> It will only provide interaction while sysinit is running
+</I>&gt;<i> and when runlevel is reached the box will continue
+</I>&gt;<i> booting normally as if /init had run instead.
+</I>&gt;<i>
+</I>&gt;<i> That seems like an adequate compromise.
+</I>&gt;<i> However, the initial implementation
+</I>&gt;<i> might be less than desirable.
+</I>&gt;<i> And the final implementation
+</I>&gt;<i> might accomplish less than expected.
+</I>&gt;<i> However, given your example situation
+</I>&gt;<i> where the omission of running certain
+</I>&gt;<i> init-scripts provided a booting solution
+</I>&gt;<i> this goal I can work towards making easier to accomplish.
+</I>&gt;<i>
+</I>&gt;<i> Is the execution of:
+</I>&gt;<i> /sbin/dmsetup mknodes
+</I>&gt;<i> causing the unwanted locking?
+</I>&gt;<i> What is causing the unwanted locking?
+</I>&gt;<i> Congrats on finding a way around the problem.
+</I>&gt;<i> But more precisely what is the problem
+</I>&gt;<i> and why is it happening, please?
+</I>&gt;<i>
+</I>&gt;<i> If we know more about the problem then
+</I>&gt;<i> we might be able to script around it in some cases,
+</I>&gt;<i> or undo the problem,
+</I>&gt;<i> or alert the SA what could be causing the problem.
+</I>&gt;<i>
+</I>&gt;<i> When
+</I>&gt;<i> /sbin/dmsetup mkdnods
+</I>&gt;<i> executes
+</I>&gt;<i> what does it create in /dev/mapper/
+</I>&gt;<i> other than:
+</I>&gt;<i> crw------- 1 root root 10, 60 Jun 17 07:35 /dev/mapper/control
+</I>&gt;<i>
+</I>&gt;<i> Is there something in there such as a:
+</I>&gt;<i> luks-hda2
+</I>&gt;<i> Anything to suggest that a partition is
+</I>&gt;<i> being detected as part of something
+</I>&gt;<i> that it is no longer part of?
+</I>&gt;<i>
+</I>&gt;<i> I am still curious as to the cause of the problem.
+</I>&gt;<i> The problem is probably not distribution wide,
+</I>&gt;<i> but there might be something that can be changed
+</I>&gt;<i> in order to help prevent the problem.
+</I>&gt;<i> Do partitions have the wrong ID number?
+</I>&gt;<i> Were they previously part of a md-raid, LVM2,
+</I>&gt;<i> or LUKS encrypted partition?
+</I>&gt;<i>
+</I>&gt;<i> I want to expect that if something about
+</I>&gt;<i> the setup of the device mapper is causing problems
+</I>&gt;<i> then those problems are due to something
+</I>&gt;<i> odd about the partitions.
+</I>&gt;<i> But so far that is merely an assumption
+</I>&gt;<i> that I expect has a less than 50% probability of being so.
+</I>&gt;<i> And an assumption like that provides me with
+</I>&gt;<i> no possibility of implementing a detection nor work-around.
+</I>&gt;<i> If time permits
+</I>&gt;<i> then please investigate the problem further.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100706/8f26701b/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100706/8f26701b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001704.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+	<LI>Next message: <A HREF="001706.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1705">[ date ]</a>
+              <a href="thread.html#1705">[ thread ]</a>
+              <a href="subject.html#1705">[ subject ]</a>
+              <a href="author.html#1705">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

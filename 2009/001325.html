@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kde v3 related spells fail to compile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%20v3%20related%20spells%20fail%20to%20compile&In-Reply-To=%3C596b75860909281526p35905178sf2c367efff457969%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001324.html">
+   <LINK REL="Next"  HREF="001327.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kde v3 related spells fail to compile</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%20v3%20related%20spells%20fail%20to%20compile&In-Reply-To=%3C596b75860909281526p35905178sf2c367efff457969%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] kde v3 related spells fail to compile">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 29 00:26:34 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001324.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+        <LI>Next message: <A HREF="001327.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1325">[ date ]</a>
+              <a href="thread.html#1325">[ thread ]</a>
+              <a href="subject.html#1325">[ subject ]</a>
+              <a href="author.html#1325">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Please recast the
+libxcb spell
+It should take care of adding to the cast queue
+all the spells that require recompilation
+in order to make references to that library go away.
+That library is no longer installed by libxcb.
+
+
+On Mon, Sep 28, 2009 at 9:01 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> I have managed to get both qt-x11-free and kdelibs-v3 to compile while *some*
+</I>&gt;<i> kde v3 spells also compiled. The trick was to compile both qt and kdelibs with
+</I>&gt;<i> the same gcc version. Gcc 4.3 did not work on the qt spell so I forced 4.2 on
+</I>&gt;<i> both.
+</I>&gt;<i>
+</I>&gt;<i> Now however, some kde v3 spells still do not compile. For example, the
+</I>&gt;<i> kdebase-v3 spell fails as
+</I>&gt;<i>
+</I>&gt;<i> -W -Wpointer-arith -DNDEBUG -DNO_DEBUG -O2 -march=native -Os -Wformat-security
+</I>&gt;<i> -Wmissing-format-attribute -Wno-non-virtual-dtor -fno-exceptions -fno-check-
+</I>&gt;<i> new -fno-common -DQT_CLEAN_NAMESPACE -DQT_NO_ASCII_CAST -DQT_NO_STL -
+</I>&gt;<i> DQT_NO_COMPAT -DQT_NO_TRANSLATION -D_GNU_SOURCE &#160;-L/opt/kde3/lib &#160; &#160; -R
+</I>&gt;<i> /opt/kde3/lib -R /opt/kde3/lib -R /opt/kde3/lib -Wl,-s -L/opt/kde3/lib -
+</I>&gt;<i> L/opt/kde3/lib64 -o ksysguard SensorBrowser.o WorkSheet.o WorkSheetSettings.o
+</I>&gt;<i> Workspace.o ksysguard.o ksysguard_skel.o ksgrd/libksgrd.la
+</I>&gt;<i> SensorDisplayLib/libsensordisplays.la -lkdeui -lkio -lkdnssd
+</I>&gt;<i> libtool: link: cannot find the library `/usr/lib/libxcb-xlib.la'
+</I>&gt;<i> make[4]: *** [ksysguard] Error 1
+</I>&gt;<i> make[4]: Leaving directory `/usr/src/sorcery/kdebase-
+</I>&gt;<i> v3/kdebase-3.5.10/ksysguard/gui'
+</I>&gt;<i> make[3]: *** [all-recursive] Error 1
+</I>&gt;<i> make[3]: Leaving directory `/usr/src/sorcery/kdebase-
+</I>&gt;<i> v3/kdebase-3.5.10/ksysguard/gui'
+</I>&gt;<i> make[2]: *** [all-recursive] Error 1
+</I>&gt;<i> make[2]: Leaving directory `/usr/src/sorcery/kdebase-
+</I>&gt;<i> v3/kdebase-3.5.10/ksysguard'
+</I>&gt;<i> make[1]: *** [all-recursive] Error 1
+</I>&gt;<i> make[1]: Leaving directory `/usr/src/sorcery/kdebase-v3/kdebase-3.5.10'
+</I>&gt;<i> make: *** [all] Error 2
+</I>&gt;<i> ! Problem Detected !
+</I>&gt;<i> Source moved to /var/tmp/failed/kdebase-v3
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Friday 25 September 2009, Jan Merka wrote:
+</I>&gt;&gt;<i> On Thursday 17 September 2009, Kyle Sallee wrote:
+</I>&gt;&gt;<i> &gt; I wonder if that is related to the libxcb update somehow?
+</I>&gt;&gt;<i> &gt; I would try recompiling qt-x11-free
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I can recompile qt-x11-free. I can even recompile kdelibs-v3. Then however,
+</I>&gt;&gt;<i> the uic command is segfaulting and all seems point to the use of different
+</I>&gt;&gt;<i> compiler versions for qt and kdelibs (4.2 and 4.3).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have unsuccessfully tried to patch qt-x11-free to compile with gcc 4.3 to
+</I>&gt;&gt;<i> &#160;no avail.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can anybody test to compile qt-x11-free, kdelibs-v3 and kdnssd-avahi in
+</I>&gt;&gt;<i> &#160;this order? If that succeeds, I would like to see what spell versions are
+</I>&gt;&gt;<i> &#160;installed on the box and compile logs for qt and kdelibs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thank you,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jan
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; and also to ensure that nothing else is being
+</I>&gt;&gt;<i> &gt; prevented from recompiling due to an ELF or LA failure.
+</I>&gt;&gt;<i> &gt; Also I would trying issuing:
+</I>&gt;&gt;<i> &gt; # mv /lib.old /lib.older
+</I>&gt;&gt;<i> &gt; # ldconfig
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Then check to see if uic is still segfaulting.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; kde-v3 is still working on my boxes and still compiling.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001324.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+	<LI>Next message: <A HREF="001327.html">[Sorcerer-admins] kde v3 related spells fail to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1325">[ date ]</a>
+              <a href="thread.html#1325">[ thread ]</a>
+              <a href="subject.html#1325">[ subject ]</a>
+              <a href="author.html#1325">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

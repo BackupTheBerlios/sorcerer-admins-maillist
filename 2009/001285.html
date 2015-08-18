@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MesaLib problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20problem&In-Reply-To=%3C596b75860906281558x6ab16e86s4a88e04c26c4780f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001284.html">
+   <LINK REL="Next"  HREF="001286.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MesaLib problem</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20problem&In-Reply-To=%3C596b75860906281558x6ab16e86s4a88e04c26c4780f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MesaLib problem">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jun 29 00:58:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001284.html">[Sorcerer-admins] MesaLib problem
+</A></li>
+        <LI>Next message: <A HREF="001286.html">[Sorcerer-admins] Botan 1.8.2 fails to build -m64 missing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1285">[ date ]</a>
+              <a href="thread.html#1285">[ thread ]</a>
+              <a href="subject.html#1285">[ subject ]</a>
+              <a href="author.html#1285">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The stable version of inputproto is 1.4.4
+I am asking the svn now if that is still so.
+Okay, no change.
+My guess is that the box has the progress selected
+as unstable for inputproto
+
+# augur progress
+
+Did it print that any unstable are selected?
+
+Maybe?
+
+# augur progress | grep inputproto
+inputproto     unstable
+
+
+Forgetting what progress are selected is very easy.
+Unless the SA asks it will never tell.  :)
+I am not certain where that information should be provided
+to make it more clear to a SA why a certain version is selected.
+
+Should the version command print something like:
+
+# augur version inputproto
+1.5.0 stable
+
+Huh, that is odd.
+I wonder why I have version 1.5.0 of input proto installed
+when the stable version is 1.4.4
+and no 1.5.0 version of inputproto is specified in the spell.
+Oh, 1.5.0 is specified as unstable version prior to 1.9.99.12
+Hmm....
+And inputproto is now on stable progress.
+So that did not tell me where the version 1.5.0 came from.
+I had to look at the spell to discover that 1.5.0 was a previous
+unstable version for inputproto.
+
+I suppose I will just leave it alone for now
+until I can discover where else displaying
+progress information could be useful and not
+require SAs to have to modify scripts that
+use the current output from augur as it is.
+
+
+On Sun, Jun 28, 2009 at 9:49 AM, Jan Merka&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Sunday 28 June 2009, Jan Merka wrote:
+</I>&gt;&gt;<i> On Saturday 27 June 2009, Kyle Sallee wrote:
+</I>&gt;&gt;<i> &gt; # augur arof MesaLib | grep inputproto
+</I>&gt;&gt;<i> &gt; inputproto
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Curious. The inputproto spell is of version inputproto-1.9.99.12 but it
+</I>&gt;&gt;<i> apparently does not provide the &#160;X11/extensions/XInput.h header file
+</I>&gt;&gt;<i> anymore. Now I recall, that some other spell forced me to move from
+</I>&gt;&gt;<i> inputproto 1.5.0 to 1.9.99.12 but don't recall which one.
+</I>&gt;<i>
+</I>&gt;<i> I was wrong, the cast log shows:
+</I>&gt;<i> Tue Mar 10 10:46:02 EDT 2009 &#160; &#160;inputproto &#160; &#160; &#160;1.4.4
+</I>&gt;<i> Tue Mar 17 13:44:17 EDT 2009 &#160; &#160;inputproto &#160; &#160; &#160;1.5.0
+</I>&gt;<i> Sat Jun 27 08:46:05 EDT 2009 &#160; &#160;inputproto &#160; &#160; &#160;1.9.99.12
+</I>&gt;<i> Sun Jun 28 12:47:38 EDT 2009 &#160; &#160;inputproto &#160; &#160; &#160;1.5.0
+</I>&gt;<i>
+</I>&gt;<i> So the latest unstable inputproto version was just cast on my computer as a
+</I>&gt;<i> regular update. Maybe we should consider holding off its version until
+</I>&gt;<i> MesaLib catches up? Or definining 1.5.0 as stable?
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I think, the easiest solution for now will be to downgrade the inputproto,
+</I>&gt;&gt;<i> cast MesaLib and then upgrade inputproto again.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Jan
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; The requirement system already has inputproto
+</I>&gt;&gt;<i> &gt; as a requirement for MesaLib
+</I>&gt;&gt;<i> &gt; It is curious,
+</I>&gt;&gt;<i> &gt; however I suspect that inputproto is not installed properly
+</I>&gt;&gt;<i> &gt; on that box or is installed at a version other than:
+</I>&gt;&gt;<i> &gt; 1.5.0
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I track inputproto
+</I>&gt;&gt;<i> &gt; I see an unstable version as high as 1.9.99.12
+</I>&gt;&gt;<i> &gt; However, since I have not installed it
+</I>&gt;&gt;<i> &gt; I do not know what files it provides
+</I>&gt;&gt;<i> &gt; or what it is intended to be used with.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Aside from using the releases specified for
+</I>&gt;&gt;<i> &gt; a major release event of xorg
+</I>&gt;&gt;<i> &gt; using the individual releases that pop out during the year
+</I>&gt;&gt;<i> &gt; proves to have mixed benefits.
+</I>&gt;&gt;<i> &gt; Some SAs say that the system works better.
+</I>&gt;&gt;<i> &gt; Yet there are now sources for xf86-video-*
+</I>&gt;&gt;<i> &gt; that I do not know a version that will compile
+</I>&gt;&gt;<i> &gt; with the currently specified version in the grimoire
+</I>&gt;&gt;<i> &gt; for other installed xorg spells.
+</I>&gt;&gt;<i> &gt; I figure that the problem will work itself out in time;
+</I>&gt;&gt;<i> &gt; assuming that there is another xorg release.
+</I>&gt;&gt;<i> &gt; When that is fixed I can resume creating the experimental uClibc port.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Sat, Jun 27, 2009 at 11:42 AM, Kyle Sallee&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; &gt; inputproto:/usr/include/X11/extensions/XInput.h
+</I>&gt;&gt;<i> &gt; &gt;
+</I>&gt;&gt;<i> &gt; &gt; On Sat, Jun 27, 2009 at 11:29 AM, Jan Merka&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; &gt;&gt; Can't install MesaLib since May 9 when was the last successful cast of
+</I>&gt;&gt;<i> &gt; &gt;&gt; that spell. The error is:
+</I>&gt;&gt;<i> &gt; &gt;&gt;
+</I>&gt;&gt;<i> &gt; &gt;&gt; glut_input.c:22:35: error: X11/extensions/XInput.h: No such file or
+</I>&gt;&gt;<i> &gt; &gt;&gt; directory
+</I>&gt;&gt;<i> &gt; &gt;&gt;
+</I>&gt;&gt;<i> &gt; &gt;&gt; What spell is supposed to provide that header file?
+</I>&gt;&gt;<i> &gt; &gt;&gt;
+</I>&gt;&gt;<i> &gt; &gt;&gt; Jan
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001284.html">[Sorcerer-admins] MesaLib problem
+</A></li>
+	<LI>Next message: <A HREF="001286.html">[Sorcerer-admins] Botan 1.8.2 fails to build -m64 missing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1285">[ date ]</a>
+              <a href="thread.html#1285">[ thread ]</a>
+              <a href="subject.html#1285">[ subject ]</a>
+              <a href="author.html#1285">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

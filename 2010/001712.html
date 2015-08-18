@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] install problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20install%20problem&In-Reply-To=%3CAANLkTimGtZ5tcZBc-PwOisR4Y0so511oWMxxdDwO2lJI%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001710.html">
+   <LINK REL="Next"  HREF="001714.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] install problem</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20install%20problem&In-Reply-To=%3CAANLkTimGtZ5tcZBc-PwOisR4Y0so511oWMxxdDwO2lJI%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] install problem">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 10 23:14:07 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001710.html">[Sorcerer-admins] install problem
+</A></li>
+        <LI>Next message: <A HREF="001714.html">[Sorcerer-admins] install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1712">[ date ]</a>
+              <a href="thread.html#1712">[ thread ]</a>
+              <a href="subject.html#1712">[ subject ]</a>
+              <a href="author.html#1712">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have not yet seen that error message.
+However, I would be tempted to unload the floppy.ko
+module.
+lsmod | grep floppy
+then rmmod the module.
+
+Probably
+rmmod floppy
+should work.
+If that solves the problem the removal
+can be made permanent.
+Add
+floppy
+to /etc/modules.rm
+If using the /usr/bin/rmmod wrapper script
+it might prompt to ask if you want floppy
+added to /etc/modules.rm
+
+Current Sorcerer I/Rs are available from
+<A HREF="http://sorcerer.silverice.org/download/iso9660/2010/">http://sorcerer.silverice.org/download/iso9660/2010/</A>
+Nothing older than the 20100529 is fixed or supported.
+Ancient Sorcerer I/Rs and those provided from magazines
+are collectors items and have no production value.
+If the I/R being used is not fresh
+then please download a new Sorcerer Install Rescue image.
+
+After a Sorcerer box is deployed
+the box must be updated no less frequently
+than once per quarter.
+Updates are just updates, not complete re-installs.
+Once a Sorcerer box is installed the I/R is only
+useful for installing new boxes or rescuing existing boxes.
+
+Yearly or bi-yearly please check for newer I/Rs
+Download and burn newer I/R images for the purpose
+of having a usable Rescue disk.
+Eventually each Sorcerer box will update to the point
+where an I/R used to install the box can no longer be
+used to rescue the box.
+
+A Sorcerer box neglected and not updated
+for more than 1 year might not smoothly update.
+In that situation back up the important files
+and do a new install from a newer I/R
+unless the SA can hem the seams together.
+
+Important transition points in sorcery development
+exist to provide backward compatibility for up to 6 months.
+So the path to a smooth update becomes overgrown
+and brambly after 6 months.
+
+New grimoires are provided daily.
+Most boxes install a grimoire that is one day old.
+That is called the LAG grimoire.
+It also helps to make updates possible on boxes
+where the SA somehow failed to set the UTC date properly.
+Boxes that have an approximate day that is not exactly
+correct might update using the LAG=0 or LAG=2 grimoires.
+Having the date set properly for each box is important
+because that determines which grimoire they attempt
+to download.
+grimoires from previous years are not downloadable.
+Grimoires as old as 3 months and sometimes older
+are available for download.
+The grimoire is basically the catalog of software
+that is supported for easy installation.
+Software that does not yet have entries into the grimoire
+can be given entries by SAs, system administrators.
+Grimoire entries are called spells.
+Just as spelling defines the proper assembly of
+characters into a meaningful word
+grimoire spells contain the information for
+source acquisition, compilation and installation.
+They are very easy to understand
+and each box comes with more than 3000 example spells.
+
+Hope that helps.
+
+
+On Sat, Jul 10, 2010 at 9:02 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I like to try sorcerer.
+</I>&gt;<i> So I downloaded the iso
+</I>&gt;<i> Burned it and boot the dvd.
+</I>&gt;<i>
+</I>&gt;<i> Then I goto the install program on /sbin
+</I>&gt;<i> and I see this message all the time&#160; : buffer i/o error on device fd0
+</I>&gt;<i>
+</I>&gt;<i> How can I get past this message because I don't have a floppy disk on my
+</I>&gt;<i> system.
+</I>&gt;<i> I have only two hard disk and one dvd burner.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Tijd voor een nieuwe telefoon? Bekijk de mogelijkheden van een Windows
+</I>&gt;<i> Phone!
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001710.html">[Sorcerer-admins] install problem
+</A></li>
+	<LI>Next message: <A HREF="001714.html">[Sorcerer-admins] install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1712">[ date ]</a>
+              <a href="thread.html#1712">[ thread ]</a>
+              <a href="subject.html#1712">[ subject ]</a>
+              <a href="author.html#1712">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

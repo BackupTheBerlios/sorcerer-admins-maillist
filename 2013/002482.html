@@ -1,0 +1,359 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important updates...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDigQF5stD%3D9PqzBUnwe%3DX3eU-E90jwyZQiNYY0pdZsfkQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002481.html">
+   <LINK REL="Next"  HREF="002483.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important updates...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDigQF5stD%3D9PqzBUnwe%3DX3eU-E90jwyZQiNYY0pdZsfkQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important updates...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Nov 23 21:14:03 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002481.html">[Sorcerer-admins] important updates...
+</A></li>
+        <LI>Next message: <A HREF="002483.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2482">[ date ]</a>
+              <a href="thread.html#2482">[ thread ]</a>
+              <a href="subject.html#2482">[ subject ]</a>
+              <a href="author.html#2482">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Nov 23, 2013 at 5:54 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> &gt; Root file systems should mount on direct sub directories of /+/
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; For deployed boxes /media/root/main becomes /+/main
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The future recommendation is deployment with /+/main as /+/base
+</I>&gt;<i> So which file is used to mount /+/base, please?
+</I>&gt;<i>
+</I>
+/+/base/etc/rootfs/fstab
+
+So when in the base root file system the file is
+/etc/rootfs/fstab
+
+During the sysinit phase
+files in /etc/rootfs/ are copied into /etc/
+Therefore, after booting the file
+/etc/rootfs/fstab /etc/fstab are the same;
+but only on the rootfs.
+in /+/base/
+the files never merge because
+sysinit only happens on rootfs.
+
+ &gt; Files that should be available in /etc/ when on the rootfs should be
+&gt;<i> within
+</I>&gt;<i> &gt; /etc/rootfs/
+</I>&gt;<i> Is that a literal rootfs, or does that name change with each root?
+</I>&gt;<i>
+</I>
+/+/base/etc/rootfs/
+should exist if the cpio initramfs images are generated from
+/+/base/
+The other root file systems do not require /etc/rootfs/
+because they do not generate files used to construct initramfs images.
+If they do then fixing that by entering a root file system
+such as
+/+/work/
+and
+# rm -fr /lib/modules /lib/firmware /boot
+Then
+# au merge; au queue reap/linux-{firmware,kernel,modules} reap/firmware;
+reap
+
+My /+/work/
+and /+/play/
+and /+/test/
+root file systems no longer create initramfs images.
+Therefore, during updates linux-modules linux-kernel do not moil.
+It would become wasted processor cycles and wasted disk space.
+
+/+/base/ requires it's own /etc/fstab/ directory
+and /lib/modules and /lib/firmware and /boot/
+because all of that is used to generate the cpio initramfs images
+that are used to populate the rootfs.
+
+
+
+&gt;<i> eg, say we use /etc/fstab and have the following entries:
+</I>&gt;<i>
+</I>&gt;<i> /dev/sda1          /+/base   auto defaults 0 0
+</I>&gt;<i> /dev/sda1          /+/64       auto defaults 0 0
+</I>&gt;<i> /dev/sda1          /+/32       auto defaults 0 0
+</I>&gt;<i> /dev/sda1          /+/test     auto defaults 0 0
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Do I need corresponding /etc/base, /etc/64 /etc/32 and /etc/test on
+</I>&gt;<i> the base rootfs?
+</I>&gt;<i>
+</I>
+The example seems incorrect.
+But if I understand the question properly
+then the answer is that /etc/rootfs/ is only required
+on the root file system used to create the cpio initramfs images
+that are used to populate the rootfs before sysinit begins.
+However, if all root file systems have /etc/rootfs/
+then that will not cause harm.
+It only becomes cause for confusion.
+
+/etc/rootfs/ allows for the rootfs file system to have it's own
+/etc/passwd /etc/shadow /etc/group /etc/fstab and so forth.
+Those files exist in /etc/rootfs/ and are copied into /etc/
+during sysinit when the file system is identified as rootfs.
+/+/base/ is it's own root file system.
+Therefore /+/base/ probably requires it's own
+/etc/{passwd,shadow,group,fstab}
+Therefore, rather than placing that in a subdirectory
+those files own their original locations.
+
+My first solution for the overlapping file names
+was to suggest /etc/fstab.rootfs
+And while that idea may be easier to understand,
+it becomes less easy to manage than an /etc/rootfs/ directory.
+If I
+# cd /etc/rootfs/
+Then I can begin editing files within that directory
+# nano *
+And I know that I will not accidentally be editing files
+that are used on the /+/base/ root file system.
+Or I can type
+# nano /etc/rootfs/*
+while logged into /+/base/
+and merrily edit files.
+
+After decades of typing something like
+# nano fstab
+# pico fstab
+# vi fstab
+
+The tendency to press enter is difficult to circumvent
+when intending to edit the fstab.rootfs
+Therefore, discarding the .rootfs and going with the rootfs directory
+seemed a more prudent change.
+
+And if I had gone that way from the start
+then the implementation would be more efficient.
+However, oops, hindsight is 20/20.
+
+One cause for confusion is the concept that with one
+root file system two fstab files can exist.
+Which is used for which?
+Hopefully the docent helps explain that.
+However, package based SAs must still grasp the idea
+that this thing called a &quot;rootfs&quot; exists
+and is similar yet not a root file system.
+That much creates cause for confusion.
+
+
+Or, does each rootfs as defined in /etc/fstab have it's own /etc/rootfs?
+&gt;<i>
+</I>
+rootfs != root file system.
+Please spot and correct that point of confusion.
+rootfs is the special hybrid RAMFS + TMPFS mounted on /
+where the content of the cpio files is extracted by the kernel.
+rootfs is not backed by a device.
+rootfs does not survive reboot.
+rootfs is not updated directly like a root file system.
+However, the SA can log into rootfs and gain an
+omniscient view of every process running regardless
+of whether the process is on the rootfs or a root file system.
+root file systems are mounted off of immediate subdirectories of /+/
+root file systems are ?chrooted? into,
+but it is not exactly a chroot because
+it involves transition into several unshared name spaces.
+In contrast the rootfs has no unshared name spaces.
+
+Okay, that much ends the description.
+However, for a glimps of much earlier thoughts...
+at a time long ago I expected the increased RAM loadout
+of computers would eventually allow for a design where
+the majority of processes run from the rootfs,
+while the disk based root file system would be entered into
+merely for the purpose of updating.
+Some people do something similar to that these days.
+They back the root file system with a SSD.
+And /home/ and other storage devices are backed by magnetic media.
+In that fashion excellent performance can be achieved
+since latency is not introduced by drive head movement
+since SSD lack moving parts.
+
+My desire for multiple root file systems was realized first.
+And price for system RAM did not drop as much as I wanted.
+However, to some extent the rootfs must be utilized for more tasks
+At least for the purpose of networking the rootfs must act like
+a combination firewall/router.
+That is because the actual ethernet device can not exist
+in multiple root file systems without abandoning unshared net namespace.
+Abandon unshared net namespace then only one of the sshd
+in multiple root file systems can listen on port 22
+and the others must listen on different ports.
+The unshared net namespace was the missing link
+or one of the most critical components involved
+in quenching my desire for multiple root file systems.
+Now multiple root file systems can each receive their own IP address
+and have their services bind to default ports.
+That maintains simplicity.
+However, the use of VETH and the network configuration
+that must happen within the rootfs introduces complexity.
+As they cliche insists, &quot;An omelet can not be made without cracking eggs.&quot;
+Or in this case the convenience of one costs the complexity of the other.
+
+A near infinite arbitrary amount of possible configurations exist.
+I feel most pleased by the one that I provide.
+But it forces the realization of a single computer
+being more like a lab of computers.
+And given a single computer's available resources
+that analogy is not far from true even if the computer
+does not have 12 keyboards and 12 monitors attached.
+
+That might beg the question could a single computer be provided
+that has 32 root file systems and have attached something like
+30 monitors, 30 keyboard, 30 mice.
+The answer to that is; it is nearly possible.
+Attaching the 30 monitors is iffy.
+It somewhat depends upon being able to install 16 graphic cards/devices.
+However, USB attached graphic devices now exist.
+I would not expect ideal performance from USB devices.
+If someone was eager to make it happen
+then yes a single computer could probably provide for a lab of 30
+if it was running my POSIX.
+And it could be more powerful than
+a lab of 30 computers provided 2 decades before.
+
+The concept is not at all new.
+I saw a lab of thin clients on an Apple Corvis network or something like
+that.
+It was many years ago.
+Hmm, I remember each computer had it's own base and floppy disk.
+And that files could also be saved in limited area of space
+on the fixed disk attached to the master computer for the network.
+And it probably communicated using token ring technology,
+because concurrent file access with others was exceedingly slow.
+However, in my previous example I imagined a lab
+where the 30 stations consisted of nothing more than
+a mouse, keyboard, and display.
+And it differs from a design where a single computer's display
+is multiplexed to several different displays.
+A design that utilizes multiple root file systems
+can make each station feel exactly like it's own computer.
+
+That much said should convey an idea of the potential,
+but not necessarily the intended utilization.
+Making each group of ( pointer, keyboard, display )
+devices associate with the proper X server seems
+too great a challenge.
+An attached USB port might vary from boot to boot.
+Therefore, the devices must have a uniq identifier.
+All network devices are supposed to have a unique identifier.
+It is called the MAC, or machine address.
+MAC differs from IP address.
+And if I remember correctly MAC is used at layer 2 of networking
+for identifying where packets go.
+
+What is stored in /etc/rootfs? just fstab, a whole copy of /etc plus
+&gt;<i> subdirs or just the files that need changing in /etc/
+</I>&gt;<i> for each rootfs?
+</I>&gt;<i>
+</I>
+Only one &quot;rootfs&quot; exists.
+/etc/rootfs/ stores the files that should go into /etc/ for the rootfs.
+/etc/rootfs/ should contain only the files that would differ
+from those that already exist in /etc/
+Therefore, if /etc/hosts suffices
+then /etc/rootfs/hosts is not required.
+
+
+ &gt; After the rootfs fstab file is installed in /etc/rootfs/fstab
+&gt;<i> &gt; then it can be easily sedited with the command
+</I>&gt;<i> &gt; # sed -i 's:/media/root/:/+/:' /etc/rootfs/fstab
+</I>&gt;<i> &gt; But probably better to edit with nano
+</I>&gt;<i> &gt; if not comfortable using sed.
+</I>&gt;<i> Hmm, so the mountpoints are not relative to each chroot?
+</I>&gt;<i>
+</I>
+?
+I did not understand the question.
+
+/+/base/etc/rootfs/ should exist.
+/+/*/etc/rootfs/ exists if the SA did not bother removing
+/etc/rootfs/ before copying the rootfs to other root file systems
+during deployment using the deployment docent.
+
+Please do not mistake my response as me being irritated.
+I am not irritated.
+I perceive a misunderstanding concerning the word &quot;rootfs.&quot;
+If I ever use the &quot;rootfs&quot; where I should have typed root file system
+then I wrote a typo.
+&quot;Rootfs&quot; is the concept of the absolute /, never unmounted,
+never backed by a device, and created by the kernel.
+It has existed for as long as I recollect Linux.
+It was occluded from view when booting with a monolithic kernel,
+because the kernel was instructed to mount a specific
+disk based file system on /
+The kernel documentation refers to rootfs as rootfs.
+/usr/src/linux/Documentation/filesystems/ramfs-rootfs-initramfs.txt
+That may become cause for confusion with the word root file systems.
+Yet, if I deviate from kernel hacker's given terminology
+then I create another barrier to understanding
+rather than demystifying the concepts.
+Hmm, the deployment docent does not reference that document.
+I added to my todo list to add a reference to that to the deployment docent.
+One look at that and misunderstanding should evaporate.
+
+I added to my todo list to make an entire step dedicated
+to explaining rootfs.
+11 of the documents I wrote contain rootfs.
+But it could become cause for confusion if not fully demystified.
+I could easily miss something like that,
+because of my excessive experience.
+
+Thanks for giving me a clue about that.
+Maybe I might spend today on the docent.
+I have plenty on my todo list,
+but I have yet to start doing any of it.  :)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131123/ad9c694b/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131123/ad9c694b/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002481.html">[Sorcerer-admins] important updates...
+</A></li>
+	<LI>Next message: <A HREF="002483.html">[Sorcerer-admins] important updates...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2482">[ date ]</a>
+              <a href="thread.html#2482">[ thread ]</a>
+              <a href="subject.html#2482">[ subject ]</a>
+              <a href="author.html#2482">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

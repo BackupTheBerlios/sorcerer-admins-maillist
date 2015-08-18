@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3COF5E812E50.E1CFBF76-ONC22577C2.00471491-C22577C2.0047AA78%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001947.html">
+   <LINK REL="Next"  HREF="001949.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3COF5E812E50.E1CFBF76-ONC22577C2.00471491-C22577C2.0047AA78%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Oct 20 15:02:46 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001947.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+        <LI>Next message: <A HREF="001949.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1948">[ date ]</a>
+              <a href="thread.html#1948">[ thread ]</a>
+              <a href="subject.html#1948">[ subject ]</a>
+              <a href="author.html#1948">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+ppr.silverice.org is up and running again. Several errors which i 
+discovered:
+
+- hostname was wrong (typo)
+- somehow /etc/hosts was missing (dunno what deleted it)
+- initramfs update actually helped, all vg* scripts are now not runned
+- time was wrong, i am not using UTC hwclock, needed to activate hwclock 
+with --localtime to run
+- fstab was messed up! eg. all my swap lines were missing, etc, dunno what 
+deleted stuff from there
+- Its running now on with 1 virtual cpu, because not sure if it can lock 
+up if i use 2, will try to increace it after i can be sure its running ok 
+for now.
+
+Looking now test server, i noticed that fstab inside initramfs has typo, 
+filesystem is marked as etx3 (should be ext3), dunno how that was 
+changed....
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 20.10.2010 15:10:41:
+
+&gt;<i> From: jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Date: 20.10.2010 15:10
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] Unexpected Maintenance - unable to 
+</I>&gt;<i> mount root filesystem as /media/root
+</I>&gt;<i> Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> 
+</I>&gt;<i> de-activate the script by chmod -x /etc/init.d/thescript
+</I>&gt;<i> regenerate the rcX using the script in /lib/lsb (or something like that)
+</I>&gt;<i> then re-run /etc/init.d/initramfs (or something like that)
+</I>&gt;<i> reboot
+</I>&gt;<i> 
+</I>&gt;<i> I faced this bug about 3 to 6 months and reported it on the ML, I 
+</I>&gt;<i> was unable to mount root because of fsck that couldn't be run 
+</I>&gt;<i> because of dm and lvm and lucks (I use none of those but since there
+</I>&gt;<i> is no control of a required service state before running a service, 
+</I>&gt;<i> there can be sides effects, I was told that speed is more priority 
+</I>&gt;<i> on relyability....)
+</I>&gt;<i> 
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM 
+</I>
+&gt;<i> On Wed, Oct 20, 2010 at 1:18 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> Hi 
+</I>&gt;<i> 
+</I>&gt;<i> Looking more closely on Sorcerer test machine, i think its indeed 
+</I>&gt;<i> LVM related bug. 
+</I>&gt;<i> i can get it out of busy doing command: dmsetup remove_all, that 
+</I>&gt;<i> removes all device mapper locks, etc. 
+</I>&gt;<i> 
+</I>&gt;<i> But, is it that because initscripts are in initrd file (afaik), and 
+</I>&gt;<i> bug is there, how can i fix it inside ramdisk? 
+</I>&gt;<i> 
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>   Pekka Panula, Net Servant Oy
+</I>&gt;<i> 
+</I>
+&gt;<i> &gt; 
+</I>&gt;<i> &gt; The LVM bug I ran into on a recent install also did not use LVM.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; What I was seeing was that the disks were being kept busy by the buggy
+</I>&gt;<i> &gt; lvm, and thus could not be fscked or mounted.
+</I>&gt;<i> &gt; If this is indeed what you are seeing, you could try:
+</I>&gt;<i> &gt; chmod a-x /etc/init.d/vg*
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; to turn off LVM initscripts, and try to boot again...
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Hmm... I have forgotten how to re-generate the /etc/rc.X
+</I>&gt;<i> &gt; directories... Does this happen automatically upon boot?
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; -Evert-
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce 
+</I>&gt;<i> soit, essayez donc de dormir avec un moustique dans votre chambre.&quot; 
+</I>&gt;<i> Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101020/9a169e09/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101020/9a169e09/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001947.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+	<LI>Next message: <A HREF="001949.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1948">[ date ]</a>
+              <a href="thread.html#1948">[ thread ]</a>
+              <a href="subject.html#1948">[ subject ]</a>
+              <a href="author.html#1948">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

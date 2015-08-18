@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /lib/lsb/install_initd, input contains a loop
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/lib/lsb/install_initd%2C%20input%20contains%20a%20loop&In-Reply-To=%3C596b75860707242302l193f3ff0n276278fc940af6d1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000099.html">
+   <LINK REL="Next"  HREF="000101.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /lib/lsb/install_initd, input contains a loop</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/lib/lsb/install_initd%2C%20input%20contains%20a%20loop&In-Reply-To=%3C596b75860707242302l193f3ff0n276278fc940af6d1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /lib/lsb/install_initd, input contains a loop">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 25 08:02:55 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000099.html">[Sorcerer-admins] /lib/lsb/install_initd, input contains a loop
+</A></li>
+        <LI>Next message: <A HREF="000101.html">[Sorcerer-admins] gzip wont compile (maybe too new glibc)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#100">[ date ]</a>
+              <a href="thread.html#100">[ thread ]</a>
+              <a href="subject.html#100">[ subject ]</a>
+              <a href="author.html#100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes.
+I spotted something like that on one of my boxes also.
+I fixed what I expected were incorrect LSB header comments
+It demonstrates that the LSB comment section of init
+script should not be treated lightly when modifying spells.
+If a box fails to mount local file systems during boot
+then that could create a difficult problem or inconvenience.
+While it is nice and convenient to not have to assign an
+arbitrary number to init script symbolic links to control
+their order of execution that convenience comes at a high cost.
+Any changes a SA makes to the sequence of init script ordering
+must be thoroughly checked before being committed to svn.
+
+
+The loop might cause problems on the box during a reboot.
+It might not.
+Changes are the necessary symbolic links to those scripts
+were not created and therefore the local filesystems will
+not be properly mounted during boot.
+But I do not know precisely since I have not actually tested
+what happen when a SA sets up a recursive requirement
+loop using init script LSB comments.
+Basically, it issues that warning, as you saw,
+and therefore it should not happen.
+Someone making and testing a change
+should see that and fix the problem and
+commit the correct init scripts to svn.
+
+But as we already know if I allow someone to do something odd,
+such as not terminate the last lines of their spells scripts with
+line feeds then someone will do exactly that odd thing which
+could cause problems later.
+
+Likewise if you see an error when a grimoire index is being generated,
+do try to correct that spell and regenerate the index.
+Otherwise the box may generate only a partial index
+and that could potentially cause problems.
+
+Sorry for ranting, but BASH is not as fault tolerant as I am.
+
+
+I would issue
+# cast grimoire;  cast -c module-init-tools e2fsprogs
+That will probably fix it.
+
+
+On 7/22/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Anytime there is /etc/init.d/&lt;script&gt; update, eg. updating new spell which
+</I>&gt;<i> runs /lib/lsb/install_initd i receive this message:
+</I>&gt;<i> Creating symbolic links to startup and shutdown scripts.
+</I>&gt;<i> tsort: -: input contains a loop:
+</I>&gt;<i> tsort: module-init-tools
+</I>&gt;<i> tsort: mount
+</I>&gt;<i> tsort: local_fs
+</I>&gt;<i>
+</I>&gt;<i> Should i be worried?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000099.html">[Sorcerer-admins] /lib/lsb/install_initd, input contains a loop
+</A></li>
+	<LI>Next message: <A HREF="000101.html">[Sorcerer-admins] gzip wont compile (maybe too new glibc)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#100">[ date ]</a>
+              <a href="thread.html#100">[ thread ]</a>
+              <a href="subject.html#100">[ subject ]</a>
+              <a href="author.html#100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

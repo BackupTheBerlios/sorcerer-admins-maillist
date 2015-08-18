@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%5Bsolved%5D%20starting%20compiz%20on%20x86_64%2C%0A%09MAYBE%20A%20BIG%20ARCH%20MISTAKE%20please%20read%21&In-Reply-To=%3C1de9d39c0808010200h57841efaicd07d17a5ca24a98%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000676.html">
+   <LINK REL="Next"  HREF="000684.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%5Bsolved%5D%20starting%20compiz%20on%20x86_64%2C%0A%09MAYBE%20A%20BIG%20ARCH%20MISTAKE%20please%20read%21&In-Reply-To=%3C1de9d39c0808010200h57841efaicd07d17a5ca24a98%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Aug  1 11:00:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000676.html">[Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+        <LI>Next message: <A HREF="000684.html">[Sorcerer-admins] [solved] starting compiz on x86_64, MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#682">[ date ]</a>
+              <a href="thread.html#682">[ thread ]</a>
+              <a href="subject.html#682">[ subject ]</a>
+              <a href="author.html#682">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok I'll test that also this night
+however I don't feel good the fact that some 64 bits libs are installed
+elsewhere than in (/usr)/lib64
+Best Regards
+JLM
+
+On Thu, Jul 31, 2008 at 11:42 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Interesting.
+</I>&gt;<i> And /etc/ld.so.conf on x86_64 has lib64 always before lib
+</I>&gt;<i> I would just move the NVIDIA libraries
+</I>&gt;<i> if NVIDIA did not hard code paths into their programs.
+</I>&gt;<i> I tried moving it around before and found out the hard way.
+</I>&gt;<i>
+</I>&gt;<i> casting NVIDIA-Linux-x86 will remove /usr/lib64/libGL.so* on x86_64
+</I>&gt;<i> architecture.
+</I>&gt;<i> And also edit MesaLib's log files.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for reporting it.
+</I>&gt;<i> It is a non issue on ia32 since /usr/lib/libGL.so{,.1} symbolic links point
+</I>&gt;<i> to the NVIDIA installed library.
+</I>&gt;<i> Not sure if that would work on x86_64 since the symbolic links
+</I>&gt;<i> would point into another directory ldconfig might ?un fix?
+</I>&gt;<i> the symbolic links
+</I>&gt;<i>
+</I>&gt;<i> If you would not mind, with both the MesaLib and NVIDIA installed
+</I>&gt;<i> OpenGL libraries still installed where they should be installed
+</I>&gt;<i> try adjusting the /usr/lib64/libGL.so{,.1} symbolic links to
+</I>&gt;<i> point to the NVIDIA installed OpenGL libraries and
+</I>&gt;<i> then run ldconfig and report whether ldconfig changes
+</I>&gt;<i> the symbolic links back to the OpenGL library installed in
+</I>&gt;<i> /usr/lib64/  please?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Jul 31, 2008 at 2:13 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; Hi,
+</I>&gt;<i> &gt; after long time I found some time to test again the compiz on x86_64
+</I>&gt;<i> &gt; sorcerer
+</I>&gt;<i> &gt; looking the forums I found several information that weren't usefull
+</I>&gt;<i> &gt; until I read somewhere that it might comme from compiz linking against
+</I>&gt;<i> &gt; mesa and not nvidia libGL....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ldd $(which compiz) told me that it was using the lib in /usr/lib64
+</I>&gt;<i> &gt; (looked good)
+</I>&gt;<i> &gt; augur install NVIDIA-Linux-x86 told me that driver install lib in
+</I>&gt;<i> /usr/lib
+</I>&gt;<i> &gt; ls -la /usr told me that /usr/lib isn't a symlink to /usr/lib64 and then
+</I>&gt;<i> &gt; a regular directory....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; looking into /usr/lib makes me worry because it contains LOT of libs,
+</I>&gt;<i> &gt; all comming from spells (since It' s a scratch install)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I'm able to run compiz with :
+</I>&gt;<i> &gt; LD_PRELOAD=/usr/lib/libGL.so.1 compiz --replace ccp &amp;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; PROBLEMS :
+</I>&gt;<i> &gt; 1) /usr/lib and /usr/lib64 both exist, both store the same kind of files
+</I>&gt;<i> &gt; (64bits libs)
+</I>&gt;<i> &gt; 2) NVIDIA drivers install in /usr/lib.... not sure it's a good place....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Best Regards,
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080801/bb103c86/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080801/bb103c86/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000676.html">[Sorcerer-admins] [solved] starting compiz on x86_64,	MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+	<LI>Next message: <A HREF="000684.html">[Sorcerer-admins] [solved] starting compiz on x86_64, MAYBE A BIG ARCH MISTAKE please read!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#682">[ date ]</a>
+              <a href="thread.html#682">[ thread ]</a>
+              <a href="subject.html#682">[ subject ]</a>
+              <a href="author.html#682">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

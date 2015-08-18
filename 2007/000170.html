@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C596b75860708172028o7221687by75dcb0f7fc4e5e8e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000169.html">
+   <LINK REL="Next"  HREF="000171.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt-x11-opensource</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C596b75860708172028o7221687by75dcb0f7fc4e5e8e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt-x11-opensource">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug 18 05:28:42 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000169.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+        <LI>Next message: <A HREF="000171.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#170">[ date ]</a>
+              <a href="thread.html#170">[ thread ]</a>
+              <a href="subject.html#170">[ subject ]</a>
+              <a href="author.html#170">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There is no complicated trick to a local grimoire
+# mkdir -p /usr/share/sorcery/local
+# cp $SPELL_NAME  /usr/share/sorcery/local/
+# augur merge
+
+There are 2 preferred methods for making local spells.
+Let's say we are making a local version of firefox.
+
+# cat  &lt;&lt;  EOF  &gt; /usr/share/sorcery/local/firefox-local
+inherit firefox
+EPROVIDE=&quot;firefox&quot;
+new stuff goes here
+EOF
+# chmod 0755 /usr/share/sorcery/local/firefox-local
+# augur merge
+
+In the above example firefox-local inherits the version information
+along with any other information in the original firefox spell such
+as the build()
+The EPROVIDE=&quot;firefox&quot; allows firefox-local to be installed as
+a drop in replacement for firefox.
+
+The second method is...
+# echo  &quot;EPROVIDE=\&quot;firefox\&quot;&quot; &gt; /usr/share/sorcery/local/firefox-local
+# cat  /root/.sorcery/grimoire/firefox &gt;&gt; /usr/share/sorcery/local/firefox-local
+# chmod 0755 /usr/share/sorcery/local/firefox-local
+# nano /usr/share/sorcery/local/firefox-local
+# augur merge
+
+By this method firefox-local still provides firefox.
+However, you are now responsible for updating the VERSION array
+build() and everything else about the spell as necessary.
+
+In some cases you may want to inherit a spell and merely add something
+additional to the OPTS or replace the build().
+That works also.
+
+What does not work is having a local spell called firefox.
+
+If you make spells in the local grimoire with the same name
+as spells in the official grimoire I do not guarantee that the
+spells in the local grimoire will have priority.
+It might or might not work today.
+It might or might not work in future sorcery.
+The reason for this are historical.
+But to put it simply I do not take error reports about spells that I
+did not create.
+And if I must fix a spell that exists in another grimoire
+by having a spell with the same name in the official grimoire
+then I will do that again.
+
+Spells in a local grimoire must exist in a container directory
+or they must exist within a container tarball.
+But they must not exist within a container directory within a container tarball.
+If you select a tarball, due to a large amount of custom spells
+then that tarball may be compressed with gzip or bzip2,
+but it does not have to be compressed.
+If you want an example of how spells should be contained within a tarball
+then simply tar -tf /usr/share/sorcery/grimoire.tar
+
+Some other locations for local grimoires are supported due to
+historical reasons.
+However, I may stop supporting those locations at any time.
+Having all permanent grimoires in /usr/share/sorcery/
+avoids confusion.
+
+Defining location for a local grimoire in /etc/sorcery/local.config is
+not supported.
+
+
+
+
+On 8/17/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Friday 17 August 2007, J Decker wrote:
+</I>&gt;<i> &gt; On 8/17/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt; On Friday 17 August 2007, J Decker wrote:
+</I>&gt;<i> &gt; &gt; &gt; but I had to targzip it.... do I have to do that for this
+</I>&gt;<i> &gt; &gt; &gt; LOCAL_GRIMOIRE thing too?
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; No, you only must make the scripts executable if I remember correctly.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; they're not being mreged... I tried first LOCAL_GRIMOIRE=&quot;~/.grimoire&quot; then
+</I>&gt;<i> &gt; tried more specifically LOCAL_GRIMOIRE=&quot;/root/.grimore&quot;
+</I>&gt;<i> &gt; ... browsing through 'build_grimoire' I don't see LOCAL_GRIMOIRE
+</I>&gt;<i> &gt; referenced...
+</I>&gt;<i> You have to add a line to your /etc/sorcery/local.config like
+</I>&gt;<i> LOCAL_GRIMOIRE=&quot;/something&quot;
+</I>&gt;<i>
+</I>&gt;<i> And don't forget &quot;augur merge; augur index&quot; before casting the modified local
+</I>&gt;<i> spell.
+</I>&gt;<i> J.
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; and actaully 'grep LOCAL_GRIM *' in /usr/libexec/sorcery reveals nothing...
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; J.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000169.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+	<LI>Next message: <A HREF="000171.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#170">[ date ]</a>
+              <a href="thread.html#170">[ thread ]</a>
+              <a href="subject.html#170">[ subject ]</a>
+              <a href="author.html#170">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

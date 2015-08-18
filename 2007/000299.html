@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C200710042244.42309.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000298.html">
+   <LINK REL="Next"  HREF="000292.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C200710042244.42309.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...">merka at highsphere.net
+       </A><BR>
+    <I>Fri Oct  5 04:44:42 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000298.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+        <LI>Next message: <A HREF="000292.html">[Sorcerer-admins] Toggled features are empty, current sorcery
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#299">[ date ]</a>
+              <a href="thread.html#299">[ thread ]</a>
+              <a href="subject.html#299">[ subject ]</a>
+              <a href="author.html#299">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 04 October 2007, Kyle Sallee wrote:
+&gt;<i> &gt; &gt; Does the xf86-video-i810 work with X11R7.3 or merely X11R7.2?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Yes, it does. I currently run xf86-video-i810 1.7.4 with xorg-server 1.4
+</I>&gt;<i> &gt; (X11R7.3) and don't have any problems.
+</I>&gt;<i>
+</I>&gt;<i> Okay, I gave the broken attribute to xf86-video-intel.
+</I>Probably was not necessary, I believe the two drivers can co-exist.
+
+&gt;<i> I wonder if I should create a current() section to have
+</I>&gt;<i> xf86-video-i810 reinstall?
+</I>&gt;<i> Was xf86-video-intel merely a poor replacement for xf86-video-i810.
+</I>That summarizes the situation well. I found the display degradation 
+unacceptable in both 2D and 3D.
+
+&gt;<i>
+</I>&gt;<i> &gt; The box is a laptop with a touchpad which makes the configuration more
+</I>&gt;<i> &gt; complicated. Your example is similar to what I use for the touchpad but I
+</I>&gt;<i> &gt; like to use a USB mouse (because of the wheel and extra buttons) so my
+</I>&gt;<i> &gt; xorg.conf used to have a section
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Section &quot;InputDevice&quot;
+</I>&gt;<i> &gt;         Identifier      &quot;USB Mouse&quot;
+</I>&gt;<i> &gt;         Driver          &quot;mouse&quot;
+</I>&gt;<i> &gt;         Option          &quot;SendCoreEvents&quot;
+</I>&gt;<i> &gt;         #Option         &quot;Protocol&quot;      &quot;auto&quot;
+</I>&gt;<i> &gt;         Option          &quot;Protocol&quot;      &quot;IMPS/2&quot;
+</I>&gt;<i> &gt;         #Option         &quot;Device&quot;        &quot;/dev/input/mice&quot;
+</I>&gt;<i> &gt;         Option          &quot;Device&quot;        &quot;/dev/input/mouse3&quot;
+</I>&gt;<i> &gt;         Option          &quot;ZAxisMapping&quot;  &quot;4 5&quot;
+</I>&gt;<i> &gt;         Option          &quot;Buttons&quot;       &quot;6&quot;
+</I>&gt;<i> &gt; EndSection
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; where /dev/input/mice was enabled in X11R7.2. Now however, it's use
+</I>&gt;<i> &gt; results in double clicks send to x11. Somewhere I found a mention that
+</I>&gt;<i> &gt; /dev/input/mice is a hack and should not be used... So a more specific
+</I>&gt;<i> &gt; device should be used but it changes on re-plug, it's on my to-do list to
+</I>&gt;<i> &gt; adjust udev configuration for the mouse.
+</I>&gt;<i>
+</I>&gt;<i> The extra wheels and buttons on a mouse will work if it is a ps2 style
+</I>&gt;<i> mouse with a declaration similar to what you are already using.
+</I>True, been there/done that but it is less convenient than evdev. You need more 
+tools to configure (like use xmodmap, imwheel) to get everything work nicely.
+
+&gt;<i> Is it the notebook that disables them if the touchpad is configured
+</I>&gt;<i> for as a ps2 style bus mouse in the CMOS configuration?
+</I>Fortunately not such a case.
+&gt;<i>
+</I>&gt;<i> I guess X11R7.3 will not work good for that notebook while
+</I>&gt;<i> there are broken drivers in the release?
+</I>It does, I moved to X11R7.3 and use xf86-video-i810 and live without evdev for 
+now. Just noticed an interesting side effect of broken evdev: The keyboard 
+lights don't indicate CAPSLOCK, NUMLOCK,... key status anymore.
+
+&gt;<i> I hope you did not encounter any problem with reverting the
+</I>&gt;<i> installation to X11R7.2.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000298.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+	<LI>Next message: <A HREF="000292.html">[Sorcerer-admins] Toggled features are empty, current sorcery
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#299">[ date ]</a>
+              <a href="thread.html#299">[ thread ]</a>
+              <a href="subject.html#299">[ subject ]</a>
+              <a href="author.html#299">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

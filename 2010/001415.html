@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%201&In-Reply-To=%3C596b75861002031840s340faf77lb7962186f35ea0f7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001408.html">
+   <LINK REL="Next"  HREF="001409.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%201&In-Reply-To=%3C596b75861002031840s340faf77lb7962186f35ea0f7%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Feb  4 03:40:11 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001408.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+</A></li>
+        <LI>Next message: <A HREF="001409.html">[Sorcerer-admins] Basic Sorcerer install instructions.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1415">[ date ]</a>
+              <a href="thread.html#1415">[ thread ]</a>
+              <a href="subject.html#1415">[ subject ]</a>
+              <a href="author.html#1415">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Feb 3, 2010 at 9:23 AM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> could someone tell me how to create a new sorcerer partition?
+</I>
+First, a disk block device must have some space for a new partition.
+Having partitions of size 0 is usually useless.
+
+Then, one should run fdisk on the disk device.
+If the disk is the first IDE device then fdisk /dev/hda
+If the disk is the first SCSI device then fdisk /dev/sda
+Just check /dev/ for devices.
+udev will automatically create nodes for both block devices
+and partitions as they are discovered.
+
+Now, for an empty disk I would normally type something like:
+fdisk /dev/sda1
+n
+p
+1
+&lt;enter&gt;
+&lt;enter&gt;
+a
+1
+w
+
+That would be new, primary partition, partition 1, start 1, maximum
+size, a to toggle it to bootable, 1 to specify which partition, and w
+to write the changes to disk.
+
+Typing ? in fdisk shows the help.
+
+A partition is merely a way to divide the content of a fixed disk.
+There are other methods also.
+Once a disk has a partition
+then a filesystem can be created on the partition.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001408.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+</A></li>
+	<LI>Next message: <A HREF="001409.html">[Sorcerer-admins] Basic Sorcerer install instructions.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1415">[ date ]</a>
+              <a href="thread.html#1415">[ thread ]</a>
+              <a href="subject.html#1415">[ subject ]</a>
+              <a href="author.html#1415">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

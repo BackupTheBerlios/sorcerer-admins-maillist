@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3C201007211038.49113.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001820.html">
+   <LINK REL="Next"  HREF="001822.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3C201007211038.49113.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">merka at highsphere.net
+       </A><BR>
+    <I>Wed Jul 21 16:38:48 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001820.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001822.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1821">[ date ]</a>
+              <a href="thread.html#1821">[ thread ]</a>
+              <a href="subject.html#1821">[ subject ]</a>
+              <a href="author.html#1821">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday, July 21, 2010, Roelof Wobben wrote:
+&gt;<i> Hello Jan,
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> I agree with you but the two partitions with /dev/hdc* are not mounted
+</I>&gt;<i> during boot and the one with uuid is booted.
+</I>
+I don't know your setup but typically you need to boot from the rescue CD, fix 
+your /etc/fstab, rerun lilo if necessary, and redo the initramfs image. Then 
+the system should boot again.
+
+J.
+
+&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Can you explain that ?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Roelof
+</I>&gt;<i> 
+</I>&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>
+</I>&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; Date: Wed, 21 Jul 2010 10:05:28 -0400
+</I>&gt;<i> &gt; Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; On Wednesday, July 21, 2010, Roelof Wobben wrote:
+</I>&gt;<i> &gt; &gt; Hello,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I found that BLKID could print put the UUID numbers.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Is there another way then write it down on paper and then type it over
+</I>&gt;<i> &gt; &gt; in fstab.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; You don't need to use UUIDs in /etc/fstab. Instead you could use, for
+</I>&gt;<i> &gt; example:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /dev/mapper/ssd-root / ext4 defaults,commit=600,noatime 0 1
+</I>&gt;<i> &gt; /dev/sda1 /boot ext3 defaults,commit=600,noatime 0 1
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; So your boot partition would need a line like:
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /dev/hdc1 /boot ext3 defaults,noatime 0 1
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; You obviously need to adjust the names and options according to your
+</I>&gt;<i> &gt; system.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Jan
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; &gt; Because this fstab problem I can't boot anymore because the root is not
+</I>&gt;<i> &gt; &gt; found.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I think I have to many problems with sorcerer.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Roelof
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>
+</I>&gt;<i> &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; Subject: RE: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> &gt; &gt; Date: Wed, 21 Jul 2010 08:22:46 +0000
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Hello,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I found the problem
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; In fstab hdc1 which contains boot and hdc3 which contains swap don't
+</I>&gt;<i> &gt; &gt; have a UIID so they not mounted. Now trying to find out how I can find
+</I>&gt;<i> &gt; &gt; the UUID of those disk.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Roelof
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>
+</I>&gt;<i> &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; Subject: RE: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> &gt; &gt; Date: Wed, 21 Jul 2010 06:11:00 +0000
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Hello Kyle,
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Did not solve it but I think I have found the problem.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; The error message is :
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; depmod checking modules.dep
+</I>&gt;<i> &gt; &gt; find /lib/modules//modules.dep: no such file or directory.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; But when I do find / -iname modules.dep. Then I get this :
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; /lib/modules/2.6.34/modules.dep
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; The difference is that on the script the kernel-name disappear.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Can you help me find out why and where it disappear.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Roelof
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; Date: Tue, 20 Jul 2010 18:37:07 -0700
+</I>&gt;<i> &gt; &gt; &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> &gt; &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; modules.dep, no problem. :)
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; /etc/init.d/depmod
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; It aught to run on it's own as needed during shutdown and reboot.
+</I>&gt;<i> &gt; &gt; &gt; Nobody has reported a missing modules.dep in a while.
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; # depmod -a
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; That will create /lib/modules/$VER/modules.dep
+</I>&gt;<i> &gt; &gt; &gt; for the currently running linux.
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; /etc/init.d/depmod
+</I>&gt;<i> &gt; &gt; &gt; only creates a modules.dep for the
+</I>&gt;<i> &gt; &gt; &gt; most recently installed kernel.
+</I>&gt;<i> &gt; &gt; &gt; I am starting to think that perhaps
+</I>&gt;<i> &gt; &gt; &gt; I should have it run for all
+</I>&gt;<i> &gt; &gt; &gt; /lib/modules/*/ available?
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; That might have avoided this problem?
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; On Tue, Jul 20, 2010 at 1:34 PM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; &gt; Hello Bradley,
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Yes, youre right.
+</I>&gt;<i> &gt; &gt; &gt; &gt; I have now a lot of experience in installing Sorcerer.
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Now trying to solve a problem with module.dep is not found.
+</I>&gt;<i> &gt; &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; &gt; Roelof
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; _______________________________________________
+</I>&gt;<i> &gt; &gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; SMS &quot;HOTMAIL&quot; naar 3010 en ontvang gratis de juiste instellingen voor
+</I>&gt;<i> &gt; &gt; Hotmail op je mobiele telefoon.
+</I>&gt;<i> &gt; &gt; _________________________________________________________________
+</I>&gt;<i> &gt; &gt; De Nieuwste Internet Explorer speciaal voor Hotmail, download nu gratis
+</I>&gt;<i> &gt; &gt; <A HREF="http://www.microsoft.com/netherlands/ie8/hotmail.htm">http://www.microsoft.com/netherlands/ie8/hotmail.htm</A>
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> 
+</I>&gt;<i> _________________________________________________________________
+</I>&gt;<i> De Nieuwste Internet Explorer speciaal voor Hotmail, download nu gratis
+</I>&gt;<i> <A HREF="http://www.microsoft.com/netherlands/ie8/hotmail.htm">http://www.microsoft.com/netherlands/ie8/hotmail.htm</A>
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001820.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001822.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1821">[ date ]</a>
+              <a href="thread.html#1821">[ thread ]</a>
+              <a href="subject.html#1821">[ subject ]</a>
+              <a href="author.html#1821">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

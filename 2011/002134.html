@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Can anyone confirm this please?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Can%20anyone%20confirm%20this%20please%3F&In-Reply-To=%3CBANLkTi%3DiU_JPJJY0d2esNqURVfqo9MgFkg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002133.html">
+   <LINK REL="Next"  HREF="002135.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Can anyone confirm this please?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Can%20anyone%20confirm%20this%20please%3F&In-Reply-To=%3CBANLkTi%3DiU_JPJJY0d2esNqURVfqo9MgFkg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Can anyone confirm this please?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 25 08:51:08 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002133.html">[Sorcerer-admins] Can anyone confirm this please?
+</A></li>
+        <LI>Next message: <A HREF="002135.html">[Sorcerer-admins] /run away /run away!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2134">[ date ]</a>
+              <a href="thread.html#2134">[ thread ]</a>
+              <a href="subject.html#2134">[ subject ]</a>
+              <a href="author.html#2134">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>When using the dual architecture installer for NVIDIA-Linux-x86_64
+then it installs most of it into the DESTDIR
+except many of the ELF 32-bit libraries such as libGL
+which it installs directly into /usr/lib/
+overwriting the libGL installed by MesaLib
+and also creating alien files.
+
+However, the solution of having two spells:
+NVIDIA-Linux-x86{,_64}
+solves the problem.
+
+I rather not admit how many hours of testing, trial and fixing
+was required in order to solve the problem involving NVIDIA-Linux.
+However, I will say that I advise against using a custom spell for those.
+The new spells are tested, tracks fine, and does not overwrite
+files installed by MesaLib.
+However, I am a bit disappointed that
+I could not accomplish the task using a single spell.
+The installer does something unexpected and files that
+one installer puts into DESTDIR are soon removed by
+the other installer.
+But having two spells is not terrible.
+Generally, for every rule there is an exception.
+And this is the exception for multilib Sorcerer.
+It is the only spell combination where one spell installs the ELF 32-bit
+and the other spell installs the ELF 64-bit.
+But we are talking about something that comes mostly pre-compiled anyway,
+and for that fact it is already strange from the beginning.
+
+When I first designed Sorcerer multilib
+I carefully considered the possibility
+of having separate installed spells
+for ELF 32-bit libraries and ELF 64-bit libraries.
+But in some ways that might make
+the loadout of installed software
+more complicated for SAs.
+I never did fancy using separate packages for
+headers, shared libraries, static libraries, servers, clients, and utilities
+which is the method by which pre-compiled binary based distributions
+chop sources into several tiny packages.
+Instead of installing net-utils there might be a separate package for each
+installed executable like a separate package for ping,
+separate package for traceroute,
+and separate package for inetd.
+Who wants a box with 2000+ installed packages?
+Oh, sorry I went on a tangent for a moment.
+
+And for many software projects cast gains an advantage by either being able
+to use a single source tree to compile both ELF 32-bit and ELF 64-bit
+libraries concurrently,
+or by being able to use a hard linked source tree.
+Spells like qt-everywhere-opensource as a single spell
+can have both ELF 32-bit and ELF 64-bit version compiled concurrently
+which is more efficient than linear compilation
+of 2 separate solo spells for qt-everywhere-opensource.
+
+But sometimes I also consider that having separate spells might
+make easier knowing if an installed library spell actually installed
+ELF 32-bit libraries.
+And it might allow more precise control over which sets of ELF 32-bit
+libraries are installed.
+In that fashion all libraries required by wine could have their ELF
+32-bit versions installed
+while libraries outside of the requirement chain need not have their
+ELF 32-bit libraries
+installed.
+
+Basically, there are advantages and disadvantages to both methods.
+But we have something that works and is not without a certain
+eloquence and simplicity.
+Therefore, we should probably use it just like the revised
+NVIDIA-Linux-x86* spells.
+
+I enjoy having multilib.
+But wow it required an absurd amount of effort to create.
+
+Okay, one last aspect I forgot to mention is the monolib functionality.
+On my workstation I used augur monolib in order to alter
+qt-everywhere-opensource so that it installed without ELF 32-bit libraries.
+Naturally, every library spell that requires qt-everywhere-opensource
+also installs without ELF 32-bit libraries.
+The effects are a savings of disk space and reduction of compile time.
+Of course if I want to run an ELF 32-bit executable
+that links with KDE or qt-everywhere-opensource
+then I must remove qt-everywhere-opensource from monolib
+and then recast every installed library spell that requires
+qt-everywhere-opensource.
+Actually, that is not a complicated task.
+
+# echo qt-everywhere-opensource | augur monolib off
+# ( echo qt-everywhere-opensource | augur req iron; augur installed
+library ) | sort | uniq -d | augur queue qt-everywhere-opensource;
+augur begin
+
+However, my point is that monolib can be used to explicitly disable
+ELF 32-bit library creation for specific requirement chains.
+It is a bit less problematic than trying to accomplish
+the same outcome automatically and transparently.
+But it could become a possibility if Sorcerer SAs wanted it.
+
+Thus seems as if nobody has anything to say about Sorcerer multilib,
+except Evert and myself as we tested, fixed, and honed it.
+For the most part the changes should be transparent to SAs.
+Using multilib Sorcerer x86_64 should be nearly identical
+to the experience of using pure x86_64 Sorcerer.
+We certainly did not fall short of meeting that goal.
+
+
+On Sun, Apr 24, 2011 at 10:36 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hmm... my Sorcerer boxes are not segfaulting. I don't have a spell
+</I>&gt;<i> called prelink installed anyways.
+</I>&gt;<i>
+</I>&gt;<i> So, does the NVIDIA spell still overwrite stuff from xorg? I seem to
+</I>&gt;<i> remember making my own spell for NVIDIA just to avoid that sort of
+</I>&gt;<i> thing some time ago, but did not install it on the multilib boxes.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002133.html">[Sorcerer-admins] Can anyone confirm this please?
+</A></li>
+	<LI>Next message: <A HREF="002135.html">[Sorcerer-admins] /run away /run away!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2134">[ date ]</a>
+              <a href="thread.html#2134">[ thread ]</a>
+              <a href="subject.html#2134">[ subject ]</a>
+              <a href="author.html#2134">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

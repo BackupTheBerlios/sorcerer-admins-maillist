@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /boot size? initrd megasize 107MB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3C596b75860906191507g7d491d50o189e1a5de74eb245%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001275.html">
+   <LINK REL="Next"  HREF="001269.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /boot size? initrd megasize 107MB</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3C596b75860906191507g7d491d50o189e1a5de74eb245%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /boot size? initrd megasize 107MB">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun 20 00:07:43 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001275.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+        <LI>Next message: <A HREF="001269.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1277">[ date ]</a>
+              <a href="thread.html#1277">[ thread ]</a>
+              <a href="subject.html#1277">[ subject ]</a>
+              <a href="author.html#1277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jun 19, 2009 at 12:14 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> One option would be to just grab the modules that are currenlty loaded...
+</I>&gt;<i> Doesn't help for updating... Is that what 'fast' is?
+</I>
+Not at all.
+In order to create the fast initramfs image
+The files and directories are added to the cpio if
+the atime of the file changed.
+Therefore, the file must be accessed during sysinit
+in order to be made part of the fast boot's initramfs.
+Using any other method seemed to chance that
+required files and directories would be missed.
+
+
+&gt;<i> Someone who doesnb't want so much kernel module... Use not linux_modular?
+</I>&gt;<i> &#160;Use a cuatom linuX?
+</I>
+SAs can always use the traditional linux spell
+that requires the SA to do a make menuconfig
+in order to create a base .config
+Whether that .config can be easily migrated from
+old to newer kernel releases depends on the whims
+of kernel developers.
+In the past migrating the .config automatically
+worked most of the time.
+But there were occasionally problems such as
+the problems caused with the parallel port drivers.
+And device names for disks in /dev have switched
+from hd* to sd* and back again a few times.
+
+For the time being I recommend that SAs use linux-modular.
+It should provide decent performance and memory usage.
+Obviously, the convenience sacrifices a few percents
+in performance and memory usage.
+But it should be no worse than using a pre-compiled kernel
+from a pre-compiled binary based distro.
+
+
+The following is an interesting question that I pondered...
+The list of files and directories that go into the fast initramfs image.
+Is there any benefit in storing it?
+
+The only time the list can be properly generated
+is right when the sysinit has finished running.
+That much is certain.
+
+Obviously when a box updates or has new software installed
+the contents of /etc/init.d/rcS.d can change
+/bin /sbin /lib /lib64 also might chance.
+Some of those files might be new and required.
+Sometimes names of modules change also.
+Consequently, re-using the list of files to
+create the &quot;fast&quot; intiramfs is not entirely safe.
+
+The size of the fast initramfs shows what is possible,
+but it is not what is possible when all initramfs are generated.
+Generating the &quot;fast&quot; type of initramfs is only possible
+immediately after sysinit completes.
+If the updates would cause regeneration of initramfs
+then the new initramfs can contain changes
+that would require different files than
+those that were used when creating the previous &quot;fast&quot; initramfs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001275.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+	<LI>Next message: <A HREF="001269.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1277">[ date ]</a>
+              <a href="thread.html#1277">[ thread ]</a>
+              <a href="subject.html#1277">[ subject ]</a>
+              <a href="author.html#1277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/lib explained, please read.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/lib%20explained%2C%20please%20read.&In-Reply-To=%3C1de9d39c0809100343q7e33a7b9gffe4e5ea3892a8d9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000772.html">
+   <LINK REL="Next"  HREF="000774.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/lib explained, please read.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/lib%20explained%2C%20please%20read.&In-Reply-To=%3C1de9d39c0809100343q7e33a7b9gffe4e5ea3892a8d9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/lib explained, please read.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Wed Sep 10 12:43:37 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000772.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+        <LI>Next message: <A HREF="000774.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#773">[ date ]</a>
+              <a href="thread.html#773">[ thread ]</a>
+              <a href="subject.html#773">[ subject ]</a>
+              <a href="author.html#773">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm interested about that change. I never liked the libtool .la that is from
+my point of view just garbage....
+can you develop how you managed to have libtool use /usr/lib.la/* instead of
+/usr/lib/*.la?
+as far as I know for pkgconfig there is some env PKG_CONFIG_PATH to set the
+pkgconfig search path and PKG_CONFIG_LIBDIR for the default search dir....
+as far as I know pkgconfig is usable in a cross compile environment, libtool
+.la aren't....
+one of my question is what appens if libtool don't find the .la? will it
+still work? anyway I will be happy if there is a way to drop libtool and
+friends. I would also be happy if there is a way to avoid having ar library
+build and installed... they have no use on a system that support dynamic
+linking and are just wasting our disk space...
+Best Regards
+JLM
+
+On Wed, Sep 10, 2008 at 5:58 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Some changes are scheduled for /usr/lib and /usr/lib64 please read.
+</I>&gt;<i>
+</I>&gt;<i> Looked inside of /usr/lib recently?
+</I>&gt;<i> Looks like a garbage can does it not?
+</I>&gt;<i> Really, is that not too much content for a single directory?
+</I>&gt;<i> What is all that stuff?
+</I>&gt;<i>
+</I>&gt;<i> There are directories.
+</I>&gt;<i> There are symbolic links to ELF libraries
+</I>&gt;<i> There are ELF libraries with .so as part of their filename.
+</I>&gt;<i> There are static link libraries ending in .a
+</I>&gt;<i> There are libtool archive files ending with .la
+</I>&gt;<i>
+</I>&gt;<i> When programs are loaded and run
+</I>&gt;<i> only ELF libraries and some symbolic links to ELF libraries are
+</I>&gt;<i> required and used.
+</I>&gt;<i> Only when compiling are static link libraries, pkgconfig files, and
+</I>&gt;<i> libtool archive files used.
+</I>&gt;<i>
+</I>&gt;<i> Therefore, /usr/lib and /usr/lib64 will be reorganized.
+</I>&gt;<i>
+</I>&gt;<i> /usr/lib/pkgconfig will become  /usr/lib.pc and /usr/lib64.pc
+</I>&gt;<i> /usr/lib/*.la becomes /usr/lib.la/* and /usr/lib64.la/*
+</I>&gt;<i>
+</I>&gt;<i> Already on my test box this has moved about 1000 files out from /usr/lib
+</I>&gt;<i>
+</I>&gt;<i> Now here is a good question.
+</I>&gt;<i> Why /usr/lib.la and /usr/lib.pc
+</I>&gt;<i> Why not /usr/lib/la and /usr/lib/pkgconfig ?
+</I>&gt;<i>
+</I>&gt;<i> To find a file in /usr/lib/pkgconfig first all of /usr/lib must be searched
+</I>&gt;<i> to locate directory pkgconfig.
+</I>&gt;<i> Using instead /usr/lib.pc reduces the previous search to all of /usr.
+</I>&gt;<i> /usr has far fewer entries in it than /usr/lib
+</I>&gt;<i> Consequently, the same is true of /usr/lib.la
+</I>&gt;<i> Locating .la files in /usr/lib.la is faster.
+</I>&gt;<i> However, even if /usr/lib is searched first, which will probably happen,
+</I>&gt;<i> not having .la files in /usr/lib expedites the start of ELF executable
+</I>&gt;<i> processes
+</I>&gt;<i> that require libraries in /usr/lib
+</I>&gt;<i>
+</I>&gt;<i> As you already know I am crusading to eliminate
+</I>&gt;<i> .a static link library archive files
+</I>&gt;<i> from /usr/lib.
+</I>&gt;<i> About 200 more to go for that.
+</I>&gt;<i> But still many will be kept.
+</I>&gt;<i>
+</I>&gt;<i> Even after these changes are complete some 200 directories
+</I>&gt;<i> still exist within /usr/lib/
+</I>&gt;<i> Move them?
+</I>&gt;<i> Probably not.
+</I>&gt;<i> There might not be a significant benefit to moving them.
+</I>&gt;<i> Afterall they must exist somewhere
+</I>&gt;<i> therefore they must pollute some directory.
+</I>&gt;<i> Moving them out of /usr/lib would probably
+</I>&gt;<i> require more effort than the boon gains.
+</I>&gt;<i>
+</I>&gt;<i> I intend to release the changes concurrently with the next release of gcc.
+</I>&gt;<i> Boxes will soon after have many installed spells recompiling.
+</I>&gt;<i>
+</I>&gt;<i> During testing I recast 300+ spells.
+</I>&gt;<i> Only 1 spell had a related problem.
+</I>&gt;<i> Fixing that problem was trivial.
+</I>&gt;<i> Still there is more that I want to test.
+</I>&gt;<i> Do not expect the change in the next grimoire release.
+</I>&gt;<i> However, please be aware that it will happen .
+</I>&gt;<i>
+</I>&gt;<i> I carefully weighed benefits of this change with the potential
+</I>&gt;<i> consequences of deviating from the LFS.
+</I>&gt;<i> However, the LFS is written in XML and not stone and consequently
+</I>&gt;<i> intended for change.
+</I>&gt;<i> Just as pkgconfig designers expected /usr/lib/pkgconfig/ was an
+</I>&gt;<i> improvement to dumping
+</I>&gt;<i> all the .pc files directly into /usr/lib I expect that /usr/lib.pc and
+</I>&gt;<i> /usr/lib.la should be the next
+</I>&gt;<i> evolutionary improvement to follow.
+</I>&gt;<i> Categorization of files based upon when they are used
+</I>&gt;<i> into separate quickly accessible directories makes sense.
+</I>&gt;<i>
+</I>&gt;<i> While I do not have a total solution for /usr/lib turning into a dumpster
+</I>&gt;<i> at least these recycles bins will reduce the stench by about 1000 files.
+</I>&gt;<i>
+</I>&gt;<i> Sorry for the inconvenience.
+</I>&gt;<i> But we might as well get this change started now
+</I>&gt;<i> rather than wait until the future while doing nothing about it.
+</I>&gt;<i> Over time boxes tend to gain more installed libraries.
+</I>&gt;<i> So either way /usr/lib keeps growing.
+</I>&gt;<i> Better the change came sooner than now,
+</I>&gt;<i> but /usr/lib was not always as crowded as it is today.
+</I>&gt;<i> I have been itching and *tching about this for a while now.
+</I>&gt;<i> Time to scratch.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080910/a998b613/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080910/a998b613/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000772.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+	<LI>Next message: <A HREF="000774.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#773">[ date ]</a>
+              <a href="thread.html#773">[ thread ]</a>
+              <a href="subject.html#773">[ subject ]</a>
+              <a href="author.html#773">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

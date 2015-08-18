@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] module-init-tools cast fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20module-init-tools%20cast%20fails&In-Reply-To=%3COF70EC6A2C.69D388F9-ONC22573D8.0025BB9A-C22573D8.0025F1CC%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000366.html">
+   <LINK REL="Next"  HREF="000368.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] module-init-tools cast fails</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20module-init-tools%20cast%20fails&In-Reply-To=%3COF70EC6A2C.69D388F9-ONC22573D8.0025BB9A-C22573D8.0025F1CC%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] module-init-tools cast fails">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Tue Jan 22 07:54:27 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000366.html">[Sorcerer-admins] Some typo problem
+</A></li>
+        <LI>Next message: <A HREF="000368.html">[Sorcerer-admins] module-init-tools cast fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#367">[ date ]</a>
+              <a href="thread.html#367">[ thread ]</a>
+              <a href="subject.html#367">[ subject ]</a>
+              <a href="author.html#367">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Cant cast module-init-tools:
+-------------------8&lt;----------------------------------------
+Compile log for module-init-tools  3.2.2
+Built with sorcery implosion-20080119-0 and gcc 4.2.2
+Built on Tue Jan 22 08:46:32 EET 2008
+Traced with sentinel.
+checking build system type... i686-pc-linux-gnu
+checking host system type... i686-pc-linux-gnu
+checking target system type... i686-pc-linux-gnu
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ANSI C... none needed
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+configure: Adding gcc options: -march=pentium4 -O2 -fomit-frame-pointer 
+-pipe  -Wunused -Wall
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: executing depfiles commands
+source='lsmod.c' object='lsmod.o' libtool=no \
+        depfile='.deps/lsmod.Po' tmpdepfile='.deps/lsmod.TPo' \
+        depmode=gcc3 /bin/sh ./depcomp \
+        gcc -DPACKAGE_NAME=\&quot;\&quot; -DPACKAGE_TARNAME=\&quot;\&quot; 
+-DPACKAGE_VERSION=\&quot;\&quot; -DPACKAGE_STRING=\&quot;\&quot; -DPACKAGE_BUGREPO
+RT=\&quot;\&quot; -DPACKAGE=\&quot;module-init-tools\&quot; -DVERSION=\&quot;3.2.2\&quot; 
+-DCONFIG_USE_ZLIB=1  -I. -I.     -march=pentium4 -O2 -fom
+it-frame-pointer -pipe  -Wunused -Wall -c `test -f 'lsmod.c' || echo 
+'./'`lsmod.c
+gcc  -march=pentium4 -O2 -fomit-frame-pointer -pipe  -Wunused -Wall -Wl,-s 
+-o lsmod  lsmod.o -Wl,-Bstatic -lz -Wl,-B
+dynamic 
+
+...
+
+install-with-care generate-modprobe.conf //sbin/generate-modprobe.conf
+/bin/sh ./mkinstalldirs /usr/share/man/man5
+ /bin/sh ./install-with-care -m 644 ./modprobe.conf.5 
+/usr/share/man/man5/modprobe.conf.5
+install-with-care -m 644 ./modprobe.conf.5 
+/usr/share/man/man5/modprobe.conf.5
+ /bin/sh ./install-with-care -m 644 ./modules.dep.5 
+/usr/share/man/man5/modules.dep.5
+install-with-care -m 644 ./modules.dep.5 /usr/share/man/man5/modules.dep.5
+/bin/sh ./mkinstalldirs /usr/share/man/man8
+ /bin/sh ./install-with-care -m 644 ./depmod.8 
+/usr/share/man/man8/depmod.8
+install-with-care -m 644 ./depmod.8 /usr/share/man/man8/depmod.8
+ /bin/sh ./install-with-care -m 644 ./insmod.8 
+/usr/share/man/man8/insmod.8
+install-with-care -m 644 ./insmod.8 /usr/share/man/man8/insmod.8
+ /bin/sh ./install-with-care -m 644 ./lsmod.8 /usr/share/man/man8/lsmod.8
+install-with-care -m 644 ./lsmod.8 /usr/share/man/man8/lsmod.8
+ /bin/sh ./install-with-care -m 644 ./rmmod.8 /usr/share/man/man8/rmmod.8
+install-with-care -m 644 ./rmmod.8 /usr/share/man/man8/rmmod.8
+ /bin/sh ./install-with-care -m 644 ./modprobe.8 
+/usr/share/man/man8/modprobe.8
+install-with-care -m 644 ./modprobe.8 /usr/share/man/man8/modprobe.8
+ /bin/sh ./install-with-care -m 644 ./modinfo.8 
+/usr/share/man/man8/modinfo.8
+install-with-care -m 644 ./modinfo.8 /usr/share/man/man8/modinfo.8
+make[1]: Leaving directory 
+`/usr/src/sorcery/module-init-tools/module-init-tools-3.2.2'
+cp: cannot stat `/root/.sorcery/grimoire/module-init-tools.d/modules.rm': 
+No such file or directory
+! Problem Detected !
+Source tree discarded.
+Dispelled spell: module-init-tools-failed
+Usage: /etc/init.d/modprobe {start}
+bash: /etc/init.d/modprobe-r: No such file or directory
+-------------------8&lt;----------------------------------------
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080122/363115c4/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080122/363115c4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000366.html">[Sorcerer-admins] Some typo problem
+</A></li>
+	<LI>Next message: <A HREF="000368.html">[Sorcerer-admins] module-init-tools cast fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#367">[ date ]</a>
+              <a href="thread.html#367">[ thread ]</a>
+              <a href="subject.html#367">[ subject ]</a>
+              <a href="author.html#367">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

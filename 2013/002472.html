@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please forgive the excessive recompilation...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20forgive%20the%20excessive%20recompilation...&In-Reply-To=%3CCAER78vTuKdPrZhY-r81g7Q71ATNnAVNM655ZNeVP6fxm-zkRag%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002471.html">
+   <LINK REL="Next"  HREF="002473.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please forgive the excessive recompilation...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20forgive%20the%20excessive%20recompilation...&In-Reply-To=%3CCAER78vTuKdPrZhY-r81g7Q71ATNnAVNM655ZNeVP6fxm-zkRag%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please forgive the excessive recompilation...">evorster at gmail.com
+       </A><BR>
+    <I>Tue Oct 15 23:16:58 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002471.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+        <LI>Next message: <A HREF="002473.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2472">[ date ]</a>
+              <a href="thread.html#2472">[ thread ]</a>
+              <a href="subject.html#2472">[ subject ]</a>
+              <a href="author.html#2472">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there..
+
+I have personally seen a couple of 20Mb Seagate MFM hard drives run
+constantly from the day that they were the biggest storage a person could
+buy till the day they were obsolete, almost a decade later. This was  in a
+Novell Netware server, and they never missed a beat. It is my personal
+opinion that as long as you don't move a hard drive while it's spinning,
+and keep it cool, you can't wear out a hard drive just by using it.
+
+Anyways, I welcome the utility, and it's fairly smart not to wipe the
+kernel cache for what is basically a sequential one-time read of the root
+file system. I guess this is why dd has the same functionality as well. I
+wonder if tar also has this functionality, since tar's main use case is
+reading through a lot of files.
+
+While high throughput is commendable, being nice to the other running
+utilities, especially as far as disk I/O is concerned, is top priority. You
+yourself said that the main purpose of this utility is to provide
+robustness to Sorcery. Having it complete in record time is a nice
+benefit... but some of us have stupidly large root filesystems, and may not
+want to wait for a lengthy disk I/O to complete before feeding our CPU.
+
+-Evert-
+
+
+
+
+On 15 October 2013 18:03, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Thanks for saying so.
+</I>&gt;<i> I feel excited and anxious about the changes.
+</I>&gt;<i> To be able to accurately verify the integrity of spell owned files
+</I>&gt;<i> without displacing the kernel's cached content
+</I>&gt;<i> for frequently accessed files
+</I>&gt;<i> grants ease while mitigating any performance loss
+</I>&gt;<i> for current processes and frequently run programs.
+</I>&gt;<i>
+</I>&gt;<i> With almost no exceptions nearly all programs
+</I>&gt;<i> have the content of the files they read
+</I>&gt;<i> stored in the kernel's block cache.
+</I>&gt;<i> For most tasks the caching provides a boon.
+</I>&gt;<i>
+</I>&gt;<i> However, for file integrity checking;
+</I>&gt;<i> the deluge could displace more valuable blocks.
+</I>&gt;<i> Yet access with O_DIRECT
+</I>&gt;<i> preserves the kernel's cached content.
+</I>&gt;<i> The deluge is circumvented.
+</I>&gt;<i> That seems exciting!
+</I>&gt;<i>
+</I>&gt;<i> We might not yet see that type performance in other POSIX.
+</I>&gt;<i> The method for accessing file content with O_DIRECT
+</I>&gt;<i> is slightly less obvious than described in manual pages.
+</I>&gt;<i> The only utility I know about which provides an O_DIRECT method
+</I>&gt;<i> is &quot;dd&quot; from coreutils.
+</I>&gt;<i> And &quot;dd&quot; is designed to read only one file per invocation.
+</I>&gt;<i> dd might not be a first choice for mass processing of files.
+</I>&gt;<i>
+</I>&gt;<i> However, by sharing the code as a new utility
+</I>&gt;<i> perhaps the functionality will be adopted by other POSIX.
+</I>&gt;<i> Knowing that the files in the file system
+</I>&gt;<i> exist and have proper content
+</I>&gt;<i> is far more satisfying than assuming so.  :)
+</I>&gt;<i>
+</I>&gt;<i> The amount of file content read might be many gigabytes.
+</I>&gt;<i> But that still amounts to less than 1%
+</I>&gt;<i> of the capacity for most mass storage devices.
+</I>&gt;<i> Therefore, I do not expect the additional throughput
+</I>&gt;<i> contributing to an early demise for fixed disks.
+</I>&gt;<i>
+</I>&gt;<i> An amusing thought is that decades ago I was convinced
+</I>&gt;<i> that atimes lead to quick demises for fixed disks.
+</I>&gt;<i> I was probably correct at the time.
+</I>&gt;<i> On older hardware atimes offered an opportunity for heads
+</I>&gt;<i> to wear a groove in platters by constantly updating the atimes
+</I>&gt;<i> for frequently accessed files.
+</I>&gt;<i> The kernel's default implementation of atimes
+</I>&gt;<i> was later changed in more recent years
+</I>&gt;<i> to prevent frequent updates of atimes
+</I>&gt;<i> for frequently accessed files.
+</I>&gt;<i> Better late than never.  :)
+</I>&gt;<i> However, pardon the digression.
+</I>&gt;<i>
+</I>&gt;<i> These changes should improve integrity verification
+</I>&gt;<i> while minimizing the impact upon performance.
+</I>&gt;<i> Certainly, much data will be read from disk.
+</I>&gt;<i> However, in a sorcery fashion
+</I>&gt;<i> only one process performing heavy I/O will run.
+</I>&gt;<i> After all the new code is in place and good to go
+</I>&gt;<i> then the feeling of spontaneity should not diminish
+</I>&gt;<i> during integrity checking.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Oct 15, 2013 at 1:33 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thanks for making Sorcery more robust.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I will be taking the newer Sorcery for a run next week, and if anything
+</I>&gt;&gt;<i> breaks, you'll be the second to know.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Evert
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Evert Vorster
+Chief Observer
+WG Cook
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131015/e546dfbb/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131015/e546dfbb/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002471.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+	<LI>Next message: <A HREF="002473.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2472">[ date ]</a>
+              <a href="thread.html#2472">[ thread ]</a>
+              <a href="subject.html#2472">[ subject ]</a>
+              <a href="author.html#2472">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

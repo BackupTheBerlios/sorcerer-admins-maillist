@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Uhmm MySQL Broke
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Uhmm%20MySQL%20Broke&In-Reply-To=%3CAANLkTinu5Q8-ugC57D8iQ-Da9e7_yZa8iSmXtAOi0YOj%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002029.html">
+   <LINK REL="Next"  HREF="002031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Uhmm MySQL Broke</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Uhmm%20MySQL%20Broke&In-Reply-To=%3CAANLkTinu5Q8-ugC57D8iQ-Da9e7_yZa8iSmXtAOi0YOj%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Uhmm MySQL Broke">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Dec 24 00:21:40 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002029.html">[Sorcerer-admins] Uhmm MySQL Broke
+</A></li>
+        <LI>Next message: <A HREF="002031.html">[Sorcerer-admins] Gcc fails build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2030">[ date ]</a>
+              <a href="thread.html#2030">[ thread ]</a>
+              <a href="subject.html#2030">[ subject ]</a>
+              <a href="author.html#2030">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Looks like a problem that maybe I introduced into the spell.
+Sorry about that.
+I am commenting out those lines.
+Software compiled with the assistance of autotools
+should have libraries automatically directed into lib and lib64
+directories as appropriate for the ELF architecture being compiled
+and this will happen without any additional lines in the build() of spells.
+But there was a line that set:
+--localstatedir=/var/lib64/mysql
+
+I merely commented out that entire case statement.
+That should fix it.
+Thanks for reporting the problem.
+
+
+
+On Thu, Dec 23, 2010 at 3:10 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> My databases have been in /var/lib/mysql for a year or so now... and
+</I>&gt;<i> now when I attempt to run mysqld as a non root user, it complains that
+</I>&gt;<i> it can't open /var/lib64/mysql (which is now the compiled-in default
+</I>&gt;<i> for the database)
+</I>&gt;<i>
+</I>&gt;<i> Really this should still just be lib, since it's platform nonspecific data.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002029.html">[Sorcerer-admins] Uhmm MySQL Broke
+</A></li>
+	<LI>Next message: <A HREF="002031.html">[Sorcerer-admins] Gcc fails build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2030">[ date ]</a>
+              <a href="thread.html#2030">[ thread ]</a>
+              <a href="subject.html#2030">[ subject ]</a>
+              <a href="author.html#2030">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

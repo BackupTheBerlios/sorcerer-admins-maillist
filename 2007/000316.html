@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%2064-bit%20%26%20vmware%20server&In-Reply-To=%3C596b75860710142354i657ed321p208a13f39a8a1e9d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000314.html">
+   <LINK REL="Next"  HREF="000317.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%2064-bit%20%26%20vmware%20server&In-Reply-To=%3C596b75860710142354i657ed321p208a13f39a8a1e9d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Oct 15 08:54:36 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000314.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+        <LI>Next message: <A HREF="000317.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#316">[ date ]</a>
+              <a href="thread.html#316">[ thread ]</a>
+              <a href="subject.html#316">[ subject ]</a>
+              <a href="author.html#316">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Could it be that you are on uhm oh what is that mode called where
+it collects all the day's or weeks messages and sends them clumped together?
+
+As for vmware, it reads as if it may be much slower than qemu.
+About a minute after starting qemu I am ready to login.
+Speed may not be an important factor,
+but if it takes minutes or hours to decompress the kernel
+then that is probably too slow?
+
+The runtime performance of Sorcerer x86_64 within qemu is decent.
+Any of the coreutils provided executables start quickly.
+However, compilation is slow.
+It reduces an Athlon performance to 80386SX speeds.
+
+Here is something useful for those wanting to run an emulator.
+If you have a simple disk file.
+You may want to be able to mount it through the loopback device
+in order to transfer files to or from it quickly instead of using HTTP or SSH.
+# mount -o 32256 /dev/loop0 img.2G
+# mount /dev/loop0
+When finished.
+# umount /dev/loop0
+# losetup -d /dev/loop0
+
+I am uncertain if the offset is the same with vmware
+as it is with qemu's disk image format.
+But it probably would not hurt to try it if you want it.
+
+I wonder if qemu will shape up with 0.9.1 release
+or will qemu become history?
+Perhaps by March 2008 we shall see?
+
+bochs 2.3.5 release happened in September 16, 2007.
+Therefore, it is more recent than qemu.
+However, bochs I do not recall x86_64 emulation support in the 2.3.5 release.
+
+vmware seems like a possibility.
+They do have open source:
+<A HREF="http://www.vmware.com/download/vi/open_source.html">http://www.vmware.com/download/vi/open_source.html</A>
+
+&quot;To use the versions below, you will need a valid license file.
+To obtain your license, please follow these steps:
+
+   1. Evaluate or purchase VMware Infrastructure and you will receive
+your license activation code.
+   2. Redeem your license activation code to create your license.&quot;
+
+But apparently you will still require vmware license to obtain the open source.
+
+vmware can probably afford to either employ the developers of other open
+source machine emulators or merely pay them to quit making releases?
+I am not holding my breath in anticipation of another release of
+bochs or qemu during 2007.
+Are there other alternatives for emulating x86_64 and PowerPC 64 machines?
+
+
+
+
+On 10/14/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Is something wrong with mailinglist as i dont get mailinglist messages as
+</I>&gt;<i> often as they should come. Earlier when i send message to list i did receive
+</I>&gt;<i> it in couple of minutes, nowdays it takes hours/days.
+</I>&gt;<i>
+</I>&gt;<i> Anyway, its working under vmware, it just take some time to decompress
+</I>&gt;<i> kernel. So no problems atm.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000314.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+	<LI>Next message: <A HREF="000317.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#316">[ date ]</a>
+              <a href="thread.html#316">[ thread ]</a>
+              <a href="subject.html#316">[ subject ]</a>
+              <a href="author.html#316">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

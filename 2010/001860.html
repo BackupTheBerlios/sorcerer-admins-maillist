@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init... speed, control, or robustness?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTimYPdjAXQuGx4V%3D_PwJ0b3avSuG8foBc1Y_7NVR%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001871.html">
+   <LINK REL="Next"  HREF="001863.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init... speed, control, or robustness?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTimYPdjAXQuGx4V%3D_PwJ0b3avSuG8foBc1Y_7NVR%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init... speed, control, or robustness?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul 27 00:16:37 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001871.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+        <LI>Next message: <A HREF="001863.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1860">[ date ]</a>
+              <a href="thread.html#1860">[ thread ]</a>
+              <a href="subject.html#1860">[ subject ]</a>
+              <a href="author.html#1860">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jean-luc Mallet preference seems to be for a combination
+of control and speed which are normally exclusive pursuits.
+
+Consider the world of racing cars.
+A spoiler can provide greater downward force and thus
+increase tire traction and therefore increase control.
+However, a spoiler that creates greater sink also creates
+a greater amount of parasitic drag and the increased
+parasitic drag reduces both acceleration and top speed.
+
+Are computers that much different?
+Can both greater control and greater speed can achieved?
+As I conjecture this I felt inclined to look at the manual page for gcc:
+
+&quot;
+-ffast-math
+ Sets -fno-math-errno, -funsafe-math-optimizations,
+ -ffinite-math-only, -fno-rounding-math, -fno-signaling-nans and
+ -fcx-limited-range.
+
+This option causes the preprocessor macro
+&quot;__FAST_MATH__&quot; to be defined.
+
+This option is not turned on by any -O option since it can result
+in incorrect output for programs which depend on an exact
+implementation of IEEE or ISO rules/specifications for math
+functions. It may, however, yield faster code for programs that do
+not require the guarantees of these specifications.&quot;
+
+Apparently, even with computers
+compromises are made that favor
+either speed or control, but not both.
+
+
+Evert makes some interesting points about PID files.
+But what can we deduce about the status of a box
+by examining a PID or a PID file?
+Much discussion has involved udev,
+because of udev's obvious importance on a box.
+So let us stick with that example.
+
+udevd does not have a PID file.
+However, when it runs it does have a PID
+Usually it has between 1 and 3 PIDs.
+The presence of a PID for udev indicates only one thing.
+the PID indicates that the daemon is running
+and probably listening for hotplug events.
+Just because udev is running is not by itself
+proof that the nodes contained or not contained in /dev
+are usable, correct, or complete.
+
+Most of the device nodes in /dev are created
+by a cooperation of a running udevd and the
+invocation of udevadm trigger
+This causes a replay of cold plug events
+that udev handles by loading modules,
+loading firmware, and creating device nodes in /dev
+according to installed udev rule files.
+udevadm, although it provides a service,
+does not remain running like a daemon.
+Whether the device nodes are created correctly
+used to depend almost entirely upon udev rules,
+but now that /dev is devtmpfs instead of just tmpfs
+it has a greater probability of containing necessary
+device nodes even if udev rule files are incorrect or missing.
+
+The reason I am explaining the complexity of udev
+is to make the assertion that the mere presence of
+a PID or a PID file does not indicate that the content
+of /dev is proper or complete.
+Whether /dev is usable might not be known
+until a fsck of filesystems
+or a mount of of filesystems is attempted.
+
+I would go as far as to conjecture that knowing
+if udev failed at the proper creation of /dev
+might not be assumable by checking the presence of
+device nodes in /dev/ for the devices defined by filesystems in /etc/fstab
+No lockfile, no PID file, and no PID can indicate
+if /dev/ is complete and usable.
+
+That is why I created the kernel command line parameter &quot;coldplug&quot;
+If the SA suspects that the problem is udev related
+then udev can be circumvented with that command line parameter.
+A previously saved order list of modules can be loaded
+while a previously saved /dev/ is copied to /dev/
+In many situations that would be enough to
+circumvent a problem with udev
+and allow a box to continue booting.
+Unfortunately, I have not decided exactly what
+should be checked in order to activate
+the coldplug safeguard automatically.
+
+As I stated several times before
+the menu that allows SAs to select
+a root partition when a root partition
+is not specified in /etc/fstab
+is an example of the precise application
+of control to bring about a desirable outcome
+that enhances robustness of booting.
+
+Control should be added when the potential
+outcome increases robustness.
+However, the gain depends upon correctly
+anticipating and intercepting specific problems.
+Adding a control which treats
+the red failure text of all init-scripts exactly the same
+is not the anticipation and interception of a specific problem.
+
+If a more robust boot is desirable
+then we should focus upon:
+identifying where problems will occur;
+why the problem occurs;
+and what can be done about a problem,
+before the problem gathers mass like a snowball rolling down hill.
+
+Spotting and solving problems with
+pin point precision will prevent pain.
+SAs do not want booting to interrupt
+or omit the execution of important init-scripts
+which turns into a nightmarish Easter egg hunt.
+They want to boot up, log in, and review log files and log out.
+
+In the recent past,
+Evert made a suggestion for the Install/Rescue disk
+to present a menu while booting that will allow
+the SA to select a device to mount for the root
+instead of the I/Rs initramfs.
+And the menu does other neat things also.
+I forgot exactly what it can do.
+But it is nice that is there
+in case I want to use it to do that.
+
+Thinking that a menu like that would be useful
+is a good example of preemptive thinking.
+Evert anticipated some problems that could happen
+and decided that an init-script could provide an adequate solution.
+Even more than that,
+that init-script demonstrates the nearly untapped potential
+init-scripts have for being able to accomplish
+more than the 3 simple tasks of mounting virtual filesystems,
+loading modules, and running daemons.
+
+If control is added in the form of init-scripts
+then potentially beneficial outcomes can be created
+where the potential for keeping a boot on target
+would be commensurate with the added overhead.
+
+The collection of init-scripts Sorcerer currently uses
+can be described as fire-and-forget.
+Successful outcomes are assumed.
+Provided that a Sorcerer box is not too far from the norm
+then the box will successfully boot even if the logs
+contain a line or two of red marks.
+Obviously, booting could benefit from a bit of additional control.
+Yet, how that control is added will determine
+if the control is beneficial or detrimental.
+
+Rather that creating a generic method for control that
+automatically snowballs errors
+into avalanches of init-scripts that are not executed
+why not implement tiny specific methods for control
+that nudge booting back onto track when
+something undesirable happens?
+The goal should be to have an outcome where the
+box boots and the real root filesystem mounts.
+Should not methods of control be designed
+with that goal firmly in mind?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001871.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+	<LI>Next message: <A HREF="001863.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1860">[ date ]</a>
+              <a href="thread.html#1860">[ thread ]</a>
+              <a href="subject.html#1860">[ subject ]</a>
+              <a href="author.html#1860">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

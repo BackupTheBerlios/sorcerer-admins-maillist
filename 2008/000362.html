@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kde 4.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%204.0&In-Reply-To=%3C596b75860801160457v4a7c9425mbdc59d9131917116%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000361.html">
+   <LINK REL="Next"  HREF="000363.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kde 4.0</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%204.0&In-Reply-To=%3C596b75860801160457v4a7c9425mbdc59d9131917116%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] kde 4.0">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jan 16 13:57:25 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000361.html">[Sorcerer-admins] kde 4.0
+</A></li>
+        <LI>Next message: <A HREF="000363.html">[Sorcerer-admins] kde 4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#362">[ date ]</a>
+              <a href="thread.html#362">[ thread ]</a>
+              <a href="subject.html#362">[ subject ]</a>
+              <a href="author.html#362">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>kde 4.0 compiled with CFLAGS='-march=i586 -O' appears to run fine.
+However, if compiled with: CFLAGS='-O -pipe -march=pentium3 -msse'
+then it signal 6 aborts most programs.
+kdm may appear to run, but forget about a successful login.
+This was tested on:
+
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 8
+model name      : Celeron (Coppermine)
+stepping        : 6
+cpu MHz         : 764.375
+cache size      : 128 KB
+fdiv_bug        : no
+hlt_bug         : no
+f00f_bug        : no
+coma_bug        : no
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 2
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge
+mca cmov pat pse36 mmx fxsr sse up
+bogomips        : 1530.49
+clflush size    : 32
+
+Might be the -msse causing the problem.
+Might be -march=i586
+Might be something entirely different.
+
+I can not stress strongly enough that you must test kde 4.0 on your dev box
+before deploying it to workstations.
+Due to the above problem kde 4.0 seems a bit more fragile than kde 3.x
+
+Additional notes about trouble shooting kde 4.0
+are being added to the top of the kde 4.0 spell.
+
+About KDE 4.0 and sound.
+It appears to use a wrapper called phonon
+which is included in KDE source tarballs.
+However, phonon is not a sound server.
+It is a wrapper that fits between the application and the sound server.
+That way each application has a standard interface provided by phonon
+while phonon handles the translation to a real sound server.
+Phonon is supposed to be able to support several sound servers
+to include the built in ALSA software mixer called dmix.
+However, I have yet to discover a way to make it use dmix.
+It can use jackit, enlightenment sound server, NAS
+and a few other sound servers that are either broken,
+old and obsolete and unmaintained.
+Phonon is also supposed to be able to use xine-lib
+as something like a sound server/mixer.
+However, I have not yet discovered how to do this.
+Perhaps it requires another software component that wraps xine-lib?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000361.html">[Sorcerer-admins] kde 4.0
+</A></li>
+	<LI>Next message: <A HREF="000363.html">[Sorcerer-admins] kde 4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#362">[ date ]</a>
+              <a href="thread.html#362">[ thread ]</a>
+              <a href="subject.html#362">[ subject ]</a>
+              <a href="author.html#362">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

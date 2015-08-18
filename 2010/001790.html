@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gobject-introspection failed to install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gobject-introspection%20failed%20to%20install&In-Reply-To=%3CAANLkTindzffpnrMCunAAqV3icfrNe_jBl7PPX3u1SY-E%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001783.html">
+   <LINK REL="Next"  HREF="001839.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gobject-introspection failed to install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gobject-introspection%20failed%20to%20install&In-Reply-To=%3CAANLkTindzffpnrMCunAAqV3icfrNe_jBl7PPX3u1SY-E%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gobject-introspection failed to install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 19 23:41:37 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001783.html">[Sorcerer-admins] gobject-introspection failed to install
+</A></li>
+        <LI>Next message: <A HREF="001839.html">[Sorcerer-admins] gobject-introspection failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1790">[ date ]</a>
+              <a href="thread.html#1790">[ thread ]</a>
+              <a href="subject.html#1790">[ subject ]</a>
+              <a href="author.html#1790">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>gobject-introspection is a bit of a pain.
+The patch was to attempt to make gobject-introspection
+to be able to compile without cairo support
+and without libX11 support.
+If cairo is required
+then a large portion of xorg is installed with it.
+Bit of a bummer.
+
+The patches used to work.
+I guess a more recent version rendered them useless.
+I made the patches for version gobject-introspection
+version 0.6.10 and forgot to upgrade/test them
+for version 0.6.14
+This is a fantastic reason why
+Sorcerer maintainers should NOT fix/hack other
+software authors sources.
+I break my own guideline and it bites me in the arse.
+Install cairo and libX11 prior to casting gobject-introspection
+and the problem will go away.
+Sorry for the inconvenience.
+
+Ah, gobject-introspection is a new gnome type thing
+and it was not introduced properly and so there are
+some sources like gobject-introspection that
+try do more than merely install the utility,
+but it also creates gir files for other sources
+when those other sources should be invoking
+g-ir-generate to create their own gir files if gir is installed.
+
+Trying to create a console only box is too difficult
+since a little gnome foot is always blocking the door.
+# cast cairo gobject-introspection
+That will fix it.
+Sorry for the inconvenience.
+
+And you could ask either:
+Why does udev require glib to udev developers?
+Why gobject-introspection to gnome developers?
+I just put the puzzle pieces together.
+I would be constantly asking questions if
+I stopped each time some weird requirement
+list such as this is created.
+
+
+On Mon, Jul 19, 2010 at 12:43 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Hello ,
+</I>&gt;<i>
+</I>&gt;<i> When I do cast gobject-introspection I see that a patch failed.
+</I>&gt;<i> After then I see this message : AC_INIT : not a literal.
+</I>&gt;<i> And this message : tests enabled but cairo not found.
+</I>&gt;<i>
+</I>&gt;<i> And a question : why do things live udev depends on gnome parts.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001783.html">[Sorcerer-admins] gobject-introspection failed to install
+</A></li>
+	<LI>Next message: <A HREF="001839.html">[Sorcerer-admins] gobject-introspection failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1790">[ date ]</a>
+              <a href="thread.html#1790">[ thread ]</a>
+              <a href="subject.html#1790">[ subject ]</a>
+              <a href="author.html#1790">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Log level Selection blue screen when booting	up
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Log%20level%20Selection%20blue%20screen%20when%20booting%0A%09up&In-Reply-To=%3CCA%2BT4wDhueheokTAM530P9ReSZerbFnH6wZTCbHbKzNyeEcxNWQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002507.html">
+   <LINK REL="Next"  HREF="002510.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Log level Selection blue screen when booting	up</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Log%20level%20Selection%20blue%20screen%20when%20booting%0A%09up&In-Reply-To=%3CCA%2BT4wDhueheokTAM530P9ReSZerbFnH6wZTCbHbKzNyeEcxNWQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Log level Selection blue screen when booting	up">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Dec  9 22:04:51 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002507.html">[Sorcerer-admins] Log level Selection blue screen when booting up
+</A></li>
+        <LI>Next message: <A HREF="002510.html">[Sorcerer-admins] Evolving beyond sorcery,
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2509">[ date ]</a>
+              <a href="thread.html#2509">[ thread ]</a>
+              <a href="subject.html#2509">[ subject ]</a>
+              <a href="author.html#2509">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The menus presented during sysinit are problematic?
+If possible enter the selection.
+The selection will later be saved to the root file system
+which is the progenitor for the rootfs.
+However, if it can not be determined
+then the selection can not be saved.
+
+Log into /+/base/
+Run the init-script
+# /etc/init.d/loglevel start
+Make the selection
+It will save.
+And then the prompt should not appear
+on the following reboot
+if the initramfs scripts properly consider
+changes within /etc/init.d/conf.d/
+to be worthy of init-script regeneration.
+If not then it is a bug.
+If it is a bug then regenerate the initramfs with:
+# /etc/init.d/initramfs force-reload
+
+I try to avoid using dialog for init-script interaction
+during sysinit and runlevel execution.
+However, some places exist where it happens
+and I have not yet edited it.
+
+Dialog is used frequently for the configuration
+parameter for init-scripts.
+Consequently, I can not merely grep for dialog
+in order to determine which init-scripts to modify.
+Thanks for reminding me about /etc/init.d/loglevel
+
+The init-script which accepts passpharse input
+for LUKS encrypted devices
+no longer uses dialog for that.
+I expected that might be the last of it.
+
+After deployment and update
+please be certain to transition files such as
+/etc/fstab.rootfs
+to /etc/rootfs/fstab
+Remove the .rootfs from files in /etc/
+and place them in /etc/rootfs/
+That allows for /etc/hostname to specify
+the hostname for /+/base/
+while /etc/rootfs/hostname
+specifies the hostname for the rootfs
+So be certain to rename
+/etc/hostname to /etc/rootfs/hostname
+and /etc/rootname to /etc/hostname
+
+Much of the code is prepared for the 2014 I/R,
+but the documentation is not yet entirely up to date.
+I do not do much testing of my computers
+using the 2013 conventions.
+However, I try to make the implementation changes
+backward compatible at least until the new I/R is released.
+
+6 months of hindsight is great for discovering/revealing
+that the implementation should have been slightly different.  :)
+
+Yet when trying something for the first time
+and making the first implementation
+then whatever works seems like a fine selection.
+If I became obsessed about the small details
+when I first created the implementation
+then the implementation would have required
+months longer in order to create.
+
+My memory is a bit vague, but it was something like;
+the first I/R for 2013 was scheduled for January.
+And I did not complete it until about 6 months later.
+So every month people would write and ask,
+&quot;Is it done yet?&quot;
+And I would reply,
+&quot;Almost ready.  Probably next month.&quot;
+No doubt some people became considerably irritated at me.
+However, what is important is that when I released it; it worked as
+expected.
+
+So please pardon the changes.
+Initially some snap decisions were required
+in order to make progress towards a usable implementation.
+Since I was not copying from anyone else,
+I had plenty of planning, design, decisions, and implementations to create.
+Please pardon if it seemed rough.
+In 2013 it was just slightly better than proof of concept.
+However, even at that I have no reason to complain.
+I have been fully satisfied after transitioning my computers
+to multi-root file systems.
+I complain about a sporadically annoying kernel bug from time to time,
+but the multi-root file system implementation seems fine.
+And the utilization of /etc/rootfs/ will make it even better.
+
+
+On Mon, Dec 9, 2013 at 12:45 AM, chessmaster
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">knowledgeispower80 at gmail.com</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> Every time I boot up I get this blue screen with this selection. Is there
+</I>&gt;<i> anyway to turn this off.
+</I>&gt;<i>
+</I>&gt;<i> Event above the default log level will not display on the console. Please
+</I>&gt;<i> select the computers default log level within 60 seconds.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> 3 KERN_ERR
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131209/a4adc69d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131209/a4adc69d/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002507.html">[Sorcerer-admins] Log level Selection blue screen when booting up
+</A></li>
+	<LI>Next message: <A HREF="002510.html">[Sorcerer-admins] Evolving beyond sorcery,
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2509">[ date ]</a>
+              <a href="thread.html#2509">[ thread ]</a>
+              <a href="subject.html#2509">[ subject ]</a>
+              <a href="author.html#2509">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

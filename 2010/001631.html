@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTinJ26pmlt8okwqvRJTsVi0Gjcc6QsDM8N8wQJ4N%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001629.html">
+   <LINK REL="Next"  HREF="001632.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] progress...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTinJ26pmlt8okwqvRJTsVi0Gjcc6QsDM8N8wQJ4N%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] progress...">evorster at gmail.com
+       </A><BR>
+    <I>Thu May 27 00:03:45 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001629.html">[Sorcerer-admins] progress...
+</A></li>
+        <LI>Next message: <A HREF="001632.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1631">[ date ]</a>
+              <a href="thread.html#1631">[ thread ]</a>
+              <a href="subject.html#1631">[ subject ]</a>
+              <a href="author.html#1631">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+I did not delete any files out of /etc/init.d, rather, I turned off any
+scripts that made an initram.
+
+I had my kernel images in /boot, and lilo loaded them directly.
+
+Since I am currently running monolithic kernels, once the kernel is loaded,
+it supports all the hardware I need.
+
+This approach is highly specific to the hardware I run, so not at all suited
+to an I/R.
+
+Quick question...
+
+Can I still tune the modular kernel? In case I need BTRFS support or such?
+
+-Evert-
+
+On Wed, May 26, 2010 at 4:44 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> On Wed, May 26, 2010 at 1:38 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Good work on the Sorcerer updates.
+</I>&gt;<i>
+</I>&gt;<i> Thanks.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; Am I right in assuming that the Sorcerer I/R's without xorg will also be
+</I>&gt;<i> a
+</I>&gt;<i> &gt; smaller download than the current ones?
+</I>&gt;<i>
+</I>&gt;<i> Not yet certain how much smaller.
+</I>&gt;<i> But I am also removing some rarely used
+</I>&gt;<i> wide loads such as samba and nfs.
+</I>&gt;<i> Seriously, any SA can just scp over
+</I>&gt;<i> any files needed without using NFS and/or samba.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; In that case, I might be tempted to wait a while till they are out.
+</I>&gt;<i>
+</I>&gt;<i> I never did make the time to cook something up using gtk+
+</I>&gt;<i> for a GUI type install experience.
+</I>&gt;<i> I was thinking that with xine and X installed
+</I>&gt;<i> there could even be instructional videos.
+</I>&gt;<i> But I suppose that will not be.
+</I>&gt;<i>
+</I>&gt;<i> &gt; I am extremely limited on the download bandwidth that I can use at work.
+</I>&gt;<i>
+</I>&gt;<i> I am using 64M sliding window xz's LZMA implementation
+</I>&gt;<i> to compress the archives.
+</I>&gt;<i> It could not be much smaller.
+</I>&gt;<i> Nearly half the load is probably the initramfs
+</I>&gt;<i> which is merely gzip compressed.
+</I>&gt;<i> The kernel might be able to support a LZMA
+</I>&gt;<i> compressed initramfs, but I do not like it,
+</I>&gt;<i> because LZMA lacks a magic.
+</I>&gt;<i> If the kernel starts supporting xz compressed
+</I>&gt;<i> initramfs then I would do that as long as all
+</I>&gt;<i> the kernels available can handle it.
+</I>&gt;<i> For now I know they can all handle gzip compressed.
+</I>&gt;<i>
+</I>&gt;<i> &gt; Thanks for the info. I might even try going from linux-custom to linux
+</I>&gt;<i> &gt; again...
+</I>&gt;<i>
+</I>&gt;<i> Aside from having nice small stripped modules
+</I>&gt;<i> sometimes modules that look unnecessary
+</I>&gt;<i> can be unloaded.
+</I>&gt;<i> Just because it is fat on disk
+</I>&gt;<i> does not make it fat in RAM.
+</I>&gt;<i> The amount of RAM consumed by the kernel
+</I>&gt;<i> is somewhat in proportion to the total RAM.
+</I>&gt;<i> However, on many boxes kernel consumption,
+</I>&gt;<i> caching and buffers not counted,
+</I>&gt;<i> can be under 30M
+</I>&gt;<i> It is not like the old days when running
+</I>&gt;<i> linux on a 16M box was possible.
+</I>&gt;<i> But also it is not unreasonable.
+</I>&gt;<i>
+</I>&gt;<i> Nearly, the only way I could provide a linux kernel
+</I>&gt;<i> that is not modular yet can boot most boxes
+</I>&gt;<i> is to include all the SCSI SATA PATA EIDE
+</I>&gt;<i> and filesystem drivers into the kernel.
+</I>&gt;<i> And there was a time when that could work
+</I>&gt;<i> if I carefully weeded out the buggy SCSI drivers
+</I>&gt;<i> that caused kernel crashes during booting.
+</I>&gt;<i> However, now that makes for a kernel that
+</I>&gt;<i> is too large to boot.
+</I>&gt;<i> Creating a monolithic generic rescue kernel
+</I>&gt;<i> would be difficult with a modern linux kernel.
+</I>&gt;<i> It was possible at a time when a generic EIDE
+</I>&gt;<i> driver was available that could work without
+</I>&gt;<i> chipset specific drivers.
+</I>&gt;<i> But now there is possibly plenty of hardware
+</I>&gt;<i> which requires drivers for the chipset.
+</I>&gt;<i> When it comes to graphics, audio, and disks
+</I>&gt;<i> there is not as much standardization.
+</I>&gt;<i> VGA and SVGA to some extend,
+</I>&gt;<i> AC97 audio to some extent,
+</I>&gt;<i> and generic BIOS driven EIDE on some boxes.
+</I>&gt;<i>
+</I>&gt;<i> One thing that does seem to work good is removable
+</I>&gt;<i> SCSI mass storage on digital cameras.
+</I>&gt;<i> So far I have owned 3 cameras with that
+</I>&gt;<i> and I have not required gphoto2 to download pictures.
+</I>&gt;<i> I just plug in the camera and mount the SCSI drive.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; But I need to have a list of things that need to be installed, scripts in
+</I>&gt;<i> &gt; /etc/init.d that need to be run in order to have a valid initram
+</I>&gt;<i>
+</I>&gt;<i> (
+</I>&gt;<i> find /etc/init.d -maxdepth 1 -type f
+</I>&gt;<i> find /root/.sorcery/grimoire/*.d/init.d.on/ -maxdepth 1 \
+</I>&gt;<i> -type f -printf &quot;/etc/init.d/%f\n&quot;
+</I>&gt;<i> ) | sort | uniq -d | xargs chmod 700
+</I>&gt;<i>
+</I>&gt;<i> That should turn on the init-scripts that must be on,
+</I>&gt;<i> unless you removed them from /etc/init.d/
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; My last one loaded the kernel, but then could not mount the root
+</I>&gt;<i> filesystem rw.
+</I>&gt;<i>
+</I>&gt;<i> That does seem strange.
+</I>&gt;<i> Even if the init-scripts were not needed
+</I>&gt;<i> I wonder why you turned them off?
+</I>&gt;<i> I wonder if there could be bugs in the init-scripts
+</I>&gt;<i> that are causing the problem?
+</I>&gt;<i> They work okay for me,
+</I>&gt;<i> but years have past since I transitioned a box
+</I>&gt;<i> from a monolithic kernel to a modular one.
+</I>&gt;<i>
+</I>&gt;<i> Also please check that initramfs and init-scripts are installed.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100526/0b6bf6fa/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100526/0b6bf6fa/attachment-0001.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001629.html">[Sorcerer-admins] progress...
+</A></li>
+	<LI>Next message: <A HREF="001632.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1631">[ date ]</a>
+              <a href="thread.html#1631">[ thread ]</a>
+              <a href="subject.html#1631">[ subject ]</a>
+              <a href="author.html#1631">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,313 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /boot size? initrd megasize 107MB
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3C596b75860906181502h3f6db965lf252bf9d28164210%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001268.html">
+   <LINK REL="Next"  HREF="001272.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /boot size? initrd megasize 107MB</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/boot%20size%3F%20initrd%20megasize%20107MB&In-Reply-To=%3C596b75860906181502h3f6db965lf252bf9d28164210%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /boot size? initrd megasize 107MB">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jun 19 00:02:16 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001268.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+        <LI>Next message: <A HREF="001272.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1270">[ date ]</a>
+              <a href="thread.html#1270">[ thread ]</a>
+              <a href="subject.html#1270">[ subject ]</a>
+              <a href="author.html#1270">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jun 18, 2009 at 2:38 AM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Okay, this might be actually be a bug, as why is it when i extract initrf i
+</I>&gt;<i> get its size as 37MB? Does it include also something that you can't extract
+</I>&gt;<i> with cpio?
+</I>
+I hope you did not do that as root
+or were careful to specify that the extracted files
+should go into the current directory and not into /
+
+The initramfs contains 2 cpio archives
+that are concatenated together.
+Chances are that the command you used
+only extracted the first of the two cpio archives.
+The kernel would have extracted both.
+37M seems about right for the kernel module initramfs.
+
+
+&gt;<i> Otherwise if its not a bug, make it somehow it smaller, way too big now,
+</I>&gt;<i> because initrd jobs is to make system boot, and if other distros can do
+</I>&gt;<i> couple megabytes initrd thats makes all sorts of stuff, then what 107MB
+</I>&gt;<i> initrd does, i just wonder.
+</I>
+For SA convenience Sorcerer does not use a cut down sysinit
+with separate utilities only used during sysinit such as uClibc and busybox.
+Instead Sorcerer uses a sysinit built from the utilities
+that we understand and want to use and would normally use.
+Consequently, the Sorcerer initramfs
+is as large as the directories I mentioned before.
+Why not go for the minimized initramfs?
+A better question is why?
+Who runs a Sorcerer box that has less than 384M of RAM?
+Do we not build boxes with +1G of RAM?
+We can afford fluffy complete initramfs images.
+We are not using 66Mhz 386DX with 16M of RAM and 512M of disk space.
+That is ancient history.
+So why use a tiny initramfs?
+
+Besides, cutting back the initramfs size also
+requires some reduction in the nearly 40M of kernel modules
+that are provided on the initramfs.
+There is no way some other distro provides a tiny initramfs
+and a full compliment of kernel modules
+with it being at least as large as required for the kernel modules.
+But when I tried that before some Sorcerer SAs did not
+want the exclusion of any kernel modules from the initramfs.
+
+Consequently, the current initramfs is not much of a compromise.
+It is big and fluffy.
+The only compromise is that I provide separate initramfs for each linux kernel.
+That minimizes the amount of RAM required to load the initramfs
+during boot by excluding from each initramfs a full compliment
+of kernel modules for each /boot/*/linux kernel
+
+However, making just one initramfs for all /boot/*/linux
+would conserve more disk space,
+but require more RAM during boot,
+and require longer to load.
+
+The minimum size for an initramfs is 0
+A kernel with required filesystem and disk device drivers compiled in
+can boot the fixed disk and mount the real root filesystem
+instead of having to use an initramfs.
+We all know that from experience since it was the preferred
+Sorcerer method for booting for many years.
+
+The next smallest initramfs size is
+1M + the size of the desired kernel modules
+sysinit can be run by a busybox that is statically linked with uClibc.
+The potential usefulness of this is amazing!
+However it is still more limited a Sorcerer initramfs.
+
+I know how to create busybox powered initramfs images.
+However, the compliment of kernel modules is
+60x to 100x larger than busybox and required init-scripts.
+Therefore, if there is no compromise made about what
+kernel modules are made available on the initramfs
+then using busybox seems silly.
+The difference between a 40M initramfs and a 80M initramfs
+is not that big in my mind when I have at least 512M of RAM to load it.
+Consequently, the art of making a tiny initramfs
+involves deciding what should be cut and sacrificed.
+
+# ls -lah /boot/fast
+total 14M
+drwxr-xr-x 2 root root 4.0K 2009-05-26 13:23 .
+drwxr-xr-x 7 root root 4.0K 2009-05-26 13:24 ..
+-rw------- 1 root root  12M 2009-05-26 13:23 initrf
+-rw-r--r-- 2 root root 1.6M 2009-05-09 05:25 linux
+-rw-r--r-- 2 root root 770K 2009-05-09 05:25 System.map
+
+Here is a gnu utility and glibc based initramfs precisely
+trimmed to the required files and modules
+that are required for booting my file server.
+12M
+Impressive considering that it does not use busybox/uClibc.
+What is the catch?
+It is only suitable for booting the computer it was made on,
+assuming that computer has no hardware changes.
+It is also nearly useless for debugging.
+Even /bin/ls would be probably be missing from that initramfs
+since /bin/ls is not normally run during sysinit.
+Do you mind doing directory listings with
+# echo *
+?
+
+With an initramfs image like that,
+which is easy to generate by rebooting a box,
+one can extract the content of the cpio images
+to see exactly what modules are stored in the initramfs
+and how much of the initramfs space the modules require.
+
+At the moment I am not interested in that.
+However, to someone interested in making very tiny initramfs
+images then it should provide some clues about what module
+directories from a linux kernel should be included as a whole
+on the initramfs.
+
+I am under the impression that for modules that were not
+possible to load during sysinit,
+due to being excluded from the initramfs,
+that another invocation of a udev cold plug trigger event
+can cause those modules to be loaded during runlevel
+when the true root filesystem is mounted.
+Therefore, we could make progress at whittling down
+the intiramfs load of modules if Sorcerer SAs form
+some consensus about what modules should be
+excluded from initramfs generation.
+Otherwise we can leave the intiramfs generation
+as it is currently since it works and is not broke.
+
+
+&gt;<i> Terveisin/Regards,
+</I>&gt;<i> &#160; Pekka Panula, Net Servant Oy
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 18.06.2009 12:14:44:
+</I>&gt;<i>
+</I>&gt;&gt;<i> From:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> To:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Date:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 18.06.2009 12:20
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Subject:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Re: [Sorcerer-admins] /boot size? initrd megasize 107MB
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sent by:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # du -sm /boot/* | head -n 3
+</I>&gt;&gt;<i> 85 &#160; &#160; &#160;/boot/2.6.29.1
+</I>&gt;&gt;<i> 84 &#160; &#160; &#160;/boot/2.6.29.2
+</I>&gt;&gt;<i> 85 &#160; &#160; &#160;/boot/2.6.30
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hmm, does seem larger on my test box also.
+</I>&gt;&gt;<i> However, it is not yet +100M big.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The initrd is composed of select files and directories
+</I>&gt;&gt;<i> archived into a cpio from the directories
+</I>&gt;&gt;<i> /etc /bin /sbin /lib /lib64
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Static archive libraries are not included in the archive.
+</I>&gt;&gt;<i> Nothing from /etc/sorcery/ is included.
+</I>&gt;&gt;<i> Many files in /etc/ are not included.
+</I>&gt;&gt;<i> However, if you did something like
+</I>&gt;&gt;<i> # cp -av /etc/sorcery /etc/sorcery.old
+</I>&gt;&gt;<i> then that would cause a large amount of files
+</I>&gt;&gt;<i> to be included in the cpio archive that are
+</I>&gt;&gt;<i> not essential for booting.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Instead of trying to determine exactly
+</I>&gt;&gt;<i> what directories from /etc are worth
+</I>&gt;&gt;<i> including in the initramfs I tried to discover
+</I>&gt;&gt;<i> what directories in /etc/ could be installed by a spell
+</I>&gt;&gt;<i> yet would not be required during sysinit.
+</I>&gt;&gt;<i> I saved a considerable amount of space
+</I>&gt;&gt;<i> in the initramfs by excluding only that.
+</I>&gt;&gt;<i> However, a SA could still create directories
+</I>&gt;&gt;<i> in /etc/ that consume space on the initramfs
+</I>&gt;&gt;<i> yet are otherwise useless during booting.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> No doubt that a method for creating a more precise initramfs is possible.
+</I>&gt;&gt;<i> However, I expect it would also require almost constant revision.
+</I>&gt;&gt;<i> If something new is introduced that installs into /bin /sbin /lib or
+</I>&gt;&gt;<i> /lib64
+</I>&gt;&gt;<i> and would be required during sysinit
+</I>&gt;&gt;<i> then the initramfs script would require adjustment
+</I>&gt;&gt;<i> or at least some component sourced in by the initramfs
+</I>&gt;&gt;<i> would need to be changed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you want a better/more precise initramfs script
+</I>&gt;&gt;<i> then spell complexity must be increased in order
+</I>&gt;&gt;<i> to specify precisely what should be inclined
+</I>&gt;&gt;<i> on an intiramfs if such directories as
+</I>&gt;&gt;<i> /bin /sbin /lib /lib64 and /etc are not included nearly as a whole.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, from /lib in each initramfs only the
+</I>&gt;&gt;<i> /lib/modules/$VERSION/ from the appropriate kernel version
+</I>&gt;&gt;<i> is included in that initramfs.
+</I>&gt;&gt;<i> Consequently, only modules to load
+</I>&gt;&gt;<i> that are appropriate for the running kernel
+</I>&gt;&gt;<i> are included on the initramfs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Originally, my design was to create merely one initramfs
+</I>&gt;&gt;<i> usable by all kernels installed in /boot
+</I>&gt;&gt;<i> A single initramfs is faster to generate.
+</I>&gt;&gt;<i> However, booting is a bit slower to load
+</I>&gt;&gt;<i> such a large initramfs, and of course more
+</I>&gt;&gt;<i> memory is required in order to store the entire
+</I>&gt;&gt;<i> content of /lib/modules in the initramfs instead
+</I>&gt;&gt;<i> of only modules required by the kernel being booted.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I mentioned that old method that I obsoleted to demonstrate
+</I>&gt;&gt;<i> that there are potentially other ways of building the initramfs.
+</I>&gt;&gt;<i> Also the initramfs can be compressed in order to conserve maybe 30%.
+</I>&gt;&gt;<i> However, the initramfs is only compressed by default
+</I>&gt;&gt;<i> when it is provided on the Install/Rescue CD.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So the fun options for making the initramfs
+</I>&gt;&gt;<i> require less disk space are: compression or redesign.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have accepted that initramfs will become larger in time.
+</I>&gt;&gt;<i> Eventually a 256M initramfs will not be absurd.
+</I>&gt;&gt;<i> Even a modern kernel and boot loader can handle it.
+</I>&gt;&gt;<i> Therefore, I am not overly worried about a 100M initramfs.
+</I>&gt;&gt;<i> However, I am not closed to discussion about
+</I>&gt;&gt;<i> what should be done to improve initramfs generation.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Also I should mention that in the past I attempted to selectively
+</I>&gt;&gt;<i> exclude kernel modules and module directories that I expected
+</I>&gt;&gt;<i> would be unessential during sysinit.
+</I>&gt;&gt;<i> However, SAs complained.
+</I>&gt;&gt;<i> Consequently, each initrmafs has a complete set of modules
+</I>&gt;&gt;<i> that is appropriate for the kernel being boot.
+</I>&gt;&gt;<i> Yet it does consume considerable space.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Jun 17, 2009 at 11:00 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; Big problem, i have run out of space. Why initrd is so big? 2.6.29.2
+</I>&gt;&gt;<i> &gt; initrd
+</I>&gt;&gt;<i> &gt; size is amazingly 107MB!
+</I>&gt;&gt;<i> &gt; My /boot is only 139 MB partition so when casting new kernel it runs out
+</I>&gt;&gt;<i> &gt; of
+</I>&gt;&gt;<i> &gt; space....
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001268.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+	<LI>Next message: <A HREF="001272.html">[Sorcerer-admins] /boot size? initrd megasize 107MB
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1270">[ date ]</a>
+              <a href="thread.html#1270">[ thread ]</a>
+              <a href="subject.html#1270">[ subject ]</a>
+              <a href="author.html#1270">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

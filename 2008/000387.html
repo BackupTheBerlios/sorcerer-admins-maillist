@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery changes, and KDE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C47A224AE.1060905%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000376.html">
+   <LINK REL="Next"  HREF="000388.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery changes, and KDE</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C47A224AE.1060905%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery changes, and KDE">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Jan 31 20:42:38 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000376.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+        <LI>Next message: <A HREF="000388.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#387">[ date ]</a>
+              <a href="thread.html#387">[ thread ]</a>
+              <a href="subject.html#387">[ subject ]</a>
+              <a href="author.html#387">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee wrote:
+&gt;<i> On Jan 27, 2008 4:39 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> sorcery provide system hooks, for example
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Hooks can be defined in /etc/sorcery/local.config
+</I>&gt;<i>
+</I>&gt;<i> Available cast hooks:
+</I>&gt;<i>
+</I>&gt;<i> hook_pre_build()
+</I>&gt;<i> hook_build()
+</I>&gt;<i> hook_post_build()
+</I>&gt;<i> hook_prepare_install()
+</I>&gt;<i> hook_post_install()
+</I>&gt;<i>
+</I>&gt;<i> Available dispel hooks:
+</I>&gt;<i>
+</I>&gt;<i> hook_pre_remove()
+</I>&gt;<i> hook_post_remove()
+</I>&gt;<i>
+</I>&gt;<i> hook_*() do not replace the non hook_ functions.
+</I>&gt;<i> hook_*() execute before the expected function.
+</I>&gt;<i>
+</I>&gt;<i> Example:
+</I>&gt;<i>
+</I>&gt;<i> hook_pre_build() executes before
+</I>&gt;<i> pre_build()
+</I>&gt;<i>
+</I>&gt;<i> The return value of hook_*() is discarded.
+</I>&gt;<i>
+</I>&gt;<i> This overly simple implementation
+</I>&gt;<i> required the least modification
+</I>&gt;<i> and the least additional complexity.
+</I>&gt;<i> Perhaps it will suffice?
+</I>&gt;<i> Please try it.
+</I>&gt;<i>
+</I>&gt;<i> Available in
+</I>&gt;<i> sorcery version implosion-20070127-1
+</I>&gt;<i> and later.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>works fine,
+just wanna have the return value of hook not discarded since I do some 
+fancy stuff like a mount / -o remount,rw in prepare install hook and 
+remove hooks.... I'm not sure about when to remount the drive ro, in 
+post install hook? maybe it could break sorcery way of working
+
+need a hook at beginning of cast and end of cast too could be the best 
+solution... some hook that will be called at each end of a cast (ie when 
+all the sorcery stuff  like log creation are done)
+but it works really fine and I think it's a good way to extend sorcery 
+(for example have sorcery been run by user and gain root privileges only 
+when installing....)
+
+thanks a lot, it's a good start and maybe finish
+JL
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080131/1e7c2af9/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080131/1e7c2af9/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000376.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+	<LI>Next message: <A HREF="000388.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#387">[ date ]</a>
+              <a href="thread.html#387">[ thread ]</a>
+              <a href="subject.html#387">[ subject ]</a>
+              <a href="author.html#387">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

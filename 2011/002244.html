@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more improved init-scripts.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20improved%20init-scripts.&In-Reply-To=%3CCA%2BT4wDgZyqPGSDk8hTaKCsBO9uUXTP5XOZBgceCm-hzAOeja0g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002241.html">
+   <LINK REL="Next"  HREF="002246.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more improved init-scripts.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20improved%20init-scripts.&In-Reply-To=%3CCA%2BT4wDgZyqPGSDk8hTaKCsBO9uUXTP5XOZBgceCm-hzAOeja0g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more improved init-scripts.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Aug  5 21:01:35 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002241.html">[Sorcerer-admins] more improved init-scripts.
+</A></li>
+        <LI>Next message: <A HREF="002246.html">[Sorcerer-admins] better cgroups...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2244">[ date ]</a>
+              <a href="thread.html#2244">[ thread ]</a>
+              <a href="subject.html#2244">[ subject ]</a>
+              <a href="author.html#2244">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Aug 4, 2011 at 8:57 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;&gt;<i> I nearly improved /etc/init.d/cgroup.
+</I>&gt;&gt;<i> But I was unable to decide if I want to allow the SA to be able
+</I>&gt;&gt;<i> to input a different mount point and select subsystems.
+</I>&gt;&gt;<i> Does anyone have complaints about cgroups's subsystems
+</I>&gt;&gt;<i> or mounting it on /dev/cgroup ?
+</I>&gt;<i> cgroups are not devices, putting them in /dev/ is a bit of an abuse.
+</I>
+I originally selected /dev/cgroup becasue
+that was being shown in the documentation
+/usr/src/linux/Documentation/cgroups/
+
+However, upon looking today I see that the examples are revised.
+cgroup is now mounted on /sys/fs/cgroup/
+However, it still lacks consensus
+concerning mounting subsystems together or separately.
+Both ways are still supported.
+
+Mounting subsystems together is less flexible because
+certain subsystems can not be used because they
+prohibit the movement of a process into different cgroups.
+And yet mounting subsystems together is faster to mount
+and faster to create, make cgroups, move processes, etc...
+
+
+&gt;<i> How about /run?
+</I>&gt;<i> Since we have it, we might as well use it.
+</I>
+It is already the designated dumping ground for files created
+during sysinit/early booting.
+It is not the first place I would go looking for cgroup.
+But then as a SA I would first check /proc/mounts
+and next check the documentation directory in order
+to learn the mount point for cgroup if that decision was mine.
+
+In one file are there two examples using /cgroup as the mount point.
+
+
+memcg_test.txt: # mount -t cgroup none /cgroup -o cpuset,memory,cpu,devices
+memcg_test.txt: # mount -t cgroup none /cgroup -o memory
+
+Maybe those will eventually be revised to /sys/fs/cgroup ?
+Similar to the the many other examples?
+
+blkio-controller.txt:   mount -t tmpfs cgroup_root /sys/fs/cgroup
+blkio-controller.txt:   mount -t cgroup -o blkio none /sys/fs/cgroup/blkio
+blkio-controller.txt:        mount -t cgroup -o blkio none /sys/fs/cgroup/blkio
+cgroups.txt: 1) mount -t tmpfs cgroup_root /sys/fs/cgroup
+cgroups.txt: 3) mount -t cgroup -ocpuset cpuset /sys/fs/cgroup/cpuset
+cgroups.txt:  mount -t tmpfs cgroup_root /sys/fs/cgroup
+cgroups.txt:  mount -t cgroup cpuset -ocpuset /sys/fs/cgroup/cpuset
+cgroups.txt:# mount -t cgroup xxx /sys/fs/cgroup
+cgroups.txt:# mount -t tmpfs cgroup_root /sys/fs/cgroup
+cgroups.txt:# mount -t cgroup -o cpuset,memory hier1 /sys/fs/cgroup/rg1
+cgroups.txt:# mount -o remount,cpuset,blkio hier1 /sys/fs/cgroup/rg1
+cgroups.txt:# mount -o remount,blkio /sys/fs/cgroup/rg1
+cpuacct.txt:# mount -t cgroup -ocpuacct none /sys/fs/cgroup
+cpusets.txt: 2) mount -t cgroup -ocpuset cpuset /sys/fs/cgroup/cpuset
+cpusets.txt:  mount -t cgroup -ocpuset cpuset /sys/fs/cgroup/cpuset
+cpusets.txt:# mount -t cgroup -o cpuset cpuset /sys/fs/cgroup/cpuset
+cpusets.txt:mount -t cpuset X /sys/fs/cgroup/cpuset
+cpusets.txt:mount -t cgroup -ocpuset,noprefix X /sys/fs/cgroup/cpuset
+freezer-subsystem.txt:   # mount -t cgroup -ofreezer freezer
+/sys/fs/cgroup/freezer
+memory.txt:# mount -t tmpfs none /sys/fs/cgroup
+memory.txt:# mount -t cgroup none /sys/fs/cgroup/memory -o memory
+
+
+The revised examples in the documentation directory
+already provide or hint at what could become inter-distribution consensus.
+That is what I wanted.
+I anticipated the cgroup mount point moving.
+All my programs that use cgroup
+have a flexible method for locating the cgroup file system's mount point.
+However, they do not support using individual subsystem mounts.
+And I am feeling tempted to transition not merely the mount point,
+but also to using individual subsystem mounts.
+
+Oh, I should have looked at the documentation directory again
+before posting the question to the list.
+At least part of the answer was there.
+Yet previously, examples showed /dev/cgroup/ as a mount point.
+And now /dev/cgroup can not be grepped.
+
+I should mention that learning cgroup is worth the effort.
+At first glance cgroup is confusing.
+Yet it becomes the new key to unlocking
+the control room to resource management.
+Not merely can proportion of CPU cycle allocation be controlled,
+but also memory, disk I/O, processor affinity, and even the ability
+to freeze/pause programs.
+
+The many different methods such as nice, taskset, ulimit
+can now be done through cgroup.
+And using &quot;nice&quot; and &quot;renice&quot; no longer effects processes.
+That scheduler is not used with cgroup.
+
+
+&gt;<i> I just had a look at /run... it looks nice and populated, seems that
+</I>&gt;<i> more and more projects are using it.
+</I>
+I am merely shoveling files and directories into it.
+Most boxes should have symbolic links
+
+$ ls -lah /var/ | grep &quot;lock\|run&quot;
+lrwxrwxrwx  1 root root     9 Apr 26 14:30 lock -&gt; /run/lock
+lrwxrwxrwx  1 root root     4 Jul 28 14:15 run -&gt; /run
+
+
+&gt;&gt;<i> Another question is...
+</I>&gt;&gt;<i> Does anyone use gpm?
+</I>&gt;<i> Not me. Seems that almost every input device interferes with xf86-input-evdev
+</I>&gt;<i> On a laptop where the attached equipment changes often, evdev is a must.
+</I>
+Excellent observation.
+gmp is ancient, but xf86-input-evdev is new.
+Seems reasonable that gpm would not integrate
+the input from two or more pointing devices
+the way xf86-input-evdev allows for both
+a touchpad and a usb mouse to be used concurrently.
+
+Maybe instead of running as a daemon
+gpm can be started when a user logs in on a console
+and then stopped when logged out?
+I am yet uncertain if gpm use
+is worth the time to consider and effort to revise.
+
+
+Thanks for the feedback.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002241.html">[Sorcerer-admins] more improved init-scripts.
+</A></li>
+	<LI>Next message: <A HREF="002246.html">[Sorcerer-admins] better cgroups...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2244">[ date ]</a>
+              <a href="thread.html#2244">[ thread ]</a>
+              <a href="subject.html#2244">[ subject ]</a>
+              <a href="author.html#2244">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

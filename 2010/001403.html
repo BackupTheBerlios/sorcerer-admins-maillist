@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt-x11-opensource and /bin/pwd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource%20and%20/bin/pwd&In-Reply-To=%3C596b75861001220626w47eefe76m659a5b0f5b3bd792%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001402.html">
+   <LINK REL="Next"  HREF="001404.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt-x11-opensource and /bin/pwd</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource%20and%20/bin/pwd&In-Reply-To=%3C596b75861001220626w47eefe76m659a5b0f5b3bd792%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt-x11-opensource and /bin/pwd">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan 22 15:26:14 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001402.html">[Sorcerer-admins] qt-x11-opensource and /bin/pwd
+</A></li>
+        <LI>Next message: <A HREF="001404.html">[Sorcerer-admins] Sorcerer Install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1403">[ date ]</a>
+              <a href="thread.html#1403">[ thread ]</a>
+              <a href="subject.html#1403">[ subject ]</a>
+              <a href="author.html#1403">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah, I should add that...
+
+I did checks with the initramfs to determine if /bin/pwd
+is used during sysinit.
+And it is not.
+The easy way to tell is to do a standard boot.
+It will make the /boot/fast/initrf
+Then, I merely have to check that initramfs.
+Since /bin/pwd was not included
+that indicates it was never loaded/run during boot.
+
+Having programs in /bin /sbin that will not be run during boot
+or are not essential for rescue and repair
+merely wastes space and makes booting longer than necessary.
+
+So the the decision to move /bin/pwd to /usr/bin/pwd
+was not in error nor a decision made without consideration.
+
+There is no advantage for a source
+to avoid using PATH to locate pwd.
+Both /bin/ and /usr/bin/ would normally be in PATH.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001402.html">[Sorcerer-admins] qt-x11-opensource and /bin/pwd
+</A></li>
+	<LI>Next message: <A HREF="001404.html">[Sorcerer-admins] Sorcerer Install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1403">[ date ]</a>
+              <a href="thread.html#1403">[ thread ]</a>
+              <a href="subject.html#1403">[ subject ]</a>
+              <a href="author.html#1403">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

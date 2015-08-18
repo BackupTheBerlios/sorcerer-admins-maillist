@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important bugs/omissions; definitely better fix boxes ASAP rather than chance encountering it on the next reboot.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20bugs/omissions%3B%0A%20definitely%20better%20fix%20boxes%20ASAP%20rather%20than%20chance%20encountering%20it%0A%20on%20the%20next%20reboot.&In-Reply-To=%3CCA%2BT4wDgbwDNQ8QRapCWDq6N14PhS2WbYPFAjYnmDATBU4zD3-g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002427.html">
+   <LINK REL="Next"  HREF="002429.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important bugs/omissions; definitely better fix boxes ASAP rather than chance encountering it on the next reboot.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20bugs/omissions%3B%0A%20definitely%20better%20fix%20boxes%20ASAP%20rather%20than%20chance%20encountering%20it%0A%20on%20the%20next%20reboot.&In-Reply-To=%3CCA%2BT4wDgbwDNQ8QRapCWDq6N14PhS2WbYPFAjYnmDATBU4zD3-g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important bugs/omissions; definitely better fix boxes ASAP rather than chance encountering it on the next reboot.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May  4 17:53:52 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002427.html">[Sorcerer-admins] summary of changes that require SA	interaction:
+</A></li>
+        <LI>Next message: <A HREF="002429.html">[Sorcerer-admins] sorcerer web pages and ppr services are down atm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2428">[ date ]</a>
+              <a href="thread.html#2428">[ thread ]</a>
+              <a href="subject.html#2428">[ subject ]</a>
+              <a href="author.html#2428">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Boxes that updated are probably missing
+/etc/init.d/{rootname,veth-setup}
+These important files should be provided by init-scripts.
+Unfortunately, somehow they were omitted from being added to the svn.
+Thankfully, Evert spotted and reported it.
+
+I have made corrections and rolled new grimoire tarballs
+that replace the previous 4 days worth of grimoire tarballs.
+So the solution should be as simple as:
+
+# rm -fr /aux/can/source/grimoire; au begin grimoire; au scry
+grimoire; au begin init-scripts
+
+However, if a box already boots without those init-scripts
+the the network adapter will not be available in the root file system.
+Perhaps the easiest fix for that box might be something like
+log into the root file system.
+edit /etc/init.d/namespace
+locate the -imnpu and change it to -impu
+Therefore, on the next boot the network namespace will not be unshared.
+Then issue shutdown -r now.
+When the box reboots networking should work from the root file system.
+
+# rm -fr /aux/can/source/grimoire; au begin grimoire; au scry
+grimoire; au begin init-scripts
+
+And when init-scripts casts it will install the missing init-scripts
+and also uncustomized the modification made to /etc/init.d/namespace.
+
+Init-scripts are provided in /etc/init.d/ which is within the /etc/ hierarchy.
+However, init-scripts are not configuration files.
+Customized configuration files are preserved across updates.
+Customization of init-scripts are overwritten.
+
+Hopefully, those instructions will assist
+everyone with circumventing the only rough aspect of transition.
+Sorry for the inconvenience.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002427.html">[Sorcerer-admins] summary of changes that require SA	interaction:
+</A></li>
+	<LI>Next message: <A HREF="002429.html">[Sorcerer-admins] sorcerer web pages and ppr services are down atm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2428">[ date ]</a>
+              <a href="thread.html#2428">[ thread ]</a>
+              <a href="subject.html#2428">[ subject ]</a>
+              <a href="author.html#2428">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] net-snmp
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20net-snmp&In-Reply-To=%3COF575BCF9A.1AB442A5-ONC22573EE.0040A554-C22573EE.00415E33%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000394.html">
+   <LINK REL="Next"  HREF="000398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] net-snmp</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20net-snmp&In-Reply-To=%3COF575BCF9A.1AB442A5-ONC22573EE.0040A554-C22573EE.00415E33%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] net-snmp">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Feb 13 12:54:07 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000394.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+        <LI>Next message: <A HREF="000398.html">[Sorcerer-admins] net-snmp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#395">[ date ]</a>
+              <a href="thread.html#395">[ thread ]</a>
+              <a href="subject.html#395">[ subject ]</a>
+              <a href="author.html#395">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Couple problems with net-snmp. First is that it wont start, i havent 
+figure out why but /etc/init.d/snmpd somehow wants to load kernel module? 
+
+---------------8&lt;--------------------------------
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at machine</A>:/etc/init.d# ./snmpd start
+ * snmpd module loading                                        [ warning ]
+modprobe: invalid option -- u
+Usage: modprobe [-v] [-V] [-C config-file] [-n] [-i] [-q] [-b] [-o 
+&lt;modname&gt;] &lt;modname&gt; [parameters...]
+modprobe -r [-n] [-i] [-v] &lt;modulename&gt; ...
+modprobe -l -t &lt;dirname&gt; [ -a &lt;modulename&gt; ...]
+ * snmpd not loaded                                            [ failed  ]
+---------------8&lt;--------------------------------
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at machine</A>:/etc/init.d# augur version grimoire
+2008-44
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at machine</A>:/etc/init.d# augur version sorcery 
+implosion-20080212-4
+
+Anyway, bigger problem is that it segfaults everytime i try to ask network 
+counters from it:
+Feb 13 13:45:08 machine kernel: snmpd[3808]: segfault at b7f68000 eip 
+b7d75c74 esp bfb23ed0 error 4
+
+---------------8&lt;--------------------------------
+Compile log for net-snmp 5.4.1
+Built with sorcery implosion-20080212-4 and gcc 4.2.3
+Built on ke 13.2.2008 13:35:00 +0200
+checking what to build and install...  agent apps man local mibs
+using default persistent mask 077
+using default AgentX socket /var/agentx/master
+using default &quot;enterprise.net-snmp&quot;
+using default enterprise sysOID &quot;NET-SNMP-MIB::netSnmpAgentOIDs...&quot;
+using default notifications &quot;NET-SNMP-MIB::netSnmpNotifications&quot;
+using OS default send buffer size for server sockets
+using OS default recv buffer size for server sockets
+using OS default send buffer size for client sockets
+using OS default recv buffer size for client sockets
+checking if I need to feed myself to ksh... no
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ANSI C... none needed
+checking how to run the C preprocessor... gcc -E
+checking for egrep... grep -E
+checking for AIX... no
+checking build system type... i686-pc-linux-gnu
+checking host system type... i686-pc-linux-gnu
+
+...
+
+Installing /usr/share/man/man3/NetSNMP::agent::default_store.3
+Installing /usr/share/man/man3/NetSNMP::OID.3
+Installing /usr/share/man/man3/NetSNMP::ASN.3
+Installing /usr/share/man/man3/NetSNMP::default_store.3
+Writing 
+/usr/lib/perl5/site_perl/5.8.8/i686-linux-thread-multi/auto/Bundle/NetSNMP/.packlist
+Appending installation info to 
+/usr/lib/perl5/5.8.8/i686-linux-thread-multi/perllocal.pod
+make[1]: Poistutaan hakemistosta 
+&quot;/usr/src/sorcery/net-snmp/net-snmp-5.4.1/perl&quot;
+&quot;/root/.sorcery/grimoire/net-snmp.d/init.d/snmpd&quot; -&gt; &quot;/etc/init.d/snmpd&quot;
+Creating symbolic links to init-scripts.
+---------------8&lt;--------------------------------
+
+my cprefs are:
+export    CFLAGS=&quot;-march=pentium4 -O2 -fomit-frame-pointer -pipe&quot;
+export  CXXFLAGS=&quot;-march=pentium4 -O2 -fomit-frame-pointer -pipe&quot;
+export   LDFLAGS=&quot;-Wl,-s&quot;
+export      PATH=&quot;/opt/gcc/current/bin:$PATH&quot;
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080213/147da6be/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080213/147da6be/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000394.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+	<LI>Next message: <A HREF="000398.html">[Sorcerer-admins] net-snmp
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#395">[ date ]</a>
+              <a href="thread.html#395">[ thread ]</a>
+              <a href="subject.html#395">[ subject ]</a>
+              <a href="author.html#395">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

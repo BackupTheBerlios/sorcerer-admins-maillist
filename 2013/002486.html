@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important updates...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDiu31XJTZhZ-uM3D5GJuT0_CrjEYgi8tUy86amf_o96pA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002485.html">
+   <LINK REL="Next"  HREF="002480.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important updates...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20updates...&In-Reply-To=%3CCA%2BT4wDiu31XJTZhZ-uM3D5GJuT0_CrjEYgi8tUy86amf_o96pA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important updates...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Nov 24 00:01:09 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002485.html">[Sorcerer-admins] important updates...
+</A></li>
+        <LI>Next message: <A HREF="002480.html">[Sorcerer-admins] changes and bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2486">[ date ]</a>
+              <a href="thread.html#2486">[ thread ]</a>
+              <a href="subject.html#2486">[ subject ]</a>
+              <a href="author.html#2486">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Nov 23, 2013 at 2:02 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> &gt; # cat /+/base/etc/rootfs/fstab
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; LABEL=dv7_Main          /+/base          auto    defaults 0 0
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; # cat /+/base/etc/fstab
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; LABEL=dv7_Boot          /boot   auto    defaults 0 0
+</I>&gt;<i> &gt; LABEL=dv7_Main_Aux  /aux    auto    defaults 0 0
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I would not normally mount /aux/ that way.
+</I>&gt;<i> &gt; However, for the purpose of an example
+</I>&gt;<i> &gt; the method described immediately above works.
+</I>&gt;<i> &gt; Configuration files intended for use on the rootfs belong in /etc/rootfs/
+</I>&gt;<i> &gt; Configuration files intended for use on a root file system belong in
+</I>&gt;<i> /etc/
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I am uncertain how the understanding of that became reversed.
+</I>&gt;<i> &gt; If that can be relayed to me
+</I>&gt;<i> &gt; then perhaps the documentation can be adjusted
+</I>&gt;<i> &gt; to circumvent that possible point of confusion?
+</I>&gt;<i> Hmm...
+</I>&gt;<i>
+</I>&gt;<i> Maybe it's just because it's not what I expected.
+</I>&gt;<i> In this example above, won't /etc/rootfs/fstab overwrite /etc/fstab
+</I>&gt;<i> when the computer boots?
+</I>&gt;<i>
+</I>
+Exactly.
+However, that overwrite only happens on the rootfs,
+because the init-script that does it only executes during sysinit.
+
+
+
+&gt;<i> So many different things are called root.
+</I>&gt;<i>
+</I>
+I agree that &quot;root&quot; is an overused word.
+I sometimes wonder why I do not misunderstand it.
+I suppose a person might normally expect
+that rootfs is the acronym for root file system, when it is not.
+A rootfs is a certain thing and yet I introduce the concept
+of a rootfs directory within /etc/
+which compounds the meaning of rootfs.
+Similarly what is a root directory?
+Is it / or is it /root/ ?
+/root/ is the &quot;root account's&quot; home directory.
+And traditionally the root account tends to own
+all the files in the root file system.
+But now that is not longer necessarily true.
+I guess BSDers did not want to compound root
+and therefore re-invented the wheel.  *chuckles*
+
+root is an overutilized word.
+However, kernel hackers choose the word rootfs
+for the name of the rootfs.
+Therefore, for me to call it differently invites confusion.
+A while back I did call it by a different name.
+I referred more to it's utilization however,
+when I called it &quot;The Sorcerer's Keep.&quot;
+That nickname held two purposes.
+First, a keep is the center of a castle
+likewise the rootfs was the center of a computer.
+Secondly, package based POSIX tend to discard
+the rootfs immediately after transitioning to a root file system.
+Therefore, their rootfs was discarded.
+Therefore, the concept of &quot;keep&quot; as the antonym for discard
+added meaning to the nickname.
+However, to avoid potential for confusion
+I have entirely dropped the utilization of the nickname
+in favor of the name kernel hacker's gave it.
+However, for anyone wondering how one fit with the other
+over the last few years then they refer to the same thing.
+
+My confusion stems from what goes on to the initramfs vs. what goes on
+&gt;<i> to the main/base filesystem.
+</I>&gt;<i>
+</I>
+The initramfs images are a subset of the /+/base/ root file system.
+And while the names of configuration files overlap contrasting content can
+not.
+Therefore, the solution was to change the name or change the location.
+/etc/rootfs/ provides that alternate location for configuration files
+intended for use on the rootfs.
+That is just one several possible methods.
+It is the currently prescribed method.
+
+I also considered /rootfs/etc/ and /etc.rootfs/
+However, it adds additional clutter to /
+And while at one time an /etc.new/ existed
+that has since migrated to /aux/new/
+/ for each root file system should be clean and sparse.
+
+Would it not be much simpler to have a /etc/initramfs directory, and
+&gt;<i> in this directory is the fstab, hostname and shadow files and whatever
+</I>&gt;<i> is required on the initramfs, and then each and every root will have
+</I>&gt;<i> it's own /etc, including the base root?
+</I>&gt;<i>
+</I>
+Certainly, that is a possibility.
+It is accomplished easily by
+# mkdir -p /etc/rootfs
+# ln -s rootfs /etc/initramfs
+However, that creates cause for confusion.
+How does /etc/initramfs? differ in use from /boot/initrf/ ?
+
+Either utilization compounds the meaning of a word.
+I am uncertain which is the better to compound.
+Perhaps rootfs is the better word to compound,
+because much discussion is made about rootfs
+while little is mentioned about initramfs.
+Hmm, 11 documents to 9 documents.
+Well, apparently I wrote much about both.
+
+Certainly, some files must differ and others should differ.
+How best to provide this is a worthy topic of conversation.
+/rootfs/etc/ offers the most flexibility,
+but places within / a directory that is rarely utilized.
+It could be provided as /aux/rootfs/etc/
+Therefore, that still allows the supplanting of any file
+configuration or otherwise.
+However, it requires that the SA actually dive into /aux/
+And while every SA should explore /aux/
+no reason exists that compels a SA to visit /aux/
+while everything works as expected.
+And while /usr/share/ exists as the junk directory
+nothing in there is easily discovered by casual
+browsing by a human.
+
+# find /usr/share/ -mindepth 1 -maxdepth 1 | wc -l
+406
+
+I do not parse 406 entries with a glance.
+
+# find /etc/ -mindepth 1 -maxdepth 1 | wc -l
+243
+
+However, in all respect /etc/ also lacks tight organization.
+
+So if we do not want /etc/rootfs/
+and definitely do not want /rootfs/
+and do not want to add it in /aux/
+then what becomes the obvious location?
+Ha, I wonder if I will click send and
+then an instant later it will become apparent.
+Yet at the moment... actually...
+What about /boot/rootfs/ and especially /boot/rootfs/etc/ ?
+/boot/ is not a bad place for it.
+It places a seldom used directory within a seldom used hierarchy.
+
+On the other hand /boot/ is never encrypted.
+A SA might not want for passwd file to exist unencrypted.
+Technically, even a small amount of encryption could be used
+with an initramfs image such that the majority of the files
+could be provided encrypted.
+However, I do not provide an init-script which implements it.
+
+On the other hand /boot/rootfs/ could be mounted as LUKS
+encrypted device or be a symbolic links that points elsewhere.
+So the limitation is not circumventable.
+
+Yet on the other hand I want a method where no spell owns
+files installed to /boot/ and /boot/ can be entirely regenerated
+from files installed elsewhere in the root file system
+if for example a SA accidentally or intentionally
+deletes the content of /boot/
+rm -r would not descend into a symbolic link.
+But then that implies that the content is best stored elsewhere.
+
+So no /boot/rootfs/
+hmm....
+I will go with /etc/rootfs/ until a better suggestion is offered
+or until I surmise a better idea.
+I am not satisfied with /etc/rootfs/
+but the compromise suffices for providing something immediately usable.
+/opt/rootfs/ ?
+Probably not.
+When looking for files involved in booting,
+/opt/ and /home/ are the last place I would look.
+/usr/ is second to last.
+
+Aside from flexibility, I have no strong objections to /etc/rootfs/
+Does anyone else have cause for disliking /etc/rootfs/
+as a location for storing configuration files
+that are dominant on the rootfs
+and dormant on the root file system?
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131123/791d87f0/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131123/791d87f0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002485.html">[Sorcerer-admins] important updates...
+</A></li>
+	<LI>Next message: <A HREF="002480.html">[Sorcerer-admins] changes and bugs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2486">[ date ]</a>
+              <a href="thread.html#2486">[ thread ]</a>
+              <a href="subject.html#2486">[ subject ]</a>
+              <a href="author.html#2486">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

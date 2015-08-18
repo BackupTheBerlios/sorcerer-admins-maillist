@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Kernel Panic
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Kernel%20Panic&In-Reply-To=%3C596b75860708101855v78047776pf1bfaffaebe76c5c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000113.html">
+   <LINK REL="Next"  HREF="000117.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Kernel Panic</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Kernel%20Panic&In-Reply-To=%3C596b75860708101855v78047776pf1bfaffaebe76c5c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Kernel Panic">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug 11 03:56:00 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000113.html">[Sorcerer-admins] Kernel Panic
+</A></li>
+        <LI>Next message: <A HREF="000117.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#116">[ date ]</a>
+              <a href="thread.html#116">[ thread ]</a>
+              <a href="subject.html#116">[ subject ]</a>
+              <a href="author.html#116">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It might not know what your root is
+You could try adding kernel parameter
+root=/dev/....
+
+Also it is very easy to cause the above problem if....
+The kernel is compiled without directly compiling in support for:
+the required IDE SCSI SATA PATA chipset drivers;
+or the filesystem for which /
+
+Yes, you compile a kernel with modular support for your
+drive hardware chipsets and modular support for the file
+systems that you have deployed.
+But it will not boot.
+That is because I detest initial booting using an initramfs or initrd image.
+Because each linux kernel for Sorcerer boxes are custom compiled,
+for near optimal performance and memory usage,
+Sorcerer boxes do not require an initrd or initramfs image for loading
+drive chipset driver modules and filesystem modules before mounting /
+that resides on an actual disk or disk like device.
+
+I am amazed you have a screenshot of it.
+Were you using a virtual machine?
+
+Do check that you have the support for the correct chipset
+that the virtual machine emulates in addition to the chipset
+of the actual machine if you are testing a kernel on the virtual
+machine that you may want to use on the actual machine.
+If, for example, you compiled in support for the chipsets
+of the actual machine thinking, yes, this is correct,
+but then run it on the virtual machine which requires different
+drive chipset then of course it will not be able to access the virtual drive.
+
+
+
+On 8/10/07, S.Jaafar Ahmed &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sayedjaffer at gmail.com</A>&gt; wrote:
+&gt;<i> I'm tried to install Sorcerer about three times from two ISO's -the latest
+</I>&gt;<i> and the previous-, but every time I get a kernel panic error as in this
+</I>&gt;<i> screenshot:
+</I>&gt;<i>  <A HREF="http://img521.imageshack.us/img521/4807/kernelpanicpp8.jpg">http://img521.imageshack.us/img521/4807/kernelpanicpp8.jpg</A>
+</I>&gt;<i>
+</I>&gt;<i> My hdd is partitioned as follows:
+</I>&gt;<i> 1. /boot is ext3
+</I>&gt;<i> 2. / is Reiserfs
+</I>&gt;<i> 3. Swap
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Kind regards,
+</I>&gt;<i>
+</I>&gt;<i> S.Jaafar N. Ahmed
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000113.html">[Sorcerer-admins] Kernel Panic
+</A></li>
+	<LI>Next message: <A HREF="000117.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#116">[ date ]</a>
+              <a href="thread.html#116">[ thread ]</a>
+              <a href="subject.html#116">[ subject ]</a>
+              <a href="author.html#116">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C1de9d39c0904160450r7e1401cdp61e565e14c2edd1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001062.html">
+   <LINK REL="Next"  HREF="001066.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lvm, suspend, raid, swap, encryption...</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C1de9d39c0904160450r7e1401cdp61e565e14c2edd1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lvm, suspend, raid, swap, encryption...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Apr 16 13:50:30 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001062.html">[Sorcerer-admins] [slightly OT] glusterfs
+</A></li>
+        <LI>Next message: <A HREF="001066.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1065">[ date ]</a>
+              <a href="thread.html#1065">[ thread ]</a>
+              <a href="subject.html#1065">[ subject ]</a>
+              <a href="author.html#1065">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I was looking about lvm and raid and I begun to think about mixing all
+stuff together....
+ie use lvm as a backend to manage virtual partitions on raw disks,
+putting some raid (optional but could be interesting) on it,
+creating following partitions :
+/dev/lvm1 : /boot : no raid on it, just lvm
+/dev/lvm2 : swap : no raid on it, just lvm, shall be suitable for
+suspend/resume on disk
+/dev/lvm3 : / : no raid, just lvm (or optional raid1)
+/dev/lvm4 : /home : raid3, with parity disk on /dev/lvm5
+/dev/lvm5 : parity disk : raid1 (duplication of parity disk)
+
+1) is it possible to have a swap suitable for suspend/resume on lvm?
+2) is it possible with sorcerer to have this configuration?
+3) is it possible to encrypt /home on top of this?
+thanks
+JLM
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001062.html">[Sorcerer-admins] [slightly OT] glusterfs
+</A></li>
+	<LI>Next message: <A HREF="001066.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1065">[ date ]</a>
+              <a href="thread.html#1065">[ thread ]</a>
+              <a href="subject.html#1065">[ subject ]</a>
+              <a href="author.html#1065">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

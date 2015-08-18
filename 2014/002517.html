@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] changes to compiler optimization...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2014/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes%20to%20compiler%20optimization...&In-Reply-To=%3CCAER78vQcFcZ4HrXYzMOwpgE%3Dg8Y1vKACrVL%3DodiPrAX5OExpSg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002516.html">
+   <LINK REL="Next"  HREF="002518.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] changes to compiler optimization...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20changes%20to%20compiler%20optimization...&In-Reply-To=%3CCAER78vQcFcZ4HrXYzMOwpgE%3Dg8Y1vKACrVL%3DodiPrAX5OExpSg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] changes to compiler optimization...">evorster at gmail.com
+       </A><BR>
+    <I>Fri Jan 31 05:17:25 CET 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002516.html">[Sorcerer-admins] changes to compiler optimization...
+</A></li>
+        <LI>Next message: <A HREF="002518.html">[Sorcerer-admins] changes to compiler optimization...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2517">[ date ]</a>
+              <a href="thread.html#2517">[ thread ]</a>
+              <a href="subject.html#2517">[ subject ]</a>
+              <a href="author.html#2517">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm.. If I read this correctly, an SA installing that wants to have
+his software optimized needs to recompile everything twice to have
+optimized software.
+How is that useful for speeding up installation?
+
+Also, no option for having all spells optimized. Have you ever thought
+that just maybe there are SA's out there that don't mind burning a few
+extra cycles on install?
+
+Secondly, per spell cpref is absolutely essential. As a case in point,
+a previous version of firefox managed to hit a bug in gcc, and it was
+only with a custom cpref for it that I was able to have an installed
+firefox that did not segfault.
+
+
+You know, using linux is about choice. ET has been slowly eroding away
+the choices a SA has over the last few years. In my opinion, that is a
+bad thing.
+
+-Evert-
+
+On 30 January 2014 17:30, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Perhaps I forgot to mention this
+</I>&gt;<i> when I made the change;
+</I>&gt;<i> however automatic optimization works differently.
+</I>&gt;<i> First, the optimize feature must be enabled
+</I>&gt;<i> otherwise optimization is -O0
+</I>&gt;<i> which is hyphen Oh Zero.
+</I>&gt;<i> Second, optimization is -O0
+</I>&gt;<i> when installing software that is not installed.
+</I>&gt;<i> That expedites deployment.
+</I>&gt;<i> Finally, -O2 optimization is used when
+</I>&gt;<i> the optimize feature is enabled
+</I>&gt;<i> and when a technic has the optimize trait
+</I>&gt;<i> and when the software project provided
+</I>&gt;<i> by the technic is already installed.
+</I>&gt;<i> Or more simply stated only installed software projects
+</I>&gt;<i> are eligible for the slower compilation that provides optimization.
+</I>&gt;<i>
+</I>&gt;<i> These changes are not undesirable.
+</I>&gt;<i> Initial deployment is faster.
+</I>&gt;<i> Installed software might execute faster following updates.
+</I>&gt;<i> New computers almost always feel plenty fast, correct?
+</I>&gt;<i> Yet with these changes they will seem to become faster
+</I>&gt;<i> over time instead of slower, but only to a point.
+</I>&gt;<i> Optimized code may required 200% to 300% duration to compile.
+</I>&gt;<i> However, runtime performance increase is in the 0% to 50% range.
+</I>&gt;<i> And only software that runs a processor full bore
+</I>&gt;<i> for a full second or longer
+</I>&gt;<i> realizes any benefit for being optimized.
+</I>&gt;<i>
+</I>&gt;<i> The processor utilization by ld.so to dynamically link
+</I>&gt;<i> ELF executable files during runtime before the program begins execution
+</I>&gt;<i> can often exceed the processor utilization of many programs
+</I>&gt;<i> that complete in an instant.
+</I>&gt;<i> So for example, the difference in execution speed of
+</I>&gt;<i> -O2 optimized /bin/ls and -O0 optimized /bin/ls
+</I>&gt;<i> makes no difference unless intending to run /bin/ls 3000 times
+</I>&gt;<i> in a loop.
+</I>&gt;<i> And then making /bin/ls a static link executable
+</I>&gt;<i> improve performance much more so than compiler optimization.
+</I>&gt;<i>
+</I>&gt;<i> Consequently, for many software projects,
+</I>&gt;<i> dare I say the majority of software projects,
+</I>&gt;<i> compiler optimization provides little benefit while
+</I>&gt;<i> increasing compilation duration by 200% to 300%.
+</I>&gt;<i> Support libraries such as libz MesaLib, video and audio codecs,
+</I>&gt;<i> any many other processor intensive libraries tend to be the exception.
+</I>&gt;<i> And in contrast the fancy GUI interfaces to utilize the libraries
+</I>&gt;<i> receive practically no benefit from optimization
+</I>&gt;<i> because the majority of intense processor utilization
+</I>&gt;<i> is delegated to a support library such as a video codec or libz.
+</I>&gt;<i>
+</I>&gt;<i> Please forgive if I seem to be belittling SAs.
+</I>&gt;<i> However, I have come to the impression that many SAs
+</I>&gt;<i> do not come to realize the significance of optimization
+</I>&gt;<i> until perhaps a decade of use using a POSIX.
+</I>&gt;<i> Neophytes read about optimization and tend to think,
+</I>&gt;<i> &quot;I want everything compiled with -O3 and unsafe optimizations.&quot;
+</I>&gt;<i> And then they lament when installed software segmentation faults.
+</I>&gt;<i> And they blame the instability on Kyle's crappy POSIX
+</I>&gt;<i> when in fact the SA's choice of optimization was culpable.
+</I>&gt;<i>
+</I>&gt;<i> Moderately experienced SAs might prefer -O2 optimization
+</I>&gt;<i> for all compiled and installed software projects.
+</I>&gt;<i> Yes, it creates stable software.
+</I>&gt;<i> However, it also doubles if not triples deployment and update duration
+</I>&gt;<i> They yet lack the realization that the benefit of optimization
+</I>&gt;<i> becomes evident only where processing cycles are spent.
+</I>&gt;<i>
+</I>&gt;<i> As a result of that a few years ago I deprecated the concept
+</I>&gt;<i> of a default cpref file in favor of granting the optimization
+</I>&gt;<i> only to software projects that have the capacity
+</I>&gt;<i> to utilize a processor for a significant duration.
+</I>&gt;<i> That way the benefit of optimization can be realized
+</I>&gt;<i> without paying the cost for optimizing all installed software.
+</I>&gt;<i>
+</I>&gt;<i> With that consideration the method for providing optimization
+</I>&gt;<i> continues to evolve.
+</I>&gt;<i> And those who prefer to simply omit optimization,
+</I>&gt;<i> because a computer is plenty fast already,
+</I>&gt;<i> can disable the optimize feature
+</I>&gt;<i> which will minimize the duration for updates.
+</I>&gt;<i>
+</I>&gt;<i> As always the speed at which code accomplish a task
+</I>&gt;<i> is not effected most by the computer upon which it runs,
+</I>&gt;<i> nor the compiler which compiled it, nor the compiler optimization.
+</I>&gt;<i> Whether code accomplish a task quickly
+</I>&gt;<i> depends entirely upon the skill of the software author.
+</I>&gt;<i> And that is a factor that tends to be beyond the control
+</I>&gt;<i> of both SAs and POSX integrators.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+-- 
+Evert Vorster
+Chief Observer
+WG Cook
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002516.html">[Sorcerer-admins] changes to compiler optimization...
+</A></li>
+	<LI>Next message: <A HREF="002518.html">[Sorcerer-admins] changes to compiler optimization...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2517">[ date ]</a>
+              <a href="thread.html#2517">[ thread ]</a>
+              <a href="subject.html#2517">[ subject ]</a>
+              <a href="author.html#2517">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

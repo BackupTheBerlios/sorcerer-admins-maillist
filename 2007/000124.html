@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Poppler &amp; kdegraphics
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3COFA5CFEBB4.2D3E6834-ONC2257336.0036E845-C2257336.0039CE16%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000108.html">
+   <LINK REL="Next"  HREF="000137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Poppler &amp; kdegraphics</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3COFA5CFEBB4.2D3E6834-ONC2257336.0036E845-C2257336.0039CE16%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Poppler &amp; kdegraphics">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Mon Aug 13 12:31:22 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000108.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+        <LI>Next message: <A HREF="000137.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#124">[ date ]</a>
+              <a href="thread.html#124">[ thread ]</a>
+              <a href="subject.html#124">[ subject ]</a>
+              <a href="author.html#124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 09.08.2007 18:38:16:
+
+&gt;<i> Actually, the current system does support these types of chains.
+</I>&gt;<i> However, I rarely split spells.
+</I>
+No, it does not support, unless you make new spell as you have done but i 
+dont think its good think to split spells only because optional 
+requirements.
+Its no better that you have now inherited it, because its still a new 
+spell, i dont like it.
+
+I propose that current system should be improved in way that there is no 
+need to split spells, but to improve requirement chain checking to include 
+to check that needed optional requirements is set to on.
+
+I think current system stores optional requirement to some file, i am 
+right? so why cant there be support so sorcerer checks if particular 
+optional part is on or off, if its off, then its re-cast that spell with 
+that optional part forced as on? Poppler &amp; kdegraphics is not only place 
+which this feature is needed, there are other KDE spells that needs spells 
+with optional requirement on. 
+
+Example in this case, with poppler and kdegraphics. kdegraphics REQ-line 
+is (now with splitted spell):
+
+       REQ=( &quot;glut kdelibs lcms&quot;
+             &quot;sane-backends:::for libkscan/kooka&quot;
+             &quot;gphoto2:::for digital still camera support&quot;
+             &quot;imlib:::to build the graphics browser/viewer KuickShow&quot;
+             &quot;fribidi:::for viewing right to left texts&quot;
+             &quot;poppler-qt-x11-free:--with-poppler:--without-poppler:for 
+enhanced PDF support&quot;
+             &quot;openexr:--with-openexr:--without-openexr:for OpenEXR 
+support&quot;
+             &quot;tiff:--with-tiff:--without-tiff:for TIFF image support&quot; )
+#            &quot;arts:--with-arts:--without-arts:for sound support&quot;
+
+You could mark poppler like this:
+       REQ=( &quot;glut kdelibs lcms&quot;
+             &quot;sane-backends:::for libkscan/kooka&quot;
+             &quot;gphoto2:::for digital still camera support&quot;
+             &quot;imlib:::to build the graphics browser/viewer KuickShow&quot;
+             &quot;fribidi:::for viewing right to left texts&quot;
+             &quot;poppler/qt-x11-free:--with-poppler:--without-poppler:for 
+enhanced PDF support&quot;
+             &quot;openexr:--with-openexr:--without-openexr:for OpenEXR 
+support&quot;
+             &quot;tiff:--with-tiff:--without-tiff:for TIFF image support&quot; )
+#            &quot;arts:--with-arts:--without-arts:for sound support&quot;
+
+So &lt;spell&gt;/&lt;optional requirement&gt;[/&lt;optional requirement&gt;]...etc.  so 
+poppler/qt-x11-free means that optional requirement qt-x11-free is needed 
+on. 
+All is needed that sorcerer checks if that optional part is on, if not, 
+then its re-casted with that option locked on. 
+Allthough locked optional requirements needs some sort support so end user 
+cant later re-cast spell and check off option that is needed elsewhere... 
+some sort of locked.on files?
+
+Any comments, would this be better than spell splitting/inheriting?
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070813/86908d2c/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070813/86908d2c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000108.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+	<LI>Next message: <A HREF="000137.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#124">[ date ]</a>
+              <a href="thread.html#124">[ thread ]</a>
+              <a href="subject.html#124">[ subject ]</a>
+              <a href="author.html#124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

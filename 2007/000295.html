@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C596b75860710031513p7599eccdledb4fa80a6cbee06%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000294.html">
+   <LINK REL="Next"  HREF="000297.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C596b75860710031513p7599eccdledb4fa80a6cbee06%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct  4 00:13:05 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000294.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+        <LI>Next message: <A HREF="000297.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#295">[ date ]</a>
+              <a href="thread.html#295">[ thread ]</a>
+              <a href="subject.html#295">[ subject ]</a>
+              <a href="author.html#295">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 10/3/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Saturday 29 September 2007, Kyle Sallee wrote:
+</I>&gt;<i> &gt; Problem solved in grimoire version 2007-273.
+</I>&gt;<i>
+</I>&gt;<i> What has been fixed? Which spell(s)? I am asking because the latest xorg
+</I>&gt;<i> upgrade has been quite painfull so far and there are still things I have not
+</I>&gt;<i> been able to resolve.
+</I>
+Seems that hang problem may be isolated to the i810 driver
+provided by xf86-video-intel?
+I have a box just like that.
+Fortunately, it is not being used as a work-station.
+If you find a fix for it, please provide.
+As of yesterday I checked for a newer version of
+xf86-video-intel, and none newer were available.
+
+
+&gt;<i> In particular, the xf86-video-intel driver performs much worse than
+</I>&gt;<i> xf86-video-i810 on my laptop with Intel 855GM graphics, I get diagonal moire
+</I>&gt;<i> and it always comes up with vertical refresh 11 Hz (!) instead of configured
+</I>&gt;<i> 60 or 75 Hz. I can switch it to higher refresh rate after it starts up but it
+</I>&gt;<i> is annoying and the moire remains (and the lousy 3d performance too).
+</I>&gt;<i>
+</I>&gt;<i> So I reverted to the i810 driver.
+</I>
+Does the xf86-video-i810 work with X11R7.3 or merely X11R7.2?
+
+
+&gt;<i> Next serious issue is the xf86-input-evdev driver, marked as broken in the
+</I>&gt;<i> grimoire. I have filed a bug report and the response was that version 1.2.0
+</I>&gt;<i> is needed. Funny, because the xorg release offers 1.1.2 and if you look into
+</I>&gt;<i> the individual xorg collection, version 1.1.5 can be found.
+</I>
+So what version if xf86-input-evdev driver do you recommend that we use?
+
+
+&gt;<i> After much searching,  I found 1.2.0 in the evdev git repository and it did
+</I>&gt;<i> compile with xorg-server 1.4. Unfortunately, the driver fails to load:
+</I>&gt;<i> (EE) Logitech_VX: cannot open input pEvdev
+</I>&gt;<i> (EE) PreInit returned NULL for &quot;Logitech_VX&quot;
+</I>
+&gt;<i> So I submitted another bug report but no response yet. Without working evdev,
+</I>&gt;<i> the mouse configuration is difficult: If /dev/input/mice is used, every click
+</I>&gt;<i> is reported twice (both press and release events) which makes it difficult to
+</I>&gt;<i> get around. This may be solved by some udev rules that would create a
+</I>&gt;<i> persistently named link in /dev/input for each mice but I haven't tested it
+</I>&gt;<i> yet (with the laptop I use different mice at home, in my office and on
+</I>&gt;<i> travel, what a mess - the fallback configuration is now useless, because it
+</I>&gt;<i> cannot use /dev/input/mice).
+</I>
+Section &quot;InputDevice&quot;
+
+# Identifier and driver
+
+    Identifier  &quot;Mouse1&quot;
+    Driver      &quot;mouse&quot;
+    Option &quot;Protocol&quot;    &quot;PS/2&quot; # PS/2 Mouse
+    Option &quot;Device&quot;      &quot;/dev/misc/psaux&quot;
+
+EndSection
+
+That could be difficult if you do not have a ps/2 style mouse, yes?
+I am not effected by that bug.
+Are there any other work-arounds?
+I rarely consider mouse configuration with X.
+
+
+&gt;<i> Well, if you got suggestion or solutions, I will certainly appreciate them.
+</I>
+ps/2 style port trackball with three buttons?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000294.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+	<LI>Next message: <A HREF="000297.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#295">[ date ]</a>
+              <a href="thread.html#295">[ thread ]</a>
+              <a href="subject.html#295">[ subject ]</a>
+              <a href="author.html#295">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

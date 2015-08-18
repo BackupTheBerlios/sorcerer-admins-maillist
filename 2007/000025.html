@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] libXau (from prior message)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXau%20%28from%20prior%20message%29&In-Reply-To=%3C8596d02a0701042140v70b5ce71k7cb9210402b0ac92%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000024.html">
+   <LINK REL="Next"  HREF="000015.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] libXau (from prior message)</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20libXau%20%28from%20prior%20message%29&In-Reply-To=%3C8596d02a0701042140v70b5ce71k7cb9210402b0ac92%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] libXau (from prior message)">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri Jan  5 06:40:29 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000024.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+        <LI>Next message: <A HREF="000015.html">[Sorcerer-admins] Sorcerer boxes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#25">[ date ]</a>
+              <a href="thread.html#25">[ thread ]</a>
+              <a href="subject.html#25">[ subject ]</a>
+              <a href="author.html#25">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Those might yet be caused by trying to export a previous
+</I>&gt;<i> XFree86 configuration file instead of generating a new one
+</I>&gt;<i> with xorgconfig
+</I>&gt;<i> You could save what you have and try generating a new one
+</I>&gt;<i> based upon the information in the old one to see if it helps.
+</I>
+
+Again, I have NEVER used XFree86 on this installation.
+The previous X was installed with 'cast xorg'.  I immediatly augur aborted
+and dispeled (without -unsafe, cause it wasn't used by anything) Xfree86.
+
+The previous xorg was NOT in seperate libraries, from perhaps october 2006.
+
+
+I have learned that augur aron and arof are very interesting and useful
+commands for cleanly uninstalling things. I went through and removed any
+graphic component which might have required X on another box.   Although...
+I didn't complete it with an alien scan...
+
+
+
+If you can spot missing requirements for spells with attribute
+&gt;<i> X11R7 then please do.
+</I>&gt;<i> My guess is that they are most likely
+</I>&gt;<i> involving spells that install only header files.
+</I>&gt;<i> In those instances an augur lddof spell_name
+</I>&gt;<i> would not detect spells requirements that are
+</I>&gt;<i> not of an ELF library nature.
+</I>&gt;<i>
+</I>&gt;<i> The last time I did tests were the initial cast of xorg
+</I>&gt;<i> on a completely fresh deployment of Sorcerer.
+</I>&gt;<i> Unfortunately, I did not detect any problems.
+</I>&gt;<i> It could be in some cases that a potential problem
+</I>&gt;<i> may be hidden merely due to the difference in order
+</I>&gt;<i> of which spells being or finish compilation on different boxes.
+</I>&gt;<i> Sorcerer does not enforce a strict order, but rather an order
+</I>&gt;<i> that requires only explicitly related spells to compile and
+</I>&gt;<i> install in order.
+</I>&gt;<i> So if at no point in a requirement chain
+</I>&gt;<i> does spell A requires spell B nor does spell B require spell A.
+</I>&gt;<i> Then, either spell B or spell A could be cast first depending
+</I>&gt;<i> upon which already has a source downloaded for it.
+</I>&gt;<i> However, if all the required sources were already downloaded,
+</I>&gt;<i> which was the case with my testing
+</I>&gt;<i> then the order that spells A and B would cast in would be specific
+</I>&gt;<i> to the order in which they appear in /root/.sorcery/index/order
+</I>&gt;<i>
+</I>&gt;<i> I hope that is not upsetting.
+</I>&gt;<i> However, knowing that fact may help identify why
+</I>&gt;<i> cast xorg may work flawlessly on one box, but could
+</I>&gt;<i> potentially trip on an unexpectedly required but not
+</I>&gt;<i> spell that provides required header files for compilation.
+</I>&gt;<i> So if you encounter it, please report specifically what spells are
+</I>&gt;<i> involved.
+</I>&gt;<i> To circumvent add in those requirements if they are obvious,
+</I>&gt;<i> but if not, download all the sources for spells with
+</I>&gt;<i> proto as part of their name, regenerate the index,
+</I>&gt;<i> and restart the cast of xorg.
+</I>&gt;<i> That will probably step around any problems
+</I>&gt;<i> involving required xorg header files not being installed.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070104/35c9e002/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070104/35c9e002/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000024.html">[Sorcerer-admins] libXau (from prior message)
+</A></li>
+	<LI>Next message: <A HREF="000015.html">[Sorcerer-admins] Sorcerer boxes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#25">[ date ]</a>
+              <a href="thread.html#25">[ thread ]</a>
+              <a href="subject.html#25">[ subject ]</a>
+              <a href="author.html#25">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

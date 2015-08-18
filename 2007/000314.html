@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%2064-bit%20%26%20vmware%20server&In-Reply-To=%3COF76B15344.06F44BF1-ONC2257375.001E0017-C2257375.001E0AE7%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000309.html">
+   <LINK REL="Next"  HREF="000316.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%2064-bit%20%26%20vmware%20server&In-Reply-To=%3COF76B15344.06F44BF1-ONC2257375.001E0017-C2257375.001E0AE7%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Mon Oct 15 07:28:08 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000309.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+        <LI>Next message: <A HREF="000316.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#314">[ date ]</a>
+              <a href="thread.html#314">[ thread ]</a>
+              <a href="subject.html#314">[ subject ]</a>
+              <a href="author.html#314">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Is something wrong with mailinglist as i dont get mailinglist messages as 
+often as they should come. Earlier when i send message to list i did 
+receive it in couple of minutes, nowdays it takes hours/days.
+
+Anyway, its working under vmware, it just take some time to decompress 
+kernel. So no problems atm.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 12.10.2007 23:33:32:
+
+&gt;<i> The x86_64 I/R works fine under qemu version 0.8.2
+</I>&gt;<i> Not certain about vmware.
+</I>&gt;<i> I have not tried vmware in a long while.
+</I>&gt;<i> 
+</I>&gt;<i> However:
+</I>&gt;<i> 
+</I>&gt;<i> # cast qemu
+</I>&gt;<i> $ qemu-img create hda 2G
+</I>&gt;<i> $ qemu-system-x86_64 -m 512 -boot d \
+</I>&gt;<i> -cdrom /tmp/sorcerer-x86_64-20070905.iso hda
+</I>&gt;<i> 
+</I>&gt;<i> The network drivers are probably ne2k-pci
+</I>&gt;<i> so modprobe that after it is running
+</I>&gt;<i> and then run dhcpcd to connect it to your network.
+</I>&gt;<i> The emulation is very slow therefore it may help to
+</I>&gt;<i> turn off all services except ntpd.
+</I>&gt;<i> ntpd you should run, unless you do not mind the clock
+</I>&gt;<i> inside the simulation running too fast and going ahead
+</I>&gt;<i> of current time.
+</I>&gt;<i> 
+</I>&gt;<i> Fortunately, with qemu it can hardly be any easier.  :)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 10/12/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hi
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I was trying to test 64-bit version under vmware 1.03 server, but it 
+</I>fails
+&gt;<i> &gt; to boot under virtual machine.
+</I>&gt;<i> &gt; It says Decompressing Linux... and stops there.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Any ideas?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Also no luck with 32-bit version, it stops where it says i got floppy 
+</I>drive
+&gt;<i> &gt; (i dont, and its even disabled from vmware settings).
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20071015/46f98180/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20071015/46f98180/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000309.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+	<LI>Next message: <A HREF="000316.html">[Sorcerer-admins] Sorcerer 64-bit &amp; vmware server
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#314">[ date ]</a>
+              <a href="thread.html#314">[ thread ]</a>
+              <a href="subject.html#314">[ subject ]</a>
+              <a href="author.html#314">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

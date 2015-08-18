@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Mr Allen wants large fluffy Sorcerer live CD I/R.	Opinions please.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Mr%20Allen%20wants%20large%20fluffy%20Sorcerer%20live%20CD%20I/R.%0A%09Opinions%20please.&In-Reply-To=%3CBANLkTim_PxTtv56YJDnzaEw1B5hq%3Dh6c-A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002140.html">
+   <LINK REL="Next"  HREF="002142.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Mr Allen wants large fluffy Sorcerer live CD I/R.	Opinions please.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Mr%20Allen%20wants%20large%20fluffy%20Sorcerer%20live%20CD%20I/R.%0A%09Opinions%20please.&In-Reply-To=%3CBANLkTim_PxTtv56YJDnzaEw1B5hq%3Dh6c-A%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Mr Allen wants large fluffy Sorcerer live CD I/R.	Opinions please.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Apr 29 02:48:17 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002140.html">[Sorcerer-admins] We should be using linux-firmware
+</A></li>
+        <LI>Next message: <A HREF="002142.html">[Sorcerer-admins] Mr Allen wants large fluffy Sorcerer live CD I/R. Opinions please.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2141">[ date ]</a>
+              <a href="thread.html#2141">[ thread ]</a>
+              <a href="subject.html#2141">[ subject ]</a>
+              <a href="author.html#2141">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Apr 28, 2011 at 11:33 AM, Nathan Jeffrey Allen
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Nathan_Jeffrey_Allen at yahoo.com</A>&gt; wrote:
+&gt;<i> I still can't get it to work.
+</I>
+What exactly is the problem.
+Often more is learned from working through a problem
+than doing a fresh installation.
+
+Is there another computer in the house
+that is connected to the Internet?
+If so then the previous email with attached tarball containing the firmware
+can be downloaded onto that computer.
+&gt;<i>From that computer the tarball can be transferred
+</I>to floppy disk, CDROM, or USB memory stick.
+The removable media can be inserted into the Sorcerer box.
+The device can be mounted.
+And the contents of the tarball can be extracted to /
+so that the firmware will land in /lib/firmware/
+
+
+&gt;<i> So I'm going to have to wait for you to make another I/R CD.
+</I>
+That might require a week or perhaps longer.
+I am currently trying/testing some improvements to how SysVInit works
+on Sorcerer.
+
+
+&gt;<i> Hopefully it won't be to long for you to create one that is wifi compatible.
+</I>
+The current I/R is wifi compatible.
+In the past I included firmware on the I/R after SAs requested it.
+There was two reasons for that.
+First, I had to find the firmware and write spells for it.
+Second, Sorcerer has a lean fast to download I/R
+because SAs have requested it to be that way.
+And third, until very recently I did not know that anyone
+was creating a tarball full of free and non-free firmware.
+Since no one objects to adding the firmware tarball to the I/R;
+the next I/R will be better.
+However, it will also be maybe 15% larger.
+
+
+&gt;<i> I have a few suggestions first make it easy for users to connect to wifi.
+</I>
+Thanks for the suggestion.
+Please provide a sample implementation.
+
+
+&gt;<i> Second make sure to make it easy to access the CDROM drive.
+</I>
+Accessing the CDROM is easy.
+Usually there are entries such as:
+
+# Removable file systems
+/dev/cdrom      /media/cdrom    iso9660 ro,users,noauto 0 0
+/dev/dvd        /media/dvd      udf     ro,users,noauto 0 0
+/dev/fd0        /media/floppy   auto    rw,users,noauto 0 0
+
+In /etc/fstab
+
+Usually udev creates a symbolic link from the CDROM/DVD device to /dev/cdrom
+If not then the SA can edit /etc/fstab
+and then fix the entry.
+That way
+# mount /media/cdrom
+will mount the cdrom device
+and
+# umount /media/cdrom
+will umount the cdrom device.
+
+
+&gt;<i> Third make sure to include the GUI with the I/R cd.
+</I>
+Some I/Rs in the past had xorg included on the I/R.
+However, Sorcerer SAs voiced their opinion.
+They wanted xorg removed.
+So now the only parts of xorg that come pre-installed
+are libraries that are required by other pre-installed software.
+
+
+&gt;<i> And finally if possible you should look into making a sorcerer live cd
+</I>
+Actually, I wanted to do that.
+I wanted to create a workstation ready I/R
+that comes completely with KDE version 4.
+Unfortunately, heated debate exists about this.
+I chose to back down.
+Make a request for a GUI enabled KDE-v4 pre-installed I/R
+on the email list and read the reaction from Sorcerer SAs.
+
+
+&gt;<i> so it would be easier for users to set up sorcerer on their computer.
+</I>
+Would it be easier or faster to install from a live CD?
+
+A larger CD increases the time required to download,
+increases the time required to burn the CD
+and increases the potential for corruption when burning the CD.
+Live CDs work best when installing on a virtual machine where the
+actual ISO9660 image is used instead of being burned to a physical optical disk.
+That way there is no chance for error when reading the ISO9660.
+
+
+&gt;<i> I hope my suggestions help. Nathan.
+</I>
+Thanks.
+I appreciate suggestions.
+As I mentioned above,
+I gave much consideration to a Sorcerer live CD.
+
+The current design for the I/R is not favorable for a live CD.
+However, it is not impossible to achieve.
+Significant modification of the I/R is not required.
+Most of the installed software on the I/R
+is provided in xz compressed tarballs
+residing in /var/cache/archive/
+This achieves near optimal compression
+and thus allows tiny quick to download I/Rs.
+
+Additional archives for xorg and kde can also be provided in /var/cache/archive/
+However, that change alone would not make it a live CD.
+However, if a box enough gigabytes of RAM installed
+then the content of the xorg and kde archives
+can be extracted prior to installation.
+Once the files are extracted from archive
+then kdm can be run and a GUI login can be presented.
+
+Minimal RAM for Sorcerer installation is currently somewhat less than 512M.
+I know this because I use 512M RAM load out on virtual computers to
+test new I/Rs.
+A KDE or GNOME live CD style I/R requires a few gigabytes of RAM.
+The other drawback is that 620M of archives must
+be read from the CDROM device and then decompressed.
+Even booting with a fast CDROM drive
+would require the SA to wait more than 5 minutes
+while archives are read and decompressed.
+Even a SMP CPU can not achieve the task faster,
+because the source of the bottleneck is the CDROM drive
+or the USB memory stick that is providing the ISO9660 image.
+
+Although I know how to create a Sorcerer live CD
+most Sorcerer SAs have their own personal reasons for not wanting a
+Sorcerer live CD.
+In summary the banes are:
+
+1. Booting the I/R requires more RAM.
+2. Booting the I/R is slower.
+3. Download the I/R requires longer.
+4. Burning the I/R requires longer.
+5. Probability of the I/R corrupting while burning increases due to
+the increased size of the I/R.
+6. Installation time increases by at least 4x.
+
+And the boons are:
+1. A GUI login might appear if xorg can correctly auto configure the hardware.
+
+My idea for a Sorcerer live CD would be all of the above and also
+a video player and automatic dhcpcd network configuration.
+I want root's X11 desktop
+to contain some links to videos hosted on youtube
+that further instruct the SA in how to do the installation.
+That way Sorcerer noobs can run the menu driven installer
+in one terminal emulation program
+while the instruction video streams
+in the konqueror or firefox web browser.
+
+I like the idea.
+However, I have been unable to gain consensus among Sorcerer SAs.
+They want and I/R that is fast to download and good for the tasks of
+installation and rescue.
+They do not want a pre-compiled binary based distro live CD style I/R.
+
+Thus far Nathan and I are the only Sorcerer SAs
+that expect that a live CD could be useful and entertaining.
+However, I create I/Rs for the Sorcerer SAs.
+So if they do not want it and will not use it
+then it is of no use for me to create it.
+
+Okay, here is a bit of how it it adds up in terms of size...
+
+# cd /var/cache/archive/x86_64/
+# du -cm $( echo kde-v4 | augur req arof | while read; do echo -n
+&quot;$REPLY/&quot;; augur log version &quot;$REPLY&quot; | cat; done ) | tail
+
+2       sane-backends/1.0.21
+2       djvulibre/3.5.24
+2       kdemultimedia-v4/4.6.2
+1       lame/3.98.3
+1       libmusicbrainz/2.1.5
+1       taglib/1.7
+3       kdeplasma-addons-v4/4.6.2
+4       kdeutils-v4/4.6.2
+1       libarchive/2.8.4
+666     total
+
+# du -cm $( echo gnome | augur req arof | while read; do echo -n
+&quot;$REPLY/&quot;; augur log version &quot;$REPLY&quot; | cat; done ) | tail
+
+1       gzip/1.4
+2       gedit/3.0.0
+1       gnome-python-desktop/2.32.0
+19      gnome-games/3.0.0
+4       gnome-games-extra-data/3.0.0
+1       gnome-nettool/3.0.0
+2       vinagre/3.0.0
+1       gtk-vnc/0.4.3
+1       polkit-gnome/0.101
+532     total
+
+
+Obviously, using the current and complete kde-v4 might not be possible,
+because the sum of all the required xz compressed archives exceeds 600M
+So times have changed and creating a 700M live CD is more challenging.
+Selecting the most appropriate loadout of software,
+which might be gnome instead of KDE,
+could require a month or more to complete, test, and make available.
+If we can gain consensus then we can do it.
+If not then creating it becomes a terrible waste of time.
+
+The important question is not, &quot;Can it be done?&quot;
+The important question is, &quot;Should it be done?&quot;
+For this type of change that question is primarily answered by asking,
+&quot;Who will use it?&quot;
+
+My guess is that most SAs regard Sorcerer installation
+as approximately 20 minutes of menu driven of tedium.
+That is my impression each time I test an I/R.
+The basic steps of partition the disk, creating file systems,
+copying the contents of the I/R to the fixed disk
+requires about 20 minutes.
+
+SAs seldom become excited about a short single run event.
+They probably want to accomplish the initial installation
+as soon as possible with a minimal possibility of problems.
+And that is probably why the tiny I/R is favored by Sorcerer SAs
+instead of a big fluffy live CD style I/R.
+
+Please do not accept merely my word about it.
+This debate repeats nearly every other year.
+So I will also send this reply to the Sorcerer email list.
+That way Sorcerer SAs can contribute their point of view.
+SAs, please make sure that replies also goto Nathan Jeffery Allen
+since he might be subscribed to the monthly digest
+instead of the daily delivery of the Sorcerer email list.
+
+When making decisions about Sorcerer evolution two separate
+questions are asked, &quot;Can do?&quot; &quot;Should do?&quot;
+Most suggestions pass the &quot;Can it be done?&quot; question.
+However, few suggestions achieve either a favorable boon to bane evaluation,
+or they fail to achieve consensus among Sorcerer SAs.
+
+The Sorcerer live CD is exactly that type of debate
+that always remains an issue simmering on a burner in the background,
+yet never quite gathers sufficient heat and resources to boil.
+
+So this time around I am offering a slight variation of the standard argument.
+It is based upon ideas contributed by Bob Finch years ago.
+Bob wanted a directory of ready to install archives available via HTTP.
+Obviously at that time making a large selection of archives available
+for download was impossible.
+The main reason was that Sorcerer's hosting providers were kicking
+Sorcerer around.
+Until the current hosting provider, silverice.org,
+nobody granted Sorcerer sufficient resources
+in order to construct a master source cache.
+So times have changed.
+
+However, I am still against providing a supreme pizza repository of archives.
+Hybridization of Sorcerer is a bad idea.
+However, I have not stopped considering the possibility of
+a boon for keeping part of the I/R available via HTTP
+instead of being downloaded and burned to a CDROM.
+
+A few years ago I created a sub-project to play with this idea.
+I created a fuse module for mounting an ISO9660 image
+that is hosted remotely via HTTP.
+It translated block requests into byte range requests that were handed
+to curl's library.
+My attempt at creating a fuse + curl based
+HTTP mounted iso9660 was a success.
+Unfortunately, it was horribly slow over the Internet.
+If most people can download about 512K/second from the Internet
+then transferring a 600M file requires about 20 minutes.
+Maybe that was why it seemed terribly slow?
+
+If an I/R was created that has the possibility of doing
+a fancy GUI boot like a live CD, and yet did not include
+archives for those required files on the CDROM
+then those archives could be downloaded from the Internet.
+On a 512K/second Internet connection approximately
+20 minutes are required in order to do a live CD style boot.
+
+Again this creates a situation where the time required
+for selecting the optional GUI boot of the I/R
+exceeds the time expected to be required for doing
+an installation from a virtual console.
+
+To avoid the problem of creating a larger I/R
+and yet still providing a live CD style I/R
+costs about 10 to 20 minutes in order to download
+and decompress the required files.
+The advantage is that the 700M barrier no longer applies,
+since an unlimited amount of files can be downloaded.
+
+No matter how we look at the situation
+we can not achieve something for nothing.
+Anyone willing to wait 20 minutes for the I/R to boot please say so.
+Because for the moment this solution is the only solution
+that provides the option doing a live CD style boot
+while maintaining a tiny I/R size for SAs that
+want to skip the fluff and go straight to a virtual console
+in order to run the menu driven installer.
+
+Sorry for the long email, but I like to cover all the facts.
+What at first seems like a clever useful idea
+can often come with some significantly heavy costs.
+A live CD requires about 600M of files
+and there is no way that 600M of files decompresses,
+downloads, or reads from CDROM instantly.
+A live CD has a very heavy cost in additional boot time and RAM.
+
+Lastly, I want to point out that Sorcerer is not a pre-compiled binary
+based distro.
+Therefore, archives include header files and ar library archives.
+Also additional spells for software such as &quot;make&quot; and &quot;gcc&quot;
+must be available on the I/R.
+As compared to a pre-compiled binary based distro
+Sorcerer already has a 15% overhead in additional files
+that are required for a base installation.
+That factor alone makes Sorcerer less suitable for a live CD distro
+as compared to a pre-compiled binary based distro.
+When compared byte for byte
+Sorcerer will probably be unable to provide as much user desired
+software on a live CD as compared to a pre-compiled binary based
+distro's live CD.
+
+That is not to imply that Sorcerer is deficient.
+Rather pre-compiled binary based distros have greater
+potential for live CDs than Sorcerer.
+However, Sorcerer still excels at tasks for which Sorcerer is designed.
+Although a Sorcerer live CD would be amusing
+the absence of Sorcerer live CD is not by chance.
+
+In summary, the most essential question of this email is
+&quot;Who is willing to wait an additional 20 minutes for the I/R to boot
+after requesting the live CD option from the boot menu?&quot;
+If nobody is willing to wait
+then there is no point to allocating effort to that sub-project.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002140.html">[Sorcerer-admins] We should be using linux-firmware
+</A></li>
+	<LI>Next message: <A HREF="002142.html">[Sorcerer-admins] Mr Allen wants large fluffy Sorcerer live CD I/R. Opinions please.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2141">[ date ]</a>
+              <a href="thread.html#2141">[ thread ]</a>
+              <a href="subject.html#2141">[ subject ]</a>
+              <a href="author.html#2141">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

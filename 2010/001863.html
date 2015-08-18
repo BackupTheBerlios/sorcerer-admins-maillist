@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init... speed, control, or robustness?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTimbH3crzh5qK4Wat5fYoWnS26qHoHqU6%3DjZKB6O%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001860.html">
+   <LINK REL="Next"  HREF="001867.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init... speed, control, or robustness?</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTimbH3crzh5qK4Wat5fYoWnS26qHoHqU6%3DjZKB6O%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init... speed, control, or robustness?">evorster at gmail.com
+       </A><BR>
+    <I>Tue Jul 27 12:06:24 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001860.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+        <LI>Next message: <A HREF="001867.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1863">[ date ]</a>
+              <a href="thread.html#1863">[ thread ]</a>
+              <a href="subject.html#1863">[ subject ]</a>
+              <a href="author.html#1863">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>OK, some init scripts do not really play nice with the PID file.
+
+There is not much we can do about that.
+
+However, the initscript itself is a wrapper for whatever service it is
+calling.
+At the very least, it can write it's exit status to a file where another
+process that absolutely depends on that process having started can check to
+see if it did.
+
+The mounting init-script ( for instance) does not have a PID at all, because
+after the script has run, it exits. However, if it's exit status was known,
+another script can see if it's worth it to even run.
+
+
+We should define which scripts are absolutely critical to a running Sorcerer
+system, and those should give you a command line if they fail to run, and
+not run the following scripts as you may muck up a perfectly good working
+system.
+
+If for instance, an SA adjusted the running kernel so that the root
+filesystem type is no longer recognizable, there is no point in loading
+anything else... the system is unbootable, and the SA should be informed,
+and the system not try to boot until the problem has been rectified. A
+command line at this point would be helpful at this point too.
+
+I am sure there are a few more examples of critical scripts that, if
+activated, must absolutely be run.
+
+
+-Evert-
+
+
+On Mon, Jul 26, 2010 at 10:16 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Jean-luc Mallet preference seems to be for a combination
+</I>&gt;<i> of control and speed which are normally exclusive pursuits.
+</I>&gt;<i>
+</I>&gt;<i> Consider the world of racing cars.
+</I>&gt;<i> A spoiler can provide greater downward force and thus
+</I>&gt;<i> increase tire traction and therefore increase control.
+</I>&gt;<i> However, a spoiler that creates greater sink also creates
+</I>&gt;<i> a greater amount of parasitic drag and the increased
+</I>&gt;<i> parasitic drag reduces both acceleration and top speed.
+</I>&gt;<i>
+</I>&gt;<i> Are computers that much different?
+</I>&gt;<i> Can both greater control and greater speed can achieved?
+</I>&gt;<i> As I conjecture this I felt inclined to look at the manual page for gcc:
+</I>&gt;<i>
+</I>&gt;<i> &quot;
+</I>&gt;<i> -ffast-math
+</I>&gt;<i>  Sets -fno-math-errno, -funsafe-math-optimizations,
+</I>&gt;<i>  -ffinite-math-only, -fno-rounding-math, -fno-signaling-nans and
+</I>&gt;<i>  -fcx-limited-range.
+</I>&gt;<i>
+</I>&gt;<i> This option causes the preprocessor macro
+</I>&gt;<i> &quot;__FAST_MATH__&quot; to be defined.
+</I>&gt;<i>
+</I>&gt;<i> This option is not turned on by any -O option since it can result
+</I>&gt;<i> in incorrect output for programs which depend on an exact
+</I>&gt;<i> implementation of IEEE or ISO rules/specifications for math
+</I>&gt;<i> functions. It may, however, yield faster code for programs that do
+</I>&gt;<i> not require the guarantees of these specifications.&quot;
+</I>&gt;<i>
+</I>&gt;<i> Apparently, even with computers
+</I>&gt;<i> compromises are made that favor
+</I>&gt;<i> either speed or control, but not both.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Evert makes some interesting points about PID files.
+</I>&gt;<i> But what can we deduce about the status of a box
+</I>&gt;<i> by examining a PID or a PID file?
+</I>&gt;<i> Much discussion has involved udev,
+</I>&gt;<i> because of udev's obvious importance on a box.
+</I>&gt;<i> So let us stick with that example.
+</I>&gt;<i>
+</I>&gt;<i> udevd does not have a PID file.
+</I>&gt;<i> However, when it runs it does have a PID
+</I>&gt;<i> Usually it has between 1 and 3 PIDs.
+</I>&gt;<i> The presence of a PID for udev indicates only one thing.
+</I>&gt;<i> the PID indicates that the daemon is running
+</I>&gt;<i> and probably listening for hotplug events.
+</I>&gt;<i> Just because udev is running is not by itself
+</I>&gt;<i> proof that the nodes contained or not contained in /dev
+</I>&gt;<i> are usable, correct, or complete.
+</I>&gt;<i>
+</I>&gt;<i> Most of the device nodes in /dev are created
+</I>&gt;<i> by a cooperation of a running udevd and the
+</I>&gt;<i> invocation of udevadm trigger
+</I>&gt;<i> This causes a replay of cold plug events
+</I>&gt;<i> that udev handles by loading modules,
+</I>&gt;<i> loading firmware, and creating device nodes in /dev
+</I>&gt;<i> according to installed udev rule files.
+</I>&gt;<i> udevadm, although it provides a service,
+</I>&gt;<i> does not remain running like a daemon.
+</I>&gt;<i> Whether the device nodes are created correctly
+</I>&gt;<i> used to depend almost entirely upon udev rules,
+</I>&gt;<i> but now that /dev is devtmpfs instead of just tmpfs
+</I>&gt;<i> it has a greater probability of containing necessary
+</I>&gt;<i> device nodes even if udev rule files are incorrect or missing.
+</I>&gt;<i>
+</I>&gt;<i> The reason I am explaining the complexity of udev
+</I>&gt;<i> is to make the assertion that the mere presence of
+</I>&gt;<i> a PID or a PID file does not indicate that the content
+</I>&gt;<i> of /dev is proper or complete.
+</I>&gt;<i> Whether /dev is usable might not be known
+</I>&gt;<i> until a fsck of filesystems
+</I>&gt;<i> or a mount of of filesystems is attempted.
+</I>&gt;<i>
+</I>&gt;<i> I would go as far as to conjecture that knowing
+</I>&gt;<i> if udev failed at the proper creation of /dev
+</I>&gt;<i> might not be assumable by checking the presence of
+</I>&gt;<i> device nodes in /dev/ for the devices defined by filesystems in /etc/fstab
+</I>&gt;<i> No lockfile, no PID file, and no PID can indicate
+</I>&gt;<i> if /dev/ is complete and usable.
+</I>&gt;<i>
+</I>&gt;<i> That is why I created the kernel command line parameter &quot;coldplug&quot;
+</I>&gt;<i> If the SA suspects that the problem is udev related
+</I>&gt;<i> then udev can be circumvented with that command line parameter.
+</I>&gt;<i> A previously saved order list of modules can be loaded
+</I>&gt;<i> while a previously saved /dev/ is copied to /dev/
+</I>&gt;<i> In many situations that would be enough to
+</I>&gt;<i> circumvent a problem with udev
+</I>&gt;<i> and allow a box to continue booting.
+</I>&gt;<i> Unfortunately, I have not decided exactly what
+</I>&gt;<i> should be checked in order to activate
+</I>&gt;<i> the coldplug safeguard automatically.
+</I>&gt;<i>
+</I>&gt;<i> As I stated several times before
+</I>&gt;<i> the menu that allows SAs to select
+</I>&gt;<i> a root partition when a root partition
+</I>&gt;<i> is not specified in /etc/fstab
+</I>&gt;<i> is an example of the precise application
+</I>&gt;<i> of control to bring about a desirable outcome
+</I>&gt;<i> that enhances robustness of booting.
+</I>&gt;<i>
+</I>&gt;<i> Control should be added when the potential
+</I>&gt;<i> outcome increases robustness.
+</I>&gt;<i> However, the gain depends upon correctly
+</I>&gt;<i> anticipating and intercepting specific problems.
+</I>&gt;<i> Adding a control which treats
+</I>&gt;<i> the red failure text of all init-scripts exactly the same
+</I>&gt;<i> is not the anticipation and interception of a specific problem.
+</I>&gt;<i>
+</I>&gt;<i> If a more robust boot is desirable
+</I>&gt;<i> then we should focus upon:
+</I>&gt;<i> identifying where problems will occur;
+</I>&gt;<i> why the problem occurs;
+</I>&gt;<i> and what can be done about a problem,
+</I>&gt;<i> before the problem gathers mass like a snowball rolling down hill.
+</I>&gt;<i>
+</I>&gt;<i> Spotting and solving problems with
+</I>&gt;<i> pin point precision will prevent pain.
+</I>&gt;<i> SAs do not want booting to interrupt
+</I>&gt;<i> or omit the execution of important init-scripts
+</I>&gt;<i> which turns into a nightmarish Easter egg hunt.
+</I>&gt;<i> They want to boot up, log in, and review log files and log out.
+</I>&gt;<i>
+</I>&gt;<i> In the recent past,
+</I>&gt;<i> Evert made a suggestion for the Install/Rescue disk
+</I>&gt;<i> to present a menu while booting that will allow
+</I>&gt;<i> the SA to select a device to mount for the root
+</I>&gt;<i> instead of the I/Rs initramfs.
+</I>&gt;<i> And the menu does other neat things also.
+</I>&gt;<i> I forgot exactly what it can do.
+</I>&gt;<i> But it is nice that is there
+</I>&gt;<i> in case I want to use it to do that.
+</I>&gt;<i>
+</I>&gt;<i> Thinking that a menu like that would be useful
+</I>&gt;<i> is a good example of preemptive thinking.
+</I>&gt;<i> Evert anticipated some problems that could happen
+</I>&gt;<i> and decided that an init-script could provide an adequate solution.
+</I>&gt;<i> Even more than that,
+</I>&gt;<i> that init-script demonstrates the nearly untapped potential
+</I>&gt;<i> init-scripts have for being able to accomplish
+</I>&gt;<i> more than the 3 simple tasks of mounting virtual filesystems,
+</I>&gt;<i> loading modules, and running daemons.
+</I>&gt;<i>
+</I>&gt;<i> If control is added in the form of init-scripts
+</I>&gt;<i> then potentially beneficial outcomes can be created
+</I>&gt;<i> where the potential for keeping a boot on target
+</I>&gt;<i> would be commensurate with the added overhead.
+</I>&gt;<i>
+</I>&gt;<i> The collection of init-scripts Sorcerer currently uses
+</I>&gt;<i> can be described as fire-and-forget.
+</I>&gt;<i> Successful outcomes are assumed.
+</I>&gt;<i> Provided that a Sorcerer box is not too far from the norm
+</I>&gt;<i> then the box will successfully boot even if the logs
+</I>&gt;<i> contain a line or two of red marks.
+</I>&gt;<i> Obviously, booting could benefit from a bit of additional control.
+</I>&gt;<i> Yet, how that control is added will determine
+</I>&gt;<i> if the control is beneficial or detrimental.
+</I>&gt;<i>
+</I>&gt;<i> Rather that creating a generic method for control that
+</I>&gt;<i> automatically snowballs errors
+</I>&gt;<i> into avalanches of init-scripts that are not executed
+</I>&gt;<i> why not implement tiny specific methods for control
+</I>&gt;<i> that nudge booting back onto track when
+</I>&gt;<i> something undesirable happens?
+</I>&gt;<i> The goal should be to have an outcome where the
+</I>&gt;<i> box boots and the real root filesystem mounts.
+</I>&gt;<i> Should not methods of control be designed
+</I>&gt;<i> with that goal firmly in mind?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100727/607a6592/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100727/607a6592/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001860.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+	<LI>Next message: <A HREF="001867.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1863">[ date ]</a>
+              <a href="thread.html#1863">[ thread ]</a>
+              <a href="subject.html#1863">[ subject ]</a>
+              <a href="author.html#1863">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

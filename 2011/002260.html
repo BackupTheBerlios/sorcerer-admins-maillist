@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] enhanced security...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20enhanced%20security...&In-Reply-To=%3CCA%2BT4wDjev433DkhAY8YOaFP07V_spushfQa7yPUSjL%3D_wZeOhQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002259.html">
+   <LINK REL="Next"  HREF="002261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] enhanced security...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20enhanced%20security...&In-Reply-To=%3CCA%2BT4wDjev433DkhAY8YOaFP07V_spushfQa7yPUSjL%3D_wZeOhQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] enhanced security...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Sep 18 04:54:14 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002259.html">[Sorcerer-admins] enhanced security...
+</A></li>
+        <LI>Next message: <A HREF="002261.html">[Sorcerer-admins] Thanks for the quality feedback.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2260">[ date ]</a>
+              <a href="thread.html#2260">[ thread ]</a>
+              <a href="subject.html#2260">[ subject ]</a>
+              <a href="author.html#2260">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Evert has valid points.
+I agree that the flaws in security occur
+due to bugs in software, naive users,
+and inadequate or incorrectly configured services.
+If all software, users and SAs were perfect
+then classical security would work perfectly.
+But since we live in an imperfect world
+sometimes imperfect solutions work best.
+
+In a previous email I stated that
+over a decade ago a nefarious user
+gained unauthorized root by exploiting a bug in vixie cron.
+Back then every box had vixie cron installed by default.
+We never know which user will betray
+nor do we know which innocent looking service
+will become a stepping stone to unauthorized root access.
+
+Many years ago an incompetent SA accused me
+of cracking into his box
+in order to download mp3 files.
+He gave two reasons.
+First, I previously told him to switch to shadow passwords,
+for all the obvious reasons.
+Second, someone cracked his box from a .mil address
+and so he suspected me.
+
+But the foolishness of his accusation was
+evident considering the fact that via scp and my user account
+I already had sufficient privilege to download all the mp3s
+and very nearly any file that I wanted from that box.
+Therefore, why would I do any cracking
+to accomplish a task that that is already possible?
+And thus by his own folly he ended his association with me.
+
+If we do not allocate the effort to enhance security
+then we risk being cracked
+through something innocent looking like vixie cron.
+If we do not allocate the the effort to enhance security
+then we risk becoming a foolish SA
+that accuses friends and discards friendship
+without ascertaining proof beyond a doubt.
+
+Enhanced security can be worth more than the cost of backing
+up a few files to restore in the event of a malicious attack.
+Enhanced security is like a kidney guard that not only blocks
+the lethal stab from behind, but might yet grant us the opportunity
+to pivot and squarely look our attacker in the face.
+Without it then we have only 20/20 hindsight
+to indicate that we might have benefited from enhanced security.
+
+Although not always obvious,
+I like the idea of enhanced security.
+The the grimoire is full of security related software such as &quot;ninja.&quot;
+The concept of &quot;ninja&quot; is good, but the implementation aught to be in
+the kernel.
+The kernel can block unauthorized execution.
+Ninja can merely detect, log, and kill a process sometime
+after the damage might have already been accomplished.
+An unauthorized process could easily kill ninja before
+ninja could detect and kill it.
+
+The grimoire also has a considerable amount of encryption software.
+Security might not prevent bytes from being stolen, but encryption can.
+And of course Sorcerer's installer supports LUKS style encryption of
+block devices.
+So even if our fixed disks find a new home
+our unencrypted bytes do not travel with them.
+
+For a considerable time I have been interested
+in selinux, grsecurity, tomoyo style enhanced security.
+But for a while my motivation waned due to several reasons.
+I did not want to delay kernel releases while waiting for grsecurity's
+patch releases.
+And selinux requires unrealistic amount of effort in order to secure
+every file on a box.
+A couple of years ago or so I tried SMAC.
+After enabling it in the kernel
+then the kernel failed booting.
+I suspect I tried tomoyo unsuccessfully years ago
+because I entered the ccs-tools years ago.
+However, currently, tomoyo's tool set has a different name.
+
+Last week my first few times trying to boot
+a tomoyo enabled kernel lacked success.
+However, I eventually obtained success.
+Yet if successful booting continued to remain elusive
+then I would probably have waited a year or two
+before trying tomoyo again or whatever was available in the future.
+
+There are no obvious definite broad and thoroughly traveled paths
+leading to the happy land of enhanced security.
+However, selinux seemed to be the most hyped method.
+I could not help but wonder if a lack of selinux support
+would make Sorcerer seem less attractive for security roles.
+
+Sorcerer's main method for security is stealth.
+Each box sails like a custom ghost ship
+without striking an audacious banner
+that announces it's allegiance to Sorcerer.
+And by disabling ICMP echo reply
+and/or running services on custom ports
+then a box gains an even lower radar cross section.
+
+With tomoyo enhanced security implemented
+the ghost ship will look and sail nearly the same.
+Yet it will have gained invisible lethal traps
+for containing unauthorized boarding parties.
+Who would not want to few automatic surprises
+prepared for those attempting to gain unauthorized access?
+
+Certainly, we are prepared for the broadside attack,
+but we must also be wary of the single row boat
+that carries an intruder who intends to silently scale
+the hull of the ship while searching for an unlatched cannon porthole.
+Then like a living shadow glides through the interior
+finding way to the captain's cabin.
+And while the captain sleeps
+the intruder don the captain's uniform
+and barks orders to an obedient and unwary crew.
+
+But what if after opening the unlatched porthole
+the cannon discharges in the intruder's face?
+The unwanted boarder is effectively repelled
+and the crew can be roused and the captain alerted.
+
+The reality of computer security these days
+is not like a battle with an exchange of broadsides
+as envisioned in computer games and BBS doors
+during the 1980s.
+Offensive capability is not determined by the available bandwidth.
+nor is defense capability determined by the size of a fixed disk.
+Actual computer security is far from the fun simulations
+presented in computer games and movies.
+
+The threat most often comes from a lone individual
+or virus operating stealthily or through subterfuge.
+Such entities will not be playing
+by the established rules of computer security.
+Therefore, neither should our defense assume
+that standard security should be sufficient.
+
+
+I am enjoying and appreciating
+how both sides of this table are being debated.
+We owe thanks to Evert for supporting
+what might possibly be the more difficult position.
+In the reality of the constant evolution of computers and software
+we almost always want to assume that newer is better.
+Therefore, supporting a position of tradition already beings
+with the disadvantage of that prejudicial expectation
+that traditional methods might already be obsolete.
+
+Hopefully with discussion we can achieve
+a compromise that is attractive
+to both the properly paranoid SAs
+and the SAs too busy to bother
+with studying tomoyo documentation.
+
+Because of the overuse of the word &quot;policy&quot;
+understanding tomoyo documentation is slightly less than trivial.
+While smaller in scope and reading than httpd documentation,
+the required understanding for effectively configuring tomoyo
+is no less demanding than configuring httpd with virtual hosts.
+Hopefully, I can bring some good benefits of tomoyo to Sorcerer
+without SAs having to understand it.
+In that way it can be a bit like Linux-PAM, shadow passwords, glibc, etc...
+It can be installed and work adequately
+while not requiring SAs to read the documentation
+to gain understanding of how it exactly works.
+
+Making tomoyo domain transition entirely transparent will be impossible.
+But it should be no more problematic than typing a command such as
+sulogin
+
+
+
+On Sat, Sep 17, 2011 at 9:24 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> On 17 September 2011 08:36, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> Just so it's on the list:
+</I>&gt;<i>
+</I>&gt;<i> The standard UNIX authentication method is elegant, simple and easy to
+</I>&gt;<i> understand.
+</I>&gt;<i>
+</I>&gt;<i> The only flaw in the model is that software is not perfect, and
+</I>&gt;<i> nefarious people exploit flaws in daemons to gain access to
+</I>&gt;<i> files/services that they are not allowed to.
+</I>&gt;<i>
+</I>&gt;<i> These flaws in the daemons are fixed as they are discovered by the
+</I>&gt;<i> white hat hackers around the world, and thus no known exploit works on
+</I>&gt;<i> a fully up to date box.
+</I>&gt;<i>
+</I>&gt;<i> This is why there are no malware/virii on UNIX machines, and the only
+</I>&gt;<i> attacks that work are targeted ones.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer boxes are some of the most up to date boxes out there, and
+</I>&gt;<i> you are already plenty in secure running one.
+</I>&gt;<i>
+</I>&gt;<i> Security services like selinux, grsecurity and even tomoyo are like
+</I>&gt;<i> trying to catch the horse after it left the barn.
+</I>&gt;<i>
+</I>&gt;<i> It can be done, but it's both difficult and the wrong way around the problem.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The right way is not to run daemons you don't need, ie reduce your
+</I>&gt;<i> exposure, and run up to date software that has every known hole fixed.
+</I>&gt;<i>
+</I>&gt;<i> And make backups often. :)
+</I>&gt;<i>
+</I>&gt;<i> Lastly, don't put anything on a computer that you don't want exposed
+</I>&gt;<i> to the world. Every security model is flawed, and will fail.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Of course, when you are forced to expose http or ssh to the real
+</I>&gt;<i> world, something like tomoyo becomes useful in locking down that
+</I>&gt;<i> process, and giving you an excuse when your boss asks you why it was
+</I>&gt;<i> possible for someone to bypass the security on your system and leave
+</I>&gt;<i> with the crown jewels. Every security model has flaws, and only serves
+</I>&gt;<i> to slow down a sufficiently determined cracker.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002259.html">[Sorcerer-admins] enhanced security...
+</A></li>
+	<LI>Next message: <A HREF="002261.html">[Sorcerer-admins] Thanks for the quality feedback.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2260">[ date ]</a>
+              <a href="thread.html#2260">[ thread ]</a>
+              <a href="subject.html#2260">[ subject ]</a>
+              <a href="author.html#2260">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

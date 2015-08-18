@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /run away /run away!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/run%20away%20/run%20away%21&In-Reply-To=%3CBANLkTikLNQd_Qjc%2BC-XhEnwKN7nQt%2Bj20g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002135.html">
+   <LINK REL="Next"  HREF="002137.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /run away /run away!</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/run%20away%20/run%20away%21&In-Reply-To=%3CBANLkTikLNQd_Qjc%2BC-XhEnwKN7nQt%2Bj20g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /run away /run away!">evorster at gmail.com
+       </A><BR>
+    <I>Wed Apr 27 02:56:23 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002135.html">[Sorcerer-admins] /run away /run away!
+</A></li>
+        <LI>Next message: <A HREF="002137.html">[Sorcerer-admins] /run away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2136">[ date ]</a>
+              <a href="thread.html#2136">[ thread ]</a>
+              <a href="subject.html#2136">[ subject ]</a>
+              <a href="author.html#2136">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+I read something about this some time ago.
+
+&gt;<i>From what I could gather from the explanation was that /run makes for
+</I>a cleaner file system, as stuff that needs a directory to write to
+early in boot were writing in to /dev, and since what they were
+writing were not strictly device nodes things were becoming messy.
+
+Having another top level directory was not a decision that was taken
+lightly. Times have moved on enough to where we need files that just
+did not fit in to any of the other subdirectories.
+
+-Evert-
+
+On Tue, Apr 26, 2011 at 1:35 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> While testing udev version 168 and saw the message:
+</I>&gt;<i>
+</I>&gt;<i> udev[690]: error: runtime directory '/run/udev' not writeable, for now
+</I>&gt;<i> falling back to '/dev/.udev'
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> What is a /run directory?
+</I>&gt;<i> Both
+</I>&gt;<i> <A HREF="http://www.pathname.com/fhs/pub/fhs-2.3.html">http://www.pathname.com/fhs/pub/fhs-2.3.html</A>
+</I>&gt;<i> and
+</I>&gt;<i> <A HREF="http://refspecs.linux-foundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/book1.html">http://refspecs.linux-foundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/book1.html</A>
+</I>&gt;<i> have nothing about /run
+</I>&gt;<i>
+</I>&gt;<i> Who wants a /run directory?
+</I>&gt;<i> Just udev developers?
+</I>&gt;<i> I found this explanation:
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://lists.fedoraproject.org/pipermail/devel/2011-March/150031.html">http://lists.fedoraproject.org/pipermail/devel/2011-March/150031.html</A>
+</I>&gt;<i>
+</I>&gt;<i> RedHat, SuSE, Debian and Ubuntu
+</I>&gt;<i> all suffer from this same problem as described in the email.
+</I>&gt;<i>
+</I>&gt;<i> However, since Sorcerer's init design is not a copy
+</I>&gt;<i> Sorcerer has no problem with providing /var/run/ and /var/lock/
+</I>&gt;<i> early in boot and then moving those file systems
+</I>&gt;<i> to their proper location on the real root file system later.
+</I>&gt;<i> As expected Sorcerer is not effected
+</I>&gt;<i> by simple design flaw that effects major distributions.
+</I>&gt;<i>
+</I>&gt;<i> I want to ignore the /run/ directory nonsense,
+</I>&gt;<i> because it creates pointless additional work for me.
+</I>&gt;<i> There is no benefit to /run/ on Sorcerer.
+</I>&gt;<i> And udev still has a fallback method
+</I>&gt;<i> for using a dot directory within /dev/
+</I>&gt;<i> and therefore does not absolutely require /run/ in order to run.
+</I>&gt;<i>
+</I>&gt;<i> However, now that udev is expecting a /run/
+</I>&gt;<i> then other software vendors might also expect a /run/
+</I>&gt;<i> was implemented for udev.
+</I>&gt;<i> Consequently, this creates a falling domino effect.
+</I>&gt;<i> udev runs early during init and is an important component
+</I>&gt;<i> for plug and pray on modern POSIX boxes.
+</I>&gt;<i> Therefore, udev has considerable mass.
+</I>&gt;<i>
+</I>&gt;<i> The introduction /run/ on Sorcerer neither solves nor creates problems.
+</I>&gt;<i> Sorcerer does not always precisely follow LSB and FSH guidelines.
+</I>&gt;<i> When something is worth doing then Sorcerer does it regardless.
+</I>&gt;<i> For the moment LSB and FSH documentation says nothing about /run/
+</I>&gt;<i> Therefore, Sorcerer will implement /run/ merely because udev expects /run/.
+</I>&gt;<i> And having /run/ might avoid future problems from software vendors
+</I>&gt;<i> that expect /run/ was implemented for udev.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+-Evert-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002135.html">[Sorcerer-admins] /run away /run away!
+</A></li>
+	<LI>Next message: <A HREF="002137.html">[Sorcerer-admins] /run away
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2136">[ date ]</a>
+              <a href="thread.html#2136">[ thread ]</a>
+              <a href="subject.html#2136">[ subject ]</a>
+              <a href="author.html#2136">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

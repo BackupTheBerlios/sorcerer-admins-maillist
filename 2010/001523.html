@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Installation Manual w/screenshots
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Installation%20Manual%20w/screenshots&In-Reply-To=%3C4109600c0f77e765d4796d1da1ebded2.squirrel%40northtech.us%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001543.html">
+   <LINK REL="Next"  HREF="001534.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Installation Manual w/screenshots</H1>
+    <B>bradley at northtech.us</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Installation%20Manual%20w/screenshots&In-Reply-To=%3C4109600c0f77e765d4796d1da1ebded2.squirrel%40northtech.us%3E"
+       TITLE="[Sorcerer-admins] Installation Manual w/screenshots">bradley at northtech.us
+       </A><BR>
+    <I>Sat Mar 13 16:22:06 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001543.html">[Sorcerer-admins] Installation and User Manual... a work in	progress developing all on its own.
+</A></li>
+        <LI>Next message: <A HREF="001534.html">[Sorcerer-admins] Installation Manual w/screenshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1523">[ date ]</a>
+              <a href="thread.html#1523">[ thread ]</a>
+              <a href="subject.html#1523">[ subject ]</a>
+              <a href="author.html#1523">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I've come across a point in the installation that I really don't understand.
+
+I've included the screenshot. Basically, there are three entries in
+setting up /etc/fstab (disregard /dev/hda2 in this case, as I was creating
+a large swap partition, and I see now that it is desired to create a
+swapfile instead on /dev/hda1.
+
+So the entries are
+
+1.) Device
+
+2.) /dev/hda1 (No problem understanding this.
+
+3.) /swap (I understand now that this is a swap file, no partition required)
+
+What is #1, Device????? Should I mount a &quot;/&quot; on it? when I enter the
+submenu, it appears that I need to fill something out but if I select
+&quot;Device&quot; from that sub-menu, nothing happens, except that something
+whizzes by and I can't read it.
+
+Perhaps this is &quot;/&quot; on the CDROM? And I don't need to fill out anything?
+I've even tried deleting that entry.
+
+All files seem to copy over from the CDROM onto /dev/hda1 (&quot;/&quot;), but still
+no reboot when everything is complete. I also discovered not to install
+the final packages for ISDN/WLAN/dialup/etc., networking, as it kicks me
+into a blank file in pico. If I just skip those files and let the
+compile/lilo/MBR get written all looks good, except still, no boot after
+reboot.
+
+I noticed from Evert's email that he says to umount at the very end, which
+I haven't put in the steps yet. Although a pretty detailed install manual
+is developing out of this experience LOL!
+
+We don't need a /boot partition do we? This version of lilo and the kernel
+shouldn't have a problem with big HDDs.
+
+Once I figure out what I'm doing wrong, I'm going to experiment with
+deleting the swapfile entry in /etc/fstab during install and just create a
+swap partition. I think that's a better way to go, although I know that
+nowadays many people are just desiring to have swapfiles in their /
+partition.
+
+hm...
+
+Your thoughts? Comments?
+
+Kindest regards,
+
+Bradley.
+
+
+&gt;<i> If you work VERY quickly, you can snap a pic of the screen as it's
+</I>&gt;<i> supposed to be. I've included a screenshot of the screen as it is when
+</I>&gt;<i> you wait for than one or two seconds, and receive the console output
+</I>&gt;<i> which will confuse someone who hasn't been through the install process
+</I>&gt;<i> before.
+</I>&gt;<i>
+</I>&gt;<i> I've also included a shot of the rpcbind errors that are received once
+</I>&gt;<i> the user selects the keyboard mapping for their locale. This shows the
+</I>&gt;<i> errors, early on I believe, that were being experienced with nfsd and
+</I>&gt;<i> subsequently corrected by commenting out the /etc/rc.* entries discussed
+</I>&gt;<i> the earlier emails by Evert and Jan.
+</I>&gt;<i>
+</I>&gt;<i> I'm currently in the process of building a detailed installation manual,
+</I>&gt;<i> and I could use some help critiquing it, of course, I'm going to do my
+</I>&gt;<i> best NOT to show the errors that are currently showing up in the process
+</I>&gt;<i> of my own installs :)
+</I>&gt;<i>
+</I>&gt;<i> Hopefully, by the time I'm finished those issues will be resolved ;)
+</I>&gt;<i>
+</I>&gt;<i> A detailed, installation manual with images will go a long way towards
+</I>&gt;<i> increasing usership of this wonderful distro :)
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> Kindest regards,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001543.html">[Sorcerer-admins] Installation and User Manual... a work in	progress developing all on its own.
+</A></li>
+	<LI>Next message: <A HREF="001534.html">[Sorcerer-admins] Installation Manual w/screenshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1523">[ date ]</a>
+              <a href="thread.html#1523">[ thread ]</a>
+              <a href="subject.html#1523">[ subject ]</a>
+              <a href="author.html#1523">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

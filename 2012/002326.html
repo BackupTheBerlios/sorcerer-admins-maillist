@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] immune-exam-dispel
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20immune-exam-dispel&In-Reply-To=%3CCA%2BT4wDg73gR7iinPa%3DriedEFMyp07Pftd%3DTiZJqwvMN%2BdY8HqQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002325.html">
+   <LINK REL="Next"  HREF="002327.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] immune-exam-dispel</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20immune-exam-dispel&In-Reply-To=%3CCA%2BT4wDg73gR7iinPa%3DriedEFMyp07Pftd%3DTiZJqwvMN%2BdY8HqQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] immune-exam-dispel">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 18 21:44:56 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002325.html">[Sorcerer-admins] httpd configuration file changes,	and xorg changes.
+</A></li>
+        <LI>Next message: <A HREF="002327.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2326">[ date ]</a>
+              <a href="thread.html#2326">[ thread ]</a>
+              <a href="subject.html#2326">[ subject ]</a>
+              <a href="author.html#2326">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I expect at least one SAs will conjecture that creating a spell
+that has the ability to arbitrarily dispel other spells is a horrible idea.
+If I added the functionality to immune-exam-clean
+then he might suffer nightmares where he discovers
+that all installed spells were automatically dispelled,
+and also that /var/cache/sources/ is empty.  ;)
+
+Fortunately, automatic mass dispelling of all installed software is an
+impossibility.
+But even so I added this newer convenience functionality
+to the spell called immune-exam-dispel.
+This way the convenience can be selectively enabled/disabled
+as part of a Sorcerer box's immune system.
+
+The purpose of immune-exam-dispel is a weekly examination
+which adds to the dispel queue all installed spells that lack a definition file.
+When this happens the event log created is called &quot;Miss Self&quot;
+Literally, it means that a spell is missing it's own definition.
+Then at the completion of immune-exam-dispel
+dispel is invoked to remove remove the content of spells
+that no longer have a definition.
+
+So why do this?
+The answer is slightly verbose.
+First, spells that lack a definition can not be re-cast.
+Yet eventually such spells will probably require an ELF library
+that is no longer installed.
+This triggers a &quot;Miss ELF&quot; event.
+However, the problem can not be repaired by sorcery,
+because sorcery can not re-cast spells that lack a definition.
+Therefore, files in /var/cache/old/ accumulate without end
+while a &quot;Miss ELF&quot; event can not be resolved.
+
+The obvious solution is to dispel the spell that is causing
+the &quot;Miss ELF&quot; event.
+However, due to SA complaints in the distant past
+I formed a policy of not dispelling installed spells on a whim.
+In general only spell &quot;conflicts&quot; and &quot;exclusive provides&quot;
+can cause installed spells to automatically dispel.
+In this fashion a new spell can displace an obsolete spell.
+An example would be the automatic transition from
+spell OOo-bin to Apache_OpenOffice.
+
+For all I know a SA might have installed a custom spell
+an then misplaced the local grimoire.
+And having one or all custom spells dispelled might cause
+a terrible break or inconvenience for the SA.
+Therefore, dispelling installed spells is an important matter
+that in the past I would not allow to be done automatically
+in order to resolve an &quot;Elf Miss&quot; event.
+
+However, for months my todo list contained the idea
+to create a spell such as &quot;immune-exam-dispel&quot;
+that will automatically dispel spells which lack a definition.
+This makes for easy removal of obsolete software.
+And obsolete software has become a more significant
+occurrence since I began the grimoire audit.
+I have ejected many spells from the grimoire.
+Others were given a potential omit date sometime in 2013.
+
+Therefore, in order to maintain the sanity of each box
+I recommend
+# au begin immune-exam-dispel
+This grants a Sorcerer box tactic consent to dispel spells
+that lack definitions; which are most likely obsolete software.
+
+SAs that want to reserve that power for themselves can instead use the command
+# au gone
+
+See
+# au help gone
+for an explanation of how to use the gone augur command module.
+
+Dispelling obsolete software is an important matter.
+In some situations obsolete software can create security risks.
+In some situations obsolete software can create compile errors.
+Therefore, if any SA does not intend to diligently pursue and
+eliminate installed obsolete software
+then I strongly recommend
+# au begin immune-exam-dispel
+
+BTW, immune-exam-dispel requires a couple of days before
+it reaches installed grimoires.
+So this email refers to functionality that will
+appear around Friday 20120720 on most boxes.
+This email is advance notice.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002325.html">[Sorcerer-admins] httpd configuration file changes,	and xorg changes.
+</A></li>
+	<LI>Next message: <A HREF="002327.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2326">[ date ]</a>
+              <a href="thread.html#2326">[ thread ]</a>
+              <a href="subject.html#2326">[ subject ]</a>
+              <a href="author.html#2326">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

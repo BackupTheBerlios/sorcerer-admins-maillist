@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] partitions?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20partitions%3F&In-Reply-To=%3CAANLkTikZE707e_jA7Dx%2BqW8ObJMq6OJhqU68NS2YaObf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001917.html">
+   <LINK REL="Next"  HREF="001921.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] partitions?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20partitions%3F&In-Reply-To=%3CAANLkTikZE707e_jA7Dx%2BqW8ObJMq6OJhqU68NS2YaObf%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] partitions?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep  2 00:59:05 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001917.html">[Sorcerer-admins] partitions?
+</A></li>
+        <LI>Next message: <A HREF="001921.html">[Sorcerer-admins] partitions?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1916">[ date ]</a>
+              <a href="thread.html#1916">[ thread ]</a>
+              <a href="subject.html#1916">[ subject ]</a>
+              <a href="author.html#1916">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The minimum amount of partitions varies depending
+upon the filesystem on the primary partition &quot;/&quot;
+xfs, for example lacks a boot block,
+so lilo must be installed to the MBR
+or there must be a /boot partition.
+
+Any filesystem on a LUKS encrypted device
+can not also be a filesystem that holds the
+linux kernel and initramfs.
+While lilo can load a kernel and initramfs stored
+on an encrypted filesystem
+lilo can not decrypt those files.
+An encrypted kernel and encrypted initramfs
+can not be used for booting.
+Therefore, when &quot;/&quot; is on LUKS encrypted device
+then a separate unencrypted ext2 /boot partition is required.
+
+If &quot;/&quot; is a mdraid or a LVM2
+then depending upon the type
+a separate /boot partition might be required
+since lilo will not be loading kernels or initramfs
+that are spread out over multiple physical devices.
+
+When in doubt create a 1G, or if space permits, a 2G /boot partition.
+And for maximum usefulness make it the first
+partition on disk so it receives low cylinder numbers.
+
+Linux kernels are a few megabytes compressed.
+A set of modules for a linux kernel is usually between
+30M compressed to 70M uncompressed,
+even more if not properly stripped,
+and considerable more if containing debug information.
+And about 10M to 50M of files from the /bin /sbin /etc /lib /lib64
+are included on an initramfs.
+Therefore, a typical uncompressed initramfs
+will be about 90M to 100M
+That is how the measurements look today.
+Years from now the requirements may differ.
+a 1G /boot should be sufficient for the next few years.
+If a box is intended to be deployed
+and updated for 5 years or longer
+then allocating a nice large /boot
+gives room to grow.
+Also additional free space on /boot
+can be used to create swapfiles
+in situations where the SA deems
+the extra virtual memory necessary.
+Swapfiles on /boot will have less of
+a performance impact than swapfiles
+on / because swapfiles on /boot will
+probably be less fragmented and also
+cause no fragmentation to the / filesystem.
+
+Perhaps no form of software based encryption
+is perfect since requires an unencrypted /boot
+that stores an unencrypted kernel and unencrypted initramfs
+that can be tampered with.
+However, for laptop and notebooks used in sensitive areas
+of for private use
+a LUKS encrypted / should add some security.
+If the laptop is stolen and not returned
+then the data encrypted on / would be inaccessible.
+If returned then the kernel or initramfs could be trojaned
+and the data could be stolen after the SA enters the password
+for the key to mount the encrypted /
+
+One of the best solutions for security on a laptop
+is to have the the fixed disk's partition entirely encrypted
+and have /boot exist separately on a removable USB thumb drive.
+Easier to keep the key secure rather than the laptop.
+Since the USB /boot &quot;key&quot; is definitely the weak link
+the data on the laptop can be stolen provided vulnerabilities
+in installed software are exploited while the laptop is running
+or if the USB /boot &quot;key&quot; is stolen, trojaned, and returned.
+
+Merely, having a BIOS password to boot
+is not sufficient protection against having
+unencrypted data removed from the fixed disk of a stolen laptop.
+
+The question of using a /boot partition
+or using only a single partition
+comes down to SA preference.
+The SA preference determines if a /boot is necessary.
+If the SA makes a mistake and deploys a configuration
+where /boot is required
+then the SA will likely have to re-install the box
+with a /boot in order for it to be bootable.
+So when in doubt make a /boot partition also.
+At worst having a /boot
+will waste a few megabytes of disk space
+while booting will be a bit faster
+for reduced fragmentation on /boot.
+
+
+On Wed, Sep 1, 2010 at 11:33 AM, Nathan Allen
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_jeffrey_allen at yahoo.com</A>&gt; wrote:
+&gt;<i> what is the required minimum number of partitions used for sorcerer?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001917.html">[Sorcerer-admins] partitions?
+</A></li>
+	<LI>Next message: <A HREF="001921.html">[Sorcerer-admins] partitions?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1916">[ date ]</a>
+              <a href="thread.html#1916">[ thread ]</a>
+              <a href="subject.html#1916">[ subject ]</a>
+              <a href="author.html#1916">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

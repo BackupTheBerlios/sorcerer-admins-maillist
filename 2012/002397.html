@@ -1,0 +1,219 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] subtle changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20subtle%20changes...&In-Reply-To=%3CCA%2BT4wDiU-xo9A4KgXJu1EXjC4T2XmqJWVLriqDfbftz3gvoZUw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002396.html">
+   <LINK REL="Next"  HREF="002398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] subtle changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20subtle%20changes...&In-Reply-To=%3CCA%2BT4wDiU-xo9A4KgXJu1EXjC4T2XmqJWVLriqDfbftz3gvoZUw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] subtle changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 25 23:34:42 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002396.html">[Sorcerer-admins] important changes...
+</A></li>
+        <LI>Next message: <A HREF="002398.html">[Sorcerer-admins] A storm approaches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2397">[ date ]</a>
+              <a href="thread.html#2397">[ thread ]</a>
+              <a href="subject.html#2397">[ subject ]</a>
+              <a href="author.html#2397">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>First another queue and utility was added.
+It is called reuse.
+It's tasks is for identifying and saving
+customized configuration files in /aux/use/
+Like oust which saves installed spell content in /aux/old/;
+reuse also can run in advance of cast and dispel.
+
+A compact information line is provided at the bottom of
+# au scry
+that provides information about the queues
+Down is for download
+Cast is for casting
+Reap is for dispelling
+Prov is for providing sources
+Exp is for expediting compilation using ccache,
+Use is for reusing customized configuration files
+Oust is for copying installed spells to /aux/old/
+
+After each number comes a fraction.
+But it is not actually a fraction.
+And so I might change the separator to : instead.
+The first value or pseudo numerator represents either
+the amount being processed which is the situation with
+Down Cast and Reap.
+Or it indicates the total amount processed
+which is the situation with Prov Exp Use Oust.
+The pseudo denominator always indicates the amount yet to go.
+So all the pseudo denominators start high when an install or upgrade begins
+and eventually reach 0.
+When everything is 0/0 then nothing is happening.
+All the pseudo numerators also approach 0 as spells are processed.
+However, some might retain a value for longer.
+If Miss Elf events are ongoing then /aux/old/ might not clear.
+In that situation Oust's pseudo numerator will not drop.
+The pseudo numerator for USE indicates the amount of spells
+that already have their configuration files saved in /aux/use/
+That drops as spells cast.
+But if a spell does not successfully cast
+then it's modified configuration files
+will still remain saved in /aux/use/
+Exp's numerator indicates the amount of directories in
+/var/cache/sorcery/ccache/
+Eventually, sentinel-space will convert those into tarballs
+where they will be xz compressed and reside in /var/cache/ccache/
+
+This change also moves /usr/src/sorcery/ to /var/cache/sorcery/
+The reason for /usr/src/sorcery/ was to be congruent with the
+recommendations of the FHS.
+<A HREF="http://refspecs.linuxfoundation.org/FHS_2.3/">http://refspecs.linuxfoundation.org/FHS_2.3/</A>
+However, the suggestion is weak and FHS does not seem to be updating,
+last updated on 20040129.
+
+More important than the FHS is that some SAs might prefer using /var/cache/
+instead for file system reasons or for performance reasons.
+The best performance for compilation is probably achieved when
+/var/cache/sorcery/ exists as it's own dedicated 40G ext3 partition.
+But that is neither mandatory nor a recommendation.
+
+The sorcery utilities now have
+7 multi-state queues and
+several program components.
+Yes, it is confusing and complex.
+So why has it become this way?
+
+The delegation of specific tasks that involve disk I/O
+allows for the I/O to be spread more evenly.
+And I/O that previously caused wait cycles
+can be executed before the outcome is required.
+Therefore, less CPU cycles become idle and wait
+while waiting for the mass storage device.
+
+Ideally, when a spell begins casting the sources for a software project
+then compilation can begin immediately.
+Upon successful completion dispel is invoked
+which removes the previously installed spell's files.
+Finally, the newly installed files are analyzed and installed.
+
+In the past casting a spell also required:
+untarring sources:
+untarring saved ccache tarball:
+ousting files to /aux/old/:
+and saving customized configuration files to /aux/use.
+Because those tasks can now be accomplished
+before a spell begins casting;
+spells can cast faster.
+When casting 100 spells or more for an update
+the efficiency can result in completion of casting
+many minutes if not an hour sooner.
+
+Okay, so casting is complete.
+Can the box be rebooted?
+Yes it can.
+And if the kernel was updated
+then it should be rebooted.
+The directories that remain in /var/cache/sorcery/ccache/
+will still be there when the box reboots.
+Therefore, sentinel-space can create tarballs and compress
+tarballs when the box next boots.
+
+The tasks that involve creating additional logs for spells
+such as LA logs, ELF logs, md5sum logs, archives and such
+are now done in parallel with installing a spell's files.
+This results in better utilization on SMP
+and better utilization of the kernel's cache
+especially for boxes which do not have 2G of RAM installed per processor.
+
+Installation of a spell's files is designed and intended to run slowly.
+This helps diminish demand for I/O while allowing concurrently casting spells
+increased access to processors.
+However, this also causes many processes
+to be started that run for a while.
+Consequently, installing a spell while concurrently casting others
+can inflate loadavg during installation.
+That is because several processes are running,
+but also intentionally starved of CPU cycles.
+The higher loadavg does not represent an undesireable state.
+It simply helps spread the I/O while
+maintaining the processor's attention on compiling source.
+
+Most of the time the sorcery utilities contribution to loadavg
+is approximately the same or one more than
+the amount of processors that are delegated to sorcery.
+Therefore, 9 could be a rather typical loadavg on an 8 core box
+where all processors are delegated to sorcery.
+However, the loadavg might temporarily spike +4
+for each spell casting during it's install phase.
+
+Although previously mentioned some SAs might yet want to know
+how to delegate processors to sorcery.
+Actually, it is rather easy.
+# /etc/init.d/cgroup configure
+Select Edit
+Select cpuset.cpus
+Select slow/sorcery
+Then enter the processors to use.
+separate the processors with a comma
+or specify a range using a hyphen.
+To 3 processors on a 4 processor box
+1-3
+would be a good value to enter.
+To use 6 processors on an 8 processor box then
+2-7
+would be a good value to enter.
+
+Delegation of processors to sorcery using control groups
+provides an alternate method for controlling resource allocation
+in contrast with selecting the &quot;min&quot; feature which
+explicitly minimizes cast's use of resources.
+cast however still requires about 1G per processor.
+Therefore, if a box has 8 cores and 4G of RAM
+then perhaps only 4 or 5 cast processor will run concurrently.
+Best not to understock the loadout of RAM.
+
+I hope this email helps mitigates confusion.
+Most of these changes are transparent.
+However, moving /usr/src/sorcery to /var/cache/sorcery/ is not so transparent.
+I am not trying to overwhelm anyone with technobabble.
+I apologize if the explanation of changes seems overly verbose.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002396.html">[Sorcerer-admins] important changes...
+</A></li>
+	<LI>Next message: <A HREF="002398.html">[Sorcerer-admins] A storm approaches...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2397">[ date ]</a>
+              <a href="thread.html#2397">[ thread ]</a>
+              <a href="subject.html#2397">[ subject ]</a>
+              <a href="author.html#2397">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

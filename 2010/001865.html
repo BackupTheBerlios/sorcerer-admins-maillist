@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] auto ignore auto failures?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTikxMcJ5GfSkTS1zZegysdg3y5Rj2PRDS5UvRu6X%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001864.html">
+   <LINK REL="Next"  HREF="001866.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] auto ignore auto failures?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTikxMcJ5GfSkTS1zZegysdg3y5Rj2PRDS5UvRu6X%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] auto ignore auto failures?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 28 00:09:50 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001864.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+        <LI>Next message: <A HREF="001866.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1865">[ date ]</a>
+              <a href="thread.html#1865">[ thread ]</a>
+              <a href="subject.html#1865">[ subject ]</a>
+              <a href="author.html#1865">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Parameter -r on cast has unpredictable results
+depending upon what ends up in the cast queue.
+It could reconfigure much more than the
+spells listed as command line parameters.
+That is why the # augur forget $SPELL
+was created.
+
+Somehow I was expecting much more was required
+in order to cast linux-custom.
+I had expected that I removed the
+make menuconfig from the spell.
+But however it is now it has been mostly
+untouched since it moved to the new name.
+
+Having multiple behaviors relation to autofailure of spells
+makes helping SAs more difficult because they will
+probably not describe exactly what is ongoing.
+Eventually, such decisions usually go the route
+of entirely one direction.
+For example the only rule used for config files
+is the preservation rule and not the backup rule.
+Modified configuration files are preserved in /etc/
+while fresh new default configuration files
+are stored in /etc.ori/
+That compromise obtains a bit of the best about both choices.
+
+Autofailure would definitely have one default behavior,
+but it probably should not have more than behavior.
+
+If a software project is not installed
+then the most probable behavior is that
+any software to compile that requires the
+missing required software project will fail to compile.
+However if a software project fails to compile
+but is already installed
+then software that requires it will probably
+be able to compile using the older than current version.
+This enables important security updates to happen
+where our current autofail rule might prevent anywhere
+from a small to a large selection of software
+from being compiled.
+Naturally, SAs should be ontop of the situation when
+something fails to compile.
+But perhaps Sorcerer should try to achieve
+best results for the SAs that have their boxes
+mostly on autopilot?
+
+Let us count that above as 2 boons for the new method.
+In general more software will compile
+with a lesser probability of security updates being blocked.
+So what convenience do we sacrifice
+by switching to the new rule?
+
+All I can think of is that some software might fail to compile
+and some might compile twice.
+Once before the a failed spell is fixed
+and once again after a failed spell is fixed.
+
+On the other hand let us consider....
+What if a SA sets a box to update
+and there are 90 spells queued.
+By the current rule if a compile failure happens
+then the SA might return a few hours later
+and have 60 autofailed spells.
+There is a significant loss of potential CPU cycles
+and after fixing the failed spell the SA will
+have to wait for 60 spells to compile.
+
+If we change to the new rule
+and a failure happens during updating
+then when the SA returns the box might
+have only 1 spell in the failed queue.
+Since that spell is already installed
+it did not cause an autofailure for the
+other spells waiting to cast.
+The SA fixes the one spell, recompiles
+and the box is probably done updating.
+That seems less problematic
+and more efficient for the SA.
+
+The current autofail rule applies to both
+new deployments and to updates.
+However most boxes do 1 deployment
+and hundreds of updates.
+Consequently, a new autofail rule is
+more favorable for updates and therefore
+that should grant it a 3rd boon.
+
+So new rule boons:
+1. more software compiles makes for better updating
+2. less chance of security fixes being prevented from compilation
+3. more efficient for the SA that makes a general time estimate
+for all spells queued instead of watching augur scry like a hawk.
+
+The only time where the current autofail rule
+is best suited is during initial deployment.
+However, during initial deployment software
+that fails compilation is also software which is not installed.
+And therefore, a failed spell would cause
+a cascade of autofailures.
+
+Therefore, in my opinion the proposed modification
+to the autofailure rule provides for the type of handling
+that we would prefer both during initial deployment
+and during updating.
+And while it is not a perfect rule it sacrifices
+the assumption of failure for convenience provided
+by attempting to continue updating software
+which in retrospect usually works.
+
+Some combinations of libraries and executables
+have a tight fit.
+openssl and openssh are a good example.
+openssh will usually only run when at runtime
+it can find the same version of openssl that
+was used to compile openssh.
+Software such as libfwbuilder and fwbuilder
+have the same point of origin and are
+effectively the same software project split
+into separate sources.
+The situations where a precise version of a library
+is required are not only few,
+but they also have a very limited area of collateral damage.
+When it happens maybe only 1 to 3 other software
+projects would be effected and refuse to compile.
+
+Now let us consider an example containing zlib.
+Potentially zlib could fail to compile.
+However, zlib version 1.2.3 is safe to use if installed.
+But by the current rule, if zlib fails to compile
+then that could potentially autofail:
+# augur aron zlib | wc -l
+2706
+other spells.
+
+So unless SAs are going to ardently attend updates
+then the current autofailure rule could cause more
+pain than pleasure.
+
+I am not against entirely removing the autofail rule,
+but this compromise to the rule should provide
+instances of autofailure that are better suited
+overall towards maintaining the security of boxes
+where SAs are not actively monitoring updates.
+And for SAs fixing failures
+the modified rules should further minimize what
+ends up in the failed queue and thus
+perhaps save the SA from waiting as much
+and not knowing when to check for results.
+
+Unless anyone can make a good reason to
+maintain the old rule as a possible selection
+then I recommend SAs that want to use the old rule
+should add a function for it in /etc/sorcery/local.config
+That way they do not have to agree with me
+in order to have it their way.  :)
+The function to replace is called auto_fail()
+
+If the modified rule turns out to be a pain
+then we can go back to the old rule
+after a few months of trying it out.
+I am already feeling happier.
+Being the one who tests more updates/
+new versions of software than anyone else
+I will be pleased to not have 60 spells ejected
+from the cast queue because one spell failed to compile.
+This change should help expedite
+checking/fixing of spells with new versions of software.
+
+
+On Tue, Jul 27, 2010 at 3:19 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hmm...
+</I>&gt;<i>
+</I>&gt;<i> Interesting, and it sounds like it will work better.
+</I>&gt;<i>
+</I>&gt;<i> I suppose as I am the person who asked for the auto-fail functionality in
+</I>&gt;<i> the first place I would be interested in this, and I am! The current
+</I>&gt;<i> auto-fail behavior should also be available, though. Just in case we want to
+</I>&gt;<i> fall back to it...
+</I>&gt;<i>
+</I>&gt;<i> One functionality I do miss is the reconfigure option that we used to have
+</I>&gt;<i> for cast.
+</I>&gt;<i>
+</I>&gt;<i> I run linux-custom.
+</I>&gt;<i>
+</I>&gt;<i> To change the configuration in linux-custom I have to do the following
+</I>&gt;<i> steps.
+</I>&gt;<i>
+</I>&gt;<i> augur version linux-custom
+</I>&gt;<i> augur forget linux-custom
+</I>&gt;<i> augur progess linux-custom 2.6.34.1
+</I>&gt;<i> cast linux-custom
+</I>&gt;<i>
+</I>&gt;<i> where in the past it used to be:
+</I>&gt;<i> cast -r linux-custom
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jul 26, 2010 at 9:17 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> To be frank about it,
+</I>&gt;&gt;<i> I am not a fan of autofailure.
+</I>&gt;&gt;<i> Half, the time I remove the spell from
+</I>&gt;&gt;<i> the failed queue that is causing the autofailure
+</I>&gt;&gt;<i> move the other spells that were autofailed
+</I>&gt;&gt;<i> back into the cast queue.
+</I>&gt;&gt;<i> I take those steps to nullify the autofailure.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sometimes autofailure is a convenience.
+</I>&gt;&gt;<i> It might keep a SA chasing after an error
+</I>&gt;&gt;<i> that is caused by a spell that failed before
+</I>&gt;&gt;<i> the one they are examining.
+</I>&gt;&gt;<i> However, more often auto failure is an inconvenience.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On some boxes where SAs are not paying attention
+</I>&gt;&gt;<i> to autofailed spells the auto fail method might be
+</I>&gt;&gt;<i> preventing the important updates of installed software
+</I>&gt;&gt;<i> and therefore permitting some versions of software
+</I>&gt;&gt;<i> with known security vulnerabilities to remain installed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have half a mind to rewrite the rule so that....
+</I>&gt;&gt;<i> A spell can autofail only if it failed to compile
+</I>&gt;&gt;<i> and an older version of the spell is not already installed.
+</I>&gt;&gt;<i> That way if gtk+ fails compilation and gtk+ is not installed
+</I>&gt;&gt;<i> then gtk+ will cause autofailures.
+</I>&gt;&gt;<i> However, if gtk+ fails compilation and gtk+ is installed
+</I>&gt;&gt;<i> then spells that have gtk+ as part of their requirement chains
+</I>&gt;&gt;<i> will not autofail and instead will attempt to cast
+</I>&gt;&gt;<i> if they are in the cast queue already.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Would anyone object to me changing
+</I>&gt;&gt;<i> the autofail rules so that they work that way?
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001864.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+	<LI>Next message: <A HREF="001866.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1865">[ date ]</a>
+              <a href="thread.html#1865">[ thread ]</a>
+              <a href="subject.html#1865">[ subject ]</a>
+              <a href="author.html#1865">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

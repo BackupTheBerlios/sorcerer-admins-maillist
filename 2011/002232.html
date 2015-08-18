@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please be aware that booting is receiving another revision.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCA%2BT4wDgq0Tw%3Dtc_ATt%2Bkpwzv1TNKD%3DkE-cBsmVzkPjtDuUk8Gw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002231.html">
+   <LINK REL="Next"  HREF="002235.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please be aware that booting is receiving another revision.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCA%2BT4wDgq0Tw%3Dtc_ATt%2Bkpwzv1TNKD%3DkE-cBsmVzkPjtDuUk8Gw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please be aware that booting is receiving another revision.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Aug  3 22:55:21 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002231.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+        <LI>Next message: <A HREF="002235.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2232">[ date ]</a>
+              <a href="thread.html#2232">[ thread ]</a>
+              <a href="subject.html#2232">[ subject ]</a>
+              <a href="author.html#2232">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay...
+Booting is easy enough to understand.
+It starts by running code in BIOS.
+Then BIOS will usually load the code from
+the first sector of a device such as a fixed disk
+or a floppy or a CDROM.
+The first sector of a fixed disk is also known as the MBR, master boot record.
+A typical fixed disk master boot record examines
+the partition table and loads code from the first sector
+of the first partition with the bootable flag enabled.
+That first sectors of a partition are called the boot block.
+
+By default Sorcerer boxes have lilo installed to a boot block
+of the /boot or / partitions.
+However, some SAs install lilo to the MBR.
+extlinux, however will not install to the MBR.
+Therefore, the MBR that comes with syslinux can be installed,
+as Evert discovered.
+I install the MBR provided from running ms-sys.
+
+extlinux provides a better bootloader than lilo because
+there are certain type of lilo errors that can not happen with extlinux.
+Also extlinux supports loading multiple initramfs images
+instead of having to concatenate them together for lilo.
+
+Recovery of a box that does not boot is easiest by
+selecting the &quot;rescue&quot; label from the boot menu.
+This works provided that that lilo or extlinux are not damaged.
+Yet if that does not work then the next easier method
+is to boot using an Install/Rescue disk in the CDROM drive.
+A menu appears that allows the SA to select an alternate root device.
+Selecting the real root device from the fixed disk allows booting
+to continue while mounting the fixed disks root as /
+instead of using the initramfs from the CDROM.
+
+A box probably aught not be run normally using an I/R initramfs and kernel
+or the rescue label.
+Therefore, after booting verify that /boot is monuted if it should be
+and commence repairs.
+
+If lilo is being used then type:
+
+# /etc/init.d/initramfs force-reload
+# /etc/init.d/lilo force-reload
+
+If extlinux is being used thentype:
+
+# /etc/init.d/initramfs force-reload
+# /etc/init.d/extlinux force-reload
+
+Then reboot normally.
+If that fails then rescue again
+and this time use ms-sys to write a
+bootable MBR to the primary fixed disk.
+Then run fdisk on the primary fixed disk
+and check to be certain that the bootable
+partition has the bootable flag.
+After verifying that
+then go for a normal reboot.
+
+I do not know what happens to a box that has
+both lilo and syslinux installed concurrently.
+If both are installed
+then choose to keep one and dispel the other.
+I recommend extlinux from syslinux.
+However, since few SAs have read the documentation for it
+then they might feel more comfortable staying with lilo.
+
+Here is what /boot should look like with extlinux.
+
+# ls -lah /boot/3.0.0
+total 40M
+drwxr-xr-x 2 root root 4.0K Aug  1 16:45 .
+drw------- 9 root root 4.0K Aug  1 16:45 ..
+-rw-r--r-- 1 root root 1.4M Jul 27 17:50 System.map
+lrwxrwxrwx 1 root root    9 Aug  1 16:45 initrf -&gt; ../initrf
+-rw------- 1 root root 2.0M Jul 27 17:50 linux
+-rw------- 1 root root  36M Jul 27 18:53 modules
+
+# ls -lah /boot/initrf/
+total 22M
+drwx------ 2 root root 4.0K Aug  1 16:45 .
+drw------- 9 root root 4.0K Aug  1 16:45 ..
+-rw------- 1 root root 4.4M Jul 18 04:36 bin
+-rw------- 1 root root 919K Aug  1 16:45 etc
+-rw------- 1 root root 5.9M Jul 27 18:53 lib
+-rw------- 1 root root 4.5M Jul 18 04:36 lib64
+-rw------- 1 root root 5.5M Jul 27 18:53 sbin
+-rw------- 1 root root 337K Jul 18 04:36 usr
+
+# ls -lah /boot/extlinux/
+total 272K
+drwx------ 2 root root 4.0K Jul 18 04:36 .
+drw------- 9 root root 4.0K Aug  1 16:45 ..
+-rw------- 1 root root 1.8K Jul 28 14:17 extlinux.conf
+-r--r--r-- 1 root root  33K Aug  1 16:45 ldlinux.sys
+-rw-r--r-- 1 root root  58K Jul 18 04:34 menu.c32
+-rw-r--r-- 1 root root 156K Jul 18 04:34 vesamenu.c32
+
+
+There is no file called initrf or initrf.old
+However if a rescue label is installed then
+there is...
+
+# ls -lah /boot/rescue/
+total 45M
+drwxr-xr-x 2 root root 4.0K Jun 11 10:34 .
+drw------- 9 root root 4.0K Aug  1 16:45 ..
+-rw-r----- 1 root root 1.4M Jun 11 10:34 System.map
+-rw------- 1 root root  41M Jun 11 10:34 initrf
+-rw------- 1 root root 1.9M Jun 11 10:34 linux
+
+/etc/init.d/initramfs is responsible
+for making initramfs files such as:
+
+# ls -lah /boot/3.0.0/modules /boot/initrf/
+-rw------- 1 root root  36M Jul 27 18:53 /boot/3.0.0/modules
+
+/boot/initrf/:
+total 22M
+drwx------ 2 root root 4.0K Aug  1 16:45 .
+drw------- 9 root root 4.0K Aug  1 16:45 ..
+-rw------- 1 root root 4.4M Jul 18 04:36 bin
+-rw------- 1 root root 919K Aug  1 16:45 etc
+-rw------- 1 root root 5.9M Jul 27 18:53 lib
+-rw------- 1 root root 4.5M Jul 18 04:36 lib64
+-rw------- 1 root root 5.5M Jul 27 18:53 sbin
+-rw------- 1 root root 337K Jul 18 04:36 usr
+
+It might not make a proper decision about
+whether to generate the layout for lilo
+or the layout for extlinux if both are installed.
+Obviously the lilo layout differs
+It will look more like the rescue image
+where there is one large initrf file.
+
+Sorry for the inconvenience.
+But the pain of transition is weighed against
+the potential for lilo errors, the benefit of multiple initrf files,
+and Evert's desire to use extlinux to boot from BTRFS.  *lol*
+If Evert had not suggested extlinux on multiple occasions
+then I would not have allocated the time to investigate it
+and discover and evaluate it's boons and banes.
+I had been using lilo for as long as I can remember.
+But extlinux is worth the switch.
+
+But I am not forcing the switch distribution wide.
+That is because SAs might have something special
+in /etc/lilo/tail that I could not automatically translate
+into the format that is accepted for extlinux configuration files.
+Switching those boxes requires the SAs to create
+an /etc/extlinux/tail that accomplishes the desired task.
+And so that is why some of our boxes boot with lilo
+and some of our boxes boot with extlinux.
+
+I realize some might have expected a transition to grub.
+grub also supports the loading of multiple initramfs.
+grub also can read a file system.
+Yet the configuration syntax and menu syntax for extlinux feels good.
+And there is no confusion about where to install it.
+extlinux knows where it should install.
+And making bootable backups with extlinux is easier,
+because a separate configuration file is not required.
+I just update the backup, chroot in, run extlinux and
+extlinux installs to the proper boot sector of /boot for the backup disk.
+So extlinux has the aspects that I like about grub
+and none of the aspects that I dislike.
+
+Nobody wanted to write the required init-script code to support grub.
+I wrote the adjustments the initramfs generation init-scripts
+and the init-script that creates extlinux's configuration file
+in a fashion similar to how lilo's configuration file is created.
+And so the reason why we have extlinux is because
+Evert suggested extlinux.
+And I did the research and the work required to integrate it into Sorcerer.
+
+lilo should still work.
+I kept at least one of my boxes booting with lilo for a long time.
+But now I am totally transitioned.
+Unless a SA has reason to avoid transition
+then transition is a good choice if one has the time
+and does not mind the finding and fixing a problem
+on the first or second reboot attempts.
+Fortunately, for me each transition has been a first time success.
+
+There is multiple boons gained from using multiple initrf files.
+First, the file sin /boot/initrf/ can be regenerated separately.
+Second, they are shared among all the regular boot labels.
+Sharing those initramfs files grants a savings in usage on /boot
+as compared using lilo with a single initramfs image that was
+a concatenation of all of /boot/initrf/* and the collection of
+modules for each linux kernel.
+
+/dev/sda1        2064208 190332   1769020  10% /boot
+
+That is /boot usage with 3 regular labels and one rescue label installed.
+Makes the 2G allocation look like overkill.
+However, when making original estimates
+the potential savings of switching to a new method
+and new boot loader were not considered.
+
+2G is still a good choice of size for a dedicated /boot/
+There is no apprehension about the potential for outgrowing /boot
+And extra space on /boot could be used for a swap file
+or for holding extra files that may or may not be encrypted.
+2G off of 500G or a 1000G is too small a slice to warrant concern.
+And boxes with 1G /boot should remain
+good for deployment for longer after the transition to extlinux.
+Therefore, there are many reason why
+transitioning to extlinux will solve more problems than it creates.
+Sorry for the bumps.
+
+
+
+On Wed, Aug 3, 2011 at 12:21 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> I already had a regular (ie msdos) mbr.... it was working with lilo...
+</I>&gt;<i> in the partition table the /dev/sda2 is marked as bootable
+</I>&gt;<i> syslinux is installed on /dev/sda2
+</I>&gt;<i> as far as I know, msdos mbr only chainload to the bootable partition....
+</I>&gt;<i> I'm wrong?
+</I>&gt;<i> thanks and regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Aug 3, 2011 at 8:04 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It could be that you need to install the bootblock for syslinux.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Assuming that your bootable partition is on /dev/sda1, and that you
+</I>&gt;&gt;<i> don't have an MBR...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> cat /usr/share/syslinux/mbr.bin &gt; /dev/sda
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This will put the MBR from syslinux to your first SATA drive. If you
+</I>&gt;&gt;<i> are multi-booting, DON'T do this....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you are multibooting, point your boot manager at the partition you
+</I>&gt;&gt;<i> installed Sorcerer in.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hope this helps...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On 3 August 2011 09:30, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; Hi
+</I>&gt;&gt;<i> &gt; I followed the instruction and I now can't boot the server.... I always
+</I>&gt;&gt;<i> &gt; get
+</I>&gt;&gt;<i> &gt; &quot;Boot error&quot; at start....
+</I>&gt;&gt;<i> &gt; rebooted several time trying to update syslinux, initrd.... no success
+</I>&gt;&gt;<i> &gt; any idea?
+</I>&gt;&gt;<i> &gt; thanks and regards
+</I>&gt;&gt;<i> &gt; JLM
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On Sun, Jul 3, 2011 at 1:04 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;&gt;<i> &gt; wrote:
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; # find /boot/initrf/ /boot/*/modules -type f
+</I>&gt;&gt;<i> &gt;&gt; /boot/initrf/bin
+</I>&gt;&gt;<i> &gt;&gt; /boot/initrf/etc
+</I>&gt;&gt;<i> &gt;&gt; /boot/initrf/lib
+</I>&gt;&gt;<i> &gt;&gt; /boot/initrf/lib64
+</I>&gt;&gt;<i> &gt;&gt; /boot/initrf/sbin
+</I>&gt;&gt;<i> &gt;&gt; /boot/initrf/usr
+</I>&gt;&gt;<i> &gt;&gt; /boot/2.6.39.1/modules
+</I>&gt;&gt;<i> &gt;&gt; /boot/2.6.39.2/modules
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; In a couple of days files such as those will appear on boxes that
+</I>&gt;&gt;<i> &gt;&gt; update.
+</I>&gt;&gt;<i> &gt;&gt; The initramfs is no longer a concatenation of 2 large cpio files.
+</I>&gt;&gt;<i> &gt;&gt; Rather it is the concatenation of several small files.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Boxes that boot with lilo will have initramfs files concatenated into
+</I>&gt;&gt;<i> &gt;&gt; /boot/$VERSION/initrf
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Boxes that boot with extlinux will references
+</I>&gt;&gt;<i> &gt;&gt; each compressed cpio file
+</I>&gt;&gt;<i> &gt;&gt; individually in the extlinux.conf
+</I>&gt;&gt;<i> &gt;&gt; Consequently, boxes booting with extlinux will save some space on
+</I>&gt;&gt;<i> &gt;&gt; /boot/
+</I>&gt;&gt;<i> &gt;&gt; while boxes booting with lilo must have the individual files cpio files
+</I>&gt;&gt;<i> &gt;&gt; concatenated into a single file.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Segregating the initramfs into several cpio files
+</I>&gt;&gt;<i> &gt;&gt; allows for individual checking
+</I>&gt;&gt;<i> &gt;&gt; to discern which cpio file must be updated.
+</I>&gt;&gt;<i> &gt;&gt; Regenerating only some of the cpio files
+</I>&gt;&gt;<i> &gt;&gt; is faster than regenerating all of them.
+</I>&gt;&gt;<i> &gt;&gt; Therefore, 7 cpio files seems to be
+</I>&gt;&gt;<i> &gt;&gt; a reasonable division along directory boundaries.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Boxes that boot with lilo
+</I>&gt;&gt;<i> &gt;&gt; require no special adjustment.
+</I>&gt;&gt;<i> &gt;&gt; It is already tested.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; However, boxes booting with extlinux
+</I>&gt;&gt;<i> &gt;&gt; will require a newer extlinux.conf.
+</I>&gt;&gt;<i> &gt;&gt; Therefore, run
+</I>&gt;&gt;<i> &gt;&gt; # /etc/init.d/extlinux force
+</I>&gt;&gt;<i> &gt;&gt; on those boxes to ensure that the configuration files update.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Basically, until the next I/R release
+</I>&gt;&gt;<i> &gt;&gt; there should be no Sorcerer boxes that are booting with extlinux.
+</I>&gt;&gt;<i> &gt;&gt; However, for SAs that manually switched
+</I>&gt;&gt;<i> &gt;&gt; please also manually regenerate extlinux.conf
+</I>&gt;&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002231.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+	<LI>Next message: <A HREF="002235.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2232">[ date ]</a>
+              <a href="thread.html#2232">[ thread ]</a>
+              <a href="subject.html#2232">[ subject ]</a>
+              <a href="author.html#2232">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/lib explained, please read.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/lib%20explained%2C%20please%20read.&In-Reply-To=%3C596b75860809101624o6c502e6bucff2efd46ce9f978%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000775.html">
+   <LINK REL="Next"  HREF="000777.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/lib explained, please read.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/lib%20explained%2C%20please%20read.&In-Reply-To=%3C596b75860809101624o6c502e6bucff2efd46ce9f978%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/lib explained, please read.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep 11 01:24:00 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000775.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+        <LI>Next message: <A HREF="000777.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#776">[ date ]</a>
+              <a href="thread.html#776">[ thread ]</a>
+              <a href="subject.html#776">[ subject ]</a>
+              <a href="author.html#776">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay, I have re-evaluated my tests.
+libtool is not working as expected.
+It is hard coded to look for .la files only in the directories
+where the libraries can be found.
+More simply put libraries and .la files can not be stored in separate
+directories
+without modifying libtool.
+Since a potentially different version of libtool
+is included in nearly every source tarball that uses libtool
+I do not want to attempt to patch each one so that it works more proper.
+Therefore, I am not moving .la files.
+
+Also if I am not going to move la files I will let .pc files continue
+to exist in /usr/lib/pkgconfig
+While still slow to locate \.pc files are used only by configure script,
+unlike libtool which may use \.la files every single time
+an object file is compiled and/or linked.
+
+Therefore, you can completely disregard my previous email.
+While not impossible the effort is not worth it,
+especially when any year now libtool versions 2 will be
+incorporated into source tarballs instead of versions 1.x
+And it still will probably be no more flexible,
+although hopefully at least twice as fast.
+
+I apologize if I made anyone excited about the possibility.
+
+
+
+On Wed, Sep 10, 2008 at 6:26 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> can you explain what you're doing with thoses .la? (how you manage libtool
+</I>&gt;<i> to not break?)
+</I>&gt;<i> here is some interesting information about libtool stupidness... (no support
+</I>&gt;<i> for multiarch systems)
+</I>&gt;<i> <A HREF="http://blog.flameeyes.eu/articles/2008/04/14/what-about-those-la-files">http://blog.flameeyes.eu/articles/2008/04/14/what-about-those-la-files</A>
+</I>&gt;<i> BR
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Sep 10, 2008 at 1:42 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Those are all good points.
+</I>&gt;&gt;<i> However, I agree with you.
+</I>&gt;&gt;<i> Concurrent installation of ar and ELF libraries is an atavism.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Sep 10, 2008 at 3:43 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; I'm interested about that change. I never liked the libtool .la that is
+</I>&gt;&gt;<i> &gt; from
+</I>&gt;&gt;<i> &gt; my point of view just garbage....
+</I>&gt;&gt;<i> &gt; can you develop how you managed to have libtool use /usr/lib.la/*
+</I>&gt;&gt;<i> &gt; instead of
+</I>&gt;&gt;<i> &gt; /usr/lib/*.la?
+</I>&gt;&gt;<i> &gt; as far as I know for pkgconfig there is some env PKG_CONFIG_PATH to set
+</I>&gt;&gt;<i> &gt; the
+</I>&gt;&gt;<i> &gt; pkgconfig search path and PKG_CONFIG_LIBDIR for the default search
+</I>&gt;&gt;<i> &gt; dir....
+</I>&gt;&gt;<i> &gt; as far as I know pkgconfig is usable in a cross compile environment,
+</I>&gt;&gt;<i> &gt; libtool
+</I>&gt;&gt;<i> &gt; .la aren't....
+</I>&gt;&gt;<i> &gt; one of my question is what appens if libtool don't find the .la? will it
+</I>&gt;&gt;<i> &gt; still work? anyway I will be happy if there is a way to drop libtool and
+</I>&gt;&gt;<i> &gt; friends. I would also be happy if there is a way to avoid having ar
+</I>&gt;&gt;<i> &gt; library
+</I>&gt;&gt;<i> &gt; build and installed... they have no use on a system that support dynamic
+</I>&gt;&gt;<i> &gt; linking and are just wasting our disk space...
+</I>&gt;&gt;<i> &gt; Best Regards
+</I>&gt;&gt;<i> &gt; JLM
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+</I>&gt;<i> et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I></PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000775.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+	<LI>Next message: <A HREF="000777.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#776">[ date ]</a>
+              <a href="thread.html#776">[ thread ]</a>
+              <a href="subject.html#776">[ subject ]</a>
+              <a href="author.html#776">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

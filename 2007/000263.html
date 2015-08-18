@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] syslog-ng 2.x
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20syslog-ng%202.x&In-Reply-To=%3C596b75860709110818w99934ccq8bce4c7a5a7e561c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000261.html">
+   <LINK REL="Next"  HREF="000264.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] syslog-ng 2.x</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20syslog-ng%202.x&In-Reply-To=%3C596b75860709110818w99934ccq8bce4c7a5a7e561c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] syslog-ng 2.x">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 11 17:18:02 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000261.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+        <LI>Next message: <A HREF="000264.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#263">[ date ]</a>
+              <a href="thread.html#263">[ thread ]</a>
+              <a href="subject.html#263">[ subject ]</a>
+              <a href="author.html#263">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 9/11/07, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> syslog-ng 2.x needs some extra work. It requires a new spell eventlog, I
+</I>&gt;<i> attached a starting one.
+</I>
+I apologize that you had to go through that.
+Again, berlios quit accepting my svn connections
+prior to 00:00 UTC and I was unable to update the svn
+grimoire to include the finished syslog-ng and eventlog spells.
+However, thanks for the description for evenlog.
+
+
+&gt;<i> checking for static GLib libraries... no
+</I>&gt;<i> configure: error: static GLib libraries not found (a file named
+</I>&gt;<i> libglib-2.0.a), either link GLib dynamically using the
+</I>&gt;<i> --enable-dynamic-linking or install a static GLib
+</I>
+I saw that also.
+Without careful consideration I went ahead and added
+&quot;--enable-dynamic-linking&quot; to $OPTS
+However, that can definitely cause syslog-ng to fail
+to start up properly if the ELF glib library
+can not be loaded when syslog-ng starts.
+
+
+&gt;<i> Should I compile static libs for glib? How can I do that?
+</I>&gt;<i> Or configure syslog-ng with --enable-dynamic-linking option?
+</I>
+What I will probably do is make an alternate glib spell
+that installs both static and dynamic version of it's libraries.
+Perhaps I will call it glib_a?
+Then, I will have it provide glib.
+That way syslog-ng can require the glib_a spell.
+
+Thanks for the bug report.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000261.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+	<LI>Next message: <A HREF="000264.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#263">[ date ]</a>
+              <a href="thread.html#263">[ thread ]</a>
+              <a href="subject.html#263">[ subject ]</a>
+              <a href="author.html#263">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

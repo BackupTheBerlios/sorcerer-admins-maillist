@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] pbzip2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20pbzip2&In-Reply-To=%3C596b75860812231407s71892efbvd651524c2bc60f36%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000959.html">
+   <LINK REL="Next"  HREF="000963.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] pbzip2</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20pbzip2&In-Reply-To=%3C596b75860812231407s71892efbvd651524c2bc60f36%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] pbzip2">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Dec 23 23:07:50 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000959.html">[Sorcerer-admins] pbzip2
+</A></li>
+        <LI>Next message: <A HREF="000963.html">[Sorcerer-admins] evince compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#961">[ date ]</a>
+              <a href="thread.html#961">[ thread ]</a>
+              <a href="subject.html#961">[ subject ]</a>
+              <a href="author.html#961">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Dec 23, 2008 at 6:57 AM, Antoine Chassagnard
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">tacredips at gmail.com</A>&gt; wrote:
+&gt;&gt;<i> From: &quot;Kyle Sallee&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here are the fun questions for today...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> First question is &quot;Should grimoire spells support a legacy progress
+</I>&gt;&gt;<i> support?&quot;
+</I>&gt;<i>
+</I>&gt;<i> I'm not sure I understand the bit about 'legacy progress support', but just
+</I>&gt;<i> in case, here's what I think: If legacy support is available, no-one is
+</I>&gt;<i> forced to use it, and those who prefer the SOTA can simply forge ahead.
+</I>&gt;<i> How difficult can it be to implement? (...then again, feel free to enlighten
+</I>&gt;<i> me if I made a blooper.)
+</I>
+No you have a good point.
+Nearly everything in Sorcerer is optional for SAs.
+SAs do not have to use grimoire spells.
+They can write their own spells.
+They can modify nearly any aspect about any of
+the sorcery tools simply by writing their own replacement
+functions in /etc/sorcery/local.config
+They can exile from installation software that is
+listed as mandatory requirements on spells.
+They can use the provides system to state that spell
+B provides spell C even if it does not.
+SAs are not even forced to sync their boxes regularly.
+SAs not syncing regularly can occasionally cause problems.
+Therefore, if legacy progress support was introduced
+SAs would have to:
+# augur progress $SPELL legacy
+in order to switch a spell over to legacy progress.
+However, I do not want to add bulk to sorcery that
+has no chance of anyone ever using it.
+
+The sorcery tools are decent since they require a meager
+71K to download, run very fast, and provide the building
+blocks for SAs to achieve what they want.
+The reason I wrote the tools in BASH was not because
+I was awesome at writing BASH scripts.
+When I started writing sorcery
+I was just as unskilled with BASH as are most SAs.
+I selected BASH because every senior level SA
+should be at least adequate with wielding BASH
+while knowledge of C, C++, and other languages is optional.
+Some SAs goes their entire careers without compiling even one source file.
+Since the tools are in BASH
+SAs can easily read, and modify and use
+without the hassle of re-compilation.
+
+The few tools I wrote for Sorcerer that are in C
+are sdelta, sdelta3 and sentinel.
+For some tasks a mid level compiled programing language is required.
+
+-rwxr-xr-x 1 root root 14K 2007-10-07 22:42 /usr/bin/sdelta3
+-rwxr-xr-x 1 root root 5.6K 2008-07-04 16:22 /usr/libexec/sorcery/sentinel
+
+As demonstrated above
+I also prefer an efficient and fast approach
+to handling programming tasks in C.
+
+The use sentinel with sorcery is obligatory.
+I used to support strace also.
+But strace has a near 20% CPU overhead.
+In contrast sentinel's overhead can not easily be measured.
+At one time sorcery supported DESTDIR.
+However, some spells like gtk+ install entirely different.
+The surprise that came from gtk+ convinced me that
+sentinel is better than trying to make sorcery more like
+a package manager.
+
+Even the debian's method is also
+to use a library override
+that is similar to sentinel.
+However, instead of tracking
+installation and modification of files
+Debian's fakeroot redirects file writes and modifications.
+I also considered using something like plasticfs
+or other methods of redirecting modifications.
+However, for concerns of stability sentinel should be kept
+because sentinel has performed rock solid for years.
+
+
+&gt;&gt;<i> Second question is &quot;Should pbzip2 be remade as an exclusive provider for
+</I>&gt;&gt;<i> bzip2?&quot;
+</I>&gt;<i>
+</I>&gt;<i> As long as it really is backwards compatible with bzip2, I say go for it.
+</I>
+The reason I hesitate is that it may have bugs.
+Something as important as bzip2 being bugged up
+might annoy SAs who can not easily detect where
+the problem is coming from.
+However, since many modern boxes are dual core or more
+the use of pbzip2 is attractive.
+Perhaps a good compromise is to wait one more release
+of it or 3 months to see if any more bugs are shook out of it?
+But when I do make it a drop in replacement for bzip2
+I want to know that I have Sorcerer SA support.
+Because if it is buggy I do not want to be blamed
+for having made an unwise and unnecessary change
+that caused instability and problems with Sorcerer.
+
+
+&gt;<i> Season's greetings to all (as they say in muslim countries),
+</I>&gt;<i> Antoine Chassagnard
+</I>
+Thanks and to every one else also Seasons greetings.
+I expect most Sorcerer SAs will be out of the office until
+probably January 2nd.
+I am still doing compilation updates for the x86_64 I/R
+I have not begin testing new I/Rs yet.
+The chances for one last I/R release in 2008 are looking slim.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000959.html">[Sorcerer-admins] pbzip2
+</A></li>
+	<LI>Next message: <A HREF="000963.html">[Sorcerer-admins] evince compile error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#961">[ date ]</a>
+              <a href="thread.html#961">[ thread ]</a>
+              <a href="subject.html#961">[ subject ]</a>
+              <a href="author.html#961">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

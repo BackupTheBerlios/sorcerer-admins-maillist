@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init-scripts redesigned for multiple root support.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-scripts%20redesigned%20for%20multiple%20root%20support.&In-Reply-To=%3CCA%2BT4wDgc9AS%3D57bDd%3DmvXewom5ETKdqA5jUS88PQntvnmKamYg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002411.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init-scripts redesigned for multiple root support.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-scripts%20redesigned%20for%20multiple%20root%20support.&In-Reply-To=%3CCA%2BT4wDgc9AS%3D57bDd%3DmvXewom5ETKdqA5jUS88PQntvnmKamYg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init-scripts redesigned for multiple root support.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Dec 21 18:52:00 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002411.html">[Sorcerer-admins] paradigm feature gone...
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2412">[ date ]</a>
+              <a href="thread.html#2412">[ thread ]</a>
+              <a href="subject.html#2412">[ subject ]</a>
+              <a href="author.html#2412">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>For a few years boxes had at least two roots.
+The first root is / and is on a file system of type rootfs.
+rootfs is like a tmpfs, but without explicit limitations.
+Therefore, the content can be swapped.
+
+When booting first BIOS runs.
+Then BIOS loads and executes the code
+in the MBR of a device such as a fixed disk.
+The code in the MBR loads runs the code
+from the boot block of the first partition
+with the bootable flag.
+The code in the boot block of that partition is the bootloader.
+The bootloader loads initramfs images and linux into memory.
+linux begins executing and unpacks
+the content of the initramfs onto the rootfs.
+Then linux executes /init on the rootfs.
+
+Boxes could boot without loading initramfs
+when the kernel has all necessary modules
+compiled directly into it or when the initramfs
+linked into the kernel is adequately populated
+with modules and code for mounting the real root file system.
+However, in general having separate initramfs loaded
+provides the benefits of easily being able
+to update the initramfs when installed software is updated
+and also having a kernel where modules
+can be unloaded and then reloaded when a bug occurs.
+
+However, even without virtualization
+boxes can have multiple root file systems.
+For wanting to maintain the appearance of simplicity
+I hid that fact until hyping the benefits
+of retaining a populated rootfs.
+Then, I revealed that the real root file system was
+mounted on /media/root/ from the perspective of the rootfs.
+However, this has changed.
+
+The real root file system is now mounted on
+/media/root/real/
+A box can have additional root file systems mounted as
+/media/root/test/
+/media/root/work/
+as an example.
+
+/media/root/test/ for example could be used for testing updates
+and by running services on alternate port numbers
+so an updated httpd could be started and it's performance
+evaluated on port 8080 before updating the software in /media/root/real/
+where the production web server is running on port 80.
+
+Each root file system receives it's own private cgroup.
+Therefore, the use of task files to replace PID files
+will still function as expected.
+The runlevel of a root file system is executed when
+/etc/init.d/prc of the root file system has the executable mode.
+And root file systems are specified in /etc/fstab.rootfs
+root file systems can be a mounted device or a bind.
+Either will work.
+Any file system that appears as /media/root/*/
+in the rootfs will be regarded as a root file system.
+
+If not obvious from the above statement
+root file systems can exist
+on delegated devices or within a file system
+that is specified above it in /etc/fstab.rootfs.
+Yes, root file systems can be hierarchical if desired.
+With the situation of a bind then that would be so.
+hierarchical root file systems will not cause problems.
+
+Selecting which getty runs where is accomplished
+by editing /etc/inittab
+
+A line would look like:
+
+vc1:12345:respawn:/sbin/chroot-agetty /media/root/real tty1 -8 -h -s 115200
+
+Consequently, the root file system that they getty appears within
+can be edited as the first parameter to /sbin/chroot-agetty
+
+Two obvious limitations exist when using multiple roots.
+First, a box only has one name.
+So when in separate roots try not to become confused.
+Adjusting the prompt can help avoid confusion
+since prompts tend to display the name of a box,
+but not the name of the root file system.
+Secondly, only a single process can bind to a port.
+If sshd in two roots start and both attempt to bind to port 22
+then the first sshd to start wins and the other exits.
+An easy way to solve this is to remove the executable mode
+from /etc/init.d/sshd in the root that should not run sshd
+or by editing /etc/services
+and selecting a different port for running sshd.
+
+Multiple root file systems tend to be
+easier to wield than virtual computers.
+Multiple root file systems have less RAM overhead
+than running a virtual computer.
+And the full resources can be utilized on an alternate root
+where virtual machines must relent a sufficient amount RAM
+for the host computer to continue to properly run.
+Consequently, virtual computers and multiple root file systems
+have different advantages and disadvantages.
+
+For years I have used both both multiple root file systems
+and virtual computers concurrently.
+It is like the difference between
+a phillips screwdriver and a flathead.
+Selecting the most appropriate tool
+for the task makes the task easier.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20121221/c0f980c2/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20121221/c0f980c2/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002411.html">[Sorcerer-admins] paradigm feature gone...
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2412">[ date ]</a>
+              <a href="thread.html#2412">[ thread ]</a>
+              <a href="subject.html#2412">[ subject ]</a>
+              <a href="author.html#2412">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

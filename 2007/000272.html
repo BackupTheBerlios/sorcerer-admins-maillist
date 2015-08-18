@@ -1,0 +1,394 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Casting of 'services' hangs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Casting%20of%20%27services%27%20hangs&In-Reply-To=%3C9104f1fb0709230234s146b705eg5cb32f5c4047135f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000271.html">
+   <LINK REL="Next"  HREF="000275.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Casting of 'services' hangs</H1>
+    <B>John Locke</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Casting%20of%20%27services%27%20hangs&In-Reply-To=%3C9104f1fb0709230234s146b705eg5cb32f5c4047135f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Casting of 'services' hangs">loki1725 at gmail.com
+       </A><BR>
+    <I>Sun Sep 23 11:34:35 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000271.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+        <LI>Next message: <A HREF="000275.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#272">[ date ]</a>
+              <a href="thread.html#272">[ thread ]</a>
+              <a href="subject.html#272">[ subject ]</a>
+              <a href="author.html#272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the advice on xorg.  I've never seen that good of a description
+before.  Their online documentation is pretty poor in my opinion.  I've
+haven't used KDE much, but I was going to try it out.  My favorite WM is
+actually Fluxbox.  I like the clean look, and the Slit is really useful.
+I've found though that having either Gnome or KDE on a box comes in handy on
+occasion.
+
+Back to my problems.  Right now I have two main ones.  First off, I recast
+'pcre' and that broke sorcery.  I recast it because it was libpcre that I
+had to make a link from /usr/lib64.old.  I thought if I recast it it would
+update all of the other spells to point to the correct library.  Well, that
+didn't happen.  After 'pcre' was cast, now I'm back to grep not working.
+When I try and do anything that calls grep, I get the foloowing
+'grep: error while loading shared libraries: libpcre.so.0: cannot open
+shared object file: No such file or directory'
+
+This is what I was getting before when I update the files in /usr/lib64.old
+to point to /lib.  I agree that this is a tempory fix only, and I was
+wondering if you had any better suggestions.  Without grep working though,
+none of the sorcery commands will work.
+
+My second problem that seems to be persistant is the gcc-v3.3 is failing to
+compile.  I've tried it multpile times, and it always fails.  I have a log
+of the failure, however getting off the box is proving to be a pain.  I will
+post it as soon as I can transfer over to a working machine.
+
+Thanks
+
+On 9/22/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> On 9/22/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Thanks for the suggestion.  I guess I wasn't clear in my last e-mail,
+</I>&gt;<i> but
+</I>&gt;<i> &gt; it's not Windows that I can't get to run, it's an X environment.
+</I>&gt;<i>
+</I>&gt;<i> Nothing to worry about.
+</I>&gt;<i> Once you get it, in the future it will be easy.
+</I>&gt;<i> First, you cast xorg.
+</I>&gt;<i> When it configures xf86-video you will have
+</I>&gt;<i> to select a driver for the graphics card.
+</I>&gt;<i> If uncertain, perhaps lshw can tell you what is already in the box.
+</I>&gt;<i> After it is all compiled and installed the hard part begins.
+</I>&gt;<i> To make crafting the /etc/X11/xorg.conf easier there is a program
+</I>&gt;<i> called xorgconfig
+</I>&gt;<i> When you finish writing the config file, make sure that you copy it to
+</I>&gt;<i> /etc/X11/xorg.conf if it is not written to that location.
+</I>&gt;<i>
+</I>&gt;<i> Now that it is installed and configured there is only left to run it.
+</I>&gt;<i> There are 2 easy approaches to that.
+</I>&gt;<i> First, you can choose to login to it using kdm, gdm, or xdm.
+</I>&gt;<i> Secondly, you can start it up from a console shell prompt.
+</I>&gt;<i> If you use kdm or gdm then those programs will select a window
+</I>&gt;<i> manager to start automatically.
+</I>&gt;<i> Otherwise the window manager is loaded by either:
+</I>&gt;<i> ~/.xinitrc if starting using startx from the console
+</I>&gt;<i> or
+</I>&gt;<i> ~/.xsession if starting use xdm login
+</I>&gt;<i>
+</I>&gt;<i> One of my favorite light weight window managers is yeahwm.
+</I>&gt;<i> It is also a good choice for those bewildered by KDM.
+</I>&gt;<i> For that person I have the following for her .xsession file
+</I>&gt;<i>
+</I>&gt;<i> /usr/bin/yeahwm &amp;
+</I>&gt;<i> /usr/bin/firefox -width 960 -height 720
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The above works for her because once she is automatically
+</I>&gt;<i> logged out when she chooses to close the web browser.
+</I>&gt;<i> Of course if I wanted it so that the window manager had to be
+</I>&gt;<i> terminated in order for logout then the ~/.xsession file would read:
+</I>&gt;<i>
+</I>&gt;<i> /usr/bin/yeahwm
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is because once the .xsession file finishes executing the session is
+</I>&gt;<i> over.
+</I>&gt;<i> The ~/.xinitrc file used by startx works exactly the same way as
+</I>&gt;<i> .xsession.
+</I>&gt;<i> You could even symbolic link one to the other and that would work fine.
+</I>&gt;<i>
+</I>&gt;<i> Finally, do not use X11 while logged in as root.
+</I>&gt;<i> Even better, never log in as root, unless via ssh.
+</I>&gt;<i> Instead just su - or use sudo to become root.
+</I>&gt;<i>
+</I>&gt;<i> In order to get DRI working for users the easiest way is adding
+</I>&gt;<i> a few extra lines to /etc/X11/xorg.conf
+</I>&gt;<i>
+</I>&gt;<i> Section &quot;DRI&quot;
+</I>&gt;<i>         Mode    0666
+</I>&gt;<i> EndSection
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As long as that is not embedded within any other sections it should work.
+</I>&gt;<i> Now anyone can use DRI.
+</I>&gt;<i> But you could make a group and use the group
+</I>&gt;<i> to control access to DRI if you wanted.
+</I>&gt;<i>
+</I>&gt;<i> The most difficult aspect of getting xorg working, for anyone but me,
+</I>&gt;<i> is getting a correct /etc/X11/xorg.conf file installed that does what you
+</I>&gt;<i> want.
+</I>&gt;<i> But if the server fails to start or has a problem
+</I>&gt;<i> then you can check the startup log for that attempt:
+</I>&gt;<i>
+</I>&gt;<i> $ less /var/log/Xorg.0.log
+</I>&gt;<i>
+</I>&gt;<i> The WW may be interesting, but the EE indicate a problem.
+</I>&gt;<i>
+</I>&gt;<i> Find a problem, fix it, try to start it again.
+</I>&gt;<i> If using kdm then be sure to do
+</I>&gt;<i>
+</I>&gt;<i> /etc/init.d/kdm stop
+</I>&gt;<i> /etc/init.d/kdm start
+</I>&gt;<i>
+</I>&gt;<i> If kdm fails to start the X server kdm still keeps on running.
+</I>&gt;<i> I expect there is a good reason for this that I am completely unaware of.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As I was saying above, the most difficult aspect for me about xorg,
+</I>&gt;<i> is that it's in some 300 spells that take a long time for me to update
+</I>&gt;<i> and test each time a new version of xorg is released.
+</I>&gt;<i> It can be a pain because requirements change
+</I>&gt;<i> new sources are added,
+</I>&gt;<i> old sources are removed,
+</I>&gt;<i> some sources change names.
+</I>&gt;<i> That purty much describes how I spent the first few days of this week.
+</I>&gt;<i> In the next big grimoire update X11R7.3 will be included.
+</I>&gt;<i> Should be okay for most every box to update to, except....
+</I>&gt;<i> Boxes with the pre-compiled binary drivers provided by ATI can not do
+</I>&gt;<i> that update.
+</I>&gt;<i> I have no idea whether or not NVIDIA provided pre-compiled drivers
+</I>&gt;<i> will work with it.
+</I>&gt;<i> Boxes with the ATI pre-compiled drivers installed will not do the xorg
+</I>&gt;<i> update.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I modified the links from /usr/lib64.old
+</I>&gt;<i> &gt; to point /lib and got augur and cast to run.  Maybe I missed one and
+</I>&gt;<i> that's
+</I>&gt;<i> &gt; why services isn't working.
+</I>&gt;<i>
+</I>&gt;<i> /usr/lib64.old/ is a trashcan.
+</I>&gt;<i> Do not modify anthing in /usr/lib64.old/
+</I>&gt;<i>
+</I>&gt;<i> Here is how that works...
+</I>&gt;<i>
+</I>&gt;<i> Let us say that ncurses updates.
+</I>&gt;<i> The old version of ncurses is 5.6
+</I>&gt;<i> It installed libraries such as:
+</I>&gt;<i>
+</I>&gt;<i> /lib/libncurses.so
+</I>&gt;<i> /lib/libncurses.so.5
+</I>&gt;<i> /lib/libncurses.so.5.6
+</I>&gt;<i>
+</I>&gt;<i> bash is also installed.
+</I>&gt;<i> It dynamically links with
+</I>&gt;<i> /lib/libncurses.so.5
+</I>&gt;<i>
+</I>&gt;<i> So what happens if
+</I>&gt;<i> /lib/libncurses.so.5
+</I>&gt;<i> is removed from the filesystem
+</I>&gt;<i> when ncurses 6.0 is installed?
+</I>&gt;<i> Right, bash breaks!
+</I>&gt;<i> Right, compilation breaks since neither
+</I>&gt;<i> /bin/sh works nor /bin/bash
+</I>&gt;<i> That would be very bad, yes?
+</I>&gt;<i>
+</I>&gt;<i> Therefore, libncurses.so.5.6 is not removed.
+</I>&gt;<i> Instead it is moved.
+</I>&gt;<i> It is moved into /usr/lib.old/
+</I>&gt;<i> or on x86_64 architecture it is moved into: /usr/lib64.old/
+</I>&gt;<i> That way the new ncurses libraries:
+</I>&gt;<i>
+</I>&gt;<i> /lib/libncurses.so
+</I>&gt;<i> /lib/libncurses.so.6
+</I>&gt;<i> /lib/libncurses.so.6.0
+</I>&gt;<i>
+</I>&gt;<i> can be installed in /lib or /lib64 or where they correctly belong.
+</I>&gt;<i> After the new ncurses is installed cast will do a fast check.
+</I>&gt;<i> It will discover that bash and several other spells must be
+</I>&gt;<i> re-compiled and linked to the new ncurses libraries.
+</I>&gt;<i> Therefore, those spells go into the cast queue.
+</I>&gt;<i> Eventually, all the spells that linked with the old ncurses libraries
+</I>&gt;<i> have been recompiled and relinked.
+</I>&gt;<i> At this point no installed ELF executables or ELF libraries require
+</I>&gt;<i> the old ELF libraries installed by ncurses.
+</I>&gt;<i> Therefore, cast safely removes those old libraries from
+</I>&gt;<i> /usr/lib.old/ or /usr/lib64.old/
+</I>&gt;<i>
+</I>&gt;<i> There are other ways this problem can be handled.
+</I>&gt;<i> In the past there were other ways in which the sorcery tools handled it.
+</I>&gt;<i> However, it is my estimate that the least probability of problems occurs
+</I>&gt;<i> when stale libraries are moved from their permanent location to
+</I>&gt;<i> /usr/lib.old/ and/or /usr/lib64.old/
+</I>&gt;<i> That way there is no way that freshly compiled software
+</I>&gt;<i> can link with the old libraries at compile time.
+</I>&gt;<i> However, installed software can still link with the old libraries at
+</I>&gt;<i> runtime.
+</I>&gt;<i> So in a way you might think of it like a retirement home for libraries.
+</I>&gt;<i> They can beget no more off-spring, but you can
+</I>&gt;<i> continue visiting with them until they eventually depart.
+</I>&gt;<i> An absolutely morbid analogy, yes?
+</I>&gt;<i>
+</I>&gt;<i> Generally, you will not have to do anything involving libraries in
+</I>&gt;<i> /usr/lib64.old
+</I>&gt;<i> And do not expect to keep anything in that directory.
+</I>&gt;<i> cast will remove files from that directory without asking you any
+</I>&gt;<i> questions.
+</I>&gt;<i> Any type of fixes involving files in that directory will break.
+</I>&gt;<i>
+</I>&gt;<i> If you have files lingering in the /usr/lib.old/ or /usr/lib64.old/
+</I>&gt;<i> directories for a long time then that is an indication that some
+</I>&gt;<i> important spell that should be installed is probably not installed!
+</I>&gt;<i>
+</I>&gt;<i> For example, and please do not do this....
+</I>&gt;<i> One could execute.
+</I>&gt;<i>
+</I>&gt;<i> # dispel --unsafe glibc
+</I>&gt;<i>
+</I>&gt;<i> glibc would hang out in /usr/lib.old/ or /usr/lib64.old/
+</I>&gt;<i> The box would not appear to break.
+</I>&gt;<i> Software could still be run.
+</I>&gt;<i> However, almost nothing could be compiled.
+</I>&gt;<i> And the sorcery tools would be unable to repair that problem
+</I>&gt;<i> automatically.
+</I>&gt;<i>
+</I>&gt;<i> The newer sorcery tools, implosion branch, are much better at making
+</I>&gt;<i> certain
+</I>&gt;<i> that holes do not exist where spells should be installed.
+</I>&gt;<i> Therefore, if ncurses or readline ended up in an uninstalled state
+</I>&gt;<i> then the tools would eventually fix that as soon as spell is to be
+</I>&gt;<i> cast that at some point in their requirement chains requires ncurses
+</I>&gt;<i> and/or readline.
+</I>&gt;<i>
+</I>&gt;<i> sorcery thaumaturgy by contrast only checks that a spell's direct
+</I>&gt;<i> requirements are installed rather than checking all inherited
+</I>&gt;<i> requirements.
+</I>&gt;<i>
+</I>&gt;<i> But do not worry about that for now.
+</I>&gt;<i> In probably less than a week sorcery implosion will be standard on
+</I>&gt;<i> Sorcerer boxes.
+</I>&gt;<i>
+</I>&gt;<i> For now take a look at those libraries in /usr/lib64.old/
+</I>&gt;<i>
+</I>&gt;<i> You might be able to find out where they came by asking
+</I>&gt;<i>
+</I>&gt;<i> # augur history
+</I>&gt;<i>
+</I>&gt;<i> and supplying the library name.
+</I>&gt;<i>
+</I>&gt;<i> Make sure that the proper libraries that should provide those
+</I>&gt;<i> libraries are installed.
+</I>&gt;<i>
+</I>&gt;<i> In other words if sorcery thaumaturgy is not cleaning up so that no files
+</I>&gt;<i> remain
+</I>&gt;<i> in the /usr/lib64.old/ directory then give it a hand by re-casting those
+</I>&gt;<i> spells
+</I>&gt;<i> that should provide those libraries.
+</I>&gt;<i>
+</I>&gt;<i> Remember that no fix involving symbolic links to files in /usr/lib64.old/
+</I>&gt;<i> is a stable or permanent fix.
+</I>&gt;<i> At best it is simply postponed trouble.
+</I>&gt;<i> It may even cause failure of spells to compile that
+</I>&gt;<i> would normally install those libraries and symbolic links.
+</I>&gt;<i> In other words you may be solving one problem,
+</I>&gt;<i> but causing an even more troublesome problem that
+</I>&gt;<i> will occur later.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I'll restart the box and try and update some of the core spells and see
+</I>&gt;<i> if
+</I>&gt;<i> &gt; that fixes grep.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> grep is a bit on the hopeless side these days.
+</I>&gt;<i> At best update it to current.
+</I>&gt;<i> I keep thinking that it will speed up again eventually.
+</I>&gt;<i> Maybe someday it will.
+</I>&gt;<i> However, I am not holding my breath.
+</I>&gt;<i> sorcery implosion has very few invocations of grep in it.
+</I>&gt;<i> It uses grep mainly only in those situations where grep
+</I>&gt;<i> is without any doubt the most suitable choice.
+</I>&gt;<i>
+</I>&gt;<i> Ah, back to getting xorg up and running.
+</I>&gt;<i> If you have the space to install it and 8 hours
+</I>&gt;<i> to let it compile then you may want to try installing KDE.
+</I>&gt;<i> The K desktop environment is a great choice for intermediate level users.
+</I>&gt;<i> It is not fast, it does consume much memory,
+</I>&gt;<i> but it is good for many hours of amusement.
+</I>&gt;<i> Since there are fewer KDE spells it is easier to tell if
+</I>&gt;<i> you have the required components for KDE installed.
+</I>&gt;<i>
+</I>&gt;<i> Gnome is a like KDE that jumped onto of a live pineapple.
+</I>&gt;<i> Gnome is in so many source files that installing it could
+</I>&gt;<i> be bewildering even with using sorcery.
+</I>&gt;<i> The very earliest versions of sorcery rough draft
+</I>&gt;<i> did not have a requirement system in them.
+</I>&gt;<i> *chuckle*
+</I>&gt;<i> But then gnome changed that.
+</I>&gt;<i> Installing gnome without a requirement system is like
+</I>&gt;<i> trying to swim out of the Bermuda triangle on an overcast night.
+</I>&gt;<i>
+</I>&gt;<i> However, gnome has less C++ in it and therefore compiles faster
+</I>&gt;<i> and tends to use less memory than KDE.
+</I>&gt;<i> Difficult to say if the programs load much faster than KDE.
+</I>&gt;<i> In both cases each ELF executable has many ELF library requirements.
+</I>&gt;<i> But you can install gnome if you want it.
+</I>&gt;<i> And besides many, if not most, of the programs one runs
+</I>&gt;<i> on their X server use the same gtk+ libraries as are used by gnome.
+</I>&gt;<i> I like to mentally deduct the libraries that I know will be resident most
+</I>&gt;<i> of the time for my idea of the overall memory consumption for programs.
+</I>&gt;<i> For example, there is practically no time when a booted box does not
+</I>&gt;<i> have both the ncurses and readline libraries in RAM, because BASH uses
+</I>&gt;<i> those libraries and almost always there is at least one bash shell running
+</I>&gt;<i> or shell script running.
+</I>&gt;<i> Ah but I am digressing.
+</I>&gt;<i>
+</I>&gt;<i> The grimoire has many choices for desktop environments and window
+</I>&gt;<i> managers.
+</I>&gt;<i> There are more than I can remember.
+</I>&gt;<i> Some that come to mind are e16, xfce, icewm.
+</I>&gt;<i> Basically, you have no shortage to select from.
+</I>&gt;<i> Surely, you will find one that you like best.
+</I>&gt;<i>
+</I>&gt;<i> Good luck with setting up X.
+</I>&gt;<i> Hope it keeps running after the update to Xorg X11R7.3.  :)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070923/ef592c80/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070923/ef592c80/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000271.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+	<LI>Next message: <A HREF="000275.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#272">[ date ]</a>
+              <a href="thread.html#272">[ thread ]</a>
+              <a href="subject.html#272">[ subject ]</a>
+              <a href="author.html#272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

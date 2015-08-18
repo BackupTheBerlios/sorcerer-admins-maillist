@@ -1,0 +1,312 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CAANLkTim1wfFllk3CSoIou7Z-xm4a1cThV-PiTK9JJzux%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001746.html">
+   <LINK REL="Next"  HREF="001748.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CAANLkTim1wfFllk3CSoIou7Z-xm4a1cThV-PiTK9JJzux%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue Jul 13 14:09:19 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001746.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001748.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1747">[ date ]</a>
+              <a href="thread.html#1747">[ thread ]</a>
+              <a href="subject.html#1747">[ subject ]</a>
+              <a href="author.html#1747">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Roelof,
+seems that you don't have /opt directory.... however I think there is an
+error in the script...
+it should be
+from_root(){ [[ -d /etc ]] &amp;&amp; touch /etc/resolv.conf 2&gt;/dev/null; }
+instead of
+from_root(){ [[ -d /opt ]] &amp;&amp; touch /etc/resolv.conf 2&gt;/dev/null; }
+
+please edit /etc/networks.d/functions/functions
+and change from_root function....
+
+sorry for the inconvenience
+if this fix the issue I'll make the changes and commit the new scripts
+best regards
+JLM
+
+On Tue, Jul 13, 2010 at 1:14 PM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+
+&gt;<i>  Hello jeanluc,
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The output of bash -x /etc/networks.d/eth-dhcp start is :
+</I>&gt;<i>
+</I>&gt;<i> + IF=eth0
+</I>&gt;<i> + ./etc/networks.d/functions/functions
+</I>&gt;<i> ++  [[ -n ' ' ]]
+</I>&gt;<i> + start
+</I>&gt;<i> + start_smart
+</I>&gt;<i> + [[ -n eth0 ]]
+</I>&gt;<i> + [[ -n ' ' ]]
+</I>&gt;<i> + [[-z eth0 ]]
+</I>&gt;<i> + [[-n ' ' ]]
+</I>&gt;<i> + [[-n ' ' ]]
+</I>&gt;<i> + [[-n ' ']]
+</I>&gt;<i> + start_dynamic
+</I>&gt;<i> + start_dhcp
+</I>&gt;<i> + from_root
+</I>&gt;<i> + [[ -d /opt ]]
+</I>&gt;<i> + return 1
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i> Date: Tue, 13 Jul 2010 10:34:18 +0200
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>
+</I>&gt;<i>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i>
+</I>&gt;<i> can you do
+</I>&gt;<i> bash -x /etc/networks.d/eth-dhcp start
+</I>&gt;<i> and output the result here?
+</I>&gt;<i>
+</I>&gt;<i> I've found a bug in function scripts but it's for static assigned ip when
+</I>&gt;<i> using dhcpd server.... (dhcpd is able to listen on eth0 device but not on
+</I>&gt;<i> eth0:0.... since it check if a static IP is assigned on the interface it's
+</I>&gt;<i> listening on it will fail. I will upload a fixed version ASAP [if there is
+</I>&gt;<i> only one IP provided then don't use label but rather the raw device])
+</I>&gt;<i>
+</I>&gt;<i> thanks
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jul 13, 2010 at 9:54 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> Im not going to work with KDE. Im a Gnome man.
+</I>&gt;<i>
+</I>&gt;<i> Networks is still not working.
+</I>&gt;<i>
+</I>&gt;<i> I see these messages.
+</I>&gt;<i>
+</I>&gt;<i> + case $1 in
+</I>&gt;<i> + start
+</I>&gt;<i> + log_warning_msg &quot;networks checking&quot;
+</I>&gt;<i> + log_line 'networks checking' ' warning'
+</I>&gt;<i> + echo -e &quot; * networks checking
+</I>&gt;<i> * networks checking
+</I>&gt;<i> + '[' -f /var/lock/networks ']'
+</I>&gt;<i> + log_warning-msg 'networks starting'
+</I>&gt;<i> + log_line ' networks starting' warning
+</I>&gt;<i> + echo -e &quot;* networks starting
+</I>&gt;<i> * networks starting
+</I>&gt;<i> + for file in '$NETWORKS/*'
+</I>&gt;<i> + '[' -f /etc/networks.d/eth-dhcp ']'
+</I>&gt;<i> + bash /etc/networks.d/eth-dhcp start
+</I>&gt;<i> + for file in '$NETWORKS/*'
+</I>&gt;<i> + '[' -f /etc/networks.d/functions ']'
+</I>&gt;<i> + for file in '$NETWORKS/*'
+</I>&gt;<i> + '[' -f /etc/networks.d/templates ']'
+</I>&gt;<i> + log_failure_msg 'networks not started' 'failed'
+</I>&gt;<i> + echo -e &quot;* networks not started
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i> Date: Tue, 13 Jul 2010 03:26:13 +0000
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>
+</I>&gt;<i>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Roedolf, thanks for trying Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> We have recently switched over to a new way of installing our software, and
+</I>&gt;<i> are still ironing out the bugs.
+</I>&gt;<i>
+</I>&gt;<i> 99% of the software compiles now, thanks to Kyle's hard work.
+</I>&gt;<i>
+</I>&gt;<i> If you plan on running KDE, you will run into a bug in
+</I>&gt;<i> qt-everywhere-opensource. This spell can't be compiled if it's not installed
+</I>&gt;<i> already. The way around this is to use an earlier version of the spell, but
+</I>&gt;<i> unfortunate;y the earlier version has a different source name, so the spell
+</I>&gt;<i> needs to be modified a little to allow for the first time cast. Oh, and it's
+</I>&gt;<i> a few hours to cast this spell, btw.
+</I>&gt;<i>
+</I>&gt;<i> I can mail you the modified spell. Are you planning to use KDE?
+</I>&gt;<i>
+</I>&gt;<i> Kind regards,
+</I>&gt;<i> -Evert Vorster-
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jul 12, 2010 at 10:26 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;<i> I could tell you how to debug it,
+</I>&gt;<i> but it may be easier just to gzip the template
+</I>&gt;<i> and attach it to an email.
+</I>&gt;<i>
+</I>&gt;<i> First, I would double check the template.
+</I>&gt;<i> Then, I would
+</I>&gt;<i> # /etc/init.d/networks stop
+</I>&gt;<i> # bash -x /etc/init.d/networks start 1&gt;&amp;2 | tee /tmp/read.me
+</I>&gt;<i>
+</I>&gt;<i> Then I would follow the trace looking for a problem.
+</I>&gt;<i> If there is a problem in the functions that parse the templates
+</I>&gt;<i> then I would be able to find it from this.
+</I>&gt;<i>
+</I>&gt;<i> Probably not in over a year has anyone mentioned
+</I>&gt;<i> a problem with the network template method
+</I>&gt;<i> so I have no way to begin debugging this without
+</I>&gt;<i> also having the template that was used.
+</I>&gt;<i> Also I recommend just using dhcpcd instead of dhclient.
+</I>&gt;<i> For some unknown reason the functions tries dhclient first.
+</I>&gt;<i> I never use dhclient.
+</I>&gt;<i>
+</I>&gt;<i> If manually starting
+</I>&gt;<i> # dhcpcd eth0
+</I>&gt;<i> works then go ahead and
+</I>&gt;<i>
+</I>&gt;<i> # dispel dhcp
+</I>&gt;<i>
+</I>&gt;<i> and try stopping and starting networks again.
+</I>&gt;<i> Oh, that is interesting.
+</I>&gt;<i> I or someone else probably made the switch
+</I>&gt;<i> to put dhcpcd first in the functions,
+</I>&gt;<i> but then never updated the available version
+</I>&gt;<i> of the networks spell.
+</I>&gt;<i>
+</I>&gt;<i> I will update that now to be certain that
+</I>&gt;<i> the installed network functions and templates
+</I>&gt;<i> are the same distribution wide.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for reporting a potential problem.
+</I>&gt;<i> Hopefully, it was trying dhclient
+</I>&gt;<i> and dhclient is bugged.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jul 12, 2010 at 10:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I did copy the template to the networks dir,
+</I>&gt;<i> &gt; Uncomment the IF= rule.
+</I>&gt;<i> &gt; Then saved it
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But when I do /etc/init.d/networks start.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I get a message that's it's failed.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i>
+</I>&gt;<i>  ------------------------------
+</I>&gt;<i> Tijd voor een nieuwe telefoon? Bekijk de mogelijkheden van een Windows
+</I>&gt;<i> Phone! &lt;<A HREF="http://www.windows.nl/WindowsPhone.aspx?id=WatIsWindowsPhone">http://www.windows.nl/WindowsPhone.aspx?id=WatIsWindowsPhone</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i> SMS &quot;HOTMAIL&quot; naar 3010 en ontvang gratis de juiste instellingen voor Hotmail
+</I>&gt;<i> op je mobiele telefoon.&lt;<A HREF="http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=HotmailTelefoon">http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=HotmailTelefoon</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/a6483b88/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/a6483b88/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001746.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001748.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1747">[ date ]</a>
+              <a href="thread.html#1747">[ thread ]</a>
+              <a href="subject.html#1747">[ subject ]</a>
+              <a href="author.html#1747">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

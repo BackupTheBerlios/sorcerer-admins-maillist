@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] How do I get a GUI to run?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20do%20I%20get%20a%20GUI%20to%20run%3F&In-Reply-To=%3CCA%2BT4wDja5fvTNgMOfNDAsfxnwKA5YpRvRPbGp8KAL6%2Bq78oGXw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002382.html">
+   <LINK REL="Next"  HREF="002385.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] How do I get a GUI to run?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20do%20I%20get%20a%20GUI%20to%20run%3F&In-Reply-To=%3CCA%2BT4wDja5fvTNgMOfNDAsfxnwKA5YpRvRPbGp8KAL6%2Bq78oGXw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] How do I get a GUI to run?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 21 19:12:30 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002382.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+        <LI>Next message: <A HREF="002385.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2383">[ date ]</a>
+              <a href="thread.html#2383">[ thread ]</a>
+              <a href="subject.html#2383">[ subject ]</a>
+              <a href="author.html#2383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Aug 21, 2012 at 12:36 AM, Demetri Salamander
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">demetrisalamander at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> $ startx
+</I>&gt;<i>
+</I>&gt;<i> Doesn't work. That was the first thing I tried.
+</I>
+Evert was correct that detailed report including exact error message and logs
+are required when further assistance is desired.
+That is because many command problems that can be anticipated
+are already circumvented with Sorcerer.
+startx failing would likely be a box specific error rather than a
+distribution wide problem.
+Therefore, such a problem must be solved at the box specific level
+based upon the SA's knowledge, skill, and any 3rd party assistance
+that can be acquired
+from email lists, forums, news groups, FAQs, HowTOs, manual pages,
+google searches, etc...
+Since the log files usually contain either excellent clues or the exact reason
+then those are the place to start.
+Almost any SA who has been using X11 long enough
+has experienced a moment when the X server would not start.
+
+&gt;<i> I need to learn everything about Sorcerer before learning bigger projects like wayland.
+</I>
+Ambitious.  Even I do not know everything about the software that is
+installed by Sorcerer.
+However, some areas I have more specialization and skill with than others.
+If becoming involved with wayland development
+then understanding how X works and it's protocol could be useful.
+Having experiencing writing X apps might also be useful.
+However, that all might also be unnecessary.
+Best way to discover is by asking the people already involved with
+wayland development.
+
+However, if I was a new programmer wanting to assist with open source
+development
+then I might want to become involved with the coreutils developers.
+coreutils is a collection of relatively small and simple utilities
+used by shell scripts
+and SAs when at a command line.
+In some cases coreutils provides functionality such as sort and uniq.
+Yet other programs such as rm rmdir mkdir
+act as sophisticated wrappers for glibc file system functions.
+They allow the shell to perform those commands.
+
+Over a decade ago someone showed me something called an OSI chart
+that explained an operating system as 7 layers.
+<A HREF="http://en.wikipedia.org/wiki/OSI_model">http://en.wikipedia.org/wiki/OSI_model</A>
+This is conceptually useful for neophytes that do not yet recognize
+the interconnectedness.
+However, the model is not useful for veterans that see and realize the
+connections.
+
+The majority of software acts as units that partially process and
+translate information for a separate layer.
+For example wayland can act as a layer that sits between the X server
+and the kernel.
+And in general the processing that wayland does makes X output slower
+than allowing X to communicate directly with the kernel.
+And the kernel provides and controls access to hardware.
+Not everyone would agree, but programming tends to become easier
+the further removed it is from interacting with hardware.
+
+kernel &lt;-&gt; glibc &lt;-&gt; coreutils &lt;-&gt; bash
+
+That is where coreutils is situated.
+And if the aforementioned hypothesis is true
+then kernel hacking is very challenging,
+glibc hacking is moderately challenging,
+coreutils programming is an average challenge,
+and bash programming is easy.
+However, exceptions to every rule exist.
+In my experience shell programming is very different
+than assembly, C, C++, Pascal, perl, PHP, Fortran, etc...
+Consequently, mastery of shell programming is not easily acquired.
+And master does not mean that one is capable of writing shell scripts,
+but rather that the shell scripts created run incredibly fast.
+It is the main reason why most people except that shell programs
+will run extremely slow when compared to an implementation in any
+other language.
+
+If accepting the OSI model as gospel truth
+then reconciling linux becomes difficult
+since it exists at multiple layers.
+However, choosing participation at an easy level in order to gain experience
+can be more useful than diving into the deep end with a &quot;sink or swim attitude.&quot;
+
+&gt;<i> I'm looking into game development as a degree and then I would need to learn
+</I>&gt;<i> more about server administration.
+</I>
+Seems like it could be even more lucrative than running an online casino.
+People seem very happy to exchange real money for virtual items.
+The house always wins with online gaming.
+However, that might be a big corporation that fleeces both the
+customers and the workers.
+The pay might not be commensurate with the amount of learning and
+training required.
+
+
+&gt;<i> Thanks for telling me more about wayland.
+</I>
+The benefit of experience allows for a different interpretation of
+what was written at the homepage.
+I can see how the goals are to make it a software layer
+that will not necessarily replace X
+at least not in the near future.
+However, what begins as something that is potentially superfluous
+can evolve into something that becomes an essential component such as udev.
+Sorcerer's existence pre-dates the udev project,
+and Sorcerer might have been one of the first projects to use devfs
+instead of a traditional /dev on disk file system.
+However, in these days few people might want to run a box without the
+benefit of udev.
+I would go as far as to say that
+I perceive udev as being a near essential utility for using a modular kernel.
+The evolution of the udev project slowly eroded my resistance towards
+modular kernels.
+For many of Sorcerer's earlier years; Sorcerer was a distribution
+intended to be run
+with a monolithic kernel and to boot without initramfs images.
+Anyway, my point is that wayland might have a bright future
+or it might become something like DirectFB.
+Retrospect is required.
+
+&gt;<i> I need to learn to be a hard core
+</I>&gt;<i> Sorcerer Admin and also cast works.
+</I>&gt;<i> I casted enlightenment.
+</I>
+cast is among the odd English words that lack a separate conjugation
+for past tense.
+To say &quot;I cast enlightenment.&quot; is interpreted as an action that
+already happened.
+Although conjugation of Nihongo verbs work only 3 ways
+I tend to also find myself doing google searches
+in order to gain absolute certainty.
+Please feel no shame for learning that cast has no separate form for
+past tense conjugation.
+
+Sorcerer is much like any other distribution but with fewer fluffy GUI
+configuration tools.
+Consequently, SAs must read the documentation
+such as manual pages and the files provided in /usr/share/tldp/
+/usr/doc/ /usr/share/doc/ /usr/src/linux/Documentation/
+also contain fascinating reading.
+Perhaps the challenge is not acquiring the information
+but narrowing the searching and learning to immediately relevant information.
+
+Hmm, I just now noticed
+/usr/src/linux/tldp/XFree86-Second-Mouse
+Never considered the possibility previously,
+but hmm I have unopened mice boxes in my hardware reserve.  :)
+What could I do with two mice?
+Perhaps I rather attach a tablet device, for drawing?
+Anyway, with all that documentation; becoming distracted is easy.
+Almost nobody will read all of it.
+Anyone who tries will probably gain a spinning headache
+and spend a few hours comatose.  :)
+
+&gt;<i> OUYA is coming out in March 2013. It will be using Android OS and will be
+</I>&gt;<i> completely hackable. Gaming will soon evolve for Linux.
+</I>
+Some people will probably enjoy being able to program their own phones
+and mobile devices.
+And access to free software should be completely better than an app store.
+If I ever decided to buy one of those mobile gadgets
+then I might also create a Sorcerer port for it
+provided that the device has sufficient RAM and mass storage.
+If it has embedded limitations then I will forget about it.
+
+Being able to run open source voice over IP telephone programs on a
+mobile cell phone
+might not only be desirable for the advantage of being able to
+voice/video conference,
+but also for what it could save on international long distance calls
+to cell phone.
+Only because my sister insisted; I tried skype on linux.
+Both the ELF and statically linked versions of skype segmentation
+fault and crash.
+They were both entirely unusable.
+I am not a fan of voice over IP using proprietary protocols.
+
+&gt;<i> I can tell you more later. I need to figure out X now.
+</I>
+The manual pages and the documentation provided by the linux
+documentation project
+would be the first place that I would start looking.
+
+&gt;<i> Oh and a forum would be good for Sorcerer Linux so that the same issues
+</I>&gt;<i> won't be brought up again. It is also easier for newbies and has better
+</I>&gt;<i> communication that can easily be referenced if messaged before.
+</I>
+Actually, Sorcerer probably has a wiki and forum somewhere.
+I seem to remember that a forum exists at the berlios project page,
+but I do not actually look at it.
+Perhaps I am too lazy?
+Email lists seem more convenient than forums.
+And the fast bug fixes introduced into Sorcerer
+quickly renders distribution wide problems ancient history.
+
+A problem involving startx would instead be a box specific problem.
+The reason would typically involve something that the SA did or did not do
+such as failure to read the manual page and create the proper
+files in one's home directory with proper mode and content.
+startx might have worked fine and then immediately exited
+because X had no reason to remain running.
+I apologize if the response seems harsh,
+but based upon receiving no error message and no logs;
+then I would surmise that startx worked perfectly
+and the account running startx lacked the user created files
+in the home directory that would cause a window manager
+and other fun programs to run.
+
+I knew someone with a near eidetic memory..
+Of course he read every document a minimum of 8 times.
+I do not.
+However, I have no hesitation about re-reading documentation
+when something I try achieves an undesired outcome.
+Good luck on the next try.  :)
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002382.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+	<LI>Next message: <A HREF="002385.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2383">[ date ]</a>
+              <a href="thread.html#2383">[ thread ]</a>
+              <a href="subject.html#2383">[ subject ]</a>
+              <a href="author.html#2383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

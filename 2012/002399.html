@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] transition to sorcery-delegate...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20transition%20to%20sorcery-delegate...&In-Reply-To=%3CCA%2BT4wDhVTad7iMcnsFma6JJoZPTbH0hqLhsNykSS0W03q94myA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002398.html">
+   <LINK REL="Next"  HREF="002400.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] transition to sorcery-delegate...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20transition%20to%20sorcery-delegate...&In-Reply-To=%3CCA%2BT4wDhVTad7iMcnsFma6JJoZPTbH0hqLhsNykSS0W03q94myA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] transition to sorcery-delegate...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct 23 06:45:14 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002398.html">[Sorcerer-admins] A storm approaches...
+</A></li>
+        <LI>Next message: <A HREF="002400.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2399">[ date ]</a>
+              <a href="thread.html#2399">[ thread ]</a>
+              <a href="subject.html#2399">[ subject ]</a>
+              <a href="author.html#2399">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Transition is possible, but feels a bit rough.
+And it looks as if the errors are endless.
+However, as usual the stream is caused by a grimoire
+that is newer than the sorcery trying to index it.
+So the errors that occur during indexing can be ignored.
+
+After the grimoire casts
+then sorcery should cast.
+However, perhaps it does not.
+In that situation then cast it.
+After sorcery casts then
+immune-exam-transition should immediately cast.
+If watching augur scry
+then restart augur scry after the newer sorcery installs.
+That is because the queues changed location.
+
+When the bottom of augur scry has 9 columns
+and displays information about 8 queues
+then the new sorcery is installed and usable.
+After that indexing errors should disappear,
+with one exception for a spell that aught not exist.
+That will evaporate on the next day.
+
+Since many spells initiate functions calls with &quot;with&quot;
+both backward and now forward compatibility can be provided.
+So transitions to major revisions in the future
+should not display a barrage of error messages.
+I should have implemented it sooner,
+but I am often reluctant to make changes and
+do revisions and re-implementations.
+
+Although I described the expected changes in detail in a previous email
+perhaps some of the more salient parts escaped attention.
+So by SA request here is a partial list of functions
+by their old names followed by their new names.
+opts -&gt; also
+provide or provides -&gt; fill
+eprovide or eprovides -&gt; hold
+conflict or conflicts -&gt; clash
+require -&gt; base
+optional -&gt; elect
+
+That could prove useful when sediting spells in local grimoires.
+I revised all the spells in the official grimoire
+and as a consequence did not provide backward compatibility.
+However in the future,
+I probably would provide backward compatibility via the &quot;with&quot; function.
+
+Okay, so there are 8 queues now; so what does it all mean?
+Actually, there are 10 queues.
+However, cast and dispel are holding areas and only acted upon when
+# augur begin
+executes.
+
+A spell's first trip is typically through the load queue.
+load downloads all the files required for casing a spell.
+Sometime after files are download a spell travels through the till queue.
+The till queue prepares sources for compilation
+which typically involves untarring source tarballs,
+extracting from zip files, applying patches, etc...
+
+If ccache is installed then a spell will travel through the &quot;rush&quot; queue.
+Obviously, the rushing untars a previously saved tarball of ccache
+created files.
+While using ccache definitely adds overhead and makes compilation slower,
+sometimes when a matching hash exists then ccache can substitute a previously
+created object file and therefore expedite compilation.
+Odds vary.  Using ccache is always a heavy investment in additional disk space,
+and the speed gains for doing updates is uncertain.
+ccache works best when recompiling a spell at the same version as last
+installed.
+This might sometimes happen when a spell must relink.
+However, the different library header files
+might still mitigate ccache's effectiveness.
+However, I digress.
+
+Most of the fun happens when a spell travels through the moil queue.
+moil executes a spell's defined or implicitly defined build() function.
+So for many software projects moil executes the commands that
+are required to configure, make, compile, link and install the software.
+However, installed spells goto a destdir rather than straight onto /
+This was a change made not many years ago.
+Yet, I digress.
+
+When moil completes then moil begins on another queued spell.
+If a spell is already installed then &quot;save&quot; and &quot;reap&quot; will run.
+Save saves modified configuration files for reuse.
+And reap removes the old files.
+Obviously, it is analogous to scavenging
+the useful parts and then cleaning the area.
+After that / is clean and ready for the spell to install.
+
+Post handles the installation of files to /,
+but also plenty more.
+It creates log files and archives also.
+And it does that all in parallel.
+Consequently, a posting spell
+temporarily drive a higher loadavg.
+But that is not undesirable.
+
+After a spell posts then nothing is left except &quot;wane.&quot;
+wane means to make smaller or become smaller.
+And what wane does is to create tarballs of a spell's ccache directory
+and then to xz compress a spell's source tarballs, ccache tarball, and
+archive tarball.
+
+More than one person might be curious as to
+why does wane run concurrently with moil?
+Of all the utilities wane has the lowest cpu.shares.
+Consequently, wane is always starving for cpu cycles.
+And as a result wane tends to eat mostly cpu cycles
+that would otherwise be spent idle or waiting.
+Even if wane's queue becomes enormous
+then give it no attention.
+It is the slow and steady sanitation engineer that
+helps reclaim disk space at minimal expense in CPU and RAM.
+
+However, if space on /aux/run/ drops below 10G
+then &quot;wane&quot; begins processing
+with the same lightening speed as moil.
+In a spatial crisis wane can help dig a box to freedom.
+But if impossible then till, moil and other utilities
+might start re-queuing their spells into the future.
+That grants wane more time to clean.
+
+As previously mentioned many directories have moved.
+/root/.sorcery/ -&gt; /aux/run/tmp/
+/etc/sorcery/log/ -&gt; /aux/log/
+/var/log/sorcery/event/ -&gt; /aux/log/event/
+/var/log/sorcery/queue/ -&gt; /aux/run/queue/
+/var/cache/sources/ -&gt; /aux/can/source/
+/var/cache/ccache/ -&gt; /aux/can/ccache/
+/var/cache/archive/ -&gt; /aux/can/archive/
+/usr/src/sorcery/ -&gt; /aux/run/
+
+bizarre is it not?
+
+The transition was done to allow some more useful partitioning
+such as a dedicated 20G partition for /aux/run/
+50G to 80G dedicated partition for /aux/
+
+Easily anyone buying a fixed disk these days probably
+purchase a terabyte or larger.
+Consequently, the space can be used to achieve better performance
+by the use of dedicated and segregated partitions.
+
+Something such as:
+1G /boot
+1G swap partition
+3G /tmp
+40G /
+50G /aux
+20G /aux/run
+100G /srv
+Rest /home
+
+could be a viable loadout
+especially when /home
+is to be created on a LUKS encrypted device.
+
+But wait, that is more than 4 partition.
+Problem?
+No problem.
+Using extended partition allows
+additional partitions to be created.
+Using 2 primary and 2 extended partitions
+allows for a total of 10 partitions.
+
+Evert and I are still discussing potential recommendations
+for partitioning boxes for the newer sorcery.
+Having almost everything which is sorcery related within /aux/
+allow for easier predictions about required sizes for /
+and /var/ and other areas of interest for SAs.
+
+As previously mentioned sorcery no longer has a library cache
+nor old cache and no longer ousts installed spells.
+That is history.
+
+Probably at least one person is wondering,
+&quot;Did he test a cast of glibc, ncurses, readline, etc...?&quot;
+And the answer is, yes I did.
+
+Testing this newer sorcery was amusing.
+I spent many consecutive hour at it.
+I ran perhaps 2 gnome updates, 1 KDE update,
+1 enlightenment update, updates of various spells,
+and an additional 1200 or more libraries through it.
+According to event logs 1681 Pass Cast Events.
+And perhaps more happened for which the event logs
+were already discarded or misplaced.
+More than 1000 spells I consider to be a reasonable test.
+However, obviously not everything was tested.
+As usual please report bugs,
+and especially when fixes are desired for the bugs.  :)
+
+Today, I spent significant time hammering on systemd
+to make it install udev libraries and pkgconfig and libtool files properly.
+I significantly disagree with the software authors about that.
+But it is good to go now.
+However, anything that is less significant or unreported
+will probably be neglected for a while as I remodel a bathroom.
+
+I hope most everyone enjoys newer sorcery as much as I do.
+It should unlock the potential of SMP
+while still keeping the beast properly harnessed.
+So in addition to post reap rush save and
+till queues running sequentially rather than concurrently
+the &quot;cock&quot; utility should also mitigate typical processing
+throughput to about 1 megabyte per second.
+
+1 megabyte per second is too slow and
+moil will always be waiting, correct?
+Actually, rush till and save queues run processor # * 2 ahead of moil.
+Consequently, sources are being prepared for casting
+considerably in advance of when those spells will cast.
+This helps spread I/O more evenly and avoid lag spikes
+and at the same time mitigates CPU cycles spent on I/O wait.
+Everything flows like a relaxing fountain with turtles and goldfish,
+instead of like a torrential downpour from a cloud.
+
+When tasks can be handled in advance
+then spreading the I/O over time
+is like spreading condiments over sandwich bread.
+Would look funny if a person was
+squirting bottles of condiments directly into their mouth
+and then stuffing in a submarine sandwich following immediately.
+However, the older sorcery was like that
+where sources were untarred just before compilation.
+So it was like squirt, squirt, gulp.
+And in contrast the newer sorcery is like receiving
+a perfectly properly made delicious submarine sandwich,
+made timely and not rushed.
+
+My analogies are less than spectacular,
+but the code implementation has a good feeling.
+It properly conveys my desire for mitigated I/O
+and throttling that I did not achieve with the
+quick fixes/additions that became familiar and provision,
+both of which are utilities that no longer exist.
+
+This newer sorcery is not a total rewrite,
+but is tantamount to a major revision.
+I try to listen to and remember and eventually implement when prudent
+the recommendations from every SA who voices opinion, curiosity, or
+discontentment.
+
+Discontentment when properly presented as
+constructive criticism becomes a fantastic force
+for impelling potentially useful change.
+Much of the directory movements
+were impelled by discontentment
+concerning their previous locations.
+
+The Linux Filesystem Hierarchy, last revised in 2004,
+adequate describes what is typical for
+a pre-compiled binary based distribution.
+However, since Sorcerer
+is not a pre-compiled binary based distribution.
+Consequently, the use of the non previously designated area of /aux/
+solves more problems than inconveniences which it might create.
+So it moved because of voiced discontentment.
+Did anyone expect that the previous locations were set in stone?
+The previous locations were merely an attempt to comply with the LFH,
+an aging document that falls short of describing
+the modern requirements of a source based distro.
+
+Also if I did not already mention;
+we all owe thanks also to Evert Vorster.
+He listens to my inane babbling
+and helps reflect and hone the best parts.
+And after a decent game of toss the ball/idea
+then we finally arrive at an idea worthy of implementation.
+His expressed interest and discontentment helped motivate me.
+And that is important because
+I can always improve sorcery,
+but I easily become complacent.
+With that said, almost anyone is welcome
+to participate in Sorcerer development
+provided that they can endure my rambling.  :)
+
+And now for the final notes.
+Although no box has required this...
+if a box would not update
+then I would manually install a current grimoire to
+/usr/share/sorcery/grimoire.tar
+and then I would untar current sorcery
+and run the installer script to manually install it.
+Then I would
+# au merge; au begin sorcery
+And that should immediately follow with
+a complimentary cast of immune-exam-transition.
+But if it did not then I would cast that also.
+
+Transition is a bit rough, but not impossible.
+And in a few more days I might have it as smooth as ice.
+Just in case please be certain to log into and check
+the status of deployed boxes that are automatically updating.
+If they have not transition within a week or two
+then give 'em a gentle kick through ssh.
+Hopefully, no Sorcerer Modern Magic boxes will derail.
+But if it happens then I am overdo.  :)
+
+This will likely be my last announcement concerning
+sorcery delegate because
+it is a considerable amount of information to retype
+especially when I am probably repeating
+what was mentioned in a previous email.
+So thanks for reading.
+And to those who skimmed/skipped and deleted,
+well then good luck Chuck.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002398.html">[Sorcerer-admins] A storm approaches...
+</A></li>
+	<LI>Next message: <A HREF="002400.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2399">[ date ]</a>
+              <a href="thread.html#2399">[ thread ]</a>
+              <a href="subject.html#2399">[ subject ]</a>
+              <a href="author.html#2399">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

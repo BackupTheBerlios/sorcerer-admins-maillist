@@ -1,0 +1,344 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] issue when rebooting boards.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTimA7q1GL1tOBU7A_yER79Ndjeyj072FWm46XaM1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001699.html">
+   <LINK REL="Next"  HREF="001701.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] issue when rebooting boards.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTimA7q1GL1tOBU7A_yER79Ndjeyj072FWm46XaM1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] issue when rebooting boards.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sun Jul  4 13:26:35 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001699.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+        <LI>Next message: <A HREF="001701.html">[Sorcerer-admins] Fwd:  issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1700">[ date ]</a>
+              <a href="thread.html#1700">[ thread ]</a>
+              <a href="subject.html#1700">[ subject ]</a>
+              <a href="author.html#1700">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+I first suspected module not loaded and /dev/ statically filled.... but ahci
+module is correctly loaded....
+/dev/disk/by-uuid/ is correctly filled
+however I suspect that dm is the culpit I found that ahci driver is used by
+dm-* modules. the annoying thing is that there are so many dm-* startup
+scripts that it's confusing to know how to stop the service... more most of
+the script do fails on my box.... so I'm confused....
+I tried to boot with rdinit=/bin/bash
+just tried to exec /init and well nothing is displayed (but I'm certain it
+does things) and right after the /dev/sda2 device is locked....
+
+about the initramfs : it shall include vi.... my first guess was to try
+vi.... I don't use nano so I forgot about it's existence.....
+another remark when I do lsmod|less I get nothing interesting..... (I don't
+even see ahci module) same with lsmod&gt;mod.list
+however lsmod |grep ahci does report ahci module.... didn't tried on the
+real FS, just on initrd....
+
+I will investigate further tonight to see what is done in init that lock the
+device
+thanks and regards
+
+On Sun, Jul 4, 2010 at 3:39 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> If /etc/fstab and /etc/lilo.conf already use UUIDs
+</I>&gt;<i> then do not dd their drives or filesystems otherwise
+</I>&gt;<i> the box will have multiple filesystems with the same UUIDs
+</I>&gt;<i> and that can be confusing.
+</I>&gt;<i>
+</I>&gt;<i> From what you described I am already confused.
+</I>&gt;<i> I suspect I would have to play around with it
+</I>&gt;<i> in order to discover what is wrong with it.
+</I>&gt;<i> Also if /etc/fstab does not contain an entry
+</I>&gt;<i> for the root filesystem
+</I>&gt;<i> then during sysinit a dialog menu will open
+</I>&gt;<i> asking the SA to select the root filesystem.
+</I>&gt;<i> In that situation only device names are presented
+</I>&gt;<i> and not UUIDs.
+</I>&gt;<i>
+</I>&gt;<i> Assuming a box uses UUIDs and does not
+</I>&gt;<i> have multiple filesystems with the same UUID
+</I>&gt;<i> then the UUID thing aught to work for fstab and lilo.
+</I>&gt;<i>
+</I>&gt;<i> If one is booting using the I/R
+</I>&gt;<i> then does that create a /boot/fast/ entry?
+</I>&gt;<i> And is there something specific about the I/R
+</I>&gt;<i> that differs from the installed box?
+</I>&gt;<i> Different kernel version?
+</I>&gt;<i> Different udev version?
+</I>&gt;<i> Or does the I/R enable a successful boot
+</I>&gt;<i> just because one must select the root filesystem
+</I>&gt;<i> instead of it being specified in /etc/fstab?
+</I>&gt;<i> Is there something wrong with the filesystem
+</I>&gt;<i> specified for / in /etc/fstab on the box?
+</I>&gt;<i>
+</I>&gt;<i> The should not be mysterious at all,
+</I>&gt;<i> provided nobody is dd(ing) the partitions/disks.
+</I>&gt;<i> Hopefully you will be able to get an idea of
+</I>&gt;<i> what is happening by examining /dev /proc
+</I>&gt;<i> when booting from the fixed disk.
+</I>&gt;<i> Perhaps even the kernel ring buffer might contain
+</I>&gt;<i> some useful information about what happened.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Jul 3, 2010 at 2:24 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; As far as I know the device name is correct (it's always /dev/sda* since
+</I>&gt;<i> &gt; 2.4.* kernels : it's a sata drive, and sata drive has never got name
+</I>&gt;<i> &gt; ./dev/hd* since I use them)
+</I>&gt;<i> &gt; reboot does switch to init 6 : I see the update of the ramdisk and the
+</I>&gt;<i> new
+</I>&gt;<i> &gt; lilo install
+</I>&gt;<i> &gt; the issue seems to come more from the content of the ramdisk
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I can't do what you ask about editing fstab because :
+</I>&gt;<i> &gt; - on normal boot (ie if ramdisk hasn't been updated and I have booted
+</I>&gt;<i> once
+</I>&gt;<i> &gt; to have the fast entry in lilo menu) the rootfs is /dev/sda2
+</I>&gt;<i> &gt; - on anormal boot (ie after a new ramdisk has been created and lilo
+</I>&gt;<i> &gt; re-installed without fast entry) if the device name has changed I can't
+</I>&gt;<i> have
+</I>&gt;<i> &gt; a solution to do &quot;hummm ramdisk has updated, so I must change fstab for
+</I>&gt;<i> this
+</I>&gt;<i> &gt; boot and use now /dev/something, recreate the ramdisk boot on it, say
+</I>&gt;<i> hummm
+</I>&gt;<i> &gt; this is the first time I booted after a ramdisk so go back to the
+</I>&gt;<i> /dev/sda
+</I>&gt;<i> &gt; thing..... but wait! I have now to update the ramdisk! so I have to fall
+</I>&gt;<i> &gt; back on the 1rst case....&quot;  endless loop!
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; regarding the UUID thing... it appears that my system already use UUID
+</I>&gt;<i> fstab
+</I>&gt;<i> &gt; mounting.... so according my understanding, the ramdisk also use UUID
+</I>&gt;<i> fstab
+</I>&gt;<i> &gt; mounting.... so if the error message report /dev/sda2, this means that
+</I>&gt;<i> the
+</I>&gt;<i> &gt; UUID to /dev/sda2 translation did occurs.... to that the hypothesis of a
+</I>&gt;<i> &gt; change of device name can't be right (since all is done through UUIDs)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Sat, Jul 3, 2010 at 2:04 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Hmm...
+</I>&gt;<i> &gt;&gt; I usually issue
+</I>&gt;<i> &gt;&gt; shutdown -r now
+</I>&gt;<i> &gt;&gt; Does using reboot properly execute runlevel 6?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; As for the failed fsck and failed mount...
+</I>&gt;<i> &gt;&gt; Maybe the root partition no longer resides on
+</I>&gt;<i> &gt;&gt; /dev/sd?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If I were in that situation I would
+</I>&gt;<i> &gt;&gt; login as root.
+</I>&gt;<i> &gt;&gt; Then, I would have a look at /dev/
+</I>&gt;<i> &gt;&gt; And also I would check the kernel ring buffer.
+</I>&gt;<i> &gt;&gt; After I discovered what the proper device names should be
+</I>&gt;<i> &gt;&gt; then I would restart using kernel parameter
+</I>&gt;<i> &gt;&gt; rdinit=/bin/bash
+</I>&gt;<i> &gt;&gt; I would
+</I>&gt;<i> &gt;&gt; nano /etc/fstab
+</I>&gt;<i> &gt;&gt; Make corrections there.
+</I>&gt;<i> &gt;&gt; Then
+</I>&gt;<i> &gt;&gt; exec /init
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Booting should continue normally and mount the root filesystem.
+</I>&gt;<i> &gt;&gt; After that I completed I would login as root on a virutal console
+</I>&gt;<i> &gt;&gt; and edit /etc/fstab and /etc/lilo/head
+</I>&gt;<i> &gt;&gt; After correcting those files I would issue
+</I>&gt;<i> &gt;&gt; shutdown -r now
+</I>&gt;<i> &gt;&gt; That should regenerate /etc/lilo.conf
+</I>&gt;<i> &gt;&gt; and the initramfs and re-install lilo to the
+</I>&gt;<i> &gt;&gt; boot block or master boot record.
+</I>&gt;<i> &gt;&gt; The box should be able to boot
+</I>&gt;<i> &gt;&gt; then without having to make further corrections.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The kernel on the initramfs might be older
+</I>&gt;<i> &gt;&gt; than the installed kernel.
+</I>&gt;<i> &gt;&gt; Sometimes the names of fixed disks change
+</I>&gt;<i> &gt;&gt; from /dev/sd* to /dev/hd* or back again.
+</I>&gt;<i> &gt;&gt; That is why the current menu driven installer
+</I>&gt;<i> &gt;&gt; mounts filesystems based upon the filesystem's UUID
+</I>&gt;<i> &gt;&gt; instead of the device name at the time of creation.
+</I>&gt;<i> &gt;&gt; Changing the entries in /etc/lilo/head and /etc/fstab
+</I>&gt;<i> &gt;&gt; to UUIDs will also solve the problem.
+</I>&gt;<i> &gt;&gt; For lilo I use something like:
+</I>&gt;<i> &gt;&gt; boot /dev/disk/by-uuid/$UUID
+</I>&gt;<i> &gt;&gt; For /etc/fstab
+</I>&gt;<i> &gt;&gt; UUID=$UUID
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The manual pages for fstab and lilo.conf
+</I>&gt;<i> &gt;&gt; explain in greater detail.
+</I>&gt;<i> &gt;&gt; Current versions of lilo appear to support the UUID=$UUID
+</I>&gt;<i> &gt;&gt; like as in /etc/fstab,
+</I>&gt;<i> &gt;&gt; however I made the change in the installer before
+</I>&gt;<i> &gt;&gt; lilo gained support for UUIDs.
+</I>&gt;<i> &gt;&gt; I suppose I could change that now.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Ask kernel developers why fixed disk device names
+</I>&gt;<i> &gt;&gt; keep flip-flopping if you want to know why.
+</I>&gt;<i> &gt;&gt; It is nothing that I control.
+</I>&gt;<i> &gt;&gt; However, I wrote the installer to use UUIDs
+</I>&gt;<i> &gt;&gt; because I also grew tired of having to fix
+</I>&gt;<i> &gt;&gt; boxes after installing a new kernel that
+</I>&gt;<i> &gt;&gt; changed the device names.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I have seen it happen enough to know what to look for
+</I>&gt;<i> &gt;&gt; and how to fix it.
+</I>&gt;<i> &gt;&gt; After making the change to the box
+</I>&gt;<i> &gt;&gt; please download and burn a new I/R
+</I>&gt;<i> &gt;&gt; The one you used for installing the box will be less
+</I>&gt;<i> &gt;&gt; useful since it names devices differently
+</I>&gt;<i> &gt;&gt; that the currently installed kernel.
+</I>&gt;<i> &gt;&gt; Also eventually due to glibc upgrades and kernel updates
+</I>&gt;<i> &gt;&gt; an old Install/Rescue disk will eventually become mostly useless.
+</I>&gt;<i> &gt;&gt; If booted one might try to mount a root filesystem
+</I>&gt;<i> &gt;&gt; and chroot into it and then receive an immediate failure
+</I>&gt;<i> &gt;&gt; since glibc on the root filesystem
+</I>&gt;<i> &gt;&gt; refuses to support an old kernel.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Sat, Jul 3, 2010 at 12:18 PM, jean-luc malet &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Hi!
+</I>&gt;<i> &gt;&gt; &gt; I've a BIG issue when restarting...
+</I>&gt;<i> &gt;&gt; &gt; I do a
+</I>&gt;<i> &gt;&gt; &gt; #reboot
+</I>&gt;<i> &gt;&gt; &gt; it does stop the pc and restart it
+</I>&gt;<i> &gt;&gt; &gt; however when it tries to mount rootfs the box hangs on
+</I>&gt;<i> &gt;&gt; &gt; fsck.ext4 : Device or resource busy while trying to open /dev/sda2
+</I>&gt;<i> &gt;&gt; &gt; Filesystem mounted or opened exclusively by another program?
+</I>&gt;<i> &gt;&gt; &gt;  * fsck failed
+</I>&gt;<i> &gt;&gt; &gt;     [ failed  ]
+</I>&gt;<i> &gt;&gt; &gt;  * Repair file systems by running /sbin/fsck                        [
+</I>&gt;<i> &gt;&gt; &gt; failed
+</I>&gt;<i> &gt;&gt; &gt;  ]
+</I>&gt;<i> &gt;&gt; &gt; Give root password for maintenance
+</I>&gt;<i> &gt;&gt; &gt; (or type Control-D to continue):
+</I>&gt;<i> &gt;&gt; &gt; Unable to mount a root filesystem as /media/root
+</I>&gt;<i> &gt;&gt; &gt; Unable to continue booting
+</I>&gt;<i> &gt;&gt; &gt; Give root password for maintenance
+</I>&gt;<i> &gt;&gt; &gt; and well I login, and can't do anything at all
+</I>&gt;<i> &gt;&gt; &gt; the only solution I found is to boot on the rescue disc, but the
+</I>&gt;<i> &gt;&gt; &gt; /dev/sda2
+</I>&gt;<i> &gt;&gt; &gt; is in fact clean.... so set the root on it and restart..... it seems
+</I>&gt;<i> &gt;&gt; &gt; that
+</I>&gt;<i> &gt;&gt; &gt; the initramfs is in cause.... having bad /dev/sda* or getting
+</I>&gt;<i> &gt;&gt; &gt; corrupted....
+</I>&gt;<i> &gt;&gt; &gt; this issue occurs 75% of the time I'll say
+</I>&gt;<i> &gt;&gt; &gt; any idea?
+</I>&gt;<i> &gt;&gt; &gt; I have lot of red lines when doing reboot but since I can't get
+</I>&gt;<i> &gt;&gt; &gt; interactive
+</I>&gt;<i> &gt;&gt; &gt; session while stopping the service I can't check if the error is a
+</I>&gt;<i> true
+</I>&gt;<i> &gt;&gt; &gt; one.....
+</I>&gt;<i> &gt;&gt; &gt; best regards
+</I>&gt;<i> &gt;&gt; &gt; JLM
+</I>&gt;<i> &gt;&gt; &gt; --
+</I>&gt;<i> &gt;&gt; &gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> &gt;&gt; &gt; (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &gt;&gt; &gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> &gt;&gt; &gt; simples
+</I>&gt;<i> &gt;&gt; &gt; et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> &gt;&gt; &gt; -----------------------------
+</I>&gt;<i> &gt;&gt; &gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> &gt;&gt; &gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+</I>&gt;<i> &gt;&gt; &gt; Reese
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> &gt; (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> simples
+</I>&gt;<i> &gt; et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> &gt; -----------------------------
+</I>&gt;<i> &gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> &gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> &gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100704/666eb6ce/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100704/666eb6ce/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001699.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+	<LI>Next message: <A HREF="001701.html">[Sorcerer-admins] Fwd:  issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1700">[ date ]</a>
+              <a href="thread.html#1700">[ thread ]</a>
+              <a href="subject.html#1700">[ subject ]</a>
+              <a href="author.html#1700">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

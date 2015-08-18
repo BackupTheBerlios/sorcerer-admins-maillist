@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more pbzip2 tests
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20pbzip2%20tests&In-Reply-To=%3C596b75860901071700m457bcfbakcb3b166c7a4e43c2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000977.html">
+   <LINK REL="Next"  HREF="000978.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more pbzip2 tests</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20pbzip2%20tests&In-Reply-To=%3C596b75860901071700m457bcfbakcb3b166c7a4e43c2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more pbzip2 tests">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jan  8 02:00:39 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000977.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+        <LI>Next message: <A HREF="000978.html">[Sorcerer-admins] gcc-4.0.0 won't compile will -mtune=native
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#979">[ date ]</a>
+              <a href="thread.html#979">[ thread ]</a>
+              <a href="subject.html#979">[ subject ]</a>
+              <a href="author.html#979">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Uhm....
+Would double speed bzip2 be faster than 7za?
+7za compresses tighter than bzip2 and decompresses faster than bzip2.
+When 7za is reduced to the quality compression of bzip2
+then 7za is considerably fast, maybe faster than bzip2?
+
+If one greps p7zip documentation it has a switch for enhanced speed
+with multi-core processors.
+
+    &lt;P&gt;Sets multithread mode. If you have a multiprocessor or multicore system,
+       you can get a speed increase with
+       this switch. This option affects only compression with BZip2, Deflate and
+       Deflate64 methods and decompression of BZip2 streams.
+       Each thread in the multithread mode uses 32 MB of RAM for buffering.
+       If you specify {N}, 7-Zip tries to use N threads.&lt;/P&gt;
+
+However, because 7za is capable of using such large block sizes
+for lzma mode there might not be an impelling reason for implementing
+support for multi-threads on multi-core CPUs.
+
+Using /etc/init.d/bgz to recompress archives in /var/cache/*
+is meant to be as be as gentle on the CPU as possible.
+Using bzip2 might finish the job faster,
+but the performance impact would become noticeable on SMP boxes.
+
+Speed of re-compression and decompression may not be
+that much of an issue when one considers
+that overall cast and leech themselves operate concurrently
+so that multiple sources can be compiled and downloaded concurrently.
+It is possible that with LEECH_RATE=4 CAST_RATE=4
+that all the CPU cores are being efficiently used
+much of the time even without parallel bzip2.
+
+Someone may want to check 7za's ability and speed to
+create and decompress bzip2 archives using multi-core.
+7za may have advantages that pbzip2 lacks?
+Can 7za using multi core support decompress a bzip2
+archive made with bzip2 faster than pbzip2?
+As it was discovered before.
+Faster decompression of bzip2 archives by pbzip2
+also requires that the archive was created with pbzip2.
+Does that rule apply to 7za?
+
+If there was an advantage to it
+then 7za could be used for decompressing
+both gzip and bzip2 archives instead of gzip and bzip2.
+
+For boxes that require the extra space 7za is worth it.
+For boxes that do not require it then /etc/init.d/bgz is probably
+not worth running at all since it would waste CPU cycles
+regaining space that is not required.
+Most new boxes come with about half a terabyte of disk space right?
+Re-compressing archives is really only an issue on legacy boxes,
+where available disk space is more valuable than speed.
+
+All of my boxes are still outfitted with western digital 30G fixed disk.
+I found something I liked and stood with it.
+But in the future I doubt I will have any concerns about disk space
+once I am using .5T fixed disks and large capacity flash drives.
+
+Thanks to everyone who is doing performance testing with
+pbzip2 and 7za.
+No matter how we we adjust the handling of compressed
+archives with sorcery the knowledge is definitely a benefit
+for making that decision.
+
+
+On Wed, Jan 7, 2009 at 9:21 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> Pekka,
+</I>&gt;<i>
+</I>&gt;<i> Thank you for testing pbzip2. Did you by any chance try to decompress
+</I>&gt;<i> pbzip2-compressed files with bzip2? Was it possible at all in the first place
+</I>&gt;<i> and how fast/slow it was?
+</I>&gt;<i>
+</I>&gt;<i> In my opinion, pbzip2 faster compression/decompression is worth having in
+</I>&gt;<i> Sorcerer. I would use it instead of 7za to speed up (re)packaging.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000977.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+	<LI>Next message: <A HREF="000978.html">[Sorcerer-admins] gcc-4.0.0 won't compile will -mtune=native
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#979">[ date ]</a>
+              <a href="thread.html#979">[ thread ]</a>
+              <a href="subject.html#979">[ subject ]</a>
+              <a href="author.html#979">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

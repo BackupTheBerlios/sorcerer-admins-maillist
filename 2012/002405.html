@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery paradigm
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20paradigm&In-Reply-To=%3CCA%2BT4wDgQh%2BNJx%2B-VK04wdTx0xSg6J0DsxxKDsMm8QnRXN9KK%3DQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002404.html">
+   <LINK REL="Next"  HREF="002406.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery paradigm</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20paradigm&In-Reply-To=%3CCA%2BT4wDgQh%2BNJx%2B-VK04wdTx0xSg6J0DsxxKDsMm8QnRXN9KK%3DQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery paradigm">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Nov 18 19:13:12 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002404.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+        <LI>Next message: <A HREF="002406.html">[Sorcerer-admins] changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2405">[ date ]</a>
+              <a href="thread.html#2405">[ thread ]</a>
+              <a href="subject.html#2405">[ subject ]</a>
+              <a href="author.html#2405">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>sorcery delegate was rather fancy was it not?
+For those that missed the update, about 10 queues and 8 utilities control
+the action.
+That way a combination of limiting which processes run concurerntly
+cgroup cpu.shares per utility, and cock rate limiting I/O
+all combined effort to achieve a more optimal use of resources
+while limiting the potential for causing lag in user owned processes.
+Being able to do updates without downtime has always been an important goal
+of Sorcerer.
+That is why boxes do not goto runlevel 1 and kick all users during updates
+which was traditional of pre-compiled binary based distros.
+
+However, not long ago a user rebuked me because firefox would not start.
+The box was in the middle of an update.
+Normally, this type of problem would not happen.
+It could have been due to a bug in sorcery.
+But I did not have the moment to investigate and identify the exact cause
+of it.
+Instead I thought, &quot;A design change in sorcery could preclude the
+possibility
+of disruption of services during updates.&quot;
+And so I have created that sorcery.
+It is called sorcery paradigm.
+
+Paradigm is a fancy word that literally means point of view.
+Some people would say that a paradigm is a model
+that effects how one perceives.
+Again that is merely a point of view.
+In a more simple sense,
+sorcery paradigm is a sorcery with explicit chrooting capabilities.
+
+Paradigms are hard link copies of a portion of the root file system.
+Paradigm functionality is not enabled by default.
+The feature &quot;paradigm&quot; must be enabled.
+And the &quot;shift&quot; feature allows for automatic paradigm shifting
+as opposed to explicitly running
+# augur paradigm /para/new shift
+to shift to the newer paradigm.
+
+As suggested at the end of the above paragraph
+the new paradigm is created within /para/new/
+Casting spells, dispelling spells are actions that happen
+within the new paradigm when the paradigm feature is enabled.
+Therefore, a request to dispel yelp
+would have no effect upon /
+but instead dispel yelp within /para/new/
+When all the requested changes such as
+updating and dispelling installed software complete
+then /para/new/ represents the new state of the box.
+/para/new/ can become the current state of the box
+by explicitly running
+# augur paradigm /para/new shift
+
+So what happens to / during a shift?
+
+If /para/old/$YEAR$MONTH/ does not exist
+then the content of / receives hard links in /para/old/$YEAR$MONTH/
+That becomes a reference point.
+As many as 4 old reference points are kept.
+Therefore, a box could be shifted backwards
+up to a quarter of a year if the box updates
+monthly or weekly.
+Shifting backwards should also allow the regression
+to a previously installed version of glibc
+which is a functionality that can not currently be achieved
+by using archives as they are currently implemented.
+
+Anyone still following might be wondering if paradigm support
+requires a considerable amount of additional disk space.
+The additional requirement is slight.
+Paradigm support consumes mostly inodes.
+Fortunately, most file systems have nearly
+a magnitude more inodes than are being used.
+
+A file on disk will have only one inode.
+However, that inode may have more than one link.
+An inode does not revert to free space
+until after all links to it are removed
+and it is no longer an open file.
+So the way that paradigm functionality is achieved
+is not by copying files nor by copying disk content,
+but instead by adjusting links to inodes.
+
+An additional requirement for paradigm support is that
+/usr must exist on / and not be a separate file system.
+A far more complicated implementation
+with an increased probability for bugs
+would be required if trying to avoid the possibility
+of creating cross file system linked files.
+
+Paradigm support is not intended to be a substitute for backups.
+However, a file deleted within /
+might yet retain a link to it somewhere within /para/old/
+Paradigm support is not intended to be a substitute
+for a dedicated development box for testing changes.
+However, a paradigm enabled box could revert from an update
+in a matter of minutes or seconds
+without requiring backups nor archives.
+
+Because innodes are a limited commodity
+paradigm support is being limited to 4 old references.
+Depleting all available inodes would be detrimental.
+
+# stat -f /bin/bash | grep Inodes:
+
+will display total and available inodes.
+If the amount in use is more than 1/5th the total
+then perhaps the file system has too few inodes
+for paradigm functionality.
+
+Succinctly stated, paradigm support
+is as if the sorcery utilities ran chrooted within /para/new/
+
+Of course please read
+# au help paradigm
+
+to explain the actual usage of the module
+after the feature is enabled.
+
+Lastly, for those who fear hard links...
+Both the mode, ownership and extended attributes of hard linked files
+remain identical for all links to an inode.
+Therefore, a file readable only by root in one location
+will not necessarily by readable by everyone somewhere else.
+However, directories are never hard linked.
+/para/{old,new}/ are owned by root and mode 700
+That wards away curious users.
+Consequently, paradigm support is expected
+to have no effect upon security.
+
+The only way a paradigm enabled box is less secure
+is if the &quot;shift&quot; feature is not enabled
+and the SA forgets to shift to the new paradigm.
+In that case all updates are confined to /para/new/
+and not shifted to /
+Consequently, consider carefully whether the &quot;shift&quot; feature
+should also be enabled.
+
+For the moment paradigm support represents functionality
+that may be more appealing for some SAs than others.
+Similarly, SAs opinions also vary concerning the benefit of archives.
+However, paradigm support might be a better fit for a source
+based distribution than archives of previously installed software.
+
+Archives are not intended to be a substitute for the packages
+that pre-compiled binary package managers create.
+That is because archives contain no information
+about which ELF shared libraries are required.
+And sorcery does not append a spell or distribution specific
+version number to indicate which modification of a spell
+was used to create the archive.
+
+The reference points created by paradigm support
+achieve the state of functionality that was current at that point in time.
+Therefore, if software after updates segfaults or has annoying runtime bugs
+then the same software from a reference point created a month before
+would run as it did a month before.
+
+In the above scenario a reference point is more desirable than an archive.
+The runtime bugs evident in a program might not be present in the program.
+For example a runtime bug in firefox, which frequently updates,
+might not be a bug in firefox.
+The bug might exist in a separate ELF library used by firefox such as zlib.
+Such a problem has occurred in the past with zlib and with other libraries.
+Hunting such a bug using reference points
+could be easier than hunting it using archives.
+
+The interdependency of software makes the examination of archives
+tantamount to looking at one pixel on a display individually.
+In contrast examining and comparing reference points is like
+looking all the pixels on a display and gives &quot;the big picture.&quot;
+
+Paradigm support is not unlike gaining a small portion of the benefit
+of having / in a git repository or the ability to revert a BTRFS to a
+previous state.
+However, sorcery does not require git nor BTRFS for paradigm support.
+It only requires a significant amount of inodes.
+And the amount of inodes provided on a file system
+can be set at the file system creation time.
+
+The future of sorcery and Sorcerer
+seems likely to involve the improvement of paradigm support
+and diminished support for archives.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20121118/1814295c/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20121118/1814295c/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002404.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+	<LI>Next message: <A HREF="002406.html">[Sorcerer-admins] changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2405">[ date ]</a>
+              <a href="thread.html#2405">[ thread ]</a>
+              <a href="subject.html#2405">[ subject ]</a>
+              <a href="author.html#2405">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

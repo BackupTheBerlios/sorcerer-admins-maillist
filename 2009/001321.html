@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] poppler-qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20poppler-qt-x11-opensource&In-Reply-To=%3C200909251710.53241.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001318.html">
+   <LINK REL="Next"  HREF="001322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] poppler-qt-x11-opensource</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20poppler-qt-x11-opensource&In-Reply-To=%3C200909251710.53241.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] poppler-qt-x11-opensource">merka at highsphere.net
+       </A><BR>
+    <I>Fri Sep 25 23:10:52 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001318.html">[Sorcerer-admins] curl doesn't work
+</A></li>
+        <LI>Next message: <A HREF="001322.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1321">[ date ]</a>
+              <a href="thread.html#1321">[ thread ]</a>
+              <a href="subject.html#1321">[ subject ]</a>
+              <a href="author.html#1321">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>pdftools from kde v4 did not work for me because they could not find necessary 
+libraries:
+$ pdfinfo ~/fartlek.pdf 
+pdfinfo: error while loading shared libraries: libpoppler.so.5: cannot open 
+shared object file: No such file or directory
+
+
+$ ldd /opt/kde4/bin/pdfinfo 
+	linux-gate.so.1 =&gt;  (0xb7fe0000)
+	libpoppler.so.5 =&gt; not found
+	libfontconfig.so.1 =&gt; /usr/lib/libfontconfig.so.1 (0xb7f81000)
+
+
+I have solved the problem by adding /opt/kde4/lib to /etc/ld.so.conf and 
+running ldconfig but is this the right solution?
+
+J.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001318.html">[Sorcerer-admins] curl doesn't work
+</A></li>
+	<LI>Next message: <A HREF="001322.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1321">[ date ]</a>
+              <a href="thread.html#1321">[ thread ]</a>
+              <a href="subject.html#1321">[ subject ]</a>
+              <a href="author.html#1321">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo warning too big kernel
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20warning%20too%20big%20kernel&In-Reply-To=%3CAANLkTik-NgDsVDzTkvVM7JUG9cQp7mnyHC24_uCbT-bW%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001609.html">
+   <LINK REL="Next"  HREF="001611.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo warning too big kernel</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20warning%20too%20big%20kernel&In-Reply-To=%3CAANLkTik-NgDsVDzTkvVM7JUG9cQp7mnyHC24_uCbT-bW%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lilo warning too big kernel">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 13 18:30:52 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001609.html">[Sorcerer-admins] lilo warning too big kernel
+</A></li>
+        <LI>Next message: <A HREF="001611.html">[Sorcerer-admins] lilo warning too big kernel
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1610">[ date ]</a>
+              <a href="thread.html#1610">[ thread ]</a>
+              <a href="subject.html#1610">[ subject ]</a>
+              <a href="author.html#1610">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, May 13, 2010 at 1:37 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Updating older installation and i am now getting this:
+</I>&gt;<i> Warning: The initial RAM disk is too big to fit between the kernel and
+</I>&gt;<i> &#160; &#160;the 15M-16M memory hole.
+</I>
+How old can the installation be?
+The default lilo.conf.head that comes
+with Sorcerer I/Rs contains the
+large-memory line
+Add that to /etc/lilo.conf.head
+and the warning message will go away.
+
+And yes, large initramfs images are loadable
+on architectures as old as Pentium MMX 233Mhz
+The BIOS would have to be very old broke
+for at problem to occur.
+
+&gt;<i> Is it safe to boot?
+</I>
+Probably.
+At least what you showed was only an warning message.
+I still recommend editing /etc/lilo.conf.head
+and then running /etc/init.d/lilo.conf
+
+&gt;<i> Also for some reason sorcery always wants to &quot;update&quot; my gcc-core, its old
+</I>&gt;<i> machine so its sort of PITA when its always wants to casts it...
+</I>
+PITA?
+So other software must be updated first?
+gcc-core should only require casting once.
+Could some alien files be causing a problem?
+
+&gt;<i> It also has couple &lt;spell&gt;-failed &quot;installed&quot;, how should i get rid of them?
+</I>
+Remove them manually.
+# rm /etc/sorcery/log/*/*-failed
+Then:
+# cast sorcery-alien
+And then look at the compile log for sorcery-alien
+and move all the aliens to somewhere safe
+where they can cause no strange behavior.
+
+&gt;<i> dispel certainly does not remove them, they always come back.
+</I>
+Dispel probably can not remove the
+*-failed spells because the *-failed spells
+install logs are incorrect.
+
+Definitely, the box should be updated
+and have the aliens weeds pulled out.
+After that it aught to be okay.
+
+While you are at it, please check to be certain
+that /etc/lilo.conf.head exists
+And if it does not then copy one from a newer
+installation and edit it.
+I wonder how many problems might occur
+if the ELF logs are 1st or 2nd generation
+or entirely missing?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001609.html">[Sorcerer-admins] lilo warning too big kernel
+</A></li>
+	<LI>Next message: <A HREF="001611.html">[Sorcerer-admins] lilo warning too big kernel
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1610">[ date ]</a>
+              <a href="thread.html#1610">[ thread ]</a>
+              <a href="subject.html#1610">[ subject ]</a>
+              <a href="author.html#1610">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

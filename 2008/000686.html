@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Spell format change and augur command	change...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Spell%20format%20change%20and%20augur%20command%0A%09change...&In-Reply-To=%3C48938E06.3010507%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000593.html">
+   <LINK REL="Next"  HREF="000690.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Spell format change and augur command	change...</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Spell%20format%20change%20and%20augur%20command%0A%09change...&In-Reply-To=%3C48938E06.3010507%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] Spell format change and augur command	change...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sat Aug  2 00:28:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000593.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+        <LI>Next message: <A HREF="000690.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#686">[ date ]</a>
+              <a href="thread.html#686">[ thread ]</a>
+              <a href="subject.html#686">[ subject ]</a>
+              <a href="author.html#686">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee wrote:
+&gt;<i> xorg-individual, hold, sold, safe, and exile are useful concepts.
+</I>&gt;<i> However, their implementation was lacking.
+</I>&gt;<i> So I am ripping them out of Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> In their place I am introducing the concept of version progress.
+</I>&gt;<i>
+</I>&gt;<i> # augur | grep &quot;^progress&quot;
+</I>&gt;<i> progress   none            List spells with non stable version progress
+</I>&gt;<i> progress   spell           List version progress for the spell
+</I>&gt;<i> progress   spell    exile  Select that the spell should never install
+</I>&gt;<i> progress   spell   secure  Select   secure version progress
+</I>&gt;<i> progress   spell   stable  Select   stable version progress
+</I>&gt;<i> progress   spell  version  Select specific version for spell
+</I>&gt;<i> progress   spell unstable  Select unstable version progress
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As you see the progress command still allows spells to be exiled.
+</I>&gt;<i> And by giving a specific version a spell can be absolutely held at that version.
+</I>&gt;<i> It also introduces the concept of 3 types of progression:
+</I>&gt;<i>
+</I>&gt;<i>   stable
+</I>&gt;<i> unstable
+</I>&gt;<i> secure
+</I>&gt;<i>
+</I>&gt;<i> stable progression is the one we are all familiar with.
+</I>&gt;<i>
+</I>&gt;<i> unstable progression would be like what IVERSION was for attribute X11R7 spells
+</I>&gt;<i> and also enables a $SPELL to also provide the $SPELL-dev without a
+</I>&gt;<i> separate $SPELL-dev
+</I>&gt;<i>
+</I>&gt;<i> The secure progression provides newer versions only when those newer
+</I>&gt;<i> versions fix security problems in previous releases.
+</I>&gt;<i> That makes secure progression work like &quot;sold&quot; did.
+</I>&gt;<i>
+</I>&gt;<i> For this to work the format of spells changes, slightly:
+</I>&gt;<i>
+</I>&gt;<i> Instead of the VERSION=( something older oldest )
+</I>&gt;<i> It will now look more like:
+</I>&gt;<i>
+</I>&gt;<i>   secure            1.2                   1.0
+</I>&gt;<i>   stable 1.3        1.2        1.1        1.0
+</I>&gt;<i> unstable 1.3 1.3pre 1.2 1.2pre 1.1 1.1pre 1.0 1.0pre
+</I>&gt;<i>
+</I>&gt;<i> For those using fixed with fonts the columns will line up in the above example.
+</I>&gt;<i> Not a very big change at all, right?
+</I>&gt;<i> Instead of the $VERSION array directly
+</I>&gt;<i> the functions called:
+</I>&gt;<i>
+</I>&gt;<i> stable()
+</I>&gt;<i> unstable()
+</I>&gt;<i> secure()
+</I>&gt;<i>
+</I>&gt;<i> will properly assign the progression version to the $VERSION array
+</I>&gt;<i> based upon the content of:
+</I>&gt;<i>
+</I>&gt;<i> /etc/sorcery/log/progress/$SPELL
+</I>&gt;<i>
+</I>&gt;<i> And to create /etc/sorcery/log/progress/$SPELL
+</I>&gt;<i> simply use the:
+</I>&gt;<i>
+</I>&gt;<i> # augur progress
+</I>&gt;<i>
+</I>&gt;<i> command
+</I>&gt;<i>
+</I>&gt;<i> Be on the lookout for this change in the future
+</I>&gt;<i> so that you can properly adjust spells that
+</I>&gt;<i> are already hold/sold/exile over to the new
+</I>&gt;<i> method of using version progression.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>hummm seems that there are an issue...
+I've swfdec version stable 0.6.6 installed
+I do augur progress swfdec unstable
+augur progress gives me swfdec unstable
+cast -r -c swfdec try to compile 0.6.6 and not unstable version....
+
+best regards
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000593.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+	<LI>Next message: <A HREF="000690.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#686">[ date ]</a>
+              <a href="thread.html#686">[ thread ]</a>
+              <a href="subject.html#686">[ subject ]</a>
+              <a href="author.html#686">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

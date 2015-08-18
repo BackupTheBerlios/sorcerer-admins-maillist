@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] cast : some annoying problems
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cast%20%3A%20some%20annoying%20problems&In-Reply-To=%3C45C221A6.2050209%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000035.html">
+   <LINK REL="Next"  HREF="000036.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] cast : some annoying problems</H1>
+    <B>jlm alias cityhunter</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cast%20%3A%20some%20annoying%20problems&In-Reply-To=%3C45C221A6.2050209%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] cast : some annoying problems">jlm_devel at laposte.net
+       </A><BR>
+    <I>Thu Feb  1 18:21:42 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000035.html">[Sorcerer-admins] seamonkey : can someone reproduce?
+</A></li>
+        <LI>Next message: <A HREF="000036.html">[Sorcerer-admins] cast : some annoying problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hello! today is again the day of problems (I love thoses days!)
+ok I activate compression of /usr (by the way I see no diff  :
+
+fuse.gunzip           3.8G  2.7G  1.1G  73% /media/fuse/gunzip
+/dev/root             3.8G  2.7G  1.1G  73% /media/fuse/usr
+none                  2.0G  8.0K  2.0G   1% /media/fuse/usr/src/sorcery
+fuse.gunzip           3.8G  2.7G  1.1G  73% /usr
+/dev/hda7              23G  3.8G   19G  17% /media/fuse/home
+fuse.gunzip            23G  3.8G   19G  17% /home
+
+)
+
+and I decided to recast everything (for the fun!)  so I done a
+# cast -c $(augur installed)
+
+it started fine but once again when glibc comes into play it's dramatic !
+this morning when I came back I had most of my application killed and 
+hopefully one still running terminal in root (else I will have had real 
+trouble)
+
+first I had ncurses dispelled and then no new bash available hopefully 
+tar was still working and I could untar it from /var/cache/archive
+after grep required libpcre and then cast wasn't working and same 
+problem same solution....
+and well after that I could launch some xterm again and tried a su.... 
+shadow was missing! same problem same solution
+after that some cast were failing.... looking compile log I found that 
+there was include problem... looking /usr/X11R6 directory.... I had bin 
+include and man file instead of symlinks to ../bin ../include ../man
+
+after that everything gone fine
+
+it's not the first time that I have this problem... and most of the time 
+it comes after glibc cast.....
+
+I thinks that for packages that support DESTDIR install it would be 
+great to use this feature to install brand new compiled packages into 
+some temporary dir, to create an archive from this and AFTER to dispell 
+and untar.... this will prevent partial installs and risk of having 
+something required dispelled that will prevent install to complete....
+
+$ldd $(which tar)
+        linux-gate.so.1 =&gt;  (0xffffe000)
+        librt.so.1 =&gt; /lib/librt.so.1 (0xb7eca000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0xb7db8000)
+        libpthread.so.0 =&gt; /lib/libpthread.so.0 (0xb7da6000)
+        /lib/ld-linux.so.2 (0xb7eef000)
+$ldd $(which rm)
+        linux-gate.so.1 =&gt;  (0xffffe000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0xb7e45000)
+        /lib/ld-linux.so.2 (0xb7f69000)
+
+
+so those 2 utils required to dispell and to install only require 
+glibc... the less requirement the less problems we will have...
+
+best regards,
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000035.html">[Sorcerer-admins] seamonkey : can someone reproduce?
+</A></li>
+	<LI>Next message: <A HREF="000036.html">[Sorcerer-admins] cast : some annoying problems
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

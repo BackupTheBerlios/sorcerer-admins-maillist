@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorry%20Red%20herring%20ctrl-alt-F%23%20just%20don%27t%20work.&In-Reply-To=%3C200806191104.34111.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000526.html">
+   <LINK REL="Next"  HREF="000528.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorry%20Red%20herring%20ctrl-alt-F%23%20just%20don%27t%20work.&In-Reply-To=%3C200806191104.34111.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.">merka at highsphere.net
+       </A><BR>
+    <I>Thu Jun 19 17:04:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000526.html">[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+</A></li>
+        <LI>Next message: <A HREF="000528.html">[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#527">[ date ]</a>
+              <a href="thread.html#527">[ thread ]</a>
+              <a href="subject.html#527">[ subject ]</a>
+              <a href="author.html#527">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 19 June 2008, Vincent Penquerc'h wrote:
+&gt;<i> &gt; Arrow keys stop working as expected in X
+</I>&gt;<i> &gt; if numlock is turned on.
+</I>&gt;<i> &gt; Due to bugs in ?xorg? the numlock keyboard light
+</I>&gt;<i> &gt; may not activate even if numlock is on.
+</I>&gt;<i>
+</I>&gt;<i> Nice try, but that's not it :)
+</I>
+It is due to the evdev driver taking over the keyboard. Now, I am not an Xorg 
+expert by any means and my conclusions are empirical but here goes what I 
+have found so far:
+
+1. Hal detects devices before Xorg and assigns (xorg) input drivers to them
+2. Unfortunately, Hal configuration means that configuration 
+from /etc/X11/xorg.conf is pretty much ignored unless (1) the Hal name 
+(device name?) matches device name in xorg.conf, and?/or? (2) the device is 
+plugged in before X.org start up.
+3. Hal uses evdev for keyboards.
+4. evdev driver for my laptop keyboard results in no arrows no matter what has 
+been tried
+5. Hal configuration can be ignored by Xorg if you put in the ServerFlags 
+this:
+  Option &quot;AutoAddDevices&quot;         &quot;off&quot;
+But that will result in inability to use  any newly connected input devices in 
+X after the X is started.
+
+
+The only reliable solution seems to be to force the 'kbd' driver in HAL. Here 
+is my /etc/hal/fdi/policy/30user/10-keyboard.fdi:
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+&lt;deviceinfo version=&quot;0.2&quot;&gt;
+  &lt;device&gt;
+    &lt;match key=&quot;input.originating_device&quot; contains=&quot;i8042_KBD_port&quot;&gt;
+      &lt;match key=&quot;info.capabilities&quot; contains=&quot;input.keyboard&quot;&gt;
+        &lt;merge key=&quot;input.x11_driver&quot; type=&quot;string&quot;&gt;kbd&lt;/merge&gt;
+      &lt;/match&gt;
+    &lt;/match&gt;
+  &lt;/device&gt;
+&lt;/deviceinfo&gt;
+
+It may be necessary to change the value of 'contains' of the 
+input.originating_device key. Use lshal to see what HAL knows about devices.
+I don't recall whether HAL restart is needed, sorry.
+
+J.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000526.html">[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+</A></li>
+	<LI>Next message: <A HREF="000528.html">[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#527">[ date ]</a>
+              <a href="thread.html#527">[ thread ]</a>
+              <a href="subject.html#527">[ subject ]</a>
+              <a href="author.html#527">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.0.1331738358.12121.sorcerer-admins%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001466.html">
+   <LINK REL="Next"  HREF="000448.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.0.1331738358.12121.sorcerer-admins%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:19:14 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001466.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="000448.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#342">[ date ]</a>
+              <a href="thread.html#342">[ thread ]</a>
+              <a href="subject.html#342">[ subject ]</a>
+              <a href="author.html#342">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>as automatically on or off during boot and shutdown,
+without having to cast -r the spell that installed the init-script.
+
+Making changes on this menu correctly updates sorcery logs.
+It correctly the mode on init-scripts in /etc/init.d/
+It invokes /lib/lsb/install_initd to update symbolic links to
+init scripts created in directories /etc/rc.d/rc*.d/
+Consequently, the changes made here remain permanent across updates.
+
+Spells such as:
+
+glibc-locales
+glibc-localtime
+init-functions
+favor
+core
+
+introduce new functionality or replace functionality
+that used to be provided by /usr/sbin/{augur,sorcery}
+
+These spells demonstrate that functionality
+to accomplish both simple to complex tasks
+can be added to Sorcerer by writing spells.
+Writing spells does not add complexity to sorcery tools,
+does not change sorcery tool API,
+and does not risk breaking some aspect of sorcery tools.
+Given those considerations recommendations that
+might otherwise not make it into the sorcery tools
+may qualify to be implemented as spells.
+
+
+In order to ensure that Sorcerer boxes behave better
+the spell init-scripts installs several init-scripts mode 0700
+for automatic executing during boot that replace functionality
+that used to be provided by /etc/inittab
+
+After init-scripts installs,
+boxes no longer require virtual file systems
+that are currently specified in /etc/fstab
+
+Spell init-functions installs the following scripts mode 0700
+so that they properly execute as required during boot and shutdown:
+
+/etc/init.d/dmesg         &lt;--  Writes kernel ring buffer to
+/etc/init.d/log/dmesg
+/etc/init.d/fsck          &lt;--  Checks filesystems specified in /etc/fstab
+/etc/init.d/lock          &lt;--  Mounts tmpfs /var/lock
+/etc/init.d/loglevel      &lt;--  Kernel console loglevel set to 3
+/etc/init.d/mount         &lt;--  Mounts local filesystems
+/etc/init.d/proc          &lt;--  Mounts proc on /proc
+/etc/init.d/pts           &lt;--  Mounts devpts on /dev/pts
+/etc/init.d/run           &lt;--  Mounts tmpfs on /var/run
+/etc/init.d/shm           &lt;--  Mounts tmpfs on /dev/shm
+/etc/init.d/sorcery       &lt;--  Mounts tmpfs on /root/.sorcery
+/etc/init.d/swap          &lt;--  Activates swap
+/etc/init.d/sys           &lt;--  Mounts sysfs on /sys
+/etc/init.d/usb           &lt;--  Mounts usbfs on /proc/bus/usb
+/etc/init.d/utmp          &lt;--  Creates proper /var/run/utmp
+/etc/init.d/wtmp          &lt;--  Creates proper /var/log/wtmp
+
+It also installs the following init-scripts as either mode 0700 or 0600
+depending upon the SA's selection:
+
+/etc/init.d/hwclock       &lt;--  Synchronizes system and CMOS clocks
+/etc/init.d/tmp           &lt;--  Mounts 2G tmpfs on /tmp and
+                               binds /tmp/.sorcery to /usr/src/sorcery
+
+
+Consequently, a meager /etc/fstab that specifies merely
+mount points for removable media, fixed disk partitions and swap
+is sufficient.
+
+Additionally, by not specifying /root/.sorcery in /etc/fstab
+the distribution maintainers can set proper limits for /root/.sorcery
+using the /etc/init.d/sorcery init-script.
+
+However, if a virtual filesystem is specified in /etc/fstab
+then those parameters are used for mounting the filesystem
+when /etc/init.d/mount executes during /boot
+This can be useful for setting a precise size for /dev/shm
+
+By having virtual filesystems mounted by scripts
+adding support for additional virtual filesystems becomes
+trivial for distribution maintainers since /etc/fstab
+will no longer be modified by sorcery script nor spell.
+
+
+Not everyone was pleased with the way the initramfs image was constructed.
+Previously, one initramfs provided a partial selection of modules expected
+to be required for booting for up to 4 kernels.
+It was a good compromise that saved disk space on /boot
+However, that method is already history.
+
+Now a separate initramfs image is constructed for each kernel image.
+Each initramfs contains a complete set of modules for that that kernel,
+yes networking modules also.
+It also contains some of /etc and all of /bin /lib /lib64 /sbin.
+On IA32 architecture each initramfs will be about 26M per box.
+On x86_64 architecture each initramfs will be somewhat larger.
+
+This change requires that newly deployed boxes,
+with the soon to be released I/Rs,
+will require /boot partitions of a size somewhere between 256M and 1G.
+However, boxes with new hardware
+should have no problems loading kernel and initramfs images that exist
+beyond the 1024 cylinder on a fixed disk.
+Therefore, those boxes do not require a dedicated /boot partition.
+Because of this I am strongly considering entirely removing
+the recommendation for creating /boot from the menu driven installer.
+
+Existing Sorcerer boxes with 64M /boot
+may be incompatible with the newer initramfs images
+Kernel + initramfs = 27M * 4 images = 108M &gt; 64M
+/boot is too small.
+
+Naturally, I am still awaiting compilation to finish on the new x86_64 I/R.
+After much consideration I decided to change from a stable linux
+kernel configuration
+to one that includes support for developmental and incomplete drivers.
+Yes, for those SAs who requested ext4
+and have deployed ext4 partitions
+the new I/Rs should be able to perform
+rescue operations on ext4 partitions.
+
+The reason that tipped the balance in favor of providing a
+developmental enabled kernel
+was that the entirely modular construction of the kernel may avoid encountering
+unfortunate bugs that exist in modules that are never loaded.
+Consequently, using the developmental enabled kernel should enable
+installation of Sorcerer on very new boxes for which linux contains
+only developmental hardware drivers.
+
+Lastly and most important is the change involving customized config files.
+Files in /etc/init.d/ can no longer be customized.
+Customization to init-scripts will be disregarded.
+Customized init-scripts are overwritten when a spell cast
+which installs those init-scripts which are customized.
+
+The reason for this change is because customized init-scripts
+can be cause frustrating problems
+when customizations become incongruent with
+the functionality expected from the new init-script.
+A customized /etc/init.d/mount init-script has the potential
+to stop a box from properly booting or properly mounting
+filesystems during boot, for example.
+
+In order to have non standard init-scripts installed
+a spell must install those the non-standard init-script.
+This could be accomplished by
+copying a spell to the local grimoire and
+properly adjusting the spell.
+
+Hopefully, the afore mentioned conveniences will outweigh this
+potential minor inconvenience with disallowing customized init-scripts.
+It is a fair trade for avoiding the potential of a customized init-script
+causing a box to malfunction during boot or shutdown.
+
+Thanks for reading.
+Happy New Year.
+Hope the first week of 2008 went better than expected for everyone.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001466.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="000448.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#342">[ date ]</a>
+              <a href="thread.html#342">[ thread ]</a>
+              <a href="subject.html#342">[ subject ]</a>
+              <a href="author.html#342">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

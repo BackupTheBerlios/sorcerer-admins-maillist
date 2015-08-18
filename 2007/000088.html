@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/networks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C461F3A09.3050009%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000085.html">
+   <LINK REL="Next"  HREF="000089.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/networks</H1>
+    <B>malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C461F3A09.3050009%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] /etc/networks">malet.jean-luc at laposte.net
+       </A><BR>
+    <I>Fri Apr 13 10:06:33 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000085.html">[Sorcerer-admins] /etc/networks
+</A></li>
+        <LI>Next message: <A HREF="000089.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>what was great with previous design of network is that there was no need 
+to merge all script requiring complex knowledge of how networks had to 
+be brought up....
+you have ethernet? fill the required fields in top of the template and 
+that's it....
+you have pppoe? do the same.....
+it was easy to add an interface
+now it's complex.... you have to know what part of the scripts to merge 
+into a single script that brings everything up...
+current design isn't as flexible as previous one.....
+maybe we should add &quot;network&quot; templates
+ie you have 2 networks home and office
+/etc/networks.d/home
+/etc/networks.d/office
+
+/etc/networks.d/networks/ contain all the scripts for networking
+
+/etc/networks.d/home :
+start() {
+     /etc/networks.d/networks/eth0-fixed  &amp;&amp;
+     /etc/networks.d/networks/pppoe-home
+}
+stop() {
+    /etc/networks.d/networks/pppoe-home stop
+    /etc/networks.d/networks/eth0-fixed stop
+}
+
+/etc/networks.d/office :
+start() {
+     /etc/networks.d/networks/eth0-dhcp start
+     /etc/networks.d/networks/eth1-dhcp start
+}
+stop() {
+    /etc/networks.d/networks/eth1-dhcp stop
+    /etc/networks.d/networks/eth0-dhcp stop
+}
+
+doing this will make notice the user that he have to write what to 
+brings up for what
+but this add a new layer in networking what I don't like
+
+maybe the really best is to do nothing by defaut in /etc/init.d/networks 
+and let the user customize...
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides: $network
+# Required-Start: $local_fs hostname
+# Required-Stop:  $local_fs
+# Should-Start:   pcmcia-cs
+# Default-Start: 3 4 5
+# Default-Stop:  0 1 2 6
+# Short-Description: networks raises and lowers network connections
+# Description: networks raises and lowers network connections
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+# Modify files located in    /etc/networks.d/
+# Templates are in           /etc/networks.d/templates/
+# If unfamiliar please read  /etc/networks.d/templates/README
+
+# If the networking should not start during boot then execute:
+# cast -r networks
+
+NETWORKS=/etc/networks.d
+
+case $1 in
+    start)  log_warning_msg &quot;networking about to start&quot;
+            #put here your network behaviour, following lines is here as 
+reference
+            #/etc/networks.d/eth0-static start &amp;&amp;
+            #/etc/networks.d/pppoe start ||
+            #/etc/networks.d/eth0-office start &amp;&amp;
+            #log_success_msg &quot;networking started&quot;  ||
+            log_failure_msg &quot;networking not started&quot;
+            ;;
+             
+     stop)  log_warning_msg &quot;networking about to stop&quot;
+            #put here your network behaviour, following lines is here as 
+reference
+            #/etc/networks.d/eth0-static start &amp;&amp;
+            #/etc/networks.d/pppoe start ||
+            #/etc/networks.d/eth0-office start &amp;&amp;
+            #log_success_msg &quot;networking has stopped&quot;  ||
+            log_failure_msg &quot;networking not stopped&quot;
+            ;;
+
+  restart)  $0  stop
+            $0  start
+            ;;
+
+        *)  echo  &quot;Usage: $0 {start|stop|restart}&quot;
+            ;;
+esac
+
+
+Kyle Sallee a &#233;crit :
+&gt;<i> On 4/12/07, malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Kyle Sallee a &#233;crit :
+</I>&gt;&gt;<i>     
+</I>&gt;&gt;&gt;<i> On 4/11/07, malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>       
+</I>&gt;&gt;<i> well I don't think so, anyway when you install sorcerer you read the
+</I>&gt;&gt;<i> readme and well it's not difficult to understand that each directory in
+</I>&gt;&gt;<i> /etc/networks.d represent a network and each script in that network is
+</I>&gt;&gt;<i> tried until one success
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> It was not obvious to me and I designed it and wrote the readme file.
+</I>&gt;<i> each file directly in /etc/networks.d/
+</I>&gt;<i> represents either a network or networks.
+</I>&gt;<i> Each file is executed with start on start and stop on stop.
+</I>&gt;<i> It should return 0 if successful 1 if not successful.
+</I>&gt;<i> There is need for a nest of subdirectories in /etc/networks.d/
+</I>&gt;<i>
+</I>&gt;<i> Yes templates can not merely be cat together.
+</I>&gt;<i> Having a template raise more than one network
+</I>&gt;<i> can require significant modification.
+</I>&gt;<i>
+</I>&gt;<i> However, let us say that I redo it.
+</I>&gt;<i> Any directory, except the example directory
+</I>&gt;<i> under /etc/networks.d/ becomes a directory that
+</I>&gt;<i> represents a group of networks to be started and stopped together.
+</I>&gt;<i>
+</I>&gt;<i> For this example let
+</I>&gt;<i> /etc/networks.d/0_home/eth0
+</I>&gt;<i> /etc/networks.d/0_home/pppoe
+</I>&gt;<i>
+</I>&gt;<i> /etc/networks.d/1_office/dhcp
+</I>&gt;<i> /etc/networks.d/1_office/wlan0
+</I>&gt;<i>
+</I>&gt;<i> Something like the above.
+</I>&gt;<i>
+</I>&gt;<i> The box is at home
+</I>&gt;<i> The box is booted.
+</I>&gt;<i> The ISP is flaking.
+</I>&gt;<i> However, eth0 comes up fine.
+</I>&gt;<i> Should the networks in /etc/networks.d/1_office also be raised or not?
+</I>&gt;<i>
+</I>&gt;<i> The box is at the office.
+</I>&gt;<i> It is booted.
+</I>&gt;<i> It starts with /etc/networks.d/0_home/eth0
+</I>&gt;<i> success even though the box is at home.
+</I>&gt;<i> The SA did not modify the script correctly to check DNS.
+</I>&gt;<i> /etc/networks.d/0_home/pppoe fails
+</I>&gt;<i> Does /etc/init.d/networks try to raise networks in
+</I>&gt;<i> /etc/networks.d/office ?
+</I>&gt;<i> It already raised one network in /etc/networks.d/0_home.
+</I>&gt;<i>
+</I>&gt;<i> As I stated before.
+</I>&gt;<i> There is far too much ambiguity in what is proper to be done
+</I>&gt;<i> with multiple networks being raised from modified templates
+</I>&gt;<i> stored in a directory that represents a location.
+</I>&gt;<i>
+</I>&gt;<i> Now let us say there are just these two
+</I>&gt;<i>
+</I>&gt;<i> /etc/networks.d/0_home
+</I>&gt;<i> /etc/networks.d/1_office
+</I>&gt;<i>
+</I>&gt;<i> /etc/init.d/networks does not care if one or more networks is raised
+</I>&gt;<i> by 0_home or 1_office.
+</I>&gt;<i> All it cares about is the exit value when run.
+</I>&gt;<i> So it first runs 0_home
+</I>&gt;<i> does it exit 0?
+</I>&gt;<i> Yes.  no need to run 1_office.
+</I>&gt;<i> No, time to run 1_office
+</I>&gt;<i>
+</I>&gt;<i> That is simple.
+</I>&gt;<i> That is clear.
+</I>&gt;<i> This way the SA can define whether or not if one only one network
+</I>&gt;<i> is raised in 0_home if that constitutes a success or a failure.
+</I>&gt;<i> For example eth0 might be possible to establish at both home and office.
+</I>&gt;<i> However, home is not home unless pppoe also raises.
+</I>&gt;<i> Therefore, the SA can modify the template so that a failure of pppoe
+</I>&gt;<i> exits 1 and therefore 1_office receives a chance at being raised.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> all networks have to be considered independant and should be tried to get up
+</I>&gt;&gt;<i> if fact the current method is by far less usefull than the previous
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> All networks are not independent.
+</I>&gt;<i> They may depend upon location.
+</I>&gt;<i> pppoe may depend on eth0 being raised first.
+</I>&gt;<i> pppoe may create and use a virtual device by virtual device
+</I>&gt;<i> runs through the actual hardware device eth0, yes?
+</I>&gt;<i> Likewise if one us using many wlan wireless networks
+</I>&gt;<i> then the network to connect to probably depends on
+</I>&gt;<i> where the box happens to be.
+</I>&gt;<i> Therefore, if connecting to one fails
+</I>&gt;<i> then the attempt of another
+</I>&gt;<i> depends on the first attempt failing.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> /etc/init.d/network one....  because you can't have several network up
+</I>&gt;&gt;<i> and catenate template isn't a solution... what if I want to restart my
+</I>&gt;&gt;<i> pppoe without dropping my eth0?
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> That is an excellent point.
+</I>&gt;<i> And it is not something that is addressed by this design.
+</I>&gt;<i> /etc/init.d/networks is supposed to run at startup and shutdown.
+</I>&gt;<i> It connects to all the networks it is supposed to and disconnects
+</I>&gt;<i> from all the networks it is supposed to.
+</I>&gt;<i> That is what it is designed to do.
+</I>&gt;<i> It is not designed to be invoked:
+</I>&gt;<i> /etc/init.d/networks stop pppoe
+</I>&gt;<i> /etc/init.d/networks start pppoe
+</I>&gt;<i> But it would have to be in order to satisfy your request.
+</I>&gt;<i> Because an invocation of /etc/init.d/networks stop
+</I>&gt;<i> would attempt to drop all your connected networks
+</I>&gt;<i> irregardless of whether they are defined as:
+</I>&gt;<i>
+</I>&gt;<i> /etc/networks.d/0
+</I>&gt;<i> /etc/networks.d/1
+</I>&gt;<i> or
+</I>&gt;<i> /etc/networks.d/0/a
+</I>&gt;<i> /etc/networks.d/0/b
+</I>&gt;<i> /etc/networks.d/1/a
+</I>&gt;<i> /etc/networks.d/1/b
+</I>&gt;<i>
+</I>&gt;<i> You would require something more like
+</I>&gt;<i>
+</I>&gt;<i> /etc/init.d/networks stop 0/a
+</I>&gt;<i> in order to specify the precise network to be disconnected.
+</I>&gt;<i>
+</I>&gt;<i> If you want that then please make and test the
+</I>&gt;<i> changes to networks in the svn grimoire.
+</I>&gt;<i> Please maintain backward compatibility
+</I>&gt;<i> so that after the spell updates boxes continue
+</I>&gt;<i> to be able to start their networks upon boot as they
+</I>&gt;<i> are currently defined by files directly within /etc/networks.d/
+</I>&gt;<i> Please exclude /etc/networks.d/templates/ directory
+</I>&gt;<i> Please only invoke executables located in /sbin and /bin
+</I>&gt;<i> Do not invoke /usr/bin/find, for example.
+</I>&gt;<i> Please try to keep it simple.
+</I>&gt;<i> The way /etc/init.d/networks is now is very easy for me to see
+</I>&gt;<i> at a glance what it does and to be able to modify it.
+</I>&gt;<i> The next person would appreciate if it could remain equally as easy to follow.
+</I>&gt;<i>
+</I>&gt;<i> Good luck with the modifications.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> maybe the best is to provide templates to copy to /etc/init.d....
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> It might be a bit difficult to have them execute in proper order
+</I>&gt;<i> if they existed in /etc/init.d/
+</I>&gt;<i> Modified templates are fine within /etc/networks.d/
+</I>&gt;<i> The control for what should execute in /etc/networks.d/
+</I>&gt;<i> should be supplied by /etc/init.d/networks
+</I>&gt;<i> If it were easier the other way around I would have kept
+</I>&gt;<i> it the way it was before when such things as
+</I>&gt;<i>
+</I>&gt;<i> /etc/init.d/eth0
+</I>&gt;<i> /etc/init.d/network
+</I>&gt;<i> /etc/init.d/ppp0
+</I>&gt;<i> /etc/init.d/dhcpcd
+</I>&gt;<i>
+</I>&gt;<i> and such existed in the /etc/init.d/ directory
+</I>&gt;<i> Tried it, ran with it, discard it.
+</I>&gt;<i> /etc/networks.d/ is better.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> no, I created the spell recently after getting my ipv6 tunnel and beeing
+</I>&gt;&gt;<i> unable to use ifconfig to set ip
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> created the iproute2 spell?
+</I>&gt;<i>
+</I>&gt;<i>    VERSION=(                 &quot;2.6.19-061214&quot; &quot;2.6.18-061002&quot;
+</I>&gt;<i> &quot;2.6.16-060323&quot; &quot;2.6.15-060110&quot; &quot;2.6.15-060110&quot; &quot;2.6.14-051107&quot;
+</I>&gt;<i> &quot;051007&quot; )
+</I>&gt;<i>
+</I>&gt;<i> It has many old versions in the version array.
+</I>&gt;<i> Am I misunderstanding?
+</I>&gt;<i>   
+</I>
+oups sorry I confused with a package that provide ping6 and 
+traceroute6..... mea culpa
+
+&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> well net-tools lack lot of ipv6 features in fact.... all people I asked
+</I>&gt;&gt;<i> told me to drop it....
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> Okay then.
+</I>&gt;<i> Let's go over to iproute2.
+</I>&gt;<i> Please make iproute2 a requirement for networks
+</I>&gt;<i> and go ahead and modify the templates accordingly.
+</I>&gt;<i>   
+</I>I don't wanna oblige anyone... if everybody agree then I'll do the 
+changes....
+&gt;<i>   
+</I>&gt;&gt;<i> no we don't althought it's better to have uniform interface....
+</I>&gt;&gt;<i> the good thing with ip is also that it can handle route, providing a
+</I>&gt;&gt;<i> single way to configure everything related to ip
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> That probably shaves 5 thousands of a second off the boot time.  :)
+</I>&gt;<i> But what if we want to change the routing table on the fly to add or
+</I>&gt;<i> remove a default route for example.
+</I>&gt;<i> Must we also adjust an interface?
+</I>&gt;<i>   
+</I>hummm it makes me think... how does pppoe change route? with ifconfig?
+&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> you can use ipv6 and ipv4 at the same time without problem
+</I>&gt;&gt;<i> for example I have both since I use a tunnel to connect to the 6thbone....
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> That is how I used to do it, a long time ago.
+</I>&gt;<i> However, I wonder if tunneling IPv6 through IPv4 looses
+</I>&gt;<i> some of the advantages of IPv6 such as multi-casting?
+</I>&gt;<i> Anything interesting on the mbone these days?
+</I>well in fact for me this is more to prevent using nat.... nat is trouble 
+making.... especially if you have several servers.... also when someone 
+comes there is always stuff to changes in configuration to fit a pecular 
+need.... ipv6 dhcp simply get ride of that burden.... he use that 
+special soft that require that special port to be opened? he has sip? or 
+sctp? well fine.... he have direct access to inet...
+and tunneling don't make lose any ipv6 advantages because in fact this 
+is as is you were directly connected to ipv6 bone through the ISP....
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000085.html">[Sorcerer-admins] /etc/networks
+</A></li>
+	<LI>Next message: <A HREF="000089.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

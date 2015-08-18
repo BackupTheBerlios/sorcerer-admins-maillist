@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Is the email list working?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Is%20the%20email%20list%20working%3F&In-Reply-To=%3C596b75860806150824l4d922f21j923726576f2f44d2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000502.html">
+   <LINK REL="Next"  HREF="000506.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Is the email list working?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Is%20the%20email%20list%20working%3F&In-Reply-To=%3C596b75860806150824l4d922f21j923726576f2f44d2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Is the email list working?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jun 15 17:24:06 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000502.html">[Sorcerer-admins] sorcery log file location
+</A></li>
+        <LI>Next message: <A HREF="000506.html">[Sorcerer-admins] grimoire 2008-169
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#505">[ date ]</a>
+              <a href="thread.html#505">[ thread ]</a>
+              <a href="subject.html#505">[ subject ]</a>
+              <a href="author.html#505">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bad news is that the berlios.de svn is not working.
+This happens from time to time.
+
+When it works again
+I will be able to commit
+the updates for kdm-v4 to run again.
+You can thank Evert for reporting the problem.
+Until he mentioned it
+I expected that kdm-v4 crashing
+was isolated to merely one of my boxes.
+
+Meanwhile I will discuss changes to init-scripts.
+Here is the init-script for kdm-v4, or what will soon become.
+
+### BEGIN INIT INFO
+# Provides: kdm-v4 gui_login
+# Required-Start: $local_fs run ICE-unix
+# Should-Start: $network $remote_fs udev xfs
+# Required-Stop: kill
+# Should-Stop: $remote_fs $network initramfs
+# Default-Start: 4 5
+# Default-Stop: 0 6
+# Short-Description: kdm-v4 provides an x11 login.
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+PIDF=/var/run/kdm.pid
+SERV=/opt/kde4/bin/kdm
+NAME=kdm-v4
+CONF=/etc/kde4.config/kdm/kdmrc
+
+restart(){ stop; sleep 10; start; }
+
+parse &quot;$@&quot;
+
+
+
+Fantastic when init-scripts fit within 25 lines, right?
+
+The new variable for init-scripts is $CONF
+I may have mentioned it before.
+It often specifies a configuration file.
+However, it can specify any directory or file.
+Whatever it specifies must exist in order
+for the service to start.
+If it does not exist then a message to that
+effect is printed instead of starting the service.
+This way startup of kdm-v4 can be suspended
+merely by renaming it's configuration file,
+instead of having to:
+# cast -r --deps init-scripts
+or
+# cast -r kdebase-workspace-v4
+
+Definitely, whether this method of control is
+boon or a bane depends on the service.
+For example:
+
+NFS server init-scripts are started when /etc/exports exists.
+This way SAs with minimal knowledge of NFS
+can achieve a working NFS server for minimal effort by:
+
+# nano /etc/{exports,hosts.{allow,deny}}
+# cast nfs-utils
+
+The overall idea is to have cast ask less questions
+while providing more logical expected solutions for init-scripts.
+Haing cast ask no questions about init-scripts
+would be a nice eventuality.
+But the grimoire is not there yet.
+Some services have either very old init-scripts,
+overly complicated init-scripts
+or entirely lack init-scripts.
+Of course the most popular and used services
+have the newest, most simple, and functional init-scripts,
+generally speaking.
+
+Remember that if a service should have started, but did not,
+please check /etc/init.d/log.d/*
+if a service did not start due to $CONF
+then it will be printed in the sysinit and runlevel logs.
+
+Will this change cause slower boots and longer logs?
+Yes, but not so much that anyone will notice.
+A box will not gain /etc/init.d/httpd unless httpd is installed.
+Therefore, the init-script system of Sorcerer boxes will
+still be nearly as terse as we have known.
+Although many of the init-scripts that are installed mode 0700
+on every Sorcerer box come from the init-script spell
+Most spells that install a server will also install
+the servers init-script exactly as expected.
+
+
+Selection of optional requirements for spells still remains a chore for SAs.
+Using always on and always off achieves faster results,
+especially since Jan reported the bug involving always on/off.
+Until then I expected nobody used always on/off.
+
+SAs using newer sorcery may have already noticed
+that the previous information screen about spells that require configuration
+became a menu to select spells to configure.
+Yes, you can skip configuration of spells.
+In some instances this is useful for me.
+However, it may not be useful to everyone.
+I still recommend configuring spells that require configuration.
+
+Even with the addition of linux-modular and initramfs
+I am still trying to preserve backward compatibility with the old method
+of using linux and a custom config and no initramfs.
+To that effect I recently fixed a bug that Evert reported
+concerning the starting of networks.
+This way if networks is unable to start during sysinit
+then a second attempt during the runlevel is made to start networking.
+
+Thanks for the help!
+
+Lastly, there may yet be a bug involving gdm
+that causes it to not run properly on some boxes.
+For a GUI login best choice are currently: xdm, kdm-v3
+
+Sorcerer policy on software quality is that:
+Sorcerer does not guarantee the fitness or usability of software.
+Almost all the software that can be installed on a Sorcerer box
+is written by people not involved with Sorcerer.
+Please report bugs as you discover them.
+However, bugs due to software authors will
+most often be fixed by those software authors
+and not the Sorcerer distribution maintainers.
+No one person or even group of people can
+take responsibility for the fitness of software
+written by thousands of other people.
+Even if you want to hold the distribution maintainers
+accountable there is no way they could guarantee
+the quality and suitability of other peoples' software.
+And that is true about every distribution and not merely Sorcerer.
+
+What would free software be without complimentary free bugs?  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000502.html">[Sorcerer-admins] sorcery log file location
+</A></li>
+	<LI>Next message: <A HREF="000506.html">[Sorcerer-admins] grimoire 2008-169
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#505">[ date ]</a>
+              <a href="thread.html#505">[ thread ]</a>
+              <a href="subject.html#505">[ subject ]</a>
+              <a href="author.html#505">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

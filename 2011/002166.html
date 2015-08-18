@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] no more lilo failures, I hope.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20no%20more%20lilo%20failures%2C%20I%20hope.&In-Reply-To=%3CBANLkTintShHdU%2BJFbs9FNiz43Kr631OtbA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002164.html">
+   <LINK REL="Next"  HREF="002167.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] no more lilo failures, I hope.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20no%20more%20lilo%20failures%2C%20I%20hope.&In-Reply-To=%3CBANLkTintShHdU%2BJFbs9FNiz43Kr631OtbA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] no more lilo failures, I hope.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 21 09:59:12 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002164.html">[Sorcerer-admins] ssh on the move
+</A></li>
+        <LI>Next message: <A HREF="002167.html">[Sorcerer-admins] nice and easy?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2166">[ date ]</a>
+              <a href="thread.html#2166">[ thread ]</a>
+              <a href="subject.html#2166">[ subject ]</a>
+              <a href="author.html#2166">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Just a few days ago I was thinking,
+&quot;Do lilo errors happen anymore?
+I have not had a lilo error in what seems like almost forever.&quot;
+And then earlier today it happened!
+
+I did not properly anticipate that /etc/init.d/lilo
+could be running concurrently with itself
+and be so precisely synchronized
+as to write to the configuration file concurrently
+and thus insert too many label statements.
+And yet that 1 in a million bug happened.
+lilo refused to re-install
+That box failed to boot.
+
+If I had been anywhere around the box while it was shutting down
+then I would have seen the problem and been able to make
+the sulogin timeout.
+I could have prevented the problem if I was there.
+Or if I had remembered to cast sorcerer-rescue
+then a rescue label would have been installed.
+And that also would have granted that one bootable label.
+But alas I did not plan ahead.
+My conclusion is that Sorcerer's init system
+is insufficient to match the true laziness of a SA.
+Consequently, the Sorcerer init system must be improved.
+
+First, directory /var/log/boot/ is now called /var/log/init/
+That is because it records logs generated
+both during booting and all run level changes.
+Yes, the old name of /var/log/boot/ did not last long.
+
+Additionally, there are two new sub-directories:
+/var/log/init/{failed,passed}
+Each gathers individual files.
+Each file's file name is the base name
+of the init-script that was run.
+The first line of each file is the command line.
+The following lines are the output from the init-script.
+Naturally, if an init-script fails then it's log file goes into
+/var/log/init/failed/
+That makes both the outcome and reason easy to view.
+
+This change is useful because it allows the box
+to anticipate and react to problems.
+If the box anticipates that it
+should be unable to boot following a restart or shutdown command
+then the box will refuse to restart and refuse to shutdown.
+It also refuses repeated attempt.
+And it will not allow reboot/shutdown requests to complete
+until after the SA logs in and solves the problem
+that probably involves lilo or a file in /etc/lilo/
+A failed attempt at reboot/shutdown causes the box
+to rebound to runlevel 3 with a message appended to
+the getty's greeting on virtual console #7.
+
+What is the beauty of a belligerent box?
+
+Please entertain the hypothetical situation that someone
+is actually rebooting a Sorcerer box.
+# shutdown -r now
+# ^D
+wait a minute...
+# ssh ....
+# uptime
+
+Is the uptime insignificant?
+If so then it reboot.
+If not then there was a problem.
+This seems a much better outcome
+than having a box located on another continent
+fail to reboot and become inaccessible by ssh.
+It is an outcome that I can appreciate,
+because problems are easier to solve via ssh
+than by analog telephone conversation.
+
+So more simply put,
+&quot;This change minimizes the probability that box will be unable to boot.&quot;
+
+Hopefully, this change improves the robustness of Sorcerer init.
+Unlike &quot;sorcerer-rescue&quot;,
+which is a spell that must be installed,
+this boon requires no additional cost in effort nor disk space.
+And the amount of complexity added to the init system is minimal.
+No overhaul of init-scripts is required.
+So the benefit comes at a cost
+which is transparent to SAs and spell authors.
+
+The Sorcerer &quot;keep&quot; is the foundation for these improvements.
+This new functionality demonstrates that the &quot;keep&quot; grants
+an additional benefit of being able to fully audit
+and react to the outcome of events during boot and shutdown.
+
+If other init-scripts deserve consideration during shutdown/reboot
+then please reply with the recommendations.
+
+
+Thanks to all the SAs that participated in this year's and last year's
+conversations about how Sorcerer's init system should be improved.
+Some suggestions were towards making init more interactive.
+Other suggestions were making towards making it more reactive
+instead of merely doing fire and forget on init-scripts.
+
+And due to recent changes Sorcerer init is now more interactive.
+At the last very point before halting or rebooting
+a SA can request the box to immediately rebound to a runlevel,
+provide a shell, or pause the final countdown.
+And Sorcerer init is more reactive in being able to detect
+the failed outcome of an init-script and anticipate the potential
+for a failed boot and avoid that potential by rebounding to runlevel 3.
+
+These changes demonstrate that specific hindrances to Sorcerer
+robustness can be individually handled with an implementation
+that does not scrap the current foundation of System V style init
+nor incur a penalty of increased complexity.
+
+Some requests are still on the cutting board.
+The current init system does not grant SAs
+the ability to individually confirm the execution
+of each of more than 100 init-scripts.
+Obviously, that makes booting and/or shutdown
+tedious while the potential benefit
+is not immediately apparent.
+Would it increase robustness?
+I do not know.
+
+However, changes that address specific problems
+are definitely receiving worthy implementations.
+Unfortunately, Sorcerer boxes are not clones.
+And all potential problems can not be anticipated.
+Therefore, a flawless boot solutions is unrealistic.
+However, some distribution wide
+implementations can be made for
+avoiding problems that can be properly anticipated.
+
+Who still has an itch with Sorcerer's init
+that could use a decent scratch, please?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002164.html">[Sorcerer-admins] ssh on the move
+</A></li>
+	<LI>Next message: <A HREF="002167.html">[Sorcerer-admins] nice and easy?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2166">[ date ]</a>
+              <a href="thread.html#2166">[ thread ]</a>
+              <a href="subject.html#2166">[ subject ]</a>
+              <a href="author.html#2166">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

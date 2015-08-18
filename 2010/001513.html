@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2045%2C%20Issue%207&In-Reply-To=%3C27f41a931003102156i77e90adeu4ea4bdf98b912960%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001512.html">
+   <LINK REL="Next"  HREF="001517.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2045%2C%20Issue%207&In-Reply-To=%3C27f41a931003102156i77e90adeu4ea4bdf98b912960%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7">evorster at gmail.com
+       </A><BR>
+    <I>Thu Mar 11 06:56:55 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001512.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+        <LI>Next message: <A HREF="001517.html">[Sorcerer-admins] Detailed installation issues....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1513">[ date ]</a>
+              <a href="thread.html#1513">[ thread ]</a>
+              <a href="subject.html#1513">[ subject ]</a>
+              <a href="author.html#1513">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Of course, make the right type of filesystem on the USB drive first....
+
+-Evert-
+
+On Thu, Mar 11, 2010 at 5:55 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi there....
+</I>&gt;<i>
+</I>&gt;<i> Installing Sorcerer to a USB disk is possible.
+</I>&gt;<i>
+</I>&gt;<i> Then, tar that filesystem, and distribute.
+</I>&gt;<i>
+</I>&gt;<i> When the distributed filesystem is untarred to a usb disk, make sure that
+</I>&gt;<i> the lilo is set up properly, run lilo, and then Viola! a new install of
+</I>&gt;<i> Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> I keep my backups of my Sorcerer install on USB hard disks in tar files.
+</I>&gt;<i>
+</I>&gt;<i> -Evert Vorster-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Mar 10, 2010 at 9:07 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> There is a rumor that an ISO9660 image can be
+</I>&gt;&gt;<i> dd onto a USB memory stick for a one time permanent transfer
+</I>&gt;&gt;<i> that becomes bootable and irreversible.
+</I>&gt;&gt;<i> I have not tried it.
+</I>&gt;&gt;<i> isolinux would not be able to boot of a USB stick,
+</I>&gt;&gt;<i> however lilo has no problem with it if the image on the
+</I>&gt;&gt;<i> USB stick is ext2 or ext3.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Unfortunately, using lilo for the boot program would
+</I>&gt;&gt;<i> probably make it so that USB memory stick might only
+</I>&gt;&gt;<i> be bootable on a box with the same fixed disk configuration.
+</I>&gt;&gt;<i> Probably grub would work for booting it since grub can
+</I>&gt;&gt;<i> read ext2 filesystems and the SA would be able to select
+</I>&gt;&gt;<i> a kernel and initramfs image to load.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If the filesystem on the USB stick is FAT32,
+</I>&gt;&gt;<i> which would be acceptable
+</I>&gt;&gt;<i> for storing a kernel, initramfs, and tar.xz archives,
+</I>&gt;&gt;<i> then syslinux would be able to load the kernel and
+</I>&gt;&gt;<i> initramfs image.
+</I>&gt;&gt;<i> This I have not tested.
+</I>&gt;&gt;<i> However, syslinux contains loaders for loading linux
+</I>&gt;&gt;<i> off of FAT32, ext2 and 3, and ISO9660.
+</I>&gt;&gt;<i> And inside the tarball is even some legacy documentation
+</I>&gt;&gt;<i> that describes how to set up linux for loading from a zip disk.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Another solution for booting is to use a network enabled
+</I>&gt;&gt;<i> boot floppy image loader.
+</I>&gt;&gt;<i> There is a project for that being hosted somewhere one
+</I>&gt;&gt;<i> www.kernel.org
+</I>&gt;&gt;<i> Basically, from the floppy is loaded a bootloader that is
+</I>&gt;&gt;<i> capable of downloading the kernel from the Internet and
+</I>&gt;&gt;<i> also an initramfs image.
+</I>&gt;&gt;<i> If using a distribution already configured for use with this
+</I>&gt;&gt;<i> then the entire root filesystem can be mounted read/only
+</I>&gt;&gt;<i> as a thin client by using a fuse filesystem what downloads
+</I>&gt;&gt;<i> data as necessary over HTTP or HTTPs by using byte
+</I>&gt;&gt;<i> range requests.
+</I>&gt;&gt;<i> Basically, it is httpfs.  :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Someone clever with a bit of time to allocate to the task
+</I>&gt;&gt;<i> can also make thin clients out of Sorcerer if they wanted.
+</I>&gt;&gt;<i> But it seems less than practical these days with the
+</I>&gt;&gt;<i> affordability of fixed disks and the large strain thin clients
+</I>&gt;&gt;<i> can place upon a network.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Probably, I would not bother to create a Sorcerer I/R
+</I>&gt;&gt;<i> that is bootable from USB.
+</I>&gt;&gt;<i> Instead I would install Sorcerer to a USB memory stick.
+</I>&gt;&gt;<i> In that fashion it would be bootable
+</I>&gt;&gt;<i> and contain a complete base installation that can easily be
+</I>&gt;&gt;<i> copied onto the fixed disk of another box.
+</I>&gt;&gt;<i> Installing from something like that is basically,
+</I>&gt;&gt;<i> fdisk it,
+</I>&gt;&gt;<i> make a filesytem, cp -ax everything into the new filesystem,
+</I>&gt;&gt;<i> mount --bind some virtual filesystems,
+</I>&gt;&gt;<i> chroot in and adjust fstab and lilo,
+</I>&gt;&gt;<i> break the chroot,
+</I>&gt;&gt;<i> reboot,
+</I>&gt;&gt;<i> disconnect the USB memory stick and boot using
+</I>&gt;&gt;<i> the fixed disk installation of Sorcerer.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If there is an ideal method for making a USB stick I/R
+</I>&gt;&gt;<i> then please someone do tell, because I do not know.
+</I>&gt;&gt;<i> Trying the dd from iso9660 image onto the USB memory stick
+</I>&gt;&gt;<i> seems like a good first try.
+</I>&gt;&gt;<i> Sure, the USB memory stick might be ruined.
+</I>&gt;&gt;<i> But it also might create an image that isolinux can boot.
+</I>&gt;&gt;<i> In that case it would work even better than a CD since
+</I>&gt;&gt;<i> it would be free of burn errors and access files much
+</I>&gt;&gt;<i> faster than a CDROM drive can.
+</I>&gt;&gt;<i> Since the Sorcerer I/R is less than 512M
+</I>&gt;&gt;<i> a 512M USB memory stick would be the cheapest
+</I>&gt;&gt;<i> ideal choice to demolish using dd.
+</I>&gt;&gt;<i> In the future I might start doing that merely because
+</I>&gt;&gt;<i> burned CDs can be faulty or sometimes read faulty
+</I>&gt;&gt;<i> in some drives where in other drives they read fine.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Mar 9, 2010 at 9:16 PM, Mike Flanagan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">gentoo.mike at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; Any suggestions for getting the iso bootable off usb, or suggestions for
+</I>&gt;&gt;<i> &gt; windows counterparts to get sorceror I/R to boot off usb for
+</I>&gt;&gt;<i> installations
+</I>&gt;&gt;<i> &gt; sake, I don't use cd/dvd medium due to not being eco friendly.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; But so far I've tried unetbootin, doesn't seem to take too well to it.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; At this point ill take any suggestions (easy / hard methods )
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Thanks in advance
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100311/e2740181/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100311/e2740181/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001512.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+	<LI>Next message: <A HREF="001517.html">[Sorcerer-admins] Detailed installation issues....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1513">[ date ]</a>
+              <a href="thread.html#1513">[ thread ]</a>
+              <a href="subject.html#1513">[ subject ]</a>
+              <a href="author.html#1513">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

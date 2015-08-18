@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] glibc..... cast issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3C596b75860703120634s598eb3b2p75f339020ca08e60%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000049.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] glibc..... cast issue</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3C596b75860703120634s598eb3b2p75f339020ca08e60%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] glibc..... cast issue">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 12 14:34:53 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000049.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 3/12/07, jlm devel &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jlm_devel at laposte.net</A>&gt; wrote:
+
+&gt;<i>  looking in the compile log I have I found that :
+</I>&gt;<i>
+</I>&gt;<i>  Performing a quick test to see if the new glibc works.
+</I>&gt;<i>  glibc is ready to install.
+</I>&gt;<i>  ESC[36mPreparing to install
+</I>&gt;<i> ESC[37mESC[1mESC[40mglibcESC[0mESC[0m
+</I>&gt;<i>  xargs: rm: No such file or directory
+</I>&gt;<i>  /usr/libexec/sorcery/dispel: line 123: /usr/bin/sort: No such file or
+</I>&gt;<i> directory
+</I>
+The above compile log fragment is enough to indicate what went wrong.
+Unfortunately, it does not tell why it went wrong.
+A library break happended while &quot;dispel glibc&quot; was executing.
+That is not supposed to happen.
+
+What should happen during the dispel of glibc is that all
+of the glibc's ELF libraries stored in /lib and /usr/lib are
+transfer into /usr/lib.old
+Next /lib/ld-linux.so.2 becomes a symbolic link to the runtime
+linker now in /usr/lib.old
+Something very similar happens on x86_64 architecture.
+
+On a box where there are no alien glibc ELF libraries
+from an older or newer version of glibc than installed
+and where the glibc compile log is correct
+# dispel glibc
+works.
+Following that the box will continue to
+execute programs as they are invoked.
+The drawback is that almost nothing will
+compile until glibc is again installed.
+
+I do not recommend executing a test of
+# dispel glibc
+unless an archive for glibc exists in /var/cache/archive/
+so that you can restore it.
+Otherwise, you may require an Install/Rescue CD to fix it.
+
+What I can do effectively to fix this problem is only about one thing.
+If I had an account and permission there I could fix the box.
+However, since I do not know precisely what the problem may be
+remotely without having looked at it I can not script a solution.
+The closest I can come to scripting a solution is what I wrote
+in the previous email that contained a few examples to grep
+probable problems.
+I do not feel comfortable with trying to script a
+generic solution for all improperly installed glibc problems.
+I apologize that I can offer no more than
+to merely repeat instructions in previous emails.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000049.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

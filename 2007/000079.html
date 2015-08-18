@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/networks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C596b75860704111800v3fd0a348o68450af70b1f5825%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000074.html">
+   <LINK REL="Next"  HREF="000081.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/networks</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C596b75860704111800v3fd0a348o68450af70b1f5825%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/networks">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Apr 12 03:00:02 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000074.html">[Sorcerer-admins] /etc/networks
+</A></li>
+        <LI>Next message: <A HREF="000081.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#79">[ date ]</a>
+              <a href="thread.html#79">[ thread ]</a>
+              <a href="subject.html#79">[ subject ]</a>
+              <a href="author.html#79">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 4/11/07, malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+&gt;<i> recently I discovered that all my networks weren't up automaticaly....
+</I>&gt;<i> after looking the network script I can now say that the script will only
+</I>&gt;<i> bring up one interface and only one...
+</I>&gt;<i> what I wanna propose is to create /etc/networks.d/nic_dir/00eth0
+</I>&gt;<i>
+</I>&gt;<i> ie create subdirs in /etc/networks.d/ containing ordered scripts
+</I>&gt;<i> each subdirs appart template one is parsed the current way
+</I>
+That is correct.
+That is because the templates are simple.
+Combine templates into a single file to bring up multiple networks.
+The way it works is straight forward.
+It tries to raise the first network as found in the first file.
+If it works it is done.
+If it does not work then it tries the next file.
+Having subdirectories for containing multiple networks to try
+is a bit more confusing to set up.
+What happens if it is trying 3 of the 3 files in a subdir for
+setting up 3 networks concurrently and it only achieves
+success for 2 out of the 3?
+Does it quit?
+Does it try the next subdirectory that defines more networks?
+Behavior is undefined and confusing.
+The way it works now is not so confusing.
+Just activate all the networks from a single script.
+Exit 0 if fine, 1 if a problem exists.
+No rewriting required.
+
+
+
+&gt;<i> here is a script that do the stuff
+</I>
+&gt;<i> another whish is to use iproute2 instead of net-tools for script since
+</I>&gt;<i> thoses tools also have ipv6 support...
+</I>
+You can do that if you want.
+Perhaps you will contribute some templates for
+suggested IPv6 configuration of networks, please?
+I wonder if iproute2 is installed on I/Rs?
+Maybe not.
+That might be a tiny inconvenience for setting up boxes on IPv6 networks.
+Hmm, maybe not.
+ifconfig supports IPv6 addresses.
+ifconfig is from net-tools
+I guess we could do without iproute2,
+unless there was something specific about it
+that net-tools does not provide?
+At least, we need not change all the templates
+provided to use the iproute2 tools at this moment, yes?
+Could be useful having templates that can use either or both?
+That would be a good idea along with having templates for
+configuring IPv6 networks.
+An extra line here and there would not be so tricky.
+Most interfaces can also be set up to use both IPv4 and IPv6 concurrently, yes?
+Could be useful.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000074.html">[Sorcerer-admins] /etc/networks
+</A></li>
+	<LI>Next message: <A HREF="000081.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#79">[ date ]</a>
+              <a href="thread.html#79">[ thread ]</a>
+              <a href="subject.html#79">[ subject ]</a>
+              <a href="author.html#79">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

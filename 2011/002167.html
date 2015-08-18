@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] nice and easy?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20nice%20and%20easy%3F&In-Reply-To=%3CBANLkTi%3D97%2BrvFiE8mGosdki2Rvsvb1ExNA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002166.html">
+   <LINK REL="Next"  HREF="002168.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] nice and easy?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20nice%20and%20easy%3F&In-Reply-To=%3CBANLkTi%3D97%2BrvFiE8mGosdki2Rvsvb1ExNA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] nice and easy?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 21 15:54:55 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002166.html">[Sorcerer-admins] no more lilo failures, I hope.
+</A></li>
+        <LI>Next message: <A HREF="002168.html">[Sorcerer-admins] 2 improvements: login during shutdown/reboot; pausing/unpausing spells while they are casting.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2167">[ date ]</a>
+              <a href="thread.html#2167">[ thread ]</a>
+              <a href="subject.html#2167">[ subject ]</a>
+              <a href="author.html#2167">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>For a decade sorcery was nice and easy on system resources.
+But due to somewhat recent changes in linux
+the scheduler that used to be nice
+was replaced with one that does cgroups.
+cgroups is not nice and cgroups is not easy.
+But it is a good compromise between complexity and functionality.
+
+For the moment I have decided to permit the sorcery utilities
+1/64 the total CPU when competing with non grouped processes.
+Also sorcery utilities receive 1/100 available bandwidth to storage devices.
+Also sorcery utilities are easier to swap from memory.
+However, if nothing is competing with the sorcery utilities
+for access to storage and CPU
+then the utilities use 100% as would be desired and expected.
+
+This change should make updating on laptop and
+desktops with single core CPUs
+nearly if not completely transparent.
+
+Additionally sorcery-bxz will run in the idle cgroup.
+When competing with ungrouped processes
+then the idle cgroup receives 1/1024 of the CPU cycles,
+1/1000 of disk cycles, and is extremely swappable.
+This change should allow background compression
+and recompression of tarballs to happen without
+any observable loss of computing power on boxes.
+The additional effect is that loadavg is irrelevant
+for processes running in the idle group.
+
+With the greater amount of control that cgroups offers
+does it not seem more exciting for Sorcerer SAs, yes?
+More information about cgroups is available at
+/usr/src/linux/Documentation/cgroups/cgroups.txt
+
+cgroups can also be used set process CPU core affinity
+to the same extent that taskset can.
+However, doing so is not as quick and simple as using taskset.
+
+The linux kernel configuration for Sorcerer boxes
+uses cgroups for scheduling and resource allocation.
+So the manual page sched_setscheduler is interesting to read
+for historical purposes because those methods no longer apply.
+
+To being enjoying fun times with cgroup;
+a box will require a new kernel.
+x86_64 boxes are probably good to go already.
+i686 boxes when updated will receive a fixed
+kernel config and compile the kernel.
+After that reboot.
+The changes will arrive in the grimoire
+in about a couple of days.
+Cheers to happy anticipation.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002166.html">[Sorcerer-admins] no more lilo failures, I hope.
+</A></li>
+	<LI>Next message: <A HREF="002168.html">[Sorcerer-admins] 2 improvements: login during shutdown/reboot; pausing/unpausing spells while they are casting.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2167">[ date ]</a>
+              <a href="thread.html#2167">[ thread ]</a>
+              <a href="subject.html#2167">[ subject ]</a>
+              <a href="author.html#2167">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

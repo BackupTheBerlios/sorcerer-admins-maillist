@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The evolution of Sorcerer initramfs.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTi%3D9gR22ah8Ewdb_BWw-75kKTxZ7Sg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002159.html">
+   <LINK REL="Next"  HREF="002161.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The evolution of Sorcerer initramfs.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20evolution%20of%20Sorcerer%20initramfs.&In-Reply-To=%3CBANLkTi%3D9gR22ah8Ewdb_BWw-75kKTxZ7Sg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The evolution of Sorcerer initramfs.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 19 12:49:15 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002159.html">[Sorcerer-admins] minor and completely ignorable announcement
+</A></li>
+        <LI>Next message: <A HREF="002161.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2160">[ date ]</a>
+              <a href="thread.html#2160">[ thread ]</a>
+              <a href="subject.html#2160">[ subject ]</a>
+              <a href="author.html#2160">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I recently gave a nickname to the Sorcerer's initramfs.
+I call it the keep of the Sorcerer's castle.
+The name is appropriate in many ways.
+
+However, thus far the potential of the keep is mostly untapped.
+After booting completes only /sbin/init and /sbin/agetty continue
+running from the keep.
+I was discussing with Evert that perhaps udev should remain running on the keep
+and that also the system logger program should run from the keep.
+
+Processes running in the keep have both benefits and drawbacks.
+First, the process is not likely to be reading or writing to files that exist
+on a filesystem attached to a physical device.
+Therefore, processes running from the keep
+are unlikely to become zombies or freeze
+in the event of a serious disk or serious file system error.
+However, if the system logger runs from the keep
+then it would write files to a tmpfs that would also be bound
+somewhere in /var/log/ so that it can be viewed from both places.
+No inconvenience with that.
+
+The first and most obvious drawback is that the system logs eat swap.
+A box that keeps a years worth of system logs,
+without rebooting, might eat a lot of swap.
+Apparently, that is not a problem with metalog.
+Also if a box reboots or shutdown unexpectedly rather
+than using the proper method
+then the content of the logs would be lost.
+The most obvious method to avoid that is
+to have the system logger also output over the network
+to a logger listening on a different box.
+And at least 9 out of 10 times when a box loses power suddenly
+there is no clue in the on disk system log as to what happened.
+Lost system logs could be annoying for other reasons,
+but on a box operating perfectly normal
+then a system log would not be lost.
+
+Switching udev to running from keep I have mostly decided upon.
+Whether or not to switch system loggers is yet undecided.
+I pose the question on the list in order to gather insight from Sorcerer SAs.
+Some SAs might know reasons for why that change would be very undesirable.
+In contrast, I prefer a system log that runs
+no-matter-what-except-sudden-power-loss.  :)
+
+Since Sorcerer boxes use the keep both during boot and shutdown
+we should also consider what process we want
+to start and continue running on the keep.
+For example, the keep is currently inaccessible when we ssh into a box.
+But what if sshing into the box is not working?
+Might we want to be able to ssh into the keep?
+So should sshd also be running on the keep
+but accessible on a different port?
+Maybe TCP port 30 since it lacks an assignment in /etc/services ?
+
+No matter what new bugs may lay siege
+to a box when installed software is updated;
+the keep remains as potential last point of retreat.
+It is a zone of safety from which problems
+can be carefully examined and solved
+without being mired in the battlefield on /media/root/
+
+So how should we fortify the keep?
+Besides ssh and scp
+what other useful programs and libraries
+should be moved into the keep?
+What processes should be started in the keep and remain running?
+
+Since the initramfs is being retained as the central &quot;keep&quot; of our
+Sorcerer's castle
+we should grown accustomed to the idea that it is a valid file system
+for running
+processes, daemons, and services.
+What benefits most from running inside the keep?
+What deserves the honor?
+
+Thanks for making a moment to consider it.
+No urgent requirement to rack one's brain.
+For over a decade the initrd and initramfs was considered
+a filesystem to be discarded after booting.
+That habit of thought is not easily discarded.
+Yet if something useful pops into mind
+then please share it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002159.html">[Sorcerer-admins] minor and completely ignorable announcement
+</A></li>
+	<LI>Next message: <A HREF="002161.html">[Sorcerer-admins] The evolution of Sorcerer initramfs.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2160">[ date ]</a>
+              <a href="thread.html#2160">[ thread ]</a>
+              <a href="subject.html#2160">[ subject ]</a>
+              <a href="author.html#2160">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

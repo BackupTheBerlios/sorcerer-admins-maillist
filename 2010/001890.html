@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo and sorcerer-rescue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20and%20sorcerer-rescue&In-Reply-To=%3CAANLkTinLnLcDpuSC7FUFYdZsHeeE1AhqhMA_xji6%3DCTm%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001894.html">
+   <LINK REL="Next"  HREF="001895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo and sorcerer-rescue</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20and%20sorcerer-rescue&In-Reply-To=%3CAANLkTinLnLcDpuSC7FUFYdZsHeeE1AhqhMA_xji6%3DCTm%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lilo and sorcerer-rescue">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug 26 08:36:24 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001894.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+        <LI>Next message: <A HREF="001895.html">[Sorcerer-admins] Wifi?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1890">[ date ]</a>
+              <a href="thread.html#1890">[ thread ]</a>
+              <a href="subject.html#1890">[ subject ]</a>
+              <a href="author.html#1890">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Usually, lilo is okay.
+If it prints LI 99 99 99 99 or something like that
+then the problem is not normally salvageable without an I/R
+Probably more common problems might be:
+lilo does not re-install properly;
+an update installs init-scripts with bad bugs;
+a freshly updated udev is destined to bite the bullet.
+
+Consequently, I am introducing a new spell called sorcerer-rescue.
+This might ease SA apprehension during a reboot following an update.
+sorcerer-rescue downloads an Install/Rescue iso9660
+appropriate for the architecture.
+Then, it extracts files from it.
+Finally, it installs the /boot/*/{System.map,initrf,linux}
+from the Install/Rescue disk into /boot/rescue/
+
+The /etc/init.d/{intramfs,lilo} have also been adjusted
+to work with this change.
+Generated /etc/lilo.conf should contain
+the label for rescue following the normal entries
+and before /etc/lilo/tail is added.
+Unlike the other entries,
+booting of the rescue image
+has a mandatory password requirement.
+
+Booting the rescue image will not automatically rescue a box.
+It will ask the for the root partition.
+Provided those two questions are answered correctly
+then it should boot the box with the real root filesystem mounted.
+This is a bit easier than hunting for an Install/Rescue disk
+and a removable USB CDROM drive.
+
+The beauty of the /boot/rescue/* is that it should stay put on disk.
+Once lilo is successfully installed with a /boot/rescue/ present
+then that lilo entry will probably always point to the proper
+location on disk for booting /boot/rescue/
+
+Let us assume that something is improper about /etc/lilo.conf
+Therefore, lilo refuses to re-install.
+However, if the initramfs images /boot/2.6.*/initrf were updated
+then the installed lilo will probably be
+unable to boot almost all of the labels.
+In contrast /boot/rescue/initrf will not have updated.
+And /boot/rescue/{linux,initrf} should still be at their
+same location on disk.
+Therefore, the installed lilo should be able to boot them.
+Therefore, that should enable a SA
+to easily escape from that potential problem.
+
+
+I started thinking of this idea back during
+the discussion about how to make Sorcerer booting more robust.
+Then, I succumbed to a bad head cold.
+Maybe that worked for the better?
+I wanted something where the majority of benefit
+could be applied to existing Sorcerer boxes.
+This seems to be a good compromise.
+
+My original idea was that Sorcerer boxes should have
+the I/R installed on it's own partition with it's own lilo.
+That way the lilo from the I/R could run first.
+It would present a default option to chain to the lilo in /boot or /
+However a mandatory password protected secondary option
+would exist for rescue.
+The most obvious drawbacks to that method are the requirements
+for a 700M reserved partition and a fresh installation.
+In contrast a method which merely adds the rescue label
+to the default lilo menu does not require an additional partition,
+no chaining of bootloaders, about 40M to 50M on /boot/,
+and no new installation to receive the benefit.
+Not bad a bad compromise, yes?
+
+However, it can not protect against the very worst type of
+lilo error or if something eliminates/overwrites the installed lilo.
+Generally, if something wrecks the installation of lilo,
+especially if that installation was in the MBR,
+then whatever caused that problem would also wreck grub.
+
+If /boot/rescue/ is installed by sorcerer-rescue
+then it will probably be available to boot
+even if other labels are incorrect or not booting properly.
+Booting the rescue label should be no more problematic
+than booting the current Install/Rescue disk
+since the contents of /boot/rescue/ comes
+from the current Install/Rescue disk.
+Therefore, this solution should satisfactorily increase
+boot robustness at no cost in performance
+and at a very minimal increase in disk usage.
+
+I wanted to include the added information about
+the reasoning, rethinking, re-evaluation,
+and consideration about the costs and benefits
+because it demonstrates something important.
+Sometimes an initial idea is good,
+but it might not be good enough
+or it might be too costly
+or not provide enough benefit.
+
+I was willing to reject my original idea.
+I did reject it.
+Having two lilo installed is too confusing.
+Having 700M reserved partition for an I/R seems wasteful.
+If I can boot a box and must
+fix installed software such as gcc
+and lack a previous archive for it
+then I would probably scp that archive from a different box.
+Normally, nobody would want to import a set of archives
+from an I/R after a box has been deployed and updated
+for a month or longer.
+Consequently, I admitted to these flaws
+that blew big holes through my glorious plan of creating
+Sorcerer boxes with incredibly robust booting.
+
+My original idea was good.
+However, by throwing it away
+I was able to arrive at an implementation
+that achieves most of the benefit for almost none of the cost.
+This outcome is far better than
+if I had implemented the initial idea.
+Certainly a year later or less,
+I would have decided that I introduced too much complexity
+and could have achieved commensurate results
+for less cost if I had granted more consideration
+about what was important and how to achieve it.
+Yet now I shall not have that regret.
+
+In general what I can about myself regarding this improvement
+can be said about any Sorcerer SA.
+Great ideas happen.
+They burn hot.
+We become excited.
+We want to push ahead with those ideas
+often without careful consideration of boons and banes.
+However, better results are usually obtained
+for less effort upon careful thorough reconsideration
+of what is desired and how to achieve the result
+for a minimal increase of complexity.
+
+More to the point I should state that many
+good ideas about increasing the robustness of Sorcerer booting
+have been discussed on the list this year.
+The reason I have been the person who seems least excited
+about those ideas is because I am also the person playing
+the role of the devil's advocate and pointing out where
+the costs in complexity and performance become too much.
+
+Sometimes I have the insight to develop adequate implementations
+for the good ideas provided by others.
+This time, perhaps not.
+Or perhaps inspiration will arrive many months or years from now.
+Took a year to decide to revise init-scripts to LSB.
+Required close to half a decade before
+a recommended for an idea such as:
+# cast --version $VER $SPELL
+became possible to accomplish with
+# augur progress $SPELL $VER; cast $SPELL
+
+My point in providing that information is to support
+the statement that a good idea remains a good idea.
+Not all good ideas have adequate implementations
+nor can be implemented with the current sorcery and Sorcerer.
+However, with time, consideration, honing
+then good ideas can return in the future
+and along with awesome implementations.
+
+Through creating and updating Sorcerer
+I discovered through retrospect that less than 20%
+of my ideas receive implementations.
+And the ideas that are implemented eventually receive revision.
+Almost nothing endures.
+To see exactly how much it changes
+one could examine a grimoire from
+the same day on each year going all
+the way back to 2000.
+Merely the changes which becomes the evolution
+of the definition of a spell are dramatic.
+
+The reason I wrote all that is so that nobody
+should feel devalued or put down who is trying
+to contribute to Sorcerer.
+Since the rejection and revision of ideas is the norm
+then everyone who has had a majority of their ideas
+rejected should feel the same as I do about it.
+Better to have some good ideas than no ideas.  :)
+If only 10% are implemented
+then that is par for the course.
+And even some of those become dust.
+
+For example,
+I liked the sentinel preload program that I wrote.
+I enjoyed the convenience.
+It was a clever program.
+It was sufficient for many years.
+But I killed it off!
+Likewise I wrote sdelta, great program, but not good enough.
+Killed it off.
+Slew off sdelta2 also.
+It had a very short life.
+But because those died we now have sdelta3
+which seems to do surprisingly good
+at creating tiny patches to translate tarballs bit for bit.
+sdelta was a great idea,
+but the implementation required tremendous effort.
+
+Sorcerer SAs have many great ideas.
+But even great ideas can require enormous
+effort before they are sufficiently honed
+and their implementations and intended effects
+exceed expectations.
+The cost for transforming a good idea into
+an implemented contribution requires the willingness
+to throw away the idea, to whittle it down to the essential,
+and to rebuild it as many times as necessary
+to eventually achieve a result that has some hope
+of enduring more than a year.
+
+The cost might be greater than one intends to spend.
+I can give an example of this.
+A while before the transition over to the new
+virtual hosting for Sorcerer I invested some effort
+into trying to create a method for remotely
+mounting and accessing a Sorcerer I/R across the Internet.
+That way a minimally bootable I/R might contain
+only contain a kernel and initramfs image.
+However, when the I/R is mounted instead of
+it being an I/R in CDROM drive it would be
+an I/R hosted on a HTTP server and accessed
+with byte-range requests.
+I wrote a nifty fuse module for this.
+
+I will skip a long discussion about it.
+My point is that it is something almost no Sorcerer SA
+knows about because I put a lot of effort into it
+and the decided to leave it alone.
+The idea of being able to have a less than 80M
+kernel + initramfs Sorcerer Install/Rescue with
+archives imported over Internet is still a cool idea.
+Would be fun and convenient to be able to distribute
+Sorcerer on CDs cut to the size and shape of business cards.
+But for a while now I have allocated no further effort to that idea.
+Just because an idea is good,
+and can be accomplished
+is not always sufficient to make it worthy.
+
+Other examples of good ideas people had,
+but relinquished doing on their own are ports
+of Sorcerer to sparc, alpha, xbox, and powerpc,
+and independent maintenance of documentation and grimoires.
+Going from a good idea to an awesome implementation is tough.
+Anyone who tries deserves a gold star.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001894.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+	<LI>Next message: <A HREF="001895.html">[Sorcerer-admins] Wifi?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1890">[ date ]</a>
+              <a href="thread.html#1890">[ thread ]</a>
+              <a href="subject.html#1890">[ subject ]</a>
+              <a href="author.html#1890">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

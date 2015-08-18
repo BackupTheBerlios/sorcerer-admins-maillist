@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The new catalog download method...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20new%20catalog%20download%20method...&In-Reply-To=%3CCAER78vTo9a9UaCf-8TgT17v5t4WN5Tje6ZxiLeshL125yW3d5w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002465.html">
+   <LINK REL="Next"  HREF="002467.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The new catalog download method...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20new%20catalog%20download%20method...&In-Reply-To=%3CCAER78vTo9a9UaCf-8TgT17v5t4WN5Tje6ZxiLeshL125yW3d5w%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The new catalog download method...">evorster at gmail.com
+       </A><BR>
+    <I>Wed Sep 18 23:31:31 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002465.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+        <LI>Next message: <A HREF="002467.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2466">[ date ]</a>
+              <a href="thread.html#2466">[ thread ]</a>
+              <a href="subject.html#2466">[ subject ]</a>
+              <a href="author.html#2466">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Quick question....
+
+How are local spells affected by this transition?
+
+-Evert-
+
+
+On 15 September 2013 14:49, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> The old method was that the catalog was downloaded
+</I>&gt;<i> and installed by the grimoire spell.
+</I>&gt;<i> Either a xz compressed tarball was downloaded
+</I>&gt;<i> or an xz compressed sdelta3 patch was downloaded.
+</I>&gt;<i> However, this is not precisely how it works now.
+</I>&gt;<i> The grimoire spell was removed.
+</I>&gt;<i>
+</I>&gt;<i> sorcery tools has an augur module called catalog.
+</I>&gt;<i> It also can download an xz compressed tarball.
+</I>&gt;<i> It extracts the content to /aux/can/spell/
+</I>&gt;<i> If /aux/can/spell/ has content
+</I>&gt;<i> then instead augur catalog first checks
+</I>&gt;<i> for the existence of a smaller xz compressed tarball.
+</I>&gt;<i> The smaller tarball contains only the spells that
+</I>&gt;<i> changed since the time the catalog was previously updated.
+</I>&gt;<i>
+</I>&gt;<i> It is a simple method.
+</I>&gt;<i> A full catalog tarball is generated.
+</I>&gt;<i> 90 days worth of partial catalogs are generated.
+</I>&gt;<i> Client computers decide which to download.
+</I>&gt;<i>
+</I>&gt;<i> If a updates derailed
+</I>&gt;<i> then first download and do a manual installation
+</I>&gt;<i> of the latest sorcery tarball.
+</I>&gt;<i> Then run augur catalog.
+</I>&gt;<i> I would also execute rm -f /usr/share/sorcery/grimoire.tar
+</I>&gt;<i> because the old catalog is no longer required.
+</I>&gt;<i>
+</I>&gt;<i> The transition is to restore the possibility of receiving
+</I>&gt;<i> smaller downloads when checking for software updates.
+</I>&gt;<i> Consequently, if recently updated
+</I>&gt;<i> then the tarball containing only recently modified spells
+</I>&gt;<i> might be very small maybe even less than a kilobyte to download.
+</I>&gt;<i> The sdelta3 method of creating source tarball patches
+</I>&gt;<i> has the limitation of providing patches for only the versions
+</I>&gt;<i> of software stored in the master source cache.
+</I>&gt;<i> Everything there is typically trimmed to no more than
+</I>&gt;<i> 3 of the most current stable versions for a software project
+</I>&gt;<i> or less depending upon the age of the previously released files.
+</I>&gt;<i>
+</I>&gt;<i> The new catalog method grants efficient updating
+</I>&gt;<i> of a root file system's catalog without the delay
+</I>&gt;<i> of requesting and then waiting for the generation
+</I>&gt;<i> of an xz compressed sdelta3 patch file.
+</I>&gt;<i> Consequently, the compromise is worthy.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Evert Vorster
+Chief Observer
+WG Cook
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130918/0764ee22/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130918/0764ee22/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002465.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+	<LI>Next message: <A HREF="002467.html">[Sorcerer-admins] The new catalog download method...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2466">[ date ]</a>
+              <a href="thread.html#2466">[ thread ]</a>
+              <a href="subject.html#2466">[ subject ]</a>
+              <a href="author.html#2466">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

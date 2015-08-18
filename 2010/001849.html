@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTinHifgVBSjU%3Dgu5Gud%2Buc3OORdd%2BOSbaiESzYNK%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001848.html">
+   <LINK REL="Next"  HREF="001852.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTinHifgVBSjU%3Dgu5Gud%2Buc3OORdd%2BOSbaiESzYNK%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">evorster at gmail.com
+       </A><BR>
+    <I>Mon Jul 26 01:44:05 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001848.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001852.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1849">[ date ]</a>
+              <a href="thread.html#1849">[ thread ]</a>
+              <a href="subject.html#1849">[ subject ]</a>
+              <a href="author.html#1849">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Booting speed is important for me, as I run linux on my laptop which gets
+booted often.
+
+There is no reason why we can't have our cake and eat it too, though.
+In the Debian world, they have runlevels 2 and 4 as serial init, and
+runlevels 3 and 5 for parallel init. We could use  runlevels 2 and 4 for the
+locking everything-will-fail-on-any-error init, and 3 and 5 like we have
+them now.
+
+To be honest, a computer like my laptop does not know where it will wake up
+next, what sort of networks will be available if any at all, etc. It would
+be silly to have it fail booting completely just because it runs into some
+small error. This goes for the I/R as well, which does not even know what
+computer it will be on.
+
+Having a serial init is very useful for fine-tuning the boot process,
+though. It is definitely something that should be available, just not
+default.
+
+My 2 cents...
+
+-Evert Vorster-
+
+
+On Sun, Jul 25, 2010 at 9:55 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt;wrote:
+
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> I'm not really all that concerned with the speed of boots. My boxes
+</I>&gt;<i> generally aren't rebooted for several months, sometimes years if their
+</I>&gt;<i> in production at client sites.
+</I>&gt;<i>
+</I>&gt;<i> 10 seconds here  or there, or even a minute means absolutely nothing to
+</I>&gt;<i> me (although I can truly appreciate being able to show how quickly a
+</I>&gt;<i> Sorcerer box boots :) ).
+</I>&gt;<i>
+</I>&gt;<i> By the same token, the stability of a running machine is everything and
+</I>&gt;<i> I really couldn't honestly say how long a machine takes to boot anyway,
+</I>&gt;<i> save for a couple of laptops, since once I power a machine up I'm
+</I>&gt;<i> typically off doing something else while this occurs, and 'ps' and
+</I>&gt;<i> 'netstat' my important stuff later, and 'tail -f'or 'grep' my logs.
+</I>&gt;<i>
+</I>&gt;<i> OTOH, dmesg simply isn't enough for me sometimes if there are errors.
+</I>&gt;<i> Errors which print to the console but aren't included in any logfiles
+</I>&gt;<i> (used to be a good argument for watching the boot sequence back in the
+</I>&gt;<i> 386 days, when you could actually read it - nowadays, it simply scrolls
+</I>&gt;<i> by too fast to matter anyway, leaving only that last hundred lines or so
+</I>&gt;<i> available for inspection.
+</I>&gt;<i>
+</I>&gt;<i> Having that stuff somehow retained in a 'bootlog' that shows the
+</I>&gt;<i> &quot;**console messages**&quot; as they actually appear in the console during the
+</I>&gt;<i> real boot sequence could be a real life saver :)
+</I>&gt;<i>
+</I>&gt;<i> Just my thoughts.
+</I>&gt;<i>
+</I>&gt;<i> On 7/22/2010 7:45 PM, Kyle Sallee wrote:
+</I>&gt;<i> &gt; Two Sorcerer SAs are having a discussing Sorcerer's init-system.
+</I>&gt;<i> &gt; Part of it spelled out over the main email list.
+</I>&gt;<i> &gt; But it is rather confusing to read for anyone not interested.
+</I>&gt;<i> &gt; However, I have been reading it
+</I>&gt;<i> &gt; and I want to learn the consensus about a potential change.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; A new proposal is for init-scripts to run slower
+</I>&gt;<i> &gt; by having those init-scripts that exit with success
+</I>&gt;<i> &gt; create lock files in /var/lock/ that indicate both the
+</I>&gt;<i> &gt; name of the init-script that ran and any service name it provides.
+</I>&gt;<i> &gt; Doing so comes at a cost of overhead,
+</I>&gt;<i> &gt; and slower runlevel execution.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Creating lock files in /var/lock/ is not pointless.
+</I>&gt;<i> &gt; The intended use of such lock files is to prevent init-scripts
+</I>&gt;<i> &gt; that run later from running if the init-scripts or service that
+</I>&gt;<i> &gt; they require did not successfully start before it.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; For example,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; # grep Required-Start: /etc/init.d/udevd
+</I>&gt;<i> &gt; # Required-Start: dev-cp sys
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; # grep Required-Start: /etc/init.d/udevtrigger
+</I>&gt;<i> &gt; # Required-Start: udevd
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; If the dev-cp init-script returns failed or is missing
+</I>&gt;<i> &gt; then the udevd init-script would never be started
+</I>&gt;<i> &gt; and if udevd never starts then udevtrigger never starts
+</I>&gt;<i> &gt; and coldplug events are never replayed.
+</I>&gt;<i> &gt; Therefore, no modules are loaded and
+</I>&gt;<i> &gt; no device nodes are created.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It works something like that.
+</I>&gt;<i> &gt; One failure during boot could create a rather
+</I>&gt;<i> &gt; large cascade of auto-failured  init-scripts
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The current method of executing init-scripts
+</I>&gt;<i> &gt; does not require lock files and normally will
+</I>&gt;<i> &gt; not create a lock file unless the init-script
+</I>&gt;<i> &gt; explicitly creates a lock file.
+</I>&gt;<i> &gt; Usually if an init-script creates a lock file,
+</I>&gt;<i> &gt; such as /etc/init.d/networks
+</I>&gt;<i> &gt; then it is that init-script that will also
+</I>&gt;<i> &gt; check for the existence of a lock file.
+</I>&gt;<i> &gt; Lock files have limited use and no purpose
+</I>&gt;<i> &gt; other than what an init-script would define for it's own lock file.
+</I>&gt;<i> &gt; Naturally, this method has only the overhead that it already has.
+</I>&gt;<i> &gt; It is neither slower nor faster since it is the default method.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So to recapitulate
+</I>&gt;<i> &gt; The current method logs errors in red, ignores errors,
+</I>&gt;<i> &gt; and continues booting as best as possible.
+</I>&gt;<i> &gt; I floss my teeth and am not afraid of a little bit of red every now and
+</I>&gt;<i> then.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; The proposed new method turns a tiny little red mark
+</I>&gt;<i> &gt; into a huge bloody wound by thrusting in a knife and giving
+</I>&gt;<i> &gt; it a hard twist.
+</I>&gt;<i> &gt; Or less metaphorically a tiny error that happens early
+</I>&gt;<i> &gt; can turn into a mountain of init-scripts that will not be executed,
+</I>&gt;<i> &gt; just because a prior init-script failed or was missing.
+</I>&gt;<i> &gt; And the new method is slower and runs more processes as overhead.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So do we go with the devil we know?
+</I>&gt;<i> &gt; Or do we risk new bugs
+</I>&gt;<i> &gt; by fixing what is not broken?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Make no assumptions about who wants what.
+</I>&gt;<i> &gt; This is not about politics or siding with one person or another.
+</I>&gt;<i> &gt; This discussion is about how each SAs wants their box to run.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So the question is,
+</I>&gt;<i> &gt; &quot;Do we stay with the current rapid fire and forget init-script launch
+</I>&gt;<i> method,
+</I>&gt;<i> &gt; or do we add in CPU cycle munching control methods
+</I>&gt;<i> &gt; that could lead to greater control over the execution of init-scripts
+</I>&gt;<i> &gt; that would probably be used to autofail init-scripts that require
+</I>&gt;<i> &gt; an init-script that did not run or return with an error?&quot;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703  (US)
+</I>&gt;<i> TEL: +44.702.405.1909 (UK)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJMTLLdAAoJEE1wgkIhr9j3byUH/jrpK1c4psdPyaB00aXxp7aW
+</I>&gt;<i> Iio3ovA6STdRYyldqDiTV5yRYIE90OdJb2hP9k3/B5DdOznZUIWXtqNf6YQf3SKx
+</I>&gt;<i> j4PnSEi4qRmywd2NQC5tsMYWEs1VdUSuEQvHB4NxPzOJQV4w/a3vsi5sqvWaY3DV
+</I>&gt;<i> kujJBffdPGHQYOnYL/hlI1xSVwWkFeoBzsscflKqCXsLrk0BF2Sgncsxue1+abq2
+</I>&gt;<i> xspNN5JtBN9MH8zdDQ82ThG+e51ZSNNo0vljL0w2FDQ991QI5DC+C0/LDPZZ5ALr
+</I>&gt;<i> cyMNxfeOX6a6nA626owhBFE80YNg4Fhlh0/Wh7JAvDAOk/F/FvUqbOGFHwKuV9k=
+</I>&gt;<i> =8uVw
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100725/1070ab77/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100725/1070ab77/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001848.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001852.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1849">[ date ]</a>
+              <a href="thread.html#1849">[ thread ]</a>
+              <a href="subject.html#1849">[ subject ]</a>
+              <a href="author.html#1849">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

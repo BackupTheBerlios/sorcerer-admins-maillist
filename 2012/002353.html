@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDj2zcWUdndfUU2mSAv6QYLVWgohFzeqBLXcjmDb%3DWcGgQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002356.html">
+   <LINK REL="Next"  HREF="002330.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDj2zcWUdndfUU2mSAv6QYLVWgohFzeqBLXcjmDb%3DWcGgQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 27 20:01:16 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002356.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+        <LI>Next message: <A HREF="002330.html">[Sorcerer-admins] SPR services restored...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2353">[ date ]</a>
+              <a href="thread.html#2353">[ thread ]</a>
+              <a href="subject.html#2353">[ subject ]</a>
+              <a href="author.html#2353">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jul 27, 2012 at 1:04 AM, Demetri Salamander
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">demetrisalamander at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> All I know is that Oracle VirtualBox just worked while qemu didn't. Just an
+</I>&gt;<i> easy virtual machine where I just follow the instructions and boom it worked
+</I>&gt;<i> for other distros I put on and even win98 but when I had Win7 on it then the
+</I>&gt;<i> WIn7 wasn't functioning fully but still worked.
+</I>
+Actually, that is exactly the same type of logic
+that I apply to updates of VirtualBox.
+Virtual box remains at version 4.1.8, because versions
+4.1.9, 4.1.10, 4.1.11, 4.1.12, 4.1.13, and 4.1.14
+failed to compile and install.
+I could probably fix it.
+But the bug was probably introduced by the software authors.
+Perhaps it is a conspiracy to modify the source
+so that it compiles only on their preferred distro?
+Really, I do not know.
+What I do know is that qemu-kvm works awesome
+and has been my choice for a few years.
+Consequently, I have allocated few hours to fixing VirtualBox,
+because I already gave it at least 40 hours in the past.
+I fixed it and yet it would not stay fixed.
+And so the version is currently held at 4.1.8.
+
+In the spell is the comment,
+
+&quot;# Does anyone want to use VirtualBox instead of qemu?&quot;
+
+Finally, I have an answer to that.
+Yes, one person wants it.
+But that person has yet to deploy Sorcerer.
+Consequently, I might allocate 8 hours to fixing it before the end of the year.
+But even if I add lines to the spell to modify the source tree
+in order to obtain successful compilation of version 4.1.14 and later versions;
+such a change will not assist someone who wants to use VirtualBox
+for running Sorcerer on an non Sorcerer host.
+
+My way of thinking is that if the virtual machine program does not have bugs,
+that would make my assumption incorrect,
+then a Sorcerer I/R should be usable on VirtualBox, qemu, qemu-kvm,
+and perhaps even bochs.
+However, I have not tried bochs in years.
+Perhaps my assumption is incorrect.
+Yet I made no special modifications to the I/R
+in order to be able to run it using qemu-kvm.
+
+My best guess is that if someone wants to try Sorcerer on a virtual machine
+and encounters a problem that prevents booting
+then they were probably thinking something like,
+&quot;Awesome, I am going to boot Sorcerer
+on my 256M RAM virtual machine.
+Here it goes.&quot;
+And there it went straight into forever lag land.
+I do not recommend booting the Sorcerer I/R
+on a virtual machine with less than 1G of installed RAM
+granted to the virtual machine.
+
+The Sorcerer I/R has those significantly sized initramfs images
+that are xz compressed.
+Consequently, the amount of RAM required to load it is
+Kernel, compressed images, space required to uncompress initramfs images,
+space required to hold uncompressed files on rootfs,
+space to run init-scripts and start services/daemons,
+space to hold some additional files extracted from archives,
+space to run installer, space to extract xz compressed archives, etc...
+So basically, I am talking about plenty of space that is used
+where almost none of it is re-taskable.
+The RAM used to hold the compressed initramfs images
+and decompress them can not be retasked by the kernel
+until after the content of those xz compressed cpio images
+is extracted and stored on rootfs which is a special type of tmpfs.
+It is something like a money back offers where one must
+spend $300 or more, send in receipt and completed form,
+and then wait 6 months for a check to arrive by snail mail.
+So better to go in with a full gigabyte of RAM
+instead of trying to skirt across at the bare minimum
+which risks a wipeout.
+
+PAE is a requirement only for booting the IA32 I/R on an IA32 microprocessor
+or an IA32 virtual machine emulated microprocessor.
+If someone tries to boot the x86_64 I/R on an IA32 virtual machine
+then a message will display that an x86_64 CPU is required to boot the kernel.
+Whoever implement that, thanks.
+The IA32 I/R can be booted on an x86_64 virtual machine, but is not
+tested that way.
+
+The minimum system specifications for using a Sorcerer I/R
+is an 80686 microprocessor with PAE.
+However, an x86_64 CPU, those with long mode,
+are better choices for workstations and multimedia stations.
+That is because displaying video can require
+significant CPU and bus speed in order to process
+even before being output to the memory of the graphics adapter.
+
+
+&gt;<i> I don't know how to use qemu and that may be the problem. I'll figure out
+</I>&gt;<i> how to download qemu and also I know a guy in town that could help me now.
+</I>
+Finally, the problem is identified.
+And the solution is at:
+<A HREF="http://www.linux-kvm.org/page/Documents">http://www.linux-kvm.org/page/Documents</A>
+Hurray, problem solved.
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002356.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+	<LI>Next message: <A HREF="002330.html">[Sorcerer-admins] SPR services restored...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2353">[ date ]</a>
+              <a href="thread.html#2353">[ thread ]</a>
+              <a href="subject.html#2353">[ subject ]</a>
+              <a href="author.html#2353">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805130210q6791d4e7m62d2617847436193%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000432.html">
+   <LINK REL="Next"  HREF="000435.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805130210q6791d4e7m62d2617847436193%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue May 13 11:10:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000432.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000435.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#433">[ date ]</a>
+              <a href="thread.html#433">[ thread ]</a>
+              <a href="subject.html#433">[ subject ]</a>
+              <a href="author.html#433">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, May 12, 2008 at 10:52 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Monday 12 May 2008, Kyle Sallee wrote:
+</I>&gt;<i>  I can see a potential problem for wireless networking because various
+</I>&gt;<i>  utilities are needed for proper configuration. For example, wpa_supplicant is
+</I>&gt;<i>  often needed and that in turn may need to run some local scripts.
+</I>&gt;<i>  Furthermore, many wireless cards must load firmware from /lib/firmware when
+</I>&gt;<i>  the proper kernel module is loaded. In short, I am afraid of this change.
+</I>
+wpa_supplicant must be installed to / instead of /usr
+/lib/firmware is already included on the initramfs.
+
+
+&gt;<i>  BTW, what about ppp connections? Are those going to be affected in any way? I
+</I>&gt;<i>  found recently how handy it is to have this functionality still available,
+</I>&gt;<i>  especially when on travel.
+</I>
+ppp will also be installed to / rather than /usr
+
+Thanks for spotting and reporting these important omissions.
+
+
+Having networking start from sysinit has yet another advantage
+that is more generally useful than potential for thin clients.
+If for some reason a box can boot into the initramfs,
+but yet the / can not be mounted then additional programs
+to help identify and fix the problem can be scp or NFSed
+into the running initramfs from another box on the network.
+
+Banes: Longer before console login prompt
+Boons: Thin client support
+Boons: Network support for the initramfs.
+
+Since the initramfs already had networking modules on it,
+and already had most of the networking tools upon it
+making this transition increases the volume of the initramfs
+image by a ratio similar to tossing a rock in a lake.
+
+Although networking and NFS client support
+now start on the initramfs
+The NFS server and sshd do not start until the runlevel
+after all the filesystems are mounted.
+Therefore, the change is not overkill.
+
+For a long time I have felt apprehensive about starting anything
+that is less than absolutely essential from within sysinit.
+sysinit executes linearly and if a problem occurs then
+then that problem also occurs before console login prompts
+become available.
+Therefore, a serious enough problem during sysinit could
+prevent console login and therefore make the SA have to
+resort to something like kernel parameter:
+rdinit=/bin/bash
+and then editing or removal of the bugged script in /etc/init.d/
+before exec /init
+
+However, I now feel as if the move of networking and NFS
+client support from runlevel to sysinit is 51% better than
+letting it start from a runlevel.
+However, be advised of the following:
+
+Any NFS mounted during boot can seriously stall a box
+during sysinit if the filesystem can not be mounted.
+Therefore, noauto is recommended if the filesystem
+does not have to be mounted during boot and is NFS.
+
+Having ppp start from boot may incur a wait state
+if the template is designed to wait until the
+PPP connection is established.
+Therefore, when starting PPP at boot, fire and forget, is suggested.
+However, that may prevent certain services that require networking
+from being able to bind to the virtual PPP network device.
+sshd and samba can not bind to the PPP
+before the PPP device exists.
+Therefore, there are yet still potential problems that can happen
+from starting PPP networking during sysinit.
+
+When using PPP I recommend that the SA or user
+start PPP sometime after booting has completed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000432.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000435.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#433">[ date ]</a>
+              <a href="thread.html#433">[ thread ]</a>
+              <a href="subject.html#433">[ subject ]</a>
+              <a href="author.html#433">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

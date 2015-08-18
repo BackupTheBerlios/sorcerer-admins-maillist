@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] holding your breath while waiting for updates?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTim1el7FONtfyjeai2neOecmnSWSUsIoAasUFWpQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001660.html">
+   <LINK REL="Next"  HREF="001663.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] holding your breath while waiting for updates?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTim1el7FONtfyjeai2neOecmnSWSUsIoAasUFWpQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] holding your breath while waiting for updates?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun 19 04:36:47 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001660.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+        <LI>Next message: <A HREF="001663.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1662">[ date ]</a>
+              <a href="thread.html#1662">[ thread ]</a>
+              <a href="subject.html#1662">[ subject ]</a>
+              <a href="author.html#1662">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> playing with SID? ;) good news!
+</I>
+In most situations the PID # of the session leader
+becomes the SID # and stays the SID # for
+all children spawned by the session leader.
+Children receive their own new PID,
+but retain the SID of the session leader.
+It is a bit like a PPID, but not really a PPID.
+
+So the PID of a session leader can be treated as SID.
+Normally, they appear to be the same.
+The problem was that I can not reliable use the quick
+lock check for PIDs on SIDs.
+That is because a session leader might have spawned
+a replacement process that receives a new PID,
+but keeps the same SID.
+I can check PID files without
+invoking external programs.
+However, checking that a SID is valid
+requires an invocation of ps and grep.
+
+There was a problem with programs not writing PID files.
+But that is no longer a problem.
+I wrote a wrapper for it.
+I knew how to do that for years,
+but never realized that I should be using
+it for init-scripts.
+So basically now creating a PID/SID file
+for any service is possible even if the
+service does not create one itself.
+
+And treating the PID file as a SID file
+should allow me to discover if a services
+is still running yet respawned itself using
+a different PID.
+
+The next problem to overcome is
+to determine which services should
+have PID files explicitly created
+and which services will create their own.
+
+At the moment a services that must explicitly
+be started background will also have it's PID/SID file
+written by init-functions.
+If the process would write it's own PID file
+then it might see the PID file and mistake
+it is a separately running invocation of itself, maybe.
+It might not expect that a correct PID file
+for it would exist before the service begins.
+But if that is a problem
+then the PID file specified
+in the init-script can use a different name
+than the PID file that is created and used by the program.
+That would create two PID files with the same content,
+but avoid creating a problem.
+
+I am coding this within the confines of the LSB specifications.
+The specifications are a bit narrow and/or precise.
+The Sorcerer init-scripts are not LSB compliant
+although Sorcerer init-scripts being with LSB comments.
+The Sorcerer init-scripts are better and smaller
+than LSB compliant init-scripts.
+However, Sorcerer can run LSB compliant init-scripts.
+The Sorcerer implementation is backward compatible.
+So basically I am walking a fine line
+in order to enhance functionality
+without breaking backward compatibility.
+
+That is why I want to be able to properly treat
+SID files and PID files and have them exist in
+/var/run/ and not do something odd like creating
+separate directories like /var/run/{pid,sid}/
+nor files such as
+/var/run/$BASE.{pid,sid}
+
+So to summarize I am cautiously testing my assumptions
+about PIDs and SIDs in order to create init-functions
+that can have the benefit of using SIDs yet
+have it implemented transparently and without
+creating a divergence from the normal expected
+LFH layout and LSB methods.
+
+If init-functions does a bit of the wrong thing,
+but achieves the correct expected outcome
+then that is okay.
+PIDs, SIDs, PID files, or SID files do not matter to SAs
+when they want the outcome of commands such as:
+# /etc/init.d/gdm status
+# /etc/init.d/gdm restart
+to do what they expect.
+So I have no problem treating files in
+/var/run/ first as PID files and second as SID files.
+If it works then fine.
+I do not care that the LSB and LFH say that
+files in /var/run/ are just PID files.
+
+For the most part using SIDs instead of PIDs
+only has advantages for gdm.
+So the extra support using SIDs and SID files
+transparently in init-functions
+makes the specific case of gdm
+into something that can be handled as
+easily as any other init-script.
+
+The better gains for this effort are:
+1. a wrapper for writing PID files.
+2. modifications to sorcery
+so that SIDs can be used to make the
+# augur abort $SPELL
+command work exactly as it should
+and kill off everything the SA intends.
+
+This goes to show how a bit of feedback to
+help solve a bug involving the gdm init-script
+leads to other less expected improvements in sorcery.
+A little feedback can go a long way.
+Thanks for participating.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001660.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+	<LI>Next message: <A HREF="001663.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1662">[ date ]</a>
+              <a href="thread.html#1662">[ thread ]</a>
+              <a href="subject.html#1662">[ subject ]</a>
+              <a href="author.html#1662">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

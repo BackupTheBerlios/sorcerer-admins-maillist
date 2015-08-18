@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Curl is no longer resolving names....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Curl%20is%20no%20longer%20resolving%20names....&In-Reply-To=%3C1de9d39c0905110226p6f3386aft435af5a75bc26f6a%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001126.html">
+   <LINK REL="Next"  HREF="001112.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Curl is no longer resolving names....</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Curl%20is%20no%20longer%20resolving%20names....&In-Reply-To=%3C1de9d39c0905110226p6f3386aft435af5a75bc26f6a%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Curl is no longer resolving names....">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon May 11 11:26:09 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001126.html">[Sorcerer-admins] Curl is no longer resolving names....
+</A></li>
+        <LI>Next message: <A HREF="001112.html">[Sorcerer-admins] While curl is failing....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1136">[ date ]</a>
+              <a href="thread.html#1136">[ thread ]</a>
+              <a href="subject.html#1136">[ subject ]</a>
+              <a href="author.html#1136">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>looks like dns cache failure....
+JLM
+
+On Mon, May 11, 2009 at 1:32 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Bizarre... I I had to leave for a while alst night... finally got back
+</I>&gt;<i> to this linux box...
+</I>&gt;<i>
+</I>&gt;<i> minileech scripts that were failing before are working now
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, May 10, 2009 at 9:13 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On Sat, May 9, 2009 at 7:48 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> On Sat, May 9, 2009 at 7:21 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> If there is not a problem in /etc/resolv.conf
+</I>&gt;&gt;&gt;&gt;<i> then perhaps curl requires c-ares to be installed?
+</I>&gt;&gt;&gt;&gt;<i> As far as I know c-ares is an optional requirement.
+</I>&gt;&gt;&gt;&gt;<i> But if curl is linked with c-ares
+</I>&gt;&gt;&gt;&gt;<i> then c-ares must still be installed in order for curl to resolve names.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> well, since I just re-cast it, and was didn't have c-ares, ...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I dunno it's strange... like it can resolve some, but not others...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> core.ring.gr.jp it can get to...
+</I>&gt;&gt;&gt;<i> but monotone.ca it cannot
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There is nothing odd looking about monotone.ca
+</I>&gt;&gt;<i> It has a single a record
+</I>&gt;&gt;<i> and it has 6 DNS servers that are authoritative for it.
+</I>&gt;&gt;<i> All the DNS servers are owned by easydns.com, apparently.
+</I>&gt;&gt;<i> If the lookup was failing could it be due to the DNS caching server
+</I>&gt;&gt;<i> that your box connected with?
+</I>&gt;&gt;<i> However, if your box runs it's own DNS server
+</I>&gt;&gt;<i> and consults that instead
+</I>&gt;&gt;<i> then a DNS resolution of monotone.ca should not be blocked.
+</I>&gt;&gt;<i> However, it is possible that it was not possible to reach those
+</I>&gt;&gt;<i> authoritative DNS servers for the monotone.ca domain.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you want to see what I am seeing, type:
+</I>&gt;&gt;<i> $ dig monotone.ca a
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> dig is provided with bind.
+</I>&gt;&gt;<i> bind is a DNS server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> (collapsing two messages to one)
+</I>&gt;&gt;&gt;<i> - I can't get util-linux to build, it actually complains, unknown
+</I>&gt;&gt;&gt;<i> compile method... there is no build() in the spell ?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> More importantly, what did the source tree look like when untarred?
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001126.html">[Sorcerer-admins] Curl is no longer resolving names....
+</A></li>
+	<LI>Next message: <A HREF="001112.html">[Sorcerer-admins] While curl is failing....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1136">[ date ]</a>
+              <a href="thread.html#1136">[ thread ]</a>
+              <a href="subject.html#1136">[ subject ]</a>
+              <a href="author.html#1136">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

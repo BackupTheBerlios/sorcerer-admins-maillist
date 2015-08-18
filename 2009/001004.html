@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New server is finally up and running
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20server%20is%20finally%20up%20and%20running&In-Reply-To=%3C27f41a930902172111h601cdd49wc44557b867f4222f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001003.html">
+   <LINK REL="Next"  HREF="001005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New server is finally up and running</H1>
+    <B>evert vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20server%20is%20finally%20up%20and%20running&In-Reply-To=%3C27f41a930902172111h601cdd49wc44557b867f4222f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New server is finally up and running">evorster at gmail.com
+       </A><BR>
+    <I>Wed Feb 18 06:11:42 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001003.html">[Sorcerer-admins] New server is finally up and running
+</A></li>
+        <LI>Next message: <A HREF="001005.html">[Sorcerer-admins] New server is finally up and running
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1004">[ date ]</a>
+              <a href="thread.html#1004">[ thread ]</a>
+              <a href="subject.html#1004">[ subject ]</a>
+              <a href="author.html#1004">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there .
+
+I, for one am glad that someone else is actually trying to install Sorerer
+from the I/R and running in to a few issues.
+Without trying to flame, I would like to add my bit.
+
+The installer does need a little work. We should all test it a little more
+and give more feedback to Kyle in order to get it in a good enough shape to
+compete with the other installers out there.
+
+I agree that the Sorcerer I/R should be as small as possible. In my mind, as
+long as you have a working Sorcerer that is network aware, you can cast
+anything you want. This approach has the added benefit of only installing
+what you need.
+
+I do not agree with having the option to select any spell for which you do
+not have sources until Sorcerer is installed and network aware.
+
+Lastly, by avoiding the skillcheck of compiling a custom kernel, we now have
+a much bigger skillcheck when trying to do anything a little different with
+the install, like a virtual environment, installing on removable media like
+usb hard drives. There should, at the very least be some clear guidelines on
+how to go from linux-modular to linux. Since I am the person that managed
+this a few times, I'll try to re-install and at least write this little bit
+of documentation.
+
+
+I wish you all a very nice day.
+-Evert Vorster-
+
+
+
+On Tue, Feb 17, 2009 at 8:42 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;wrote:
+
+&gt;<i>  <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> New server machine is up and running - finally.
+</I>&gt;<i>
+</I>&gt;<i> Some points from new I/R version, regarding its installer. Its a very
+</I>&gt;<i> hostile toward any virtualization environment...
+</I>&gt;<i> All current major distros works like a charm under KVM, Xen, VirtualBox,
+</I>&gt;<i> etc. I have tested several distros, Ubuntu, Debian, CentOS, Fedora. All Just
+</I>&gt;<i> Works, no major problems, but when i try Sorcerer, i always get it to mess
+</I>&gt;<i> it up very seriously, installer does do wierd things, no bootloader, spell
+</I>&gt;<i> depencies are selecting so much packets so i need to scream loudly to my
+</I>&gt;<i> machine and kick it out of my window.
+</I>&gt;<i>
+</I>&gt;<i> For example, i am using Virtualbox thru SSH X11 tunnel, and when i was
+</I>&gt;<i> installing current Sorcerer I/R its install - option in menu is very bad for
+</I>&gt;<i> virtualization environments. First it jammed my whole SSH session to
+</I>&gt;<i> Virtualbox, then i did fire it up using RDP connection and founded it did
+</I>&gt;<i> say Out of Memory errors, i was using 256MB RAM, so clearly thats not
+</I>&gt;<i> enough. Then i upgraded it to 512MB and it was enough, i did not bother to
+</I>&gt;<i> try eg. 384MB, etc... so i dont know what memory requirements are.
+</I>&gt;<i>
+</I>&gt;<i> In compile option in installer menu, when i did go thru it, it asked spell
+</I>&gt;<i> selections, etc. i picked up cracklib, but its sources are not in I/R discs,
+</I>&gt;<i> so basicily whole system was not installing properly because nice &quot;Auto
+</I>&gt;<i> Failure&quot; feature, so eg. initramfs, init-functions etc, all refused to
+</I>&gt;<i> install because i picked cracklib... Including that lilo refused to not to
+</I>&gt;<i> make /etc/lilo.conf... arf.
+</I>&gt;<i>
+</I>&gt;<i> Okay when i fixed all those horrible bugs i did manage to start sorcerer,
+</I>&gt;<i> but why are spell depencies always installing lots of stuff i dont need,
+</I>&gt;<i> meaning whole X Window/X.org and lots of X Window related spells, like media
+</I>&gt;<i> codecs, media players, etc.  I dont want some desktop crap installed, i want
+</I>&gt;<i> a very basic tools installed and no listening ports in default but currently
+</I>&gt;<i> i would guess its wanting to run some multimedia game pc and lots of ports
+</I>&gt;<i> listening for some services i dont know what they are (think some services
+</I>&gt;<i> heimdal wants?), so i think we need some options what we need to install and
+</I>&gt;<i> what not. Then some basic tools are missing in default, like ping command,
+</I>&gt;<i> thats wierd. I love Ubuntu way that there is zero listening daemons when you
+</I>&gt;<i> install it, you have to even install openssh-server to get SSH port open,
+</I>&gt;<i> but Sorcerer is a very different beast, it opens like 10 or more services
+</I>&gt;<i> that i dont even know what they are, its just so very wrong.
+</I>&gt;<i>
+</I>&gt;<i> Oh, i almost forgot, network configuration, its just horrible, current
+</I>&gt;<i> &quot;templates&quot; just suck. I would assume that almost all would need to use
+</I>&gt;<i> static ip or dhcp, but there are no instructions how to do it, and when you
+</I>&gt;<i> look general template, its not clear what to do, its very very confusing,
+</I>&gt;<i> clearly better templates are needed and installer should also have support
+</I>&gt;<i> to setup network settings (static, dhcp, etc). Currently i just love Debian
+</I>&gt;<i> style interfaces configuration, about billion time better system there than
+</I>&gt;<i> we have right now.
+</I>&gt;<i>
+</I>&gt;<i> Oh yeah this is a rant but journey to get Sorcerer to run under virtualized
+</I>&gt;<i> environment is so full of pain to do and default depencies are so wrong.
+</I>&gt;<i> Clearly we need to polish installer to work better in different environments
+</I>&gt;<i> and to test it much much more to get all bugs out of it. Also, those spell
+</I>&gt;<i> depencies, i just dont get it why in default after installation i always to
+</I>&gt;<i> manage to get it to position to have install several GUI stuff, i think we
+</I>&gt;<i> need to get also solution to console only usage or at least some howto guide
+</I>&gt;<i> how to ban all graphics relates spells and howto reset system if whole X
+</I>&gt;<i> Window System / X.org wants to cast but your dont need it, or you need only
+</I>&gt;<i> basic X.org libraries, not several multimedia codecs, players, etc.
+</I>&gt;<i>
+</I>&gt;<i> Kyle, how many servers is needed, we need to move sorcerer.silverice.organd
+</I>&gt;<i> ppr.silverice.org to this new server. If i install one server for
+</I>&gt;<i> sorcerer.silverice.org and for ppr.silverice.org? Then perhaps another
+</I>&gt;<i> server where we perhaps can set some automatic way to build new versions of
+</I>&gt;<i> spells, etc, perhaps third one for testing 64-bit sorcerer?
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>   Pekka Panula, Net Servant Oy
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">listSorcerer-admins at lists.berlios.dehttps</A>://lists.berlios.de/mailman/listinfo/sorcerer-admins
+</I>&gt;<i>
+</I>&gt;<i>  whaow what a flame shoot ;)
+</I>&gt;<i> I agree with some point like the fact that after install there shall be
+</I>&gt;<i> only terminal application installed
+</I>&gt;<i> I didn't review the network templates for a while, but last time I checked
+</I>&gt;<i> it I was a little bit confused, since I can now read bash I looked further
+</I>&gt;<i> and then understood... but maybe a template per feature supported might be
+</I>&gt;<i> better.... let say instead of a &quot;generic&quot; into links then a dhcp, a static
+</I>&gt;<i> ethernet, a static wlan....
+</I>&gt;<i> the network template seems to be readable and then I don't think it shall
+</I>&gt;<i> be &quot;improved&quot; right?
+</I>&gt;<i>
+</I>&gt;<i> this is only a clue but if I look about others installers like ubuntu one,
+</I>&gt;<i> it simply duplicate the cd content onto the new root partition and update
+</I>&gt;<i> boot loader, so basically after install you have exactly the same OS than on
+</I>&gt;<i> the CD, I think this is better approach, I used this method to create the
+</I>&gt;<i> usb recovery disk (much more usefull from my point of view than a CD, it's
+</I>&gt;<i> small and don't scratch ;) )
+</I>&gt;<i> so basically I think that a better way to install and simplier way is to
+</I>&gt;<i> duplicate the CD/usb content on the drive
+</I>&gt;<i> like this you start from a totaly clean env, without preselected
+</I>&gt;<i> dependencies, btw is there any augur command that &quot;forget&quot; an optional
+</I>&gt;<i> requirement on all spell allready configured?
+</I>&gt;<i> ie something that do
+</I>&gt;<i>
+</I>&gt;<i> # augur forgetopt xinetd
+</I>&gt;<i>
+</I>&gt;<i> forgetopt () {
+</I>&gt;<i>     for spell in $(grep -l ${1} /etc/sorcery/log/opt.on); do
+</I>&gt;<i>          sed -i &quot;s:${1}::g&quot; ${spell};
+</I>&gt;<i>          echo &quot;${1}&quot; &gt;&gt; ${spell/opt.on/opt.off}
+</I>&gt;<i>     done
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090218/99f73683/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20090218/99f73683/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001003.html">[Sorcerer-admins] New server is finally up and running
+</A></li>
+	<LI>Next message: <A HREF="001005.html">[Sorcerer-admins] New server is finally up and running
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1004">[ date ]</a>
+              <a href="thread.html#1004">[ thread ]</a>
+              <a href="subject.html#1004">[ subject ]</a>
+              <a href="author.html#1004">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

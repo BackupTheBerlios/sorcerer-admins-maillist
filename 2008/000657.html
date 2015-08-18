@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kernel 2.6.26
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kernel%202.6.26&In-Reply-To=%3C596b75860807281811u61430274maf8087e6481102ac%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000656.html">
+   <LINK REL="Next"  HREF="000658.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kernel 2.6.26</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kernel%202.6.26&In-Reply-To=%3C596b75860807281811u61430274maf8087e6481102ac%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] kernel 2.6.26">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul 29 03:11:16 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000656.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+        <LI>Next message: <A HREF="000658.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#657">[ date ]</a>
+              <a href="thread.html#657">[ thread ]</a>
+              <a href="subject.html#657">[ subject ]</a>
+              <a href="author.html#657">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>linux executes modprobe directly before
+it executes /init?
+
+If you want to arrest the boot of a box with an initramfs image
+before it begins execution of /init
+then issue the kernel parameter:
+
+rdinit=/bin/bash
+
+Please let me know what more you can discover about it.
+
+# uname -r
+2.6.26
+
+I have done about 30 reboots with linux-modular version 2.6.26.
+I did not encounter problems yet.
+
+Also NVIDIA-Linux-x86 works with linux-modular 2.6.26
+I tested it.
+
+Thanks for the bug report.
+I hope this is easy to fix on your boxes.
+If I encounter the bug
+then I will try to debug it.
+
+
+On Mon, Jul 28, 2008 at 11:31 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On this box, I cannot boot 2.6.26 kernel.  Before init is run (overrided by
+</I>&gt;<i> lilo option init=/bin/sh ) the kernel crashes during startup with a failure
+</I>&gt;<i> in modprobe.
+</I>&gt;<i>
+</I>&gt;<i> This makes running X a little difficult, since there is no nvidia driver in
+</I>&gt;<i> my previousl 2.6.25.9 kernel. and when I re-cast NVIDIA-Linux-x86 it doesn't
+</I>&gt;<i> build for (uname -r)
+</I>&gt;<i>
+</I>&gt;<i> I see that the nvidia-linux spell uses 'get_provider' there doens't seem to
+</I>&gt;<i> be an augur interface to get the provider of linux-kernel I know it's not
+</I>&gt;<i> linux ...
+</I>&gt;<i>
+</I>&gt;<i> I've re-cast linux-modular a few times... still just crashes on boot
+</I>&gt;<i> though...
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000656.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+	<LI>Next message: <A HREF="000658.html">[Sorcerer-admins] kernel 2.6.26
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#657">[ date ]</a>
+              <a href="thread.html#657">[ thread ]</a>
+              <a href="subject.html#657">[ subject ]</a>
+              <a href="author.html#657">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

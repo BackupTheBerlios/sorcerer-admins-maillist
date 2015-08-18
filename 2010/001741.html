@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] how to read this output from augur update
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20how%20to%20read%20this%20output%20from%20augur%20update&In-Reply-To=%3CSNT118-W467A1D65594CDBFD862E8AEB90%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001739.html">
+   <LINK REL="Next"  HREF="001750.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] how to read this output from augur update</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20how%20to%20read%20this%20output%20from%20augur%20update&In-Reply-To=%3CSNT118-W467A1D65594CDBFD862E8AEB90%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] how to read this output from augur update">rwobben at hotmail.com
+       </A><BR>
+    <I>Tue Jul 13 09:45:51 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001739.html">[Sorcerer-admins] how to read this output from augur update
+</A></li>
+        <LI>Next message: <A HREF="001750.html">[Sorcerer-admins] how to read this output from augur update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1741">[ date ]</a>
+              <a href="thread.html#1741">[ thread ]</a>
+              <a href="subject.html#1741">[ subject ]</a>
+              <a href="author.html#1741">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello Kyle,
+
+ 
+
+These are packages that are not compiling because of missing awk.
+
+ 
+
+- ccache 3.0
+
+- dash 0.5.6.1.orig
+
+- libdrm 2.4.19
+
+ 
+
+Perl --XML-SAX is not compiling because of this message :
+
+ 
+
+can't locate XML-SAX.pm in @INC.
+
+ 
+
+Roelof
+
+ 
+
+ 
+
+ 
+
+
+ 
+&gt;<i> Date: Mon, 12 Jul 2010 17:01:16 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] how to read this output from augur update
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Jul 12, 2010 at 1:06 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I updated my box for the first time.
+</I>&gt;<i> &gt; And when everything is done I get this output.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 32   Auto Failure
+</I>&gt;<i> &gt; 66   compile
+</I>&gt;<i> &gt; 5    compile error
+</I>&gt;<i> &gt; 30  Dispell
+</I>&gt;<i> &gt; 94  Download
+</I>&gt;<i> &gt; 6   Elf Failure
+</I>&gt;<i> &gt; 1   Expire
+</I>&gt;<i> &gt; 3   LA failure
+</I>&gt;<i> 
+</I>&gt;<i> LA and ELF Failures are handled automatically.
+</I>&gt;<i> Compile Errors should be investigated
+</I>&gt;<i> and possibly reported to the list
+</I>&gt;<i> if the error might be distribution wide.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; And on the other side.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; multi path tools     0
+</I>&gt;<i> &gt; libdrm                  0
+</I>&gt;<i> &gt; perl-XML-Sax        0
+</I>&gt;<i> &gt; pkgconfig             23
+</I>&gt;<i> &gt; grimoire               57
+</I>&gt;<i> &gt; shishi                  0
+</I>&gt;<i> &gt; logs                    14:38
+</I>&gt;<i> &gt; shishi                 0
+</I>&gt;<i> 
+</I>&gt;<i> That looks strange.
+</I>&gt;<i> Oh, maybe I know what you mean now.
+</I>&gt;<i> Each row has 4 columns:
+</I>&gt;<i> count of event;
+</I>&gt;<i> type of event;
+</I>&gt;<i> Most recent spell with that event;
+</I>&gt;<i> duration since event happened.
+</I>&gt;<i> 
+</I>&gt;<i> Auto failures is a bit of an iffy thing.
+</I>&gt;<i> If a spell that should be compiled fails to compile
+</I>&gt;<i> and other spells waiting to compile require the spell
+</I>&gt;<i> that failed to compile
+</I>&gt;<i> then those spells waiting to compile will not be compiled.
+</I>&gt;<i> They will be automatically failed.
+</I>&gt;<i> The solution is to fix the spells that should have compiled.
+</I>&gt;<i> In other words we should take a closer look
+</I>&gt;<i> at the 5 spells that had compile failures.
+</I>&gt;<i> When those are fixed the rest should be okay.
+</I>&gt;<i> 
+</I>&gt;<i> # augur activity failed
+</I>&gt;<i> 
+</I>&gt;<i> That should print what failed.
+</I>&gt;<i> 
+</I>&gt;<i> Viewing a compile log is as easy as :
+</I>&gt;<i> 
+</I>&gt;<i> # augur compile bash
+</I>&gt;<i> 
+</I>&gt;<i> Where bash is replaced by the spell name.
+</I>&gt;<i> In the above example that displays the compile log for bash.
+</I>&gt;<i> 
+</I>&gt;<i> Probably your box might be the first
+</I>&gt;<i> new installation since the transition from
+</I>&gt;<i> using a preloadable library to DESTDIR.
+</I>&gt;<i> So unfortunately, some of the spells that
+</I>&gt;<i> failed to cast might have builds() that
+</I>&gt;<i> are not exactly perfect for doing a DESTDIR style install.
+</I>&gt;<i> 
+</I>&gt;<i> A bit uncertain about whether perl--XML-SAX is broke.
+</I>&gt;<i> It compiles fine on my workstation.
+</I>&gt;<i> But I commented in the spell that it might not work.
+</I>&gt;<i> It seems to compile fine on the test box now also.
+</I>&gt;<i> 
+</I>&gt;<i> Since the box was just installed
+</I>&gt;<i> I recommend that the first steps be:
+</I>&gt;<i> # cast grimoire
+</I>&gt;<i> # cast sorcery
+</I>&gt;<i> Verify that the installed sorcery is current.
+</I>&gt;<i> If not, untar the source to somewhere in /tmp
+</I>&gt;<i> and do a manual install.
+</I>&gt;<i> and then recast sorcery
+</I>&gt;<i> 
+</I>&gt;<i> After the grimoire and sorcery are current
+</I>&gt;<i> being with casting of xorg and gnome.
+</I>&gt;<i> 
+</I>&gt;<i> My guess is perl--XML-SAX is already fixed in more current grimoires.
+</I>&gt;<i> 
+</I>&gt;<i> Because of the recent fixes going into the grimoire
+</I>&gt;<i> you might want to use a LAG=0 grimoire.
+</I>&gt;<i> Before casting grimoire do
+</I>&gt;<i> 
+</I>&gt;<i> # echo LAG=0 &gt;&gt; /etc/sorcery/local.config
+</I>&gt;<i> # augur merge
+</I>&gt;<i> 
+</I>&gt;<i> That will switch to the most recent grimoire
+</I>&gt;<i> that is rolled each day at UTC 00:00
+</I>&gt;<i> By my clock UTC 00:00 is about 5 minutes away.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; How must I read this ?
+</I>&gt;<i> &gt; I know that Dispell is that packages are removed and I think that Download
+</I>&gt;<i> &gt; is the number of Downloaded packages.
+</I>&gt;<i> &gt; I see some failure rules. Must I do any sort of action for these errors.
+</I>&gt;<i> 
+</I>&gt;<i> Ah, I forgot to mention.
+</I>&gt;<i> There are no packages in Sorcerer.
+</I>&gt;<i> Spells are not packages.
+</I>&gt;<i> They are a simple modular format that describes
+</I>&gt;<i> for sorcery instructions for how to
+</I>&gt;<i> download, compile, and install software.
+</I>&gt;<i> 
+</I>&gt;<i> A Sorcerer box is like a custom built hot-rod.
+</I>&gt;<i> You tell what parts you want.
+</I>&gt;<i> And sorcery orders and assembles
+</I>&gt;<i> the parts in the garage.
+</I>&gt;<i> Aside from an occasional compile error
+</I>&gt;<i> the process is usually worth the wait.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+Een netbook met Windows 7? Hier vind je alles dat je moet weten.
+<A HREF="http://www.windows.nl/netbook">http://www.windows.nl/netbook</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/893f98c0/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100713/893f98c0/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001739.html">[Sorcerer-admins] how to read this output from augur update
+</A></li>
+	<LI>Next message: <A HREF="001750.html">[Sorcerer-admins] how to read this output from augur update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1741">[ date ]</a>
+              <a href="thread.html#1741">[ thread ]</a>
+              <a href="subject.html#1741">[ subject ]</a>
+              <a href="author.html#1741">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] networks startup script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20networks%20startup%20script&In-Reply-To=%3C200806261402.42348.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000552.html">
+   <LINK REL="Next"  HREF="000556.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] networks startup script</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20networks%20startup%20script&In-Reply-To=%3C200806261402.42348.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] networks startup script">merka at highsphere.net
+       </A><BR>
+    <I>Thu Jun 26 20:02:42 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000552.html">[Sorcerer-admins] networks startup script
+</A></li>
+        <LI>Next message: <A HREF="000556.html">[Sorcerer-admins] networks startup script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#555">[ date ]</a>
+              <a href="thread.html#555">[ thread ]</a>
+              <a href="subject.html#555">[ subject ]</a>
+              <a href="author.html#555">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thursday 26 June 2008, J Decker wrote:
+&gt;<i> /etc/init.d/networks is failing to start eth1.
+</I>&gt;<i>
+</I>&gt;<i> eth0 has no DNS (template fails)
+</I>Which template are you using? There are several, like eth-static, 
+eth-dhcp, ...
+
+&gt;<i> eth1 is independant from eth0 and should be started anyway.
+</I>It is up to the SA to decide which adapters should be started and on what 
+conditions. Please look at /etc/networks.d/templates/README but basically 
+chose a template (or several) from /etc/network	s.d/templates, copy 
+to /etc/networks.d/links and give it whatever name you like. Same for the 
+additional adapters you want to start on boot.
+
+Than create a script in /etc/networks.d, for example named mynet. On one of my 
+servers, the script has got the following commands:
+$ cat /etc/networks.d/mynet
+. /lib/lsb/init-functions
+
+start()  {
+  /etc/networks.d/links/eth0-static start	&amp;&amp;
+  log_success_msg &quot;Started eth0&quot;  		||
+  log_failure_msg &quot;Failed to start eth0&quot;
+  /etc/networks.d/links/eth1-static start 	&amp;&amp;   
+  log_success_msg &quot;Started eth1&quot;  		||
+  log_failure_msg &quot;Failed to start eth1&quot;
+}
+
+stop()  { 
+  /etc/networks.d/links/eth1-static stop   	
+  /etc/networks.d/links/eth0-static stop   
+}
+
+$1
+
+So a start of both adapters is attempted on boot and both are stopped when 
+requested.
+
+There are of course other possible scenarios which you can find suggested in 
+the README file.
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> could some more intelligence on processing of /etc/networks.d be done?
+</I>&gt;<i>
+</I>&gt;<i> 00-* start these
+</I>&gt;<i> 01-* if any of 00-* fails, don't start these, otherwise, start these
+</I>&gt;<i> 02...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> maybe the answer is 'don't use the template file for networks... and
+</I>&gt;<i> hack it yourself'
+</I>The templates are for individual adapters, the linking logic is very system 
+specific and you need to do it yourself (although there is some default logic 
+built in).
+
+J.
+
+&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000552.html">[Sorcerer-admins] networks startup script
+</A></li>
+	<LI>Next message: <A HREF="000556.html">[Sorcerer-admins] networks startup script
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#555">[ date ]</a>
+              <a href="thread.html#555">[ thread ]</a>
+              <a href="subject.html#555">[ subject ]</a>
+              <a href="author.html#555">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

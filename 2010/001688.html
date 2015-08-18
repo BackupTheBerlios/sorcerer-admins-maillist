@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery spell...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20spell...&In-Reply-To=%3CAANLkTikg4_vffklx8kZFnr3o2caxFdokkGQX5ZrH174m%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001687.html">
+   <LINK REL="Next"  HREF="001695.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery spell...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20spell...&In-Reply-To=%3CAANLkTikg4_vffklx8kZFnr3o2caxFdokkGQX5ZrH174m%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery spell...">evorster at gmail.com
+       </A><BR>
+    <I>Thu Jul  1 07:26:43 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001687.html">[Sorcerer-admins] sorcery spell...
+</A></li>
+        <LI>Next message: <A HREF="001695.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1688">[ date ]</a>
+              <a href="thread.html#1688">[ thread ]</a>
+              <a href="subject.html#1688">[ subject ]</a>
+              <a href="author.html#1688">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm...
+
+Thanks for the heads-up. Of course I went and did an augur sync just after
+reading this mail.
+
+I'll do some testing on the compilation of all the spells, and see if it
+bombs out horribly, or not.
+
+-Evert-
+
+On Thu, Jul 1, 2010 at 4:11 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> The sorcery spell that went out with grimoire version 2010-182
+</I>&gt;<i> is not able to install the newer sorcery.
+</I>&gt;<i> Sorry about that.
+</I>&gt;<i> Well, it depends.
+</I>&gt;<i> Boxes with sufficiently older sorcery will install it.
+</I>&gt;<i> Boxes with newer sorcery that have only partial support for DESTDIR
+</I>&gt;<i> will install it into the wrong place and it never reaches
+</I>&gt;<i> /usr/libexec/sorcery/
+</I>&gt;<i>
+</I>&gt;<i> So I increased the available version for sorcery to
+</I>&gt;<i> kame-20100630-1
+</I>&gt;<i>
+</I>&gt;<i> And I added a more complicated build() that checks for
+</I>&gt;<i> an incorrect DESTDIR and exports .... well it looks like:
+</I>&gt;<i>
+</I>&gt;<i> build(){
+</I>&gt;<i>  if [      &quot;$DESTDIR&quot; == &quot;$META_DIR/$SPELL.install&quot; ]
+</I>&gt;<i>  then export DESTDIR=/
+</I>&gt;<i>  fi
+</I>&gt;<i>
+</I>&gt;<i>  DESTDIR=$DESTDIR ./install $VERSION
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> Sorry for making a pain out of the transition.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100701/dcafa728/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100701/dcafa728/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001687.html">[Sorcerer-admins] sorcery spell...
+</A></li>
+	<LI>Next message: <A HREF="001695.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1688">[ date ]</a>
+              <a href="thread.html#1688">[ thread ]</a>
+              <a href="subject.html#1688">[ subject ]</a>
+              <a href="author.html#1688">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

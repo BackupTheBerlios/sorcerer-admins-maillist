@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] networks startup script
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20networks%20startup%20script&In-Reply-To=%3C4869353F.5020506%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000584.html">
+   <LINK REL="Next"  HREF="000553.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] networks startup script</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20networks%20startup%20script&In-Reply-To=%3C4869353F.5020506%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] networks startup script">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Jun 30 21:34:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000584.html">[Sorcerer-admins] networks startup script
+</A></li>
+        <LI>Next message: <A HREF="000553.html">[Sorcerer-admins] lib64 references....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#587">[ date ]</a>
+              <a href="thread.html#587">[ thread ]</a>
+              <a href="subject.html#587">[ subject ]</a>
+              <a href="author.html#587">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I find the new scheme more confusing, less easy to troubleshout and well 
+less readable.... I don't like redhat or debian because their scripts 
+are spread in small parts everywhere on earth.... one part here... 
+second fonction there....
+making complex network with current scheme only require knowing basic 
+sh.... nothing fancy
+this way will be I think harder to understand and a new commer or even 
+someone that is used to administrate a box won't understand...
+I still prefer to have one script per network, each using the configured 
+links
+Best Regards
+JLM
+
+
+Kyle Sallee wrote:
+&gt;<i> Networking comes in more flavors than soylent green.
+</I>&gt;<i> But at least the method of &quot;try them until one is successful&quot;
+</I>&gt;<i> seems to be a rational approach to a box that can use
+</I>&gt;<i> different networks at different times.
+</I>&gt;<i>
+</I>&gt;<i> Since that is the norm I might yet make it so using menus.
+</I>&gt;<i> That way even a single network connection modified template
+</I>&gt;<i> would have to exist in the a network group instead of
+</I>&gt;<i> residing directly in /etc/networks.d/
+</I>&gt;<i>
+</I>&gt;<i> Possible arrangement on disk:
+</I>&gt;<i>
+</I>&gt;<i> /etc/networks.d/groups/[00.99]/
+</I>&gt;<i> /etc/networks.d/connections/
+</I>&gt;<i>
+</I>&gt;<i> Completed templates go into /etc/networks.d/connections/
+</I>&gt;<i> Within /etc/networks.d/groups/$NUM/
+</I>&gt;<i> go symbolic links that point to files in
+</I>&gt;<i> /etc/networks.d/connections/
+</I>&gt;<i> that belong to the group $NUM
+</I>&gt;<i>
+</I>&gt;<i> Such a layout allows for up to 100 network groups
+</I>&gt;<i> with connections that can belong to one any or all of those groups.
+</I>&gt;<i>
+</I>&gt;<i> The rule would be that for a networking group to be successful
+</I>&gt;<i> that all entries must raise successfully.
+</I>&gt;<i>
+</I>&gt;<i> For example
+</I>&gt;<i> Group/Network
+</I>&gt;<i>
+</I>&gt;<i> 00/A
+</I>&gt;<i> 00/B
+</I>&gt;<i> 01/A
+</I>&gt;<i>
+</I>&gt;<i> Starting with network group 00 both A and B must raise.
+</I>&gt;<i> If they do not raise then try group 01
+</I>&gt;<i> In group 01 A must raise.
+</I>&gt;<i>
+</I>&gt;<i> In the above example network B may be considered
+</I>&gt;<i> optional while network A is mandatory.
+</I>&gt;<i>
+</I>&gt;<i> This fashion allows some flexibility.
+</I>&gt;<i> For networks within a group success is &quot;AND&quot;
+</I>&gt;<i>
+</I>&gt;<i> Complex network topology may require using
+</I>&gt;<i> more than a few groups in order achieve
+</I>&gt;<i> the desired &quot;and&quot; &quot;or&quot; arrangement of network connections.
+</I>&gt;<i>
+</I>&gt;<i> Also I can support this new design while still first support
+</I>&gt;<i> the old design of checking for files within /etc/networks.d/
+</I>&gt;<i> Therefore, it could achieve forward progress while
+</I>&gt;<i> maintaining backward compatibility.
+</I>&gt;<i> But it makes the /etc/init.d/networks script longer.
+</I>&gt;<i>
+</I>&gt;<i> Is this a good design for guiding SAs into perceiving networking
+</I>&gt;<i> configuration in a useful fashion?
+</I>&gt;<i> Or is this paradigm box too cramped and tiny?
+</I>&gt;<i>
+</I>&gt;<i> I am not entirely determined that this is a good design.
+</I>&gt;<i> Please suggest modifications.
+</I>&gt;<i> For now I will add it to my todo list as something
+</I>&gt;<i> to give further consideration.
+</I>&gt;<i>
+</I>&gt;<i> Anyone want to write more networking templates?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Jun 29, 2008 at 3:52 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> J Decker wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, Jun 26, 2008 at 2:36 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Let us suppose that a box must raise 256 network connections.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> well sure - but what about a box that has just 2... it's not that big
+</I>&gt;&gt;<i> a deal to have 2 setups there...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> we try to use a way that work in all cases....
+</I>&gt;&gt;<i> look :
+</I>&gt;&gt;<i> Jan has 2 eth interfaces in static
+</I>&gt;&gt;<i> kyle told me  about someone that have a home network and a work network,
+</I>&gt;&gt;<i> home network should be attempted if work network failled
+</I>&gt;&gt;<i> I have one eth static, one pppoe connection, one aiccu (ipv6 connection),
+</I>&gt;&gt;<i> and one wifi connection that is only a on-demand connection. if eth static
+</I>&gt;&gt;<i> fail pppoe shall not be started, same with aiccu and pppoe...
+</I>&gt;&gt;<i> with thoses 3 cases you have so many combinations that it's impossible for
+</I>&gt;&gt;<i> us to create a way that will fit all people... so we choosen to let the SA
+</I>&gt;&gt;<i> choose, and write the /etc/network.d/whateverhewants scripts
+</I>&gt;&gt;<i> the templates are only helpers.... normaly if you have only one network,
+</I>&gt;&gt;<i> just copy the template you want and that's it.... if you want more complex
+</I>&gt;&gt;<i> network... well now it's up to you to decide what YOU want and not what WE
+</I>&gt;&gt;<i> decided for you
+</I>&gt;&gt;<i> Best Regards
+</I>&gt;&gt;<i> JLM
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080630/b7169551/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080630/b7169551/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000584.html">[Sorcerer-admins] networks startup script
+</A></li>
+	<LI>Next message: <A HREF="000553.html">[Sorcerer-admins] lib64 references....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#587">[ date ]</a>
+              <a href="thread.html#587">[ thread ]</a>
+              <a href="subject.html#587">[ subject ]</a>
+              <a href="author.html#587">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

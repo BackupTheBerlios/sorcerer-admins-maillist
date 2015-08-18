@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] enhanced security...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20enhanced%20security...&In-Reply-To=%3CCA%2BT4wDiSeHB_mCWAD7v%3DxuehQ_v5_0hTBtYSTjpMuiCOpqiOVQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002257.html">
+   <LINK REL="Next"  HREF="002259.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] enhanced security...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20enhanced%20security...&In-Reply-To=%3CCA%2BT4wDiSeHB_mCWAD7v%3DxuehQ_v5_0hTBtYSTjpMuiCOpqiOVQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] enhanced security...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep 17 17:36:00 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002257.html">[Sorcerer-admins] enhanced security...
+</A></li>
+        <LI>Next message: <A HREF="002259.html">[Sorcerer-admins] enhanced security...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2258">[ date ]</a>
+              <a href="thread.html#2258">[ thread ]</a>
+              <a href="subject.html#2258">[ subject ]</a>
+              <a href="author.html#2258">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for sharing an opinion.
+I harbor a nearly unspoken apprehension
+that selecting tomoyo for enhanced security
+is a bet on the underdog.
+selinux has growing support in the kernel
+and in core applications.
+However, tomoyo development also
+published plans through linux kernel 3.2.x.y
+
+Originally, I would have sided with grsecurity,
+but somehow it failed to put a foot in linux's door.
+An implementation available in vanilla linux gains considerable favor.
+Having kernel updates delayed
+because of the late arrival of third party patches
+was a pain we have avoided for years.
+And tomoyo is in many respects like grsecurity,
+but without the uberuser password and other stuff.
+
+I was discussing tomoyo with Evert.
+I do not want to put words in Evert's mouth.
+Please correct me if I am wrong.
+However, I gained the impression that Evert's opinion
+was that the standard security model is fine.
+
+And I agree with that also.
+There is nothing wrong with the standard security
+model of having root with awesome privileges
+and users under oppressive restrictions.  :)
+root/user security is easy to understand.
+
+Unfortunately, the standard security model
+makes no consideration nor provisions
+for the possibility of someone acquiring
+an effective user identity of 0
+without having properly authenticated.
+If a user exploits a bug in a process running with EUID 0
+or exploits a bug in a SUID executable file
+then a user may be able to gain root
+without having authenticated as root.
+
+This is a scenario that we should all want to avoid.
+However, in accordance with reality
+the event should be anticipated and handled.
+A nefarious user rooted one of my boxes
+with a vixie-cron exploit more than a decade ago!
+So, yes I also was embarrassingly victimized long ago.
+Encountering a terrible user is as inevitable as a rainy day.
+Therefore, we should prepare for and anticipate a hostile attack
+just as we bring an umbrella on a day when rain is anticipated.
+
+Consequently, I am implementing tomoyo in a fashion that
+neither improves nor modifies the model of security
+that we already approve of.
+Rather I want to enforce it.
+
+Effectively, there will be two domains
+most processes will run in the &quot;restricted&quot; domain.
+The restricted domain has as much privilege
+as a user or service would normally require.
+However, it does not receive privilege to modify files in
+/bin /boot /etc /lib{,64} /opt /sbin /usr
+To achieve entry into the &quot;freedom&quot; domain
+one must run a program such as sulogin or sudo
+and provide credentials.
+Upon entering the freedom domain
+one gains all the amazing privileges that one expects for root.
+Of course one must still gain EUID 0
+before enjoying the privilege.
+sulogin does that.
+I am yet undecided concerning sudo.
+And su is out of the question since it does not
+ask for a password when one's EUID is already 0
+
+Too simple, yes?
+In addition to the two standard domains
+I will create custom domains
+for services expected to run on all Sorcerer boxes.
+For example ntp will be in it's own tiny little box
+that will allow no access that ntp would not normally do.
+It will fit as tightly as any electronic straight jacket can.
+
+However, I will not provide custom domains for
+services such as httpd that have a wide variation
+in how they are configured and how they run.
+Instead services that are too expansive to effectively
+confine in an electronic straight jacket
+will run in the &quot;restricted&quot; domain.
+
+The restricted domain limits the damage in a worst case scenario.
+The box can not have a root kit installed.
+And the box will successful survive reboot.
+
+However, all files and directories in /home can be modified or wiped.
+The unauthorized user can kill processes, run programs,
+download software, run software that was not installed, etc..
+Consequently, parts of /var, all of /home can be destroyed.
+Yes, the inconvenience is considerable.
+But perhaps the outcome is preferable to having the attacker
+being able to burrow in like a tick and
+conceal his activity by trojaning ps, top, and other programs?
+
+Pardon me for repeating what I already wrote.
+But I wanted to explicate the level of protection
+that is provided by the &quot;restricted&quot; domain.
+
+The possibility of protecting /home is difficult to implement.
+And it might be almost easy to implement in linux version 3.2.x.y,
+because domain transition can occur without execution.
+But that is yet a long wait.
+
+An interesting aspect about tomoyo domain rules
+is that they can contain a \$ to indicate the $PID of a process.
+Yet nothing about rules nor domain transition directly involves UID or EUID.
+Domain transition is always accomplished through executing a file.
+Consequently, the only way to protect individual home directories
+is to have custom domains for each user.
+
+I am contemplating the possibility.
+However, I have not implemented it.
+Custom domains for each user
+is not difficult to create in advance.
+And the list could be created dynamically
+and loaded into the kernel when tomoyo
+policies are normally loaded.
+However, domain transition is problematic.
+
+Successful authentication with login or sshd
+typically runs the user's defined shell which
+the user can change at whim.
+There is no provision for running something
+before that change domains.
+Likewise transition to a user's custom domain for KDE
+would not be impossible, but not easy.
+The most likely possibility
+would be to replace /opt/kde4/bin/startkde
+with a wrapper that changes to the user's custom
+domain before executing the real startkde.
+
+So we might not gain good protection for /home
+But some enhanced comprehensive protection is better than none.
+So far I have managed to implement what I wrote above.
+And while running sshd in the restricted domain
+I managed to log via ssh using a user account.
+The only aspects not working properly
+involves cgroup related tasks.
+But I may yet solve that.
+
+Soon I will create additional rules for the restricted domain
+that allow writing to audio devices, graphic devices,
+input and other useful devices in /dev/
+But of course no write access to disk devices will be permitted.
+
+The restricted domain still requires considerable more development
+before it becomes ready for production use.
+However, I am feeling excited about tomoyo.
+
+SMTP evolved to a current method that authenticates SMTP servers
+to prevent mail with a forged domain address.
+HTTP evolved to allow 2-way encryption and
+authentication of the server by a 3rd party.
+DNS gained TSIG.
+TCP-IP gained IP security.
+telnet and r* type utilities were replaced with ssh and scp.
+All of that demonstrates the transition
+from the assumed trusting nature of UNIX services
+into beasts suitable for thrashing and thwarting nefarious users.
+Given that perspective mandatory access control
+provided by tomoyo is a natural evolution of local host security.
+
+Even when implemented by a skilled SA
+tomoyo is not a perfect solution.
+Some services can be locked tighter than a safe.
+The rest is ... well ... who knows.
+It might be circumventable by a less than obvious manner.
+Something such as binding part of the root elsewhere with mount --bind
+will not work unless permitted as a rule.
+Therefore mount --bind provides no quick escape from the glass box.
+
+An important difference exists between selinux and tomoyo.
+When selinux is placed into enforcement mode
+then the rules must be perfect and everything pre-planned.
+That is because selinux locks everything down at once.
+In contrast tomoyo supports an unlimited amount of domains
+that can each have it's individual policy that determines:
+unenforced; learning mode; reported but not enforced; reported and enforced.
+
+selinux is like automobile security by locking one's keys inside the car.
+The only way to return to the inside is to smash a window,
+or less metaphorically reboot a box in non-enforcement mode.
+tomoyo is way more sane.
+It is like having a club for the steering wheel,
+a locking boot for the wheel,
+a locking stereo mount,
+and a 200 decibel alarm system.
+one, none, all, or any combination can be used
+to maintain a sane amount of security
+with less than an insane amount of preparation.
+
+The Sorcerer selinux sub-project died because
+I was unwilling to contribute all the effort
+required to make it work properly.
+It seemed like every file on the box required
+a security context to describe how it can be used.
+That is hundreds of thousands of files.
+And I complain about having to maintain
+merely a few thousand spells.
+
+With tomoyo I am already half way to production quality.
+If nobody volunteers to assist
+then I will probably have this complete soon anyway.
+I was estimating about a week's worth of effort.
+But I also estimated Sorcerer Sentient to require about a month
+when it actually required about a quarter of the year.
+So the tomoyo sub-project might eat the rest of the year,
+but at least through current testing
+I can already see the light at the end of the tunnel.
+
+Sorry if that seemed like too much to say about tomoyo.
+But I am still feeling excited about it.
+I am anticipating the enjoyment of creating custom domains
+that fit services as tight as an electronic straight jacket.
+After bringing the tomoyo implementation on Sorcerer to production quality
+then a Sorcerer SAs that deploys tomoyo
+can become nearly lackadaisical about security
+while realizing that when the rain comes
+they are already under the umbrella.
+
+I definitely want some protection for /home also
+but I suppose we must wait until linux 3.2.x.y
+to discover and wield tomoyo's new abilities.
+
+
+The above information indicates the current status of the sub-project.
+The final outcome may yet differ.
+My tests from yesterday implemented 3 domains: root; daemon; user.
+But transition is not easy from the daemon domain to the user domain
+for services such as: kdm; xdm; sshd; login
+And Evert made a good point about already being familiar
+with a 2 domain concept of security, namely the root/user model.
+
+Consequently, anyone is welcome to contribute suggestions
+about how this implementation should develop.
+I listened to Evert and am satisfied with the change.
+Thanks.
+Anyone else?
+
+And one last thing:
+
+&gt;<i> Everywhere I turn, every howto and tutorial I read, and every manual I
+</I>&gt;<i> write; says to disable selinux before proceeding with anything
+</I>&gt;<i> - -installing software,
+</I>
+No requirement for disabling tomoyo
+or rebooting with enforcement disabled
+will be required before updating installed software on Sorcerer.
+Before running augur, cast, leech, dispel
+then the SA must explicitly transition to the &quot;freedom&quot; domain.
+The sorcery tools will then work like they normally do.
+However, I am considering that cast
+might run compilation in the &quot;restricted&quot; domain.
+That will keep sneaky source trees from inserting aliens
+into the file system or making unexpected changes
+that would only eventually be detected and corrected
+only by immune-exam-integrity.
+Succinctly, the tomoyo implementation
+will not be the pain in the reboot that selinux is.
+
+Thanks.
+After considering and writing about it
+I am feeling better about favoring tomoyo.
+I was feeling somewhat melancholy about the possibility
+that nobody might be eager to try enhanced security
+with tomoyo after I complete the sub-project.
+But it might yet become something as useful as Linux-PAM.
+And it should be more useful for true Sorcerer SAs than Sorcerer Sentient.
+Glad to finally become motivated again in implementing some enhanced security.
+I do not recall how many years elapsed since I played with grsecurity.
+If not for the lack of timely kernel patches
+then maybe grsecurity would have had a future on Sorcerer.
+I am expecting much better from tomoyo.
+
+
+On Sat, Sep 17, 2011 at 6:01 AM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> Everywhere I turn, every howto and tutorial I read, and every manual I
+</I>&gt;<i> write; says to disable selinux before proceeding with anything
+</I>&gt;<i> - -installing software, configuring this service or that, and even just
+</I>&gt;<i> plain old basic OS install.
+</I>&gt;<i>
+</I>&gt;<i> Selinux is a wonderful thing - especially in the RH/CentOS world, coz
+</I>&gt;<i> you get to turn it off and disable it almost as soon as you assign a
+</I>&gt;<i> machine its hostname.
+</I>&gt;<i>
+</I>&gt;<i> Selinux is so popular that it's not included at all in Slackware.
+</I>&gt;<i>
+</I>&gt;<i> Good call on letting it die on the vine Kyle.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002257.html">[Sorcerer-admins] enhanced security...
+</A></li>
+	<LI>Next message: <A HREF="002259.html">[Sorcerer-admins] enhanced security...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2258">[ date ]</a>
+              <a href="thread.html#2258">[ thread ]</a>
+              <a href="subject.html#2258">[ subject ]</a>
+              <a href="author.html#2258">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

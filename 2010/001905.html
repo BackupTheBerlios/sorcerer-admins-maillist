@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] A chain of errors...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20chain%20of%20errors...&In-Reply-To=%3CAANLkTikDnym3kyVW1kZTncSBSYySTiEcTMdqLY-N69jr%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001902.html">
+   <LINK REL="Next"  HREF="001911.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] A chain of errors...</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20chain%20of%20errors...&In-Reply-To=%3CAANLkTikDnym3kyVW1kZTncSBSYySTiEcTMdqLY-N69jr%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] A chain of errors...">d3ck0r at gmail.com
+       </A><BR>
+    <I>Sun Aug 29 07:23:17 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001902.html">[Sorcerer-admins] A chain of errors...
+</A></li>
+        <LI>Next message: <A HREF="001911.html">[Sorcerer-admins] A chain of errors...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1905">[ date ]</a>
+              <a href="thread.html#1905">[ thread ]</a>
+              <a href="subject.html#1905">[ subject ]</a>
+              <a href="author.html#1905">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay I understand how this will work...
+
+I got it accomplished
+
+but now xorg tries to load
+
+dlopen: /usr/lib/xorg/modules//extensionslibdri2.so: cannot open
+shared object file: No such file or directory
+(EE) Failed to load /usr/lib/xorg/modules//extensionslibdri2.so
+(EE) Failed to load module &quot;dri2&quot; (loader failed, 7)
+
+(for 1 example)
+
+I don't know how to get the extensions to have a trailing / before it
+appends libdri2.so
+
+and it does this whether I have ./extensions lines in the xorg.conf
+
+hmm maybe it's loading a different one... after doing X -configure it
+now almost loads but I still get the standard
+
+twm:  unable to open fontset &quot;-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*&quot;
+
+which really means I need to 'LANG=C startx'
+
+ermm... well it's working now for some reason - maybe there's a module
+cache somewhere
+
+
+On Sat, Aug 28, 2010 at 8:46 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> More complete workaround to get NVIDIA-Linux-x86 working:
+</I>&gt;<i>
+</I>&gt;<i> cast MesaLib xorg-server
+</I>&gt;<i>
+</I>&gt;<i> edit /root/.sorcery/grimoire/NVIDIA-Linux-x86
+</I>&gt;<i>
+</I>&gt;<i> Change this line:
+</I>&gt;<i> --x-module-path=$DESTDIR/usr/lib/xorg/modules
+</I>&gt;<i>
+</I>&gt;<i> to read
+</I>&gt;<i> --x-module-path=$DESTDIR/usr/lib/nv/modules
+</I>&gt;<i>
+</I>&gt;<i> then cast NVIDIA-Linux-86
+</I>&gt;<i>
+</I>&gt;<i> edit /etc/X11/xorg.conf and make sure your module paths look something
+</I>&gt;<i> like this:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &#160; &#160;ModulePath &#160; &#160; &#160;&quot;/usr/lib/nv/modules/&quot;
+</I>&gt;<i> &#160; &#160;ModulePath &#160; &#160; &#160;&quot;/usr/lib/nv/modules/extensions/&quot;
+</I>&gt;<i> &#160; &#160;ModulePath &#160; &#160; &#160;&quot;/usr/lib/modules/&quot;
+</I>&gt;<i> &#160; &#160;ModulePath &#160; &#160; &#160;&quot;/usr/lib/modules/extensions/&quot;
+</I>&gt;<i> &#160; &#160;ModulePath &#160; &#160; &#160;&quot;/usr/lib/xorg/modules/&quot;
+</I>&gt;<i> &#160; &#160;ModulePath &#160; &#160; &#160;&quot;/usr/lib/xorg/modules/extensions/&quot;
+</I>&gt;<i>
+</I>&gt;<i> Lastly,
+</I>&gt;<i>
+</I>&gt;<i> cd /usr/lib/nv/modules/
+</I>&gt;<i> rm libwfb.so
+</I>&gt;<i> ln -s /usr/lib/xorg/modules/libwfb.so libwfb.so
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Then you should be able to re-start X with full OpenGL acceleration.
+</I>&gt;<i> I have not looked into why exactly this works, and everything else I
+</I>&gt;<i> tried did not... and also why Kyle is not having the same problem on
+</I>&gt;<i> his computers is still a mystery to me, too.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Aug 28, 2010 at 10:22 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> lilo didn't want to run; it came up '99 99 99 99 99 99'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> put in my old recovery CD, tried chroot, and it says kernel not new enough.
+</I>&gt;&gt;<i> got a new sorcerer ISO using lynx installed in existing installation
+</I>&gt;&gt;<i> it happened to be a r/w dvd, so erased it and burned the new image,
+</I>&gt;&gt;<i> rebooted, new recovery offers option to start existing root ... so the
+</I>&gt;&gt;<i> system came up mostly.
+</I>&gt;&gt;<i> ran lilo.
+</I>&gt;&gt;<i> reboot ed
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (took cd out after a couple tries)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> system came up failing to mount /media/root
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> put in root password to recover
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> tried to mount /dev/hda2 /tmp/x (made a /tmp/x) and it said /dev/hda2
+</I>&gt;&gt;<i> was already mounted... &#160;(actually couldn't mount any partition on the
+</I>&gt;&gt;<i> disk)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> will not boot on its own, put the DVD back in, mounted to new root
+</I>&gt;&gt;<i> /dev/hda2, and the system is now mostly alive...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> trying to startx (which was just working a week ago)....
+</I>&gt;&gt;<i> I try to run startx, and nvidia says 'libwfb.so' is required.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> dlopen: /usr/lib/xorg/modules/libwfb.so: undefined symbol:
+</I>&gt;&gt;<i> PictureScreenPrivateIndex
+</I>&gt;&gt;<i> (EE) Failed to load /usr/lib/xorg/modules/libwfb.so
+</I>&gt;&gt;<i> (EE) Failed to load module &quot;wfb&quot; (loader failed, 7)
+</I>&gt;&gt;<i> (EE) Aug 28 12:44:03 NVIDIA(0): Need libwfb but wfbScreenInit not found
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /var/cache/old/usr/lib/xorg/modules/libwfb.so
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> hmmm and it has that symbol too - actually nm says it has no symbols...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm stuck.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sound is working though :) was having problems with that before I left.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001902.html">[Sorcerer-admins] A chain of errors...
+</A></li>
+	<LI>Next message: <A HREF="001911.html">[Sorcerer-admins] A chain of errors...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1905">[ date ]</a>
+              <a href="thread.html#1905">[ thread ]</a>
+              <a href="subject.html#1905">[ subject ]</a>
+              <a href="author.html#1905">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%202&In-Reply-To=%3C596b75861002031914v160547ebs8f8d3f9d9dd307b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001410.html">
+   <LINK REL="Next"  HREF="001411.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%202&In-Reply-To=%3C596b75861002031914v160547ebs8f8d3f9d9dd307b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Feb  4 04:14:47 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001410.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2
+</A></li>
+        <LI>Next message: <A HREF="001411.html">[Sorcerer-admins] Fwd:  Sorcerer-admins Digest, Vol 44, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1417">[ date ]</a>
+              <a href="thread.html#1417">[ thread ]</a>
+              <a href="subject.html#1417">[ subject ]</a>
+              <a href="author.html#1417">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Feb 3, 2010 at 10:02 AM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> could someone please tell me how to install sorcerer linux as my only operating system in laymans terms ie what to type from partition to completion step by step because i keep getting errors like failed to mount and such thanks.
+</I>
+The exact commands to type to create a partition
+with fdisk vary depending upon whether the disk is empty
+or already contains a partition.
+However, fdisk is a necessary step.
+Even if a partition already exists
+with fdisk the partition type can be changed
+and the partition can be marked as bootable
+or not bootable.
+By default fdisk normally creates a partition type
+that is appropriate for a linux filesystem.
+However, it will not normally mark a partition as bootable.
+However, Sorcerer's menu driven installer will probably
+do that if the SA forgets.
+
+Now in addition to having a partition
+a filesystem must be create on that partition.
+This can be done with the mkfs command
+or several other commands depending upon
+what filesystem one wants to install.
+xfs and reiserfs and other exotic filesystem types
+tend to have different command line programs
+for creating those filesystems.
+Fortunately, a SA does not have to learn
+those program names or parameters if the SA
+is using the Sorcerer menu driven installer.
+
+However, the SA must visit the fstab menu
+and specify which partition should be /
+and the filesystem type for it.
+I used ext3 on /
+However, other SAs might want to try ext4,
+although ext4 has not been available for long.
+ext3 has been available for almost a decade.
+
+Now that the menu driven installer knows which
+partition should be / and what filesystem should be on it
+please visit the file system initialization menu.
+On this menu please remember to highlight the partition
+and pres space so that the check-mark or [x]
+is filled into the brackets.
+Then, pressing enter will indicate to the menu driven installer
+that the filesystem should be created.
+It will double check with the SA
+that it has permission to remove all data on that partition.
+
+My guess is that upon visiting this menu
+that some SAs might be unfamiliar with how to use
+dialog's checklist.
+dialog is the program used for Sorcerer's menu driven install.
+The reason for this selection is because lxdialog,
+a variant of dialog, is used for the kernel's make menuconfig.
+In the past all Sorcerer SAs were expected to be able to
+successfully complete a make menuconfig on the linux kernel.
+And that required the skill of being able to use dialog.
+
+Perhaps the use of dialog is not intuitive for all new SAs?
+Unfortunate if that is the case;
+never the less dialog should be mastered because
+almost any menu presented in the sorcery tools
+is generated using dialog.
+Sorry for the inconvenience.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001410.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2
+</A></li>
+	<LI>Next message: <A HREF="001411.html">[Sorcerer-admins] Fwd:  Sorcerer-admins Digest, Vol 44, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1417">[ date ]</a>
+              <a href="thread.html#1417">[ thread ]</a>
+              <a href="subject.html#1417">[ subject ]</a>
+              <a href="author.html#1417">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

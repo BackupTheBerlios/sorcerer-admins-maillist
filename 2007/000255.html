@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%0A%09http%3A//sorcerer.silverice.org/download/iso9660/new_and_testing/&In-Reply-To=%3C596b75860709092106o3eaa8235qd552cf1c7c3ab091%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000254.html">
+   <LINK REL="Next"  HREF="000256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%0A%09http%3A//sorcerer.silverice.org/download/iso9660/new_and_testing/&In-Reply-To=%3C596b75860709092106o3eaa8235qd552cf1c7c3ab091%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Sep 10 06:06:10 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000254.html">[Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/
+</A></li>
+        <LI>Next message: <A HREF="000256.html">[Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#255">[ date ]</a>
+              <a href="thread.html#255">[ thread ]</a>
+              <a href="subject.html#255">[ subject ]</a>
+              <a href="author.html#255">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 9/9/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+&gt;<i> I'm trying out the new Installer for x86_64 and I'm running into a problem.
+</I>&gt;<i> When I do an md5sum check on the source files, it looks like the entire
+</I>&gt;<i> directory /usr/src/linux fails.  When it tries to re-transfer the directory,
+</I>&gt;<i> I very quickly see
+</I>&gt;<i> &quot;tar: usr/src/linux/..file name...  : Cannot stat: No such file or director
+</I>&gt;<i> &quot;
+</I>&gt;<i>
+</I>&gt;<i> I can only see this for an instant before the next file wants to be
+</I>&gt;<i> re-transfered.  I've said yes well over 1000 times so far.  I actually just
+</I>&gt;<i> put a weight on the 'enter' key.
+</I>&gt;<i>
+</I>&gt;<i> I did an md5sum check on the .iso before I burned the image and it was good.
+</I>&gt;<i>  I haven't yet checked the sources md5sums because the first check isn't
+</I>&gt;<i> done yet.
+</I>&gt;<i>
+</I>&gt;<i> Any ideas?
+</I>
+Cute.  :)
+
+The first time I attempted to generate the ISO I forgot to remove
+the /usr/src/linux directory.
+Then, after I did that I forgot to regenerate the initrd image.
+Therefore, the initrd image expects that the files that were
+in /usr/src/linux were installed when they do not exist on the I/R.
+Best solution is probably to avoid doing the check, entirely.
+Consider it broken in this release.
+The next x86_64 IR I roll will not have that problem.
+I should have used my macro script that invokes all my smaller scripts
+in sequence.
+
+The I/R should still, otherwise, be use-able.
+Meanwhile, I am doing some prep-work and debugging of
+a very advanced and different version of sorcery.
+Yes, that does mean that it uses less RAM
+has easier to read code, and is faster.
+But there are several places where I have not removed
+or rewritten the references to index directories that are no longer used.
+So more grepping and editing is ahead.
+I do not want to release it in a state that could frustrate SAs.
+
+Therefore, if no show stopping bug is reported with the IRs
+I will continue to hone the sleek new sorcery so that when
+I do re-wrap the IRs the newer sorcery can go on them.
+For now I added sorcerer-x86_64-20070905.iso9660.bugs
+that explains the bug you reported.
+Thanks for reporting the error.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000254.html">[Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/
+</A></li>
+	<LI>Next message: <A HREF="000256.html">[Sorcerer-admins]	http://sorcerer.silverice.org/download/iso9660/new_and_testing/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#255">[ date ]</a>
+              <a href="thread.html#255">[ thread ]</a>
+              <a href="subject.html#255">[ subject ]</a>
+              <a href="author.html#255">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

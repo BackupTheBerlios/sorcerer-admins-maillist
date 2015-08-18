@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805160854l32d1bcebu1e277137a959a152%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000440.html">
+   <LINK REL="Next"  HREF="000444.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C596b75860805160854l32d1bcebu1e277137a959a152%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May 16 17:54:28 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000440.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000444.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#442">[ date ]</a>
+              <a href="thread.html#442">[ thread ]</a>
+              <a href="subject.html#442">[ subject ]</a>
+              <a href="author.html#442">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Yes, but some of network can start in S an some in 3, 4... etc...
+</I>&gt;<i>
+</I>&gt;<i> which implies multiple (more than 1 ) run level for setting up and
+</I>&gt;<i> getting networking going.
+</I>
+Perhaps I should have phrased it differently?
+Networking starts during sysinit.
+In runlevels 0 1 6 networking is shut down?
+
+I admit that I also find it confusing that sysinit
+and runlevels 0 and 6 are not runlevels.
+However, an easy way to think about it is that
+at runlevels 1 2 3 4 5 a box will continue to in those levels.
+sysinit 0 and 6 are transitional.
+
+sysinit symbolic links are placed in /etc/rc.d/rcS.d
+That does not make it a runlevel.
+There is nothing special to it.
+It merely follows a tradition.
+Setting up a distro that boots without sysinit is possible.
+However, sysinit serves an additional useful purpose on Sorcerer.
+sysinit executes from the initramfs when booting with initramfs.
+The successful execution of sysinit ends by starting the real init
+which executes on the real root filesystem
+and enters into runlevels 1 2 3 4 5
+
+I expect some distros have something different that
+executes on the initramfs or initrd instead of sysinit.
+However, I have not compared Sorcerer's boot with
+any other distros.
+Seems to work a-okay as is and having sysinit execute
+from initramfs saves SAs from having to learn about
+something entirely differently that handles booting
+from initramfs.
+Therefore, I consider it added functionality
+without added complexity.
+
+
+&gt;<i> Okay whatever, technicality.... yes standards indicate this is true...
+</I>&gt;<i> and all I'd have to do is change the default in inttab to 5 from 3...
+</I>&gt;<i> not an issue.
+</I>
+It is still possible to elect to not have a GUI login execute
+on runlevel 5 merely by selecting those init-scripts,
+xdm gdm kdm-v3 kdm-v4, to not execute automatically
+during startup and shutdown.
+Aside from that runlevels 3 and 5 are nearly identical.
+Runelvels 2 and 4 are nearly identical.
+
+Sorcerer flexibility in how init-scripts are installed
+might in some ways obsolete the necessity of
+having so many runlevel choices.
+But until now I had no reason to think about it.
+
+
+&gt;<i> Again, XDM does not have an option to auto login. I do not WANT gdm or
+</I>&gt;<i> kdm - as I do not need all their additional bloat of gnome or kde
+</I>&gt;<i> libraries.
+</I>&gt;<i>
+</I>&gt;<i> and yes - option to start networking in S level would have fixed my
+</I>&gt;<i> issue also (which was what I was originaly going to do)
+</I>
+Did you take a good look at those scripts xdm installs?
+I would not wager that xdm can not be configured for kiosk use.
+And it is considerably light weight compared to kdm and gdm.
+
+But you would not require xdm for something so simple.
+Merely creating a login environment, starting X, and having
+it execute a window manager should work.
+
+Let us see something like....
+
+#!/bin/bash
+
+start(){
+ while : ; do /bin/su - guest -c startx; done &amp;
+ sleep 0.1
+ echo &quot;$!&quot; &gt; /var/run/xguest
+}
+
+And put the WM and other commands to run in
+~/guest/.xinitrc
+
+exec the window manager last
+Have the programs begin before it backgrounded.
+The example in startx gives an excellent example.
+
+
+&gt;<i> There is no auto restart when running startx.
+</I>&gt;<i> when X exits, it exits.
+</I>
+You could loop the window manager in ~/.xinitrc
+But if the user zaps the X server or it crashes
+then it is gone.
+Using a wrapper script like the one I wrote as
+an example above can continually restart the
+X server as guest and with the PID saved
+it can be killed when no longer wanted.
+Do not forget the sleep.
+BASH can not grant PIDs for recently backgrounded processes.
+An wait of an undetermined amount of time is required
+before using $!
+
+
+&gt;<i> There is NO auto login option for xdm.
+</I>
+Option? What option? I meant edit the scripts in
+/etc/X11/xdm/ in order to make it do a kiosk login.
+But a wrapper script around startx is probably easier.
+
+
+&gt;<i> that's pretty much my point... I would rather that my startx was
+</I>&gt;<i> maintained by inittab.
+</I>&gt;<i>
+</I>&gt;<i> but a really stupid simple script works...
+</I>&gt;<i>
+</I>&gt;<i> --- watch_task --
+</I>&gt;<i> #!/bin/bash
+</I>&gt;<i>
+</I>&gt;<i> $*
+</I>&gt;<i> echo $(date) restarting $* &gt;&gt;/tmp/watch_task.log
+</I>&gt;<i> $0 $* &amp;
+</I>
+That is simple?
+I have no clue what it does.
+
+Some of the servers installed by
+sorcery-immune sorcery-bgz demonstrate
+how a BASH script can be made into a daemon.
+Technically, leech and cast are also daemons
+or something similar since they execute in the background.
+Of course, they are not started at boot.
+
+
+&gt;<i> Not really an issue, but it is a custom hack rather than a standard
+</I>&gt;<i> utility to restart a task.
+</I>
+That circles around to one of my original questions.
+Should something that provides this functionality be
+provided in init-functions?
+First, I am not certain that with only one example of
+what want it to do that we can make it into a standard.
+In order to standardize mounting of virtual filesystems
+there were more than 5 places where virtual filesystems
+would be mounted and all those scripts worked out to
+do almost entirely the same thing.
+Therefore, it was much like recognizing it as a macro
+and then defining that macro in init-functions.
+
+However, with only one example of what we want looped
+that does not provide enough of an idea of how it should
+be made standard.
+Therefore, you seem to be on track with writing a custom
+init-script to handle that specific case.
+
+I apologize if I appeared to push xdm gdm and kdm a bit much.
+I agree startx is a simple and adequate solution when
+proceeded by su - guest in order to first switch to a non
+root account.
+
+Hmm.... but now I do have a bit of an itch from this discussion.
+Should a spell be created that requires startx that
+will create a guest user and group when cast and will
+provide automatic kisok login for user guest?
+Of course what programs are started and what window
+manager are started would depend upon
+~/guest/.xinitrc
+A default one could be provided similar to the example
+that is given in startx that executes twm,
+the window manager, for the window manager.
+
+That seems like a good idea.
+I will go ahead and do that.
+However, I will consider the name of the spell
+and account name and other details a little longer
+before I write the spell.
+I am considering putting an account and group of guest
+in the 512 to 1023 range because it is a role account
+rather than a service account ( 256 =&gt; 512 ) and not a
+user account ( 1024 &gt;= 65534 )
+
+Anything else you want with it?
+Banana peppers, jalapeno peppers, green and red peppers?
+I am in the mood for a sub sandwich.
+
+I suppose I will call it xguest.
+That seems to be available and it seems a decently
+enough descriptive name without being verbose.
+Besides it took me way to long to learn how to spell kiosk.
+
+I suppose if anyone has a need for a similar spell that
+uses a different account name than guest
+then they will probably want to further customize it
+than merely adjust the name and will write it into their
+local grimoire as a custom spell.
+At least having the example spell will ease the task
+for SAs that have not set up a kiosk style auto-login.
+
+I will copy this into my todo file.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000440.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000444.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#442">[ date ]</a>
+              <a href="thread.html#442">[ thread ]</a>
+              <a href="subject.html#442">[ subject ]</a>
+              <a href="author.html#442">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

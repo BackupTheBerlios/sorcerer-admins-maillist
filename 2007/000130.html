@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Leech just waits forever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140028u2157c25bhda778669ccb80866%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000132.html">
+   <LINK REL="Next"  HREF="000131.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Leech just waits forever</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140028u2157c25bhda778669ccb80866%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Leech just waits forever">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 14 09:28:06 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000132.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+        <LI>Next message: <A HREF="000131.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#130">[ date ]</a>
+              <a href="thread.html#130">[ thread ]</a>
+              <a href="subject.html#130">[ subject ]</a>
+              <a href="author.html#130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>One way to keep curl from waiting forever is to have
+
+--speed-time 120
+--speed-limit 256
+
+
+in /root/.curlrc
+
+But there are some servers that sometimes seem to be able to hang it up.
+In that event you might want to try also...
+
+--connect-timeout 120
+
+That might help resolve that issue.
+
+Usually, before leech downloads a source
+it makes a connection to the server using a --connect-timout
+and requests the file's header.
+If the header is not available then curl skips
+sending the actual file request to that server.
+In theory, that aught to avoid curl waiting
+a very long time during connection.
+
+Also you can go ahead and press 's'
+while watching a leech of a source.
+That causes leech to skip ahead to the next server.
+In some cases it causes it to retry the current server
+when the next server is the current server.
+Basically, it doubles up the server list to get at least 2
+attempts to download in the event that a source has
+merely 1 download URL.
+
+If all else fails there is always:
+# su - pkill curl
+
+If you can spot what server is behaving irrationally
+please report it to the email list so that the spell or
+spells can be adjusted to avoid using that server.
+Also you can specify a preference order for servers using augur.
+The augur help screen explains how.
+
+If it becomes a serious problem then I can modify augur
+so that a given preference value for a server means that
+the server is never contacted.
+That might cause a problem if a certain source can only
+be downloaded from that server?
+But sometimes sources can also be downloaded from
+Bent's partial source cache or the sources that reside
+at the PPR.
+But the PPR has been a bit flaky in recent months.
+If you have to download a source from the PPR
+you might have to get it with a web browser?
+
+Generally, most sources can be acquired all of the time
+and those that go unavailable, temporarily, usually are
+available the following day.
+Best thing to do is set up a source cache that all the
+deployed boxes on your network can share.
+A squid proxy can also be handy for caching source tarballs.
+
+Keep in mind that there a servers such as berlios that permit
+merely one download of a source tarball from a gateway IP
+per release or maybe per amount of days?
+The few source tarballs distributed from berlios.de
+can be among the slowest and most difficult source tarballs to download,
+especially if your network does not have a local shared source cache.
+
+Sometimes you can download a tarball for a rare source or a source
+that is not normally distributed by tarball from Debian's ftp server.
+I have no clue where to download the libpaper tarball from,
+but I can always get it from Debian's ftp server which is why
+the URL for that spell retrieves it from that location.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000132.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+	<LI>Next message: <A HREF="000131.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#130">[ date ]</a>
+              <a href="thread.html#130">[ thread ]</a>
+              <a href="subject.html#130">[ subject ]</a>
+              <a href="author.html#130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

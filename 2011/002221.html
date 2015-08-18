@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] -O3 optimizations...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCAER78vQa%2BbhAwzcD%3Ds6DQ13BE-3DhDFDfeV%2BtxPeaTi6xFHqLA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002220.html">
+   <LINK REL="Next"  HREF="002222.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] -O3 optimizations...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCAER78vQa%2BbhAwzcD%3Ds6DQ13BE-3DhDFDfeV%2BtxPeaTi6xFHqLA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] -O3 optimizations...">evorster at gmail.com
+       </A><BR>
+    <I>Sun Jul 31 11:16:58 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002220.html">[Sorcerer-admins] Some augur commands that used to be but not	anymore
+</A></li>
+        <LI>Next message: <A HREF="002222.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2221">[ date ]</a>
+              <a href="thread.html#2221">[ thread ]</a>
+              <a href="subject.html#2221">[ subject ]</a>
+              <a href="author.html#2221">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there, Sorcerer Admins.
+
+This is something of an old debate, but I do have a few thoughts on
+the subject, and would like to hear what other Sorcerer admins think.
+
+I recently discovered that binutils was compiled with -O3, and created
+an ld that was segfaulting on my hardware.
+I forced it to -O2, and recompiled. ld no longer segfaults on my arch.
+( Intel Centrino2 )
+
+
+
+When I first started using Sorcerer, there were no CFLAGS in spells,
+and whatever the SA decided to compile for was accepted. Being young
+and on a slow machine, I compiled an entire system with -O3. --- And
+was sorry I did. Not only did it take much longer to compile, it was
+also horribly broke.
+
+After reading quite a bit on the subject, and quite a few days
+experimenting, me default is  -O2 since -O2 is what most binary
+compiled software is shipped with. As such is by far the most tested
+configuration.
+
+Sorcerer's default -Os only makes a difference on ancient hardware
+which has tiny cache and slow memory bandwitdh. On a modern machine I
+can't tell the difference.
+
+-O3 is used very rarely, because speed gains are not universal and
+have to be measured on a case by case basis. Whatever speed gains are
+achieved are offset against possible instabilities that this
+optimization level may cause. A few notable exceptions are ffmpeg, and
+Mesalib, for which the authors recommend -O3 for their sources, and
+thus get a bit of testing.
+
+
+So, it is my position that a distribution should not apply -O3 to it's
+core utilities, like we are doing in bash and binutils. While this may
+work on some architectures, it may be unstable on others, and we
+should aim for stability rather than speed.
+
+Sorcerer already has a tool for specifying special CFLAGS for specific spells.
+The way I think it should work is as follows:
+
+An SA like Kyle, that spends the majority of his time in bash, might
+want to test bash with -O3. If it's stable enough, create a
+/etc/sorcery/cpref file where -O3 is applied.
+augur cpref $SPELL $CONF_FILE_NAME would then only apply -O3 for that spell.
+
+Another SA might want to do it with mysql to squeeze a little more out
+of the hardware available.
+
+I use a lot of video stuff, so I would compile my video utilities with
+-O3, and leave the rest of my boxen as stable as possible.
+
+
+In the end, I suppose it boils down to this....
+
+
+As a control freak Sorcerer SA, I want to have control over what
+compiler flags my sources get compiled with. But I am also lazy, and
+don't want to be over-riding all CFLAGS everywhere, as some spells
+actually only compile with very specific compiler flags. Specifically,
+I don't want to be overriding a spell's CFLAGS to make my box more
+stable.
+
+The CFLAGS in the spells then override the CFLAGS I specify in
+/etc/cpref/default, as they should. Putting CFLAGS in spells are
+useful when a spell is unstable/uncompilable with safe options, or
+have very specific CFLAG requirements.
+
+
+
+Lately I have seen -O3 cropping up in the grimoire more and more
+often, and I feel that this is a practice that needs to be
+discouraged, as it may make some architectures unstable.
+
+Putting -O3 on spells should be done by the SA for spells on his own
+system only, the only exceptions being sources where the source
+authors actually specify -O3.
+An SA that then want's to mess with a spell's CFLAGS can do so through
+augur cpref, for his own box, but can't blame the distribution for any
+instability that it causes.
+
+
+I feel that even though Sorcerer is a sources-based distribution, I
+would rather that Sorcerer be known for rock solid stability and ease
+of maintenance.
+
+Anybody have a different view?
+-- 
+-Evert-
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002220.html">[Sorcerer-admins] Some augur commands that used to be but not	anymore
+</A></li>
+	<LI>Next message: <A HREF="002222.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2221">[ date ]</a>
+              <a href="thread.html#2221">[ thread ]</a>
+              <a href="subject.html#2221">[ subject ]</a>
+              <a href="author.html#2221">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

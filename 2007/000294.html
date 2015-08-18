@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C200710031511.29670.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000291.html">
+   <LINK REL="Next"  HREF="000295.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C200710031511.29670.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...">merka at highsphere.net
+       </A><BR>
+    <I>Wed Oct  3 21:11:29 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000291.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual consoles	and exiting...
+</A></li>
+        <LI>Next message: <A HREF="000295.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#294">[ date ]</a>
+              <a href="thread.html#294">[ thread ]</a>
+              <a href="subject.html#294">[ subject ]</a>
+              <a href="author.html#294">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Saturday 29 September 2007, Kyle Sallee wrote:
+&gt;<i> Problem solved in grimoire version 2007-273.
+</I>
+What has been fixed? Which spell(s)? I am asking because the latest xorg 
+upgrade has been quite painfull so far and there are still things I have not 
+been able to resolve.
+
+In particular, the xf86-video-intel driver performs much worse than 
+xf86-video-i810 on my laptop with Intel 855GM graphics, I get diagonal moire 
+and it always comes up with vertical refresh 11 Hz (!) instead of configured 
+60 or 75 Hz. I can switch it to higher refresh rate after it starts up but it 
+is annoying and the moire remains (and the lousy 3d performance too).
+
+So I reverted to the i810 driver.
+
+Next serious issue is the xf86-input-evdev driver, marked as broken in the 
+grimoire. I have filed a bug report and the response was that version 1.2.0 
+is needed. Funny, because the xorg release offers 1.1.2 and if you look into 
+the individual xorg collection, version 1.1.5 can be found.
+
+After much searching,  I found 1.2.0 in the evdev git repository and it did 
+compile with xorg-server 1.4. Unfortunately, the driver fails to load:
+(EE) Logitech_VX: cannot open input pEvdev
+(EE) PreInit returned NULL for &quot;Logitech_VX&quot;
+
+So I submitted another bug report but no response yet. Without working evdev, 
+the mouse configuration is difficult: If /dev/input/mice is used, every click 
+is reported twice (both press and release events) which makes it difficult to 
+get around. This may be solved by some udev rules that would create a 
+persistently named link in /dev/input for each mice but I haven't tested it 
+yet (with the laptop I use different mice at home, in my office and on 
+travel, what a mess - the fallback configuration is now useless, because it 
+cannot use /dev/input/mice).
+
+Well, if you got suggestion or solutions, I will certainly appreciate them.
+
+jan
+
+&gt;<i> With that fixed fewer of us will probably want to stay with X11R7.2
+</I>&gt;<i> There were some problems with the fix to try and reduce the versions
+</I>&gt;<i> of xorg related spells, but those problems were also fixed in grimorie
+</I>&gt;<i> 2007-273. For those of you with LAG=0 in /etc/sorcery/local.config
+</I>&gt;<i> 2007-273 is already available.
+</I>&gt;<i> All other boxes can receive it a day later or according to their
+</I>&gt;<i> custom LAG setting.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000291.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual consoles	and exiting...
+</A></li>
+	<LI>Next message: <A HREF="000295.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#294">[ date ]</a>
+              <a href="thread.html#294">[ thread ]</a>
+              <a href="subject.html#294">[ subject ]</a>
+              <a href="author.html#294">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

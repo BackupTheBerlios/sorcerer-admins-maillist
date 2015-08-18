@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20startup&In-Reply-To=%3CAANLkTikCkTAxduoljRdzFnyCABDQlUDfVfqENIwY6Opc%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001724.html">
+   <LINK REL="Next"  HREF="001732.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on startup</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20startup&In-Reply-To=%3CAANLkTikCkTAxduoljRdzFnyCABDQlUDfVfqENIwY6Opc%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhcp on startup">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 12 00:29:07 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001724.html">[Sorcerer-admins] dhcp on startup
+</A></li>
+        <LI>Next message: <A HREF="001732.html">[Sorcerer-admins] Current I/Rs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1728">[ date ]</a>
+              <a href="thread.html#1728">[ thread ]</a>
+              <a href="subject.html#1728">[ subject ]</a>
+              <a href="author.html#1728">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There are many ways to have networking configured.
+It can be activated by /etc/init.d/networks
+when proper templates have been configured.
+It can be activated by udev using rules.
+It can be activated by a program such as:
+wpa_supplicant
+
+There is no right/wrong way about doing it.
+You could even write your own custom init-script
+and put it in /etc/init.d/ with mode 700
+and then run /lib/lsb/install_initd
+This last method is easy if one understands
+how to create init-scripts with proper LSB comment section.
+
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides: bootmisc
+# Required-Start: $local_fs $network $remote_fs
+# Required-Stop: $local_fs $network $remote_fs
+# Default-Start: 1 2 3 4 5
+# Default-Stop:
+# Short-Description: bootmisc is for lazy SAs
+# Description: SAs can add additional programs to invoke during
+#       boot to /etc/init.d/bootmisc
+### END INIT INFO
+
+That would be adequate for the start of a bootmisc init-script.
+After the comments one could add:
+
+dhcpcd eth0
+
+All of my boxes use /etc/init.d/networks
+which uses networking templates.
+All the information about networking templates
+is contained within directories and subdirectories
+/etc/networks.d/
+It is both very simple and absurdly complicated,
+but it can be used to set up network configurations
+on any box, including boxes that have multiple
+locations and/or have multiple network adapters.
+
+Personally, I would like to have a menu driven
+type method for configuring networking.
+But there is a lack of consensus about it
+and nobody seems eager to write it.
+Permanent network configurations take
+only a few seconds to minutes to configure
+and then a box is good to go for probably
+about as long as it will ever be deployed.
+So nobody is too eager about an elaborate
+method that will only ever be used once per box
+and might be more restrictive than what can
+currently be accomplished using the system
+of network templates and functions.
+
+Although network configuration is definitely
+do-able on Sorcerer I still consider the matter
+to be a sore-spot on Sorcerer boxes.
+All the command line tools for network configuration
+are available on Sorcerer boxes.
+However, no certain documentation or clear consensus
+exists about how GUI, menus, or fluffed up interfaces for them.
+Almost every distribution has it's own unique methods
+for doing networking configuration.
+
+Years before I introduced the template system
+and the /etc/init.d/networks init-script to activate it
+SAs were instructed to directly edit
+/etc/init.d/network and type the exact commands
+to invoke command line tools for network configuration.
+While that might seem a bit harsh,
+there are still SAs that would prefer that
+network configuration was still done exactly that way.
+
+However, these days there is a policy that
+init-scripts are not configuration files.
+Therefore, modifications to files in /etc/init.d/
+are not preserved across updates.
+The only modification that is preserved
+is the mode of the init-script.
+Mode 0700 init-scripts are active.
+Mode 0600 init-scripts are inactive.
+If you want to change an init-script
+just chmod it and run /lib/lsb/install_initd
+Failing to run /lib/lsb/install_initd is not a problem.
+If it should have been run it will run itself later
+provided that the box is properly shutdown.
+Probably better to run it in advance.
+
+Speaking of custom configuration files...
+Files in /etc/ except those in /etc/{init.d,sorcery,gconf}/
+can be customized.
+And the customizations will stick across updates.
+However, copies of original uncustomized configuration
+files are stored in /etc.ori/
+Therefore, if a SA wants to undo a customization
+or apply the customization to a newer configuration file
+then the SA can copy the file from /etc.ori/
+into /etc/ and make modifications as necessary.
+
+Sorcerer has rough spots like the
+endless amounts of ways to configure networking.
+However, it also has conveniences such as the
+/etc.ori/ directory which contains original configuration
+files that are current for the software which is installed.
+For years I have listened to SAs complain about
+the problems involving customized configuration files.
+Sometime after we started trying this solution
+nobody seems to be complaining anymore.  *lol*
+Maybe it is not the best solution.
+But it does seem workable.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001724.html">[Sorcerer-admins] dhcp on startup
+</A></li>
+	<LI>Next message: <A HREF="001732.html">[Sorcerer-admins] Current I/Rs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1728">[ date ]</a>
+              <a href="thread.html#1728">[ thread ]</a>
+              <a href="subject.html#1728">[ subject ]</a>
+              <a href="author.html#1728">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

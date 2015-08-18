@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Spell format change and augur command	change...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Spell%20format%20change%20and%20augur%20command%0A%09change...&In-Reply-To=%3C596b75860806302336q585ba8f5ydf37975f7df62599%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000591.html">
+   <LINK REL="Next"  HREF="000686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Spell format change and augur command	change...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Spell%20format%20change%20and%20augur%20command%0A%09change...&In-Reply-To=%3C596b75860806302336q585ba8f5ydf37975f7df62599%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Spell format change and augur command	change...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul  1 08:36:10 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000591.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+        <LI>Next message: <A HREF="000686.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#593">[ date ]</a>
+              <a href="thread.html#593">[ thread ]</a>
+              <a href="subject.html#593">[ subject ]</a>
+              <a href="author.html#593">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the report.
+touch the /root/.sorcery/grimoire/$SPELL
+I was using echo -n &gt;&gt; $GRIMOIRE/$SPELL
+but apparently it did not update the timestamp
+on the file as I would normally expect.
+So I switch it to touch.
+
+
+
+
+On Mon, Jun 30, 2008 at 11:19 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> augur available &lt;spell&gt;
+</I>&gt;<i> shows nothing.
+</I>&gt;<i>
+</I>&gt;<i> augur progress &lt;spell&gt;
+</I>&gt;<i> shows nothing.
+</I>&gt;<i>
+</I>&gt;<i> after syncing with the latest sorcery.
+</I>&gt;<i>
+</I>&gt;<i> After another augur merge ; augur index, augur available &lt;spell&gt; gives me
+</I>&gt;<i> something - the stable version even when unstable is selected 'augur progress
+</I>&gt;<i> &lt;spell&gt; unstable ; augur available &lt;spell&gt;'.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Monday 30 June 2008, Kyle Sallee wrote:
+</I>&gt;&gt;<i> xorg-individual, hold, sold, safe, and exile are useful concepts.
+</I>&gt;&gt;<i> However, their implementation was lacking.
+</I>&gt;&gt;<i> So I am ripping them out of Sorcerer.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In their place I am introducing the concept of version progress.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # augur | grep &quot;^progress&quot;
+</I>&gt;&gt;<i> progress   none            List spells with non stable version progress
+</I>&gt;&gt;<i> progress   spell           List version progress for the spell
+</I>&gt;&gt;<i> progress   spell    exile  Select that the spell should never install
+</I>&gt;&gt;<i> progress   spell   secure  Select   secure version progress
+</I>&gt;&gt;<i> progress   spell   stable  Select   stable version progress
+</I>&gt;&gt;<i> progress   spell  version  Select specific version for spell
+</I>&gt;&gt;<i> progress   spell unstable  Select unstable version progress
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> As you see the progress command still allows spells to be exiled.
+</I>&gt;&gt;<i> And by giving a specific version a spell can be absolutely held at that
+</I>&gt;&gt;<i> version. It also introduces the concept of 3 types of progression:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   stable
+</I>&gt;&gt;<i> unstable
+</I>&gt;&gt;<i> secure
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> stable progression is the one we are all familiar with.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> unstable progression would be like what IVERSION was for attribute X11R7
+</I>&gt;&gt;<i> spells and also enables a $SPELL to also provide the $SPELL-dev without a
+</I>&gt;&gt;<i> separate $SPELL-dev
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The secure progression provides newer versions only when those newer
+</I>&gt;&gt;<i> versions fix security problems in previous releases.
+</I>&gt;&gt;<i> That makes secure progression work like &quot;sold&quot; did.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For this to work the format of spells changes, slightly:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Instead of the VERSION=( something older oldest )
+</I>&gt;&gt;<i> It will now look more like:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>   secure            1.2                   1.0
+</I>&gt;&gt;<i>   stable 1.3        1.2        1.1        1.0
+</I>&gt;&gt;<i> unstable 1.3 1.3pre 1.2 1.2pre 1.1 1.1pre 1.0 1.0pre
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For those using fixed with fonts the columns will line up in the above
+</I>&gt;&gt;<i> example. Not a very big change at all, right?
+</I>&gt;&gt;<i> Instead of the $VERSION array directly
+</I>&gt;&gt;<i> the functions called:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> stable()
+</I>&gt;&gt;<i> unstable()
+</I>&gt;&gt;<i> secure()
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> will properly assign the progression version to the $VERSION array
+</I>&gt;&gt;<i> based upon the content of:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /etc/sorcery/log/progress/$SPELL
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And to create /etc/sorcery/log/progress/$SPELL
+</I>&gt;&gt;<i> simply use the:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # augur progress
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> command
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Be on the lookout for this change in the future
+</I>&gt;&gt;<i> so that you can properly adjust spells that
+</I>&gt;&gt;<i> are already hold/sold/exile over to the new
+</I>&gt;&gt;<i> method of using version progression.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000591.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+	<LI>Next message: <A HREF="000686.html">[Sorcerer-admins] Spell format change and augur command	change...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#593">[ date ]</a>
+              <a href="thread.html#593">[ thread ]</a>
+              <a href="subject.html#593">[ subject ]</a>
+              <a href="author.html#593">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

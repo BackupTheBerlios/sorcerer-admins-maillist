@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Booting your boxes can become faster!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Booting%20your%20boxes%20can%20become%20faster%21&In-Reply-To=%3C1de9d39c0711080501u2fa965cai14e9f8d4032871f9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000319.html">
+   <LINK REL="Next"  HREF="000321.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Booting your boxes can become faster!</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Booting%20your%20boxes%20can%20become%20faster%21&In-Reply-To=%3C1de9d39c0711080501u2fa965cai14e9f8d4032871f9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Booting your boxes can become faster!">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Nov  8 14:01:45 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000319.html">[Sorcerer-admins] Booting your boxes can become faster!
+</A></li>
+        <LI>Next message: <A HREF="000321.html">[Sorcerer-admins] Booting your boxes can become faster!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#320">[ date ]</a>
+              <a href="thread.html#320">[ thread ]</a>
+              <a href="subject.html#320">[ subject ]</a>
+              <a href="author.html#320">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 11/5/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Recently, I was testing the boot speed of
+</I>&gt;<i> parallelized init script execution at runlevel 4.
+</I>&gt;<i> My conclusion of course was,
+</I>&gt;<i> &quot;Yes, that is very fast!&quot;
+</I>&gt;<i>
+</I>&gt;<i> However, is efficient computing over when booting has completed?
+</I>&gt;<i> After booting completes the computer is probably mostly idle
+</I>&gt;<i> while awaiting someone to login and
+</I>&gt;<i> to begin execution of programs such as firefox.
+</I>&gt;<i> However, if the norm for the workstation is for someone to login
+</I>&gt;<i> and begin execution of programs within 5 minutes after boot
+</I>&gt;<i> then should not the computer anticipate that and begin
+</I>&gt;<i> loading files into memory before they are needed?
+</I>&gt;<i> Seems like a simple task for a computer to accomplish, yes?
+</I>&gt;<i>
+</I>&gt;<i> Take firefox for example.
+</I>&gt;<i> It reads many files when it starts up.
+</I>&gt;<i> Consequently, starting firefox may require 10 or more seconds
+</I>&gt;<i> if the computer recently finished booting.
+</I>&gt;<i> However, if firefox was previously loaded and exited
+</I>&gt;<i> then the files may still be in the kernel cache.
+</I>&gt;<i> If firefox's files are cached then starting firefox may require merely 1
+</I>&gt;<i> second.
+</I>&gt;<i> 1 second is better than 10, yes?
+</I>&gt;<i> By that realization I decided that
+</I>&gt;<i> computers should anticipate the files that will be read
+</I>&gt;<i> and it should load the contents of those files into RAM before they are
+</I>&gt;<i> needed,
+</I>&gt;<i> because a computer with pre-cached files can start programs faster.
+</I>&gt;<i>
+</I>&gt;<i> After discarding several potential implementations I created
+</I>&gt;<i> an implementation that is efficient, eloquent, and simple and
+</I>&gt;<i> I call it bootblaze.
+</I>&gt;<i> I added it to the sorcery tools along with an optional init script.
+</I>&gt;<i> Merely select the bootblaze init script as on for it to run during boot.
+</I>&gt;<i>
+</I>&gt;<i> The way bootblaze works is simple.
+</I>&gt;<i> When the box is booted bootblaze memorizes the files
+</I>&gt;<i> that are opened during the first five minutes of execution.
+</I>&gt;<i> It memorizes executables, ELF libraries, and data files.
+</I>&gt;<i> It adds those to a list /etc/bootblaze.conf
+</I>&gt;<i> Until /etc/bootblaze.conf is populated no pre-caching of files during
+</I>&gt;<i> boot is possible.
+</I>&gt;<i> However, once /etc/bootblaze.conf exists the contents of those files,
+</I>&gt;<i> listed in /etc/bootblaze.conf, are read into RAM by bootblaze during boot.
+</I>&gt;<i> Then, when a program tries to read one of the pre-cached files the
+</I>&gt;<i> contents
+</I>&gt;<i> can be quickly read from RAM instead of wasting any CPU cycles on waiting
+</I>&gt;<i> for the fixed disk to read the file.
+</I>&gt;<i>
+</I>&gt;<i> Configuration is easier than making an ACL.
+</I>&gt;<i> Verify /etc/init.d/bootblaze exists and is mode 0700
+</I>&gt;<i> Verify that /etc/bootblaze.conf does not exist.
+</I>&gt;<i> Reboot.
+</I>&gt;<i> Login and execute all the programs typically running within 5 minutes
+</I>&gt;<i> of booting.
+</I>&gt;<i> Configuration is complete!
+</I>&gt;<i>
+</I>&gt;<i> To change the configuration of bootblaze simply
+</I>&gt;<i> remove /etc/bootblaze.conf and repeat the steps in the above paragraph.
+</I>&gt;<i> If /etc/bootblaze.conf is more than 2 days old during boot
+</I>&gt;<i> then bootblaze will add to /etc/bootblaze.conf
+</I>&gt;<i> files that are read within the first 5 minutes of booting.
+</I>&gt;<i> That way if installed software has been updated
+</I>&gt;<i> and different files are being loaded during boot
+</I>&gt;<i> then bootblaze will recognize and adapt to the change.
+</I>&gt;<i> It is an automatic reconfiguration.
+</I>&gt;<i> Without need for further elaboration
+</I>&gt;<i> bootblaze uses an intelligent method
+</I>&gt;<i> to determine what files to keep in
+</I>&gt;<i> /etc/bootblaze.conf and what files to dismiss.
+</I>&gt;<i>
+</I>&gt;<i> One important limitation is that bootblaze will not enter into
+</I>&gt;<i> /etc/bootblaze.conf files that exist in /home directories.
+</I>&gt;<i> Consider it a privacy concern that bootblaze only
+</I>&gt;<i> pays attention to files read in within in /bin /etc /usr /sbin
+</I>&gt;<i>
+</I>&gt;<i> Thanks for taking the time to learn about this new sorcery functionality.
+</I>&gt;<i> The last obvious question is probably
+</I>&gt;<i> what boxes should become bootblaze enabled?
+</I>&gt;<i>
+</I>&gt;<i> Many of us keep both our workstations running all the time
+</I>&gt;<i> and reboot only after installing a new kernel.
+</I>&gt;<i> Keeping computers constantly on is healthier for fixed disks, power
+</I>&gt;<i> supplies and fans.
+</I>&gt;<i> Frequent powering down and powering up of computers,
+</I>&gt;<i> even once per day,
+</I>&gt;<i> can cause fixed disks, power supplies, and fans to fail prematurely.
+</I>&gt;<i> Computers left on all the time will rarely benefit from bootblaze.
+</I>&gt;<i> However there is no significant cost for using bootblaze other than
+</I>&gt;<i> selecting it as on.
+</I>&gt;<i>
+</I>&gt;<i> Conversely, off time is a norm for notebooks.
+</I>&gt;<i> Therefore, notebooks should benefit for using bootblaze.
+</I>&gt;<i>
+</I>&gt;<i> sorcery with bootblaze will arrive sometime this week.
+</I>&gt;<i> This informational update email was sent a few days in advance
+</I>&gt;<i> to inform SAs of the new functionality to avoid being caught unaware
+</I>&gt;<i> when granted the option of having /etc/init.d/bootblaze run during boot.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> For those more interested in a new I/R set...
+</I>&gt;<i> Unfortunately, next weekend may be as soon as possible.
+</I>&gt;<i> Do not hold your breath.
+</I>&gt;<i> It is not a promise.
+</I>&gt;<i> I loathe committing the effort to have some silly mistake render them
+</I>&gt;<i> unsuable.
+</I>&gt;<i> Anyone who requires a change to the I/Rs send me a message this week.
+</I>&gt;<i>
+</I>&gt;<i> Already, they will have kernels configured very differently than the
+</I>&gt;<i> previous release
+</I>&gt;<i> and should work for even USB CDROMs without the trouble of shelling
+</I>&gt;<i> to load additional modules, run busybox mdev, and manually create the
+</I>&gt;<i> /dev/cdrom symbolic link.
+</I>&gt;<i> Sorry for the inconveniences it has already caused.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>That's a good new functionality, my laptop has 2GB ram and often after boot
+there is no more disc access....
+I would have liked to have a config file where to put the binaries we want
+to have cached too... for example, I know I will run firefox, konqueror,
+vim, gliv, pidgim at least once during a session but not necessarly during
+the 5 first minutes but for efficiency I would like to have those preloaded
+into ram (for example I'm on a trip and want to have only disc access during
+startup and after only use ram) no matter what.... so is it possible to have
+thoses files and dependencies preloaded into ram?
+thanks
+Best Regards
+JLM
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20071108/fe98ca82/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20071108/fe98ca82/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000319.html">[Sorcerer-admins] Booting your boxes can become faster!
+</A></li>
+	<LI>Next message: <A HREF="000321.html">[Sorcerer-admins] Booting your boxes can become faster!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#320">[ date ]</a>
+              <a href="thread.html#320">[ thread ]</a>
+              <a href="subject.html#320">[ subject ]</a>
+              <a href="author.html#320">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

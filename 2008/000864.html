@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%09xorg&In-Reply-To=%3C200811261830.24175.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000863.html">
+   <LINK REL="Next"  HREF="000865.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] up left rigth and down arrow don't work in	xorg</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%09xorg&In-Reply-To=%3C200811261830.24175.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] up left rigth and down arrow don't work in	xorg">merka at highsphere.net
+       </A><BR>
+    <I>Thu Nov 27 00:30:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000863.html">[Sorcerer-admins] up left rigth and down arrow don't work in xorg
+</A></li>
+        <LI>Next message: <A HREF="000865.html">[Sorcerer-admins] up left rigth and down arrow don't work in xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#864">[ date ]</a>
+              <a href="thread.html#864">[ thread ]</a>
+              <a href="subject.html#864">[ subject ]</a>
+              <a href="author.html#864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I suspect that X11 takes the keyboard configuration from HAL and your 
+xorg.conf also tries to configure the same keyboard. Also the options asking 
+for pc104 layout may be invalid for evdev contolled devices, not sure about 
+that.
+
+Without knowing more details about your setup, I cannot give you a better 
+answer. 
+
+It would be helpfull for me to see the /etc/X11/xorg.conf, /var/log/Xorg.0.log 
+and output from lshal. Alternatively, send at least the following output:
+
+ grep -C2 -i -e xkb -e kbd -e keyb -e evdev /var/log/Xorg.0.log
+
+ sections ServerLayout, InputDevice (keyboards only), ServerFlags from 
+xorg.conf
+
+ lshal | grep -C15 -i keyb
+
+Thanks, 
+
+Jan
+
+On Wednesday 26 November 2008, MALET Jean-Luc wrote:
+&gt;<i> Hi,
+</I>&gt;<i> so it seems that there is no hw issue....
+</I>&gt;<i> but I'm almost certain that the keyboard used is the keyboard1 (id=3)
+</I>&gt;<i> and not the 4
+</I>&gt;<i> however keyboard1 display keysyms while keyboard4 display key numbers....
+</I>&gt;<i> the keycode to keysyms translation is done with the following rule :
+</I>&gt;<i> xkb_keymap {
+</I>&gt;<i> &#160; &#160; xkb_keycodes &#160;{ include &quot;xfree86+aliases(qwerty)&quot; &#160; &#160;};
+</I>&gt;<i> &#160; &#160; xkb_types &#160; &#160; { include &quot;complete&quot; &#160; &#160;};
+</I>&gt;<i> &#160; &#160; xkb_compat &#160; &#160;{ include &quot;complete&quot; &#160; &#160;};
+</I>&gt;<i> &#160; &#160; xkb_symbols &#160; { include &quot;pc(pc105)+us(intl)&quot; &#160; &#160;};
+</I>&gt;<i> &#160; &#160; xkb_geometry &#160;{ include &quot;pc(pc105)&quot; &#160; &#160;};
+</I>&gt;<i> };
+</I>&gt;<i> so what is appearing is that the arrow keys are working at keycode
+</I>&gt;<i> level, but not at keysyms level it seems
+</I>&gt;<i> the result is that the arrow keys are NOT WORKING
+</I>&gt;<i> any idea? maybe in xkb_symbols there miss something?
+</I>&gt;<i> thanks
+</I>&gt;<i> JLM
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000863.html">[Sorcerer-admins] up left rigth and down arrow don't work in xorg
+</A></li>
+	<LI>Next message: <A HREF="000865.html">[Sorcerer-admins] up left rigth and down arrow don't work in xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#864">[ date ]</a>
+              <a href="thread.html#864">[ thread ]</a>
+              <a href="subject.html#864">[ subject ]</a>
+              <a href="author.html#864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

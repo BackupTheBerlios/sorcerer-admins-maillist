@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Augur man page and GCC optimization
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Augur%20man%20page%20and%20GCC%20optimization&In-Reply-To=%3CCA%2BT4wDgGa_x61kC_5E%3Dy7X5bn-AU1VD7vhoqx3F%3D4Oi9deZZqQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002497.html">
+   <LINK REL="Next"  HREF="002500.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Augur man page and GCC optimization</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Augur%20man%20page%20and%20GCC%20optimization&In-Reply-To=%3CCA%2BT4wDgGa_x61kC_5E%3Dy7X5bn-AU1VD7vhoqx3F%3D4Oi9deZZqQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Augur man page and GCC optimization">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Dec  8 08:52:12 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002497.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+        <LI>Next message: <A HREF="002500.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2499">[ date ]</a>
+              <a href="thread.html#2499">[ thread ]</a>
+              <a href="subject.html#2499">[ subject ]</a>
+              <a href="author.html#2499">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Dec 7, 2013 at 11:30 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> I maintain that everyone is free to do with their hardware as they
+</I>&gt;<i> please, and knowledge is power, after all. :)
+</I>&gt;<i>
+</I>
+Of course I concur.
+Every aspect of the sorcery tools
+can be modified by editing /etc/sorcery/config.
+However, because it can be modified
+is not necessarily sufficient reason to modify it.
+
+About a decade or so we also were
+somewhat excited about compiler optimization.
+And then more recently it was about link time optimization.
+However, testing revealed that there was as much to gain
+as to lose from enabling it.
+Such things are not clear benefits.
+I can give detailed examples.
+However, in this rare situation I will omit doing so unless requested.
+
+&quot;There comes a time, thief, when the jewels cease to sparkle,
+when the gold loses its luster, when the throne room becomes a prison,
+and all that is left is a father's love for his child.&quot;
+Ha, wait, no that's from the 1982 movie &quot;Conan the Barbarian.&quot;
+
+There comes a time when the micromanagement loses its luster.
+And the POSIX becomes the like a subordinate SA.
+And all that is left is for the SA to do the tasks
+that require the skills of a SA such as
+editing configuration files for Apache httpd or
+editing configuration files for Berkeley Internet Name Domain.
+*chuckles*  :)
+
+With that said SAs are not encouraged to micromanage.
+Doing so merely invites in possibilities for bugs
+that would not be surmised when a bug report is submitted.
+Therefore, all extraordinary modifications should be reported
+along with bug reports when seeking help.
+Typically, the less extraordinary the modifications
+then the more extraordinary the performance.
+
+There is one exemption.
+If desired the selected processor governor can be performance.
+I use it from time to time.
+However, many of us tend to use the ondemand governor.
+That allows frequency of processors to be scaled up when demand exists.
+However, the adjustment is not instant.
+Performance is lost while using ondemand.
+However, power is conserved and less heat is produced.
+
+Not many of us dare to allow our computers
+to hibernate to RAM or hibernate to disk.
+Typically, hibernate to disk requires special provision
+for a sufficiently large swap partition during deployment.
+So the next best thing to do before logging out of a workstation
+or locking the screen is to switch to the powersave governor.
+At a command line type
+# cpufreq
+then press tab twice for a list of governors.
+
+If the frequency for processors is desired
+then at any time run:
+$ grep MHz /proc/cpuinfo
+
+# grep MHz /proc/cpuinfo
+cpu MHz         : 3000.000
+cpu MHz         : 3000.000
+cpu MHz         : 800.000
+cpu MHz         : 800.000
+
+Something like that might not be uncommon
+for the ondemand governor.
+And it could change to something else
+in less than a second.
+
+If we want to adjust performance
+then utilization of CPU frequency and governors
+tends to be how we do it these days.
+
+BTW, do not feel obliged to use my program
+to adjust the governors and frequency.
+The files can be accessed directly
+within the /sys/ hierarchy.
+They are somewhere within there.
+Might require using find and grep to locate.
+However, the greatest amount of flexibility
+is provided by adjusting them directly.
+The cpufreq program is merely a convenience tool.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131207/f58f966d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131207/f58f966d/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002497.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+	<LI>Next message: <A HREF="002500.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2499">[ date ]</a>
+              <a href="thread.html#2499">[ thread ]</a>
+              <a href="subject.html#2499">[ subject ]</a>
+              <a href="author.html#2499">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

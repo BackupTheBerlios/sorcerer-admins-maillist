@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] problem with sorcerer - might be	unstable	libraries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20problem%20with%20sorcerer%20-%20might%20be%0A%09unstable%09libraries&In-Reply-To=%3C461CCC44.6080406%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000075.html">
+   <LINK REL="Next"  HREF="000080.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] problem with sorcerer - might be	unstable	libraries</H1>
+    <B>malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20problem%20with%20sorcerer%20-%20might%20be%0A%09unstable%09libraries&In-Reply-To=%3C461CCC44.6080406%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] problem with sorcerer - might be	unstable	libraries">malet.jean-luc at laposte.net
+       </A><BR>
+    <I>Wed Apr 11 13:53:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000075.html">[Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+</A></li>
+        <LI>Next message: <A HREF="000080.html">[Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#77">[ date ]</a>
+              <a href="thread.html#77">[ thread ]</a>
+              <a href="subject.html#77">[ subject ]</a>
+              <a href="author.html#77">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> a &#233;crit :
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> I run IBM Lotus Domino servers under Sorcerer. I know its not 
+</I>&gt;<i> officially supported by IBM, but i havent got previously no problems 
+</I>&gt;<i> running Domino under it. Problem is that when irebooted servers now my 
+</I>&gt;<i> Dominos always crashes after it launches its tasks.
+</I>&gt;<i>
+</I>&gt;<i> I dont idea why it crashes as its own crashlogs does not make any 
+</I>&gt;<i> sense (to me), nor its error information what it puts to console. its 
+</I>&gt;<i> always prints out something like this:
+</I>&gt;<i> Stack base = 0xb1f64590, Stack size = 5156 bytes
+</I>&gt;<i> Fatal Error signal = 0x0000000b PID/TID = 2532/-1309258832
+</I>&gt;<i>
+</I>&gt;<i> I think it could be glibc issue... maybe... or some other library 
+</I>&gt;<i> issue... tried even different kernels, no help there...
+</I>&gt;<i>
+</I>&gt;<i> I tried to re-compile glibc, but it does not compile because binutils 
+</I>&gt;<i> 2.17 seems to include some sort of bug, so you cant re-compile glibc 
+</I>&gt;<i> if you got binutils 2.17. Hah.
+</I>&gt;<i> Okay, then i tried to re-compile binutils 2.15, but it does not 
+</I>&gt;<i> compile with gcc v4.x.x it seems, Hah.
+</I>&gt;<i> So i modified spell to use gcc-v3.4, it did compile binutils 2.15, 
+</I>&gt;<i> then i re-compiled glibc 2.3.5, it uses also gcc-v.3.4. Now it 
+</I>&gt;<i> compiled ok. Rebooted but my problem still stays... meaning always my 
+</I>&gt;<i> Domino crashes. I suspect there are some sort of library problems with 
+</I>&gt;<i> sorcerer as i got 2 machines which got this problem, they are 
+</I>&gt;<i> different models, etc... I have no idea why it crashes...
+</I>&gt;<i>
+</I>&gt;<i> Any ideas, OS seems to be stable otherwise... allthough Domino is only 
+</I>&gt;<i> big problem i run inside those machines, but otherwise shell &amp; utils 
+</I>&gt;<i> seems to work flawlessly - except my Dominos...
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>   Pekka Panula, Net Servant Oy - A Sofor company
+</I>&gt;<i>   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+</I>&gt;<i> ------------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>I runned into similar problem while compiling vsftpd.... after looking 
+the web I found that it cames from broken glibc header...  glibc spell 
+is 2.3.6 while the official site reports 2.5... on the spell it was 
+saids that it was due to glibc 2.4 and 2.5 have to be considered as 
+betas... however the spell cast and run fine when using 2.5 glibc while 
+it don't on 2.3.6....
+I wonder if amule borken stats and wxgtk issue isn't related to that....
+best regards,
+jlm
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000075.html">[Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+</A></li>
+	<LI>Next message: <A HREF="000080.html">[Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#77">[ date ]</a>
+              <a href="thread.html#77">[ thread ]</a>
+              <a href="subject.html#77">[ subject ]</a>
+              <a href="author.html#77">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

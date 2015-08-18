@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%205&In-Reply-To=%3C596b75861002050652y279b11a6va51e074f37aff359%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001422.html">
+   <LINK REL="Next"  HREF="001425.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%205&In-Reply-To=%3C596b75861002050652y279b11a6va51e074f37aff359%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Feb  5 15:52:45 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001422.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5
+</A></li>
+        <LI>Next message: <A HREF="001425.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1424">[ date ]</a>
+              <a href="thread.html#1424">[ thread ]</a>
+              <a href="subject.html#1424">[ subject ]</a>
+              <a href="author.html#1424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Feb 4, 2010 at 12:28 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> i got your emails created a partition but i am now stuck in the fstab menu. when i entered the fstab information and click device it gives me a bad command error and when i click done it gives me an essential information not found error root system not established. could you please tell me what i am doing wrong and guide me step by step through this menu. thanks.
+</I>
+
+Ah, I understand now.
+That first entry which says device is there for a reason.
+It is useful for something.
+But I keep forgetting what that something is.
+
+Now, after you partition a disk.
+The partitions will show on that menu.
+But one must know what to look for.
+
+Let us say that the disk device that was partitioned
+was /dev/sda
+Then the first partition of /dev/sda is /dev/sda1
+The second partition of /dev/sda is /dev/sda2
+
+If the device partitioned was /dev/hda
+Then the first partition of /dev/hda is /dev/hda1
+The second partition of /dev/hda is /dev/hda2
+
+Additional IDE devices will have names such as:
+/dev/hdb
+/dev/hdc
+/dev/hdd
+
+Additional SCSI devices will have names such as:
+/dev/sda
+/dev/sdb
+/dev/sdc
+
+If they exist then they can be partitioned.
+There is an exception of course.
+An ATA based CDROM will have a device name such as
+/dev/hdb or /dev/hdc or /dev/hdd
+However, a cdrom device can not be partitioned.
+
+A SCSI based CDROM has a device name such as
+/dev/sg0 or /dev/scd0 /dev/scd1
+Yes it confuses SAs also from time to time.
+But that aside create at least one partition for Sorcerer
+and then select that partition in the fstab menu
+in order to fill out the mount point of /
+and the filesystem type of ext3
+After that it is done.
+
+Hmm, yes, that device at the top of that menu has a use,
+but rarely would anyone want to use it.
+Since it can be selected it is misleading.
+I always assumed that SAs would select the partitions
+beneath that corresponds to the partition that they
+created for Sorcerer where they want to install it.
+
+Sorry for the confusion.
+I wonder what aught to be done about that menu?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001422.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5
+</A></li>
+	<LI>Next message: <A HREF="001425.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1424">[ date ]</a>
+              <a href="thread.html#1424">[ thread ]</a>
+              <a href="subject.html#1424">[ subject ]</a>
+              <a href="author.html#1424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

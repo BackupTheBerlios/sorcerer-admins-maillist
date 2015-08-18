@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] md5sum checking...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20md5sum%20checking...&In-Reply-To=%3C596b75860805090738s7d425336qe4f512f06e560a2e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000425.html">
+   <LINK REL="Next"  HREF="000427.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] md5sum checking...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20md5sum%20checking...&In-Reply-To=%3C596b75860805090738s7d425336qe4f512f06e560a2e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] md5sum checking...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri May  9 16:38:06 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000425.html">[Sorcerer-admins] p7zip
+</A></li>
+        <LI>Next message: <A HREF="000427.html">[Sorcerer-admins] 20080507 ia32 I/R
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#426">[ date ]</a>
+              <a href="thread.html#426">[ thread ]</a>
+              <a href="subject.html#426">[ subject ]</a>
+              <a href="author.html#426">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Since I improved the ELF checking and added LA checking
+I for a moment began considering the md5sum checking.
+
+Currently, md5sum checks can be done weekly using the sorcery-md5sum check.
+It checks all installed spells.
+It is a good check.
+But it is also heavy on disk access.
+
+Instead I was thinking about a new feature.
+
+What about a md5sum check that does merely one spell at a time?
+Perhaps it begins with the oldest installed spell.
+It checks the md5sum files and then updates the time-stamp on
+that spells md5sum log in /etc/sorcery/log/md5sum/
+
+But when is the best time to perform the check?
+Perhaps the check should be done currently during dispel?
+That way every time a spell dispels,
+such as during updates of installed spells,
+a md5sum check is performed on an installed spell.
+
+This may be good place for it because dispel is heavy on CPU and light
+on disk usage,
+while a md5sum check is heavy on disk usage but light on CPU usage.
+
+I have not yet made a table weighing the boons and banes.
+Would anyone like to use this feature if implemented?
+Does it have more benefits or more costs over doing
+a weekly md5sum check of all installed spells?
+
+Considerations:
+
+While initially it seems like a good idea there is no correlation between
+how long a spell is installed and the probability of files corrupting.
+Also files accessed more frequently may have a higher probability
+of being corrupt than files that are rarely accessed.
+
+If a box has 1000 installed spells, with an average of 200 updating monthly
+5 months may be required to md5sum check files for all installed spells.
+Therefore, a corrupt file could exist for 5 months before detection
+as opposed to merely one week.
+
+
+Given the above considerations I will probably abandon this feature idea
+unless someone can make a strong case for it's potential benefits.
+
+
+Other variations: md5sum check during augur scry.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000425.html">[Sorcerer-admins] p7zip
+</A></li>
+	<LI>Next message: <A HREF="000427.html">[Sorcerer-admins] 20080507 ia32 I/R
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#426">[ date ]</a>
+              <a href="thread.html#426">[ thread ]</a>
+              <a href="subject.html#426">[ subject ]</a>
+              <a href="author.html#426">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

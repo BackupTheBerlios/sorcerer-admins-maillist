@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTi%3DfAgMazoXLhbmLyzyfD5yW5D2B_deDsFu4Aico%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001980.html">
+   <LINK REL="Next"  HREF="001985.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTi%3DfAgMazoXLhbmLyzyfD5yW5D2B_deDsFu4Aico%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 28 18:14:12 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001980.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+        <LI>Next message: <A HREF="001985.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1982">[ date ]</a>
+              <a href="thread.html#1982">[ thread ]</a>
+              <a href="subject.html#1982">[ subject ]</a>
+              <a href="author.html#1982">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Oct 28, 2010 at 12:56 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> One stray init script that needs config is networks. Currently the SA
+</I>&gt;<i> has to write their own stubs and stick them into /etc/networks.d.
+</I>&gt;<i> I have not found a good way of making that configgable, but this is
+</I>&gt;<i> mainly through not looking.
+</I>
+My thought about /etc/init.d/networks
+is that /etc/init.d/networks more or less fits the archetype of an init-script.
+It runs a start program and a stop program.
+/etc/networks.d/ is not considered part of the /etc/init.d/networks init-script
+It is run as a separate program rather than sourced in.
+That seems like a different issue and different discussion.
+
+
+&gt;<i> mount has it's config file as /etc/fstab, so the idea is not so very new.
+</I>
+If setting up a network was more like mounting a file system,
+more like defining a file system device and and mount point association,
+and more like defining a swap file or swap device
+then I could understand having an /etc/nettab
+The important aspect about /etc/fstab
+that makes it different from
+a configuration file for an init-script
+is that /etc/fstab is used directly by programs such as:
+
+/sbin/mount
+/sbin/umount
+/sbin/swapon
+/sbin/swapoff
+
+With a few exceptions
+/etc/fstab is a configuration file for a program
+invoked by an init-script,
+but it is not normally a configuration file for an init-script.
+
+If /etc/fstab was a file sourced in or read in by an init-script
+and used as parameters for starting an additional program
+then that would be more what I expect from a configuration
+file for an init-script.
+
+Therefore, my idea of a configuration file for an init-script
+is a file that contains information that is used directly by
+the init-script and perhaps handed as command line parameters
+to the programs an init-script runs.
+However, a configuration file for an init-script would not be like
+/etc/networks.d/ nor like /etc/fstab.
+/etc/networks.d/ is more like it's own program.
+/etc/fstab are configuration files most often used
+directly by programs run by init-scripts.
+However, at times even those lines blur.
+
+I am not saying that /etc/init.d/conf.d/networks
+would be un-doable for the /etc/init.d/networks init-script.
+However, I have no idea how /etc/init.d/conf.d/networks
+could become a replacement for /etc/networks.d/
+
+
+&gt;<i> modules also have a config file...
+</I>
+The files in /etc/modprobe.d/
+such as /etc/modprobe.d/i915.conf
+Those can contain configuration information for modules.
+
+
+&gt;<i> most services that start have a config file,
+</I>
+Do they?
+I would not normally consider a config file for a program run by an init-script
+to necessarily be the same as a config file for an init-script.
+Therefore, my perspective is that an init-scripts will rarely have a
+config file.
+
+
+&gt;<i> Maybe some launch feedback, as is done now.
+</I>&gt;<i> The init could call the script, and stick something about that in the
+</I>&gt;<i> log, and the program could then say fail, launched, success or
+</I>&gt;<i> whatever would be most fitting....
+</I>i&gt; So, the log file could look very much similar to what we have today,
+&gt;<i> maybe even shorter...
+</I>&gt;<i>
+</I>&gt;<i> ie:
+</I>&gt;<i> calling: /etc/init.d/mount &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [success]
+</I>&gt;<i> calling: /etc/init.d/networks &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [fail &#160; &#160; &#160; &#160;]
+</I>&gt;<i> calling: /etc/init.d/bootmisc
+</I>&gt;<i> calling: /etc/init.d/kdm-5 &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[launched]
+</I>
+
+Code to provide that additional information can be added to
+/etc/init.d/prc
+It would make the logs somewhat longer.
+But it would help make evident the location of a problem
+provided that init-scripts are running in series.
+Instead of having to grep some text from init-scripts in /etc/init.d/
+The log would show exactly what init-script was ran.
+
+ * loopback configuring                                         [ warning ]
+ * loopback configured                                          [ success ]
+
+Seeing that alone does not indicate that the
+information was printed during the execution of
+/etc/init.d/loopback
+
+Lines such as:
+ * Run /etc/init.d/loopback
+ * loopback configuring                                         [ warning ]
+ * loopback configured                                          [ success ]
+ * Ran /etc/init.d/loopback
+
+Or perhaps printing
+/etc/rc.d/rcS.d/S00loopback
+would show more precisely
+what is running and where a problem
+might be happening if init-scripts are
+being run in sequence.
+
+
+&gt;<i> It would look cool, but I have no idea whether this might actually be feasible.
+</I>&gt;<i> I might hack it a little, and see just how badly I can break the init
+</I>&gt;<i> on my boxes. Luckily, just casting init-scripts can bring that back to
+</I>&gt;<i> normal.. :)
+</I>
+
+I did not have such information print
+because it will make information during sysinit
+and runlevel scroll faster and longer.
+And the additional information is only useful
+during serial execution of init-scripts.
+However, it does make sense to have it.
+
+When I go looking for a problem
+I look for the problematic init-script
+by grepping for text from log scroll
+in files located in /etc/init.d/
+to see which init-script can print it.
+That lacks a certain eloquence and convenience.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001980.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+	<LI>Next message: <A HREF="001985.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1982">[ date ]</a>
+              <a href="thread.html#1982">[ thread ]</a>
+              <a href="subject.html#1982">[ subject ]</a>
+              <a href="author.html#1982">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

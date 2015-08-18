@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Collating Sorcerer specific directories into the	/aux/ hierarchy
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Collating%20Sorcerer%20specific%20directories%20into%20the%0A%09/aux/%20hierarchy&In-Reply-To=%3CCA%2BT4wDijOoBGJPgTjezLBgwZhRkpj%3Ds%2B%2B2iW5SS2XhGN1j52JA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002384.html">
+   <LINK REL="Next"  HREF="002387.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Collating Sorcerer specific directories into the	/aux/ hierarchy</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Collating%20Sorcerer%20specific%20directories%20into%20the%0A%09/aux/%20hierarchy&In-Reply-To=%3CCA%2BT4wDijOoBGJPgTjezLBgwZhRkpj%3Ds%2B%2B2iW5SS2XhGN1j52JA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Collating Sorcerer specific directories into the	/aux/ hierarchy">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug 23 20:02:26 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002384.html">[Sorcerer-admins] familiar with the familiar?
+</A></li>
+        <LI>Next message: <A HREF="002387.html">[Sorcerer-admins] Collating Sorcerer specific directories into the /aux/ hierarchy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2386">[ date ]</a>
+              <a href="thread.html#2386">[ thread ]</a>
+              <a href="subject.html#2386">[ subject ]</a>
+              <a href="author.html#2386">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorcerer boxes provide directories
+that are not present on other distros.
+Until now the plethora of directories
+gives Sorcerer a sloppy appearance.
+Thankfully retrospect provides a solution.
+These directories are moving into
+the /aux directory hierarchy.
+
+Former                Newer
+/etc.sav/              /aux/use/etc/
+/etc.ori/               /aux/new/etc/
+/lib64.sav/            /aux/fit/lib64/
+/lib.sav/               /aux/fit/lib/
+/var/cache/old/     /aux/old/
+/var/cache/tmp/    /aux/tmp/
+
+Here is the reasoning.
+First, these directories belong on the root file system.
+That way their content is available when / is mounted.
+This could be important if software to run
+is currently having a &quot;Miss ELF&quot; event
+and requires formerly installed libraries
+that are available only in /aux/old/
+
+Second, the use of /aux/use/
+for storing customized configuration files
+during upgrades or while spells are dispelled
+allows for easy storage of any customized file
+instead of only files from /etc/
+Only a few odd software projects
+fail to store their configuration files in /etc
+KDE is or was among them.
+
+Files placed in /aux/tmp/ are hard linked into /aux/old/
+therefore those must exist on the same file system.
+
+I might yet consign more directories to /aux-blivion  :)
+Actually, /aux is short for /auxiliary
+/auxiliary seems like much to type.
+
+I am making this announcement for two reasons.
+First, I apologize if creating an inconvenience by using /aux
+As far as I know /aux is not used.
+Please correct me if I am incorrect.
+Second, please do not rm -fr /aux
+It is providing a service.
+
+However, if a SA dares to clear the old cache
+while a &quot;Miss ELF&quot; event is ongoing
+then I can understand executing the commands
+# rm -fr /aux/old; ldconfig
+I will also understand if the box refuses to run some
+or all installed software after that command executes.
+Be very certain about what will break
+when manually removing the old cache.
+
+BTW, previously, the old cache was /var/cache/old/
+Consequently, libraries in it did not become available
+until after /var/ or /var/cache/ mounts.
+That should not have caused problems on Sorcerer boxes.
+However, having it on / eliminates any possibility.
+
+If a verbose explanation is desired
+then install immune-help-guide
+and then visit each directory
+using a bash shell root command prompt.
+By collating these Sorcerer specific directories
+and providing a tour guide;
+new SAs should be able to quickly grasp
+the importance and use of the auxiliary directories.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002384.html">[Sorcerer-admins] familiar with the familiar?
+</A></li>
+	<LI>Next message: <A HREF="002387.html">[Sorcerer-admins] Collating Sorcerer specific directories into the /aux/ hierarchy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2386">[ date ]</a>
+              <a href="thread.html#2386">[ thread ]</a>
+              <a href="subject.html#2386">[ subject ]</a>
+              <a href="author.html#2386">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

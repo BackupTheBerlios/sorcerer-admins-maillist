@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] smooth performance...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20smooth%20performance...&In-Reply-To=%3CCA%2BT4wDiesASymAJ441Jmje_7qTfpy7dF0WK12-4Ja5HuwTsVZQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002393.html">
+   <LINK REL="Next"  HREF="002395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] smooth performance...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20smooth%20performance...&In-Reply-To=%3CCA%2BT4wDiesASymAJ441Jmje_7qTfpy7dF0WK12-4Ja5HuwTsVZQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] smooth performance...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 11 21:05:02 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002393.html">[Sorcerer-admins] role play
+</A></li>
+        <LI>Next message: <A HREF="002395.html">[Sorcerer-admins] directories reassigned
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2394">[ date ]</a>
+              <a href="thread.html#2394">[ thread ]</a>
+              <a href="subject.html#2394">[ subject ]</a>
+              <a href="author.html#2394">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Obviously, having processes such as updating installed software
+defer input/output to user owned processes is desirable.
+And that is what recent changes accomplish.
+sorcery should now be able to provide smoother performance.
+
+Last week I was using the &quot;pv&quot; program from
+<A HREF="http://www.ivarch.com/programs/pv.shtml">http://www.ivarch.com/programs/pv.shtml</A>
+in order to rate limit some I/O tasks.
+However, rate limiting was not exactly what I wanted.
+
+Now cock is used for rate limiting.
+Unlike other rate limiting programs cock has an auto-mode.
+With auto-mode full bore output is permitted
+until an impending I/O spike is encountered.
+Then I/O is deferred momentarily.
+This allows the kernel more I/O for loading user processes,
+swapping, and other tasks that compete with sorcery for disk I/O.
+
+Additionally, cock allows rate limiting specified in megabytes per second.
+And a box with the &quot;min&quot; feature enabled
+will always rate limit I/O tasks to 1 megabyte per second
+in order to minimize sorcery's utilization of resources.
+
+SAs that want to specify a specific value for rate limiting
+I/O tasks can do so using sorcery's configuration menu.
+8 megabytes per second provides a very reasonable
+compromise between performance and system spontaneity.
+
+Like most aspects of sorcery
+this is yet another
+that can be complete ignored
+while still receiving a benefit.
+
+Installing and upgrading software requires processing power and I/O.
+Yet both should be deferred when needed by user owned processes.
+Sorcery should be capable of completing it's tasks
+without a detectable loss in primary role performance.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002393.html">[Sorcerer-admins] role play
+</A></li>
+	<LI>Next message: <A HREF="002395.html">[Sorcerer-admins] directories reassigned
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2394">[ date ]</a>
+              <a href="thread.html#2394">[ thread ]</a>
+              <a href="subject.html#2394">[ subject ]</a>
+              <a href="author.html#2394">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

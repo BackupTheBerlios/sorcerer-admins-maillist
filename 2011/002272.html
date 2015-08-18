@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] important changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20changes...&In-Reply-To=%3CCA%2BT4wDhG3UvLxfiK9LC6ciqvhaMyjrsDd5uBggwMmc9%3DFoOawg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002271.html">
+   <LINK REL="Next"  HREF="002273.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] important changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20important%20changes...&In-Reply-To=%3CCA%2BT4wDhG3UvLxfiK9LC6ciqvhaMyjrsDd5uBggwMmc9%3DFoOawg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] important changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct 11 20:12:39 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002271.html">[Sorcerer-admins] gnome 3.2.0 madness
+</A></li>
+        <LI>Next message: <A HREF="002273.html">[Sorcerer-admins] important changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2272">[ date ]</a>
+              <a href="thread.html#2272">[ thread ]</a>
+              <a href="subject.html#2272">[ subject ]</a>
+              <a href="author.html#2272">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/var/{lock,run}/ are now supposed to be directories and not symbolic links.
+I was being annoyed at how the symbolic links would sometimes be overwritten
+when a spell installed something such as ConsoleKit or gdm.
+Therefore, those directories are now binds to /run/lock and /run, respectively.
+That should eliminate any problems concerning those.
+
+sorcery used to remove /sys/fs/cgroup/sorcery/ after completing.
+That was potentially annoying because removing the control group
+also relinquished it's resource allocation settings.
+Consequently, on the subsequent run sorcery could compete
+with the user and daemon control groups for up to half the CPU cylces.
+This will no longer happen.
+
+sorcery control group will have it's limited 16 cpu.shares.
+Additionally, the sub control groups of sorcery: cast; dispel; leech
+now receive individual resource allowances.
+That way the majority of CPU cycles and blockio.weight belongs to cast.
+leech and dispel will compete for scraps.
+
+The proper amount of CPU time for sorcery to consume when competing
+against other control groups is 1/64th or less.
+That should maintain calm waters while updating,
+which is something that might not have been happening on all boxes.
+
+Evert suggested that glibc locale database generation should only happen
+when the ac adapter is plugged into a laptop.
+I agree.
+And I made that change a while ago.
+However, I neglected to notice that the function generating
+the locale databases was not correctly joining with the idle control group.
+I fixed this.
+Now the generation of locale archives will happen at boot
+using background an incredibly slim 1/512th of CPU cycles,
+or more provided that the cycles would be otherwise idle.
+
+locale databases are used for native language translation.
+A complete set is not required.
+A subset can be selected by running
+# /etc/init.d/locale-archive configure
+
+The locale-archives are not generated on every boot.
+They are generated on the first boot after installation
+or after glibc is re-installed.
+So in general the /etc/init.d/locale-archive script
+has received far more improvement that warranted
+for something that infrequently performs a duty.
+
+I have not yet surmised a passable solution for using
+gdm on an NVIDIA twinview configuration.
+However, for those who can use gdm
+then gnome 3.2.0 should be mostly usable.
+gnome-terminal crashes.
+And I adjusted gnome-session's fallback
+to run mutter instead of metacity.
+mutter works okay.
+It is less fancy than gnome-shell.
+However, gnome-shell does not render properly on all boxes.
+
+gnome-shell however does render properly with NVIDIA twinview.
+Unfortunately, gdm errors and does not permit login.
+Consequently, if not too inconvenient then users might want to
+login using xdm or kdm and then change the window manager to gnome-shell.
+That much accomplishes nearly the same as starting with gdm.
+
+I do not warranty the software that comes from gnome authors.
+I probably spend more time struggling with it than the average SA.
+As far as I can tell the installation should be good enough to run.
+And it runs fine on some boxes.
+If it breaks feel free to keep the pieces.
+I am only doing extremely modest distribution wide fixes-workarounds
+and am not willing to rewrite unfortunate gnome code.
+
+Please do not forget that /var/{lock,run}/ will now be directories
+that are bound and no longer symbolic links.
+That way it will not look strange when looking for potential problems.
+Good luck to anyone who wants to run gnome 3.
+I recommend using the LAG=0 grimoire after the next UTC 00:00
+for the best probability of success.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002271.html">[Sorcerer-admins] gnome 3.2.0 madness
+</A></li>
+	<LI>Next message: <A HREF="002273.html">[Sorcerer-admins] important changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2272">[ date ]</a>
+              <a href="thread.html#2272">[ thread ]</a>
+              <a href="subject.html#2272">[ subject ]</a>
+              <a href="author.html#2272">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

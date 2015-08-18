@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20preserve%20or%20to%20backup%2C%20that%20is%20the%20question%2C%0A%09no%20longer%21&In-Reply-To=%3C596b75860902211353h5141515do4accb1143f709230%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001021.html">
+   <LINK REL="Next"  HREF="001011.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20preserve%20or%20to%20backup%2C%20that%20is%20the%20question%2C%0A%09no%20longer%21&In-Reply-To=%3C596b75860902211353h5141515do4accb1143f709230%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb 21 22:53:20 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001021.html">[Sorcerer-admins] To preserve or to backup, that is the question, no longer!
+</A></li>
+        <LI>Next message: <A HREF="001011.html">[Sorcerer-admins] VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1022">[ date ]</a>
+              <a href="thread.html#1022">[ thread ]</a>
+              <a href="subject.html#1022">[ subject ]</a>
+              <a href="author.html#1022">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The backup/preserve rule for files in /etc
+did not have anything to do with backing up the filesystem.
+Those are different issues entirely.
+
+The changes I announced most recently were to indicate to SAs
+that I made changes so that SA can easily keep both modified
+files in /etc while having easy access to the originals in /etc.ori/
+
+It saves SAs the trouble of having to copy before modifying,
+yet still having the original to revert to at anytime for any reason.
+Basically, this change is merely implementing a convenience that
+SAs would do otherwise on an as needed basis.
+
+
+As for restoring boxes to a previous state
+there are snapshot logs that a SA can use
+to discover exactly what software at what versions
+were installed on a given date.
+/var/log/sorcery/snap.gz
+
+There are a number of ways to use it.
+
+# zcat snap.gz | LC_ALL=C grep &quot;^200902210903&quot; | cut -f2-
+
+That would show all the software and versions installed at that time.
+
+# zcat snap.gz | LC_ALL=C grep &quot;grimoire&quot;
+
+That would show the times of snapshots when the grimoire was installed
+and the installed version of the grimoire.
+It will show many lines because the grimoire is always installed.
+If one wanted to know what versions of the grimoire had been installed...
+
+# zcat snap.gz | LC_ALL=C grep &quot;grimoire&quot; | cut -f2- | uniq
+
+snapshot logs can be used in any way the SA wants.
+The information in a snapshot log can be used to
+recreate the installed software the way
+that it would have been at a certain time in the past.
+
+
+
+On Sat, Feb 21, 2009 at 8:06 AM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> Kyle Sallee wrote:
+</I>&gt;&gt;<i> For a while I considered that preserve/backup feature was confusing.
+</I>&gt;&gt;<i> I barely remembered which was which nor which did what.
+</I>&gt;&gt;<i> Consequently, I am removing it.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I do not recall the original purpose of the backup/preserve feature.
+</I>&gt;&gt;<i>
+</I>&gt;<i> backup feature was because long time ago sorcery was not stable enough
+</I>&gt;<i> for my own usage.... I crashed the box several times without backup to
+</I>&gt;<i> restore and then had to preform a whole install... however this don't
+</I>&gt;<i> appears to be the case now (more than 1 year without reinstall...)
+</I>&gt;&gt;<i> I tend to expect that the SA or SAs that requested it did
+</I>&gt;&gt;<i> were not clear about what they wanted.
+</I>&gt;&gt;<i> This is what happens when an idea
+</I>&gt;&gt;<i> is not carefully considered prior to implementation.
+</I>&gt;&gt;<i> It creates something that is confusing, difficult, and probably less
+</I>&gt;&gt;<i> than desired.
+</I>&gt;&gt;<i> Therefore, I am removing it.
+</I>&gt;&gt;<i>
+</I>&gt;<i> well we discussed long time though... ;)
+</I>&gt;<i> for preserve I've no idea about what it was doing.... backup was
+</I>&gt;<i> creating incremental backup of the system to allow an emergency recovery
+</I>&gt;<i> using simply tar
+</I>&gt;<i> then with a small subset of statically linked apps you could still boot
+</I>&gt;<i> on the system and restore it...
+</I>&gt;&gt;<i> The following will be the current rules regarding most files in /etc/
+</I>&gt;&gt;<i> The rules below do not apply to files in /etc/{gconf,sorcery,init.d}/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When a spell is dispelled,
+</I>&gt;&gt;<i> it's modified files from /etc/
+</I>&gt;&gt;<i> are transferred to /etc.sav/
+</I>&gt;&gt;<i> where only /etc.sav/ renames /etc/
+</I>&gt;&gt;<i> This way after the the updated spell finishes installing
+</I>&gt;&gt;<i> modified /etc/ files can be transferred back into /etc/
+</I>&gt;&gt;<i> Convenient, yes?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The original /etc/ files for spells are now installed in both
+</I>&gt;&gt;<i> /etc/ and also /etc.ori/
+</I>&gt;&gt;<i> This way diffing a modified and original /etc/ file
+</I>&gt;&gt;<i> is as easy as executing the diff command.
+</I>&gt;&gt;<i> Yes, /etc.ori/ is a bit non standard.
+</I>&gt;&gt;<i> And so is /etc.sav/
+</I>&gt;&gt;<i> However, these aught to give SAs
+</I>&gt;&gt;<i> greater convenience than the choice between
+</I>&gt;&gt;<i> a preserve and backup rules.
+</I>&gt;&gt;<i> And most boxes have plenty of space to nearly replicate /etc/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The files in /etc.ori/ are merely for SA convenience.
+</I>&gt;&gt;<i> They have no checksums.
+</I>&gt;&gt;<i> Consequently, removing them should not create problems.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Although not /etc/ files,
+</I>&gt;&gt;<i> all files installed in /usr/doc/ /usr/share/doc/ /usr/share/locale/LC_MESSAGES/
+</I>&gt;&gt;<i> can also be removed anytime.
+</I>&gt;&gt;<i> No CPU cycles or disk wear and tear is wasted on
+</I>&gt;&gt;<i> checking the content of files that are often unessential.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Did someone ask how to reconfigure all the installed spells on a Sorcerer box.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # rm /etc/sorcery/log/config/*/sorcery /etc/sorcery/log/opt.{on,off}/*
+</I>&gt;&gt;<i> # cast --deps $( augur installed )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, I have not tried it.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001021.html">[Sorcerer-admins] To preserve or to backup, that is the question, no longer!
+</A></li>
+	<LI>Next message: <A HREF="001011.html">[Sorcerer-admins] VirtualBox
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1022">[ date ]</a>
+              <a href="thread.html#1022">[ thread ]</a>
+              <a href="subject.html#1022">[ subject ]</a>
+              <a href="author.html#1022">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

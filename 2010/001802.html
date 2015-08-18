@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Re : can't boot into my box
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Re%20%3A%20can%27t%20boot%20into%20my%20box&In-Reply-To=%3CAANLkTiksGzaMHcmNIdLqQxlBxXdeHkZ3ZCYS9PTnRmEu%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001798.html">
+   <LINK REL="Next"  HREF="001799.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Re : can't boot into my box</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Re%20%3A%20can%27t%20boot%20into%20my%20box&In-Reply-To=%3CAANLkTiksGzaMHcmNIdLqQxlBxXdeHkZ3ZCYS9PTnRmEu%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Re : can't boot into my box">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul 20 05:35:40 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001798.html">[Sorcerer-admins] Re : can't boot into my box
+</A></li>
+        <LI>Next message: <A HREF="001799.html">[Sorcerer-admins] Accessing the internet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1802">[ date ]</a>
+              <a href="thread.html#1802">[ thread ]</a>
+              <a href="subject.html#1802">[ subject ]</a>
+              <a href="author.html#1802">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jul 19, 2010 at 4:51 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> hm..
+</I>&gt;<i>
+</I>&gt;<i> should have read this before I posted, but basically, this just confirms
+</I>&gt;<i> what I said in my previous email.
+</I>&gt;<i>
+</I>&gt;<i> One question though Kyle, why a 2GByte /boot?
+</I>
+A 1G /boot is usually sufficient.
+However, as SAs request and want
+more and more software
+then /lib /lib64 /sbin /bin will require more space
+and likewise new kernel releases tend to require
+more space for modules.
+1G might be enough /boot to last 5 years,
+maybe 10, maybe not.
+2G should be plenty while still requiring
+merely a fraction of the available space
+on 300G to 500G fixed disks.
+Better to spend a little more on /boot
+than to have to repartition later.
+
+&gt;<i> We used to get by with an 8 or 10 meg /boot - and yes, I do dye my beard
+</I>&gt;<i> to keep the gray out ;)
+</I>
+I also remember those days.
+Before switching to modular kernels with initramfs
+the recommended size for /boot was about 256M or 512M.
+Due to that piece of history modern Sorcerer
+only uses about 4 of the 16 available lilo slots for booting.
+
+# du -sm /boot/2.6*
+100     /boot/2.6.33.4
+101     /boot/2.6.34
+101     /boot/2.6.34.1
+
+The space requirements for booting are on the rise.
+Used to be less than 64M per directory.
+Now about 100M
+64*4 = 256M
+So 4 images used to fit within 256M /boot
+But not now.
+Hopefully, SAs that had to adjust boxes
+already adjusted them.
+
+Until the boons started to greatly outweigh the banes
+I did not want Sorcerer to have
+a pre-configured modular kernel.
+It is a chore to update the config.
+But even more so than that
+the space requirements for /boot quadrupled.
+
+But I am hooked on plug'n'pray and
+the convenience of being able to easily
+install Sorcerer without running utilities
+to learn the hardware and browse the
+kernel's menus to enable the proper drives.
+That was a masochists' egg hunt
+that used to be amusing.
+But such a skill check is uncommon among modern distros.
+And the drawback of course is having
+a kernel that requires an hour or more
+to compile instead of merely 5 minutes.
+
+Sorcerer could have been on board
+at the time distros used initrd,
+but I still evaluated against it at that time.
+Consequently, important changes happened.
+Disk space became very cheap and plentiful
+and installing distros from floppy disks went away.
+So when I decided upon going with an initramfs
+I did not have the traditional consideration of
+trying to make the initramfs as small as possible.
+For one, the list of modules was huge.
+SAs complained if I did not include them all on the initramfs.
+That alone is half the size of an initramfs.
+Secondly, if the initramfs was already going to be that big
+then why should I provide only a limited selection
+of cut down utilities from busybox that
+can just barely boot a box?
+I was looking at the difference
+between creating a 32M or a 64M initramfs.
+So why not gather almost everything from
+/bin /etc /lib /lib64 /sbin and put that in the initramfs?
+That way SA have enough to do repairs,
+create filesystems, or almost anything that
+might be required from the initramfs.
+Of course the initramfs never turns out to be as much
+help as an Install/Rescue disk,
+but the fully stocked initramfs is the next
+best thing to a fully stocked liquor cabinet.
+
+So wanting a full selection of modules
+on an fully stocked initramfs is how
+it came to be 64M.
+And over time the initramfs continues growing.
+Both gzip and bzip2 compressed initramfs are loadable.
+LZMA compressed initramfs do not load.
+I tested it.
+The latest I/Rs probably have bzip2 compressed initramfs.
+And that does save some space.
+But on a deployed Sorcerer box
+the time required to bzip2 or even gzip
+4 initramfs images is not the blink of an eye.
+Given that disk space can be provided
+then better to just have them uncompressed.
+
+# time gzip -1 initr
+real    0m6.748s
+user    0m5.941s
+sys     0m0.418s
+
+# ls -lah /boot/2.6.34.1/initrf initrf.gz
+-rw------- 1 root root 91M Jul 19 16:34 /boot/2.6.34.1/initrf
+-rw------- 1 root root 39M Jul 19 20:21 initrf.gz
+
+No doubt even light compression would help,
+but at the cost of about 24-30 extra seconds
+in generating them to save 42% disk space.
+Therefore, I rather spend the space
+than trouble the SA to wait for the compression.
+Later on /boot becomes tight and SAs complain
+then I can introduce an option to compress initramfs images.
+
+So currently, 1G would be enough to hold
+almost 10 kernels + initramfs.
+2G would be enough for 16.
+But if only 4 are stored
+then there is even space left over
+for the SA to create a swap file if necessary.
+/boot sees very little action.
+fragmentation on /boot would be regrettable,
+but would not cause as much of an impact as
+fragmentation on /
+Having 2G for /boot would not be disadvantageous
+in the short or long run depending upon how the SA
+uses the spare space on /boot and how fast
+kernel + initramfs images grow in size.
+
+Still the decision is up to the SA.
+There is no right or wrong about it,
+just compromises.
+I want some speed and plenty of utilities on an initramfs.
+To me that is worth the disk space.
+Aside from the I/R there are almost
+no space considerations concerning the initramfs.
+But one can look at /etc/init.d/initramfs to
+see what I filter out of the initramfs.
+I shave off a few megabytes, but not much.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001798.html">[Sorcerer-admins] Re : can't boot into my box
+</A></li>
+	<LI>Next message: <A HREF="001799.html">[Sorcerer-admins] Accessing the internet
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1802">[ date ]</a>
+              <a href="thread.html#1802">[ thread ]</a>
+              <a href="subject.html#1802">[ subject ]</a>
+              <a href="author.html#1802">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

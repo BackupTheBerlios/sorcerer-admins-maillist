@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] GPT Disk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3CCA%2BT4wDh7%2BpiZxA0Y-upDQATEouTcBSH5S_8mY5w%3DcN%2BxN65nvQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002419.html">
+   <LINK REL="Next"  HREF="002421.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] GPT Disk</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20GPT%20Disk&In-Reply-To=%3CCA%2BT4wDh7%2BpiZxA0Y-upDQATEouTcBSH5S_8mY5w%3DcN%2BxN65nvQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] GPT Disk">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Feb 19 21:52:25 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002419.html">[Sorcerer-admins] GPT Disk
+</A></li>
+        <LI>Next message: <A HREF="002421.html">[Sorcerer-admins] greetings and a glimpse of the future.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2420">[ date ]</a>
+              <a href="thread.html#2420">[ thread ]</a>
+              <a href="subject.html#2420">[ subject ]</a>
+              <a href="author.html#2420">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I feel pleased by the many SAs offering help.
+Thanks everyone.
+Great ideas.
+And I will re-read the URL that Bradley D. Thornton provided.
+Until recently, I have been ignoring EFI
+because I have no computers with the firmware
+and did not expect to be able to test it in qemu.
+However, I might have added an EFI bootloader to the grimoire.
+If I can gain some useful understanding about it then perhaps
+it can be an used with the next I/R or the one after the next.
+
+I adjusted kernel configs.
+When CONFIG_PARTITION_ADVANCED is set
+then many questions are asked most of which seem irrelevant.
+
+Advanced partition selection (PARTITION_ADVANCED) [N/y/?] (NEW)
+  Acorn partition support (ACORN_PARTITION) [N/y/?] (NEW)
+  Alpha OSF partition support (OSF_PARTITION) [N/y/?] (NEW)
+  Amiga partition table support (AMIGA_PARTITION) [N/y/?] (NEW)
+  Atari partition table support (ATARI_PARTITION) [N/y/?] (NEW)
+  Macintosh partition map support (MAC_PARTITION) [N/y/?] (NEW)
+  PC BIOS (MSDOS partition tables) support (MSDOS_PARTITION) [Y/n/?]
+    BSD disklabel (FreeBSD partition tables) support (BSD_DISKLABEL)
+[N/y/?] (NEW) y
+    Minix subpartition support (MINIX_SUBPARTITION) [N/y/?] (NEW)
+    Solaris (x86) partition table support (SOLARIS_X86_PARTITION) [N/y/?]
+(NEW)
+    Unixware slices support (UNIXWARE_DISKLABEL) [N/y/?] (NEW)
+  Windows Logical Disk Manager (Dynamic Disk) support (LDM_PARTITION)
+[N/y/?] (NEW)
+    Windows LDM extra logging (LDM_DEBUG) [N/y/?] (NEW)
+  SGI partition support (SGI_PARTITION) [N/y/?] (NEW)
+  Ultrix partition table support (ULTRIX_PARTITION) [N/y/?] (NEW)
+  Sun partition tables support (SUN_PARTITION) [N/y/?] (NEW)
+  Karma Partition support (KARMA_PARTITION) [N/y/?] (NEW)
+  EFI GUID Partition support (EFI_PARTITION) [N/y/?] (NEW)
+  SYSV68 partition table support (SYSV68_PARTITION) [N/y/?] (NEW)
+
+Consequently, that EFI GUID is somewhat like the needle in the hay stack.
+Decided to try:
+
+CONFIG_PARTITION_ADVANCED=y
+# CONFIG_ACORN_PARTITION is not set
+# CONFIG_OSF_PARTITION is not set
+# CONFIG_AMIGA_PARTITION is not set
+# CONFIG_ATARI_PARTITION is not set
+# CONFIG_MAC_PARTITION is not set
+CONFIG_MSDOS_PARTITION=y
+CONFIG_BSD_DISKLABEL=y
+# CONFIG_MINIX_SUBPARTITION is not set
+CONFIG_SOLARIS_X86_PARTITION=y
+CONFIG_UNIXWARE_DISKLABEL=y
+CONFIG_LDM_PARTITION=y
+# CONFIG_LDM_DEBUG is not set
+CONFIG_SGI_PARTITION=y
+CONFIG_ULTRIX_PARTITION=y
+CONFIG_SUN_PARTITION=y
+CONFIG_KARMA_PARTITION=y
+CONFIG_EFI_PARTITION=y
+# CONFIG_SYSV68_PARTITION is not set
+CONFIG_BLOCK_COMPAT=y
+
+I half expect that LDM and SUN might go unused
+and KARAMA's description says that it is for an mp3 player.
+If anyone wants more or less of a change
+please indicate so and why.
+I do put forth effort to make decent kernel configs
+that should be usable distribution wide.
+For that reasons an x86_64, an IA32 SMP, and an IA32 UP config exists.
+That way each type of box can gain a slightly closer to optimal performance.
+But the configs might not always be ideal
+so I welcome corrections.
+
+Some of us were wielders of the modern magic in days of yore
+when creating a usable kernel configuration
+was a mandatory installation task.
+The lore of kernel configuration became the gatekeeper
+that determined who can deploy the distro.
+It had merits.
+We laughed about compiling
+a kernel and modules in under 2 minutes.
+But the change in computers from 64M of RAM, to 256M of RAM, to 1G of RAM,
+to even larger loadouts, and appearance of udev and other factors
+shifted favor away from custom monolithic kernels.
+
+Along with creating kernel configs
+I also introduced semi-elaborate initramfs images
+and decided that if we should pay the price
+for the inconvenience of a much larger /boot/
+then we should also reap the reward
+of retaining a lofty rootfs after boot
+to act as a look-down/shoot-down platform
+for sniping unusual bugs or problems
+that could occur in the root file system.
+The metaphor may be obtuse.
+Look-down/shoot-down is a type of aircraft radar
+which enables the pilot to engage and destroy an air target with missiles
+while remaining beyond visual range,
+and perhaps while remaining beyond the possibility of retaliation.
+Similarly while chrooted to the rootfs file system
+bugs or strangeness in the root file system
+would not likely be able to cause any disruption
+of processes that are run from the rootfs.
+
+Ah, but I digress.  As I was previously saying,
+with the appearance of udev and other considerations
+I eventually changed my point of view
+and created a modular kernel config for distribution wide, etc...
+Not everyone was in favor of the changes.
+However, the changes seemed to solve more problems than were created.
+
+I never expected to be capable of creating an ideal linux config.
+I tried only because I expected the outcome would be the lesser of evils.
+However, the methods of using a distribution provided configs
+or using custom created configs both have boons and banes.
+Likewise using modular or monolithic kernels both have boons and banes.
+When considering from a single SA's point of view
+custom configs and a monolithic kernel
+that can boot without initramfs
+might seem to be indisputably most favorable.
+But when considering the variety of hardware
+and the variety of skill in system administrators
+then I arrived at the conclusion that a modular kernel
+with a distribution provided configuration
+would not be better,
+but would achieve the lesser of evils.
+And most SAs can neglect attention towards kernel configs.
+That is convenient, especially for SAs that wear many hats.
+
+So with consideration to what I wrote above,
+please always feel free to make recommendations
+concerning the kernel config.
+By cooperating we can create an adequate distribution wide kernel config,
+or perhaps at least configs adequate for  99% of the enterprise
+quality servers, workstations, and laptops that we deploy.
+I am adding extra emphasis to this aspect because
+the situation involving GUID Partition Tables and the resolution
+demonstrates that a how a deficiency in the kernel config
+was spotted, reported, and corrected.
+This is good.
+With a changes such as this
+the distro evolves to become more adequate
+for deployment on systems with 2T and larger mass storage devices.
+
+I find this change to be exciting,
+even though I humbly admit
+to being the last person to learn about GPT.
+*chuckles*
+Please feel free to give me a clue
+when I am less than aware of current trends.
+Thanks.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130219/beac7ca2/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130219/beac7ca2/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002419.html">[Sorcerer-admins] GPT Disk
+</A></li>
+	<LI>Next message: <A HREF="002421.html">[Sorcerer-admins] greetings and a glimpse of the future.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2420">[ date ]</a>
+              <a href="thread.html#2420">[ thread ]</a>
+              <a href="subject.html#2420">[ subject ]</a>
+              <a href="author.html#2420">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] What is happening during 'waiting for	compilation to begin'
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20What%20is%20happening%20during%20%27waiting%20for%0A%09compilation%20to%20begin%27&In-Reply-To=%3C596b75860708172055o5cceabc5i68c0af730fafbf56%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000164.html">
+   <LINK REL="Next"  HREF="000191.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] What is happening during 'waiting for	compilation to begin'</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20What%20is%20happening%20during%20%27waiting%20for%0A%09compilation%20to%20begin%27&In-Reply-To=%3C596b75860708172055o5cceabc5i68c0af730fafbf56%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] What is happening during 'waiting for	compilation to begin'">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug 18 05:55:57 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000164.html">[Sorcerer-admins] What is happening during 'waiting for	compilation to begin'
+</A></li>
+        <LI>Next message: <A HREF="000191.html">[Sorcerer-admins] What is happening during 'waiting for	compilation to begin'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#173">[ date ]</a>
+              <a href="thread.html#173">[ thread ]</a>
+              <a href="subject.html#173">[ subject ]</a>
+              <a href="author.html#173">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># top
+
+That gives an overview of what processes are consuming the CPU cycles.
+
+# augur
+
+That gives an overview of what sorcery may be doing
+or could be doing on the box.
+
+The delay between when a spell is cast and
+when it begins may be due to several factors.
+1. grep runs far more slowly now than it did in the past.
+2. When a spell is cast every spell that spell requires
+must be checked to see if it is fully configured.
+3. The SA is presented with configuration dialogs
+for spells that have not yet been fully configured.
+4. Sources for spells that must be compiled have to be downloaded
+if they are not already available on the local box.
+5. The spell requested to cast may be waiting
+for the spells that it requires to be installed.
+
+Here is an example:
+
+Spell C requires spell B.
+Spell B requires spell A.
+Box has spell A installed.
+SA requests Spell C cast.
+Spell C must wait until spell
+B finishes casting before
+beginning to cast spell C
+
+
+Unlike leech and cast which can automatically invoke the other
+dispel can not automatically invoke any other sorcery utility.
+The appearance of &quot;waking up&quot; due to a spell being dispelled
+is merely coincidental timing.
+
+Lastly, a new cast request that occurs
+while sources are being compiled
+will take a few times longer to be processed
+than a cast request on a box that is otherwise idle.
+But it will still work.
+
+
+
+On 8/17/07, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> This box sometimes works fine, and sometimes takes a really really long time
+</I>&gt;<i> to cast things.
+</I>&gt;<i> What is it waiting for?
+</I>&gt;<i> how can I poke it and make it go anyway
+</I>&gt;<i> augur scry just has the spell waiting
+</I>&gt;<i> seems sometimes if I dispel something it wakes up...
+</I>&gt;<i>
+</I>&gt;<i> Jim
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000164.html">[Sorcerer-admins] What is happening during 'waiting for	compilation to begin'
+</A></li>
+	<LI>Next message: <A HREF="000191.html">[Sorcerer-admins] What is happening during 'waiting for	compilation to begin'
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#173">[ date ]</a>
+              <a href="thread.html#173">[ thread ]</a>
+              <a href="subject.html#173">[ subject ]</a>
+              <a href="author.html#173">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

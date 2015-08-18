@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] problem with sorcerer - might be unstable	libraries
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20problem%20with%20sorcerer%20-%20might%20be%20unstable%0A%09libraries&In-Reply-To=%3COF8083682B.BAE8E847-ONC22572BA.003D307C-C22572BA.003E8637%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000089.html">
+   <LINK REL="Next"  HREF="000077.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] problem with sorcerer - might be unstable	libraries</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20problem%20with%20sorcerer%20-%20might%20be%20unstable%0A%09libraries&In-Reply-To=%3COF8083682B.BAE8E847-ONC22572BA.003D307C-C22572BA.003E8637%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] problem with sorcerer - might be unstable	libraries">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Apr 11 13:22:55 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000089.html">[Sorcerer-admins] /etc/networks
+</A></li>
+        <LI>Next message: <A HREF="000077.html">[Sorcerer-admins] problem with sorcerer - might be	unstable	libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#75">[ date ]</a>
+              <a href="thread.html#75">[ thread ]</a>
+              <a href="subject.html#75">[ subject ]</a>
+              <a href="author.html#75">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+I run IBM Lotus Domino servers under Sorcerer. I know its not officially 
+supported by IBM, but i havent got previously no problems running Domino 
+under it. Problem is that when irebooted servers now my Dominos always 
+crashes after it launches its tasks.
+
+I dont idea why it crashes as its own crashlogs does not make any sense 
+(to me), nor its error information what it puts to console. its always 
+prints out something like this:
+Stack base = 0xb1f64590, Stack size = 5156 bytes
+Fatal Error signal = 0x0000000b PID/TID = 2532/-1309258832
+
+I think it could be glibc issue... maybe... or some other library issue... 
+tried even different kernels, no help there...
+
+I tried to re-compile glibc, but it does not compile because binutils 2.17 
+seems to include some sort of bug, so you cant re-compile glibc if you got 
+binutils 2.17. Hah.
+Okay, then i tried to re-compile binutils 2.15, but it does not compile 
+with gcc v4.x.x it seems, Hah. 
+So i modified spell to use gcc-v3.4, it did compile binutils 2.15, then i 
+re-compiled glibc 2.3.5, it uses also gcc-v.3.4. Now it compiled ok. 
+Rebooted but my problem still stays... meaning always my Domino crashes. I 
+suspect there are some sort of library problems with sorcerer as i got 2 
+machines which got this problem, they are different models, etc... I have 
+no idea why it crashes...
+
+Any ideas, OS seems to be stable otherwise... allthough Domino is only big 
+problem i run inside those machines, but otherwise shell &amp; utils seems to 
+work flawlessly - except my Dominos...
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070411/6594bac6/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070411/6594bac6/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000089.html">[Sorcerer-admins] /etc/networks
+</A></li>
+	<LI>Next message: <A HREF="000077.html">[Sorcerer-admins] problem with sorcerer - might be	unstable	libraries
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#75">[ date ]</a>
+              <a href="thread.html#75">[ thread ]</a>
+              <a href="subject.html#75">[ subject ]</a>
+              <a href="author.html#75">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

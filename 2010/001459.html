@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] udev does not create sda, sdb and md0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20does%20not%20create%20sda%2C%20sdb%20and%20md0&In-Reply-To=%3COFD9F75B8A.8D2549A7-ONC22576C5.004A1A6C-C22576C5.004B2A3D%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001458.html">
+   <LINK REL="Next"  HREF="001460.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] udev does not create sda, sdb and md0</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20does%20not%20create%20sda%2C%20sdb%20and%20md0&In-Reply-To=%3COFD9F75B8A.8D2549A7-ONC22576C5.004A1A6C-C22576C5.004B2A3D%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] udev does not create sda, sdb and md0">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Tue Feb  9 14:40:59 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001458.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+        <LI>Next message: <A HREF="001460.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1459">[ date ]</a>
+              <a href="thread.html#1459">[ thread ]</a>
+              <a href="subject.html#1459">[ subject ]</a>
+              <a href="author.html#1459">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> From: Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Date: 09.02.2010 15:27
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] udev does not create sda, sdb and md0
+</I>&gt;<i> Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> 
+</I>&gt;<i> On Tue, Feb 9, 2010 at 12:40 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Updated kernel and udev and other stuff and rebooted ok, no problems 
+</I>and i
+&gt;<i> &gt; can see lots of stuff in /dev, but /dev/sda, sdb and its partitions 
+</I>are
+&gt;<i> &gt; missing and also /dev/md0.
+</I>&gt;<i> 
+</I>&gt;<i> Wow, that seems serious.
+</I>&gt;<i> The last time I saw something like that was when
+</I>&gt;<i> an incompelte initramfs we created that lacked
+</I>&gt;<i> kernel modules.
+</I>&gt;<i> It happened because of disk space shortage.
+</I>&gt;<i> I solved it by booting an older linux from the list.
+</I>&gt;<i> If those device nodes are not created
+</I>&gt;<i> then the first thing I would check is to see
+</I>&gt;<i> if /lib/modules/ has appropraite kernel modules
+</I>&gt;<i> for the kernel being run according to /proc/version
+</I>&gt;<i> If the kernel modules are missing
+</I>&gt;<i> then both mknod and udev are useless.
+</I>
+I tend to not use modules, instead i choose them be part of kernel 
+directly.
+I dont use modular kernel spell, i use old method, so no initramfs, etc. 
+not been used. 
+And also i dont see that disk is full. 
+
+&gt;<i> &gt; Boots ok, but those device files goes missing. What should i do, udev
+</I>&gt;<i> &gt; version 151, kernel 2.6.32.6
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Did create those manually:
+</I>&gt;<i> &gt; mknod sda b 8 0
+</I>&gt;<i> &gt; mknod sda1 b 8 1
+</I>&gt;<i> &gt; mknod sda2 b 8 2
+</I>&gt;<i> &gt; mknod sda5 b 8 5
+</I>&gt;<i> &gt; mknod sdb b 8 16
+</I>&gt;<i> &gt; mknod sdb1 b 8 17
+</I>&gt;<i> &gt; mknod sdb2 b 8 18
+</I>&gt;<i> &gt; mknod sdb5 b 8 21
+</I>&gt;<i> &gt; mknod md0 b 9 0
+</I>&gt;<i> 
+</I>&gt;<i> Did that help?
+</I>
+Yes, but only for this session, as udev overrides dev when rebooting. I 
+will reboot this server tonight.
+
+&gt;<i> Did you do a normal kernel version boot
+</I>&gt;<i> or did it fail to create those while doing a fast boot?
+</I>
+I use old kernel spell, not that modular one...
+
+&gt;<i> If it failed during a fast boot
+</I>&gt;<i> then it might not have been udev's fault,
+</I>&gt;<i> but rather a mistake that I coded.
+</I>&gt;<i> 
+</I>&gt;<i> My guess is that the udev version that is current
+</I>&gt;<i> in the grimoire is good for use.
+</I>&gt;<i> I tested it and also did a reboot test.
+</I>&gt;<i> But I tested it on a box with IDE hardware and not SCSI.
+</I>&gt;<i> 
+</I>&gt;<i> Will you double check please and verify that the problem
+</I>&gt;<i> is caused by udev?
+</I>
+IMHO, its prob. udev... 
+
+&gt;<i> On my test box I also keep a copy of udev installed,
+</I>&gt;<i> but extracted from archive in a subdirectory in /etc/
+</I>&gt;<i> That way if the installed udev is seriously broke
+</I>&gt;<i> then I can copy that older udev out of the directory
+</I>&gt;<i> and use it instead.
+</I>&gt;<i> 
+</I>&gt;<i> However, if udev is not working then....
+</I>&gt;<i> /etc/coldplug/dev contains a /dev
+</I>&gt;<i> that can be copied to /dev
+</I>&gt;<i> And also /etc/coldplug/modules
+</I>&gt;<i> contains a properly ordered list of modules to load.
+</I>&gt;<i> 
+</I>&gt;<i> I crated a kernel parameter that
+</I>&gt;<i> can force it to be used or disregarded,
+</I>&gt;<i> now which is it and what was it?
+</I>&gt;<i> 
+</I>&gt;<i> Oh yeah...
+</I>&gt;<i> Add coldplug to the kernel command line.
+</I>&gt;<i> That will use my previously saved coldplug events
+</I>&gt;<i> instead of leaving the task to udev.
+</I>&gt;<i> That should bail the box out.
+</I>&gt;<i> 
+</I>&gt;<i> I am reasonably certain that sometime during sysinit
+</I>&gt;<i> that it prints something like...
+</I>&gt;<i> 
+</I>&gt;<i> udev with udevadm trigger will handle coldplug events
+</I>&gt;<i> If this fails or requires longer than 200 seconds
+</I>&gt;<i> then please try rebooting with the kernel parameter:
+</I>&gt;<i> coldplug
+</I>&gt;<i> to reuse previously used coldplug events
+</I>&gt;<i> 
+</I>&gt;<i> But who reads scroll, yes?
+</I>
+will try if needed, but it still boots ok, but when boot is done and when 
+i can login to system, its missing /dev/sda, sdb and md0, but udev has 
+managed todo other devices ok afaik... so i dont rule out that current 
+boot procedure with current init-scripts causes this because i dont use 
+modular kernel spell.
+
+&gt;<i> I created this alternate method for handling cold plug events,
+</I>&gt;<i> because I do not have 100% confidence in udev.
+</I>&gt;<i> At least this aught to bail a box out if it previously
+</I>&gt;<i> could boot but now due to some udev bug
+</I>&gt;<i> bites the bullet during sysinit.
+</I>&gt;<i> I hope that helps.
+</I>
+I might actually pray for devtmpfs, <A HREF="http://lwn.net/Articles/330985/">http://lwn.net/Articles/330985/</A> , 
+<A HREF="http://lwn.net/Articles/331818/">http://lwn.net/Articles/331818/</A> , <A HREF="http://lwn.net/Articles/370418/">http://lwn.net/Articles/370418/</A>
+Could that be activated and then delete udev? I hate udev, it sucks big 
+time. Why, because its too much kernel version dependent, i mean, old 
+kernel and new udev its nogo, then new kernel and old udev, its also nogo, 
+grrrrrr. 
+
+Terveisin/Regards,
+   Pekka Panula, Sofor Oy - Jatkuvat palvelut
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100209/1bd06699/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100209/1bd06699/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001458.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+	<LI>Next message: <A HREF="001460.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1459">[ date ]</a>
+              <a href="thread.html#1459">[ thread ]</a>
+              <a href="subject.html#1459">[ subject ]</a>
+              <a href="author.html#1459">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

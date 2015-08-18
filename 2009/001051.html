@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Recent Setup...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Recent%20Setup...&In-Reply-To=%3C8596d02a0904131441qda22e94yd152fa04ea0cb6f3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001049.html">
+   <LINK REL="Next"  HREF="001054.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Recent Setup...</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Recent%20Setup...&In-Reply-To=%3C8596d02a0904131441qda22e94yd152fa04ea0cb6f3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Recent Setup...">d3ck0r at gmail.com
+       </A><BR>
+    <I>Mon Apr 13 23:41:42 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001049.html">[Sorcerer-admins] Recent Setup...
+</A></li>
+        <LI>Next message: <A HREF="001054.html">[Sorcerer-admins] Recent Setup...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1051">[ date ]</a>
+              <a href="thread.html#1051">[ thread ]</a>
+              <a href="subject.html#1051">[ subject ]</a>
+              <a href="author.html#1051">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Apr 13, 2009 at 2:33 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> The network templates are better in the grimoire tarball
+</I>&gt;<i> than on the last I/R
+</I>&gt;<i> But they are still a long way from becoming excellent.
+</I>&gt;<i>
+</I>&gt;&gt;<i> There was some other package that didn't recognize it should inclue
+</I>&gt;&gt;<i> -lwrap... but I forgot what that was...
+</I>&gt;<i>
+</I>&gt;<i> What do you want to use TCP wrappers for when
+</I>&gt;<i> you have iptables and a linux box?
+</I>&gt;<i>
+</I>
+Uhmm.. cause I think tcpwrappers is enabled by default on most
+packages that want to use it?   I didn't puposefully select it.
+
+&gt;<i>
+</I>&gt;&gt;<i> Botan didn't recognize my processor, and I had to hand-add --cpu=amd64 to spell
+</I>&gt;<i>
+</I>&gt;<i> Do you use Botan for anything?
+</I>&gt;<i> It is not actually required by any spell in the grimoire.
+</I>&gt;<i>
+</I>
+Monotone.  (monotone.ca) ... it uses boost and Botan. (I think this is
+more a fault of the Botan maintainers than anything... the CPU I'm
+using actually doesn't say 'opteron' but is a 64bit processor
+anyhow... so it's setup scripts for configure.pl that it uses is just
+making bad assumptions....
+
+&gt;<i>
+</I>&gt;&gt;<i> It would be nice if the functions in /etc/networks.d/functions would
+</I>&gt;&gt;<i> support setting like ETHADDR to specify the ethernet address of a
+</I>&gt;&gt;<i> card... not a big deal, until I update next and functinos are
+</I>&gt;&gt;<i> overwritten.
+</I>&gt;<i>
+</I>&gt;<i> I am reasonably certain that the networking templates
+</I>&gt;<i> allow to specify multiple IP address for a network device,
+</I>&gt;<i> both multiple IPv4 and IPv6 address if desired.
+</I>&gt;<i>
+</I>
+I'm not sure what the IP is being set for 'eth0' as first... the first
+IP address in the list is set on device eth0:0... but yes it looks
+like the lists of IP are working very well... but that doesn't address
+setting the hardware address :)
+
+Oh - but - dhcpd - the server for DHCP, doesn't like my
+configuration... there is no IPv4 on ETH0, and it is only checking
+eth0 and eth1... when I specify eth0:0:1 (which is the interface with
+the real IP I want to serve DHCP from) it says there's no subnet or
+that it has no ipv4 address..., or it's not broadcast enabled... I
+gave up looking at it for a bit... I don't get it.  It's the same
+configuration which was just working on my prior gateway....
+
+&gt;<i>
+</I>&gt;&gt;<i> (My cable company has the hw addr of my card registered, and this new
+</I>&gt;&gt;<i> box, being the new gateway, needed to emulate the old address - well,
+</I>&gt;&gt;<i> guess I could call them and say that I had to replace it and
+</I>&gt;&gt;<i> re-register the new IP *shrug* )
+</I>&gt;<i>
+</I>&gt;<i> They know the MAC address of the previous card?
+</I>&gt;<i> It might be possible to change the MAC address of a card
+</I>&gt;<i> or fake a different one, perhaps?
+</I>&gt;<i>
+</I>
+ipconfig hw ether 00:00:blah
+
+&gt;&gt;<i> oh - and dhclient, for some reason, doesn't seem to work, so I had to
+</I>&gt;&gt;<i> re-order the detect of dhcpcd and dhclient in functions... I don't
+</I>&gt;&gt;<i> know why it doesn't work, but it just sits there.
+</I>&gt;<i>
+</I>&gt;<i> I vaguely recall Jan pointing out that dhclient must be started
+</I>&gt;<i> during runlevels instead of during sysinit.
+</I>&gt;<i> I forgot exactly why.
+</I>&gt;<i> Or maybe that was some other program.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Other than that this has gone very smoothly. &#160;I now have a amd x64 box
+</I>&gt;&gt;<i> as my gateway with quite a bit of extra space (if you need a build
+</I>&gt;&gt;<i> site)
+</I>&gt;<i>
+</I>&gt;<i> I am always at a lack of x86_64 CPU power.
+</I>&gt;<i> I am currently awaiting the outcome of an linux-modular
+</I>&gt;<i> compile on qemu-system-x86_64
+</I>&gt;<i>
+</I>
+:<i>) linux-modular still takes like 20 minutes to build... but it's not
+</I>utterly horrible :)... I can set you up with an account soon - it's
+not quite stable yet (I'm not sure if rebooting will come back up yet)
+ _______________________________________________
+&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001049.html">[Sorcerer-admins] Recent Setup...
+</A></li>
+	<LI>Next message: <A HREF="001054.html">[Sorcerer-admins] Recent Setup...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1051">[ date ]</a>
+              <a href="thread.html#1051">[ thread ]</a>
+              <a href="subject.html#1051">[ subject ]</a>
+              <a href="author.html#1051">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

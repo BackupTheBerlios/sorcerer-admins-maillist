@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Update failures
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Update%20failures&In-Reply-To=%3C8596d02a1002111938y5b096daat32508a39dd47be3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001462.html">
+   <LINK REL="Next"  HREF="001469.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Update failures</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Update%20failures&In-Reply-To=%3C8596d02a1002111938y5b096daat32508a39dd47be3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Update failures">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri Feb 12 04:38:08 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001462.html">[Sorcerer-admins] Maintenance 9.2. 22:00 (GMT+2) - 10.2. 06:00	(GMT+2)
+</A></li>
+        <LI>Next message: <A HREF="001469.html">[Sorcerer-admins] Update failures
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1468">[ date ]</a>
+              <a href="thread.html#1468">[ thread ]</a>
+              <a href="subject.html#1468">[ subject ]</a>
+              <a href="author.html#1468">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>was recently syncing to all the latest packages, but stunnel fails to build.
+
+gcc -march=native -Os -Wall -Wshadow -Wcast-align -Wpointer-arith
+-I/usr/include -Wl,-s -o stunnel file.o client.o log.o options.o
+protocol.o network.o resolver.o ssl.o ctx.o verify.o sthreads.o
+stunnel.o pty.o libwrap.o  -lz -ldl -lutil -lnsl -lpthread -L/usr/lib
+-lssl -lcrypto
+libwrap.o: In function `check_libwrap':
+libwrap.c:(.text+0x21): undefined reference to `request_init'
+libwrap.c:(.text+0x2b): undefined reference to `sock_host'
+libwrap.c:(.text+0x35): undefined reference to `hosts_access'
+
+ &gt;      --- configure   2008-05-18 07:46:08.000000000 -0400
+ &gt;      +++ /tmp/configure      2008-09-26 22:44:02.000000000 -0400
+ &gt;      @@ -23452,6 +23452,7 @@
+ &gt;                       cat &gt;&gt;confdefs.h &lt;&lt;\_ACEOF
+ &gt;       #define HAVE_LIBWRAP 1
+ &gt;       _ACEOF
+ &gt;      +LIBS=&quot;-lwrap $LIBS&quot;
+
+ This is how Gentoo fixed it as well but it would have thought that the
+ tcp_wrappers/buildlink3.mk would have taken care of this.  If I bump
+ stunnel to 4.26 locally it folds at the same point on OpenSolaris so I
+ don't _think_ this is a NetBSD specific issue.
+
+... the same -lwrap can be applied to the ./configure in the spell.
+
+
+in the spell modified
+
+default_build
+
+to
+
+LIBS=-lwrap default_build
+
+now it builds.
+
+--------------
+had some issues with vlc and rrdtool failing to link with lua, recast
+lua, now both built.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001462.html">[Sorcerer-admins] Maintenance 9.2. 22:00 (GMT+2) - 10.2. 06:00	(GMT+2)
+</A></li>
+	<LI>Next message: <A HREF="001469.html">[Sorcerer-admins] Update failures
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1468">[ date ]</a>
+              <a href="thread.html#1468">[ thread ]</a>
+              <a href="subject.html#1468">[ subject ]</a>
+              <a href="author.html#1468">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

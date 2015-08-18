@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery changes, and KDE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C596b75860801311425i53319359wecb9066632255f1d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000387.html">
+   <LINK REL="Next"  HREF="000370.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery changes, and KDE</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%20changes%2C%20and%20KDE&In-Reply-To=%3C596b75860801311425i53319359wecb9066632255f1d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery changes, and KDE">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jan 31 23:25:30 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000387.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+        <LI>Next message: <A HREF="000370.html">[Sorcerer-admins] Problem download sources eg. using GNOME_URL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#388">[ date ]</a>
+              <a href="thread.html#388">[ thread ]</a>
+              <a href="subject.html#388">[ subject ]</a>
+              <a href="author.html#388">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i>  works fine,
+</I>&gt;<i>  just wanna have the return value of hook not discarded since I do some
+</I>&gt;<i> fancy stuff like a mount / -o remount,rw in prepare install hook
+</I>
+And if the remount fails?
+Do what?
+Exactly.
+cast does not know what to do with a failed result.
+The hook function can do something like:
+
+if ! mount / -o remount,rw
+then augur abort $SPELL
+fi
+
+It might work.
+It happens at the beginning of prepare_install
+Therefore, the actual dispel of the previously
+installed spell and installation of the new files
+has not yet begun.
+
+
+&gt;<i> and remove
+</I>&gt;<i> hooks.... I'm not sure about when to remount the drive ro, in post install
+</I>&gt;<i> hook?
+</I>
+That may be an unfortunate decision since
+filesystem modifications happen during post_install
+Also init-scripts are installed.
+
+
+&gt;<i> maybe it could break sorcery way of working
+</I>Probably.
+Keep in mind that after post_install runs
+and the spell finishes casting an archive file
+will be made and stored in /var/cache/archive
+That might not happen if /var/cache/archive is RO
+
+&gt;<i>  need a hook at beginning of cast and end of cast too could be the best
+</I>&gt;<i> solution... some hook that will be called at each end of a cast (ie when all
+</I>&gt;<i> the sorcery stuff  like log creation are done)
+</I>
+Even after a spell finishes casting,
+cast may still be modifying the filesystem.
+A hook at the end of cast is not the solution
+for remounting a filesystem ro.
+Okay util-linux finishes casting
+while openssh enters prepare_install
+the cast of openssh mounts the / RW
+However, as files are installing
+the closure of util-linux remounts / as RO
+openssh fails during installation.
+partially installed openssh can not be dispelled as
+as openssh-failed.
+Previously, installed openssh can not be restored.
+All because the filesystem is mounted RO
+
+&gt;<i>  but it works really fine and I think it's a good way to extend sorcery (for
+</I>&gt;<i> example have sorcery been run by user and gain root privileges only when
+</I>&gt;<i> installing....)
+</I>
+bash scripts do not support suid 0
+And there is no way to preserve memory
+if promoting from a user to root by su -
+Also users can not execute /usr/sbin/cast
+nor /usr/libexec/sorcery/cast because neither
+have other executable bit.
+
+
+&gt;<i>  thanks a lot, it's a good start and maybe finish
+</I>
+It is finished before it has started
+if one expects / can be remounted RO
+from a hook in cast.
+
+And even if there was a hook_cast_finale()
+what if dispel or leech is running?
+remounting file systems RO while leech or
+dispel is running may cause a wreck.
+
+Another option is to run a daemon that
+checks every minute or so to see if
+cast, dispel, or leech is running.
+If no PIDs are discovered
+then remount / RO and stop.
+However, starting a daemon such as
+that from a hook_prepare_install
+may have some extremely unfortunate consequences.
+Sentinel will be preloaded with that daemon.
+Also some function in cast might not return
+because it is waiting for that daemon to close
+or to separate from stdin, stdout, stderr.
+Also if cast does function correctly
+then why cast quits it may also forcibly
+shut the daemon which is a sibling process.
+
+Running a remount rw from prepare_install
+is not problematic.
+However, running a daemon from that point could be.
+
+Best options are probably having a wrapper script
+that you invoke before invoking:
+augur easy
+or cast
+or augur sync; augur newer; augur update
+That handles mount and remounting.
+Or perhaps start a daemon just before
+invoking cast or augur.
+The daemon can remount / as RW
+and then delay 5 minutes before beginning
+to check if it should remount / as RO
+
+leech can invoke leech and cast.
+cast can invoke cast dispel and leech
+dispel can not invoke cast nor dispel, nor leech.
+leech and cast can run multiple concurrent processes.
+
+Obviously, this makes adding a remount to RO
+point to cast leech or dispel a difficult objective,
+because it must also check that no other
+leech, cast, dispel are running.
+
+While not impossible it may be better to
+run a daemon that scan as often as once per minute
+to see if all the sorcery tools have completed and
+it is safe to remount / as read only.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000387.html">[Sorcerer-admins] sorcery changes, and KDE
+</A></li>
+	<LI>Next message: <A HREF="000370.html">[Sorcerer-admins] Problem download sources eg. using GNOME_URL
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#388">[ date ]</a>
+              <a href="thread.html#388">[ thread ]</a>
+              <a href="subject.html#388">[ subject ]</a>
+              <a href="author.html#388">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

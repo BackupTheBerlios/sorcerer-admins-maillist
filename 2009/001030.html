@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Some more feedback
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Some%20more%20feedback&In-Reply-To=%3C596b75860903041349r247a07b7x7c68ac243cc8b7a5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001029.html">
+   <LINK REL="Next"  HREF="001031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Some more feedback</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Some%20more%20feedback&In-Reply-To=%3C596b75860903041349r247a07b7x7c68ac243cc8b7a5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Some more feedback">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Mar  4 22:49:45 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001029.html">[Sorcerer-admins] Some more feedback
+</A></li>
+        <LI>Next message: <A HREF="001031.html">[Sorcerer-admins] dispell list totaly wrong....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1030">[ date ]</a>
+              <a href="thread.html#1030">[ thread ]</a>
+              <a href="subject.html#1030">[ subject ]</a>
+              <a href="author.html#1030">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Mar 4, 2009 at 1:11 AM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hi, back from my winter vacation
+</I>
+&gt;<i> hope you get fun! me I will take a month in a week to go to japan (thoses
+</I>&gt;<i> vacation will be more than welcome)
+</I>
+&#12418;&#12358;&#12288;&#26085;&#26412;&#35486;&#12398;&#20250;&#35441;&#12364;&#12288;&#20986;&#26469;&#12414;&#12377;&#12363;
+Can you already do Japanese conversation?
+
+
+&gt;<i> I was happy to read that my &quot;flame&quot; did have a positive feedback on my
+</I>&gt;<i> problems.
+</I>
+Precise constructive feedback is never flames.
+Flames are derogatory, not specific, and utterly useless.
+
+
+&gt;<i> Just thinking why we actually need this whole compiler menu in first place?
+</I>
+What compiler menu?
+For selecting custom CFLAGS and CXXFLAGS?
+Perhaps a SA might want to compile something with no optimization
+and debug information?
+
+
+&gt;<i> could we just copy needed environment from I/R? We have linux-modular, no
+</I>&gt;<i> need to compile custom kernel anymore. Let's just copy needed stuff to new
+</I>&gt;<i> root and SA then can reboot and use sorcerer tools on a new installed
+</I>&gt;<i> environment.
+</I>
+The menu driven installer does that and a little bit more.
+
+
+&gt;<i> this is also what I think : an I/R install shall be as simple as
+</I>&gt;<i> # mount /dev/target /media/root
+</I>&gt;<i> # mount /dev/target_var /media/root/var
+</I>&gt;<i> # ... (countinue mounting all user defined partitions)
+</I>&gt;<i> # mount /dev/cdrom /media/cdrom
+</I>&gt;<i> # cp -ax /media/cdrom /media/root
+</I>
+If only it were that simple
+then that would be nice.
+However, manual installation is possible.
+However, the careful construction of
+/media/root/etc/{lilo.conf{.head,},fstab}
+are essential.
+Also the initramfs must be constructed
+and the boot block and possibly bootable MBR must be written.
+Also the the bootable partition must be marked in using
+a partition programing such as fstab.
+
+/media/cdrom of an IR has only a few things on it.
+It has an initramfs, a kernel, a few megabytes in /var/cache/sources/*
+and a the majority of megabytes in /var/cache/archive/*
+
+If we reverted to a I/R style prior to 2008
+then the I/R ISO would have to be compressed with p7zip.
+It also might be too large to burn for the current selection of
+software provided on the x86_64 CD.
+Consequently, far less software could be provided on the I/R
+unless the format was changed to from CD to DVD.
+Also since CDROM drivers are slow and prone to write errors,
+maxing out a CDROM would increase the probability of encounter
+an unreadable sectors during installation
+and installation would be slower because reading compressed
+tarballs from CDROM and then decompressing them tends
+before writing to fixed disk tends to be faster than reading
+a huge amount of uncompressed files from CDROM using cp -a
+
+There are several advantages that the 2009 I/R format grants us.
+However, it does make for a more complicated manual installation.
+
+The 2009 style I/R has the advantage of download + burn + boot.
+The 2008 style I/R had download + decompress + burn + boot
+
+Therefore, from the perspective
+of the SA who wants to do the menu driven installation
+the 2009 style IR has one less step.
+
+
+&gt;<i> Regarding X.org. Whole force behind Sorcerer was earlier that you could
+</I>&gt;<i> choose your depencies, but now this X.org is sort of forced to install. So
+</I>&gt;<i> whats the point being source based if we still force big spells, eg. X.org
+</I>&gt;<i> to be force installed and removing it and it's depencies so damn difficult?
+</I>&gt;<i> I simply dont like it, we are loosing our freedom here on big way.
+</I>&gt;<i> Whats next, whole GNOME or KDE is forced too?
+</I>
+Actually, at the start of 2008 I wanted to provide KDE on the I/R
+However, KDE 4 just became available.
+And consequently, I had to redo all the kde spells to ensure that
+kde-v3 could exist in /opt/kde3/
+while kde-v4 could exist in /opt/kde4/
+
+However, xorg provided pre-compiled on the I/R is a convenience.
+Yes, xorg must be installed.
+However, xorg does not have to stay installed.
+Visit the dispel menu in sorcery.
+The I/R provides many installed spells
+that SAs may not want to keep installed.
+Dispelling of unwanted software is an intermediary step
+in the deployment of a Sorcerer box.
+Likewise software that SAs want installed must be selected for installation.
+
+The Sorcerer I/R is not perfectly sculpted to any SA's wishes.
+It has software that may be useful for installation
+and some that may be useful for rescue.
+It is not a complete pre-compiled binary based distro,
+but on a modern box complete installation of desired software
+can be accomplished in a reasonable amount of compilation and time.
+
+The current selection of software provided on the I/R is a bit
+of a compromise because the decent compression allows for
+more additional megabytes than expected.
+For many years I did not allow XFree86 nor xorg on the I/R
+For years the I/R had less than 100 spells installed on it.
+Now it has closer to 500 spells.
+
+Even if the I/R was reverted to 2008 style
+the 650M capacity of the CDROM
+would be exceed either this year or next.
+
+
+&gt;<i> I also agree, since on the I/R the Xserver isn't installed it shall not be
+</I>&gt;<i> installed after install
+</I>
+Oh but it is installed on the I/R
+It is simply not one of the spells provided in the I/R's initramfs.
+However, the archives for xorg are within /var/cache/archive/
+
+&gt;<i> on a previous mail I proposed a solution to drop a spell that is configured
+</I>&gt;<i> as optional in many spell and that we don't want to be selected as opt
+</I>&gt;<i> anymore, this shall help dropping X11 since I guess that for a console only
+</I>&gt;<i> linux all the mandatory spells have only an OPT on it
+</I>
+While I am uncertain if I understand the above paragraph
+I have modified cast so that when it is run while booted
+from the I/R cast will not present any selection of optional
+requirements for spells.
+Consequently, the SA will not at that time be granted
+the ability to select or deselect spells as optional requirements.
+Consequently, installation should not hang or go awry
+while casting the required spells during the menu driven installation.
+
+
+&gt;<i> I dont mind that it exists on I/R, but at least there should be options to
+</I>&gt;<i> be &quot;server option&quot; where X.org should not follow nor its depencies. I agree
+</I>&gt;<i> that nowdays some server programs do use GUI stuff and some has some X
+</I>&gt;<i> Window library depencies but there should be way to simpy cast that needed
+</I>&gt;<i> library and it's depencies not bunch of multimedia crap.
+</I>
+The idea if fine.
+However, the implementation is difficult.
+For the sake of simplicity let us just say that
+I magically know exactly what archived spells
+can be excluded from installation in order to
+avoid installing xorg, video codecs, video players, etc...
+Consequently, only desired software is installed.
+Oops, an ELF Failure happened because some installed
+software requires an ELF provided by some xorg spell
+that was not installed.
+No problem right?
+cast just re-compiles the source for the installed spell?
+However, the required source is not in the source cache?
+The SA has not set up the network?
+A compile failure happens.
+The compile failure triggers auto-failures of other essential spells
+queued for casting.
+Ultimately, this causes the installation process to fail.
+
+It is better to install all the archives.
+Then, on the first boot to the fixed disk,
+run sorcery, goto the dispel menu, and select for dispelling
+all the software that is not wanted.
+This way when cast is run later, cast can repair any problems
+that were created by missing ELF libraries that were installed
+by dispelled spells.
+
+No matter how sparse I make the I/R
+it will always install some software that SAs do not want.
+Therefore, SAs will have to visit the dispel menu.
+However, if I managed to make the I/R so sparse that
+it did not install any software that SAs could not live without,
+then SAs would complain about the software it lacks.
+&quot;Where is ping?  Where is nano?
+You expect me to create files with cat and edit files with sed?&quot;
+Consequently, the selection of software provided on
+the I/R is always a compromise.
+
+
+&gt;<i> well technically you just require X.org spell... kde, gnome.... are optional
+</I>&gt;<i> (aren't installed on this box)
+</I>&gt;<i> Best Regards
+</I>&gt;<i> JLM
+</I>
+I would totally include a kde-v4 installation on the I/R if I had the
+CPU cycles.
+:<i>)
+</I>kde-v4 is fun and useful in many respects.
+However, compiling kde-v4 takes a long time time.
+In contrast dispelling kde-v4 requires just a couple of minutes.
+Dispelling is faster than casting.
+Consequently, kde-v4 would be potentially useful for the I/R
+
+However, recently, I have been tempted to remove xine-lib xine-ui
+codecs and some other software from the I/R
+New source tarballs are released for those software projects.
+They take hours to compile in qemu-system-x86_64
+If I removed them from the I/R the last time
+I felt the temptation
+then I would be days closer to being ready to roll new I/Rs.
+
+
+Lastly, I want to revert a few topics and say
+that if someone understood the 2009 style I/R
+then they could do a manual installation.
+There would be some extra steps including unarchiving.
+But the other additional steps would be essential
+even if the I/R were more like a fixed disk image.
+fstab lilo and such still must be done either way.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001029.html">[Sorcerer-admins] Some more feedback
+</A></li>
+	<LI>Next message: <A HREF="001031.html">[Sorcerer-admins] dispell list totaly wrong....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1030">[ date ]</a>
+              <a href="thread.html#1030">[ thread ]</a>
+              <a href="subject.html#1030">[ subject ]</a>
+              <a href="author.html#1030">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

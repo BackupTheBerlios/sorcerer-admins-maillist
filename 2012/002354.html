@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] cosmetic changes involving logs.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cosmetic%20changes%20involving%20logs.&In-Reply-To=%3CCA%2BT4wDj122aEQ%2Bc1U5V7Zcx9FCsd8SyVNTeBEpBPfE8mFKBhRw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002348.html">
+   <LINK REL="Next"  HREF="002357.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] cosmetic changes involving logs.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20cosmetic%20changes%20involving%20logs.&In-Reply-To=%3CCA%2BT4wDj122aEQ%2Bc1U5V7Zcx9FCsd8SyVNTeBEpBPfE8mFKBhRw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] cosmetic changes involving logs.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 27 23:32:05 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002348.html">[Sorcerer-admins] one of my software prejudices...
+</A></li>
+        <LI>Next message: <A HREF="002357.html">[Sorcerer-admins] limited time only bug infestation,
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2354">[ date ]</a>
+              <a href="thread.html#2354">[ thread ]</a>
+              <a href="subject.html#2354">[ subject ]</a>
+              <a href="author.html#2354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>About a quarter of the time
+I want to look at a compile log
+after dispel already removed it.
+As I pondered a solution for this
+I slowly began to remember that
+I forgot to complete the migration
+of most types of information logs
+to event logs.
+
+I remember that when I first deprecated the 3 individual
+activity logs for cast, dispel, and leech
+that some people were not pleased with the forced transition
+to event logs in order to gather that information.
+And for a while I implemented an
+# augur activity
+in order to gather and display the same information
+from event logs rather than the deprecated activity logs.
+And now that augur command module is gone
+and I wonder why or when I removed it.
+But that is a digression.
+What I intend to indicate was that after the initial
+transition to event logs I decided to delay the
+migration of the additional logs.
+Of course, then I forgot entirely about it.
+I have no idea how many years ago that happened.
+But it seems like a good idea now.
+
+The event logs are disposable.
+Nothing breaks if they are not retained.
+They are purely informational.
+And they can be automatically pruned
+by immune-exam-clean
+
+I might have already mentioned event logs this year.
+But I added 3 new types of event logs:
+
+Down Load       Output from curl while downloading files
+Past Post       Installed file log when spell successfully cast
+Snap Shot       Installed loadout  when spell successfully cast
+
+And that is exactly how it appears.
+Download logs, history logs, and snapshot logs will now be generated
+each as an event log.
+Of course they are gzip compressed to reduce the required space on disk.
+And I was able to code backward compatibility for snapshot logs,
+but unfortunately, not for history logs since I changed the way they are stored.
+
+For the change to be properly noticed
+I am renaming
+# augur snapshot
+to
+# augur snap
+
+and
+# augur history
+to
+# augur past
+
+Their input remains the same.
+Output will probably differ.
+
+I am renaming the files for SAs to notice the change
+try the modified augur command modules
+and modify their scripts/programs to be able to parse the output.
+Also I tend to type commands such as:
+# au past
+And past is faster to type than history.  :)
+Same idea.
+And it goes with the event log type of &quot;Past Post&quot;
+
+Obviously, I am attempting to create logical yet short names.
+When viewing information spanning several columns
+then width becomes important.
+And short names are easier to recognize than single or dual character acronyms.
+Yes it is silly, but I like this sort of thing.
+
+I use
+# au event $SPELL
+and enjoy the columns.
+
+I recognize that not everyone is skilled at accessing event logs by
+command line.
+Not everyone knows to press ctrl-v before pressing tab.
+Consequently, I created a menu driven event viewer.
+And of course named it:
+# augur event-menu
+
+I am not fond of creating menus and dialogs for use with augur,
+since I usually prefer to add that to the sorcery tool instead.
+However, I made an exception in the past for
+# augur scry-menu
+Maybe almost nobody has discovered it?
+While doing
+# au scry
+M jumps to the scry menu.
+I never use it and so just now checked to see how it is accessed
+and to verify that it still works as expected.
+
+Sorry, I easily digress.
+The topic of conversation is the transition of existing log types to event logs.
+And one type of log is not transitioning.
+I am entirely discarding the dispel logs.
+In retrospect it was far less useful than I expected.
+I do not remember the last time I was interested
+in reading or grepping something from the dispel log.
+
+The reason I am not transitioning the dispel log to an event log
+is because dispel works differently than cast and leech.
+When dispel runs it processes ALL the spells queued for dispel in a single run.
+Being able to dispel the loadout of 2 to 256 installed spells concurrently
+is faster than dispelling each linearly.
+
+That is not because of SMP nor driving a high load nor any nonsense.
+dispel uses many external commands such as sed, sort, uniq.
+And running the content of several spells concurrently
+is faster because of fewer invocations to helper programs.
+However, the files and directories are still processed linearly.
+Dispel can cause I/O lag
+only when copying of files from their installed location to the OLD_CACHE/
+The files are copied sequentially, yet also rapidly.
+
+The blkio.weight for dispel is 100
+as compared with the normal weight of 1000 for services and user run programs.
+Actually, it looks more like:
+
+# find /etc/cgroup/ -name blkio.weight | xargs --max-lines=64 grep .
+/etc/cgroup/norm/blkio.weight:700
+/etc/cgroup/norm/user/blkio.weight:800
+/etc/cgroup/norm/sys/blkio.weight:700
+/etc/cgroup/idle/blkio.weight:10
+/etc/cgroup/idle/user/blkio.weight:10
+/etc/cgroup/idle/sys/blkio.weight:10
+/etc/cgroup/slow/sorcery/blkio.weight:100
+/etc/cgroup/slow/sorcery/leech/blkio.weight:100
+/etc/cgroup/slow/sorcery/cast/blkio.weight:200
+/etc/cgroup/slow/sorcery/dispel/blkio.weight:100
+/etc/cgroup/slow/blkio.weight:100
+/etc/cgroup/slow/user/blkio.weight:500
+/etc/cgroup/slow/sys/blkio.weight:500
+/etc/cgroup/real/blkio.weight:1000
+/etc/cgroup/real/sys/blkio.weight:1000
+/etc/cgroup/fast/blkio.weight:900
+/etc/cgroup/fast/user/blkio.weight:900
+/etc/cgroup/fast/sys/blkio.weight:900
+
+Unless the SA customized it more so by running
+# /etc/init.d/cgroup configure
+then a user should have about 7 times greater access to throughput than dispel.
+Yet it never seems that way if/when a box experiences I/O lag.
+Best solution seems to involve having plenty of installed and available RAM.
+The kernel automatically re-tasks most available RAM to the role of I/O caching.
+After the blocks are written due to memory pressure, a sync, or commit
+timer trigger,
+then the RAM can be re-tasked when required by processes.
+
+That completes this digression.
+A small lesson about event logs
+followed by a smaller lesson about control groups.
+Control groups are fascinating, even more so than analog cathode ray televisions
+with knobs on the front to change channels and
+to adjust frequency tuning of stations
+in order to compensate for reflected signals, frequency shifts, etc...
+No more knobs, no more snow on television every day,
+and no more dispel logs.
+Missing it already?
+Of course not.
+Some things we can do without.
+
+Please try the:
+# augur event-menu
+# augur snap
+# augur past
+commands in order to gain familiarly and retain recollection.
+As always
+# augur help event-menu
+# augur help snap
+# augur help past
+provide verbose help screens for those commands.
+
+BTW, I am sending this email
+about 2 days before the improved sorcery tools become available.
+For now I am hogging all the bugs and fun to myself.
+Okay, not many bugs, but plenty of fun.  :)
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002348.html">[Sorcerer-admins] one of my software prejudices...
+</A></li>
+	<LI>Next message: <A HREF="002357.html">[Sorcerer-admins] limited time only bug infestation,
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2354">[ date ]</a>
+              <a href="thread.html#2354">[ thread ]</a>
+              <a href="subject.html#2354">[ subject ]</a>
+              <a href="author.html#2354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

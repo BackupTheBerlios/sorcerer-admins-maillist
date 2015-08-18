@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Lilo
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Lilo&In-Reply-To=%3C8596d02a0905222205x49b190ees89630304d4fa5d8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001207.html">
+   <LINK REL="Next"  HREF="001210.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Lilo</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Lilo&In-Reply-To=%3C8596d02a0905222205x49b190ees89630304d4fa5d8%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Lilo">d3ck0r at gmail.com
+       </A><BR>
+    <I>Sat May 23 07:05:24 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001207.html">[Sorcerer-admins] Lilo
+</A></li>
+        <LI>Next message: <A HREF="001210.html">[Sorcerer-admins] Lilo
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1209">[ date ]</a>
+              <a href="thread.html#1209">[ thread ]</a>
+              <a href="subject.html#1209">[ subject ]</a>
+              <a href="author.html#1209">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> However, do you have an example of &quot;the wrong uuid&quot;?
+</I>
+I don't.
+they were alpha (base 32+?)  like HjJfga-ahajuu1-
+
+they were not the right grouping of digits either
+
+they were not hex - they definatly had letters g+
+
+they were several characters shorter....
+
+
+
+
+
+On Fri, May 22, 2009 at 10:41 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Thanks.
+</I>&gt;<i> I will check for that.
+</I>&gt;<i> Was the UUID valid, but belonged to a different partition?
+</I>&gt;<i> Was the UUID that was written not belong to any partition?
+</I>&gt;<i> I am a bit curious about how it could be getting the wrong UUID.
+</I>&gt;<i> I will look over that code thoroughly now.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, May 21, 2009 at 4:15 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> I found that the installation wrote the wrong uuid's to fstab...
+</I>&gt;&gt;<i> once you have the system up (mostly ) You can reboot witht he I/R cd,
+</I>&gt;&gt;<i> and mount alternate root....
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> then...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ls /dev/dev-by-uuid -la
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (these are just symbolic links to the real /dev/sda1 sort of
+</I>&gt;&gt;<i> devices... so you can fix the fstab ewith the correct uuid's....)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> regneerate the initramfs and you should good to reboot live...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Thu, May 21, 2009 at 8:15 AM, Mike Flanagan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">gentoo.mike at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Now ive downloaded the most recent iso . Go through the steps and ive
+</I>&gt;&gt;&gt;<i> noticed something off a bit .
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> When i go to boot into it after , it cannot locate the uuid of the
+</I>&gt;&gt;&gt;<i> harddrives that are generated from fstab .
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Also tried copying it over from the iso as well to boot into it , no luck.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> But if i setup raid or lvm / works like a charm . So does anyone have a
+</I>&gt;&gt;&gt;<i> workaround for this , or any suggestions .
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Because i would like to get to work on sorcerer.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> // on a side note , the install is nice and fast on the base system . It
+</I>&gt;&gt;&gt;<i> only takes all of 10 minutes to install which is nice for a base system :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Tue, May 19, 2009 at 6:02 AM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>&gt;
+</I>&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Send Sorcerer-admins mailing list submissions to
+</I>&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; &#160;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; &#160;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; &#160;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> You can reach the person managing the list at
+</I>&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; &#160;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-owner at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> When replying, please edit your Subject line so it is more specific
+</I>&gt;&gt;&gt;&gt;<i> than &quot;Re: Contents of Sorcerer-admins digest...&quot;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Today's Topics:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> &#160; 1. Re: webkit (jean-luc malet)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ----------------------------------------------------------------------
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Message: 1
+</I>&gt;&gt;&gt;&gt;<i> Date: Mon, 18 May 2009 13:54:49 +0200
+</I>&gt;&gt;&gt;&gt;<i> From: jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> Subject: Re: [Sorcerer-admins] webkit
+</I>&gt;&gt;&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> Message-ID:
+</I>&gt;&gt;&gt;&gt;<i> &#160; &#160; &#160; &#160;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">1de9d39c0905180454x439de608qfa85fd29c8b42eef at mail.gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> Content-Type: text/plain; charset=UTF-8
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> none yet
+</I>&gt;&gt;&gt;&gt;<i> I spent my last weekend cycling during 24h.... so I didn't touched a
+</I>&gt;&gt;&gt;&gt;<i> computer and right now I just dream of bed ;)
+</I>&gt;&gt;&gt;&gt;<i> will see if I can make some
+</I>&gt;&gt;&gt;&gt;<i> JL
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Fri, May 15, 2009 at 8:01 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;&gt;&gt;&gt;<i> wrote:
+</I>&gt;&gt;&gt;&gt;<i> &gt; midori means green in Japanese.
+</I>&gt;&gt;&gt;&gt;<i> &gt; I did not know it was the name of a web browser.
+</I>&gt;&gt;&gt;&gt;<i> &gt; And I did not know about webkit.
+</I>&gt;&gt;&gt;&gt;<i> &gt; Do you have a spell for either yet?
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; On Fri, May 15, 2009 at 1:22 AM, jean-luc malet
+</I>&gt;&gt;&gt;&gt;<i> &gt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; did anyone tried to compile webkit?
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; it seems that there are quite number of small web browser that can use
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; it and have pretty good features
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; like
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; <A HREF="http://fosswire.com/post/2008/11/midori-a-lightweight-webkit-browser-for-linux/">http://fosswire.com/post/2008/11/midori-a-lightweight-webkit-browser-for-linux/</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; thanks and regards
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; --
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; (garde le simple, imb?cile!)
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; &quot;mais qu'est-ce que tu m'as pondu comme usine ? gaz? fait des choses
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; simples et qui marchent, esp?ce d'imb?cile!&quot;
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; -----------------------------
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; &quot;Si vous pensez que vous ?tes trop petit pour changer quoique ce soit,
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; Reese
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i> &gt;
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;&gt;&gt;&gt;<i> (garde le simple, imb?cile!)
+</I>&gt;&gt;&gt;&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine ? gaz? fait des choses
+</I>&gt;&gt;&gt;&gt;<i> simples et qui marchent, esp?ce d'imb?cile!&quot;
+</I>&gt;&gt;&gt;&gt;<i> -----------------------------
+</I>&gt;&gt;&gt;&gt;<i> &quot;Si vous pensez que vous ?tes trop petit pour changer quoique ce soit,
+</I>&gt;&gt;&gt;&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+</I>&gt;&gt;&gt;&gt;<i> Reese
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> ------------------------------
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> End of Sorcerer-admins Digest, Vol 35, Issue 23
+</I>&gt;&gt;&gt;&gt;<i> ***********************************************
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Work to live , live to work
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001207.html">[Sorcerer-admins] Lilo
+</A></li>
+	<LI>Next message: <A HREF="001210.html">[Sorcerer-admins] Lilo
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1209">[ date ]</a>
+              <a href="thread.html#1209">[ thread ]</a>
+              <a href="subject.html#1209">[ subject ]</a>
+              <a href="author.html#1209">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

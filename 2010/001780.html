@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W44DE12B9A7734C1C35A86EAEBE0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001782.html">
+   <LINK REL="Next"  HREF="001781.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W44DE12B9A7734C1C35A86EAEBE0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Sun Jul 18 12:59:29 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001782.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001781.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1780">[ date ]</a>
+              <a href="thread.html#1780">[ thread ]</a>
+              <a href="subject.html#1780">[ subject ]</a>
+              <a href="author.html#1780">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+Hello Kyle. 
+
+ 
+
+I did a little investigation and I think what causes the problem.
+
+ 
+
+When I change the sed to 
+
+ 
+
+/.^/dev/fd0 because I don't have any floppy-disk.
+
+ 
+
+Then I get this message :
+
+ 
+
+sed -e expression 1 char 86, unterminated adress regex.
+
+ 
+
+So it looks to me that sed doesn't like when we change that rule.
+
+But when we don't change it the installer won't work.
+
+ 
+
+Roelof
+
+ 
+
+ 
+
+ 
+
+ 
+&gt;<i> Date: Sat, 17 Jul 2010 15:36:01 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> That might be a bug in the menu driven installer.
+</I>&gt;<i> Normally, it detects partition,
+</I>&gt;<i> and it identifies the filesystem on them
+</I>&gt;<i> and makes an entry for it in the fstab menu.
+</I>&gt;<i> However, if no entry exists
+</I>&gt;<i> then selecting the top item in the menu list
+</I>&gt;<i> will allow the SA to enter in a device name
+</I>&gt;<i> and manually create an entry.
+</I>&gt;<i> If that fails to work
+</I>&gt;<i> then you could try a manual install.
+</I>&gt;<i> 
+</I>&gt;<i> Installation of an operating system like Sorcerer is rather easy.
+</I>&gt;<i> Partition disk,
+</I>&gt;<i> do not forget to mark the bootable partition,
+</I>&gt;<i> run ms-sys to install a bootable MBR to the device,
+</I>&gt;<i> make a filesystem,
+</I>&gt;<i> mount it on /media/root,
+</I>&gt;<i> copy the contents of the rootfs/initramfs to it,
+</I>&gt;<i> copy /media/IR/boot to /media/root/boot,
+</I>&gt;<i> unarchive all the archives from /media/IR/var/cache/archive/
+</I>&gt;<i> to the new root filesystem /media/root/,
+</I>&gt;<i> mount --bind virtual filesystems within the new root filesystem,
+</I>&gt;<i> such as
+</I>&gt;<i> mount --bind /dev /media/root/dev
+</I>&gt;<i> mount --bind /proc /media/root/proc
+</I>&gt;<i> ,
+</I>&gt;<i> chroot into the new root filesystem,
+</I>&gt;<i> edit /etc/fstab and /etc/lilo/head,
+</I>&gt;<i> dispel install,
+</I>&gt;<i> cast glibc-locales etc kbd
+</I>&gt;<i> /etc/init.d/depmod
+</I>&gt;<i> /etc/init.d/rc.d
+</I>&gt;<i> /etc/init.d/services.d
+</I>&gt;<i> /etc/init.d/lilo
+</I>&gt;<i> /etc/init.d/initramfs
+</I>&gt;<i> ,
+</I>&gt;<i> exit the chroot,
+</I>&gt;<i> umount the virtual filesystems,
+</I>&gt;<i> umount /media/root,
+</I>&gt;<i> reboot
+</I>&gt;<i> 
+</I>&gt;<i> The menu driven installer is suppose
+</I>&gt;<i> to provide a somewhat familiar path
+</I>&gt;<i> through those steps so the SA can
+</I>&gt;<i> reach the outcome faster and with less effort.
+</I>&gt;<i> Creating LUKS encrypted filesystems, LVM2,
+</I>&gt;<i> or mdraids seem far more complicated without
+</I>&gt;<i> the assistance of the menu driven installer.
+</I>&gt;<i> 
+</I>&gt;<i> If you discover why the menu driven installer
+</I>&gt;<i> is unable to locate partitions
+</I>&gt;<i> then I would be eager to know.
+</I>&gt;<i> Did you happen to change the incomplete sed
+</I>&gt;<i> command from one that filters out /dev/fd[0-9]
+</I>&gt;<i> to one that filters out /dev/hd*
+</I>&gt;<i> I have a difficult time guessing why
+</I>&gt;<i> the partition would not show up in the installer's
+</I>&gt;<i> fstab creation menu.
+</I>&gt;<i> But like I said above
+</I>&gt;<i> a device can be entered manually
+</I>&gt;<i> provided that the SA is sure that will work.
+</I>&gt;<i> If it does not work then /media/root will not mount
+</I>&gt;<i> the installation will install files to the rootfs/initramfs
+</I>&gt;<i> and it will fill up and the computer will probably halt
+</I>&gt;<i> from running out of RAM.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Sat, Jul 17, 2010 at 3:31 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I know why the root is empty.
+</I>&gt;<i> &gt; Because of a reinstall I made the partitions again and the file system
+</I>&gt;<i> &gt; again.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; But still it seems that the installer can't find it and fdisk can find it.
+</I>&gt;<i> &gt; I find it wierd that I cannot put any value in the device section of the
+</I>&gt;<i> &gt; installer.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+Alles wat je wilt weten over Windows 7, en meer !
+<A HREF="http://www.windows.nl/windows7">http://www.windows.nl/windows7</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100718/90517cac/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100718/90517cac/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001782.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001781.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1780">[ date ]</a>
+              <a href="thread.html#1780">[ thread ]</a>
+              <a href="subject.html#1780">[ subject ]</a>
+              <a href="author.html#1780">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

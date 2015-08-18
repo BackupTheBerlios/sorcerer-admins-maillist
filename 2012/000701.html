@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.3.1331738361.12121.sorcerer-admins%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000649.html">
+   <LINK REL="Next"  HREF="000813.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.3.1331738361.12121.sorcerer-admins%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:19:14 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000649.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="000813.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#701">[ date ]</a>
+              <a href="thread.html#701">[ thread ]</a>
+              <a href="subject.html#701">[ subject ]</a>
+              <a href="author.html#701">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Module names may change and what modules are loaded may change
+when linux updates from one version to another.
+A good example of that is how on many of our boxes we use
+/dev/sd* names instead of /dev/hd* names although we know
+that the motherboard controller is EIDE.
+
+Therefore, building a module list from lsmod creates a huge
+blind spot on kernel updates that may cause the new initramfs
+to lack important modules and that may cause failure to be able
+to mount the real root filesystem.
+
+When initramfs images are updated they are updated for
+all installed kernels and modules and not merely for the
+one specified by
+# augur version linux
+or
+# augur version linux-modular
+
+However, the output of lsmod can only be 100% matched
+with the currently running kernel and not necessarily older kernels.
+
+The idea of using lsmod looks good at first.
+It is in fact do-able if one first starts by booting
+a fresh kernel with an initramfs with a full compliment
+of kernel modules.
+And then one and only one precise module list can be generated
+for the uname -r kernel.
+So that saves about 23M overall in /boot
+Might not  be a large percentage of savings if 4 kernels are in /boot
+
+With further consideration this might be advantageous at a later date.
+For now a 23M savings on only initramfs of all the installed kernels
+might compromise too much flexibility for too little of a gain.
+Even if the time required to load the initramfs and kernel
+from a flash drive was half of what it is now
+I would still think that is slower than a fixed disk
+if I remember it correctly.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000649.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="000813.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#701">[ date ]</a>
+              <a href="thread.html#701">[ thread ]</a>
+              <a href="subject.html#701">[ subject ]</a>
+              <a href="author.html#701">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

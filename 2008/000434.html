@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Linux 2.6.25.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%202.6.25.2&In-Reply-To=%3C8596d02a0805131811n7f13e2a4s93d43a2b851e1bb6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000450.html">
+   <LINK REL="Next"  HREF="000437.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Linux 2.6.25.2</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux%202.6.25.2&In-Reply-To=%3C8596d02a0805131811n7f13e2a4s93d43a2b851e1bb6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Linux 2.6.25.2">d3ck0r at gmail.com
+       </A><BR>
+    <I>Wed May 14 03:11:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000450.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000437.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#434">[ date ]</a>
+              <a href="thread.html#434">[ thread ]</a>
+              <a href="subject.html#434">[ subject ]</a>
+              <a href="author.html#434">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While working on this video server box, I found a place where a faulty
+(old, obsolete) switch caused network errors on my card.  While there
+was also a fix released in february for this version for my card,
+replacing the switch also fixed the problem.
+
+Meanwhile this box runs X, and uses an NVIDIA card.  Had to attempt to
+update the driver without network access (not so painful as it was)
+
+NVIDIA-Linux-x86 does not compile and work with 2.6.25.2  there are 2
+problems 1) a removed symbol global_flush_tlb() (?) and then it fails
+to find the symbol 'set_page_attr'.
+
+there is a beta driver 173.08 which does compile and work with
+2.6.25.2 ( has Beta in the nvidia logo )
+
+<A HREF="http://www.nvnews.net/vbulletin/showthread.php?t=107144">http://www.nvnews.net/vbulletin/showthread.php?t=107144</A>
+
+(there is an FTP site with these drivers)
+<A HREF="ftp://download.nvidia.com/XFree86/">ftp://download.nvidia.com/XFree86/</A>
+
+----------------------
+Okay, so with 2.6.25.2 and 173.08 (I tried most of the 169.12, 171.xx
+) I had a system which seemed to not have problems from network
+congestion, and still ran. ..
+
+but it didn't work... what has been working for a few years to launch
+and track vlc processes ended up with sockets stuck as open by vlc
+which no longer had a pid.  zombie vlc processes, and a few other
+zombies as things came and went.
+
+Booted the older kernel, cleaned up now driver conflicts cause the
+application level X driver and the kernel were a different version,
+and 173.08 didn't want to build in the older linux... (maybe cause I
+still had 2.6.25.2 in /usr/src/linux?) got rid of all my customized
+spells in /usr/share/sorcery/local, recast linux, recast NVIDIA-linux,
+replaced the switch, and now all is well again :)
+
+Beware there may be issues with this kernel.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000450.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000437.html">[Sorcerer-admins] Linux 2.6.25.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#434">[ date ]</a>
+              <a href="thread.html#434">[ thread ]</a>
+              <a href="subject.html#434">[ subject ]</a>
+              <a href="author.html#434">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

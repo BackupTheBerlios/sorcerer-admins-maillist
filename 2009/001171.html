@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] wondering about memory....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20wondering%20about%20memory....&In-Reply-To=%3C596b75860905130404p541f4594yee5fa723803ce6d3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001169.html">
+   <LINK REL="Next"  HREF="001151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] wondering about memory....</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20wondering%20about%20memory....&In-Reply-To=%3C596b75860905130404p541f4594yee5fa723803ce6d3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] wondering about memory....">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May 13 13:04:33 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001169.html">[Sorcerer-admins] wondering about memory....
+</A></li>
+        <LI>Next message: <A HREF="001151.html">[Sorcerer-admins] Okay forget all that....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1171">[ date ]</a>
+              <a href="thread.html#1171">[ thread ]</a>
+              <a href="subject.html#1171">[ subject ]</a>
+              <a href="author.html#1171">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Somewhat less than 3G of address space
+can be allocated on IA32 architecture.
+And somewhere under 64G of address space
+can be allocated on x86_64 architecture.
+Those are the limits.
+Allocation of address space has it's uses
+even if that memory is not used or not used immediately.
+Allocating a large address space is very useful for compression programs.
+Many programs do it.
+And while it does cost a little bit of additional RAM as overhead,
+it is not a necessarily bad thing.
+Each program has mostly it's own private address space.
+Just because one process has allocated 2G of address space
+does not mean that a different process can not allocate 2G of address space.
+The linux kernel is rather generous in allowing overcommit,
+which means more address space can be allocated than
+there is both RAM + swap to back it.
+However, sometimes linux will fail large allocations of address space.
+I have had it do that to my programs when I was somewhat
+overtasking my workstation.
+
+Sometimes I consider that the availability of a system swap space
+are was poor design for POSIX.
+When allocating large amounts of address space
+with intention to use that address space
+then performance is usually better when
+the backing for the address space is mmaped
+to a temporary file instead of being backed by
+the system swap.
+
+As long as disk space is available on /tmp
+and /tmp is not a tmpfs
+then only the architecture limitations
+effect the limit for the amount of address space
+that an be allocated and used.
+
+When looking at process in top
+I do not know the way, if possible,
+to determine if the address space requested
+is backed by system swap or a private tmp file.
+Yet that might be something a SA would want to know.
+If a box has only a 512M swap area
+then that might be sufficient even for programs
+using 2.5G of RAM if that program backs the
+address space with a private temporary file.
+
+The way sdelta3 works is that it backs the memory
+address space allocated using a private temporary file.
+For a short while, while berlios was not putting me
+under the a quota the size of the eye of a needle
+I managed to be able to generate some sdelta3 patch
+files on their box, which had almost no swap area,
+by using a private temporary file for backing.
+
+Anyway, my insight into backing address space
+with swap or tmpfiles is probably beyond the
+usefulness and interest of most SAs,
+so I will leave it at that.
+
+
+On Wed, May 13, 2009 at 1:20 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> is not an indication that it will be used :
+</I>&gt;<i> right, if someone allocate a 2000G memory pool it won't use it...
+</I>&gt;<i> however it still have the possibility...
+</I>&gt;<i> sorry but no lib/application shall ever do that... memory shall be
+</I>&gt;<i> allocated on demand, not once for all before startup just in case...
+</I>&gt;<i> JLM
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001169.html">[Sorcerer-admins] wondering about memory....
+</A></li>
+	<LI>Next message: <A HREF="001151.html">[Sorcerer-admins] Okay forget all that....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1171">[ date ]</a>
+              <a href="thread.html#1171">[ thread ]</a>
+              <a href="subject.html#1171">[ subject ]</a>
+              <a href="author.html#1171">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

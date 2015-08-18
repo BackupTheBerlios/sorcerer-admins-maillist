@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Xorg%20-configure%20hangs%20but%20gdm%20can%20launch...&In-Reply-To=%3CAANLkTind9Uf7p0NFCC2_qDTLm60OwjaavudsqnaX8blo%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001668.html">
+   <LINK REL="Next"  HREF="001674.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Xorg -configure hangs but gdm can launch...</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Xorg%20-configure%20hangs%20but%20gdm%20can%20launch...&In-Reply-To=%3CAANLkTind9Uf7p0NFCC2_qDTLm60OwjaavudsqnaX8blo%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Xorg -configure hangs but gdm can launch...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue Jun 22 08:46:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001668.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+        <LI>Next message: <A HREF="001674.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1672">[ date ]</a>
+              <a href="thread.html#1672">[ thread ]</a>
+              <a href="subject.html#1672">[ subject ]</a>
+              <a href="author.html#1672">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+seems that xorg policy is to progressively drop the config file for auto
+configuration..... I didn't managed to create the config file.... however I
+found that the touchpad was requiring xf86-input-synaptic driver.....
+now all is working fine and I can begin to tune this box.... I'm impressed
+that sorcerer seems to run smoothly on a netbook despite it's relative low
+cpu power....
+thanks and regards
+
+On Sun, Jun 20, 2010 at 11:45 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> With XFree86 and earlier versions of xorg
+</I>&gt;<i> there was a program that could create a configuration file
+</I>&gt;<i> by having the SA answer a series of questions
+</I>&gt;<i> which would include information such as graphic
+</I>&gt;<i> chipset and monitor horizontal and vertical frequency ranges.
+</I>&gt;<i> But perhaps that program is gone now.
+</I>&gt;<i> I can not seem to find it
+</I>&gt;<i> or forgot what provides it.
+</I>&gt;<i>
+</I>&gt;<i> if
+</I>&gt;<i> # Xorg -configure
+</I>&gt;<i> hangs
+</I>&gt;<i> then I would probably try
+</I>&gt;<i> copying and editing an older configuration file
+</I>&gt;<i> or configuration file from a different box.
+</I>&gt;<i> Or reading the xorg.conf manual page
+</I>&gt;<i> and manually creating an xorg.conf
+</I>&gt;<i> Or I might try installing an older or newer
+</I>&gt;<i> version of xorg-server.
+</I>&gt;<i>
+</I>&gt;<i> Also the pointer input device can be re-selected
+</I>&gt;<i> one Xorg is running.
+</I>&gt;<i> Hmm, well xinput used to be able to do that,
+</I>&gt;<i> but the manual page now says:
+</I>&gt;<i>
+</I>&gt;<i> &quot;       --set-pointer device
+</I>&gt;<i>               Switch  device  in core pointer.  This option does nothing on
+</I>&gt;<i> X
+</I>&gt;<i>               servers 1.5 and later.
+</I>&gt;<i> &quot;
+</I>&gt;<i>
+</I>&gt;<i> Xorg has a possible useful parameter:
+</I>&gt;<i> &quot;-pointer name          specify the core pointer InputDevice name&quot;
+</I>&gt;<i>
+</I>&gt;<i> Maybe there are other useful Xorg parameters.
+</I>&gt;<i>
+</I>&gt;<i> Is Xorg -configure hanging
+</I>&gt;<i> or is perhaps it completing and exiting,
+</I>&gt;<i> yet the driver is failing to properly
+</I>&gt;<i> restore the video mode for consoles to work?
+</I>&gt;<i> If so the box might still be accessible via ssh.
+</I>&gt;<i> That might be the case with chipsets that
+</I>&gt;<i> use Xorg's &quot;intel&quot; driver.
+</I>&gt;<i>
+</I>&gt;<i> Want for me to try to generate an xorg.conf,
+</I>&gt;<i> gzip, and email it to you?
+</I>&gt;<i> Then you can start Xorg without the configuration file,
+</I>&gt;<i> see what drivers it is using,
+</I>&gt;<i> fix the spots in the xorg.conf
+</I>&gt;<i> and then you will have a usable one.
+</I>&gt;<i>
+</I>&gt;<i> The version 1.8.x and later xorg-conf
+</I>&gt;<i> support an /etc/X11/xorg.conf.d/
+</I>&gt;<i> directory where fragments of configuration files
+</I>&gt;<i> can be inserted.
+</I>&gt;<i> No I have not tested it.
+</I>&gt;<i> But perhaps with later xorg-server
+</I>&gt;<i> one can provide a fragment of an xorg-conf
+</I>&gt;<i> file that only configures the core pointer?
+</I>&gt;<i>
+</I>&gt;<i> Later versions, such as 1.8.1, of xorg
+</I>&gt;<i> are available in the latest version progress.
+</I>&gt;<i> They are not unstable nor stable.
+</I>&gt;<i> Who knows when the next full stable release
+</I>&gt;<i> of xorg will happen.
+</I>&gt;<i> When it does then all of the stable version progress
+</I>&gt;<i> versions will be updated as required for spells
+</I>&gt;<i> with the X11R7 attribute.
+</I>&gt;<i>
+</I>&gt;<i> Good luck.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Jun 20, 2010 at 8:56 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; Hi!
+</I>&gt;<i> &gt; I've an issue with Xorg.... I've the default autoprobing (used when no
+</I>&gt;<i> &gt; xorg.conf exist) that use /dev/input/mice instead of /dev/mouse1
+</I>&gt;<i> (trackpad)
+</I>&gt;<i> &gt; so I wanted to create an xorg.conf to be able to configure the input
+</I>&gt;<i> &gt; device... but what is strange is that Xorg -configure does hangs all
+</I>&gt;<i> &gt; time.... I've no more access to any console, neither keyboard nor mice
+</I>&gt;<i> seems
+</I>&gt;<i> &gt; to work.... and I've to reboot the box with hard method (unplug power
+</I>&gt;<i> plug)
+</I>&gt;<i> &gt; any idea?
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> &gt; (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> simples
+</I>&gt;<i> &gt; et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> &gt; -----------------------------
+</I>&gt;<i> &gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> &gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> &gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100621/5814efba/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100621/5814efba/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001668.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+	<LI>Next message: <A HREF="001674.html">[Sorcerer-admins] Xorg -configure hangs but gdm can launch...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1672">[ date ]</a>
+              <a href="thread.html#1672">[ thread ]</a>
+              <a href="subject.html#1672">[ subject ]</a>
+              <a href="author.html#1672">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

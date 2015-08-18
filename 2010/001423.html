@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcerer Install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcerer%20Install&In-Reply-To=%3C596b75861002050636u19e99311x23df4e4f21b1dcb6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001421.html">
+   <LINK REL="Next"  HREF="001422.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcerer Install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcerer%20Install&In-Reply-To=%3C596b75861002050636u19e99311x23df4e4f21b1dcb6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcerer Install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Feb  5 15:36:17 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001421.html">[Sorcerer-admins] sorcerer Install
+</A></li>
+        <LI>Next message: <A HREF="001422.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1423">[ date ]</a>
+              <a href="thread.html#1423">[ thread ]</a>
+              <a href="subject.html#1423">[ subject ]</a>
+              <a href="author.html#1423">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Feb 4, 2010 at 10:59 AM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+&gt;<i> please tell me step by step how to configure the fstab menu in laymans terme because i keep getting the essential fields are missing
+</I>
+
+When specifying only one partition for mounting as /
+then the amount of questions to answer are 2!
+
+First, what should it be mounted as.
+Answer the mount point is /
+Second question, what type of filesystem is it?
+Answer, whatever you want.
+I recommend ext3.
+After that the way out of that menu is probably by
+pressing right or left arrow followed by enter.
+
+All the other fields are filled in automatically.
+If the partition already has a detected filesystem
+then that also is entered into the filesystem spot.
+
+I am thinking that I made the way out of that menu
+too different than others and also am not providing
+enough information so that the SA knows what spots
+must be entered.
+
+The menu is called the fstab menu because it acquires
+mostly the information that would be used to construct
+the file /etc/fstab.
+Among other things /etc/fstab is used to describe filesystems
+and memory swaps to activate or that can be activated by
+either root or users.
+fstab is an abbreviation of the word filesystem table.
+
+Since a disk can have many partitions
+that can belong to separate operating systems
+the use of file system table is to tell a POSIX operating system
+what filesystems belong to it,
+when those file systems should be mounted,
+and what permissions should those filesystems be mounted with.
+In short it is like a tiny, text only registry for filesystems and swaps.
+
+<A HREF="http://en.wikipedia.org/wiki/Fstab">http://en.wikipedia.org/wiki/Fstab</A>
+<A HREF="http://man.he.net/man5/fstab">http://man.he.net/man5/fstab</A>
+
+Those are two potentially useful pages about /etc/fstab
+More importantly than knowing what to enter
+in the install menu is to know what is required,
+why it is required, and how it is used.
+
+Once the concept and layout of /etc/fstab becomes familiar
+then the Sorcerer install menu will make sense.
+
+The only way it differs is that Sorcerer supports
+LUKS encrypted filesystem upon block devices.
+Also Sorcerer allows filesystems to be created on
+almost any type of block device whether that block
+device represents a partition, a software md RAID,
+a logical volume, a device mapper created device,
+or a LUKS device.
+That sentence might seem confusing because Sorcerer
+does offer more choices for block and filesystem configuration
+than many other distros that have elected to deprecate
+the use of partitions in favor of logical volumes
+
+During boot Sorcerer sets up software raids first,
+then logical volumes, and finally LUKS encrypted filesystems.
+So there can be a LV made of RAIDS,
+but not RAIDS made of LV.
+LUKS encryption can be applied to partitions,
+raids, or even LVs, because that is the last step.
+But a LV can be be made of separate partitions that
+are individually LUKS encrypted.
+Some distros have the order of setup done differently
+in a nonsensical way that would allow a each partition
+to be encrypted and then added to a LV.
+But then that would require 2 password prompts
+to gain a password for each partition to decrypt
+before adding it to the logical volume.
+Sorcerer's order makes sense because
+space can be gathered from many drives to be
+assembled either as a md software raid or a logical volume
+and then that single unit can be LUKS encrypted
+with a single password.
+I probably would not do that, but a SA can do that.
+
+Once you master a basic installation
+then for a notebook computer an installation with
+the / partition encrypted might be desirable.
+That type of installation differs slightly.
+First, it requires a 1G ext2 partition mounted as /boot
+which is never encrypted.
+Second, it requires a nice fat / partition which is encrypted.
+Third, it can optionally have an encrypted swap partition,
+which is initialized on each boot with a random key
+which means after shutting the box down any data
+that was written to a swap partition is forever scrambled.
+Naturally, an encrypted swap partition might not be the
+best choice for a notebook being used in suspend to disk mode,
+since an encrypted swap would be useful for resuming a
+previous session.
+However, Sorcerer boxes tend to boot really fast
+and so suspending to disk is not recommended.
+
+So first, please learn the layout and purpose of /etc/fstab
+Unfortunately, the way the menu driven installer is written
+I am assuming that the person using the menu driven installer
+already knows about /etc/fstab
+Consequently, gaining that knowledge should help clear
+up misunderstanding about it.
+
+Please understand that every POSIX has an /etc/fstab
+even if that POSIX is actually a UNIX such as Solaris.
+So learning about /etc/fstab is not a one time waste of effort.
+The knowledge will probably continue to be useful for decades.
+
+Although much changes about the way POSIX are implemented
+some things like /etc/fstab
+have remained almost entirely the same for decades.
+But I suppose that only become evident with retrospect.
+But as such I would expect any UNIX or POSIX SA to know
+about /etc/fstab
+
+As I mull it over in my mind I am contemplating what the best
+method to teach totally new SAs the ropes while they are using
+the menu driven installer.
+Perhaps having the manual page for fstab displayed
+could be useful?
+Or maybe there should be a menu of useful manual pages
+to select in order to provide references?
+
+SAs tend not to remember every little thing about every little thing.
+Instead when we want to know more about something
+we read a manual page by typing man followed by something.
+For example:
+man fstab
+
+One of the above URLs in this email shows a manual page for fstab.
+
+The thing about showing manual pages is...
+Are only experienced SAs and POSIX
+users able to read and understand them?
+I wondered that a decade ago when I was teaching
+novice SAs how to gather information by reading manual
+pages and visiting the linux documentation project and
+reading HowTos.
+
+Short of expensive computer based training provided by
+the company that one works for the way that most SAs
+learn the tools is by reading help screens, manual pages,
+HowTos, FAQs, Guides, and just editing files.
+
+The menu driven installer can not be expected to provide
+the same level of training as computer based training.
+But is providing manual pages at least useful?
+I would appreciate your opinion when reading the above URLs
+about whether not you feel as if you fully understand /etc/fstab
+afterward.
+
+Since the Sorcerer menu driven installer tends to cater
+to the experience level of a senior level SA it provides
+very little additional information.
+Of course it can provide more information,
+but to what degree should it attempt to obtain
+before useful information because a useless pile of information?
+It can not be computer based training.
+So if a SA can not read and understand the manual pages
+then the additional information merely becomes more information
+overload that does not lead to completion of the task.
+
+With almost 3 decades of computer experience
+I am considerably beyond the point of being able to properly
+achieve and understand the perspective of someone
+who is entirely new to POSIX and computer concepts.
+That is one of the reasons why my students could gain a point
+each day for providing a useful answer,
+and another point for helping a fellow classmate.
+
+Maybe there is a free online book or publication that
+someone can read that provides instruction in POSIX
+system administration?
+It is not a complicated subject but there is a bit to learn.
+It would probably seem like a mountain to learn if a SA
+did not first know what /dev/ is and the purpose of the
+directories and nodes within /dev/
+
+There is a considerably amount to learn,
+more than should be explained by an install program.
+Maybe the approach of the Sorcerer menu driven installer
+is entirely wrong for new SAs?
+It simplifies the tasks that a senior SA would otherwise do manually.
+But a distro that specializes in new SAs might be one
+that attempts to partition automatically,
+automatically selects where to install
+and automatically select filesystem type
+and tries to do everything automatically
+instead of burdening the SA with having to know
+what /etc/fstab is or the purpose of nodes in /dev/ ?
+
+Perhaps if the Sorcerer menu driven installer continues
+to be one that a senior level SA would want to use
+to achieve the exact style of install that they want
+then if providing manual pages to read does not provide
+enough information to complete the task of installing
+then that type of installer would still remain
+impossible to use for someone new to system administration.
+
+Consequently, I am strongly considering on my todo list
+the addition of a dialog tutorial for the menu driven installer
+and also a menu of useful manual pages to read.
+If that would not be enough to complete installation
+then it is the fault of the advance design
+of the menu driven installer.
+If one is going to fly a class-A fighter aircraft
+then they better know the difference between the
+throttle, yoke, and rudder pedals before they sit
+down in the cockpit.
+However still having a knee-board sheet is fine.
+
+Given that consideration perhaps two install programs are required?
+One can be like it is now with the addition of a dialog tutorial
+and manual pages.
+However, the other program must be one that can accomplish
+an installation of Sorcerer with nearly no questions asked.
+And that is a tad bit harder than it might seem to be at first
+without the possibility of a noob overwriting an existing
+partition for an operating system that they might want to keep.
+
+If a person buys a new computer
+and it comes with 1 or 2 partitions
+that are already full of something
+that probably belongs to a windoze operating system
+then how is someone who is entirely new going
+to be able to install Sorcerer on it
+with no place to install it?
+
+I could use some feedback about that because
+I never install different operating systems to the same disk.
+I always put different operating systems on different disks.
+I have never resized nor shrunk a partition and filesystem.
+I have no idea if that can even be done safely with NTFS.
+
+Consequently, my idea of a very simple no questions asked
+install program is something where someone runs it
+and half a second later it displays a message that says,
+
+&quot;Primary disk has no available space for a new Sorcerer partition.
+Installation is not possible.
+Have a nice day.&quot;
+
+As if that is any use?
+Even better is the question where to put lilo
+if another operating system is on that disk?
+lilo in the MBR might not be safe.
+Heck, it might not even be possible to accomplish
+if BIOS has MBR virus protection enabled
+and is denying write access to the MBR of the disk.
+
+I guess that tends to show why I would not want
+a method for installation that is no questions asked.
+I expect that it also would probably encounter problems.
+Might be entirely impossible to complete if the SA never
+pressed delete or F1 during POST in order to visit the
+BIOS/CMOS configuration menu and disable MBR write protection.
+
+I would not want to be a new computer user these days.
+So many factors contribute
+to keeping computer users in the dark.
+I probably would not be able to escape the clutches of windoze.
+What can be done about it?
+
+Even a computer with a POSIX pre-installed
+being received by a new computer user is analogous
+to giving a baby a set of tesseracts
+in place of building blocks.
+Yes, kind of cool, but still a concept that
+is bit difficult to graps at first.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001421.html">[Sorcerer-admins] sorcerer Install
+</A></li>
+	<LI>Next message: <A HREF="001422.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1423">[ date ]</a>
+              <a href="thread.html#1423">[ thread ]</a>
+              <a href="subject.html#1423">[ subject ]</a>
+              <a href="author.html#1423">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

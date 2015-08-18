@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more flexibility with linux-* spells
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20flexibility%20with%20linux-%2A%20spells&In-Reply-To=%3CCA%2BT4wDgsTkJaB5mLLZkLnuS2qVS5BRDm4-%2BepiegLWWEaG%2BW9w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002423.html">
+   <LINK REL="Next"  HREF="002425.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more flexibility with linux-* spells</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20flexibility%20with%20linux-%2A%20spells&In-Reply-To=%3CCA%2BT4wDgsTkJaB5mLLZkLnuS2qVS5BRDm4-%2BepiegLWWEaG%2BW9w%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more flexibility with linux-* spells">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Mar 26 08:02:23 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002423.html">[Sorcerer-admins] login getty and virtual consoles...
+</A></li>
+        <LI>Next message: <A HREF="002425.html">[Sorcerer-admins] summary of changes that require SA interaction:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2424">[ date ]</a>
+              <a href="thread.html#2424">[ thread ]</a>
+              <a href="subject.html#2424">[ subject ]</a>
+              <a href="author.html#2424">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I do not typically split a single source tarball into multiple spells.
+Pre-compiled binary package based POSIXs
+split source tarballs into several packages.
+I irritate myself about it.
+Parsing a loadout of 1000 installed spells is already a minor headache.
+Parsing a loadout of 3000+ installed packages
+providing the same software
+requires more time and effort.
+That is why I prefer loadout lists that
+succinctly represent the installed software projects.
+
+However, I set aside my prejudice
+to weigh the boons and banes
+of having several linux-* spells
+instead of a single linux spell.
+And I decided that having several linux-* spells
+creates possibilities precluded by having a single linux spell.
+Consequently, linux will be changing in a near future grimoire.
+
+Here are the new spells:
+linux;
+linux-config;
+linux-firmware;
+linux-headers;
+linux-kernel;
+linux-modules;
+linux-source
+
+linux is a profile spell.
+
+linux-source will cast first.
+This is the base of the tower.
+Adjusting the version progress for linux-source
+also effects the versions installed
+by spells linux-{config,firmware,headers,kernel,modules}
+The versions for linux-{config,firmware,headers,kernel,modules}
+are extracted from /usr/src/linux/Makefile
+linux-source downloads a linux source tarball
+and untars it in /usr/src/linux/
+
+linux-config can cast after linux-source completes.
+linux-config will create file /usr/src/linux/.config.stock
+That is the stock configuration.
+I create configurations for linux and store them in the grimoire.
+Spells linux-{modules,kernel} will use either
+{/usr/src/linux/.config.{custom,stock}
+The custom config is preferred when it exists.
+
+linux-headers will install the header files
+provided by the linux source in /usr/src/linux/
+into /usr/include/
+
+linux-firmware will install into /lib/firmware/
+the firmware that is provided in the linux source tree.
+The linux source tree contains almost no firmware.
+Most of the firmware desired to be installed
+is provided by the firmware spell
+which was previously called linux-firmware.
+The firmware spell downloads firmware from a git repository.
+
+linux-modules can begin casting after linux-config completes.
+linux-modules compiles modules and installs them in /lib/modules/$VERSION/
+The compilation of the modules is accomplished outside of /usr/src/linux/
+Consequently, /usr/src/linux/ will not grow in size when linux-modules runs.
+
+linux-kernel can begin casting after linux-modules completes.
+This compiles and installs a kernel as /boot/$VERSION/linux
+
+linux is a profile spell which requires previously mentioned spells.
+The version for the linux-source spell will be the same
+as the version that is on the linux source tarball.
+However, spells linux{,-config,-firmware,-headers,-modules,-kernel}
+receive versions extracted from /usr/src/linux/Makefile
+
+SAs that want a kernel with a custom configuration
+can copy linux-config to linux-config-custom
+in the local grimoire and add the following line
+with hold linux-config
+Then the linux-config-custom will substitute for linux-config
+after linux-config-custom is installed.
+The customized spell can install a /usr/src/linux/.config.stock
+or /usr/src/linux/.config.custom
+Either is fine.
+
+If a SA wants to one-shot a try a configuration file
+then the configuration file can be saved as
+/usr/src/linux/.config.custom
+sometime after linux-source moils and
+sometime before linux-{kernel,modules} moil.
+Tedious to wait for it and intercept it,
+but an opportunity is presented
+that would require a custom linux spell
+where a single linux spell provides
+everything that can be installed from a linux tarball.
+
+Another possibility which I intend to experiment with
+is to have a linux-kernel-initramfs spell that can
+install a linux kernel that has
+linux's internal cpio initramfs fully populated with files from:
+/bin/ /etc/ /lib/ /lib64/ /lib/modules/$VERSION/ /sbin/ and portions of /usr/
+It would create a linux kernel that was over 100M in size.
+However, in theory it would be able to boot without external initramfs images.
+It is a bit like a monolithic kernel that is not actually monolithic.
+
+Booting a xen computer with hypervisor
+will only accept the first external initramfs image and ignore.
+That causes a boot failure when
+more than one external initramfs image must be loaded.
+I already coded a solution for that
+into the initramfs generation scripts.
+
+Booting a PV guest on a xen hypervisor box
+might only support the loading of a single external initramfs image.
+I have not made an opportunity to check it yet.
+
+Booting a guest operating system using HVM work splendidly.
+And of course qemu can be used with the kvm kernel module
+instead of the xen hypervisor to boot guest operating system.
+
+Until significant improvements are added to this POSIX;
+utilizing xen remains a task that can be accomplished
+when a SA has a week of hours to spend on it.
+It is very complex.
+And xen source tarball is not at all usable as-is.
+
+As we already know lilo can only boot a single external initramfs image.
+That was one of the compelling reasons for switching to extlinux.
+With extlinux a kernel can be booted
+with a nearly unlimited amount of external intiramfs images.
+I appreciate that convenience.
+It is why awesome amounts of software
+can be provided on the rootfs
+without wasting massive amounts of space on /boot/
+Consequently, I do not want to relinquish this convenience.
+
+The possibility of being able to provide a kernel
+with a fully stocked internal initramfs
+is like a renting a hotel room with fully stocked kitchen attached.
+For $300 per night it aught to have a kitchen!
+That could be potentially useful in some situations.
+
+Having the modules installed by a different spell
+than the spell that installs the linux kernel
+creates the possibility for creating an all-in-one linux kernel.
+The cpio utility is the obstacle to accomplishing
+an all-in-one linux kernel with a single linux spell.
+cpio creates the initramfs images.
+However, cpio does not provide a convenient method
+for translating the names of the files it adds to the archives.
+Files extract from an archive to the location where the file was added.
+Therefore, the kernel module files must already be located in
+/lib/modules/$VERSION/
+for inclusion in a linux kernel's internal cpio initramfs.
+Having a separate spell linux-modules allows for that task
+of installing modules to /lib/modules/$VERSION/
+to be accomplished prior to when the linux spell runs.
+
+I apologize for the verbosity of this email.
+Providing rationale explicates how
+the added complexity gains commensurate functionality.
+Rationale demonstrates that the changes
+were properly evaluated and not implemented on a whim.
+
+The following lines of this email describe the evaluation process
+of the proposed implementation changes described above.
+Reading further is only desirable for those who want
+to learn how proposed changes are evaluated.
+Proposed changes that are evaluated unfavorably are rejected.
+Almost no proposed changes are approved and implemented without proper
+evaluation.
+
+Boon: simplicity of a single linux spell
+Bane: complicated to customize
+Bane: less than ideal for use with xen PV guests
+
+Bane: multiple linux-* spells makes the installed spell loadout list longer
+Boon: easier to customize the configuration of linux kernel and modules
+Boon: possibility to create an all-in-one linux.
+
+Keeping the current implementation scores -1.
+Improving the implementation scores 1.
+The evaluation favors the change.
+
+Please pardon the inconvenience with adjusting to the change.
+Fortunately, the linux-* spells contain less lines of code
+than the previous linux spell.
+Therefore, the new spells are easier to understand and customize.
+The spell's name gives a very good hint
+as to the task the spell intended to perform.
+
+No speed is lost for having multiple linux spells.
+Only one spell installs /usr/src/linux/
+The other spells utilize the content of /usr/src/linux/
+instead of having their own source tarballs.
+Consequently, the newer implementation is faster
+because the older implementation had sources for both linux{,-headers}
+
+Thanks for reading.
+I like everyone else would prefer to keep status quo
+and minimize the amount of annoying changes
+that require everyone to learn new methods.
+However, change is beneficial
+for adapting to the limitations
+of technologies such as xen.
+
+Modern computers can have hardware loadouts
+that provide resources more than a magnitude greater
+than a computer from the previous decade.
+And the disk/mass storage space provided
+has grown by several magnitudes.
+Consequently, when the enormous power becomes overkill for a role
+then partitioning the resources to guest operating systems
+allows for the extra power to be leased to consumers.
+
+Obviously, this POSIX is awesome
+for utilizing the power of a modern computer.
+However, when the power is partitioned to virtual computers,
+created to the resource loadouts of legacy computers from a decade ago,
+then package based POSIXs become preferred for deployment.
+
+Obviously, package based POSIXs dominate the niche
+of guest operating systems for virtual computers.
+If deploying a POSIX to 16 or more PV guests
+then any package based POSIX is lighter on resource usage.
+When deployment of this POSIX requires 3G or more installed RAM
+than many SAs will omit this POSIX from consideration as a guest
+where the desired amount of RAM for each PV is 256M to 1G.
+In that circumstance the boons of a package based POSIXs,
+that still conform to the legacy computer paradigm, can not be dismissed!
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002423.html">[Sorcerer-admins] login getty and virtual consoles...
+</A></li>
+	<LI>Next message: <A HREF="002425.html">[Sorcerer-admins] summary of changes that require SA interaction:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2424">[ date ]</a>
+              <a href="thread.html#2424">[ thread ]</a>
+              <a href="subject.html#2424">[ subject ]</a>
+              <a href="author.html#2424">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

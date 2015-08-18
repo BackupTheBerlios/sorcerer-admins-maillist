@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Server crashes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Server%20crashes&In-Reply-To=%3C596b75860709241554p380ae3b6r16f3a4d65b386102%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000276.html">
+   <LINK REL="Next"  HREF="000278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Server crashes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Server%20crashes&In-Reply-To=%3C596b75860709241554p380ae3b6r16f3a4d65b386102%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Server crashes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 25 00:54:52 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000276.html">[Sorcerer-admins] Server crashes
+</A></li>
+        <LI>Next message: <A HREF="000278.html">[Sorcerer-admins] At long last....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 9/23/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+
+&gt;<i> Now its crashing always when trying to make grimoire index:
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at xyz</A>:~# augur index
+</I>&gt;<i> Merging Grimoires.
+</I>&gt;<i> Merging Grimoires Completed.
+</I>&gt;<i> Generating Grimoire Index.
+</I>&gt;<i> &lt;and crash&gt;
+</I>&gt;<i>
+</I>&gt;<i> Okay, problem is now that i cant make index, so i cant compile new versions
+</I>&gt;<i> of software, how do i continue? I like to compile new
+</I>&gt;<i> coreutils/binutils/bash, etc, some utility is crashing it perhaps.
+</I>
+sorcery is highly dependent on certain programs
+being installed and working flalessly:
+bash, sed, grep, find, coreutils, etc....
+
+Either you must discover which of those is broken and fix it manually
+or you should bulk replace them with the versions installed on the I/R
+
+For example:
+
+# mount /media/cd
+# cd /
+# cat /media/cd/etc/sorcery/log/install/pcre  |
+tar --no-recursion -C /media/cd -cPT -         |
+tar --overwrite -Uxf -
+
+The above code could be used to transfer the files for almost any spell
+from the I/R to the hard disk filesystem.
+Probably best not to try and replace bash, glibc, ncurses, or readline that way.
+However, it aught to work for sed, pcre, grep, find, coreutils, etc....
+After the broken installed versions are overwritten with the ones from the I/R
+clean up what is left.
+
+# augur alien  |  tee /tmp/aliens.txt
+
+Look through the /tmp/aliens.txt and potentially problematic alien files
+such as residual libraries or symbolic links left behind from the installed
+versions of spells that you overwrote.
+
+Finally,
+# ldconfig
+
+Once the programs that are important for sorcery
+to work correctly work then sorcery will work correctly.
+
+
+&gt;<i> Why it isnt hardware fault, well, because in last weekend, i compiled linux
+</I>&gt;<i> kernel ok, no faults. Its pretty stable if its manages to compiles linux
+</I>&gt;<i> kernel, its pretty resource hungry process.
+</I>
+linux is nearly unique.
+You could have a box without glibc header files installed.
+And on that box you could still compile linux, probably since
+linux does not require those header files.
+But it might if make menuconfig is executed.
+lxdialog probably requires ncures and readline headers
+that probably require glibc headers.
+It could be possible to compile linux on a box that has
+some unusual and annoying breaks.
+
+
+&gt;<i> Perhaps its bash-problem or some utility which index is using that's
+</I>&gt;<i> crashing system....
+</I>
+It is possible that a spell can crash index generation.
+However, I have not seen anything like that in a while.
+Usually, it says what spell and why.
+And that is obviously easy to fix.
+Just edit the spell in /root/.sorcery/grimoire/
+and then repeat # augur index
+
+Without logging into the box I can not tell you exactly what
+exactly is broken and must be fixed for sorcery to work properly.
+You could try looking at a bash trace for # augur index,
+but that is extremely difficult to follow.
+Likewise without knowing which sorcery is installed I am uncertain
+whether or not grep will effect index generation.
+However, I would definitely recommend checking and fixing if required
+find, grep, sed, coreutils, pcre.
+
+If you want to install a newer sorcery, go ahead and do so manually.
+You can download:
+<A HREF="http://sorcerer.silverice.org/download/sorcery/sorcery-implosion-20070924-2.tar.bz2">http://sorcerer.silverice.org/download/sorcery/sorcery-implosion-20070924-2.tar.bz2</A>
+
+Unpack it to a temporary directory in /tmp
+Then, run ./install implosion-20070922-0
+But you will end up creating a problem if sorcery
+detects that /etc/sorcery/config became a customized configuration file.
+Therefore, if you manually install it then replace the md5sum value in
+/etc/sorcery/md5sum/sorcery
+for the file /etc/sorcery/config
+with the md5sum for the /etc/sorcery/config
+that you just installed.
+Then, you can edit /etc/sorcery/log/version/sorcery
+and increase the version to the one you installed.
+Everything else is basically the same.
+
+On the next grimoire update sorcery the available sorcery is switching to
+sorcery-implosion-20070924-2
+So once the box is fixed it would receive that sorcery anyway.
+sorcery-implosion-20070924-2 does not use grep as much.
+Aside from generating the order index, which is very important,
+grep might not be used any other place during index generation.
+However, I still recommend fixing grep and pcre on that box.
+
+Replacing installed spells with version from the
+IR as I describe above is very sloppy.
+But generally it does not risk multiplying any existing problems.
+When the index is broken, running dispel is way too dangerous.
+Replacing a few broken installed spells with known good versions
+from the I/R is a much faster and easier solution than redeployment
+or even chrooted rebuilding.
+
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000276.html">[Sorcerer-admins] Server crashes
+</A></li>
+	<LI>Next message: <A HREF="000278.html">[Sorcerer-admins] At long last....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#277">[ date ]</a>
+              <a href="thread.html#277">[ thread ]</a>
+              <a href="subject.html#277">[ subject ]</a>
+              <a href="author.html#277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

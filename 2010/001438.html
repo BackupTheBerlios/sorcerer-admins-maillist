@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%206&In-Reply-To=%3C596b75861002060932m774ffce6ycf81de80018efca%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001435.html">
+   <LINK REL="Next"  HREF="001426.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2044%2C%20Issue%206&In-Reply-To=%3C596b75861002060932m774ffce6ycf81de80018efca%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb  6 18:32:38 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001435.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6
+</A></li>
+        <LI>Next message: <A HREF="001426.html">[Sorcerer-admins] Linux intro...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1438">[ date ]</a>
+              <a href="thread.html#1438">[ thread ]</a>
+              <a href="subject.html#1438">[ subject ]</a>
+              <a href="author.html#1438">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Doing a manual install is such a chore
+that even I would not want to type in the commands.
+But if that is what you want:
+
+partition a disk
+mark a bootable partition,
+use ms-sys to install a bootable MBR to the disk,
+create a filesystem
+mount the file system
+cp /etc and /dev to it
+cp all of /var/cache/archive from the I/R
+to /var/cache/archive on the file system
+unarchive all those archives to the filesystem
+create /dev /proc /home /media /media/root /sys /root /tmp
+and other directories within the filesystem and give them
+appropriate permissions.
+copy /etc/skel/ to /root in the filesystem so that root gains
+the usual benefits of logging in
+mount --bind /dev /proc to their places in the filesystem
+Chroot into the filesystem
+run ldconfig
+edit /etc/lilo* as necessary
+edit /etc/fstab as necessary
+execute:
+/etc/init.d/depmod
+/etc/init.d/services.d
+/etc/init.d/rc.d
+/etc/init.d/lilo.conf
+/etc/init.d/initramfs
+cd to /etc/networks.d/
+do what is required to set up networking,
+break the chroot,
+unmount bound filesystems,
+unmount the filesystem,
+reboot,
+adjust BIOS/CMOS to boot from fixed disk instead of CDROM,
+boot the newly installed Sorcerer,
+start updating the box,
+complete updating it,
+start adding new software.
+
+Please forgive me if I accidentally omitted a few steps.
+It is not so much complex as it is tedious.
+And the above example is just for a single partition install.
+
+If the menu driven installer breaks
+then the SA must already know how to do a manual install
+and have some experience with doing manual installs.
+Otherwise no pile of docs is going to help
+as they brick their shorts and rip out lose hairs.
+
+Being able to do a manual install is
+a step up in skill from that of the average SA.
+Probably anyone who is not already a senior level SA
+who is attempting to manually install Sorcerer has
+at best a 5% chance of increasing their probability of success
+with the help of documentation.
+But they might just end up with a box that prints
+LI
+and is unable to continue booting.
+
+By far hacking bugs out of the install script as needed
+is easier than doing a manual installation.
+It is one of the reasons that the installer is a shell script.
+However, it has not had a bug that SAs had to
+sedit or edit out of it since maybe 2007 or 2008,
+not in years at least.
+
+I have good confidence in the current I/R menu driven installer.
+It is not broke.
+However, there may be errors that only manifest
+within certain machine emulation programs.
+I know for example that qemu versions 0.12.1 has
+some serious bugs,
+bugs that cause programs to segfault,
+and I have not yet made time to
+extensively test qemu version 0.12.2
+However, I have confidence in qemu version 0.11.1
+
+Experiencing segfaults and compilation failures
+while trying to update the x86_64 I/R image
+while running qemu version 0.12.1
+does not indicate that a bug exists in cast,
+or a bug in coreutils, or a bug in grep.
+No, I recognize that the actual cause of the problem
+are bugs in qemu version 0.12.1
+
+If someone wants to report a bug that is definitely
+within the menu driven installer
+then the bug report should _not_ be as follows,
+
+&quot;Because a problem occurred while using the menu driven installer
+I have concluded that there is a bug within the menu driven installer.&quot;
+
+That conclusion is spurious.
+Until one knows exactly what failed and why
+and have eliminated other possibilities such as
+a problem with the virtual machine emulator
+then all we know is the first statement which is,
+&quot;Something unusual that became a problem
+occurred while running the menu driven installer.&quot;
+That much we can normally trust is a valid observation.
+
+Recently, someone told me that
+libical has an absolute requirement on libidn.
+He stated the reason for that conclusion was because
+when libical and libidn cast at the same time libical will fail.
+
+So I investigated this.
+I grepped libical's source.
+Nothing about it suggests libidn is used nor required.
+Also it does not link with libidn when libidn is installed.
+
+What I discovered was that libical compiles using cmake
+and cmake links with libidn.
+I suspect that during the upgrade of libidn
+for tiny fraction of a second cmake became unable to run
+because ld.so does not yet know libidn's libraries have
+moved to a different location.
+That is probably what caused libical's compile failure.
+
+Therefore, the proper solution to the problem
+was to make libidn a solo spell so that no other
+spells compile while libidn is compiling.
+That entirely avoids the original problem.
+
+But my point in stating the above to show
+that an untested assumption based upon an observation
+can lead to a spurious conclusion.
+While something undesirable happened
+while running the menu driven installer,
+and it created a problem,
+that does not necessarily mean that there is
+a bug in the menu driven installer.
+Hmmm, maybe that above sentence is confusing.
+Let me try to word it differently.
+Yes a problem occurred while running the menu driven installer.
+No that does not necessarily mean that the cause of
+the problem is improper code in the menu driven installer.
+The cause of the problem must be investigated
+and not merely assumed.
+
+Without a thorough investigation to find out
+exactly what failed and why
+then to guess that the cause is a bug in the installer
+is merely a guess.
+A guess is a fine place to start,
+but all guesses must be checked out
+so that only the verifiable truth remains.
+
+I would love to fix the problem.
+All I have to do is make the bug happen while I am using it.
+If I can see it then I can analyze it and fix it.
+But since it is not happening for me,
+I at the mercy of whatever information is provided to me.
+So if you want a good fix
+please provide good information.  :)
+
+I am not denying that there was a problem.
+I merely want to know more about it,
+such as what caused it and what can be done about it.
+
+Unlike Sorcerer boxes,
+which have individual loadouts of installed software,
+the Sorcerer I/Rs are the same no matter who uses them.
+Consequently, we should be having a consistently failed
+experience if a bug exists in the functions used by the fstab menu
+in the menu driven installer.
+Since it works for me, that is as much as I can do about it.
+The next steps is for someone who has the problem
+to thoroughly investigate it,
+and also for others to try to replicate it.
+There more people who can encounter the problem and analyze it
+then the better the fix aught to be.  :)
+
+If I could generate the problem
+then I would fix it immediately and
+try to have new I/Rs rolled and tested
+before the weekend is done.
+Both of the I/R working directories are up to date,
+and so the only reason I am not releasing a new I/R
+at the moment is because I want to improve the
+menu driven installer and create a dialog tutorial script.
+But if there was a bug in the current menu driven installer
+and I could trigger it
+then I would be able to release fixes for it very soon.
+
+So please pile up your information and hunt down this bug.
+It probably is not in the installer,
+but once the cause of the bug is discovered
+then there might be changes that can be made to
+the installer in order to circumvent the bug.
+
+Such an expectation would be consistent with improvements
+made to the script to detect the sorcerer I/R CD even when
+it is installed in old buggy CDROMs that tend to immediately
+and repeatedly fail mount attempts while the CDROM is
+slowly spinning up to speed.
+
+But if the virtual machine emulator is the cause of the problem
+then the only work-around possible might be a warning.
+I could post in the welcome message that attempts to
+install Sorcerer using the menu driven installer within
+such and such VM version such and such will fail.
+Sometimes a warning is as much as can be done
+when I can not take ownership of the problem
+nor provide a solution.
+
+Go hunt please.
+And when you bring back a bug strapped to a pole
+then I will thoroughly roast it for you.
+:<i>)
+</I>
+
+On Sat, Feb 6, 2010 at 8:46 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> However, it does look like there might be something broken with our
+</I>&gt;<i> installer script judging from the comments.
+</I>&gt;<i>
+</I>&gt;<i> Which is why I would like to see an alternate, human script ( read install
+</I>&gt;<i> instructions not relying on the script ) as a backup plan. This will not
+</I>&gt;<i> have to change unless you make changes to where things are kept on the I/R.
+</I>&gt;<i>
+</I>&gt;<i> That way, even if the installer script borks and kills little kittens, a
+</I>&gt;<i> truly determined SA can get the Sorcerer installed _manually_ from the I/R
+</I>&gt;<i> and then set about to get it on the net and so on.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001435.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 6
+</A></li>
+	<LI>Next message: <A HREF="001426.html">[Sorcerer-admins] Linux intro...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1438">[ date ]</a>
+              <a href="thread.html#1438">[ thread ]</a>
+              <a href="subject.html#1438">[ subject ]</a>
+              <a href="author.html#1438">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

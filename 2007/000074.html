@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/networks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C461CA25D.1030608%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000073.html">
+   <LINK REL="Next"  HREF="000079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/networks</H1>
+    <B>malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C461CA25D.1030608%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] /etc/networks">malet.jean-luc at laposte.net
+       </A><BR>
+    <I>Wed Apr 11 10:54:53 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000073.html">[Sorcerer-admins] [x86-64] can't compile ppp
+</A></li>
+        <LI>Next message: <A HREF="000079.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>recently I discovered that all my networks weren't up automaticaly....
+after looking the network script I can now say that the script will only 
+bring up one interface and only one...
+what I wanna propose is to create /etc/networks.d/nic_dir/00eth0
+
+ie create subdirs in /etc/networks.d/ containing ordered scripts
+each subdirs appart template one is parsed the current way
+
+here is a script that do the stuff
+
+for each dir in $(find /etc/networks.d -maxdepth 1); do
+   if [ &quot;${dir}&quot; == &quot;template&quot; ]; then continue; fi
+   log_warning_msg &quot;about to start ${dir} network&quot;
+   for       file  in  $NETWORKS/*;  do
+              [  -f  $file  ]     &amp;&amp;
+              bash   $file start  &amp;&amp;
+              break
+    done  &amp;&amp;
+    log_success_msg &quot;network ${dir} started&quot;  ||
+    log_failure_msg &quot;network ${dir} not started&quot;
+done
+
+what do you think about that?
+
+another whish is to use iproute2 instead of net-tools for script since 
+thoses tools also have ipv6 support...
+best regards,
+jlm
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000073.html">[Sorcerer-admins] [x86-64] can't compile ppp
+</A></li>
+	<LI>Next message: <A HREF="000079.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

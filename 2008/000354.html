@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] A couple problems, one with a solution
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20couple%20problems%2C%20one%20with%20a%20solution&In-Reply-To=%3C4BA81DCCE4F1984289DB909AD20BA9335165CD%40exchange.cohort.local%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000352.html">
+   <LINK REL="Next"  HREF="000355.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] A couple problems, one with a solution</H1>
+    <B>Vincent Penquerc'h</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20couple%20problems%2C%20one%20with%20a%20solution&In-Reply-To=%3C4BA81DCCE4F1984289DB909AD20BA9335165CD%40exchange.cohort.local%3E"
+       TITLE="[Sorcerer-admins] A couple problems, one with a solution">vincent.penquerch at cohortstudios.com
+       </A><BR>
+    <I>Fri Jan 11 15:32:19 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000352.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+        <LI>Next message: <A HREF="000355.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#354">[ date ]</a>
+              <a href="thread.html#354">[ thread ]</a>
+              <a href="subject.html#354">[ subject ]</a>
+              <a href="author.html#354">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>/etc/init.d/mcron says:
+start_daemon-p
+(missing space before -p)
+It results in cron not starting when I rebuilt my box, and people
+complaining about missing messages, which is how I found it.
+
+Also, I've now had various problems with software trying to get
+files from the internet when compiling - the ones using gtk-doc.
+This tries to get XSL def files from docbook.sourceforge.net,
+fails, and stops the build, failing the cast. Since it's for
+docs, it's mighty annoying (and autofails spells depending on
+them too).
+After investigating, it appears it should not load anything since
+there should be a cache in /etc/xml. I've got only two files there,
+catalog and docbook. There are rewrite rules in there, but I kinda
+suspect I should have copies of the XSL files in there as well ?
+Am I right ? Needing internet access to build seems like a very
+backwards idea, and I doubt gtk-doc would be used so much if it
+really needed it, so I assume it's a problem on my box ?
+I've rebuilt it all yesterday, didn't fix the problem (but did
+make me spot the cron bug).
+I tried recasting docbooc, various docbook-* spells, etc, to no
+avail.
+
+Any pointers greatly appreciated.
+
+Cheers
+
+-- 
+Cohort Studios Limited. Innovation Centre, 1 Harrison Road, Dundee, DD2
+3SN. Scotland, registered No. SC297259
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000352.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+	<LI>Next message: <A HREF="000355.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#354">[ date ]</a>
+              <a href="thread.html#354">[ thread ]</a>
+              <a href="subject.html#354">[ subject ]</a>
+              <a href="author.html#354">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

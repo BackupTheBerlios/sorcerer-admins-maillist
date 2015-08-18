@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] familiar with the familiar?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20familiar%20with%20the%20familiar%3F&In-Reply-To=%3CCA%2BT4wDj6cE3x61OkpwrdH0cFNijnFve7i8Uz23_0qx_RV7geog%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002385.html">
+   <LINK REL="Next"  HREF="002386.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] familiar with the familiar?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20familiar%20with%20the%20familiar%3F&In-Reply-To=%3CCA%2BT4wDj6cE3x61OkpwrdH0cFNijnFve7i8Uz23_0qx_RV7geog%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] familiar with the familiar?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 21 19:48:00 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002385.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+        <LI>Next message: <A HREF="002386.html">[Sorcerer-admins] Collating Sorcerer specific directories into the	/aux/ hierarchy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2384">[ date ]</a>
+              <a href="thread.html#2384">[ thread ]</a>
+              <a href="subject.html#2384">[ subject ]</a>
+              <a href="author.html#2384">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Yes, I have decided to give Sorcerer boxes a familiar.
+It is not a cat, toad, nor owl.
+It is just a name I am giving to the new program
+that does anticipatory I/O during moments
+where I/O is expected to be low rather than high.
+
+For example, let us say that a SA on a non Sorcerer box wants to compile linux.
+The SA downloads the source tarball, untars it, configures it,
+compiles it, installs it.
+The process seems entirely linear.
+And on a Sorcerer box something similar happens when casting linux.
+
+However, Sorcerer boxes gain benefits that SA can not easily accomplish
+such as being able to concurrently cast multiple spells.
+As a result many actions that a SA would accomplish linearly
+are accomplished in parallel on a Sorcerer box.
+For example, while spells are casting
+sources for spells queued for casting download concurrently.
+This way a source has already arrived on the box
+prior to the time the software is ready to cast.
+And this is the norm for boxes when casting multiple spells,
+such as when doing deployment and updates.
+
+The familiar takes this preparation one step further by
+untarring some sources into /usr/src/sorcery/compile/$SPELL/
+and some previously saved ccache data into /usr/src/sorcery/ccache/$SPELL/
+Familiar accomplishes this task before the spell begins casting.
+Therefore, when the spell's turn to cast happens
+then compilation can begin without delay.
+
+familiar will prepare about 4 source trees prior to when cast requires them.
+Therefore, the amount of disk space required does not become excessive.
+Familiar accomplishes the task during moments when I/O is expected to be low.
+Therefore, the familiar's task is to help minimize CPU cycles being
+wasted on &quot;idle&quot; and &quot;wait.&quot;
+
+Prior to creating familiar I had already become aware that cast was
+overly fastidious.
+Especially when ccache is enabled,
+the duration of casting spent after compilation and linking completes
+remained significant.
+This was especially evident when casting firefox,
+because firefox created about 3G of files in /usr/src/sorcery/ccache/firefox/
+that cast would convert into /var/cache/ccache/firefox.tar
+And so my solution was to not have cast do that.
+
+cast no longer cleans the mess in  /usr/src/sorcery/ccache/
+However, immune-sentinel-space does.
+When cast is no longer running
+then immune-sentinel-space will use idle CPU cycles
+to collect the files in /usr/src/sorcery/ccache/$SPELS/
+and convert them into tarballs /var/cache/ccache/$SPELLS.tar.
+immune-sentinel-space also xz compress tarballs in
+/var/cache/{archive,ccache,sources}/
+
+If a SA deploys a box that has extreme storage space
+then the SA might chose to dispel immune-sentinel-space.
+And that is fine.
+Please be aware that the gigabytes of files collecting in
+/usr/src/sorcery/ccache/ are not trash.
+cast and ccache will re-use those during updates.
+
+The current design of Sorcerer is to maximize the smooth flow of casting
+and to minimize the concurrence of heavy disk I/O.
+Naturally, the act of dispelling and installing new software can not
+be deferred.
+Therefore, some available CPU cycles are lost due to I/O wait.
+However, if and when possible I will try to mitigate the effect.
+That way boxes can deploy and update quickly.
+Also mission critical boxes should be able to update
+without creating an impact upon primary role performance.
+
+I am still testing familiar.
+And I will have the changes available soon.
+Some might wonder why I am risking the introduction of bugs and
+the enhanced functionality prior to new I/Rs
+Simply put, the modifications I am making to sorcery should allow
+for a smoother and faster deployment of boxes.
+Initial deployment can involve casting many hundreds of spells.
+Therefore, the performance enhancement of the familiar
+and a better sorcery can create a benefit
+that conserves many minutes.
+If shaves 30 minutes or more from deployment duration then I know that
+I want it.
+
+Anyway, at the rate of progress I am yet uncertain
+if I will have new I/Rs completed by the end of this month.
+However, better to have awesome I/Rs rather than to
+download bug fixed I/Rs a week or a month later, yes?
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002385.html">[Sorcerer-admins] How do I get a GUI to run?
+</A></li>
+	<LI>Next message: <A HREF="002386.html">[Sorcerer-admins] Collating Sorcerer specific directories into the	/aux/ hierarchy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2384">[ date ]</a>
+              <a href="thread.html#2384">[ thread ]</a>
+              <a href="subject.html#2384">[ subject ]</a>
+              <a href="author.html#2384">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

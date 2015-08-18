@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] glibc..... cast issue
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3CJESRTC%2456530A17C9EB90FA6B03F92221B4FCC2%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000054.html">
+   <LINK REL="Next"  HREF="000053.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] glibc..... cast issue</H1>
+    <B>xyz</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc.....%20cast%20issue&In-Reply-To=%3CJESRTC%2456530A17C9EB90FA6B03F92221B4FCC2%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] glibc..... cast issue">jlm_devel at laposte.net
+       </A><BR>
+    <I>Mon Mar 12 16:46:24 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000054.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+        <LI>Next message: <A HREF="000053.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I retried a cast of glibc that failled again... I trully
+expect that the problem comes from the empty list of installed
+libs.... what should I do? can I use a list provided by
+someone else?
+this is the only spell that fail on my box but it's really
+annoying....
+
+
+&gt;<i> Perhaps seeing double was the expected effect of
+</I>&gt;<i> # augur scry glibc
+</I>&gt;<i> executed at that moment.
+</I>&gt;<i> 
+</I>&gt;<i> Upon execution of augur scry
+</I>&gt;<i> the compile log is first cat.
+</I>&gt;<i> Then, it is followed with tail.
+</I>&gt;<i> Due to executing both cat and tail
+</I>&gt;<i> the last line or lines that exist
+</I>&gt;<i> when augur scry is executed
+</I>&gt;<i> may be printed more than once.
+</I>&gt;<i> 
+</I>&gt;<i> If that is the case then the only way to be certain
+</I>&gt;<i> that it did not dispel twice
+</I>&gt;<i> is to look at the compile log,
+</I>&gt;<i> probably /usr/src/sorcery/.meta/glibc.log
+</I>&gt;<i> 
+</I>&gt;<i> It probably did not dispel twice.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> glibc fails to cast for usually one of two reasons.
+</I>&gt;<i> Either the install log for the installed glibc is incorrect.
+</I>&gt;<i> Or bits and pieces of untracked and older glibc exist
+</I>&gt;<i> in /lib, or on x86_64 architecture in /lib64.
+</I>&gt;<i> 
+</I>&gt;<i> Doing checks before casting glibc on a box where it is
+</I>&gt;<i> expected to fail is probably best.
+</I>&gt;<i> The task is fairly easy for a SA,
+</I>&gt;<i> but difficult to script since a wrong
+</I>&gt;<i> assumption made during the creation
+</I>&gt;<i> of the script could cause glibc to break
+</I>&gt;<i> upon the script's execution.
+</I>&gt;<i> When an alien file must be pruned from /lib
+</I>&gt;<i> the SA should be careful to prune the files
+</I>&gt;<i> that should be pruned and log the files in
+</I>&gt;<i> the glibc log that should be kept.
+</I>&gt;<i> 
+</I>&gt;<i> Below are some sample tests a SA might try:
+</I>&gt;<i> 
+</I>&gt;<i> # for file in /lib/*; do grep -qrx &quot;$file&quot;
+</I>/etc/sorcery/log/install ||
+&gt;<i> echo &quot;$file&quot;; done
+</I>&gt;<i> 
+</I>&gt;<i> The above may display untracked files in /lib
+</I>&gt;<i> 
+</I>&gt;<i> ls /etc/sorcery/log/install/glibc*
+</I>&gt;<i> 
+</I>&gt;<i> Is something called glibc-failed installed?
+</I>&gt;<i> That would cause a break.
+</I>&gt;<i> Something called glibc-dev installed?
+</I>&gt;<i> Is the glibc install log mysteriously absent?
+</I>&gt;<i> Those could all become problems.
+</I>&gt;<i> 
+</I>&gt;<i> # grep &quot;^/lib/&quot; /etc/sorcery/log/install/glibc | while read;
+</I>do [ -e
+&gt;<i> &quot;$REPLY&quot; ] || echo &quot;$REPLY&quot;; done
+</I>&gt;<i> 
+</I>&gt;<i> Did it print that any lines starting with /lib/ are tracked
+</I>but do not exist?
+&gt;<i> If it did then the glibc install log may not be correct
+</I>&gt;<i> for the installed version of glibc.
+</I>&gt;<i> Directly modify glibc's install log to correct it.
+</I>&gt;<i> 
+</I>&gt;<i> What spells installed files in /lib/?
+</I>&gt;<i> Should not be many.
+</I>&gt;<i> 
+</I>&gt;<i> # grep -lr &quot;^/lib/&quot; /etc/sorcery/log/install | cut -d / -f6
+</I>&gt;<i> glibc
+</I>&gt;<i> bzip2
+</I>&gt;<i> gcc
+</I>&gt;<i> libcap
+</I>&gt;<i> init-functions
+</I>&gt;<i> procps
+</I>&gt;<i> shadow
+</I>&gt;<i> linux-fusion
+</I>&gt;<i> zlib
+</I>&gt;<i> pcre
+</I>&gt;<i> udev
+</I>&gt;<i> e2fsprogs
+</I>&gt;<i> acl
+</I>&gt;<i> linux
+</I>&gt;<i> kqemu
+</I>&gt;<i> ncurses
+</I>&gt;<i> device-mapper
+</I>&gt;<i> readline
+</I>&gt;<i> fuse
+</I>&gt;<i> attr
+</I>&gt;<i> 
+</I>&gt;<i> Is there a spell with files installed under /lib that
+</I>&gt;<i> perhaps should not be installed?
+</I>&gt;<i> 
+</I>&gt;<i> # grep &quot;^/lib/&quot; /etc/sorcery/log/install/glibc
+</I>&gt;<i> 
+</I>&gt;<i> /lib/ld-2.3.6.so
+</I>&gt;<i> /lib/ld-linux.so.2
+</I>&gt;<i> /lib/libBrokenLocale-2.3.6.so
+</I>&gt;<i> /lib/libBrokenLocale.so.1
+</I>&gt;<i> /lib/libSegFault.so
+</I>&gt;<i> /lib/libanl-2.3.6.so
+</I>&gt;<i> /lib/libanl.so.1
+</I>&gt;<i> /lib/libc-2.3.6.so
+</I>&gt;<i> /lib/libc.so.6
+</I>&gt;<i> /lib/libcidn-2.3.6.so
+</I>&gt;<i> /lib/libcidn.so.1
+</I>&gt;<i> /lib/libcrypt-2.3.6.so
+</I>&gt;<i> /lib/libcrypt.so.1
+</I>&gt;<i> /lib/libdl-2.3.6.so
+</I>&gt;<i> /lib/libdl.so.2
+</I>&gt;<i> /lib/libm-2.3.6.so
+</I>&gt;<i> /lib/libm.so.6
+</I>&gt;<i> /lib/libmemusage.so
+</I>&gt;<i> /lib/libnsl-2.3.6.so
+</I>&gt;<i> /lib/libnsl.so.1
+</I>&gt;<i> /lib/libnss_compat-2.3.6.so
+</I>&gt;<i> /lib/libnss_compat.so.2
+</I>&gt;<i> /lib/libnss_dns-2.3.6.so
+</I>&gt;<i> /lib/libnss_dns.so.2
+</I>&gt;<i> /lib/libnss_files-2.3.6.so
+</I>&gt;<i> /lib/libnss_files.so.2
+</I>&gt;<i> /lib/libnss_hesiod-2.3.6.so
+</I>&gt;<i> /lib/libnss_hesiod.so.2
+</I>&gt;<i> /lib/libnss_nis-2.3.6.so
+</I>&gt;<i> /lib/libnss_nis.so.2
+</I>&gt;<i> /lib/libnss_nisplus-2.3.6.so
+</I>&gt;<i> /lib/libnss_nisplus.so.2
+</I>&gt;<i> /lib/libpcprofile.so
+</I>&gt;<i> /lib/libpthread-2.3.6.so
+</I>&gt;<i> /lib/libpthread.so.0
+</I>&gt;<i> /lib/libresolv-2.3.6.so
+</I>&gt;<i> /lib/libresolv.so.2
+</I>&gt;<i> /lib/librt-2.3.6.so
+</I>&gt;<i> /lib/librt.so.1
+</I>&gt;<i> /lib/libthread_db-1.0.so
+</I>&gt;<i> /lib/libthread_db.so.1
+</I>&gt;<i> /lib/libutil-2.3.6.so
+</I>&gt;<i> /lib/libutil.so.1
+</I>&gt;<i> 
+</I>&gt;<i> Are there files in /lib that should be on the above
+</I>&gt;<i> list but mysteriously missing.
+</I>&gt;<i> A clean reap of the installed glibc is essential
+</I>&gt;<i> for the newly compiled glibc to install successfully.
+</I>&gt;<i> 
+</I>&gt;<i> There is a high probability that you will spot and
+</I>&gt;<i> be able to correct the problem if you check for it.
+</I>&gt;<i> I apologize that is not something that I can script
+</I>&gt;<i> for and feel safe and satisfied about the script.
+</I>&gt;<i> However, I can check the box personally 1st hand if you want.
+</I>&gt;<i> If what I wrote above does not solve the problem,
+</I>&gt;<i> which it should solve in most cases,
+</I>&gt;<i> then the problem will probably only be detected
+</I>&gt;<i> and solve by direct inspection by a SA.
+</I>&gt;<i> Could be something odd like an old or untracked or
+</I>&gt;<i> developmental version of binutils installed
+</I>&gt;<i> or an unexpected problem due to the compiler being used
+</I>&gt;<i> or one or more trojaned executables installed.
+</I>&gt;<i> Those possibilities are so remote I can not begin to
+</I>estimate the odds.
+&gt;<i> 
+</I>&gt;<i> I once inspected a box that could not tracked files installed
+</I>&gt;<i> by spells because the installed version of findutils was broken.
+</I>&gt;<i> Oh, that was so long ago now that the findutils spell no longer
+</I>&gt;<i> even contains the comment about what version to never use.
+</I>&gt;<i> However, I would expect that a box broken in that way would
+</I>&gt;<i> either be unable to cast glibc, or unable to cast a newer glibc
+</I>&gt;<i> after the older glibc installed, because the install log for the
+</I>&gt;<i> older installed glibc would be lacking entries for files that
+</I>&gt;<i> were installed in /lib/
+</I>&gt;<i> 
+</I>&gt;<i> It may even be possible, although unlikely,
+</I>&gt;<i> that a problem with a file installed in /usr/include
+</I>&gt;<i> may cause glibc to mis-compile.
+</I>&gt;<i> However, that is very unlikely since the glibc spell
+</I>&gt;<i> provides not only the glibc header files to use,
+</I>&gt;<i> but also the specific linux kernel header files to use
+</I>&gt;<i> for compilation of glibc.
+</I>&gt;<i> 
+</I>&gt;<i> Try the recommended above checks please.
+</I>&gt;<i> I apologize for harping about it.
+</I>&gt;<i> But there is no sense going on a wild goose chase
+</I>&gt;<i> before shooting the ducks floating in the barrel.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On 3/9/07, xyz &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jlm_devel at laposte.net</A>&gt; wrote:
+</I>&gt;<i> &gt; hi!
+</I>&gt;<i> &gt; i've been doing several stuff lately and I hadn't time to
+</I>&gt;<i> &gt; inspect this problem I have on ;y pc with upgrade of glibc....
+</I>&gt;<i> &gt; so the glibc compile fine and seems to install to... and
+</I>&gt;<i> &gt; sudenly my pc freeze and I can't login again.... in fact I can
+</I>&gt;<i> &gt; only switch of console but when I try to enter login nothing
+</I>&gt;<i> &gt; happen.... same ctrl-alt-suppr to reboot have no effect
+</I>&gt;<i> &gt; It happen all the time I cast glibc....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; today I tried a cast of glibc and I started 2 augur scry :
+</I>&gt;<i> &gt; augur scry
+</I>&gt;<i> &gt; augur scry glibc
+</I>&gt;<i> &gt; on 2 console
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I noticed something strange on augur scry glibc screen :
+</I>&gt;<i> &gt; performing quick test to see if the new glibc works
+</I>&gt;<i> &gt; glibc is ready to install
+</I>&gt;<i> &gt; preparing to install glibc
+</I>&gt;<i> &gt; dispelled spell : glibc
+</I>&gt;<i> &gt; dispelled spell : glibc
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; it's not an error of me, there is 2 lines saying a
+</I>&gt;<i> &gt; dispell..... and after this.... I can do nothing else than
+</I>&gt;<i> &gt; hardreseting the box......
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; does anyone have the same problem?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; best regards
+</I>&gt;<i> &gt; jlm
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> 
+</I>
+Envoyez vos cartes de voeux depuis www.laposte.net 
+Elles seront ensuite distribu&#233;es par le facteur : pratique et malin !
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000054.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+	<LI>Next message: <A HREF="000053.html">[Sorcerer-admins] glibc..... cast issue
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] stunnel
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20stunnel&In-Reply-To=%3C200801121442.23754.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000357.html">
+   <LINK REL="Next"  HREF="000359.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] stunnel</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20stunnel&In-Reply-To=%3C200801121442.23754.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] stunnel">merka at highsphere.net
+       </A><BR>
+    <I>Sat Jan 12 20:42:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000357.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+        <LI>Next message: <A HREF="000359.html">[Sorcerer-admins] kde 4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#356">[ date ]</a>
+              <a href="thread.html#356">[ thread ]</a>
+              <a href="subject.html#356">[ subject ]</a>
+              <a href="author.html#356">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Anybody got stunnel compiled recently? I am getting this message (tail of the 
+compile log):
+
+/bin/sh ../libtool --tag=CC --mode=link 
+gcc  -march=pentium-m -O2 -pipe -Wno-deprecated-declarations -Wall -Wshadow -Wcast-align -Wpointer-arith -I/usr/include  -Wl,-s -o 
+stunnel   file.o client.o log.o options.o protocol.o network.o resolver.o 
+ssl.o ctx.o verify.o sthreads.o stunnel.o pty.o 
+libwrap.o  -lz -ldl -lutil -lnsl  -lpthread -L/usr/lib -lssl -lcrypto
+gcc -march=pentium-m -O2 -pipe -Wno-deprecated-declarations -Wall -Wshadow -Wcast-align -Wpointer-arith -I/usr/include -Wl,-s -o 
+stunnel file.o client.o log.o options.o protocol.o network.o resolver.o ssl.o 
+ctx.o verify.o sthreads.o stunnel.o pty.o 
+libwrap.o  -lz -ldl -lutil -lnsl -lpthread -L/usr/lib -lssl -lcrypto
+libwrap.o: In function `check_libwrap':
+libwrap.c:(.text+0x34): undefined reference to `request_init'
+libwrap.c:(.text+0x3c): undefined reference to `sock_host'
+libwrap.c:(.text+0x44): undefined reference to `hosts_access'
+collect2: ld returned 1 exit status
+make[1]: *** [stunnel] Error 1
+make[1]: Leaving directory `/usr/src/sorcery/stunnel/stunnel-4.21/src'
+make: *** [all-recursive] Error 1
+! Problem Detected !
+Source moved to /var/tmp/failed/stunnel-4.21
+
+Googling has been fruitless so far.
+
+Jan
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000357.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+	<LI>Next message: <A HREF="000359.html">[Sorcerer-admins] kde 4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#356">[ date ]</a>
+              <a href="thread.html#356">[ thread ]</a>
+              <a href="subject.html#356">[ subject ]</a>
+              <a href="author.html#356">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

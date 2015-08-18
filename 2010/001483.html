@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] menu entries for KDE and gnome...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20menu%20entries%20for%20KDE%20and%20gnome...&In-Reply-To=%3C596b75861002202047j1c18b958uf80ae602bea93b01%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001482.html">
+   <LINK REL="Next"  HREF="001484.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] menu entries for KDE and gnome...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20menu%20entries%20for%20KDE%20and%20gnome...&In-Reply-To=%3C596b75861002202047j1c18b958uf80ae602bea93b01%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] menu entries for KDE and gnome...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Feb 21 05:47:04 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001482.html">[Sorcerer-admins] menu entries for KDE and gnome...
+</A></li>
+        <LI>Next message: <A HREF="001484.html">[Sorcerer-admins] menu entries for KDE and gnome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1483">[ date ]</a>
+              <a href="thread.html#1483">[ thread ]</a>
+              <a href="subject.html#1483">[ subject ]</a>
+              <a href="author.html#1483">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Although probably hundreds of useful software projects
+exist for which there are spells, but not KDE/gnome menu entries,
+starting by creating those desktop entry for
+the most popular software first seems like a good plan.
+Thanks for helping.
+Please add to those spells an explicit requirement for
+hicolor-icon-theme
+Not much has that as a requirement.
+And from what I saw it seems to install one file,
+and an excessive amount of directories for holding icon files.
+Yet it will server as an indication of what spells have
+already been adapted to provide menu entries and icons.
+
+I will go ahead and add that to gimp's requirements
+since I already know that gimp is good to go.
+And I already previously added it to firefox and xine-ui.
+
+Looks like we are off to a running start.
+3 done, about 497 more to go.  :)
+
+
+With the exception of creating 4 different sized png icons,
+which could be absurdly time consuming for some software,
+creating the .desktop files is not terribly complex.
+In addition to using what is provided in the documentation
+there are plenty of example .desktop files provided by KDE
+that can be copied and edited to achieve the desired result.
+
+gimp is an excellent example of software that
+installs it's menu entry and icons properly...
+
+# augur install gimp | grep &quot;hicolor.*\.png\|\.desktop&quot;
+/usr/share/applications/gimp.desktop
+/usr/share/icons/hicolor/16x16/apps/gimp.png
+/usr/share/icons/hicolor/22x22/apps/gimp.png
+/usr/share/icons/hicolor/24x24/apps/gimp.png
+/usr/share/icons/hicolor/32x32/apps/gimp.png
+/usr/share/icons/hicolor/48x48/apps/gimp.png
+/usr/share/icons/hicolor/64x64/apps/gimp.png
+
+gimp authors manage to do as part of gimp's installation.
+Am I unreasonable to conjecture that from other software authors?
+Therefore, that is why I am thinking that it should not
+become yet another thing that distribution maintainers do.
+Yes it is a trivial task.
+However, a trivial tasked multiplied by 500
+suddenly becomes non trivial.
+But if this is what SAs want
+then please give a hand and help with the modifications.
+I fully expect it to require far less effort than
+the previous time that I rewrote the entire 3000+ spell grimoire.
+
+
+On Sat, Feb 20, 2010 at 6:49 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> You are a brave man...
+</I>&gt;<i>
+</I>&gt;<i> I'll look at your xine mods, and apply them to the games that ( It's mostly
+</I>&gt;<i> games that don't put the icon in the right place - go figure ) don't have
+</I>&gt;<i> their icons in the right place.
+</I>&gt;<i>
+</I>&gt;<i> I guess I can help with a couple.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Feb 20, 2010 at 9:10 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Fortunately, both KDE and GNOME use the same file format for menu entries.
+</I>&gt;&gt;<i> Both have default fall backs for finding both icons and menu entries
+</I>&gt;&gt;<i> and thus do not require that menu entries, also known as Desktop Entry,
+</I>&gt;&gt;<i> to be installed /opt/kde4/... and somewhere separate for gnome.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> All desktop entries for applications can go in
+</I>&gt;&gt;<i> /usr/share/applications/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Icons have a somewhat more complex directory structure depending upon
+</I>&gt;&gt;<i> the dimensions of the icon or whether it is scalable.
+</I>&gt;&gt;<i> Those go somewhere under /usr/share/icons/hicolor/*/apps/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Some sources such as xine-ui supply both a desktop entry
+</I>&gt;&gt;<i> and also icons.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # augur install xine-ui | grep hicolor | grep png
+</I>&gt;&gt;<i> /usr/share/icons/hicolor/16x16/apps/xine.png
+</I>&gt;&gt;<i> /usr/share/icons/hicolor/22x22/apps/xine.png
+</I>&gt;&gt;<i> /usr/share/icons/hicolor/32x32/apps/xine.png
+</I>&gt;&gt;<i> /usr/share/icons/hicolor/48x48/apps/xine.png
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The icons are installed correctly.
+</I>&gt;&gt;<i> However, the reason that the program entry never shows up
+</I>&gt;&gt;<i> on a KDE or gnome menu is because
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # augur install xine-ui | grep &quot;\.desktop&quot;
+</I>&gt;&gt;<i> /usr/share/xine/desktop/xine.desktop
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> It installs the desktop file in the wrong location
+</I>&gt;&gt;<i> instead of in /usr/share/applications/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For example, xine-ui is easy to fix.
+</I>&gt;&gt;<i> Writing a desktop entry for firefox was not difficult
+</I>&gt;&gt;<i> since I merely modified konqbrowser.desktop
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Still if someone wants menu entries for software
+</I>&gt;&gt;<i> for which the software author is not providing
+</I>&gt;&gt;<i> then this requires more effort by spell authors.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.1.html">http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.1.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html">http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Those are the URLs to the documentation.
+</I>&gt;&gt;<i> I researched it already to discover what is involved.
+</I>&gt;&gt;<i> I expect that it would be a boring task.
+</I>&gt;&gt;<i> Probably only about 500 spells would benefit from enhancements.
+</I>&gt;&gt;<i> At about 10 minutes per spell to do it properly and check
+</I>&gt;&gt;<i> the effort required is only about a meager 80 hours.
+</I>&gt;&gt;<i> For a fast worker with fast computer
+</I>&gt;&gt;<i> the task could be complete in perhaps 40 hours.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Who will volunteer to make and test all those spell modifications?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Ah, last thing is,
+</I>&gt;&gt;<i> in order to see the menu entries appear on KDE menus without
+</I>&gt;&gt;<i> having to end session and log back in
+</I>&gt;&gt;<i> then run the program:
+</I>&gt;&gt;<i> /opt/kde4/bin/kbuildsycoca4
+</I>&gt;&gt;<i> Since the data is read from those directories
+</I>&gt;&gt;<i> by a user run program and then cached
+</I>&gt;&gt;<i> and the cached data is owned by the user;
+</I>&gt;&gt;<i> the updating of menu entries while a user is logged in
+</I>&gt;&gt;<i> is not a SA task but rather a user task.
+</I>&gt;&gt;<i> But not having to log periodically to check what showed up
+</I>&gt;&gt;<i> on menus does save some time.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Well, I already managed to have xine
+</I>&gt;&gt;<i> appear on KDE's Applications/Multimedia Menu.
+</I>&gt;&gt;<i> That was easy.
+</I>&gt;&gt;<i> 1 Down.
+</I>&gt;&gt;<i> About 499 left to go.
+</I>&gt;&gt;<i> Who is with me?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001482.html">[Sorcerer-admins] menu entries for KDE and gnome...
+</A></li>
+	<LI>Next message: <A HREF="001484.html">[Sorcerer-admins] menu entries for KDE and gnome...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1483">[ date ]</a>
+              <a href="thread.html#1483">[ thread ]</a>
+              <a href="subject.html#1483">[ subject ]</a>
+              <a href="author.html#1483">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

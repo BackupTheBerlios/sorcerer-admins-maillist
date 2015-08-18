@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTimJfdtyrXk9-q9xOedji0_yIOq7KwofRjeGchnT%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001637.html">
+   <LINK REL="Next"  HREF="001639.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] progress...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTimJfdtyrXk9-q9xOedji0_yIOq7KwofRjeGchnT%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] progress...">evorster at gmail.com
+       </A><BR>
+    <I>Thu May 27 23:36:28 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001637.html">[Sorcerer-admins] progress...
+</A></li>
+        <LI>Next message: <A HREF="001639.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1638">[ date ]</a>
+              <a href="thread.html#1638">[ thread ]</a>
+              <a href="subject.html#1638">[ subject ]</a>
+              <a href="author.html#1638">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there.
+
+I have been using Sorcerer for a little while as well.
+
+I preferred having an I/R to be as small as possible, with the sources for
+that I/R as a separate download.
+
+In my humble opinion, an I/R should a binary only collection of software
+that is just enough software on to boot, do command line fixes, and to
+download and compile sources.
+
+The rest is all optional, and might not be needed in whatever the SA has in
+mind for the linux box.
+
+
+
+This approach maximizes the usefulness of having sources stashed away from
+previous or other Sorcerer installs.
+Having a small code base makes for easy troubleshooting, quick update cycle
+and fast downloads.
+
+Is it possible to have an initramfs that replicates itself onto the root
+filesystem upon install for a seriously small Sorcerer distro?
+If gcc is needed from there, it could be stored in
+/var/cache/archive/gcc.xz, and just unpacked with Sorcerer's tools on to the
+newly installed root?
+Same with the other tools that is needed for Sorcerer to perform it's
+functions.
+
+-Evert-
+
+
+On Thu, May 27, 2010 at 3:43 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> I expected someone might say that.
+</I>&gt;<i> My answer is...
+</I>&gt;<i> scp the files.  :)
+</I>&gt;<i> scp -r to bring across a whole directory recursively.
+</I>&gt;<i> Or use sshfs-fuse provided on the I/R
+</I>&gt;<i> to mount a remote directory almost as easily as NFS.
+</I>&gt;<i>
+</I>&gt;<i> I also removed samba for much the same reasons
+</I>&gt;<i> as the nfs-utils.
+</I>&gt;<i> Samba required much space and a long time to compile.
+</I>&gt;<i>
+</I>&gt;<i> I tested a new x86_64 I/R already.
+</I>&gt;<i> It was 200M and installed fine.
+</I>&gt;<i> I am making only minor adjustments.
+</I>&gt;<i> Also I can shave a few more megs off the size
+</I>&gt;<i> by recompiling ppl without support for
+</I>&gt;<i> it's static link ar archive library.
+</I>&gt;<i>
+</I>&gt;<i> 265M 2010-02-06 18:52 sorcerer-x86_64-20100207.iso
+</I>&gt;<i>
+</I>&gt;<i> Compared to the former I/R the shrink of 65M
+</I>&gt;<i> was far less than expected.
+</I>&gt;<i> However, the size of installed software increased.
+</I>&gt;<i>
+</I>&gt;<i> I have many reasons in favor of the change.
+</I>&gt;<i> The size of of installed software keeps growing
+</I>&gt;<i> which keeps pushing up the size of the I/R.
+</I>&gt;<i> Downloading with current throttling limits requires a lengthy wait.
+</I>&gt;<i> Going from an installation with Xorg installed
+</I>&gt;<i> to a console only installation is tricky.
+</I>&gt;<i> It is easier to go from console to Xorg.
+</I>&gt;<i> and does not require a long compile.
+</I>&gt;<i> Installed xine was useful only for workstations.
+</I>&gt;<i>
+</I>&gt;<i> I did want to be able to provide more on the I/Rs.
+</I>&gt;<i> However, faster downloading, faster burning, faster testing
+</I>&gt;<i> tend to influence my decision to slim it down.
+</I>&gt;<i>
+</I>&gt;<i> Booting the I/R does not require a network connection.
+</I>&gt;<i> However, if an I/R consisted only of a kernel and initramfs
+</I>&gt;<i> then all the archives could be provided from a httpfs mount
+</I>&gt;<i> across the Internet that sort of I/R could be around 50M
+</I>&gt;<i>
+</I>&gt;<i> Sort of makes it less useful for recovery
+</I>&gt;<i> and difficult for installing if the Internet
+</I>&gt;<i> connection is slow or tricky to configure.
+</I>&gt;<i> However, archives could be provided independently
+</I>&gt;<i> from the I/Rs to provide more current installs even
+</I>&gt;<i> when using an old I/R
+</I>&gt;<i> Yet even so I still prefer having the archives on CD.
+</I>&gt;<i> Does everyone feel the same about that?
+</I>&gt;<i>
+</I>&gt;<i> In the long run having a more concise I/R
+</I>&gt;<i> will require less testing, less compiling
+</I>&gt;<i> and allow for more frequent releases
+</I>&gt;<i> of new I/Rs as important changes happen.
+</I>&gt;<i>
+</I>&gt;<i> Ah, I remembered something..
+</I>&gt;<i> Someone asked for more manual page and
+</I>&gt;<i> manual page support on the I/R
+</I>&gt;<i> I am trying to make it happen.
+</I>&gt;<i> However, I added a restriction to the I/R
+</I>&gt;<i> to ensure that the required archives for
+</I>&gt;<i> providing and reading manual pages are only
+</I>&gt;<i> untarred provided that enough free RAM exists.
+</I>&gt;<i>
+</I>&gt;<i> Therefore, if the amount of RAM on the target box is sufficient
+</I>&gt;<i> then the initramfs is populated with more software
+</I>&gt;<i> and manual pages than when testing on a 384M target.
+</I>&gt;<i>
+</I>&gt;<i> Excluding nfs-utils from the I/R
+</I>&gt;<i> also omits the loading of some modules,
+</I>&gt;<i> which saves some space.
+</I>&gt;<i> Unnecessary modules can also be removed
+</I>&gt;<i> from the initramfs by the SA
+</I>&gt;<i> if available memory is too tight.
+</I>&gt;<i>
+</I>&gt;<i> I was looking at the capacity of credit card sized CDs.
+</I>&gt;<i> 50 megs is still too tiny for Sorcerer I/R
+</I>&gt;<i> However, 256M USB memory sticks are faster
+</I>&gt;<i> and maybe cheaper than a CDROM + CDROM rewriter.
+</I>&gt;<i> Trying to create Sorcerer I/Rs that are less than 256M
+</I>&gt;<i> seems like a reasonable goal.
+</I>&gt;<i>
+</I>&gt;<i> Download savings can happen even in advance of updates
+</I>&gt;<i> when sources are downloaded from the master source cache.
+</I>&gt;<i> However, the benefit of having the SPR,
+</I>&gt;<i> Sorcerer Patch Repository,
+</I>&gt;<i> pay off almost exclusively on updates.
+</I>&gt;<i> Therefore, if an initial install requires the downloading
+</I>&gt;<i> of sources for Xorg and KDE-v4
+</I>&gt;<i> then when those updates happen
+</I>&gt;<i> the box can download the xz compressed sdelta3 patches.
+</I>&gt;<i> Therefore, download savings start sooner.
+</I>&gt;<i> And a SA might already have archives or sources
+</I>&gt;<i> from another Sorcerer box to use and so having
+</I>&gt;<i> that software pre-compiled might not be useful.
+</I>&gt;<i> However, having a fresh I/R could be useful for
+</I>&gt;<i> doing new installs or recovery.
+</I>&gt;<i>
+</I>&gt;<i> I was nervous about the changes.
+</I>&gt;<i> But I considered the boons and banes
+</I>&gt;<i> and decided that a smaller I/R would be
+</I>&gt;<i> more beneficial than detrimental.
+</I>&gt;<i>
+</I>&gt;<i> I did not do the usual pros and cons type listing.
+</I>&gt;<i> I will try to contrast and explain concisely below.
+</I>&gt;<i> There are many possibilities for the shape of the I/R.
+</I>&gt;<i>
+</I>&gt;<i> A. kernel + initramfs + network.
+</I>&gt;<i> B. kernel + initramfs + archives on CD.
+</I>&gt;<i> C. kernel + with all software in initramfs.
+</I>&gt;<i> D. kernel + initramfs + \
+</I>&gt;<i>   installed software on CD with rockridge extensions
+</I>&gt;<i>   and and zisofs
+</I>&gt;<i>
+</I>&gt;<i> A. is nice and tiny, but requires a network.
+</I>&gt;<i> B. is medium sized and does not require a network.
+</I>&gt;<i> C. is smaller than B. but larger than A. \
+</I>&gt;<i> however it requires over a gigabyte of RAM!
+</I>&gt;<i> D. is like somewhat like 2007 and earlier I/Rs
+</I>&gt;<i> which eventually exceeded CDROM capacity for the x86_64 I/R
+</I>&gt;<i> and also makes for a huge download.
+</I>&gt;<i>
+</I>&gt;<i> B. is the current compromise.
+</I>&gt;<i> It is much larger than A,
+</I>&gt;<i> somewhat less efficient than C.,
+</I>&gt;<i> but unlike C. requires very little RAM for install.
+</I>&gt;<i>
+</I>&gt;<i> I am tying to provide I/Rs that are useful and not bloated.
+</I>&gt;<i> If someone has good reasons
+</I>&gt;<i> for why we should use a different design
+</I>&gt;<i> then the conversation is still open.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, May 27, 2010 at 10:44 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; On Thursday 27 May 2010, Kyle Sallee wrote:
+</I>&gt;<i> &gt;&gt; Some of the new software is a bit thick:
+</I>&gt;<i> &gt;&gt; ppl is surprisingly thick and more than makes
+</I>&gt;<i> &gt;&gt; up for losing samba and nfs-utils related spells.
+</I>&gt;<i> &gt; Hmm, that is bad news for me: The nfs-utils spells are quite useful for
+</I>&gt;<i> me
+</I>&gt;<i> &gt; because they allow me to mount a NFS file system with sources. On the
+</I>&gt;<i> other
+</I>&gt;<i> &gt; hand, I can as well install nfs-utils shortly after the system is done
+</I>&gt;<i> &gt; installing from the CD.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; J.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100527/cfbdc65d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100527/cfbdc65d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001637.html">[Sorcerer-admins] progress...
+</A></li>
+	<LI>Next message: <A HREF="001639.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1638">[ date ]</a>
+              <a href="thread.html#1638">[ thread ]</a>
+              <a href="subject.html#1638">[ subject ]</a>
+              <a href="author.html#1638">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

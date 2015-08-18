@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Cast and Augur stats...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Cast%20and%20Augur%20stats...&In-Reply-To=%3CAANLkTikEkBd2y5CZdQR_69aUTHNOppReOVPrL7R0Xzc5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002053.html">
+   <LINK REL="Next"  HREF="002059.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Cast and Augur stats...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Cast%20and%20Augur%20stats...&In-Reply-To=%3CAANLkTikEkBd2y5CZdQR_69aUTHNOppReOVPrL7R0Xzc5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Cast and Augur stats...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan  7 04:15:40 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002053.html">[Sorcerer-admins] Cast and Augur stats...
+</A></li>
+        <LI>Next message: <A HREF="002059.html">[Sorcerer-admins] KDE cast failing...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2056">[ date ]</a>
+              <a href="thread.html#2056">[ thread ]</a>
+              <a href="subject.html#2056">[ subject ]</a>
+              <a href="author.html#2056">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jan 6, 2011 at 5:05 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> If I could get some explanations for documentation that would be great :)
+</I>
+Ok.
+
+&gt;<i> `augur`
+</I>&gt;<i>
+</I>&gt;<i> The Augur View menu and its various reportings (If I can get an
+</I>&gt;<i> explanation of each *type* as it relates to it's respective *event*).
+</I>
+What is the view menu?
+I do not remember writing that command.
+
+
+
+&gt;<i> Event &#160; Type &#160; &#160;Occurrences
+</I>
+# augur help event
+
+That command explains the events.
+
+
+&gt;<i> Also, the 'augur scry' console displays, as in the included image file.
+</I>&gt;<i> Could you address the definitions for the *6* columns?
+</I>
+The first column is a status column
+The 2nd column is the spell name column
+The third column is the version column
+And the final column displays various information such as duration
+or time elapsed since event, or a line from the compile log.
+
+
+&gt;<i> i.e., in the first line we have:
+</I>&gt;<i>
+</I>&gt;<i> &lt;code&gt;
+</I>&gt;<i> [wait] &#160;zip &#160; &#160; 30
+</I>&gt;<i> &lt;/code&gt;
+</I>&gt;<i>
+</I>&gt;<i> presumably, *Sorcery* is 'waiting' to cast *zip*
+</I>
+That row shows queue counts.
+Cast shows how many spells are casting
+Wait shows how many spells are queued to be cast
+Download shows how many spells are downloading sources
+Acquire shows how many spells are waiting to acquire sources.
+
+
+&gt;<i> In Line 4, we have:
+</I>&gt;<i>
+</I>&gt;<i> &lt;code&gt;
+</I>&gt;<i> [00o ] &#160;sqlite &#160;3.7.3 &#160; + &#160; &#160; &#160; &#160; &#160; &#160; &#160; 2093k/3330k
+</I>&gt;<i> &lt;/code&gt;
+</I>
+The 2093k/3330k shows approximately where it was during
+the download when augur last had a look at it.
+
+
+&gt;<i> Presumably, we're talking about a spell called *00o* which requires the
+</I>&gt;<i> *sqlite* spell as a dependancy (Req?). The particular version of
+</I>&gt;<i> *sqlite* is 3.7.3
+</I>
+[OOo ] is explained in
+
+# augur help scry
+
+It is a visual representation of a bar graph in ASCII
+instead of writing a percentage value.
+It is not intended to be entirely accurate.
+[OO  ] indicates half compilation complete.
+However, that gives no clue about whether that is true
+or how long the other half will require.
+This functionality called &quot;estimation&quot; was requested by SAs.
+It might not always be correct.
+Most of the time it uses the amount of lines from a previous compile log
+as a basis for how many compile lines to expect from the current cast
+of that software project.
+
+
+&gt;<i> What is the *+* sign for?
+</I>
+The + indicates that the time for those is growing larger.
+It probably only shows + when software is compiling.
+
+The - indicates that the event happened in the past.
+The number follow the - indicates how long ago in the past
+the event occurred.
+The time is expressed in Days:Hours:Minutes format.
+So if there is no : then it is just minutes.
+
+The heads up display shows at the very top something expected for the future.
+In the middle it shows what is currently happening.
+Then, towards the bottom it shows what previously happened.
+When an event has a description such as: Pass Cast
+then it is an event that already occurred.
+So from top to bottom it is future, present, past.
+
+
+&gt;<i> Perhaps it has d/l'd 2093 of 3330 KBytes?
+</I>
+Yes that what a line indicating downloading.
+Sometimes those show up.
+
+
+&gt;<i> On Line 5 we have:
+</I>&gt;<i>
+</I>&gt;<i> &lt;code&gt;
+</I>&gt;<i> [0. &#160;] &#160;fftw &#160; &#160;3.2.2 &#160; + &#160; &#160; &#160; 10 &#160; &#160; &#160;dft/simd
+</I>&gt;<i> &lt;/code&gt;
+</I>&gt;<i>
+</I>&gt;<i> Here we have, presumably, a spell called *0.*, which requires the spell
+</I>&gt;<i> *fftw*. fftw's version number is 3.2.2? Again, what is the plus sign for
+</I>&gt;<i> in column four, and in column 5 there is the number *10*, but what does
+</I>&gt;<i> that stands for?
+</I>
+No fftw is the spell.
+The [O.  ] is a bar graph.
+The bar graph fills from left to right.
+
+&gt;<i> What *dft/simd* is in column six.
+</I>
+It is something that printed in the compile log.
+# augur scry expects that may be it's current work directory
+relative to the source tree.
+
+
+&gt;<i> And also, where the other particulars that are listed may be of
+</I>&gt;<i> significance too.
+</I>&gt;<i>
+</I>&gt;<i> Finally, and the only source I could find was in the n00b faq, but are
+</I>&gt;<i> the following still the preferred initial system configs to be
+</I>&gt;<i> performed and in the order they are listed?:
+</I>&gt;<i>
+</I>&gt;<i> 1.) `sorcery update grimoire`
+</I>&gt;<i> 2.) run `sorcery` and set defaults
+</I>&gt;<i> 3.) `augur sync`
+</I>&gt;<i> 4.) `augur sync`
+</I>&gt;<i> 5.) `augur &#160;update`
+</I>&gt;<i> 6.) `sorcery rebuild`
+</I>&gt;<i> 7.) `cast useful-profile`
+</I>&gt;<i> 8.) `cast kde`
+</I>&gt;<i> 9.) `cast firefox` # instead of Mozilla?
+</I>&gt;<i> 10.) `augur forget etc; cast etc`
+</I>&gt;<i> 11.) `augur forget glibc-locales; cast glibc-locales`
+</I>&gt;<i> 12.) `augur forget glibc-localtime; cast glibc-localtime`
+</I>&gt;<i> 13.) `augur forget init-toggle; cast init-toggle`
+</I>&gt;<i> 14.) `augur forget sorcery-bgz; cast sorcery-bgz` # for small HDDs
+</I>&gt;<i> 15.) `cast sorcery-bootblaze`
+</I>&gt;<i> 16.) `cast sorcery-immune`
+</I>&gt;<i> 17.) `cast sorcery-alien` &#160; &#160; &#160; # makes monthly cronjob
+</I>&gt;<i> 18.) `cast sorcery-clean` &#160; &#160; &#160; # makes monthly cronjob
+</I>&gt;<i> 16.) `cast sorcery-defrag` &#160; &#160; &#160;# makes monthly cronjob
+</I>&gt;<i> 16.) `cast sorcery-md5sum` &#160; &#160; &#160;# makes weekly crontab job
+</I>&gt;<i>
+</I>&gt;<i> And finally, what might be the easiest way to find/install something
+</I>&gt;<i> like, say, wireshark or transmission? One could try the following:
+</I>&gt;<i>
+</I>&gt;<i> cast wireshark; cast transmission; cast openshot; cast k3b (but I don't
+</I>&gt;<i> know if those are the correct spellings for the spells to cast in order
+</I>&gt;<i> to install wireshark or transmission - and I don't know if there even is
+</I>&gt;<i> a spell for OpenShot [non-linear video editor] or if k3b has its own
+</I>&gt;<i> spell or &#160;is part of another KDE thang...
+</I>
+List as many spells on cast as are desired to be cast such as:
+
+# cast kde-v4 sorcery-immune sorcery-md5sum glibc-locales
+
+augur commands must be run in sequence
+A SA can either type:
+# augur sync; augur newer; augur update
+or
+# augur easy
+
+
+&gt;<i> Thanks :)
+</I>
+Sure.
+Sorry if that seemed difficult.
+The augur scry screen makes better sense
+the more that a SA looks at it.
+Because of the limited amount of character space in a console
+there is not much point in trying to label the columns.
+Most of the columns should be rather intuitive like the spell name column
+and the version column.
+The first and last columns are more dynamic.
+The first column is a status column which might also show status
+of an ongoing event as a bar graph.
+The last column provides information about the event which might be
+lines from the ongoing download log, or a line from the compile log
+or a duration for the event or since the event took place.
+
+Many of the augur commands provide verbose help when invoked like:
+
+# augur help $COMMAND_NAME
+
+where $COMMAND_NAME is the name of the command such as:
+&quot;event&quot;
+
+# augur help event
+
+Like a HUD on an aircraft airspeed is indicated somewhere
+if the pilot knows where to look, however the air number and/or
+gauge that shows air speed might not have the word &quot;airspeed&quot; written on it.
+So the augur scry, also called the HUD, short for heads up display,
+is similar to an aircraft HUD in that it provides information in the spot
+where the SA will look once familiar with where to look to find the
+desired information.
+
+Unfortunately, it can not show everything.
+Compile logs are saved by default.
+# augur compile $SPELL
+Download logs are not saved by default.
+It must be enabled as a feature.
+Event logs are stored in /var/log/sorcery/event/
+They can be viewed by various methods.
+And some of them, which have a size greater than 0
+will contain additional information as their file content.
+
+
+
+&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703 &#160;(US)
+</I>&gt;<i> TEL: +44.702.405.1909 (UK)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.10 (GNU/Linux)
+</I>&gt;<i> Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJNJli3AAoJEE1wgkIhr9j3kEUIAJNUirOYpdpJrp/n1lsVmoe5
+</I>&gt;<i> 0VNyKFXqJWWdufO4qH4XrX6S2kgtfVBZ8LjnvkDjeGV7QRWpMzN3ewQAKn+TeHBI
+</I>&gt;<i> DDOP3D+wAzq3AWEtPxZCxdb4h5yB3czWZO0Y7MagSHJ6TjP04HhF88v2ujBepoTa
+</I>&gt;<i> HAJfv/KgWeHhfGDP4RxgMlv959soPH8Ug2qflgHV+kOpcEQuB6W6RAR0lvi98TWb
+</I>&gt;<i> gvFdaoo7oR+pAPqDtOrkvxGupwI18kbsqqAjsp1jlbPZS4Wcgk9ugHgX9CCSZxW7
+</I>&gt;<i> mLG84vQEcZ5ceRtqP5OCK6XG/pa60u/nqmhAXLhptXvJ83S5dysSfTYSPem/ZHc=
+</I>&gt;<i> =clby
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002053.html">[Sorcerer-admins] Cast and Augur stats...
+</A></li>
+	<LI>Next message: <A HREF="002059.html">[Sorcerer-admins] KDE cast failing...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2056">[ date ]</a>
+              <a href="thread.html#2056">[ thread ]</a>
+              <a href="subject.html#2056">[ subject ]</a>
+              <a href="author.html#2056">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

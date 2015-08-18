@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] conservation of RAM or conservation of disk space?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20conservation%20of%20RAM%20or%20conservation%20of%20disk%20space%3F&In-Reply-To=%3CCA%2BT4wDj-Xy6CgmjsFO%3DLga2C9csoHc4RDe97ehDr3ATMJdu_NQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002247.html">
+   <LINK REL="Next"  HREF="002249.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] conservation of RAM or conservation of disk space?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20conservation%20of%20RAM%20or%20conservation%20of%20disk%20space%3F&In-Reply-To=%3CCA%2BT4wDj-Xy6CgmjsFO%3DLga2C9csoHc4RDe97ehDr3ATMJdu_NQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] conservation of RAM or conservation of disk space?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug 18 00:23:27 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002247.html">[Sorcerer-admins] To doc or not to doc, that is the question.
+</A></li>
+        <LI>Next message: <A HREF="002249.html">[Sorcerer-admins] bug in udev...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2248">[ date ]</a>
+              <a href="thread.html#2248">[ thread ]</a>
+              <a href="subject.html#2248">[ subject ]</a>
+              <a href="author.html#2248">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I made improvements to immune-sentinel-space.
+
+# /etc/init.d/sentinel-space configure
+
+Presents a list of percentages to select
+for the amount of RAM for xz to use when compressing tarballs.
+The entire amount of RAM selected
+is not guaranteed to be used each time.
+However, allowing sufficient RAM allowd xz to create
+a dictionary window the size of the tarball being compressed.
+
+For example, linux tarball compressed in 1 block
+is smaller than a linux tarball compressed in 2 blocks.
+The main reason that xz can compress files smaller
+than bzip2 is because bzip2
+uses a fixed block size while compressing.
+bzip2's maximum block size is 900K.
+
+In contrast we already know xz can use 65M
+when compressing with parameter -9.
+However, with proper parameters
+xz can also use several gigabytes of RAM.
+
+Because I keep many tarballs,
+I prefer to use a large amount of RAM
+on my workstation for compressing tarballs.
+Most of the time the RAM is available
+and used for little other than disk caching.
+
+I am setting the default at 10%.
+The size is reasonable.
+immune-sentinel-space runs in the idle cgroup.
+When competing for the CPU
+immune-sentinels-space receives
+about 1/512 of the CPU cycles.
+Therefore, it can take it's time.
+
+The maximum value I am allowing is 80%
+Keep in mind that compressing with such
+a large amount of RAM also increases
+the amount of CPU cycles required.
+Therefore, xz could eat 80% of RAM for
+a much longer duration than the default setting of 10%.
+Selecting 80% could be unwise.
+
+Compression programs, such as xz,
+do pattern matching across a large span of RAM.
+Consequently, compression programs are effectively non-swappable.
+Any memory used by the compression program that is swapped
+must be read back into RAM almost immediately.
+Please keep that in mind when selecting a value greater than 50%.
+
+Changing the settings will not re-compress tarballs
+that are already compressed with xz.
+It only effects new tarballs that arrive uncompressed
+or are compressed with gzip and/or bzip2.
+
+Difficult to anticipate where this improvement will be of much use.
+Using large portions of RAM gains perhaps between 5% and 50%
+compression improvement on large tarballs.
+On small tarballs no improvement is gained because
+tarballs under 8M already compress in a single block.
+Here is the default from xz's manual page on the table of presets:
+
+Preset   DictSize   CompCPU   CompMem   DecMem
+-6       8 MiB       6       94 MiB    9 MiB
+
+The default of setting of 10%
+for immune-sentinel-space on a box with 1G of RAM
+achieves nearly the same performance as xz's defaults.
+However, on a 4G box...
+
+Preset   DictSize   CompCPU   CompMem   DecMem
+-8      32 MiB       6      370 MiB   33 MiB
+-9      64 MiB       6      674 MiB   65 MiB
+
+The performance allowed is somewhat better than present -8
+
+xz being able to determining memory consumption by a percentage
+is a nice improvement over using tradition preset values.
+This way no understanding of a table is required.
+And selecting an undesirable preset
+that forces the box into infinite swapping mode is not possible.
+Consequently, I wanted to upgrade immune-sentinel-space
+so that SAs can enjoy benefits without having to
+read xz manual pages and documentation
+in order to make a decision.
+Enjoy.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002247.html">[Sorcerer-admins] To doc or not to doc, that is the question.
+</A></li>
+	<LI>Next message: <A HREF="002249.html">[Sorcerer-admins] bug in udev...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2248">[ date ]</a>
+              <a href="thread.html#2248">[ thread ]</a>
+              <a href="subject.html#2248">[ subject ]</a>
+              <a href="author.html#2248">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

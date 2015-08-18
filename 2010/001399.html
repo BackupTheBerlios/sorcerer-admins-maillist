@@ -1,0 +1,292 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] 1 point against ubuntu - they mangle the	original package name
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%201%20point%20against%20ubuntu%20-%20they%20mangle%20the%0A%09original%20package%20name&In-Reply-To=%3C596b75861001150242h7f2828c2xe56a655a5a6669fe%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001397.html">
+   <LINK REL="Next"  HREF="001398.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] 1 point against ubuntu - they mangle the	original package name</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%201%20point%20against%20ubuntu%20-%20they%20mangle%20the%0A%09original%20package%20name&In-Reply-To=%3C596b75861001150242h7f2828c2xe56a655a5a6669fe%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] 1 point against ubuntu - they mangle the	original package name">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan 15 11:42:17 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001397.html">[Sorcerer-admins] 1 point against ubuntu - they mangle the original	package name
+</A></li>
+        <LI>Next message: <A HREF="001398.html">[Sorcerer-admins] Does anyone know of a good(atomic/small) xwindow	client for windows that works well with xorg?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1399">[ date ]</a>
+              <a href="thread.html#1399">[ thread ]</a>
+              <a href="subject.html#1399">[ subject ]</a>
+              <a href="author.html#1399">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jan 15, 2010 at 2:35 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> I appreciate your work
+</I>
+Thanks.
+
+&gt;<i> I recently grabbed Ubuntu ( don't ask), and built a virtual machine,
+</I>&gt;<i> and was running old scripts I had to &quot;cat
+</I>&gt;<i> $(/etc/sorcery/logs/installed/$(Package)) | cpio &quot;
+</I>
+If using as an initramfs
+then best usually to pipe that through LC_ALL=C sort
+to ensure that directories are created first.
+However, I would probably use tar over cpio when possible.
+
+&gt;<i> basically... changed a few lines to &quot; dpkg -L $(Package) | cpio &quot;, and
+</I>&gt;<i> built tiny ubuntu images...
+</I>&gt;<i>
+</I>&gt;<i> I had to grab 'bash', 'coreutils', fbset, v86d, freetype (which they
+</I>&gt;<i> call libfreetype6) why 6?
+</I>
+# augur install freetype | grep libfreetype
+/usr/lib/libfreetype.la
+/usr/lib/libfreetype.so
+/usr/lib/libfreetype.so.6
+/usr/lib/libfreetype.so.6.3.22
+
+Probably because software authors gave it a soname of:
+libfreetype.so.6
+
+&gt;<i>&#160;and libpng (libpng1.2-0) libattr (libattr1)
+</I>&gt;<i> !! 1?! why would they mangle package names.
+</I>
+Unlike Sorcerer boxes,
+that more gracefully handle the ELF libraries,
+pre-compiled binary based distros must more tightly
+specify and control the installed version of libraries.
+
+Calling freetype, freetype6 is actually a smart way to handle it.
+Generally any freetype that will install a
+libfreetype.so.6.xyz will be binary compatible and usable
+by all software that expects to runtime link with libfreetype.so.6
+
+Sorcerer also does something like that, but a bit less clever.
+Instead of relying upon the so names of libraries
+we appended part of the official version to the spell name
+when it must appear as a separate spell.
+For example:
+gtk+ and gtk+-v1.2
+All software that requires the old legacy gtk+ library
+requires the gtk+-v1.2 spell.
+But we could have called it gtk+1 or gtk+1.2 for example.
+
+Fortunately, Sorcerer boxes rarely require separate spells
+with nearly the same name for providing older software.
+There is of course gtk+ and gtk+-v1.2 and all of the kde*-v3
+and kde*-v4 type spells.
+But those are not really as bad as it seems.
+For example
+/lib/libreadline.so.6
+is installed by readline version 6.1
+And when readline 7 becomes available
+it will install /lib/libreadline.so.7
+But the same readline spell can be used.
+Therefore, there is no absurd sequence such as:
+readline1, readline2, readline3, readline4, readline5, readline6, etc...
+But for a pre-compiled binary based distro
+all of those separate readline packages names make sense.
+
+
+&gt;<i>.. SDL, lots of mangling
+</I>&gt;<i> around Xorg release stuff... they do SOME case insensitive searches,
+</I>&gt;<i> but tracking packages is horrible if you actually know the origin of
+</I>&gt;<i> said packages....
+</I>
+Well, there are advantages and disadvantages to both styles.
+With Sorcerer, the source tarball name usually becomes
+the spell name.
+That is why esound is the name of the enlightenment sound daemon
+instead of libesd or esd.
+Also readline is the name for readline instead of libreadline.
+However, there are many spells that do begin with the word lib
+and that is because their source tarball does also
+such as libgnome
+While it makes sense to me, the Sorcerer spell to software
+project naming system is nearly opposite of what distributions
+try to do.
+But from my point of view pre-compiled based distros
+name the packages differently than what software authors want.
+
+
+&gt;<i> There is a monotone 0.45 which is a 30% performance increase over
+</I>&gt;<i> 0.44, besides that I think they did some stuff...
+</I>
+# montone 0.45 failed compilation
+# tm_posix.cpp:(.text+0x15): undefined reference to `clock_gettime'
+
+I will recheck it since it may be caused by Botan,
+but if the software fails to compile
+then we wait until software authors fix it.
+
+
+&gt;<i> I'm &#160;having an issue with at76_usb &#160;- it it safe to remove?
+</I>
+Yes.
+at76-usb only compiles with older than current kernels.
+It is a driver for a USB wireless network device.
+In order for it to work atmel-firmware must be installed.
+Then, the at76c50x_usb module for the linux kernel will
+automatically be loaded if the device is present.
+However, the at76c50x_usb might only work properly in
+linux version 2.6.30.4
+It has not worked for me in 2.6.32.x kernel versions.
+Chances are that you do not have the device.
+
+
+&gt;<i> (Maybe I should reboot - then the real problems....)
+</I>&gt;<i> Some things I like... but erm... somehow are broken...
+</I>&gt;<i>
+</I>&gt;<i> ------ Insert cast xorg -----
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at tower2</A>:~# cast xorg
+</I>&gt;<i> &#160;* bxz starting &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> &#160;* bxz started &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> &#160;* depmod checking modules.dep &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ warning ]
+</I>&gt;<i> &#160;* depmod checked &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ success ]
+</I>&gt;<i> &#160;* /etc/services.d checking &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> &#160;* /etc/services.d checked &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> &#160;* /etc/rc.d checking &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> &#160;* /etc/rc.d checked &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> &#160;* /etc/lilo.conf checking &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ warning ]
+</I>&gt;<i> &#160;* /etc/lilo.conf updating &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ warning ]
+</I>&gt;<i> &#160;* initramfs checking &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> &#160;* initramfs updating &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> Warning: LBA32 addressing assumed
+</I>&gt;<i> Added 2.6.32.3 *
+</I>&gt;<i> Added 2.6.32.2
+</I>&gt;<i> Added 2.6.32
+</I>&gt;<i> One warning was issued.
+</I>&gt;<i> &#160;* initramfs updated &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> &#160;* initramfs checked &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> &#160;* /etc/lilo.conf updated &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ success ]
+</I>&gt;<i> &#160;* /etc/lilo.conf checked &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ success ]
+</I>&gt;<i> &#160;* initramfs checking &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> &#160;* initramfs updating &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;<i> Warning: LBA32 addressing assumed
+</I>&gt;<i> Added 2.6.32.3 *
+</I>&gt;<i> Added 2.6.32.2
+</I>&gt;<i> Added 2.6.32
+</I>&gt;<i> One warning was issued.
+</I>&gt;<i> &#160;* initramfs updated &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> &#160;* initramfs checked &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;<i> Waiting for compilation of xorg to begin
+</I>&gt;<i>
+</I>&gt;<i> Press l to switch to less view of compile log.
+</I>&gt;<i> Press q to quit augur scry.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> -------------------------
+</I>&gt;<i>
+</I>&gt;<i> What timestamp is wrong that I can fix so it doesn't always regenerate
+</I>&gt;<i> initramfs (it doesn't take very long.... )
+</I>
+It regenerates the initramfs when regenerating it is required.
+See the initrf_current() function in
+/etc/init.d/initrmafs for information about what it checks.
+It does not check very much in order to determine
+if the initramfs should be re-generated.
+Could you tell me what is changing and why please?
+When it discovers that the initramfs requires regeneration
+it automatically the reason why to:
+/var/log/initramfs.log
+After initramfs re-generation
+looking at that file first might provide a clue.
+
+&gt;<i> maybe I shoudl reboot....I appreciate your work
+</I>
+Reboot is only required in a new kernel was installed.
+You are welcome.
+
+&gt;<i> Fri Jan 15 00:50:17 PST 2010 &#160; &#160;stunnel 4.29 &#160; &#160;build/compile error
+</I>
+Unless you know that you are using it
+then you probably do not have imap or pop3 sessions
+wrapped using stunnel.
+I can check if it is broke.
+But you may want to
+# augur forget stunnel; dispel stunnel
+
+
+&gt;<i> Jan 15 02:26:46 PST 2010 &#160; &#160;lcms &#160; &#160;1.19 &#160; &#160;Download failed
+</I>&gt;<i>
+</I>&gt;<i> it comes from sourceforge... augur minileech lcms and running the
+</I>&gt;<i> resulting /tmp/mini* doesn't work
+</I>
+I have not tried minileech in a long time.
+I corrected the obvious mistake in the source url for lcms.
+Thanks for reporting it.
+
+&gt;<i> xfs failure.....
+</I>&gt;<i>
+</I>&gt;<i> /usr/bin/xmlto -m ./doc/xfs-design.xsl -o doc pdf ./doc/xfs-design.xml
+</I>&gt;<i> I/O error : Attempt to load network entity
+</I>&gt;<i> <A HREF="http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd</A>
+</I>&gt;<i> /var/tmp/failed/xfs/xfs-1.1.0/./doc/xfs-design.xml:3: warning: failed
+</I>&gt;<i> to load external entity
+</I>&gt;<i> &quot;<A HREF="http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd</A>&quot;
+</I>&gt;<i> &#160; &#160;&quot;<A HREF="http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd</A>&quot;&gt;
+</I>
+Yes, I also am irritated by network access during compilation.
+I was not carefully aware of the requirements of xfs.
+I doubt that anyone would use xfs anymore.
+With ample disk space almost everyone installs X11 fonts
+to their fixed disk rather than requesting them across the
+local network from a X Font Server, provided by xfs.
+I recommend:
+# augur forget xfs; dispel xfs
+
+&gt;<i> down in building docs that I'll never read and would sooner run
+</I>&gt;<i> configure with --without-docs or something.... I guess
+</I>
+I will try:
+      opts --disable-devel-docs
+But I do not know if that will convince it
+to not try to run xmlto.
+But there are other ways to circumvent the problem
+if you absolutely require xfs.
+Otherwise I will probably just put a broke attribute on it.
+
+&gt;<i> Jim
+</I>
+Thanks for the bug reports Jim.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001397.html">[Sorcerer-admins] 1 point against ubuntu - they mangle the original	package name
+</A></li>
+	<LI>Next message: <A HREF="001398.html">[Sorcerer-admins] Does anyone know of a good(atomic/small) xwindow	client for windows that works well with xorg?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1399">[ date ]</a>
+              <a href="thread.html#1399">[ thread ]</a>
+              <a href="subject.html#1399">[ subject ]</a>
+              <a href="author.html#1399">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

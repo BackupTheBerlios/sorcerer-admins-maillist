@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] I/R Building... and observations about	current...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20I/R%20Building...%20and%20observations%20about%0A%09current...&In-Reply-To=%3Ca8d8718f0808290121i39b77b03s2a264552bb4b6b8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000735.html">
+   <LINK REL="Next"  HREF="000737.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] I/R Building... and observations about	current...</H1>
+    <B>Scruffy Poo</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20I/R%20Building...%20and%20observations%20about%0A%09current...&In-Reply-To=%3Ca8d8718f0808290121i39b77b03s2a264552bb4b6b8%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] I/R Building... and observations about	current...">pooster at gmail.com
+       </A><BR>
+    <I>Fri Aug 29 10:21:07 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000735.html">[Sorcerer-admins] I/R Building... and observations about	current...
+</A></li>
+        <LI>Next message: <A HREF="000737.html">[Sorcerer-admins] How to deploy a new box from an old box...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#736">[ date ]</a>
+              <a href="thread.html#736">[ thread ]</a>
+              <a href="subject.html#736">[ subject ]</a>
+              <a href="author.html#736">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Haven't really been keeping up, so forgive the lapse here.  Is the
+UUID roughly equivalent to the partition labels that most distros use,
+or is this a lower-level?
+
+On Thu, Aug 28, 2008 at 11:11 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Thu, Aug 28, 2008 at 2:57 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> I LIKE the idea about using uuid for disk partitions and lilo boot
+</I>&gt;&gt;<i> specifications.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> But, this doesn't work for the purposes of taking an existing disk and
+</I>&gt;&gt;<i> copying it to another disk.
+</I>&gt;<i>
+</I>&gt;<i> It can work.
+</I>&gt;<i> The UUID for a devices is can be changed.
+</I>&gt;<i> However, it probably should not be.
+</I>&gt;<i> The purpose of UUID is that they should be unique.
+</I>&gt;<i>
+</I>&gt;&gt;<i> 1) Lilo complains that there are two disks with the same ID - long
+</I>&gt;&gt;<i> time issue which used to be fatal.
+</I>&gt;<i>
+</I>&gt;<i> Change the UUID of the copy before running lilo
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> So, I guess, I dunno I have to hand go back through and replace UUID
+</I>&gt;&gt;<i> references with device references... after installation Sorcerer
+</I>&gt;&gt;<i> doesn't really manage fstab and lilo.conf.head right
+</I>&gt;<i>
+</I>&gt;<i> That is the idea behind using the UUID.
+</I>&gt;<i> Find it and use it forever.
+</I>&gt;<i> Edit /etc/fstab and /etc/lilo.conf{,.head}
+</I>&gt;<i> to use device names or UUID or labels.
+</I>&gt;<i> I have no preference.
+</I>&gt;<i> However, the I/R uses UUIID so that installations
+</I>&gt;<i> can be made onto both fixed disks and
+</I>&gt;<i> also flash drives.
+</I>&gt;<i> But none of my deployed boxes,
+</I>&gt;<i> except flash drives, use UUID.
+</I>&gt;<i>
+</I>&gt;<i> If the device names change UUID continues to work.
+</I>&gt;<i> It does not matter if /dev/sda1 becomes /dev/sdb1
+</I>&gt;<i> or if /dev/sda1 becomes /dev/hda1
+</I>&gt;<i> With UUID the proper device with
+</I>&gt;<i> UUID will be mounted.
+</I>&gt;<i>
+</I>&gt;<i> There is no ideal method.
+</I>&gt;<i> Each of the three has different boons and banes.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+SO not teh 1337
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000735.html">[Sorcerer-admins] I/R Building... and observations about	current...
+</A></li>
+	<LI>Next message: <A HREF="000737.html">[Sorcerer-admins] How to deploy a new box from an old box...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#736">[ date ]</a>
+              <a href="thread.html#736">[ thread ]</a>
+              <a href="subject.html#736">[ subject ]</a>
+              <a href="author.html#736">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

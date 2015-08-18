@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] named init script hangs forever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20named%20init%20script%20hangs%20forever&In-Reply-To=%3C474A845F.3030602%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000330.html">
+   <LINK REL="Next"  HREF="000331.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] named init script hangs forever</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20named%20init%20script%20hangs%20forever&In-Reply-To=%3C474A845F.3030602%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] named init script hangs forever">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Nov 26 09:31:27 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000330.html">[Sorcerer-admins] Where did it go?
+</A></li>
+        <LI>Next message: <A HREF="000331.html">[Sorcerer-admins] What is cooking on the stove?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#329">[ date ]</a>
+              <a href="thread.html#329">[ thread ]</a>
+              <a href="subject.html#329">[ subject ]</a>
+              <a href="author.html#329">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE> . /etc/init.d/named stop
++ . /etc/init.d/named stop
+++ . /lib/lsb/init-functions
++++ DEFAULT='\e[0m'
++++ BOLD='\e[1m'
++++ BLACK='\e[30m'
++++ RED='\e[31m'
++++ GREEN='\e[32m'
++++ YELLOW='\e[33m'
++++ BLUE='\e[34m'
++++ VIOLET='\e[35m'
++++ CYAN='\e[36m'
++++ WHITE='\e[37m'
++++ S60='                                                            '
+++ JAIL=/var/chroot/bind
+++ PIDF=/var/chroot/bind/var/run/named.pid
+++ SERV=/usr/sbin/named
+++ NAME=named
+++ case $1 in
+++ stop
+++ log_warning_msg 'named about to stop'
+++ log_start 'named about to stop'
+++ echo -n -e '\e[32m * \e[0m'
+ * ++ echo -n -e 'named about to stop'
+named about to stop++ echo -n '                                         '
+                                         ++ log_finish '\e[37m warning'
+++ echo -e '\e[34m[\e[37m warning \e[34m]\e[0m'
+[ warning ]
+++ rndc stop
+rndc: connect failed: 127.0.0.1#953: timed out
+++ log_success_msg 'named stopped'
+++ log_start 'named stopped'
+++ echo -n -e '\e[32m * \e[0m'
+ * ++ echo -n -e 'named stopped'
+named stopped++ echo -n '                                               '
+                                               ++ log_finish '\e[32m 
+success'
+++ echo -e '\e[34m[\e[32m success \e[34m]\e[0m'
+[ success ]
+
+
+this is the only success case I had, all the others times, named just 
+hangs and wait forever..... can't we set the timeout shorter (for me 3s 
+would be enough I think)
+best regards
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000330.html">[Sorcerer-admins] Where did it go?
+</A></li>
+	<LI>Next message: <A HREF="000331.html">[Sorcerer-admins] What is cooking on the stove?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#329">[ date ]</a>
+              <a href="thread.html#329">[ thread ]</a>
+              <a href="subject.html#329">[ subject ]</a>
+              <a href="author.html#329">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

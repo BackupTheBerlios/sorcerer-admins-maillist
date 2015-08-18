@@ -1,0 +1,544 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] issue when rebooting boards.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTimiZXBvw7zkkAGq0OHcG-FTc22CXAF93l7Zt1X2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001705.html">
+   <LINK REL="Next"  HREF="001749.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] issue when rebooting boards.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTimiZXBvw7zkkAGq0OHcG-FTc22CXAF93l7Zt1X2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] issue when rebooting boards.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jul  6 23:56:15 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001705.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+        <LI>Next message: <A HREF="001749.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1706">[ date ]</a>
+              <a href="thread.html#1706">[ thread ]</a>
+              <a href="subject.html#1706">[ subject ]</a>
+              <a href="author.html#1706">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 6, 2010 at 4:23 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>  &quot;sorcerer is a fast car without brakes&quot;
+</I>
+*lol*
+
+Yeah, no breaks.  :)
+If it does not break
+then it does not require fixing.
+Ideally, I wish it could be that way.
+
+
+&gt;<i> what prevent us to have some runlevel dedicated to interactive statup? in
+</I>&gt;<i> what is it not doable?
+</I>
+Basically, it requires that /etc/inittab also be modified.
+I could try to sedit in the required line,
+but that might not work because it requires an assumption
+that /etc/inittab looks something like the one provided by
+Sorcerer.
+Sediting a heavily modified /etc/inittab might not work.
+Installing a new default /etc/inittab replacing customized
+/etc/initab might irritate and inconvenience SAs.
+
+The best way to make any modification to
+the selection of init-scripts run during runlevel
+is to handle that at the very end of sysinit.
+Only when sysinit ends do the virtual consoles gettys
+become activated.
+Therefore, there exists an opportunity
+for one last attempt at interaction.
+Once runlevels start the action is fire and forget.
+
+And is that really so bad?
+The most sensitive parts of booting
+happen before runlevel execution begins.
+Nothing about runlevel execution should cause the box
+to enter into a state where the kernel is crashed
+or login is impossible,
+provided that the Linux-PAM installation was not already broke.
+
+
+&gt;<i> As far as I know it's allready working when I was
+</I>&gt;<i> prompted for fsck issue.... and the logs were in
+</I>&gt;<i> /etc/init.d/log.d/{sysinit,runlevel.$RUNLEVEL}
+</I>
+fscking only happens during sysinit.
+By the time runlevel begins a real root filesystem
+should be mounted read/write on /
+and therefore fscking should not be possible.
+
+&gt;<i> I ask it only in a sequential runlevel.... not in parallel ones....
+</I>&gt;<i> I still believe that we won't have to give up on all that you said...
+</I>&gt;<i> &quot;prompt the user and then?&quot; well I'll answer &quot;have someone maybe fix it?&quot;
+</I>&gt;<i> from what I see now, is that we run services without control, it might work,
+</I>&gt;<i> it might not work, if some service crash we have no way to fix it easely....
+</I>&gt;<i> we have a fast car, without brake, and we force the driver to blind
+</I>&gt;<i> himself.... good luck!
+</I>
+The runlevel log is far from being blind.
+Since about 100 init-scripts run during runlevel
+I can not read screen scroll fast enough.
+If I saw some unusual red
+then I check the runlevel log.
+
+As I mentioned before an interactive runlevel requires
+not only sequential foreground wrapped execution of init-scripts,
+but it also requires a modification of /etc/inittab in order to delay
+the startup of gettys until after runlevel execution completes.
+Ideally, the way to have that is to create special debug
+runlevel 7 that occurs in the /etc/inittab
+before the lines for virtual consoles begin.
+Ideal placement would be after si: and ca:
+assuming ca: occurs before vc[1-6]:
+
+As long as the ca: line exists in /etc/inittab
+and has not moved relative to the other lines
+then it could be used as an anchor point
+inserting the runlevel line just below it.
+
+&gt;<i> what prevent us to use locks?
+</I>
+There was no obvious gain for the cost of implementing it.
+
+&gt;<i> for me the concept of &quot;required&quot; and &quot;started
+</I>&gt;<i> before&quot; has nothing different
+</I>
+Ah, but it is different.
+In the LSB comment section of an init-script
+the Required-Start: and Should-Start:
+both are used merely as tools for ordering init-scripts.
+Take the /etc/init.d/lock init-script for example:
+
+### BEGIN INIT INFO
+# Required-Start: proc
+# Default-Start: S 1 2 3 4 5
+# Short-Description: lock mounts tmpfs on /var/lock
+### END INIT INFO
+
+Why does it have Required-Start: proc?
+Must /proc be mounted in order to mount /var/lock?
+Obviously there is no relationship.
+Several init-scripts, especially ones that will run during sysinit,
+have a Required-Start: proc
+merely in order to assure that /proc
+is one of the first init-scripts run during sysinit.
+
+# ls /etc/rc.d/rcS.d/S0[01]* | cat
+/etc/rc.d/rcS.d/S00loopback
+/etc/rc.d/rcS.d/S00media_root
+/etc/rc.d/rcS.d/S00proc
+/etc/rc.d/rcS.d/S01coldplug
+/etc/rc.d/rcS.d/S01dev
+/etc/rc.d/rcS.d/S01hostname
+/etc/rc.d/rcS.d/S01lock
+/etc/rc.d/rcS.d/S01loglevel
+/etc/rc.d/rcS.d/S01run
+/etc/rc.d/rcS.d/S01sys
+
+On my workstation proc is not mounted first.
+But it starts soon enough.
+
+&gt;<i> this is only you that interpret it as such
+</I>&gt;<i> for me that /var/locks shall be mounted tmps before starting someservice
+</I>&gt;<i> means that the service somervice require service mount_locks_fs
+</I>&gt;<i> for me if one service that require something to be run before it's run even
+</I>&gt;<i> if it's to have a touched file (not relying on a process to be executing at
+</I>&gt;<i> the same time) it require this service to be started....
+</I>
+That sounds fine.
+However, init-scripts do not know
+the difference between a Required-Start:
+that is used merely for ordering
+and a Required-Start: that indicates the specified
+init-script or service must have executed prior and
+completed successfully.
+
+Besides...
+Creating cascading auto-failures during init-script
+execution is not desirable.
+
+If lock files were created then what?
+Check for them and fail entire chains of init-scripts
+because an earlier init-script failed?
+
+Not every box has networking started by
+the networks init-script.
+Yet the init-script for /etc/init.d/sshd
+on almost every box will start something like:
+
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Required-Start: $network empty ssh-keygen run
+# Required-Stop:  $network
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: sshd provides server for secure encrypted remote logins.
+### END INIT INFO
+
+
+So would you want to sshd to not be started if
+the script specified by $network failed when it ran?
+Would you want sshd to not be stopped if
+the init-script that controls $networks
+did not successfully stop?
+Furthermore, how do init-scripts check for
+a lockfile from $network
+when $network specifies a generic service name
+rather than a specific init-script?
+
+Oddly enough the /etc/init.d/networks init-script
+writes a locfile /var/lock/networks
+That is only used to indicate for the init-script
+networks that networks was previously started.
+
+
+&gt;<i> I'm even more sure that we can achieve &quot;out of order stating&quot; : lauch ALL
+</I>&gt;<i> /etc/rc.d/rc*.d/ scripts in parallel without ordering and if dependencies
+</I>&gt;<i> are correct, have the services unlocking themselves in the right order.....
+</I>
+Even init systems designed to create the illusion
+of being able to start every init-script in parallel without ordering
+merely start ahead of those services other services to
+act as stand-ins.
+There is no effective way to create a true
+orderless concurrent execution of init-scripts.
+Some things absolutely must happen before other thins.
+Forget about trying to start them all at once
+and having them unlock and run in correct order.
+It would be slow for the kernel to handle
+and cause wear and tear on mechanical fixed-disks
+that have their heads constantly hopping all around
+the disks reading bits and pieces of files that are all
+being requested rather concurrently.
+
+
+&gt;<i> A requ B C D E
+</I>&gt;<i> B req C
+</I>&gt;<i> F req E
+</I>&gt;<i>
+</I>&gt;<i> A &amp; B &amp; C &amp; D &amp; E &amp; F &amp;
+</I>&gt;<i>
+</I>&gt;<i> A wait on B
+</I>&gt;<i> B wait on C
+</I>&gt;<i> C =&gt; free to run!
+</I>&gt;<i> D =&gt; free to run!
+</I>&gt;<i> E =&gt; free to run!
+</I>&gt;<i> F wait on E
+</I>&gt;<i> D free the lock...
+</I>&gt;<i> E free the lock
+</I>&gt;<i> F =&gt; free to run!
+</I>&gt;<i> C free the lock...
+</I>&gt;<i> B =&gt; free to run!
+</I>&gt;<i> B free the lock
+</I>&gt;<i> A =&gt; free to run!
+</I>&gt;<i>
+</I>&gt;<i> execution order C D E F B A
+</I>&gt;<i> C service if failing? D E F services will be executed, B and A who depends
+</I>&gt;<i> on it won't.... this is safety!
+</I>
+It is both slow and resource intensive.
+Years ago I had a sorcery that was like that.
+Instead of cast queues a spell would start to cast
+in it's own process within a screen session
+and it would constantly pole and wait for it's turn to go.
+If 300 spells were waiting to cast
+then that could be 300+ processes waking up periodically
+and polling to see if their turn to run has come.
+
+Rewriting sorcery was difficult and Evert constantly
+encouraged me to find and fix all the places where
+cast would cease to run while spells remained in the cast queue.
+Those situations were called &quot;stalls.&quot;
+
+Using numbers to control the execution order of init-scripts
+is way better than having 100 init-scripts
+doing battle with each other for the use of the CPU
+while trying to figure out what should execute next.
+And exactly how often should each init-script check?
+Check too often and the CPU is hogged.
+Check too infrequent and the CPU is idle.
+Neither is good.
+
+Having init-scripts run by number is better
+because as soon as an init-script is ready to execute
+then the init-script can execute.
+
+
+&gt;<i> as you see I don't even have to care about numbers..... it runs as fast as
+</I>&gt;<i> possible! even the sorcery parallel boot won't achieve such speed
+</I>
+Sorcerer's parallel boot blows away the method
+you described by a measure of many seconds.
+
+However, Sorcerer's sysinit is non parallel.
+Therefore it is mostly single core
+and gains only a slight benefit from SMP boxes.
+However, a parallel sysinit would be undesirable.
+It might save 3 seconds,
+but cause chaos if anything
+went wrong or out of order.
+And seriously, while fscking filesystems
+no other init-scripts should be executing concurrently.
+
+What happens during runlevel start is not as critical as sysinit.
+Ordering is also not nearly as important.
+Therefore, more concurrent execution of init-scripts is possible.
+
+I wish to demosntrate this in a way that makes sense.
+Do ls /etc/rc.d/rcS.d/
+How high do the numbers go?
+S17?
+Now check the S numbers for /etc/rc.d/rc4.d/
+How high do the S numbers go?
+S04?
+S04 indicates that there are 4 steps.
+All the init-scripts within a step can execute concurrently.
+When they have all finished running
+then all the init-scripts of the next step can begin executing concurrently.
+
+# for ((CX=0;CX&lt;5;CX++)); do echo -n &quot;S0$CX: &quot;; ls
+/etc/rc.d/rc4.d/S0$CX* | wc -l; done
+S00: 15
+S01: 14
+S02: 10
+S03: 5
+S04: 3
+
+15 init-scripts run concurrently at S00,
+14 at S01,
+10 at S02,
+5 at S03,
+and 3 at S04.
+
+runlevel execution offers good opportunity
+for parallelism.
+
+# for ((CX=0;CX&lt;10;CX++)); do echo -n &quot;S0$CX: &quot;; ls
+/etc/rc.d/rcS.d/S0$CX* | wc -l; done
+S00: 3
+S01: 7
+S02: 2
+S03: 1
+S04: 3
+S05: 1
+S06: 5
+S07: 4
+S08: 2
+S09: 2
+
+In contrast the sysinit execution
+offers less opportunity for concurrent execution.
+Not much is lost for running them in order.
+Also the order of init-scripts might not be proper
+for concurrent execution of sysinit init-scripts.
+Currently, there is an average of 2.4 init-scripts
+run per sublevel for sysinit.
+For runlevel 4 the average is 8.8 init-scripts.
+And the sublevels also tend to balance load average.
+sublevel 00 and sublevel 01 have many init-scripts executing,
+but each is fast and simple to run.
+Later sublevels contain init-scripts that tend
+to start services instead of merely mounting filesystems
+and loading modules.
+The execution of those init-scripts is more CPU intensive.
+
+&gt;<i> all we need is to have all startup scripts have the following line at end of
+</I>&gt;<i> startup
+</I>&gt;<i>
+</I>&gt;<i> setsid session_leader $0 $*
+</I>&gt;<i>
+</I>&gt;<i> in session_leader script
+</I>&gt;<i> ------------------------------------
+</I>&gt;<i> signal_handler() {
+</I>&gt;<i> &#160;&#160;&#160;&#160; kill -$sessionID
+</I>&gt;<i> &#160; &#160;&#160; sleep 2s
+</I>&gt;<i> &#160; &#160;&#160; kill -9 $sessionID
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i> trap SIGTERM SIG.... signal_handler
+</I>&gt;<i> required_service=parse_required $1;
+</I>&gt;<i> service_name=$(basename $1);
+</I>&gt;<i> #prevent same service to be run twice at the same time
+</I>&gt;<i> if [ $2 == start ]; then
+</I>&gt;<i> &#160; lock /var/lock/$service_name;
+</I>&gt;<i> &#160; wait_on_lock ${required_service};
+</I>&gt;<i> &#160; #get back the start()/stop() function in namespace
+</I>&gt;<i> &#160; source $1;
+</I>&gt;<i> &#160; #execute the command
+</I>&gt;<i> &#160; $2;
+</I>&gt;<i> &#160; #free the other services
+</I>&gt;<i> &#160; echo $$ &gt; /var/PID/$service_name;
+</I>&gt;<i> &#160; #wait for child to end
+</I>&gt;<i> &#160; wait
+</I>&gt;<i> &#160; #free the service
+</I>&gt;<i> &#160; unlock /var/lock/$service_name;
+</I>&gt;<i> else
+</I>&gt;<i> &#160; $2
+</I>&gt;<i> &#160; sleep 2s
+</I>&gt;<i> &#160; kill $(cat /var/PID/$service_name)
+</I>&gt;<i> fi
+</I>&gt;<i> --------------------------------------------------
+</I>&gt;<i> wait_on_lock() {
+</I>&gt;<i> &#160; for args in $*; do
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160; while ! [ -e /var/PID/$arg ]; do
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; #arctive poling? I don't know the lock mecanism
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; sleep 1s
+</I>&gt;<i> &#160;&#160;&#160;&#160; done
+</I>&gt;<i> }
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> with such script we unsure :
+</I>
+
+&gt;<i> - all service are run in their own session leader
+</I>
+This can be accomplished already without
+modifying any init-script.
+The execution of the init-script must be wrapped
+by another script that writes the $$, PID.
+Also setsid must be called before a process begins.
+setsid must start that new process.
+An invocation of setsid can not
+be merely inserted into an init-script.
+
+&gt;<i> - killing the session leader will kill the spawned childs
+</I>
+Yes, already done.
+
+&gt;<i> - the PID file is reliable
+</I>
+Yes the PID = Session ID if it was the leader.
+
+
+&gt;<i> - services can be run out of order
+</I>
+Nope.
+Not going to happen.
+100 greedy init-scripts waking up every .01 second
+to grab the CPU and check if it can start
+would be a bad scenario.
+Even having one process control the entire show
+polling every 0.01 seconds to see which init-scripts
+can be started would be a waste of CPU.
+
+# time /lib/lsb/install_initd
+Creating symbolic links to init-scripts.
+
+real    0m2.850s
+user    0m1.766s
+sys     0m0.875s
+
+That is as much time as required for a BASH script
+to properly order all of the init-scripts just one time.
+Assuming a C program could do it 100 times faster.
+0.03 CPU seconds would be required for each run
+and therefore limits the amount of times the ordering
+can execute per second to about 10.
+Faster than 10 per second and it hogs the CPU.
+100 per second and it entirely hogs an entire CPU core.
+
+
+&gt;<i> - you can even implement a timeout on starting scripts
+</I>
+Thankfully a timeout is not required.
+
+Ah, I can not find the URL for it now.
+Evert sent me a URL about a new system
+for init-script startup that is being beta tested.
+The idea is that a few services are started initially
+such as a socket proxy, an automounter and a few
+other services.
+And then every init-script that would run for
+runlevel startup can be started concurrently.
+So about 4 to 8 services start sequentially at first,
+and then everything else that follows can run
+concurrently without waiting.
+For example, even the automounter would handle
+events such as mounting /var/ru
+ just in time before a process could write a PID file.
+
+The concept is cool.
+The implementation is probably workable as
+a technology demonstration.
+But it might not be any faster than
+an implementation such as Sorcerer.
+To the contrary attempting to run too many
+processes at once is problematic for the CPU
+and for the physical fixed-disk as the competition
+for CPU, RAM, and disk sectors is too intense.
+
+I am still waiting to read a compelling list
+of boons and banes for making a runlevel 7
+which runs foreground, sequential, and interactively.
+
+Also I am still thinking about how I want
+an interactive sysinit to go.
+I am thinking what I want /init.debug to do.
+And I am writing that in my todo list.
+But I have not yet begun coding it.
+Would be nice if I can create an initial implementation
+that exceeds expectations.  :)
+
+If definite ideas exist about what you want it to do
+then you might want to explicitly state those ideas.
+Thus far I have:
+
+initial menu for turning off init-scripts in sysinit;
+while running init-scripts:
+  option to interrupt execution of init-scripts after error;
+  option to set next break point;
+  option to open a /bin/bash shell;
+after sysinit completes:
+ an option to change execution status of sysinit init-scripts
+ on the real root filesystem so that next normal boot
+ omits execution of init-scripts that were not executed
+ during the rdinit=/init.debug boot.
+
+So basically, it does 5 things.
+And it makes debugging sysinit
+just a little bit faster and easier than
+doing it entirely at a bash prompt.
+Would this be sufficient?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001705.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+	<LI>Next message: <A HREF="001749.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1706">[ date ]</a>
+              <a href="thread.html#1706">[ thread ]</a>
+              <a href="subject.html#1706">[ subject ]</a>
+              <a href="author.html#1706">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

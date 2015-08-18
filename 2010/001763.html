@@ -1,0 +1,448 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W64E5099C65593283B0E706AEBC0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001761.html">
+   <LINK REL="Next"  HREF="001764.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W64E5099C65593283B0E706AEBC0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Fri Jul 16 09:31:46 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001761.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001764.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1763">[ date ]</a>
+              <a href="thread.html#1763">[ thread ]</a>
+              <a href="subject.html#1763">[ subject ]</a>
+              <a href="author.html#1763">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Hello, 
+
+ 
+
+I have a sad message.
+
+I can't boot my box anymore.
+
+I get a message that i can't find my disk anymore.
+
+ 
+
+And when I boot of the dvd and reboot I see suddenly a choice fast 
+
+When booting is done I see this message :
+
+ 
+
+Init : Entering runlevel 3
+
+ 
+
+Hostname.unknown login : acpid starting up
+
+acpid: 3 rules loaded
+
+ 
+
+acpid : waiting for events : event logging is off.
+
+ 
+
+Then I have to press the enter key so I can log in properly.
+
+These messages I see everytime I boot of the cd of from my harddisk.
+
+ 
+
+ 
+
+When I log in the directory .sorcery is empty.
+
+ 
+
+ 
+
+So I think a reinstall is needed here. 
+
+ 
+
+I find it the most wierd that I get a message that I can log in and the same time acpid is taken over the control.
+
+ 
+
+Regards
+
+ 
+
+Roelof
+
+ 
+
+ 
+
+
+ 
+&gt;<i> Date: Thu, 15 Jul 2010 14:55:08 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> Okay that is a good start.
+</I>&gt;<i> My next guess is to add where that sleep statement was
+</I>&gt;<i> a specific instruction such as:
+</I>&gt;<i> mount -o remount,ro /
+</I>&gt;<i> Let us see what happens when that is tried.
+</I>&gt;<i> Does it fix the problem or hang the box during shutdown/reboot.
+</I>&gt;<i> 
+</I>&gt;<i> I am still wondering what could have files open on /
+</I>&gt;<i> that would be preventing it from remounting read only.
+</I>&gt;<i> 
+</I>&gt;<i> After the the command to remount read only
+</I>&gt;<i> you might want to add a /sbin/suologin command
+</I>&gt;<i> That way you should be able to provide the root password
+</I>&gt;<i> and in exchange receive a bash prompt.
+</I>&gt;<i> Then you should be able to run ps -Af
+</I>&gt;<i> and have a look at what is still running.
+</I>&gt;<i> 
+</I>&gt;<i> mount and umount might not say why they fail,
+</I>&gt;<i> but ps and lsof might give clues.
+</I>&gt;<i> All that should be running is init at PID 1,
+</I>&gt;<i> several kernel threads usually within [ ]
+</I>&gt;<i> and often starting with &quot;[k&quot;
+</I>&gt;<i> /etc/init.d/prc
+</I>&gt;<i> The mount init-script
+</I>&gt;<i> sulogin
+</I>&gt;<i> bash
+</I>&gt;<i> Those can not be killed off.
+</I>&gt;<i> Anything else you might want to try
+</I>&gt;<i> killing it to see if / can then be remounted read only.
+</I>&gt;<i> 
+</I>&gt;<i> Remounting / read only is a bit like
+</I>&gt;<i> trying to switch a rug out while standing on it.
+</I>&gt;<i> But it used to be possible provided that
+</I>&gt;<i> almost nothing else was running.
+</I>&gt;<i> I wonder if that series of commands executing
+</I>&gt;<i> in a pipe is the very reason that / can not
+</I>&gt;<i> be remounted read only?
+</I>&gt;<i> I vaguely remember pipes creating invisible fifos.
+</I>&gt;<i> 
+</I>&gt;<i> Anyway, if that is the problem
+</I>&gt;<i> then adding an explicit
+</I>&gt;<i> mount -o remount,ro /
+</I>&gt;<i> following the umount statement
+</I>&gt;<i> should be enough to fix it.
+</I>&gt;<i> If so we can make that change
+</I>&gt;<i> distribution wide after you check it.
+</I>&gt;<i> Thanks for trouble shooting it.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Thu, Jul 15, 2010 at 1:23 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;  Oke
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thank you but that did not solved the problem.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I tried sleep 1 and sleep 10 and the problems stays.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Date: Wed, 14 Jul 2010 12:53:57 -0700
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; POSIX command names like UNIX command names
+</I>&gt;<i> &gt;&gt; often differ slightly than what they probably aught to be.
+</I>&gt;<i> &gt;&gt; The command to search for us umount.
+</I>&gt;<i> &gt;&gt; The line looks like:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; LC_ALL=C sort -ur | xargs -r --max-lines=1024 umount -lr
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; After that line and before the
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; }
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Try inserting
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; sleep 1
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The full command being used to umount filesystems is
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; cut -d ' ' -f2 /proc/mounts |
+</I>&gt;<i> &gt;&gt; LC_ALL=C sort -ur | xargs -r --max-lines=1024 umount -lr
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; That means:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Using space as a delimiter cut everything from /proc/mounts
+</I>&gt;<i> &gt;&gt; except the second column
+</I>&gt;<i> &gt;&gt; then sort that list into reverse order and eliminate duplicates,
+</I>&gt;<i> &gt;&gt; and finally provide that list as parameters to the umount
+</I>&gt;<i> &gt;&gt; command followed by parameter -lr and with an additional
+</I>&gt;<i> &gt;&gt; list of parameters no greater than 1024 parameters in length.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Shell programming differs from any other type of programming
+</I>&gt;<i> &gt;&gt; that I tried before and in many ways is fun and easy.
+</I>&gt;<i> &gt;&gt; The '|' pipe, the character in between the quotes,
+</I>&gt;<i> &gt;&gt; is a very useful for shell scripts.
+</I>&gt;<i> &gt;&gt; The pipe connects the standard output from the
+</I>&gt;<i> &gt;&gt; program executing in front of the pipe
+</I>&gt;<i> &gt;&gt; to the standard input of the program that
+</I>&gt;<i> &gt;&gt; executes after the pipe.
+</I>&gt;<i> &gt;&gt; The pipe becomes like a bucket brigade.
+</I>&gt;<i> &gt;&gt; But since we are dealing with computers instead of water
+</I>&gt;<i> &gt;&gt; it is a bit bucket brigade. :)
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If augur is run without parameters
+</I>&gt;<i> &gt;&gt; then it prints a general help screen where
+</I>&gt;<i> &gt;&gt; in one column called Stdin some of the
+</I>&gt;<i> &gt;&gt; parameters have an asterisk *.
+</I>&gt;<i> &gt;&gt; All augur commands support input as
+</I>&gt;<i> &gt;&gt; additional command line parameters.
+</I>&gt;<i> &gt;&gt; However, some of them also will read
+</I>&gt;<i> &gt;&gt; input from stdin.
+</I>&gt;<i> &gt;&gt; In that fashion augur commands can easily
+</I>&gt;<i> &gt;&gt; be joined together using a pipe.
+</I>&gt;<i> &gt;&gt; One of my favorite examples is:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # augur lone | augur size | sort -g | tee /tmp/piggy.txt
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; That creates the piggy list and saves it to file /tmp/piggy.txt
+</I>&gt;<i> &gt;&gt; while also displaying it as scroll on the screen.
+</I>&gt;<i> &gt;&gt; If a box is low on space or I just want to clean
+</I>&gt;<i> &gt;&gt; wipe away some programs not being used,
+</I>&gt;<i> &gt;&gt; which tends to happen on my test box,
+</I>&gt;<i> &gt;&gt; then I use the piggy list to help decide.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; A more menu driven method for removing software
+</I>&gt;<i> &gt;&gt; is to use sorcery's dispel menu.
+</I>&gt;<i> &gt;&gt; That helps the SA select software for removal
+</I>&gt;<i> &gt;&gt; using the same logic used while undressing.
+</I>&gt;<i> &gt;&gt; When undressing could a person remove their
+</I>&gt;<i> &gt;&gt; socks before their shoes?
+</I>&gt;<i> &gt;&gt; Crazy idea yes?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The sorcery's dispel menu also ensures that
+</I>&gt;<i> &gt;&gt; shoes must be selected for removal
+</I>&gt;<i> &gt;&gt; before socks become eligible for removal.
+</I>&gt;<i> &gt;&gt; It is a layered approaching to software removal
+</I>&gt;<i> &gt;&gt; where the outer most layers must be removed first
+</I>&gt;<i> &gt;&gt; in order to unlock installed software that is being kept
+</I>&gt;<i> &gt;&gt; installed because it is required by other installed software.
+</I>&gt;<i> &gt;&gt; Sorcerer boxes have more layers of software than
+</I>&gt;<i> &gt;&gt; a fancy pastry cake and less layers than
+</I>&gt;<i> &gt;&gt; an authentic folded steel Japanese sword.
+</I>&gt;<i> &gt;&gt; Fortunately, sorcery is there to help.
+</I>&gt;<i> &gt;&gt; Therefore, the SA does not have to recognize each layer.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Knowing about pipes is useful.
+</I>&gt;<i> &gt;&gt; Knowing about a Sorcerer box's layers of software is useful.
+</I>&gt;<i> &gt;&gt; Sorcerer requirements are always recursive rather than absolute.
+</I>&gt;<i> &gt;&gt; And that is what creates a layered effect.
+</I>&gt;<i> &gt;&gt; Additionally, I would want to know about all the software
+</I>&gt;<i> &gt;&gt; installed by the coreutils spell by reading their manual pages.
+</I>&gt;<i> &gt;&gt; After that I would read the manual pages for sed, grep, find, xargs.
+</I>&gt;<i> &gt;&gt; And finally, I would read the manual page for BASH.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # augur install coreutils sed grep findutils bash |
+</I>&gt;<i> &gt;&gt; grep /man/ |
+</I>&gt;<i> &gt;&gt; xargs man
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Just press q to progress to the next manual page.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Yes, that is a lot of reading 101 manual pages,
+</I>&gt;<i> &gt;&gt; and the bash manual page is very long!
+</I>&gt;<i> &gt;&gt; But why all the reading?
+</I>&gt;<i> &gt;&gt; Sorcerer SAs' skill is proportional to their SA skills
+</I>&gt;<i> &gt;&gt; and almost directly proportional to BASH scripting skill.
+</I>&gt;<i> &gt;&gt; The better a SA's BASH scripting skill
+</I>&gt;<i> &gt;&gt; the more effectively that SA can wield sorcery.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Sorcerer was originally designed to scratch an itch
+</I>&gt;<i> &gt;&gt; that senior level SAs acquire from using a pre-compiled
+</I>&gt;<i> &gt;&gt; binary based distro.
+</I>&gt;<i> &gt;&gt; And unfortunately, it still remains a tool where skilled
+</I>&gt;<i> &gt;&gt; SAs have a much greater capacity to wield than novice.
+</I>&gt;<i> &gt;&gt; Consequently, almost any output that can be achieved
+</I>&gt;<i> &gt;&gt; by connecting a few commands together using pipes
+</I>&gt;<i> &gt;&gt; is not usually scripted as a convenient augur command.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Therefore, overall the best way to increase a SAs
+</I>&gt;<i> &gt;&gt; ability with sorcery is to increase the SAs ability,
+</I>&gt;<i> &gt;&gt; especially scripting ability.
+</I>&gt;<i> &gt;&gt; With Sorcerer there are not a dozens
+</I>&gt;<i> &gt;&gt; or more GUI programs to learn.
+</I>&gt;<i> &gt;&gt; The most basic sorcerer commands are:
+</I>&gt;<i> &gt;&gt; augur cast dispel leech sorcery
+</I>&gt;<i> &gt;&gt; That in itself is practically nothing to learn,
+</I>&gt;<i> &gt;&gt; about a 15 minute effort at most.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; In contrast, learning about coreutils and BASH
+</I>&gt;<i> &gt;&gt; and other things useful for a SA can require
+</I>&gt;<i> &gt;&gt; a week of study.
+</I>&gt;<i> &gt;&gt; However, such knowledge is not insignificant nor
+</I>&gt;<i> &gt;&gt; limited to practical use on Sorcerer boxes.
+</I>&gt;<i> &gt;&gt; coreutils and BASH are installed on almost every POSIX box.
+</I>&gt;<i> &gt;&gt; Even Solaris and UNIX implementations have
+</I>&gt;<i> &gt;&gt; commands with the same names that accept
+</I>&gt;<i> &gt;&gt; similar command line parameters and produce similar output.
+</I>&gt;<i> &gt;&gt; Most if not almost everything learned about while
+</I>&gt;<i> &gt;&gt; administrating a Sorcerer box is also knowledge
+</I>&gt;<i> &gt;&gt; that is applicable while administrating other distros.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Therefore, in summary Sorcerer tends to attract
+</I>&gt;<i> &gt;&gt; the type of SAs that could deploy a box without
+</I>&gt;<i> &gt;&gt; a distro or deploy a box with a distro of their own design
+</I>&gt;<i> &gt;&gt; if that SA had sufficient time to accomplish the task.
+</I>&gt;<i> &gt;&gt; That does not make Sorcerer the best distro,
+</I>&gt;<i> &gt;&gt; but it grants experienced SAs nearly as much freedom
+</I>&gt;<i> &gt;&gt; they could want from a distro while still gaining
+</I>&gt;<i> &gt;&gt; the benefits of easy software updating.
+</I>&gt;<i> &gt;&gt; I want to expect about Sorcerer that
+</I>&gt;<i> &gt;&gt; the division of decision of what happens
+</I>&gt;<i> &gt;&gt; is more equally weighted to SAs rather than distro developers.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Probably the most significant power struggle in Sorcerer
+</I>&gt;<i> &gt;&gt; is about the init-scripts.
+</I>&gt;<i> &gt;&gt; It is not just about how init-scripts execute,
+</I>&gt;<i> &gt;&gt; but more importantly about how
+</I>&gt;<i> &gt;&gt; I made a distribution wide decision that init-scripts
+</I>&gt;<i> &gt;&gt; are not configuration files and
+</I>&gt;<i> &gt;&gt; therefore init-script content is non-customizable
+</I>&gt;<i> &gt;&gt; unlike other files stored in /etc/
+</I>&gt;<i> &gt;&gt; With that declaration I also made the provision that
+</I>&gt;<i> &gt;&gt; SAs who want a customized init-script
+</I>&gt;<i> &gt;&gt; must take full responsibility for it
+</I>&gt;<i> &gt;&gt; by creating a custom spell which installs that init-script.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Therefore, the change I recommended by adding
+</I>&gt;<i> &gt;&gt; a sleep 1 to the /etc/init.d/mount init-script
+</I>&gt;<i> &gt;&gt; would not be a permanent change.
+</I>&gt;<i> &gt;&gt; The next time the &quot;init-scripts&quot; spell casts
+</I>&gt;<i> &gt;&gt; the modified /etc/init.d/mount would be replaced
+</I>&gt;<i> &gt;&gt; by a stock version.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Since init-scripts can change name, function, and
+</I>&gt;<i> &gt;&gt; even ordering an init-script that would be permitted
+</I>&gt;<i> &gt;&gt; customization today could cause a box fail to reboot a year later.
+</I>&gt;<i> &gt;&gt; That sort of unexpected latency between cause and effect
+</I>&gt;<i> &gt;&gt; could baffle and frustrate a SA.
+</I>&gt;<i> &gt;&gt; Therefore, most decisions about init-scripts are made
+</I>&gt;<i> &gt;&gt; at the distribution level.
+</I>&gt;<i> &gt;&gt; Such decisions a SA can only overrule by creating custom spells.
+</I>&gt;<i> &gt;&gt; Unfortunately, understanding how all the init-scripts
+</I>&gt;<i> &gt;&gt; fit together is not unlike assembling a 200 piece jigsaw puzzle.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I hope that helps provide some useful information.
+</I>&gt;<i> &gt;&gt; Much of the documentation that Sorcerer SAs
+</I>&gt;<i> &gt;&gt; would want to use on a daily basis is provided in
+</I>&gt;<i> &gt;&gt; the form of help screens, manual pages, info pages,
+</I>&gt;<i> &gt;&gt; /usr/src/linux/Documentation/ /usr/share/doc/ /usr/doc/
+</I>&gt;<i> &gt;&gt; and basically all of that good stuff is installed on Sorcerer boxes.
+</I>&gt;<i> &gt;&gt; The next best places to look on the World Wide Web are
+</I>&gt;<i> &gt;&gt; google's search engine,
+</I>&gt;<i> &gt;&gt; software author's project and home pages,
+</I>&gt;<i> &gt;&gt; and &quot;The Linux Documentation Project.&quot;
+</I>&gt;<i> &gt;&gt; Most Sorcerer spells have a homepage entry
+</I>&gt;<i> &gt;&gt; that contains the URL to the software author's project
+</I>&gt;<i> &gt;&gt; website or homepage.
+</I>&gt;<i> &gt;&gt; However, Sorcerer itself does not provide much documentation,
+</I>&gt;<i> &gt;&gt; because almost all the docs anyone needs already exists.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Sorcerer is not unlike a ship in a bottle.
+</I>&gt;<i> &gt;&gt; The bottle is POSIX, Portable Operating System for unIX.
+</I>&gt;<i> &gt;&gt; POSIX defines what is and should be about distros.
+</I>&gt;<i> &gt;&gt; The Sorcerer I/R is like a quick start kit.
+</I>&gt;<i> &gt;&gt; Sorcery is like glue and simple tools for fastening pieces together.
+</I>&gt;<i> &gt;&gt; And the individual pieces of the boat
+</I>&gt;<i> &gt;&gt; come from the installed software components.
+</I>&gt;<i> &gt;&gt; Being Sorcerer SA requires
+</I>&gt;<i> &gt;&gt; some effort and some skill.
+</I>&gt;<i> &gt;&gt; But the requirement is not as much
+</I>&gt;<i> &gt;&gt; as compared to someone who builds
+</I>&gt;<i> &gt;&gt; model ships inside of bottles. :)
+</I>&gt;<i> &gt;&gt; Some Sorcerer SAs come to feel a bit of
+</I>&gt;<i> &gt;&gt; pride and affection for their Sorcerer boxes.
+</I>&gt;<i> &gt;&gt; They learn how to care for
+</I>&gt;<i> &gt;&gt; and feed their pet Sorcerer boxes. :)
+</I>&gt;<i> &gt;&gt; It is not a bad experience for SAs that have
+</I>&gt;<i> &gt;&gt; the skill and required tenacity to make their boxes thrive.
+</I>&gt;<i> &gt;&gt; Good luck.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Wed, Jul 14, 2010 at 1:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Hello,
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Sorry but I don't see a unmount command in  /etc/init.d/mount so I can't
+</I>&gt;<i> &gt;&gt; &gt; try
+</I>&gt;<i> &gt;&gt; &gt; it.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Roelof
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; De nieuwste Internet Explorer: snel, eenvoudig en veilig. Download nu!
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+Alles wat je wilt weten over Windows 7, en meer !
+<A HREF="http://www.windows.nl/windows7">http://www.windows.nl/windows7</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100716/fe7b8d95/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100716/fe7b8d95/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001761.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001764.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1763">[ date ]</a>
+              <a href="thread.html#1763">[ thread ]</a>
+              <a href="subject.html#1763">[ subject ]</a>
+              <a href="author.html#1763">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

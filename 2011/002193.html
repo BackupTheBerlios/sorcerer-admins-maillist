@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] memory...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20memory...&In-Reply-To=%3CBANLkTimAcP67QyAEa7j0%3D5x5G-s-JP-6YA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002192.html">
+   <LINK REL="Next"  HREF="002194.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] memory...</H1>
+    <B>Scruffy Poo</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20memory...&In-Reply-To=%3CBANLkTimAcP67QyAEa7j0%3D5x5G-s-JP-6YA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] memory...">pooster at gmail.com
+       </A><BR>
+    <I>Tue Jun  7 02:39:47 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002192.html">[Sorcerer-admins] memory...
+</A></li>
+        <LI>Next message: <A HREF="002194.html">[Sorcerer-admins] memory...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2193">[ date ]</a>
+              <a href="thread.html#2193">[ thread ]</a>
+              <a href="subject.html#2193">[ subject ]</a>
+              <a href="author.html#2193">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The way I recall the situation, they're making no
+backward-incompatible changes to the on-disk format going forward, so
+it should be *relatively* safe to use.
+
+Then again, ext4 is still a &quot;technology preview&quot; in CentOS, and btrfs
+is around a decade away, so there you go.
+
+On Mon, Jun 6, 2011 at 8:10 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 06/06/2011 04:49 PM, Evert Vorster wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have 30-40GB root, and then a btrfs volume that keeps subvolumes for
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So Evert, when I go and look at the btrfs sites everything I read
+</I>&gt;<i> indicates it's more of something akin to a 'beta in flux', state, and
+</I>&gt;<i> there are caveats suggesting it shouldn't be used in production machines.
+</I>&gt;<i>
+</I>&gt;<i> What is your take on that, and what are your experiences with it. I
+</I>&gt;<i> adopted HammerFS before it was supposedly ready for primetime, had no
+</I>&gt;<i> issues with it, etc., but I really haven't delved into the particulars
+</I>&gt;<i> of btrfs yet.
+</I>&gt;<i>
+</I>&gt;&gt;<i> /var/cache, /var/cache/sources, /data and /home
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> eg:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /dev/sda1 &#160; &#160; &#160; / &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; ext4
+</I>&gt;&gt;<i> defaults,noatime,commit=3600 &#160; &#160;0 0
+</I>&gt;&gt;<i> /dev/sdb &#160; &#160; &#160; &#160;/media/btrfs &#160; &#160; &#160; &#160; &#160; &#160;btrfs &#160; defaults,noatime
+</I>&gt;&gt;<i> &#160; &#160; &#160; &#160; &#160;0 0
+</I>&gt;&gt;<i> /dev/sdb &#160; &#160; &#160; &#160;/home &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; btrfs
+</I>&gt;&gt;<i> subvol=home,defaults,noatime &#160;0 0
+</I>&gt;&gt;<i> /dev/sdb &#160; &#160; &#160; &#160;/data &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; btrfs
+</I>&gt;&gt;<i> subvol=data,defaults,noatime &#160; &#160;0 0
+</I>&gt;&gt;<i> /dev/sdb &#160; &#160; &#160; &#160;/var/cache/ &#160; &#160; &#160; &#160; &#160; &#160; btrfs
+</I>&gt;&gt;<i> subvol=M_c,defaults,noatime &#160; &#160; 0 0
+</I>&gt;&gt;<i> /dev/sdb &#160; &#160; &#160; &#160;/var/cache/sources &#160; &#160; &#160;btrfs
+</I>&gt;&gt;<i> subvol=sources,defaults,noatime 0 0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If we ever start using syslinux for a bootloader, I'll probably use
+</I>&gt;&gt;<i> btrfs for / as well. With btrfs it's easy to think of your space as
+</I>&gt;&gt;<i> being infinite, as when you start hitting the limits of your current
+</I>&gt;&gt;<i> storage, you can just add a disk, or replace a small disk one with a
+</I>&gt;&gt;<i> bigger one, all while the volume is up and ready for use...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I feel that this setup allows Sorcerer to grow and it keeps my data in
+</I>&gt;&gt;<i> one place, easy to back up, and the root Sorcerer install in one
+</I>&gt;&gt;<i> place, also easy to backup. Root is about 14GB, and can be tarballed
+</I>&gt;&gt;<i> and compressed down to 4GB with xz. For a complete desktop multimedia
+</I>&gt;&gt;<i> centre with all the bells, this is not too bad at all!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, Jun 6, 2011 at 1:41 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Yesterday, I completed the Sorcerer automatic installation.
+</I>&gt;&gt;&gt;<i> No questions are asked after confirming the start of automatic installation.
+</I>&gt;&gt;&gt;<i> Works awesomely during test installations!
+</I>&gt;&gt;&gt;<i> Rebooted into the newly installed box worked perfectly.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Today, I designed and implemented a new sentinel
+</I>&gt;&gt;&gt;<i> for protecting against memory depletion.
+</I>&gt;&gt;&gt;<i> It wastes no CPU cycles,
+</I>&gt;&gt;&gt;<i> because it does not do constant polling.
+</I>&gt;&gt;&gt;<i> Works awesomely in a qemu virtual machine.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The menu driven installer no longer requires a SA.
+</I>&gt;&gt;&gt;<i> SA designated swap space is unnecessary.
+</I>&gt;&gt;&gt;<i> Tomorrow, I will make modifications to provide
+</I>&gt;&gt;&gt;<i> an automatic attempt at network configuration
+</I>&gt;&gt;&gt;<i> for boxes that lack an explicit network configuration.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Maybe not long before Sorcerer boxes
+</I>&gt;&gt;&gt;<i> start issuing commands to SAs
+</I>&gt;&gt;&gt;<i> instead of the other way around?
+</I>&gt;&gt;&gt;<i> Ready to become a slave to the machine?
+</I>&gt;&gt;&gt;<i> *lol*
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> - --
+</I>&gt;<i> Bradley D. Thornton
+</I>&gt;<i> Manager Network Services
+</I>&gt;<i> NorthTech Computer
+</I>&gt;<i> TEL: +1.760.666.2703 &#160;(US)
+</I>&gt;<i> TEL: +44.203.318.2755 (UK)
+</I>&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;<i>
+</I>&gt;<i> -----BEGIN PGP SIGNATURE-----
+</I>&gt;<i> Version: GnuPG v1.4.10 (GNU/Linux)
+</I>&gt;<i> Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+</I>&gt;<i>
+</I>&gt;<i> iQEcBAEBAwAGBQJN7WxbAAoJEE1wgkIhr9j3dyUH/Aq4e4BiX3uIRP+f7U7CK6ou
+</I>&gt;<i> HirZrCve52wKtTlJqJPeZQherYZUSzmFNA9YeUg1DkNm9TYSjytOsloGAIehXbGj
+</I>&gt;<i> HIUoD4IUeJQxS0ZnLOcouRWgeyx0bMhBjnAWLCDyDst/kj3PumHHKLwyCFBvYvGz
+</I>&gt;<i> BsYRYNs5j/aHyFl7O0OnkV43QyDngKbdvbQzoOrIku7ZVKCBFKnXk5f/DzKeAeKu
+</I>&gt;<i> uEMUZD4Q3A6ecnWmF0eEa2s8aeOD9FMjUxZX2nl8COYrzMtNSTsXZeDP28cU5GDG
+</I>&gt;<i> DUOX1NFjkBBXAzrimh8pCgYQvVg4nomIZGE0w9+/FzRL8IfF/U2HbnZL00/L4KA=
+</I>&gt;<i> =jBPq
+</I>&gt;<i> -----END PGP SIGNATURE-----
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+SO not teh 1337
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002192.html">[Sorcerer-admins] memory...
+</A></li>
+	<LI>Next message: <A HREF="002194.html">[Sorcerer-admins] memory...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2193">[ date ]</a>
+              <a href="thread.html#2193">[ thread ]</a>
+              <a href="subject.html#2193">[ subject ]</a>
+              <a href="author.html#2193">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

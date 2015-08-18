@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTi%3Dyx93Zfwoajji2ZSNunvgY87qyCa5aSDEiTcNZ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001857.html">
+   <LINK REL="Next"  HREF="001870.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTi%3Dyx93Zfwoajji2ZSNunvgY87qyCa5aSDEiTcNZ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Tue Jul 27 11:10:48 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001857.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001870.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1862">[ date ]</a>
+              <a href="thread.html#1862">[ thread ]</a>
+              <a href="subject.html#1862">[ subject ]</a>
+              <a href="author.html#1862">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Jul 26, 2010 at 10:56 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> On Mon, Jul 26, 2010 at 8:44 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Sounds like there's really a specific point - udev - which is actually
+</I>&gt;<i> &gt; critical for system startup success.  Personally, if such a thing
+</I>&gt;<i> &gt; fails, I just add initsh=/bin/sh on the boot line and then hand run
+</I>&gt;<i> &gt; the init scripts to see what was caused; so there is a ctrl-d to
+</I>&gt;<i> &gt; repair.
+</I>&gt;<i>
+</I>&gt;<i> initrd=/bin/bash is the best way to debug init.
+</I>&gt;<i> The Sorcerer init-scripts are designed so that each
+</I>&gt;<i> one should so one simple primary task.
+</I>&gt;<i> Discovering where a problem happened is usually easy.
+</I>&gt;<i> Finding the init-script that failed is usually easy.
+</I>&gt;<i>
+</I>
+taking the case of cryptsetup..... the error was when doing fsck.... let's
+have a look at this particular use case :
+the root cause of the problem is in one of the services started before.
+which one? no idea.... there are several red lines before... so how to know?
+so ok you start with /bin/bash as initrd... begin to start processes one by
+one... ah? shit this process failed! so take a paper write down on a piece
+of paper how to fix it, because, remember you're on a ramdisk, any
+modification will be lost upon reboot! and you don't have access to the real
+filesystem.... soooooooooo funny! finding that the root cause was mdadm and
+some other system service was only a guess and by chance it worked! between
+the time I found it and the begin of the try and guess process I restarted
+almost 50 or more time, because one time you forget to do that manual step,
+that time you forget to desactivate that service.....
+this is a cascade effect.... the initrd=/bin/bash is pain in the ass in such
+case, when you have to debug one or 2 identified services, fine! when you do
+have to troubleshoot interactions of service it's another story!
+
+
+&gt;<i> Knowing why it failed is not usually immediate
+</I>&gt;<i> and often requires a bit of exploration both before
+</I>&gt;<i> and after running an init-script to see what
+</I>&gt;<i> actually happened.
+</I>&gt;<i>
+</I>
+lol a bit of exploration..... if I didn't had the knowledge I would simply
+had dropped sorcerer...
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;&gt; regarding speed... I still believe that the overhead isn't that much as
+</I>&gt;<i> kyle
+</I>&gt;<i> &gt;&gt; is saying.... what will we loss? 1? 2s? on a netbook? anyway using a
+</I>&gt;<i> &quot;super
+</I>&gt;<i> &gt;&gt; service&quot; process written in C/C++ using a client/server model and then
+</I>&gt;<i> only
+</I>&gt;<i> &gt;&gt; communication through unix sockets, I'm confident that the cost won't be
+</I>&gt;<i> &gt;&gt; ever noticeable...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> And it will not ever be debuggable by SAs during boot
+</I>&gt;<i> unless we start including gcc, make,
+</I>&gt;<i> and source files on the initramfs.
+</I>&gt;<i>
+</I>
+this process is intended to be small and rebust! your point is like saying
+me that you should include gcc, make and source files in the initramfs
+because sh, cat, grep, tail and other might be buggy.....
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;&gt; another point regarding speed :
+</I>&gt;<i> &gt;&gt; say you have 5 starting services :
+</I>&gt;<i> &gt;&gt; S00_1 : 10s
+</I>&gt;<i> &gt;&gt; S00_2 : 50s
+</I>&gt;<i> &gt;&gt; S01_3 : require S00_1, 1s
+</I>&gt;<i> &gt;&gt; S01_4 : require S00_1, 30s
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; with current design using parallel start : S00 time : 50s, S01 time :
+</I>&gt;<i> 30s,
+</I>&gt;<i> &gt;&gt; whole time 80s
+</I>&gt;<i> &gt;&gt; with a start/stop controled on requirements : S01_4 total start (most
+</I>&gt;<i> time
+</I>&gt;<i> &gt;&gt; consuming on the S00_1 branch) 10+30s = 40s,  S00_2 total time : 50s,
+</I>&gt;<i> whole
+</I>&gt;<i> &gt;&gt; start time 50s......
+</I>&gt;<i> &gt;&gt; =&gt; 80s versus 50s, who is winner?
+</I>&gt;<i>
+</I>&gt;<i> That logic almost works on Jan's computers that
+</I>&gt;<i> have 16 cores and RAM based disks with
+</I>&gt;<i> 0 milisecond access time.
+</I>&gt;<i> On real computers with mechanical disk devices
+</I>&gt;<i> and only a few processor cores
+</I>&gt;<i> the total time to boot depends upon the time required
+</I>&gt;<i> to read files from disks and the time required
+</I>&gt;<i> for the CPU cores to do the work of starting
+</I>&gt;<i> and running the services.
+</I>&gt;<i> And as we already know
+</I>&gt;<i> not everything can start immediately.
+</I>&gt;<i> All parallel init implementations must have at least a few
+</I>&gt;<i> order specific services or tasks that must be accomplished
+</I>&gt;<i> before any serious level of parallelization can begin.
+</I>&gt;<i>
+</I>
+this logic works on my netbook... an atom CPU with a regular harddrive...
+
+
+&gt;&gt;<i> another point regarding speed :
+</I>&gt;&gt;<i> S00_1 : no requirement, might take 3s to fail
+</I>&gt;&gt;<i> S01_2 : require S00_1, might take 40s to fail
+</I>&gt;&gt;<i> S02_3 : require S01_2, might take 1s to fail
+</I>&gt;&gt;<i> imagine now that S00_1 fails, in controled start way, S01_2, S02_3 won't
+</I>&gt;&gt;<i> start and then won't consume resources, won't make the other S01* and
+</I>S02*
+&gt;&gt;<i> wait (since the are waiting on their branches and not on a runlevel start
+</I>&gt;&gt;<i> step), overall cost of the failure : 3s
+</I>&gt;&gt;<i> now with the current design, S00_1 fails, cost 3s, we're moving to the
+</I>S01
+&gt;&gt;<i> layer, S01_2 fails (because of S00_1) on integrated time out of 40s, cost
+</I>:<i>
+</I>&gt;&gt;<i> 40s, moving to the S02 layer, S02_3 is started, fail, cost 1s.  OVERALL
+</I>&gt;&gt;<i> start time 3+40+1 = 43s
+</I>&gt;&gt;<i> =&gt; 3s versus 43s.... wo is winner?
+</I>
+ *lol*  Who cares how fast a totally failed boot can happen
+&gt;<i> when the box will not be usable in that scenario?
+</I>&gt;<i>
+</I>
+who said that the box won't be usable? in this scenario I only considered
+one branch of services....  you can have in parallel a S00_4, S01_5 and more
+services....
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;&gt; controled start service is winner in both failure and success
+</I>&gt;<i> scenario....
+</I>&gt;<i>
+</I>&gt;<i> If an operating system was different and services
+</I>&gt;<i> had no order requirements, and disks are RAM based,
+</I>&gt;<i> and CPU cores are unlimited then it wins.
+</I>&gt;<i> Yet on a real computer it loses
+</I>&gt;<i> and the fixed disk device loses also.
+</I>&gt;<i>
+</I>
+not a single way.... you know what is read reordering? and you probably also
+know that even small, low power, low performances CPU have at least 2 cores
+(even if in some case it's virtualized?)
+on real computer, even low power ones, multhreaded/multiprocess scheme if
+correctly written is allmost always winner.... in the proposed scheme, no
+service is consuming resources during the wait phase
+at this phase only ONE process is running : the service manager,
+since the system use caching, there is only ONE read that have to be done,
+which is cached into the system disk cache......
+even the current scheme as more filesystem accesses....
+
+
+
+&gt;<i> So many requests for files at once will cause
+</I>&gt;<i> excessive disk seeking as the kernel will
+</I>&gt;<i> not read entire unfragmented files entirely on first seek,
+</I>&gt;<i> because the demand for disk sectors is so high.
+</I>&gt;<i> Trying to simultaneously load sectors from 300 files
+</I>&gt;<i> is high abuse for a traditional fixed disk device.
+</I>&gt;<i>
+</I>&gt;<i> The fact that most Sorcerer init-scripts are
+</I>&gt;<i> under 4096 bytes is not a coincidence.
+</I>&gt;<i> By design they are intended to be that small
+</I>&gt;<i> so that they can not become fragmented
+</I>&gt;<i> and can be entirely read with that first seek
+</I>&gt;<i> to the part of the disk that holds them.
+</I>&gt;<i>
+</I>
+well fine! what an optimisation!
+ls -lh /bin/dash /bin/grep /bin/cat
+-rwxr-xr-x 1 root root 50K 2010-03-05 04:29 /bin/cat
+-rwxr-xr-x 1 root root 82K 2010-04-01 21:22 /bin/dash
+-rwxr-xr-x 1 root root 99K 2010-03-05 05:48 /bin/grep
+
+oh! great you managed to make the initscript readable in one seek..... and
+can you explain me how you managed to do with what is used by the
+initscript? I'm really curious...
+
+
+&gt;<i> Consequently, all the factorized out code
+</I>&gt;<i> that exists in /lib/lsb/init-functions
+</I>&gt;<i> need only be read once and then remains
+</I>&gt;<i> in the kernel's disk cache.
+</I>&gt;<i> Unfortunately, the rest of the files loaded
+</I>&gt;<i> during boot are not few nor tiny.
+</I>&gt;<i>
+</I>
+same argument with the wrapping process.... will be read once for ALL init
+scripts and then cached into kernel.....
+anyway, on most modern computers disks are enough fast so that it won't even
+be noticeable, most disk are able now to re-order requests to optimize the
+seek process, and if the disk itself don't do it, the kernel is doing it
+anyway..... this discussion about speed is non sense because even on a
+netbook you won't notice a 1% speed loss....
+speed and optimisation is my work, and I don't work an 16CPU system, I work
+on embedded, and here when we have the CPU power of an i486 we're happy....
+even on such system the scenario given are happening and are winner....
+JLM
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100727/d8f1ff0d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100727/d8f1ff0d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001857.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001870.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1862">[ date ]</a>
+              <a href="thread.html#1862">[ thread ]</a>
+              <a href="subject.html#1862">[ subject ]</a>
+              <a href="author.html#1862">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

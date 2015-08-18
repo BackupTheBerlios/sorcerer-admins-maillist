@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New I/Rs on the way.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20I/Rs%20on%20the%20way.&In-Reply-To=%3C596b75860901032029k73e8e5f8l8b76e9b1fce780c3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New I/Rs on the way.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20I/Rs%20on%20the%20way.&In-Reply-To=%3C596b75860901032029k73e8e5f8l8b76e9b1fce780c3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New I/Rs on the way.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jan  4 05:29:24 CET 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000977.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#976">[ date ]</a>
+              <a href="thread.html#976">[ thread ]</a>
+              <a href="subject.html#976">[ subject ]</a>
+              <a href="author.html#976">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I did multiple installation and reboot tests with the new I/Rs
+They pass.
+I even discovered an odd race condition between when
+/dev is moved from /dev to /media/root/dev
+and I corrected that with a tiny sleep statement.
+Everyone already knows that I hate making booting
+any slower than absolutely necessary.
+But it was very odd when the chrooted
+mount -a failed because the previous mount --move command
+was not yet completed by the kernel.
+
+As I am writing this email I am uploading the new I/Rs
+They aught to be ready for download by or before Jan 05 00:00 UTC 2009
+They have a more complete and linear main menu, as requested.
+And they have a new menu while booting from the I/R
+that presents different outcomes:
+
+boot the I/R as usual;
+load a previously installed kernel and initramfs and boot that ( to
+avoid lilo errors );
+continue booting but mount something different
+than the initramfs for the real root filesystem ( to avoid lilo and
+initramfs errors )
+
+The third option is especially hand when a kernel and initramfs can
+not be loaded
+since booting from the I/R for rescue would become necessary.
+This new menu is also a request.
+
+Not every aspect of the Sorcerer menu driven installer was tested.
+I tested installing it onto a single / partition
+and installing it using a /boot and / partition.
+I did not test the LVM, mdadm, luks or other aspects.
+If you try them and they do not work
+then please report the problem so that it can be fixed in the next release.
+
+Also the previously released I/R from 2009 seems fine for use.
+The menu driven installer on that CD has been more thoroughly tested.
+It may be worth having if the 1st 2009 I/R does not do as expected.
+The menu driven installer is still a very simple bash script.
+Therefore, fixing bugs as they are encountered should not be difficult.
+
+Thanks for all the input and feedback.
+Good luck with your networks in 2009!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000977.html">[Sorcerer-admins] more pbzip2 tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#976">[ date ]</a>
+              <a href="thread.html#976">[ thread ]</a>
+              <a href="subject.html#976">[ subject ]</a>
+              <a href="author.html#976">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

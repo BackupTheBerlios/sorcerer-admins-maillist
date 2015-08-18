@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] mrgetty
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20mrgetty&In-Reply-To=%3CCA%2BT4wDhTiaMdh5uRsocEU0YtKUaNA%2BXv%2B9P7zjEgb07T0tJc0w%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002487.html">
+   <LINK REL="Next"  HREF="002489.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] mrgetty</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20mrgetty&In-Reply-To=%3CCA%2BT4wDhTiaMdh5uRsocEU0YtKUaNA%2BXv%2B9P7zjEgb07T0tJc0w%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] mrgetty">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Dec  5 08:40:46 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002487.html">[Sorcerer-admins] /boot/linux/$VERSION/{kernel,modules}
+</A></li>
+        <LI>Next message: <A HREF="002489.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2488">[ date ]</a>
+              <a href="thread.html#2488">[ thread ]</a>
+              <a href="subject.html#2488">[ subject ]</a>
+              <a href="author.html#2488">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>No that is not Mister Getty,
+but instead short for multiple root getty.
+
+Initially, I expected the logind to grow on me.
+However, as time elapsed I increased my irritation at it
+until the point that it must be put down.
+And so now it can buried deep within the bit bucket.
+It deserves long rest for granting us about half a year of usefulness.
+
+mrgetty is the replacement.
+&gt;<i>From any virtual console, not running xorg,
+</I>press together the keys alt shift and 'a'
+which might also be written as alt-shift-a
+It is a simple left hand key combo on a qwerty keyboard.
+The getty will pop open in a new virtual console.
+Do not worry about looking for it.
+The active virtual console switches to the new virtual console.
+The old active virtual console remains the same as it was.
+
+mrgetty is easy to use.
+press arrow keys until a root file system or rootfs is highlighted.
+Press space.
+mrgetty enters the namespace for it and runs /bin/login
+It is simple and effective.
+
+One of the potentially useful advantages about this method
+is the ability to use system request k to kill whatever
+is running on the virtual console before pressing alt shift a.
+That way the person at the keyboard can feel assured
+that the prompts received are absolutely genuine.
+
+However, what I like best is the end of the flipping through
+virtual consoles looking for the one that leads to the desired direction.
+If I was working with 60 rather than 6 root file systems
+then the quest for the proper login prompt would be daunting.
+
+One of the less obvious boons of mrgetty
+is that it is smaller and more simple than the logind implementation.
+One of the less obvious banes of mrgetty
+is that manually changing the keymap
+to a different layout could clear the key sequence
+that is assigned to KeyboardSignal.
+Therefore, if alt shift a does not respond
+then the solution is to execute
+/etc/init.d/KeyboardSignal start
+
+keymaps will only be loaded during sysinit
+and no longer loaded during runlevels.
+As far as I can tell the unshared namespaces
+do not provide a provision for unshared Linux consoles.
+Or more succinctly stated different root file systems
+can not have different keymaps.
+However, the keymapping mechanism used by xorg
+is entirely separate and apart from Linux consoles.
+alt shift a does not invoke mrgetty
+when the active virtual console is running X.
+
+As would be expected /sbin/init receives the request
+as signal SIGWHICH.
+The action is defined in /etc/rootfs/inittab.
+sysvinit will recast and a suitable /etc/rootfs/inittab
+will be installed.
+
+The interconnecting parts are a bit more complicated than desired,
+but the convenience of pressing a key sequence to pop open
+a getty in a fresh virtual console seems very inviting.
+
+The reason for not initially implementing it that way,
+was because I wanted greater control over who can log in where.
+However, I feel more than satisfied that can be accomplished
+with password files and PAM.
+
+Probably like many of us.
+I spend more time interacting with terminal emulation programs
+than I do with a virtual console.
+However, when I am using virtual consoles
+then I prefer the experience to not become unappealing.
+This should sate my desire for present.
+
+Someone might feel tempted to ask,
+but what if it is bugged or not installed?
+Will login be impossible?
+The fail safe 60s login on virtual console #2
+still begins sometime during sysinit.
+Therefore, a SA can always log in there and snipe the bugs.
+mrgetty is almost entirely BASH,
+with the modest assistance of find, sed, column, sort, nsenter, etc...
+mrgetty does not use dialog
+and so no worries about dialog being broken.
+mrgetty is also usable with an audio output console,
+where hardware vocalizes the words printed on the console.
+Therefore, it should not provide an accessibility problem.
+It does not require
+DirectFB, nor weston, nor MesaLib, nor Xorg,
+nor even a mouse.
+Therefore, if the keyboard and screen work
+then it should work as expected.
+
+Succinctly stated mrgetty should help provide all the convenience
+of the easy type of logins we enjoyed with a single root file system,
+yet still retain all the power of multiple root file systems.
+
+Although not implemented with a menu
+the SA can edit the configuration file for KeyboardSignal
+and change it to a different and unadvertised key sequence.
+Anyone else might see the typical prompt that says
+press alt shift a for a login getty.
+They press and press and press and nothing happens
+if the SA assigned the sequence differently.
+However, with that said please be aware that correct keycodes
+can sometimes be difficult to discover,
+and the keycode I use for the 'a' key might correspond to
+the key located to the right of CapsLock even if that key
+is something other than 'a' on a different keyboard
+or different keymapping.
+
+For the moment it remains a mystery that I can not investigate,
+because I use very cheap US QWERTY 101 style key keyboards
+made in China.
+I go through keyboards somewhat quickly.
+
+I am excited about mrgetty
+and pleased to delete it from my todo list.
+Criticism and suggestions are invited.
+As a base implementation it is fine,
+but it could possibly benefit from embellishment.
+The changes should arrive in the next UTC 00:00
+software catalog update.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131204/067ea724/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131204/067ea724/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002487.html">[Sorcerer-admins] /boot/linux/$VERSION/{kernel,modules}
+</A></li>
+	<LI>Next message: <A HREF="002489.html">[Sorcerer-admins] Augur man page and GCC optimization
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2488">[ date ]</a>
+              <a href="thread.html#2488">[ thread ]</a>
+              <a href="subject.html#2488">[ subject ]</a>
+              <a href="author.html#2488">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

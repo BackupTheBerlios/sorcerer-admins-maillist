@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C596b75860708200719p5a93a54bj8b065a5a3dde6b5d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000186.html">
+   <LINK REL="Next"  HREF="000156.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] qt-x11-opensource</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20qt-x11-opensource&In-Reply-To=%3C596b75860708200719p5a93a54bj8b065a5a3dde6b5d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] qt-x11-opensource">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Aug 20 16:19:06 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000186.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+        <LI>Next message: <A HREF="000156.html">[Sorcerer-admins] It happened! XFree86 4.7.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#189">[ date ]</a>
+              <a href="thread.html#189">[ thread ]</a>
+              <a href="subject.html#189">[ subject ]</a>
+              <a href="author.html#189">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 8/20/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on
+</I>&gt;<i> 17.08.2007 17:44:26:
+</I>&gt;<i>
+</I>&gt;<i>  &gt; Well....if the examples are removed from the qt-x11-opensource tree
+</I>&gt;<i>  &gt; and the docs also then maybe it could be possible to squeeze it into
+</I>&gt;<i>  &gt; 2G for compilation on ia32 architectures using -Os?
+</I>&gt;<i>  &gt; But I do not know yet.
+</I>&gt;<i>
+</I>&gt;<i> Please, no -Os as default, i considered it as potentially dangerous.
+</I>&gt;<i> I have seen lot of mysterious happenings when compiled eg. Linux kernel
+</I>&gt;<i> using -Os, it just brokes it.
+</I>&gt;<i> Maybe kernel is special case but i have switched all my machines to -O2 and
+</I>&gt;<i> It Just Works(tm).
+</I>&gt;<i> Dont use -Os unless you are pretty sure it wont broke your installation.
+</I>&gt;<i> I know it just disables those optimizations which make your binaries larger
+</I>&gt;<i> but somehow i have learned it can be buggy anyway.
+</I>
+People used to say that about -O3
+:<i>)
+</I>And it was true that for a time in certain situations -O3 did cause breaks.
+Even now, -O2 is mandatory for compilation of glibc.
+CFLAGS and CXXFLAGS are modified to enforce -O2 for glibc compilation.
+Anyway, it seems that qt-x11-opensource compiles about half of it's
+object files with -O2 even if CFLAGS and CXXFLAGS specifiy -Os.
+Chances are it will probably work should you compile it with -Os,
+but if not you can always recast and use -O2.
+For now I will not enforce the use of -O2 for any spell except glibc
+or for a spell where -Os or -O3 has been identified to cause a problem.
+A problem must exist and not merely be conjectured.
+
+
+&gt;<i> disk space is cheap, buy larger hdd ;).
+</I>
+However, the past recommendation is to deploy Sorcerer boxes
+with a 2G dedicated /tmp and a 2G dedicated /usr/src/sorcery
+or to have a 2G tmpfs mounted on /usr/src/sorcery
+However, I would not recommend compiling qt-x11-opensource
+on tmpfs even on a box with 2G of RAM installed, merely because
+compilation of c++ can require a magnitude more megabytes of
+memory than mere c.
+
+Therefore, being able to cast qt-x11-opensource on deployed
+Sorcerer boxes without SA modification of those boxes is the
+desired outcome.
+We do not want SAs to have to make drastic modification to
+existing Sorcerer boxes to become compatible with the
+future KDE3 to KDE4 update.
+However, I will put in the install recommendations that
+/usr/src/sorcery be a dedicated 4G partition of space allows
+or 3G partition if space is limited.
+
+
+&gt;<i> Otherwise consider system where we can use/download pre-compiled spells
+</I>&gt;<i> without compiling them but current system where we have optional
+</I>&gt;<i> requirements per spell thats not easily done.
+</I>
+It would be possible to provide a near completely statically
+linked qt-x11-opensource.
+It would take up more disk space.
+It would be nearly 100M to download.
+And it may not comply with the qt-x11-opensource license agreement.
+However, I doubt that it would.
+
+Currently, we make a couple of concessions for allowing spells for
+pre-compiled binaries in the grimoire.
+1. closed source drivers for nvidia cards.
+2. openoffice ( because it is so huge and takes days to compile if you
+can figure it out )
+3. jdk ( for reasons similar to openoffice )
+
+In contrast, qt-x11-opensource is not closed source,
+is not difficult to compile,
+and is not so big that it can not be compiled within the 2G
+dedicated /usr/src/sorcery/ if demos and examples are omitted.
+
+For the time being I do not want to have qt-x11-opensource
+installed on Sorcerer boxes from pre-compiled binaries.
+However, if that becomes a good idea then it may be possible
+to accomplish if the pre-compiled binaries provided by trolltech
+have no ELF library requirements besides glibc, or very few.
+
+Using a precompiled binary for qt-x11-opensource is not beyond consideration
+but has not yet reached a point where that possible solution merits
+consideration.
+
+For the meanwhile since Sorcerer is a source based distribution it
+tends to work best and heal up the problems that come from library
+updates when all the installed spells that are effected by library updates
+have sources from which the installed version can be recompiled and
+relinked with the newly installed libraries.
+If qt-x11-opensource was provided as a pre-compiled binary then
+it might also require additional spells for libraries such as jpeg
+and png that install very specific versions of those libraries
+so that the libraries provided are those that were qt-x11-opensource
+was dynamically linked with at compile time.
+However, if qt-x11-opensource was statically linked with those
+graphic libraries and database libraries and so forth
+then that would greatly mitigate the potential for qt-x11-opensource
+having an ELF library requirement for which no installed spell can fulfill.
+
+Sorry if the above paragraph read complicated.
+
+Sources are like clay.
+Pre-compiled binaries are like stone.
+Since pre-compiled binaries can not be re-shaped
+everything else around pre-compiled binaries
+must be altered for the pre-compiled binary
+to fit and work correctly.
+That could require considerable effort.
+And that is the simple explanation.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000186.html">[Sorcerer-admins] qt-x11-opensource
+</A></li>
+	<LI>Next message: <A HREF="000156.html">[Sorcerer-admins] It happened! XFree86 4.7.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#189">[ date ]</a>
+              <a href="thread.html#189">[ thread ]</a>
+              <a href="subject.html#189">[ subject ]</a>
+              <a href="author.html#189">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

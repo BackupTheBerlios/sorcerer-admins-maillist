@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] audio in KDE and mysql with	qt-everywhere-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20audio%20in%20KDE%20and%20mysql%20with%0A%09qt-everywhere-opensource&In-Reply-To=%3C596b75861003040916w712a5ecydcfcbdc0763fe835%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001487.html">
+   <LINK REL="Next"  HREF="001489.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] audio in KDE and mysql with	qt-everywhere-opensource</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20audio%20in%20KDE%20and%20mysql%20with%0A%09qt-everywhere-opensource&In-Reply-To=%3C596b75861003040916w712a5ecydcfcbdc0763fe835%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] audio in KDE and mysql with	qt-everywhere-opensource">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Mar  4 18:16:44 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001487.html">[Sorcerer-admins] grimoire version 2010-56 and later
+</A></li>
+        <LI>Next message: <A HREF="001489.html">[Sorcerer-admins] KDE screen locking... failed!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1488">[ date ]</a>
+              <a href="thread.html#1488">[ thread ]</a>
+              <a href="subject.html#1488">[ subject ]</a>
+              <a href="author.html#1488">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Mar 3, 2010 at 12:31 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Wednesday 24 February 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> Jan reports sound is still broke on a KDE version 4.4.0 installation.
+</I>&gt;<i> OK, it turns out that the remaining audio issue is with the audio mixer: If
+</I>&gt;<i> either of 'front' or 'headphone' controls (in kmix) is muted than there is no
+</I>&gt;<i> sound on my laptop from both the internal speakers and headphones.
+</I>&gt;<i>
+</I>&gt;<i> However, alsamixer correctly mutes the internal speaker or headphones
+</I>&gt;<i> separately.
+</I>&gt;<i>
+</I>&gt;<i> Looks like a bug in KDE or QT.
+</I>
+I use aumix to change levels manually.
+And for automatic setting I use /etc/init.d/alsactl
+when the box boots.
+That requires an /etc/asound.state to work.
+First set the levels.
+Then, run alsactl store
+And that creates the /etc/asound.state file.
+
+Evert tried doing audio with OSSv4 for a while.
+Apparently no audio solution is without some quirks.
+Fortunately, on my boxes audio seems to work okay.
+But at least it is not like in the days where
+I had to buy a sound blaster OSS module in order
+to have a driver for my sound card.
+Overall the support for audio hardware
+seems good and getting better.
+
+
+&gt;&gt;<i> With the fix of KDE 4.4.0 to support the nepomuk stuff
+</I>&gt;&gt;<i> it looks good to go.
+</I>&gt;&gt;<i> Also KDE 4.4.0 no longer uses mysql through qt for nepomuk indexing.
+</I>&gt;&gt;<i> It uses virtuoso-opensource.
+</I>&gt;&gt;<i> And so that has changed.
+</I>&gt;&gt;<i> Consequently, in the 2010-57 and later grimoire
+</I>&gt;&gt;<i> some boxes that are not explicitly using mysql
+</I>&gt;&gt;<i> or that the SA wants it installed in order to use
+</I>&gt;&gt;<i> should be okay to have mysql dispelled.
+</I>&gt;&gt;<i> However, it will cause qt-everywhere-opensource to recast
+</I>&gt;&gt;<i> if mysql is removed.
+</I>&gt;<i>
+</I>&gt;<i> KDE is crazy nowadays. True, nepomuk does not use mysql anymore. However,
+</I>&gt;<i> akonadi, which depends on nepomuk, requires mysql. So nepomuk and akonadi each
+</I>&gt;<i> use a different database engine :(
+</I>
+Then, should mysql still be a mandatory requirement for
+qt-everywhere-opensource?
+Does akonadi use mysql through qt's interface?
+Thanks for figuring it out.
+I use KDE's kiten and gwenview and not much else.
+So I might not be seeing where problems are occurring.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001487.html">[Sorcerer-admins] grimoire version 2010-56 and later
+</A></li>
+	<LI>Next message: <A HREF="001489.html">[Sorcerer-admins] KDE screen locking... failed!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1488">[ date ]</a>
+              <a href="thread.html#1488">[ thread ]</a>
+              <a href="subject.html#1488">[ subject ]</a>
+              <a href="author.html#1488">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] booting? to udevadm trigger or to not udevadm	trigger, that is the 	question.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20booting%3F%20to%20udevadm%20trigger%20or%20to%20not%20udevadm%0A%09trigger%2C%20that%20is%20the%20%09question.&In-Reply-To=%3C596b75860912152029v1118a743w3a2bbbfae4eca057%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001382.html">
+   <LINK REL="Next"  HREF="001384.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] booting? to udevadm trigger or to not udevadm	trigger, that is the 	question.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20booting%3F%20to%20udevadm%20trigger%20or%20to%20not%20udevadm%0A%09trigger%2C%20that%20is%20the%20%09question.&In-Reply-To=%3C596b75860912152029v1118a743w3a2bbbfae4eca057%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] booting? to udevadm trigger or to not udevadm	trigger, that is the 	question.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Dec 16 05:29:19 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001382.html">[Sorcerer-admins] grub...
+</A></li>
+        <LI>Next message: <A HREF="001384.html">[Sorcerer-admins] nspr, nss on x86_64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1383">[ date ]</a>
+              <a href="thread.html#1383">[ thread ]</a>
+              <a href="subject.html#1383">[ subject ]</a>
+              <a href="author.html#1383">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I know the feeling of testing a new version of udev
+and discovering that the box incapable of completing sysinit
+due to bugs in the new version of udev.
+I would spare you that anguish if I could.
+I spare myself the anguish by keeping
+an untarred udev archive of a usable udev
+within subdirectory /etc/udev.sav/
+That way if the installed udev is ineffective
+then I can boot with kernel parameter
+rdinit=/bin/bash,
+# cp /etc/udev.sav/* /
+# exec /init
+And resume booting the box.
+That safety net does not seem like a good solution for a distribution
+wide policy.
+But I could not stop thinking that something must be done
+to give the SA a way out of udev purgatory in the event
+that the new version of udev fails during sysinit.
+Of course booting with an Install/Rescue disk would provide a way out,
+but even I do not like using that solution.
+Therefore, I decided to try something different.
+
+/init will now also create a list of loaded modules and a copy of /dev
+and store that in /etc/coldplug/{dev/,modules} , respectively.
+The reason for that is to try to obtain the end result of
+having executed udevadm trigger,
+yet without actually having to execute udevadm trigger.
+
+Of course the problem with re-using a list of modules and
+also a copy of /dev is that it might not be exactly the same
+when a new kernel is booted or when installed hardware changes.
+Therefore, the remembered coldplug information stored in
+/etc/coldplug/ is only used in certain situations.
+
+When fast booting using /boot/fast/{linux,initrf}
+then the information in /etc/coldplug/
+is used instead of doing udevadm trigger.
+Why?
+First, that initrf image contains only the modules that were loaded
+when the fast boot initrf image was created.
+Therefore, fast booting is incapable of handling hardware changes.
+That makes sense, of course, because the price for speed
+is knowing exactly what to do and assuming that there are no changes.
+
+If doing a regular non fast booting with a fully populated initrf
+then different modules can be loaded in response to hardware changes
+and kernel module name changes.
+Therefore, udevadm trigger remains the default method
+for sysinit when booting from images such as:
+/boot/2.6.32{linux,initrf}
+
+However, if the installed udev is a unusable
+then using stored information in /etc/coldplug/
+might yet work.
+Fortunately, that is possible and also easy to do.
+Add to the kernel command line the parameter coldplug.
+That will instruct scripts run during sysinit to use information in
+/etc/coldplug/ instead of doing udevadm trigger if both
+/etc/coldplug{dev,modules}
+exist.
+
+In summary the kernel parameter coldplug causes information
+in /etc/coldplug/{dev,modules} to be used instead of running
+udevadm trigger allowing udevd to handle coldplug events.
+Also fast booting has the default method of booting
+as if the kernel parameter coldplug was given.
+Therefore, if a problem exists with this implementation
+then please report it on the email list.
+If a fast boot initrf image is unusable
+then full boot images can still be used.
+However, my intention was not to ruin the potential for fast booting.
+
+Fast booting using /etc/coldplug/{dev,modules} seems faster
+than previous fast booting using udevadm trigger.
+Basically it invokes modprobe about 100 times to load all modules.
+But that is not as slow as it should seem.
+And on boxes that reach the full 180 second timeout for udevadm settle
+then fast booting will definitely be faster.
+
+Please make a note about the kernel command line parameter coldplug.
+The kernel ignores it, but the Sorcerer init-scripts
+that run during sysinit will look for it.
+It could provide a quick way out an unbootable mess
+caused by a udev update.
+
+After updating with a version 2009-351 grimoire
+the changes described in this email will go into effect.
+And if you have any ill premonitions about the update
+then please use that as an excuse to update backups first.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001382.html">[Sorcerer-admins] grub...
+</A></li>
+	<LI>Next message: <A HREF="001384.html">[Sorcerer-admins] nspr, nss on x86_64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1383">[ date ]</a>
+              <a href="thread.html#1383">[ thread ]</a>
+              <a href="subject.html#1383">[ subject ]</a>
+              <a href="author.html#1383">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] :) I love updating boxes that are far out of	date
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%3A%29%20I%20love%20updating%20boxes%20that%20are%20far%20out%20of%0A%09date&In-Reply-To=%3CBANLkTino-u-H%2BgCPu8xtzZeVnUJCawmYmA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002112.html">
+   <LINK REL="Next"  HREF="002114.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] :) I love updating boxes that are far out of	date</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%3A%29%20I%20love%20updating%20boxes%20that%20are%20far%20out%20of%0A%09date&In-Reply-To=%3CBANLkTino-u-H%2BgCPu8xtzZeVnUJCawmYmA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] :) I love updating boxes that are far out of	date">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr 16 21:48:37 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002112.html">[Sorcerer-admins] :) I love updating boxes that are far out of	date
+</A></li>
+        <LI>Next message: <A HREF="002114.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2115">[ date ]</a>
+              <a href="thread.html#2115">[ thread ]</a>
+              <a href="subject.html#2115">[ subject ]</a>
+              <a href="author.html#2115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Here is the demystification of cast, leech, and dispel.
+Dispel is easiest to understanding.
+dispel processes all spells in the dispel queue
+concurrently without any order.
+That helps dispel run quickly.
+
+leech is the nearly as simple as dispel.
+leech downloads sources listed in the leech queue
+according to the expected cast order of the spells.
+The download order is not guaranteed to be ideal.
+But usually it should rarely cause
+cast to unnecessarily wait for a source.
+
+leech has the ability to invoke cast
+provided that cast is not already running
+and spells are in the cast queue.
+
+Leech or in general the download of sources is
+not very interesting.
+Therefore, usually nothing shows in augur scry.
+If a source happens to be downloading when
+augur scry runs then augur scry might attempt
+to show that along with an estimated progress
+of the download.
+
+Doing # augur scry $SPELL
+might show the output of curl
+provided the spell is the leech queue and downloading.
+
+If a SA earnestly wants to know the download order
+then this command will provide the information:
+
+# augur queue | sed &quot;s:leech/::p;d&quot; | augur order
+
+Spells listed above download before spells listed beneath.
+
+
+Similar to leech, cast also uses an ordered list
+of spells in the cast queue
+for the task of determining which spell should
+next be compile or restored.
+However, for a spell to be selected by cast
+then that spell must not be downloading
+and not have any of it's possible requirements
+currently casting.
+Additionally, some spells are solo spells
+and therefore can be the only spell casting.
+Often a solo spell might delay before starting
+until it becomes required by every other
+spell waiting to cast.
+
+The added complexity to the selection of spells
+to cast grants cast optimal probability that
+a spell should successfully finish compilation
+linking and installation without encountering
+an error created by concurrently casting with
+another spell.
+
+The screen for
+# augur scry
+gives a hint about the future.
+Spells listed from top to bottom have
+a somewhat chronological order.
+The first few lines might indicate spells
+that are queued for compilation and expected
+to begin soon.
+Lines that show spells that are currently compiling
+occur after the lines that indicate the expected future.
+Those lines look somewhat different.
+Finally, the lines that follow each begin
+with an event classification such as
+&quot;Pass Cast&quot;
+Those indicate events that recently happened.
+Older events occur lower and the oldest of events
+eventually lose their place on the list.
+However, the list will usually still contain at the bottom
+a line for the last event where something failed.
+
+I like to consider the layout of # augur scry
+similar to that of an aircraft HUD, head's up display.
+A HUD displays information but does not waste
+space presenting a key that explains which is the
+altimeter, airspeed, and attitude indicators.
+Yet after one looks at the HUD for a moment during flight
+then it seems to make sense.
+
+Similarly,
+# augur scry $SPELL
+is as if the pilot quit looking ahead and instead
+looked down at an gauge or multi-function-display
+in order to receive precise information.
+The HUD might not indicate a fire exists in engine 2,
+but the MFD, multi-function-display,
+can display fuel, damage, hydraulic pressure, etc...
+
+sorcery is like fly-by-wire.
+The yoke is not directly physically connected
+to the aileron and elevators flight control surfaces.
+Therefore, the pilot pushes on the stick
+and the fancy stuff happens in the background
+without the pilot exactly knowing how the avionics
+computer and hydraulic systems work nor
+what they are doing.
+In that respect SAs really are like modern aircraft
+pilots flying their boxes from the past to the present
+and into the future.
+
+Having sorcery tools perform like
+fly-by-wire avionics is not a bad thing.
+Otherwise SAs could become overwhelmed by the
+choices per second required to make an update happen
+if the SA had to manually select spell order and,
+manually compile, install, track, and remove software.
+
+Also Sorcerer boxes can have installed libraries
+change their &quot;shared object&quot; name follow an update.
+That type of event makes a box as unstable as a F16.
+To avoid having a box roll violently out of control
+and crash into the ground
+sorcery checks for these &quot;Miss ELF&quot; events.
+After discovering problems
+then it adds to the cast queues the spells
+which must be recompiled and relinked
+with the newer libraries that were recently installed.
+
+Yes, the aircraft analogies break with the
+tradition of the magic analogies.
+However, the initial conception of idea
+differs greatly from currently implementation.
+sorcery rough draft was merely a technology demonstration
+a proof that the concept can be implemented.
+Unfortunately, it was far from usable.
+Modern sorcery expects and adapts to the changes in a box.
+Almost every bit of the complexity in it serves a purpose.
+
+Unless someone suggests a better idea
+then the SA should load queues, begin the action
+and watch it unfold using # augur scry.
+Unlike flying an airplane there is no roar of engines,
+no hiss of the slipstream, and no scenery and clouds
+to view through a glass cockpit.
+The landscape of files and directories
+that the sorcery tools flies through lacks
+an abstracted graphic/visual representation.
+Yet sorcery is a means for flying through
+the digital landscape of free software.
+
+For those that like an abstract visualization
+there is a program called lavaps.
+It uses information that a program such as top would gather
+and then displays it in an analog form
+with a visual representation similar to a lava lamp.
+
+Probably people can feel bewildered by computers
+especially after they decide that there are no suitable
+analogies to physical constructs.
+In order to delay that onset some operating systems
+transitioned the name of &quot;directory&quot; to &quot;folder.&quot;
+But changing the name does not change what it is
+and &quot;folder&quot; is no more nor less accurate description.
+It is entirely abstract and mysterious
+to those who do not know what it really is.
+
+Therefore, my suggestion is to not allow a problem
+assume the appearance of a battle of will between
+man and machine.
+The sorcery tools are trying to do what it can in order
+to fulfill the SA requests.
+So instead consider it something like a junior SA
+that occasionally requires a little bit of extra assistance.
+Generally, it does the proper thing and
+it does so with greater ease and far faster than
+a human SA could do manually.
+
+To see what transpired in the last 24 hours
+try the command:
+
+# augur event 1
+
+The event logs are often a good method
+for discovering what happened.
+And at the end it will provide the accumulated
+occurrences for events such as:
+
+Event Type  Occurrences
+Cast ELF    2
+Cast LA     2
+Cast MD5    2
+Cast New    80
+Cast Req    22
+Cast SA     3
+Fail Auto   16
+Fail Load   2
+Miss ELF    3
+Miss LA     2
+Pass Cast   132
+Pass Load   110
+Pass Oust   112
+Pass Void   2
+
+Any SA that wants to come closer to the action
+is probably typing:
+
+../configure --prefix=/usr &amp;&amp; make &amp;&amp; make install DESTDIR=$PWD/install
+
+or something like that on a command line.
+
+
+
+
+On Fri, Apr 15, 2011 at 6:31 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for the report.
+</I>&gt;<i>
+</I>&gt;<i> Always a pleasure :) &#160;it's so rare that I get to give problems to
+</I>&gt;<i> other people - it's so much more often that people are giving me issue
+</I>&gt;<i> reports on my stuff.
+</I>&gt;<i>
+</I>&gt;<i> Say, is there a spot that I can track the download progress of things?
+</I>&gt;<i> &#160;I sometimes shows in augur scry, but more often it shows in a wait
+</I>&gt;<i> state until it gets to actually compiling.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002112.html">[Sorcerer-admins] :) I love updating boxes that are far out of	date
+</A></li>
+	<LI>Next message: <A HREF="002114.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2115">[ date ]</a>
+              <a href="thread.html#2115">[ thread ]</a>
+              <a href="subject.html#2115">[ subject ]</a>
+              <a href="author.html#2115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

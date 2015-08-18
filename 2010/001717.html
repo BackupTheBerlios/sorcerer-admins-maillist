@@ -1,0 +1,426 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] install problem
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20install%20problem&In-Reply-To=%3CSNT118-W30F95326F12ACB087DDD9DAEB70%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001716.html">
+   <LINK REL="Next"  HREF="001718.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] install problem</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20install%20problem&In-Reply-To=%3CSNT118-W30F95326F12ACB087DDD9DAEB70%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] install problem">rwobben at hotmail.com
+       </A><BR>
+    <I>Sun Jul 11 12:32:40 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001716.html">[Sorcerer-admins] important bug...
+</A></li>
+        <LI>Next message: <A HREF="001718.html">[Sorcerer-admins] mcron fails to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1717">[ date ]</a>
+              <a href="thread.html#1717">[ thread ]</a>
+              <a href="subject.html#1717">[ subject ]</a>
+              <a href="author.html#1717">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+ 
+
+Hello, 
+
+ 
+
+The name of the iso is sorcerer_x86_64-20100529
+
+So the rolling date is oke.
+
+ 
+
+I also checked the md5sum of the downloaded iso and that is also oke.
+
+ 
+
+My hardware is : 
+
+ 
+
+AMD64 Athon 3500+ processor.
+
+1G memory.
+
+ 
+
+Two hard disk : 
+
+ 
+
+80G hard disk 
+
+60G Maxtor hard disk which is use for linux.
+
+ 
+
+one LG dvd burner.
+
+ 
+
+Error message is still : i/o buffer  error on fd0 on sector xxxx
+
+Where x is every time another number
+
+ 
+
+I hope you have enough data now.
+
+ 
+
+Roelof
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+ 
+&gt;<i> Date: Sun, 11 Jul 2010 02:48:56 -0700
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] install problem
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>
+</I>&gt;<i> 
+</I>&gt;<i> Did not fix it?
+</I>&gt;<i> Bummer.
+</I>&gt;<i> I wish you had included the roll date of the I/R.
+</I>&gt;<i> I am out of guesses unless you provide more information.
+</I>&gt;<i> 
+</I>&gt;<i> I remember a known issue involving the selection
+</I>&gt;<i> of the Install/Rescue disk from removable drives.
+</I>&gt;<i> Fixed it.
+</I>&gt;<i> Problem is, I can not fix previously released I/Rs.
+</I>&gt;<i> I create new I/Rs and upload them to fix reported problems.
+</I>&gt;<i> If you have an older than current I/R
+</I>&gt;<i> then that I/R is a collectors' item.
+</I>&gt;<i> I only fix bugs reported in the current I/R.
+</I>&gt;<i> 
+</I>&gt;<i> A problem similar to the one described
+</I>&gt;<i> existed on an old I/R and was not
+</I>&gt;<i> reported or fixed until someone tested
+</I>&gt;<i> the I/R on a box with floppy drives.
+</I>&gt;<i> To save time while testing and
+</I>&gt;<i> to eliminate the possibility of CDROM read errors
+</I>&gt;<i> the I/R testing is done using a qemu virtual machine.
+</I>&gt;<i> The qemu virtual machine configuration
+</I>&gt;<i> that I use for testing does not have a floppy disk.
+</I>&gt;<i> So the error existed through at least one or perhaps more I/Rs.
+</I>&gt;<i> I never saw it until I started qemu with floppy disk emulation enabled.
+</I>&gt;<i> 
+</I>&gt;<i> The error occurs during booting when
+</I>&gt;<i> the /etc/init.d/find_ir init-script is run.
+</I>&gt;<i> I could give you the fixed init-script,
+</I>&gt;<i> but it would not be fun typing it.
+</I>&gt;<i> Would require kernel parameter
+</I>&gt;<i> # rdinit=/bin/bash
+</I>&gt;<i> then
+</I>&gt;<i> # nano /etc/init.d/find_ir
+</I>&gt;<i> and after fixing the script:
+</I>&gt;<i> # exec /init
+</I>&gt;<i> 
+</I>&gt;<i> Downloading and burning a newer I/R is the easier solution.
+</I>&gt;<i> 
+</I>&gt;<i> If the error I am thinking of is not the same
+</I>&gt;<i> then please include a more verbose bug report
+</I>&gt;<i> along with your best guesses about the cause,
+</I>&gt;<i> solution, location, hardware, etc...
+</I>&gt;<i> That way I can find and fix the bug and roll new I/Rs.
+</I>&gt;<i> 
+</I>&gt;<i> If verbose information is not provided
+</I>&gt;<i> and I do not encounter an error when testing I/Rs
+</I>&gt;<i> then an unreported error may span multiple I/Rs.
+</I>&gt;<i> I/Rs can not be tested on every hardware configuration.
+</I>&gt;<i> Therefore, for obscure errors specific to certain hardware loadouts
+</I>&gt;<i> detailed information is required to spot and fix those problems.
+</I>&gt;<i> 
+</I>&gt;<i> Sorry for the inconvenience.
+</I>&gt;<i> Please again double check that the I/R
+</I>&gt;<i> being used is current.
+</I>&gt;<i> New I/Rs are released bi-annually
+</I>&gt;<i> or in response to reported error messages.
+</I>&gt;<i> Latest I/Rs were rolled 20100529
+</I>&gt;<i> Anything older is a collector's item
+</I>&gt;<i> and should not be used for deploying new boxes.
+</I>&gt;<i> A box that is deployed from a 2010122 or 20100207
+</I>&gt;<i> is the same thing as a box that neglected updating
+</I>&gt;<i> for over 6 months.
+</I>&gt;<i> Sorcerer boxes are intended to be updated
+</I>&gt;<i> no less frequently than quarterly
+</I>&gt;<i> or as far back as the most recent I/R.
+</I>&gt;<i> 
+</I>&gt;<i> Sorcerer is differs from many distros.
+</I>&gt;<i> Sorcerer boxes are not completely re-installed
+</I>&gt;<i> each year from new I/Rs.
+</I>&gt;<i> For as long as a Sorcerer box's role is required
+</I>&gt;<i> the installed Sorcerer is updated periodically.
+</I>&gt;<i> The updates do not require new I/Rs.
+</I>&gt;<i> 
+</I>&gt;<i> Sorcerer boxes surf the wave of currently released free software.
+</I>&gt;<i> They update seamlessly from past to present to future.
+</I>&gt;<i> But they do not do super-long-jumps.
+</I>&gt;<i> And neither do pre-compiled binary based distros
+</I>&gt;<i> that require a re-install every year or so.
+</I>&gt;<i> 
+</I>&gt;<i> Semi-long jumps are possibly mainly on distros
+</I>&gt;<i> where the tools are not changing.
+</I>&gt;<i> Generally, the longer sorcery goes without major changes
+</I>&gt;<i> then the greater the span of time Sorcerer boxes can leap
+</I>&gt;<i> forward between updates.
+</I>&gt;<i> However, the sorcery tools are adapted
+</I>&gt;<i> to meet the changing challenges of
+</I>&gt;<i> downloading, compiling, and installing software.
+</I>&gt;<i> 
+</I>&gt;<i> The most recent major change was going from using
+</I>&gt;<i> a preloadble ELF library to track filesystem changes
+</I>&gt;<i> to using a DESTDIR type method of installation
+</I>&gt;<i> in order to track what files are installed when
+</I>&gt;<i> software finishes compiling.
+</I>&gt;<i> Sorcerer is a decade old.
+</I>&gt;<i> Support for DESTDIR has been gaining popularity
+</I>&gt;<i> and is common in almost all new software now.
+</I>&gt;<i> However, 5 years ago it was hardly in anything.
+</I>&gt;<i> 
+</I>&gt;<i> DESTDIR caught on faster than bzip2 did.
+</I>&gt;<i> Even today many sources are released as gzip
+</I>&gt;<i> compressed tarballs.
+</I>&gt;<i> However, a tiny fraction of software is now available
+</I>&gt;<i> as xz compressed tarballs.
+</I>&gt;<i> xz is an gzip like implementation of LZMA.
+</I>&gt;<i> the program supports gzip parameters
+</I>&gt;<i> and the compressed files have identifiable magic headers.
+</I>&gt;<i> And yes sorcery tools were updated to seamlessly
+</I>&gt;<i> recognize and support xz compressed tarballs
+</I>&gt;<i> just as it already supports gzip and bzip2 compressed tarballs.
+</I>&gt;<i> 
+</I>&gt;<i> I hope that somewhat explains the limitations of Sorcerer.
+</I>&gt;<i> Basically anything older than current is ancient history.
+</I>&gt;<i> Bug reports are only received on current grimorie spells,
+</I>&gt;<i> current sorcery, current I/Rs, etc...
+</I>&gt;<i> 
+</I>&gt;<i> If that error involving the I/R detection on boxes with floppy drives
+</I>&gt;<i> had not stuck in my mind as an unusual problem that snuck
+</I>&gt;<i> through testing on qemu
+</I>&gt;<i> then I might not have made the guess that the error
+</I>&gt;<i> you are reporting is an error that no longer exists on
+</I>&gt;<i> the current Sorcerer I/R.
+</I>&gt;<i> But I could be wrong. :)
+</I>&gt;<i> 
+</I>&gt;<i> The old error I was thinking about above
+</I>&gt;<i> required communication carried through about
+</I>&gt;<i> 4 email messages to illuminate sufficiently
+</I>&gt;<i> so that I booted qemu with floppy emulation enabled
+</I>&gt;<i> and was able to re-create the error and see how
+</I>&gt;<i> obviously messed up that init-script I wrote was.
+</I>&gt;<i> It was funny, because I have no idea why
+</I>&gt;<i> I had wrote such an obviously bad init-script.
+</I>&gt;<i> Yet somehow on boxes with just
+</I>&gt;<i> one removable disk device it worked okay.
+</I>&gt;<i> 
+</I>&gt;<i> Anyway, my point is that an initial error message
+</I>&gt;<i> that only indicates a problem happened is common.
+</I>&gt;<i> That was a decent initial report.
+</I>&gt;<i> Thanks for reporting the problem.
+</I>&gt;<i> I hope you are in a good mood to dig in
+</I>&gt;<i> the dirt and uproot the cause, please.
+</I>&gt;<i> Good luck wrangling it.
+</I>&gt;<i> If it exists on the current I/R
+</I>&gt;<i> then I hope it is easy to hog-tie.
+</I>&gt;<i> 
+</I>&gt;<i> Please report your findings on the Sorcerer email list.
+</I>&gt;<i> Other SAs are often eager to help in the hunt
+</I>&gt;<i> and will eagerly dig in trying to recreate the error.
+</I>&gt;<i> 
+</I>&gt;<i> Since I roll the I/Rs and already tested the current releases
+</I>&gt;<i> I have not encountered the error and probably would not
+</I>&gt;<i> be able to re-create it without further information.
+</I>&gt;<i> But as I mentioned above the experience of installing
+</I>&gt;<i> the Sorcerer I/R can vary depending upon hardware loadout.
+</I>&gt;<i> If you encounter the error then someone else also
+</I>&gt;<i> aught to be able to encounter or create the error.
+</I>&gt;<i> 
+</I>&gt;<i> We keep hacking at it until we slice and dice the bug.
+</I>&gt;<i> And that is how problems with Sorcerer are fixed.
+</I>&gt;<i> Cooperation is key to making a solid distro.
+</I>&gt;<i> Good luck.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Sat, Jul 10, 2010 at 11:58 PM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hello Kyle,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Your suggestion does not solve my problem.
+</I>&gt;<i> &gt; I still get the error message.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Date: Sat, 10 Jul 2010 14:14:07 -0700
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] install problem
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I have not yet seen that error message.
+</I>&gt;<i> &gt;&gt; However, I would be tempted to unload the floppy.ko
+</I>&gt;<i> &gt;&gt; module.
+</I>&gt;<i> &gt;&gt; lsmod | grep floppy
+</I>&gt;<i> &gt;&gt; then rmmod the module.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Probably
+</I>&gt;<i> &gt;&gt; rmmod floppy
+</I>&gt;<i> &gt;&gt; should work.
+</I>&gt;<i> &gt;&gt; If that solves the problem the removal
+</I>&gt;<i> &gt;&gt; can be made permanent.
+</I>&gt;<i> &gt;&gt; Add
+</I>&gt;<i> &gt;&gt; floppy
+</I>&gt;<i> &gt;&gt; to /etc/modules.rm
+</I>&gt;<i> &gt;&gt; If using the /usr/bin/rmmod wrapper script
+</I>&gt;<i> &gt;&gt; it might prompt to ask if you want floppy
+</I>&gt;<i> &gt;&gt; added to /etc/modules.rm
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Current Sorcerer I/Rs are available from
+</I>&gt;<i> &gt;&gt; <A HREF="http://sorcerer.silverice.org/download/iso9660/2010/">http://sorcerer.silverice.org/download/iso9660/2010/</A>
+</I>&gt;<i> &gt;&gt; Nothing older than the 20100529 is fixed or supported.
+</I>&gt;<i> &gt;&gt; Ancient Sorcerer I/Rs and those provided from magazines
+</I>&gt;<i> &gt;&gt; are collectors items and have no production value.
+</I>&gt;<i> &gt;&gt; If the I/R being used is not fresh
+</I>&gt;<i> &gt;&gt; then please download a new Sorcerer Install Rescue image.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; After a Sorcerer box is deployed
+</I>&gt;<i> &gt;&gt; the box must be updated no less frequently
+</I>&gt;<i> &gt;&gt; than once per quarter.
+</I>&gt;<i> &gt;&gt; Updates are just updates, not complete re-installs.
+</I>&gt;<i> &gt;&gt; Once a Sorcerer box is installed the I/R is only
+</I>&gt;<i> &gt;&gt; useful for installing new boxes or rescuing existing boxes.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Yearly or bi-yearly please check for newer I/Rs
+</I>&gt;<i> &gt;&gt; Download and burn newer I/R images for the purpose
+</I>&gt;<i> &gt;&gt; of having a usable Rescue disk.
+</I>&gt;<i> &gt;&gt; Eventually each Sorcerer box will update to the point
+</I>&gt;<i> &gt;&gt; where an I/R used to install the box can no longer be
+</I>&gt;<i> &gt;&gt; used to rescue the box.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; A Sorcerer box neglected and not updated
+</I>&gt;<i> &gt;&gt; for more than 1 year might not smoothly update.
+</I>&gt;<i> &gt;&gt; In that situation back up the important files
+</I>&gt;<i> &gt;&gt; and do a new install from a newer I/R
+</I>&gt;<i> &gt;&gt; unless the SA can hem the seams together.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Important transition points in sorcery development
+</I>&gt;<i> &gt;&gt; exist to provide backward compatibility for up to 6 months.
+</I>&gt;<i> &gt;&gt; So the path to a smooth update becomes overgrown
+</I>&gt;<i> &gt;&gt; and brambly after 6 months.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; New grimoires are provided daily.
+</I>&gt;<i> &gt;&gt; Most boxes install a grimoire that is one day old.
+</I>&gt;<i> &gt;&gt; That is called the LAG grimoire.
+</I>&gt;<i> &gt;&gt; It also helps to make updates possible on boxes
+</I>&gt;<i> &gt;&gt; where the SA somehow failed to set the UTC date properly.
+</I>&gt;<i> &gt;&gt; Boxes that have an approximate day that is not exactly
+</I>&gt;<i> &gt;&gt; correct might update using the LAG=0 or LAG=2 grimoires.
+</I>&gt;<i> &gt;&gt; Having the date set properly for each box is important
+</I>&gt;<i> &gt;&gt; because that determines which grimoire they attempt
+</I>&gt;<i> &gt;&gt; to download.
+</I>&gt;<i> &gt;&gt; grimoires from previous years are not downloadable.
+</I>&gt;<i> &gt;&gt; Grimoires as old as 3 months and sometimes older
+</I>&gt;<i> &gt;&gt; are available for download.
+</I>&gt;<i> &gt;&gt; The grimoire is basically the catalog of software
+</I>&gt;<i> &gt;&gt; that is supported for easy installation.
+</I>&gt;<i> &gt;&gt; Software that does not yet have entries into the grimoire
+</I>&gt;<i> &gt;&gt; can be given entries by SAs, system administrators.
+</I>&gt;<i> &gt;&gt; Grimoire entries are called spells.
+</I>&gt;<i> &gt;&gt; Just as spelling defines the proper assembly of
+</I>&gt;<i> &gt;&gt; characters into a meaningful word
+</I>&gt;<i> &gt;&gt; grimoire spells contain the information for
+</I>&gt;<i> &gt;&gt; source acquisition, compilation and installation.
+</I>&gt;<i> &gt;&gt; They are very easy to understand
+</I>&gt;<i> &gt;&gt; and each box comes with more than 3000 example spells.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Hope that helps.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Sat, Jul 10, 2010 at 9:02 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Hello,
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; I like to try sorcerer.
+</I>&gt;<i> &gt;&gt; &gt; So I downloaded the iso
+</I>&gt;<i> &gt;&gt; &gt; Burned it and boot the dvd.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Then I goto the install program on /sbin
+</I>&gt;<i> &gt;&gt; &gt; and I see this message all the time  : buffer i/o error on device fd0
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; How can I get past this message because I don't have a floppy disk on my
+</I>&gt;<i> &gt;&gt; &gt; system.
+</I>&gt;<i> &gt;&gt; &gt; I have only two hard disk and one dvd burner.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Roelof
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; ________________________________
+</I>&gt;<i> &gt;&gt; &gt; Tijd voor een nieuwe telefoon? Bekijk de mogelijkheden van een Windows
+</I>&gt;<i> &gt;&gt; &gt; Phone!
+</I>&gt;<i> &gt;&gt; &gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; SMS &quot;HOTMAIL&quot; naar 3010 en ontvang gratis de juiste instellingen voor
+</I>&gt;<i> &gt; Hotmail op je mobiele telefoon.
+</I> 		 	   		  
+_________________________________________________________________
+Al je email accounts in 1 inbox. Het kan in Hotmail.
+<A HREF="http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=Hotmail">http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=Hotmail</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100711/78f3a901/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100711/78f3a901/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001716.html">[Sorcerer-admins] important bug...
+</A></li>
+	<LI>Next message: <A HREF="001718.html">[Sorcerer-admins] mcron fails to compile
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1717">[ date ]</a>
+              <a href="thread.html#1717">[ thread ]</a>
+              <a href="subject.html#1717">[ subject ]</a>
+              <a href="author.html#1717">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

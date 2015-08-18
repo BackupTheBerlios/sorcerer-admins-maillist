@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTike9Xq9j9e4af-Hj8x71Fr0-jU5uLcqZGSLDtVH%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001636.html">
+   <LINK REL="Next"  HREF="001638.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] progress...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTike9Xq9j9e4af-Hj8x71Fr0-jU5uLcqZGSLDtVH%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] progress...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May 27 22:43:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001636.html">[Sorcerer-admins] progress...
+</A></li>
+        <LI>Next message: <A HREF="001638.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1637">[ date ]</a>
+              <a href="thread.html#1637">[ thread ]</a>
+              <a href="subject.html#1637">[ subject ]</a>
+              <a href="author.html#1637">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I expected someone might say that.
+My answer is...
+scp the files.  :)
+scp -r to bring across a whole directory recursively.
+Or use sshfs-fuse provided on the I/R
+to mount a remote directory almost as easily as NFS.
+
+I also removed samba for much the same reasons
+as the nfs-utils.
+Samba required much space and a long time to compile.
+
+I tested a new x86_64 I/R already.
+It was 200M and installed fine.
+I am making only minor adjustments.
+Also I can shave a few more megs off the size
+by recompiling ppl without support for
+it's static link ar archive library.
+
+265M 2010-02-06 18:52 sorcerer-x86_64-20100207.iso
+
+Compared to the former I/R the shrink of 65M
+was far less than expected.
+However, the size of installed software increased.
+
+I have many reasons in favor of the change.
+The size of of installed software keeps growing
+which keeps pushing up the size of the I/R.
+Downloading with current throttling limits requires a lengthy wait.
+Going from an installation with Xorg installed
+to a console only installation is tricky.
+It is easier to go from console to Xorg.
+and does not require a long compile.
+Installed xine was useful only for workstations.
+
+I did want to be able to provide more on the I/Rs.
+However, faster downloading, faster burning, faster testing
+tend to influence my decision to slim it down.
+
+Booting the I/R does not require a network connection.
+However, if an I/R consisted only of a kernel and initramfs
+then all the archives could be provided from a httpfs mount
+across the Internet that sort of I/R could be around 50M
+
+Sort of makes it less useful for recovery
+and difficult for installing if the Internet
+connection is slow or tricky to configure.
+However, archives could be provided independently
+from the I/Rs to provide more current installs even
+when using an old I/R
+Yet even so I still prefer having the archives on CD.
+Does everyone feel the same about that?
+
+In the long run having a more concise I/R
+will require less testing, less compiling
+and allow for more frequent releases
+of new I/Rs as important changes happen.
+
+Ah, I remembered something..
+Someone asked for more manual page and
+manual page support on the I/R
+I am trying to make it happen.
+However, I added a restriction to the I/R
+to ensure that the required archives for
+providing and reading manual pages are only
+untarred provided that enough free RAM exists.
+
+Therefore, if the amount of RAM on the target box is sufficient
+then the initramfs is populated with more software
+and manual pages than when testing on a 384M target.
+
+Excluding nfs-utils from the I/R
+also omits the loading of some modules,
+which saves some space.
+Unnecessary modules can also be removed
+from the initramfs by the SA
+if available memory is too tight.
+
+I was looking at the capacity of credit card sized CDs.
+50 megs is still too tiny for Sorcerer I/R
+However, 256M USB memory sticks are faster
+and maybe cheaper than a CDROM + CDROM rewriter.
+Trying to create Sorcerer I/Rs that are less than 256M
+seems like a reasonable goal.
+
+Download savings can happen even in advance of updates
+when sources are downloaded from the master source cache.
+However, the benefit of having the SPR,
+Sorcerer Patch Repository,
+pay off almost exclusively on updates.
+Therefore, if an initial install requires the downloading
+of sources for Xorg and KDE-v4
+then when those updates happen
+the box can download the xz compressed sdelta3 patches.
+Therefore, download savings start sooner.
+And a SA might already have archives or sources
+from another Sorcerer box to use and so having
+that software pre-compiled might not be useful.
+However, having a fresh I/R could be useful for
+doing new installs or recovery.
+
+I was nervous about the changes.
+But I considered the boons and banes
+and decided that a smaller I/R would be
+more beneficial than detrimental.
+
+I did not do the usual pros and cons type listing.
+I will try to contrast and explain concisely below.
+There are many possibilities for the shape of the I/R.
+
+A. kernel + initramfs + network.
+B. kernel + initramfs + archives on CD.
+C. kernel + with all software in initramfs.
+D. kernel + initramfs + \
+   installed software on CD with rockridge extensions
+   and and zisofs
+
+A. is nice and tiny, but requires a network.
+B. is medium sized and does not require a network.
+C. is smaller than B. but larger than A. \
+however it requires over a gigabyte of RAM!
+D. is like somewhat like 2007 and earlier I/Rs
+which eventually exceeded CDROM capacity for the x86_64 I/R
+and also makes for a huge download.
+
+B. is the current compromise.
+It is much larger than A,
+somewhat less efficient than C.,
+but unlike C. requires very little RAM for install.
+
+I am tying to provide I/Rs that are useful and not bloated.
+If someone has good reasons
+for why we should use a different design
+then the conversation is still open.
+
+
+
+On Thu, May 27, 2010 at 10:44 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Thursday 27 May 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> Some of the new software is a bit thick:
+</I>&gt;&gt;<i> ppl is surprisingly thick and more than makes
+</I>&gt;&gt;<i> up for losing samba and nfs-utils related spells.
+</I>&gt;<i> Hmm, that is bad news for me: The nfs-utils spells are quite useful for me
+</I>&gt;<i> because they allow me to mount a NFS file system with sources. On the other
+</I>&gt;<i> hand, I can as well install nfs-utils shortly after the system is done
+</I>&gt;<i> installing from the CD.
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001636.html">[Sorcerer-admins] progress...
+</A></li>
+	<LI>Next message: <A HREF="001638.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1637">[ date ]</a>
+              <a href="thread.html#1637">[ thread ]</a>
+              <a href="subject.html#1637">[ subject ]</a>
+              <a href="author.html#1637">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

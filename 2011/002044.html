@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Maintenance%20on%20thursday%206.1%20-%0A%20sorcerer.silverice.org%20and%20ppr64.silverice.org%20downtime&In-Reply-To=%3CAANLkTikyOKWEtLbFe02OmsUc8%3DsZ5JMV19BqcFyChgJm%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002043.html">
+   <LINK REL="Next"  HREF="002045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Maintenance%20on%20thursday%206.1%20-%0A%20sorcerer.silverice.org%20and%20ppr64.silverice.org%20downtime&In-Reply-To=%3CAANLkTikyOKWEtLbFe02OmsUc8%3DsZ5JMV19BqcFyChgJm%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jan  5 06:24:07 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002043.html">[Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime
+</A></li>
+        <LI>Next message: <A HREF="002045.html">[Sorcerer-admins] Binary distro?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2044">[ date ]</a>
+              <a href="thread.html#2044">[ thread ]</a>
+              <a href="subject.html#2044">[ subject ]</a>
+              <a href="author.html#2044">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If size is a concern
+then I can start providing sdelta patches for I/Rs.
+However, few people know how to apply sdelta patches manually.
+And more recently, I was providing I/R
+rolled from different boxes and therefore with
+completely different sets of archives.
+I even re-compressed archives to achieve a smaller I/R.
+Without making the I/Rs sloppy they are nearly minimalistic.
+
+The days of a 100 megabyte I/R are gone.
+But for a few megabytes more the I/R can have more
+of the useful stuff like vlc &lt;- for a video player,
+and firefox &lt;- for web browsing.
+
+KDE and firefox are the software projects that require the longest to compile.
+Having them provided pre-compiled helps mitigate
+the time requirement gap between installing Sorcerer
+as opposed to installing a pre-compiled binary based distro.
+SAs can still remove the software after installation
+and/or change the optionals and recompile.
+
+Unfortunately, console only I/Rs are problematic due to
+a few core software projects that have requirements on xorg components.
+
+# augur arof udev | grep libX11
+libX11
+
+While there might be other reasons at least one pivotal point
+is the requirement on gobject-introspection.
+Unfortunately, support of gobject-introspection must be nearly all or nothing
+rather than being able to select freely on individual spells.
+
+Probably the closest that Sorcerer can come to being a hybrid distribution
+is to provide a good selection of software for the initial installation.
+Because SAs can selection optionals for installed spells
+each box diverges from the I/R configuration
+when the SAs start selecting optionals.
+Therefore, upgrades of installed software must still be compiled.
+
+An I/R is a compromise between size and convenience.
+Trying to go smaller causes or invites potential problems.
+Going large makes for a longer download
+and increases the probability of encountering an error when reading the CD.
+But it could shave a few hours off of the time to full deployment
+for a workstation with KDE, xine, firefox and vlc.
+
+Overall size should still remain favorable because this would be an I/R
+with an expanded selection of software rather than a &quot;live CD&quot; type I/R.
+
+Options are:
+network install CD which lacks archives archives must be downloaded
+with curl over Internet;
+moderate Install/Rescue CD with xorg which is the style we currently use;
+expanded Install/Rescue CD with additional firefox, vlc, and perhaps KDE;
+live CD with horrible zisofs per file gzip level compression.
+
+A network install CD seems smaller to download,
+but that is only because more downloading is done during installation.
+Also it is far less use as a rescue CD.
+The only advantage to a network install CD is that it tiny and fast to
+write to CD
+with a minimal probability of encountering bad CD sectors.
+If xz/LZMA initramfs images worked with linux
+then a 40M to 50M network install I/R could be possible.
+
+The moderate install CD has all the advantages and disadvantages that we expect.
+As a baseline for comparison it is not excessively large nor
+excessively convenient.
+
+The expanded CD costs more in size and downloading, but provides
+greater convenience.
+Workstation deployment could be nearly as fast as using a pre-compiled
+binary based distro.
+All the software to install is still provided just on that one CD and
+so there is no volume
+of CDs to burn nor the requirement of using a DVD writer instead of CDs.
+Installation of additional software comes at the usual expense of
+downloading and compilation.
+
+The live CD is nearly the opposite of a Sorcerer box.
+The pathetic level of compression makes it very large to download
+while providing even less software than can be provided on an expanded I/R.
+Even back in the days when Sorcerer was provided with zisofs with
+rockridge extensions
+I am uncertain if it was worthy of being called a live CD.
+It was moderately large and had no X11 pre-installed.
+
+Software like firefox and xorg that would be expected to be installed
+on nearly every box seems logical to include on an Install/Rescue image.
+A default media player like vlc could also be useful.
+Maybe half of Sorcerer SAs use KDE.
+I have been using it for a few years now.
+The long and somewhat linear time required in order to compile
+KDE makes it good candidate to come on an I/R.
+But I am not entirely convinced
+since the inclusion of KDE could increase the I/R size
+by about 250 to 300 megabytes.
+In contrast firefox + vlc would fill up about as much space
+as samba used to require on the Install/Rescue disk
+But I see that I already discontinued providing samba.
+Hopefully the omission did not cause inconvenience.
+
+
+
+On Tue, Jan 4, 2011 at 8:24 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Downloading 600mb is a pain on my slow internet connection.
+</I>&gt;<i>
+</I>&gt;<i> I would much prefer a stripped-down version that does not even have
+</I>&gt;<i> X11 pre-installed.
+</I>&gt;<i> Can we have an I/R that includes just the necessary software to
+</I>&gt;<i> compile more software? With fewer software installed, there is less to
+</I>&gt;<i> test, as once a Sorcerer box connects to the internet it grows in it's
+</I>&gt;<i> own direction.
+</I>&gt;<i>
+</I>&gt;<i> Kind regards,
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jan 4, 2011 at 7:24 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Speaking of improvements...
+</I>&gt;&gt;<i> Does anyone want the next releases of the I/R
+</I>&gt;&gt;<i> to contain pre-installed KDE, pre-installed gnome,
+</I>&gt;&gt;<i> or pre-installed firefox?
+</I>&gt;&gt;<i> I now have the disk space and CPU cycles to provide
+</I>&gt;&gt;<i> more pre-compiled software.
+</I>&gt;&gt;<i> And due to the considerably tight xz compression used
+</I>&gt;&gt;<i> for the archives on the Install/Rescue disks;
+</I>&gt;&gt;<i> the additional software will fit on standard 650M ISO9660 CDs.
+</I>&gt;&gt;<i> However, installing from a memory stick is faster and more reliable
+</I>&gt;&gt;<i> if the image is dd onto a USB removable thumb drive and can be booted.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Jan 4, 2011 at 4:44 AM, &#160;&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Hi
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I am doing some maintenance at this thursday (6.1.). I am upgrading virtual
+</I>&gt;&gt;&gt;<i> software (Virtualbox v3.x -&gt; v4.0.0) and perhaps doing some hdd space
+</I>&gt;&gt;&gt;<i> increments for ppr64.silverice.org as Kyle requested.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So there might be some small reboots/downtime on that day and
+</I>&gt;&gt;&gt;<i> <A HREF="http://sorcerer.silverice.org">http://sorcerer.silverice.org</A> and <A HREF="http://ppr64.silverice.org,">http://ppr64.silverice.org,</A> etc. not
+</I>&gt;&gt;&gt;<i> answering.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Terveisin/Regards,
+</I>&gt;&gt;&gt;<i> &#160; Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002043.html">[Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime
+</A></li>
+	<LI>Next message: <A HREF="002045.html">[Sorcerer-admins] Binary distro?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2044">[ date ]</a>
+              <a href="thread.html#2044">[ thread ]</a>
+              <a href="subject.html#2044">[ subject ]</a>
+              <a href="author.html#2044">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

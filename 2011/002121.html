@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Ntp build fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Ntp%20build%20fails&In-Reply-To=%3CBANLkTimnvTd_BSeCy%3DoJokd%3DhHGaG%3DhgTQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002120.html">
+   <LINK REL="Next"  HREF="002122.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Ntp build fails</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Ntp%20build%20fails&In-Reply-To=%3CBANLkTimnvTd_BSeCy%3DoJokd%3DhHGaG%3DhgTQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Ntp build fails">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Apr 17 10:47:10 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002120.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+        <LI>Next message: <A HREF="002122.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2121">[ date ]</a>
+              <a href="thread.html#2121">[ thread ]</a>
+              <a href="subject.html#2121">[ subject ]</a>
+              <a href="author.html#2121">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm...
+That seems interesting.
+Is all the other installed software updated?
+I wonder why ntp is compiling on the test box but not that one?
+
+linux-headers must only be a recent but not exact match for installed headers.
+historically there are reasons for that.
+However, having the currently installed linux headers installed
+would not normally be problematic.
+However, in general software that is run
+should be compiled with linux kernel headers
+that is at the same version or a lesser version
+than the running linux.
+
+So if the installed version of linux-headers
+is newer than the installed and running version of linux
+then problems might occur.
+
+Also sometimes breaks might occur due to updates of linux headers.
+One way to help avoid those breaks is to try to encourage all boxes
+to have the same set of linux kernel headers installed instead of
+having the &quot;soup de jour.&quot;
+
+I previously guessed that the problem with ntp
+had something to do with the installed linux headers.
+If updating the installed linux headers did not help
+then perhaps that was not the problem?
+However, I still recommend removing ntp from the fail queue
+and doing another cast on it or at least check the date at the
+top of ntp's compile log to ensure that the last attempt happened
+after linux-headers was updated.
+
+ntp is useful software but only for a few things absolutely essential.
+There might be something to do with DNS TSIG that requires
+time synchronization within 5 seconds.
+Most Sorcerer boxes will not be bothered by being a few minutes late or early.
+And the method for setting the clock can compensate for drift when allowed.
+I forget exactly how that works.
+Most computer clocks do not have terrible drift, but some might.
+
+In the distant past installations running within qemu could suffer
+horrible drift
+and be unable to accurately keep system time within the virtual machine.
+That was something to do with qemu.
+
+I hope the problem with ntp becomes evident.
+I added to my todo list:
+
+test ntp on the I/R
+
+Maybe I will see it there?
+However, if it is not problematic
+then perhaps I will allow it to be distributed pre-compiled on the I/R.
+I vaguely recall having done that in the past.
+But then there was a period of time when ntp was not compiling.
+But it seems okay for now.
+ntp version 4.2.6p3 compiled fine without a patch.
+However, earlier versions probably require a patch in order to compile.
+Some of those patches might still be present in the grimoire.
+And the source would be auto-patched at compile time by a cast
+from a sufficiently recent sorcery.
+auto-patching was added last year or the year before.
+
+
+
+On Sat, Apr 16, 2011 at 7:43 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On Sat, Apr 16, 2011 at 7:33 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On Sat, Apr 16, 2011 at 7:27 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> On Sat, Apr 16, 2011 at 1:16 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> On Sat, Apr 16, 2011 at 10:09 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> low priority:
+</I>&gt;&gt;&gt;&gt;&gt;<i> NTP tries to reference a symbol MOD_NANO which I guess has been
+</I>&gt;&gt;&gt;&gt;&gt;<i> depricated and should be ADJ_MONO... &#160;a search for 'ntp mod_nano' will
+</I>&gt;&gt;&gt;&gt;&gt;<i> reveal what I'm tlakin bout - seems each distributor has their own
+</I>&gt;&gt;&gt;&gt;&gt;<i> workaround - really should be fixed in ntp I would think.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I did a cast of ntp.
+</I>&gt;&gt;&gt;&gt;<i> No problem.
+</I>&gt;&gt;&gt;&gt;<i> However, the box already has updated linux kernel headers.
+</I>&gt;&gt;&gt;&gt;<i> Updating the installed linux kernel headers
+</I>&gt;&gt;&gt;&gt;<i> prior to casting ntp might be a solution.
+</I>&gt;&gt;&gt;&gt;<i> I did not suspect that and so the &quot;ntp&quot; spell
+</I>&gt;&gt;&gt;&gt;<i> does not have a requirement on the
+</I>&gt;&gt;&gt;&gt;<i> &quot;linux-headers&quot; spell.
+</I>&gt;&gt;&gt;&gt;<i> Thanks for reporting it.
+</I>&gt;&gt;&gt;&gt;<i> I will add the requirement.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Okay I had updated the kernel - oh there's a seperate spell for kernel
+</I>&gt;&gt;&gt;<i> headers? &#160;I'll give that a shot before I retire this image.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> linux-headers don't just match the current linux kernel? &#160;2.6.37.4 is
+</I>&gt;&gt;<i> what linux-headers is saying and kernel is 2.6.38.2
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> updated linux-headers ntp still fails
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> If ntp does not compile after all installed software is upgraded
+</I>&gt;&gt;&gt;&gt;<i> then please report that to the ntp software authors also.
+</I>&gt;&gt;&gt;&gt;<i> I prefer to avoid an attempt at writing a patch
+</I>&gt;&gt;&gt;&gt;<i> for a problem that I am not seeing happen.
+</I>&gt;&gt;&gt;&gt;<i> I would not know where to begin.
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002120.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+	<LI>Next message: <A HREF="002122.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2121">[ date ]</a>
+              <a href="thread.html#2121">[ thread ]</a>
+              <a href="subject.html#2121">[ subject ]</a>
+              <a href="author.html#2121">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

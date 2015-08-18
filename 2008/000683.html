@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C1de9d39c0808010214y60ca6094t132920b78b8e5927%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000663.html">
+   <LINK REL="Next"  HREF="000687.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C1de9d39c0808010214y60ca6094t132920b78b8e5927%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Aug  1 11:14:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000663.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000687.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#683">[ date ]</a>
+              <a href="thread.html#683">[ thread ]</a>
+              <a href="subject.html#683">[ subject ]</a>
+              <a href="author.html#683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok tooo much info at once ;) will take time to read the book but just for
+feedback :
+1) booting from usb is indeed a great idea
+2) the boot MUST be machine independant (using either partition labels or
+UUID)
+3) shall also be bootable on SDCARD (lot of laptops have it and we now find
+32G cards for les than 50Euros here [11Mo/s in writing 19Mo/s reading), the
+usbcard allow also to have no part &quot;outside&quot; the box and is available on all
+laptops sold today
+
+this can be done through the initramfs (specifying extra lilo args like
+&quot;linux ROOT_LABEL=somelabel&quot; or &quot;linux ROOT_UUID=someuuid&quot; if I'm correct
+the extra parameter on lilo are passed as environment variables to init,
+maybe a mount root script could handle that in initramfs)
+
+however : I would like to have a way to specify what goes into initramfs, I
+have no use of whole modules, just want the ones that are loaded and this
+will reduce the size of initramfs to few Mo which is acceptable for boot
+time
+
+Best Regards
+JLM
+
+
+On Thu, Jul 31, 2008 at 2:13 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Thanks to Jan for reporting the article.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I do not know about those file systems described in the article.
+</I>&gt;<i> However, the article does imply that the block size should probably
+</I>&gt;<i> be larger, at least 32K.
+</I>&gt;<i> Maybe 64K on larger flash sizes.
+</I>&gt;<i> ext3 on x86_64 architecture supports block sizes larger than 4K.
+</I>&gt;<i> The limit may be 64K block sizes.
+</I>&gt;<i> However, if the filesystem blocks are not aligned with the flash blocks
+</I>&gt;<i> then a 32K block may involve writing to 2 32K portions of the flash drive.
+</I>&gt;<i> While a 64K block may require writing to 3 32K portions of the flash drive.
+</I>&gt;<i> Obviously, reiserfs would not be a good choice for flash drives,
+</I>&gt;<i> because adding file tails to directories would virtually groove the
+</I>&gt;<i> the flash sectors that hold frequently modified directories.
+</I>&gt;<i>
+</I>&gt;<i> Grepping ubifs in /usr/src/linux/Documentation/filesystems/
+</I>&gt;<i> found nothing.
+</I>&gt;<i> Obviously, using filesystems designed for magnetic media
+</I>&gt;<i> is not the ideal solution for flash drives.
+</I>&gt;<i> However, I expect using something provided in the vanilla linux kernel
+</I>&gt;<i> is a better idea than trying to patch in support which may require
+</I>&gt;<i> older kernels, or kernels updates to be held back while waiting
+</I>&gt;<i> for the patch to be rewritten for the newer kernels.
+</I>&gt;<i>
+</I>&gt;<i> Given the list of filesystems already supported by the linux kernel
+</I>&gt;<i> what filesystem do you expect will work best on flash drives?
+</I>&gt;<i>
+</I>&gt;<i> Obviously, journals may be bad for a flashdrive as they may
+</I>&gt;<i> cause data to be written twice or more.
+</I>&gt;<i> However, being able to delay commits long enough to
+</I>&gt;<i> reduce the amount of data written has potential.
+</I>&gt;<i> Consequently, I do not already have an opinion about
+</I>&gt;<i> what filesystem may be best.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Jul 30, 2008 at 3:33 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; More technical details about flash memories and filesystems for them:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="http://lwn.net/Articles/276025/">http://lwn.net/Articles/276025/</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080801/72f190b6/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080801/72f190b6/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000663.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000687.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#683">[ date ]</a>
+              <a href="thread.html#683">[ thread ]</a>
+              <a href="subject.html#683">[ subject ]</a>
+              <a href="author.html#683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

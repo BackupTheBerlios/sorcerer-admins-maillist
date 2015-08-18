@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] A chain of errors...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20chain%20of%20errors...&In-Reply-To=%3CAANLkTinrJUqh43BvvXfFsrhvLm65jc1k_deQX7nhvNh%3D%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001911.html">
+   <LINK REL="Next"  HREF="001900.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] A chain of errors...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20chain%20of%20errors...&In-Reply-To=%3CAANLkTinrJUqh43BvvXfFsrhvLm65jc1k_deQX7nhvNh%3D%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] A chain of errors...">evorster at gmail.com
+       </A><BR>
+    <I>Sun Aug 29 23:17:15 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001911.html">[Sorcerer-admins] A chain of errors...
+</A></li>
+        <LI>Next message: <A HREF="001900.html">[Sorcerer-admins] Why do spells that are broken attempt to build?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1912">[ date ]</a>
+              <a href="thread.html#1912">[ thread ]</a>
+              <a href="subject.html#1912">[ subject ]</a>
+              <a href="author.html#1912">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+I looked into this a little further...
+
+Basically, I don't like NVIDIA-Linux-x86 and xorg-server overwriting
+each other's files. This means that X will inexplicably stop working
+whenever a person casts xorg-server.
+
+Since we already create the directory /usr/lib/nv, it only makes sense
+to put the modules subdirectory there.
+
+There is already a piece in the Spell stating to modify
+/etc/X11/xorg.conf. All that needs is one extra line to work correctly
+with NVIDIA-Linux-x86 storing it's modules in /usr/lib/nv/modules:
+
+ModulePath &quot;/usr/lib/nv/modules&quot;
+This line needs to appear before the xorg modules line, so that X
+looks for the nv drivers first.
+
+
+Surely this is better than spells overwriting each other's files and
+creating problems depending on which one was cast first? There is
+quite a few subtle failures here that is a lot harder to find for a
+novice than to modify the xorg.conf file to find the gl drivers  of
+NVIDIA-Linux-x86 before finding the xorg gl drivers?
+
+NVIDIA's libwfb.so does not have the right symbols that xorg-server is
+expecting, so we have to remove it from the spell in the same way that
+Kyle has removed it from his spell in the fix_install subroutine. Just
+make sure the directory is correct, as it's not in /usr/lib/xorg/
+anymore.
+
+-Evert-
+
+
+On Sun, Aug 29, 2010 at 3:28 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> # grep ModulePath /etc/X11/xorg.conf
+</I>&gt;<i>    ModulePath      &quot;/usr/lib/modules&quot;
+</I>&gt;<i>    ModulePath      &quot;/usr/lib/xorg/modules&quot;
+</I>&gt;<i>
+</I>&gt;<i> Nothing special there.
+</I>&gt;<i>
+</I>&gt;<i> Try the attached NVIDIA-Linux-x86 spell
+</I>&gt;<i> I just tested it.
+</I>&gt;<i> I feel certain it should work.
+</I>&gt;<i> Works for me.
+</I>&gt;<i> Just to increases the probability of it working
+</I>&gt;<i> untar it into /root/.sorcery/grimoire/
+</I>&gt;<i> then
+</I>&gt;<i>
+</I>&gt;<i> # cast xorg-server MesaLib NVIDIA-Linux-x86
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> $ cat /etc/sorcery/log/install/{xorg-server,MesaLib,NVIDIA-Linux-x86}
+</I>&gt;<i> | sort | uniq -d | while read; do [ -f $REPLY ] &amp;&amp; echo &quot;$REPLY&quot;; done
+</I>&gt;<i> /usr/lib/xorg/modules/extensions/libglx.so
+</I>&gt;<i>
+</I>&gt;<i> And yes, the libglx.so from NVIDIA-Linux-x86 must overwrite
+</I>&gt;<i> the libglx from xorg-server otherwise NVIDIA's GLX will
+</I>&gt;<i> not be available.
+</I>&gt;<i>
+</I>&gt;<i> Also
+</I>&gt;<i>
+</I>&gt;<i> # grep -i driver /etc/X11/xorg.conf
+</I>&gt;<i>    Driver         &quot;evdev&quot;
+</I>&gt;<i>    Driver         &quot;evdev&quot;
+</I>&gt;<i>    Driver         &quot;nvidia&quot;
+</I>&gt;<i>
+</I>&gt;<i> The driver to use from NVIDIA-Linux-x86 is called nvidia
+</I>&gt;<i> The driver provided by xf86-video-nv is called nv
+</I>&gt;<i> Using the wrong driver will also disable GLX.
+</I>&gt;<i>
+</I>&gt;<i> For boot problems I recommend
+</I>&gt;<i> checking to see how many lilo are installed
+</I>&gt;<i> on what MBR and what boot blocks
+</I>&gt;<i> Remember there is no boot block for lilo on xfs.
+</I>&gt;<i> When in doubt use a dedicated ext2 partition for /boot/
+</I>&gt;<i> lilo can be installed in the MBR, but it is not recommended,
+</I>&gt;<i> and if done so please include a line in /etc/lilo/head
+</I>&gt;<i> that indicates boot = whatever that disk is called.
+</I>&gt;<i>
+</I>&gt;<i> If lilo is not installing to the boot block of /boot or /
+</I>&gt;<i> then specifying boot = in /etc/lilo/head should help.
+</I>&gt;<i> /etc/init.d/lilo
+</I>&gt;<i> will merge the content of /etc/lilo/* into /etc/lilo.conf
+</I>&gt;<i> and re-install lilo.
+</I>&gt;<i> It can be run manually or during shutdown/reboot.
+</I>&gt;<i>
+</I>&gt;<i> # file -s /dev/hda1
+</I>&gt;<i> /dev/hda1: x86 boot sector, LInux i386 boot LOader, code offset 0xeb
+</I>&gt;<i>
+</I>&gt;<i> That for example would show that lilo is installed
+</I>&gt;<i> to the boot block of /dev/hda1
+</I>&gt;<i> Just in case one did not know how to check.
+</I>&gt;<i> Make certain that the partition where lilo is installed
+</I>&gt;<i> is also marked as bootable by running fdisk
+</I>&gt;<i> There will be a * Under the Boot column
+</I>&gt;<i> and in the proper partition row
+</I>&gt;<i> when it is correct.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Aug 28, 2010 at 10:23 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Okay I understand how this will work...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I got it accomplished
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> but now xorg tries to load
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> dlopen: /usr/lib/xorg/modules//extensionslibdri2.so: cannot open
+</I>&gt;&gt;<i> shared object file: No such file or directory
+</I>&gt;&gt;<i> (EE) Failed to load /usr/lib/xorg/modules//extensionslibdri2.so
+</I>&gt;&gt;<i> (EE) Failed to load module &quot;dri2&quot; (loader failed, 7)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (for 1 example)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't know how to get the extensions to have a trailing / before it
+</I>&gt;&gt;<i> appends libdri2.so
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> and it does this whether I have ./extensions lines in the xorg.conf
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> hmm maybe it's loading a different one... after doing X -configure it
+</I>&gt;&gt;<i> now almost loads but I still get the standard
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> twm:  unable to open fontset &quot;-adobe-helvetica-bold-r-normal--*-120-*-*-*-*-*-*&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> which really means I need to 'LANG=C startx'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ermm... well it's working now for some reason - maybe there's a module
+</I>&gt;&gt;<i> cache somewhere
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Aug 28, 2010 at 8:46 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> More complete workaround to get NVIDIA-Linux-x86 working:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> cast MesaLib xorg-server
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> edit /root/.sorcery/grimoire/NVIDIA-Linux-x86
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Change this line:
+</I>&gt;&gt;&gt;<i> --x-module-path=$DESTDIR/usr/lib/xorg/modules
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> to read
+</I>&gt;&gt;&gt;<i> --x-module-path=$DESTDIR/usr/lib/nv/modules
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> then cast NVIDIA-Linux-86
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> edit /etc/X11/xorg.conf and make sure your module paths look something
+</I>&gt;&gt;&gt;<i> like this:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>    ModulePath      &quot;/usr/lib/nv/modules/&quot;
+</I>&gt;&gt;&gt;<i>    ModulePath      &quot;/usr/lib/nv/modules/extensions/&quot;
+</I>&gt;&gt;&gt;<i>    ModulePath      &quot;/usr/lib/modules/&quot;
+</I>&gt;&gt;&gt;<i>    ModulePath      &quot;/usr/lib/modules/extensions/&quot;
+</I>&gt;&gt;&gt;<i>    ModulePath      &quot;/usr/lib/xorg/modules/&quot;
+</I>&gt;&gt;&gt;<i>    ModulePath      &quot;/usr/lib/xorg/modules/extensions/&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Lastly,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> cd /usr/lib/nv/modules/
+</I>&gt;&gt;&gt;<i> rm libwfb.so
+</I>&gt;&gt;&gt;<i> ln -s /usr/lib/xorg/modules/libwfb.so libwfb.so
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Then you should be able to re-start X with full OpenGL acceleration.
+</I>&gt;&gt;&gt;<i> I have not looked into why exactly this works, and everything else I
+</I>&gt;&gt;&gt;<i> tried did not... and also why Kyle is not having the same problem on
+</I>&gt;&gt;&gt;<i> his computers is still a mystery to me, too.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -Evert-
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Sat, Aug 28, 2010 at 10:22 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> lilo didn't want to run; it came up '99 99 99 99 99 99'
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> put in my old recovery CD, tried chroot, and it says kernel not new enough.
+</I>&gt;&gt;&gt;&gt;<i> got a new sorcerer ISO using lynx installed in existing installation
+</I>&gt;&gt;&gt;&gt;<i> it happened to be a r/w dvd, so erased it and burned the new image,
+</I>&gt;&gt;&gt;&gt;<i> rebooted, new recovery offers option to start existing root ... so the
+</I>&gt;&gt;&gt;&gt;<i> system came up mostly.
+</I>&gt;&gt;&gt;&gt;<i> ran lilo.
+</I>&gt;&gt;&gt;&gt;<i> reboot ed
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> (took cd out after a couple tries)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> system came up failing to mount /media/root
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> put in root password to recover
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> tried to mount /dev/hda2 /tmp/x (made a /tmp/x) and it said /dev/hda2
+</I>&gt;&gt;&gt;&gt;<i> was already mounted...  (actually couldn't mount any partition on the
+</I>&gt;&gt;&gt;&gt;<i> disk)
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> will not boot on its own, put the DVD back in, mounted to new root
+</I>&gt;&gt;&gt;&gt;<i> /dev/hda2, and the system is now mostly alive...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> trying to startx (which was just working a week ago)....
+</I>&gt;&gt;&gt;&gt;<i> I try to run startx, and nvidia says 'libwfb.so' is required.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> dlopen: /usr/lib/xorg/modules/libwfb.so: undefined symbol:
+</I>&gt;&gt;&gt;&gt;<i> PictureScreenPrivateIndex
+</I>&gt;&gt;&gt;&gt;<i> (EE) Failed to load /usr/lib/xorg/modules/libwfb.so
+</I>&gt;&gt;&gt;&gt;<i> (EE) Failed to load module &quot;wfb&quot; (loader failed, 7)
+</I>&gt;&gt;&gt;&gt;<i> (EE) Aug 28 12:44:03 NVIDIA(0): Need libwfb but wfbScreenInit not found
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> /var/cache/old/usr/lib/xorg/modules/libwfb.so
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> hmmm and it has that symbol too - actually nm says it has no symbols...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> I'm stuck.
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> Sound is working though :) was having problems with that before I left.
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001911.html">[Sorcerer-admins] A chain of errors...
+</A></li>
+	<LI>Next message: <A HREF="001900.html">[Sorcerer-admins] Why do spells that are broken attempt to build?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1912">[ date ]</a>
+              <a href="thread.html#1912">[ thread ]</a>
+              <a href="subject.html#1912">[ subject ]</a>
+              <a href="author.html#1912">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

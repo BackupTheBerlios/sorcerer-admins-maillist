@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] upstart anyone?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20upstart%20anyone%3F&In-Reply-To=%3CBANLkTi%3DnLpxs%3DLMdEmTCVe%2B-sdYr90v4ug%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002137.html">
+   <LINK REL="Next"  HREF="002139.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] upstart anyone?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20upstart%20anyone%3F&In-Reply-To=%3CBANLkTi%3DnLpxs%3DLMdEmTCVe%2B-sdYr90v4ug%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] upstart anyone?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Apr 28 02:14:23 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002137.html">[Sorcerer-admins] /run away
+</A></li>
+        <LI>Next message: <A HREF="002139.html">[Sorcerer-admins] We should be using linux-firmware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2138">[ date ]</a>
+              <a href="thread.html#2138">[ thread ]</a>
+              <a href="subject.html#2138">[ subject ]</a>
+              <a href="author.html#2138">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If time is scarce then do not bother reading this message.
+It is of no importance to driving a Sorcerer box.
+
+<A HREF="http://upstart.ubuntu.com/">http://upstart.ubuntu.com/</A>
+
+Approximately, a couple years ago some Sorcerer SAs
+wanted to participate in the race to create the fastest booting system.
+Nothing changed about Sorcerer's boot method.
+However, Ubuntu made the transition from SysVinit to Upstart.
+
+Any new method can be made to boot faster than a SysVInit based method,
+because slow init-scripts and a slow method for executing init-scripts
+can be implemented.
+Back in the days when Debian used perl for running init-scripts
+booting required a long time.
+Perl start time was much slower than bash.
+Most init-scripts ran;
+looked for an installed daemon's file that was not installed;
+and then exited because there was nothing to start.
+That type of boot implementation can be extremely slow.
+
+However, as any boot method approaches optimal efficiency
+then the majority of time consumed during boot is not spent by the the CPU,
+but rather on waiting for slow mass storage devices to deliver file content.
+Therefore, an attempt to load all CPU cores can also bottleneck I/O.
+Files that could be used sooner might be delivered later.
+
+A mass storage device is not like a quad core CPU.
+A mass storage device delivers blocks from a disk,
+at the rate which the drive can sling the head around and read the data.
+Requesting more blocks at a time does not make
+them fly off the disk at a faster rate.
+To the contrary the more frequently disk heads must move
+then the slower the data will be read.
+Therefore, trying to read 15 files concurrently
+is usually slower than reading 15 files linearly,
+even when a fixed disk has several heads and platters.
+
+Unlike /sbin/sysvinit; the upstart daemon requires Python and dbus.
+Is upstart the reason why providing tmpfs on /var/lock and /var/run is
+problematic on Ubuntu?
+Did programmers confuse &quot;can do&quot; with &quot;should do?&quot;
+
+Having worked as a professional SA
+I recognize that SAs often wear many non-SA hats.
+They are expected to be the software engineers
+that can do anything and everything.
+Therefore, the overworked and underpaid professional SA
+does not want the additional burden of spending
+an hour learning the intricacies of a new boot method
+that promises to shave 10 seconds off the boot time
+provided that they also defrag files.  *lol*
+Provided that the gain remained a constant 10 seconds, which it would not,
+then at least 360 boots while the SA waits
+are required before the SA regains the hour spent on training with upstart.
+Would such a change be worth doing on Sorcerer?
+
+My reason for being critical of upstart
+is to demonstrate by contrast
+that under my leadership this last decade
+the changes made to Sorcerer have brought more boon than bane.
+Careful evaluation of boons vs banes are made prior to implementing changes.
+I explicitly state this not due to a desire to gloat.
+Instead I perceive the importance of the continuation of this tradition.
+&quot;Can do&quot; and &quot;Should do&quot; are two entirely different equations that
+should not be confused.
+I hope that those who participate in the leadership of Sorcerer
+will continue this tradition of careful evaluation.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002137.html">[Sorcerer-admins] /run away
+</A></li>
+	<LI>Next message: <A HREF="002139.html">[Sorcerer-admins] We should be using linux-firmware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2138">[ date ]</a>
+              <a href="thread.html#2138">[ thread ]</a>
+              <a href="subject.html#2138">[ subject ]</a>
+              <a href="author.html#2138">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

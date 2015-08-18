@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Did I forge to mention stall immunity?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Did%20I%20forge%20to%20mention%20stall%20immunity%3F&In-Reply-To=%3C596b75860709251103x69e80149hc824315b79923683%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000282.html">
+   <LINK REL="Next"  HREF="000288.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Did I forge to mention stall immunity?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Did%20I%20forge%20to%20mention%20stall%20immunity%3F&In-Reply-To=%3C596b75860709251103x69e80149hc824315b79923683%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Did I forge to mention stall immunity?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 25 20:03:56 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000282.html">[Sorcerer-admins] Gcc 4.2.1 ?
+</A></li>
+        <LI>Next message: <A HREF="000288.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#281">[ date ]</a>
+              <a href="thread.html#281">[ thread ]</a>
+              <a href="subject.html#281">[ subject ]</a>
+              <a href="author.html#281">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Someone requested something like stall prevention for the sorcery tools.
+I finally, implemented it with sorcery implosion.
+However, I took it a bit further than necessary, as usual.
+The implementation has a useful side effect.
+When stall immunity is enabled spells can also be placed
+into the queues to be processed in the future.
+In some cases spells are automatically queued in the future.
+
+Spells queued by
+# augur newer
+# augur newer_ia
+are queued to cast 1 hour from present.
+
+Spells queued by any of the sorcery menus
+will be queued to cast or dispel 1 year from present.
+
+However, you need not wait for the future to arrive.
+Selecting Run from the Queue Menu of sorcery will
+cause the queued files to receive current time stamps
+and then dispel and cast will run on them instead of ignoring them.
+
+Likewise:
+# augur update
+causes the spells in the cast queue to receive current time stamps.
+
+
+Wondering why spells may be queued in with future time stamps?
+Sorcery stall immunity perceives a stall condition exists only
+when the spell in the queue has a current or past timestamp.
+Spells with future time stamps are considered postponed rather than stalled.
+However when immune detects stalled spells it will activate
+cast, dispel, leech as appropriate to resume activity.
+Therefore, if
+# augur newer
+queued spells with current timestamps
+then it is possible that immune would launch cast
+before the SA had a chance to adjust the queued spells and run
+# augur update
+
+Yes this present past future stuff is confusing.
+A moment may be required to become used to it.
+However, if you remember the following
+then you will probably not encounter any problems
+due to the stall immunity.
+
+# augur sync
+# augur newer
+# augur update    # do not execute cast instead of # augur update
+
+When using sorcery:
+sorcery -&gt; Software -&gt; Queue -&gt; Run
+
+
+For boxes where the above steps do not appear to work please continue reading.
+
+The way that the sorcery tools quickly determine whether a queued spell has
+a future, present, or past timestamp is by comparing the file in the queue to
+/proc/version
+
+I checked several boxes.
+/proc/version appears to always have a timestamp that is current.
+Or perhaps it is better to say that /proc/version always has a time
+stamp of now.
+If there is a box where /proc/version has a timestamp that is in the past
+then cast, dispel, and leech will not view the content of the queues correctly.
+If /proc/version has a timestamp in the past then any spell queued even with
+a current timestamp will appear to have a future time stamp when compared
+to /proc/version
+Spells with future time stamps are ignored by cast and dispel.
+
+To check that /proc/version is current simply compare
+$ date
+with
+$ ls -lah /proc/version
+
+I hope everyone finds the stall immunity to be a boon rather than confusing.
+For example the first task begun in the office can be the the last task
+completed if the SA queues spells to cast a few hours after
+they expect to have already left and gone home.
+
+
+The stall immunity can be enabled from sorcery's immunity menu.
+More information is available from:
+# cast --help
+# dispel --help
+$ man touch
+
+The sorcery tools use the exact same parameter and format that touch uses.
+# ls -lah /root/.sorcery/queue/cast/
+Can be used to verify the correct expected timestamp of the queued spells.
+Once the format is learned it is very easy to use.
+
+Lastly, do not forget to enable sorcery's stall immunity if you want to
+have spells with future time stamps to cast automatically in the future.
+Unless IMMUNITY is not set in /etc/sorcery/local.config
+boxes will not gain stall immunity automatically.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000282.html">[Sorcerer-admins] Gcc 4.2.1 ?
+</A></li>
+	<LI>Next message: <A HREF="000288.html">[Sorcerer-admins] Something you may want to be aware of...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#281">[ date ]</a>
+              <a href="thread.html#281">[ thread ]</a>
+              <a href="subject.html#281">[ subject ]</a>
+              <a href="author.html#281">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

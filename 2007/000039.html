@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] some bug reports, fuse, db, samba
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20some%20bug%20reports%2C%20fuse%2C%20db%2C%20samba&In-Reply-To=%3COFF8957216.D400403F-ONC2257283.0039D86F-C2257283.003A7B78%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000038.html">
+   <LINK REL="Next"  HREF="000040.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] some bug reports, fuse, db, samba</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20some%20bug%20reports%2C%20fuse%2C%20db%2C%20samba&In-Reply-To=%3COFF8957216.D400403F-ONC2257283.0039D86F-C2257283.003A7B78%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] some bug reports, fuse, db, samba">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu Feb 15 11:38:46 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000038.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+        <LI>Next message: <A HREF="000040.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#39">[ date ]</a>
+              <a href="thread.html#39">[ thread ]</a>
+              <a href="subject.html#39">[ subject ]</a>
+              <a href="author.html#39">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Yep, /lib/pkgconfig was not empty, there was one old file from one spell i 
+made couple years ago. After i manually deleted that one file fuse 
+compiled ok.
+
+About db, there is no that line &quot;patchin file&quot;, and cast -c db does not 
+help, i have tried that many times. 
+I looked my /var/cache/sources/db/4.5.20/ and there is indeed 2 patch 
+files, patch.4.5.20.1 and .2, any ideas why it does not patch them? Maybe 
+some error in build()?
+
+Yeah that samba spell was modified by me, but some unknown reason i did 
+not see that there were spaces after \, grr..silly me.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 15.02.2007 11:56:48:
+
+&gt;<i> First, find out what installed in
+</I>&gt;<i> /lib/pkgconfig
+</I>&gt;<i> 
+</I>&gt;<i> Then,
+</I>&gt;<i> # rm  -fr  /lib/pkgconfig
+</I>&gt;<i> 
+</I>&gt;<i> The directory should not exist.
+</I>&gt;<i> 
+</I>&gt;<i> About db.
+</I>&gt;<i> 
+</I>&gt;<i> Perhaps the compile log does not contain the line:
+</I>&gt;<i> patching file rep/rep_record.c
+</I>&gt;<i> 
+</I>&gt;<i> In that case you should probably do:
+</I>&gt;<i> # cast -c db
+</I>&gt;<i> 
+</I>&gt;<i> That way it should compile and the newly compiled db
+</I>&gt;<i> should have the correct patches applied.
+</I>&gt;<i> Also you may want to disable the reuse feature.
+</I>&gt;<i> 
+</I>&gt;<i> oracle releases db patches without increasing
+</I>&gt;<i> the release version of db, and so do I.
+</I>&gt;<i> sorcery itself will detect that the installed version
+</I>&gt;<i> requires re-installation, but whether it compiles
+</I>&gt;<i> or simple extracts from an archive of a previous
+</I>&gt;<i> compile depends on whether the reuse feature is enabled.
+</I>&gt;<i> On stand-alone boxes reuse should not be enabled.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Then samba does not compile
+</I>&gt;<i> 
+</I>&gt;<i> No spaces may occur after \
+</I>&gt;<i> otherwise \ no longer indicates that
+</I>&gt;<i> the line is continued below.
+</I>&gt;<i> Whoever added:
+</I>&gt;<i> --with-shared-modules=idmap_rid \
+</I>&gt;<i> 
+</I>&gt;<i> left a few spaces behind the backslash.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for the bug reports.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070215/2c12f713/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070215/2c12f713/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000038.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+	<LI>Next message: <A HREF="000040.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#39">[ date ]</a>
+              <a href="thread.html#39">[ thread ]</a>
+              <a href="subject.html#39">[ subject ]</a>
+              <a href="author.html#39">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] 2 improvements: login during shutdown/reboot; pausing/unpausing spells while they are casting.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%202%20improvements%3A%20login%20during%20shutdown/reboot%3B%0A%20pausing/unpausing%20spells%20while%20they%20are%20casting.&In-Reply-To=%3CBANLkTinNf87_xDS6KRbtbYRZHuV6wtogJg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002167.html">
+   <LINK REL="Next"  HREF="002169.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] 2 improvements: login during shutdown/reboot; pausing/unpausing spells while they are casting.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%202%20improvements%3A%20login%20during%20shutdown/reboot%3B%0A%20pausing/unpausing%20spells%20while%20they%20are%20casting.&In-Reply-To=%3CBANLkTinNf87_xDS6KRbtbYRZHuV6wtogJg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] 2 improvements: login during shutdown/reboot; pausing/unpausing spells while they are casting.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue May 24 17:11:57 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002167.html">[Sorcerer-admins] nice and easy?
+</A></li>
+        <LI>Next message: <A HREF="002169.html">[Sorcerer-admins] login during sysinit; yes we can.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2168">[ date ]</a>
+              <a href="thread.html#2168">[ thread ]</a>
+              <a href="subject.html#2168">[ subject ]</a>
+              <a href="author.html#2168">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The first improvement requires an edit of /etc/inittab if wanted.
+
+I changed the line starting with vc7:
+
+to read
+
+vc7:01234567:respawn:/sbin/agetty -f /etc/issue.rootfs /dev/tty7 9600
+
+This enables the virtual console getty that logs into the keep
+to continue running at all runlevels.
+Unmounting the real root file system does not
+require the termination of the getty
+which is running on the keep.
+
+With this change login in remains possible even
+during shutdown and reboot.
+If an init-script hangs shutdown/reboot
+then the SA can switch to runlevel 7
+then login and begin debugging.
+With this change login remains possible
+at all times except during sysinit.
+If sysinit can start a getty during sysinit
+then that also might be something which can be changed.
+
+The next improvement does not require a file edit.
+It is an augur command.
+The benefit of the freezer subsystem of cgroup
+enables spells in the process of being cast
+to be entirely paused or resumed without ill consequences.
+However, spell left paused/frozen
+can delay processing of other spells
+that are in the cast queue.
+
+# augur help freezer
+
+The above command displays the help page.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002167.html">[Sorcerer-admins] nice and easy?
+</A></li>
+	<LI>Next message: <A HREF="002169.html">[Sorcerer-admins] login during sysinit; yes we can.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2168">[ date ]</a>
+              <a href="thread.html#2168">[ thread ]</a>
+              <a href="subject.html#2168">[ subject ]</a>
+              <a href="author.html#2168">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

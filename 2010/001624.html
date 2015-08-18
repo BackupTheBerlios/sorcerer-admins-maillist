@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lastest ISO : some feedback
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lastest%20ISO%20%3A%20some%20feedback&In-Reply-To=%3CAANLkTinzimXmIX2VDd9uRMw6MBYP2lvKXJ8JaJbXagel%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001621.html">
+   <LINK REL="Next"  HREF="001626.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lastest ISO : some feedback</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lastest%20ISO%20%3A%20some%20feedback&In-Reply-To=%3CAANLkTinzimXmIX2VDd9uRMw6MBYP2lvKXJ8JaJbXagel%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lastest ISO : some feedback">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May 23 21:24:02 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001621.html">[Sorcerer-admins] lastest ISO : some feedback
+</A></li>
+        <LI>Next message: <A HREF="001626.html">[Sorcerer-admins] lastest ISO : some feedback
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1624">[ date ]</a>
+              <a href="thread.html#1624">[ thread ]</a>
+              <a href="subject.html#1624">[ subject ]</a>
+              <a href="author.html#1624">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good point.
+I was uploading both for a while.
+But when I went trouble shooting a problem
+problem caused by an over zealous firewall
+I accidentally rewrote some scripts including
+the one that wraps and uploads sorcery tarball.
+Probably even grimoires are only provides as .tar.xz also.
+
+I should have released new I/Rs before making the change.
+But due to various factors the progress of the new I/Rs
+was delayed.
+
+
+On Sun, May 23, 2010 at 11:28 AM, jean-luc malet
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> Maybe one solution is to have a way to specify a fallback? bz2 archives are
+</I>&gt;<i> always available, so if we have a way to specify in a spell a fallback the
+</I>&gt;<i> grimoire could be tried first with the last best-bleeding-edge compressor
+</I>&gt;<i> and fall into the failsafe compression....
+</I>&gt;<i>
+</I>&gt;<i> On Sun, May 16, 2010 at 4:50 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> xz is an implementation of LZMA using a libz type frontend.
+</I>&gt;&gt;<i> Ya know, like gzip, but higher compression than bzip2.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Guess I created a chicken/egg situation?
+</I>&gt;&gt;<i> The I/R is too old.
+</I>&gt;&gt;<i> I only upload xz compressed sorcery tarballs.
+</I>&gt;&gt;<i> Naturally, they require xz be installed software
+</I>&gt;&gt;<i> otherwise they do not decompress.
+</I>&gt;&gt;<i> Sorry.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I want to create new I/Rs soon.
+</I>&gt;&gt;<i> For now download xz,
+</I>&gt;&gt;<i> decompress, untar, compile,
+</I>&gt;&gt;<i> and temporarily install into /usr/local/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> <A HREF="http://tukaani.org/xz/xz-4.999.9beta.tar.bz2">http://tukaani.org/xz/xz-4.999.9beta.tar.bz2</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sorry for the inconvenience.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Oh about dhclient..
+</I>&gt;&gt;<i> Try:
+</I>&gt;&gt;<i> # dhcpcd eth0
+</I>&gt;&gt;<i> or
+</I>&gt;&gt;<i> # dhcpcd wlan0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> xz is the preferred archiver now.
+</I>&gt;&gt;<i> Smaller sliding windows can be used
+</I>&gt;&gt;<i> in order to achieve faster yet less efficient compression.
+</I>&gt;&gt;<i> Or larger sliding windows can be used to create better
+</I>&gt;&gt;<i> compression than is capable with bzip2.
+</I>&gt;&gt;<i> Also xz decompresses faster than bzip2
+</I>&gt;&gt;<i> and sometimes faster than gzip.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sun, May 16, 2010 at 3:36 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; Hi!
+</I>&gt;&gt;<i> &gt; I just received a netbook which will be used as home server.
+</I>&gt;&gt;<i> &gt; I installed sorcerer on it using unetbootin and well it worked well
+</I>&gt;&gt;<i> &gt; (autodetection of cd failed of course, but the recovery mechanism did
+</I>&gt;&gt;<i> &gt; allowed me to mount the I/R and well all gone fine)
+</I>&gt;&gt;<i> &gt; I'm using the IR x86-64 of feb-2010
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; few remark until now (I just configured network and tried an augur easy)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; 1) dhclient never worked for me, (I remember a previous install LOOOOONG
+</I>&gt;&gt;<i> &gt; time ago that had the same problem) I think that this client is dead
+</I>&gt;&gt;<i> &gt; 2) leeching of grimoire fails because it try to download a 7za archive
+</I>&gt;&gt;<i> &gt; while
+</I>&gt;&gt;<i> &gt; on silverice I can only find bz2 and xz (what's this?) archives. I gone
+</I>&gt;&gt;<i> &gt; into
+</I>&gt;&gt;<i> &gt; sorcery configuration menu and didn't found back where to specify the
+</I>&gt;&gt;<i> &gt; prefered archive type... can someone help me fix this issue? I'm stuck
+</I>&gt;&gt;<i> &gt; at
+</I>&gt;&gt;<i> &gt; bare install step....
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; thanks and regards
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+</I>&gt;<i> et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001621.html">[Sorcerer-admins] lastest ISO : some feedback
+</A></li>
+	<LI>Next message: <A HREF="001626.html">[Sorcerer-admins] lastest ISO : some feedback
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1624">[ date ]</a>
+              <a href="thread.html#1624">[ thread ]</a>
+              <a href="subject.html#1624">[ subject ]</a>
+              <a href="author.html#1624">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

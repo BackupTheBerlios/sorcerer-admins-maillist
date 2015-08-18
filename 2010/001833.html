@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] openssh failed to install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3C4C47A4B6.9030603%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001832.html">
+   <LINK REL="Next"  HREF="001837.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] openssh failed to install</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3C4C47A4B6.9030603%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] openssh failed to install">Bradley at NorthTech.US
+       </A><BR>
+    <I>Thu Jul 22 03:53:58 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001832.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+        <LI>Next message: <A HREF="001837.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1833">[ date ]</a>
+              <a href="thread.html#1833">[ thread ]</a>
+              <a href="subject.html#1833">[ subject ]</a>
+              <a href="author.html#1833">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+I'm of the same opinion as Jan on this Kyle. I use/depend upon
+tcp_wrappers for things like NFS and portsentry, etc.
+
+To me, it's kind of a 'standard' thing, expected to be part of a UNIX
+installation, and used regularly.
+
+I don't always use netfilter, often depending upon PfSense firewalls on
+the perimeter, and quite often will just quickly enter some jerk into
+/etc/hosts.deny (even on a LAN) for simplicity ;)
+
+To do that w/iptables might require four or five rules, when I can do it
+on a single line in /etc/hosts/deny for particular services.
+
+wrt things like portsentry, I like the redundancy and have no problems
+removing false positives from iptables AND /etc/hosts.deny as
+a regular course of re-allowing access.
+
+Not to mention its integral relationship to NFS. I'm hoping you'll
+rethink your inclinations on this Kyle, and then we can all go back to
+hating Redhat - coz it's fun! :)
+
+um... okay, time for a non-sequitur: I'm really incensed about what I
+perceive as perhaps the demise of Sun and Solaris. I don't think any of
+us would be here quite like we are now if it wasn't for Bill Joy, his
+BSD and IP stack, and I'm very saddened every time I see another aspect
+of Sun Microsystem's contributions to our world being re-branded under
+Oracle.
+
+I've got what I think is the very last free release of Solaris 10 (the
+October edition) in a boxed set. Dunno where things are going from here,
+but I'm not optimistic.
+
+On 7/21/2010 11:38 AM, Jan Merka wrote:
+&gt;<i> On Wednesday, July 21, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> If someone who uses tcp_wrappers wants
+</I>&gt;&gt;<i> for a better solution
+</I>&gt;&gt;<i> then please implement one.
+</I>&gt;&gt;<i> This ancient source is causing more problems than it is worth.
+</I>&gt;&gt;<i> I would prefer to dispose of it.
+</I>&gt;<i> 
+</I>&gt;<i> I use tcp_wrappers on my servers together with iptables. Tcp_wrappers are 
+</I>&gt;<i> still extremely convenient because they enable the use of /etc/hosts.allow and 
+</I>&gt;<i> /etc/hosts.deny. I use it primarily due to NFSv4 and DenyHost services.
+</I>&gt;<i> 
+</I>&gt;<i> Do you have a suggestion as to what (how) could replace tcp_wrappers?
+</I>
+
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.760.666.2703  (US)
+TEL: +44.702.405.1909 (UK)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAwAGBQJMR6S2AAoJEE1wgkIhr9j3Yz4H/0+bBtwO9gGmwgVAONMmvonV
+fZ+XKRW/HSmmNtD9ufmJ2M6uBVV61XCMTbuV7E8eOiB0jHClf5H0WPsDFcfo/wIJ
+42FpajjHSbT8Pc/KD5fAh7p4cBHfIQ7/aOHwZkruOjq7ktwRkFNQ2+tv3iIsJ3xc
+AUQ9jplIlA51ZhjmNfkFY76xsJLigySvGJbVkVbvzI+ChgYN5y84dq1RSjUtFEae
+B4t45JaLVi8IOwj8mpIIWftYmCHd62dH99Zw886kONKIln9lJ7Ki9zg3AbmxYGIB
+sutYRtgW8JVYp8nuDRQH1qbeAOB54aZ2y0gi7JLj8j9UIVOJReXFjkqZyBxnQvs=
+=NizO
+-----END PGP SIGNATURE-----
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001832.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+	<LI>Next message: <A HREF="001837.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1833">[ date ]</a>
+              <a href="thread.html#1833">[ thread ]</a>
+              <a href="subject.html#1833">[ subject ]</a>
+              <a href="author.html#1833">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

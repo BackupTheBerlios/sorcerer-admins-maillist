@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/sbin/lilo round 1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTikSWcaAqcqqv-S9g9wkFfkdRF_VhsUCvZkudCWQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002089.html">
+   <LINK REL="Next"  HREF="002091.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/sbin/lilo round 1</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTikSWcaAqcqqv-S9g9wkFfkdRF_VhsUCvZkudCWQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/sbin/lilo round 1">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Mar 11 03:26:13 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002089.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+        <LI>Next message: <A HREF="002091.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2090">[ date ]</a>
+              <a href="thread.html#2090">[ thread ]</a>
+              <a href="subject.html#2090">[ subject ]</a>
+              <a href="author.html#2090">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>If make install for lilo or linux runs /sbin/lilo
+then it is not showing up in the compile logs.
+As far as I know lilo is only run by
+/etc/init.d/{initramfs,lilo}
+and those are run by /usr/sbin/cast
+
+A way to become certain is to make /sbin/lilo a wrapper
+that logs when /sbin/lilo is run
+along with the parameters and the outcome.
+
+Another possibility is to check /sbin/lilo's access time
+on a file system that has atime enabled.
+However, my impression of atime enabled file systems
+is that they bring fixed disks to an early demise.
+However, that observation might be historic rather than current.
+Yet, I still do not risk it.
+
+Evert is interested in knowing when lilo runs.
+My interest is in having /sbin/lilo run when
+lilo's configuration changes or when
+new initramfs images are generated.
+
+SAs that do not want automatic initramfs regeneration
+and automatic updating of lilo's configuration file
+and automatic running of /sbin/lilo can
+# chmod 600 /etc/init.d/{initramfs,lilo}
+Then, a SA can be very certain about when lilo runs
+and about when initramfs images are generated.
+However, as long as automatic mode works fine
+then automatic mode should be used.
+
+For SAs still in the habit of doing it manually there is:
+/sbin/mkinitrd
+/sbin/mkinitrf
+SAs who studied LSB would expect those to be present.
+
+However, for SAs that might be confused
+about the initramfs yet know about lilo
+then the /usr/sbin/lilo wrapper that invokes the scripts required
+to update lilo's configuration file and to regenerated initramfs images
+should be nothing short of a boon.
+Many SAs might not be used to running init-scripts manually
+and therefore this helps out.
+Perhaps within the LSB there is no mention of a program/script
+that should exist for the purpose of automatically updating lilo's
+configuration file.
+That is I only provided /etc/init.d/lilo
+It is not a bad spot for it since it is under 4k
+and should be run before shutdown/reboot if not sooner.
+
+Generally, I assume that convenience and automation is best.
+However, if the conveniences or automatic execution seems
+to be more of a bane than a boon then please voice it as Evert did.
+Sometimes a small bit of adjustment can make the implementation better.
+
+Also Evert discovered something that I had not anticipated.
+If during cast of sysinit the SA selects nodes for character devices
+where the device would be unavailable during boot
+then that could cause the execution of sysinit or runlevel
+to entirely abort due to a broke pipe.
+Unfortunately, I did not anticipate nor checked for this possibility.
+Yet, thanks to a report from Evert;
+/etc/init.d/{rcS,prc} now check that the character device is available.
+If it is not then it tees the output to console and the log file.
+Therefore, it should avoid a &quot;device not present&quot; and broken pipe situation.
+
+There are probably other spots in Sorcerer
+where I did not anticipate all the possible selections of the SA.
+When locating something like that where the SA can break
+it by selecting something that seemed appropriate
+then please report it as a possible bug.
+Spotting and fixing these improves Sorcerer's robustness.
+
+This discussion might seem like overkill for something like
+whether or not to have /usr/sbin/lilo and convenience wrappers.
+However, if a SA is dissatisfied with something and there is no clear compromise
+then discussion on the email list helps impel progress towards improvement.
+
+On the subject of improvements...
+The grimoire following the next I/R release will become more congruent
+with the labels that software authors are using for their releases.
+
+For example, the first few lines of the rsyslog spell will become:
+
+   version stable 5.6.4 5.6.3 5.4.0
+   version devel 6.1.5 6.1.4 6.1.3
+   version beta  5.7.8 5.7.6
+
+The software author is not using a release label called &quot;unstable.&quot;
+Therefore, trying to conform the software author's releases
+to old sorcery requires deciding if version 6.1.5 or version 5.7.8
+deserved to be unstable version progress.
+In retrospect making sorcery and the grimoire more flexible is the
+better solution.
+By using the &quot;version&quot; function an arbitrary label can be given to any
+sequence of versions.
+Therefore, a SA can select the &quot;devel&quot; version progress or
+the &quot;beta&quot; version progress for the rsyslog spell.
+Arbitrary version progress makes indexing slightly slower,
+but it also makes sorcery a better tool for software installation and updating.
+
+Might have been great to have an implementation as flexible as that
+from the start.
+But sorcery and the grimoire are still evolving to become a better
+tool for the task.
+And I probably have a bit more revision to go before
+I become satisfied with the way arbitrary version progress works.
+
+
+On Thu, Mar 10, 2011 at 11:52 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> If the linux kernel invokes /sbin/lilo
+</I>&gt;<i> then that is news to me.
+</I>&gt;<i> When does it happen?
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Mar 9, 2011 at 2:45 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hmm I'm not sure how this helps anyone by overloading lilo; the linux
+</I>&gt;&gt;<i> kernel which I know uses lilo itself; but it uses /sbin/lilo so it
+</I>&gt;&gt;<i> won't invoke the override to perform sorcerer maintainence while doing
+</I>&gt;&gt;<i> llilo...
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002089.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+	<LI>Next message: <A HREF="002091.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2090">[ date ]</a>
+              <a href="thread.html#2090">[ thread ]</a>
+              <a href="subject.html#2090">[ subject ]</a>
+              <a href="author.html#2090">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

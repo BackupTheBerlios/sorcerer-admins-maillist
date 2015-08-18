@@ -1,0 +1,337 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Detailed installation issues....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Detailed%20installation%20issues....&In-Reply-To=%3C3a26a64f8c3838dda2089965ded5cef3.squirrel%40northtech.us%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001513.html">
+   <LINK REL="Next"  HREF="001528.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Detailed installation issues....</H1>
+    <B>bradley at northtech.us</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Detailed%20installation%20issues....&In-Reply-To=%3C3a26a64f8c3838dda2089965ded5cef3.squirrel%40northtech.us%3E"
+       TITLE="[Sorcerer-admins] Detailed installation issues....">bradley at northtech.us
+       </A><BR>
+    <I>Fri Mar 12 23:15:32 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001513.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+        <LI>Next message: <A HREF="001528.html">[Sorcerer-admins] Detailed installation issues....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1517">[ date ]</a>
+              <a href="thread.html#1517">[ thread ]</a>
+              <a href="subject.html#1517">[ subject ]</a>
+              <a href="author.html#1517">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay a detailed analysis of the installation issues were asked for. And
+considering that there are no documents related to installing Sorcerer,
+and the emailed docs that are now in the recent archives of this list are
+inaccurate (in that they do not describe what really occurs in
+chronological order, and therefore leave out so much of what happens that
+the user does not know what to skip or when - in fact, If I read it
+correctly, it indicated to just do the install and let Sorcerer figure out
+on it's own how to configure /etc/fstab, format the file systems, etc...),
+I decided to do a write up on the installation program, showing exactly
+what happens, when, in the hopes that this might shed some light on just
+where SAs are having issues.
+
+And I'm not a beginning SA either. IMO, given the current state of the
+sinstall process, it would be better (even for a noob) to just perform the
+fdisk, fstab, mkfs's, swapons, etc., by hand.
+
+We really need to fix the sinstall process so it can be understood by
+people, IMO, and I would like to help with that process as well as develop
+a comprehensive set of docs to make the installation, compile, and
+configuration process straight-forward and understandable.
+
+This will go a long way towards the adoption of this really kewl distro :)
+
+
+-----### The Installation Process as it currently is ###-----
+
+Immediately after selecting the default keyboard mapping, a message is
+displayed saying:
+
+&quot;rpcbind: cannot bind * on udp6: address already in use&quot;
+&quot;rpcbind: cannot bind tcp6: address already in use&quot;
+
+then the screen to continue the boot process comes up. Selecting continue
+boot displays:
+
+&quot;Welcome to Sorcerer.&quot;
+&quot;Please login as root.&quot;
+&quot;Press enter for password.&quot;
+&quot;/sbin/sinstall
+to begin a menu driven installation.&quot;
+
+Then a login prompt comes up, but before one can enter, 'root', and press
+enter for the blank password they are disrupted by a message saying:
+
+&quot;Fri Mar12 11:55:16&quot;
+&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at hostname</A>:~# /Mar 12 11:55:18 hostname.unknown kernel: Error: Driver
+'pcspkr' is already registered, aborting...&quot;
+&quot;Mar 12 11:55:18 hostname.unknown kernel: piix4_smbus 0000:00:07.0: SMBus
+base address uninitialized - upgrade BIOS or use force_addrr=0xaddr&quot;
+
+At this point, if you know what's going on, you can enter root in the
+middle of a blank field, and then you'll get the password prompt.
+
+When you enter the blank password, you receive a message saying:
+
+&quot;~bash: /: is a directory
+
+Fri Mar 12 12:05:47
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at hostname</A>:~#&quot;
+
+At this point, if the user is not completely confused, they can enter
+/sbin/sinstall, and bring up the installer.
+
+lsmod (optional) #I do nothing
+
+modprobe (optional) #I do nothing
+
+rmmod (optional) #I do nothing
+
+mbr (optional)  #I enter this, choose /dev/hda, and it sets the MBR
+(presumably).
+
+partition (optional) #I enter this, and create a /dev/hda1 of about
+18GBytes (18431.86), set it bootable, create a /dev/hda2 of about 3GBytes
+(3042.91), out of a total of 20GB, set its type to '83', write the new
+partition table, and exit.
+
+(That's actually the display from cfdisk, which I don't use. I use fdisk,
+because I'm more comfortable with it, so the actual report is:
+
+/dev/hda1	*	1	35714	17999824+	83	Linux
+/dev/hda2		35715	41610	2971584		82	Linux swap / Solaris
+
+At this point, the installer reports that both the 'mbr' and 'partition'
+sections are &quot;complete&quot;, so I move on to &quot;modify_fstab (required)&quot;.
+
+The user is presented with a rather confusing menu that displays the
+following:
+
+device		mount filesys option d o
+/dev/hda1	none unknown defauults, natime 0 0
+/dev/hda2	none unknown defaults, natime 0 0
+/swap		none swap defaults 0 0
+
+Now, I don't really have a problem with /etc/fstab, but getting through
+this section is totally confusing.
+
+I'll go through these one by one, saving &quot;device&quot; for last, since it is
+the weirdest.
+
+/dev/hda1:
+
+Device	/dev/hda1
+Mount	/
+Filesystem	ext4
+Options		defaults,noatime
+Dump		0
+Order		0
+Feature		-0 dir_index,filetype,sparse_super
+Check
+Encryption
+Empty		All fields removing entry
+
+Basically, all I did was set the mount point to &quot;/&quot;, and chose the &quot;ext4&quot;
+filesystem (which is the default). Everything else looks good to me.
+
+Now on to the next partition, /dev/hda2, which I have designated as a 3GB
+Swap partition, since this is a source based distro that needs a lot of
+virtual memory for compile time.
+
+Device	/dev/hda2
+Mount	/
+Filesystem	ext4
+Options		defaults,noatime
+Dump		0
+Order		0
+Feature		-0 dir_index,filetype,sparse_super
+Check
+Encryption
+Empty		All fields removing entry
+
+At this point, I do something wrong and the /dev/hda2 entry disappears, I
+try to edit the /swap entry and it disappears too, then I try to check out
+the device entry and something unintelligible flashes by the screen to
+fast to tell what it says, I'm told that something didn't get completed,
+and since I can't seem to put back the /dev/hda2 entry to give myself a
+big swap disk, I move on...
+
+Since I know that something has gone bad wrong, I checkout the entry
+entitled, &quot;reload fstab&quot;. That seems to put everything back to the way it
+originally was, so I go back and do the fstab again:
+
+So I enter the /dev/hda2 again and set the mount point to /swap. Then I
+set the filesystem to swap, when I come out of that screen, it says my
+mount point is none, but that the filesystem is swap.
+
+I figure that for some reason, the installer system must be correct so I
+move ahead...
+
+I enter the /swap selection on the screen that I had no understanding as
+to why it existed in the first place (Interestingly enough, it said that
+the swap size was only 256MBytes), select &quot;Device&quot;, then edit nothing
+because something flashes across the screen and the menu appears again. I
+&quot;Done&quot; exit back to the main fstab menu but before I get there it says
+
+&quot;Essential fields are missing, Emptying entry.&quot;
+
+It throws me completely out of the fstab edit sub-menu and back to the
+installer. So I go back into the edit fstab sub-menu and this looks about
+as good now to me now as it's going to (I've gone through this several
+times - there are no docs to help out here.
+
+It shows:
+
+device		mount filesys options d o
+/dev/hda1	/ ext4 defaults,noatime 0 0
+/dev/hda2	none swap default 0 0
+
+
+So, since I haven't been into the &quot;device&quot; entry yet, I do so:
+
+hm... Okay now, it says, &quot;Please visit every menu item except the Empty
+All Fields&quot;. So I will, but first, the display looks like this before I
+edit it:
+
+Device
+Mount
+Filesystem	swap
+Options
+Dump
+Order
+Size
+Check
+Empty		All fields removing entry
+
+
+Note that there is a &quot;Size field instead of a feature field, and the
+&quot;Encryption&quot; field is not there.
+
+First, I go into &quot;Device&quot;, and something unintelligible flashes across the
+screen.
+
+Next, I go into &quot;Mount&quot; I enter /swap, but when exiting, it says &quot;none&quot;.
+
+But it now says the following, which looks as good as I can get it (sine
+it won't let me put /dev/hda2 into &quot;Device&quot;, and won't let me enter the
+mount point of &quot;/swap&quot; either). So I make one more adjustment (to &quot;Size&quot;)
+before moving on, noting the new settings below before doing so:
+
+Device
+Mount		none
+Filesystem	swap
+Options		default
+Dump		0
+Order		0
+Size		3042 #(because, according to cfdisk, /dev/hda2 is 3042.91)
+Feature		-0 dir_index,filetype,sparse_super
+Check
+Empty		All fields removing entry
+
+&quot;Essential fields are missing, Emptying entry.&quot;, is the message I get at
+this point, which I find interesting, so I go back into &quot;modify_fstab&quot;
+from the main install menu to take a look:
+
+It shows:
+
+device		mount filesys options d o
+/dev/hda1	/ ext4 defaults,noatime 0 0
+/dev/hda2	none swap default 0 0
+
+hm... I would prefer if that &quot;device&quot; entry wasn't there, since I don't
+know what that is, but the other two entries look really good. Let's move
+on...
+
+modify_fstab is showing as (complete)
+
+Since there aren't ANY installation docs (Which I'm considering writing as
+a manual, BTW) the next two entries are &quot;init_filesys (optional)&quot;, and
+&quot;mount (required)&quot;.
+
+Now, I know you can't mount  before &quot;mkfs -t...&quot;, so I choose
+&quot;init_filesys&quot; - even though it says &quot;optional&quot; - BECAUSE IT IS NOT
+OPTIONAL - You MUST format the partition in real life before you can mount
+and copy files over....
+
+The screen says:
+&quot;[ ] /dev/hda1		/ ext4 defaults,noatime 0 0&quot;
+&quot;[ ] /dev/hda2		none swap default 0 0&quot;
+
+Hey this looks good, actually, maybe I did it right this time! so I select
+both and wait while the (presumably) mkfs -t ext4, mkswap, swapon, etc.,
+whatever... goes through its process....
+
+&quot;[*] /dev/hda1		/ ext4 defaults,noatime 0 0&quot;
+&quot;[*] /dev/hda2		none swap default 0 0&quot;
+
+It asks me to confirm that all data will be lost. Sure, no prob!
+
+&quot;mkfs.ext4 -0 dir_index.filetype,sparse_super /dev/hda1&quot; appears to be the
+command it's going to run. Looks good to me, so I select &quot;Yes&quot;.
+
+&quot;writing inode tables: x/130&quot;...
+&quot;creating journal (32768 blocks):&quot;...
+&quot;Writing superblocks and filesystem accounting information: done&quot;...
+
+And then it takes the user back to a screen that says:
+
+&quot;ext4 successfully created on /dev/hda1&quot;. I select &quot;OK&quot; and...
+
+&quot;Please confirm it is okay that all data on /dev/hda2 is lost?&quot; I choose
+&quot;Yes&quot;...
+
+Now it says, &quot;mkswap /dev/hda2&quot;. I choose &quot;Yes&quot;...
+
+&quot;swap successfully created on /dev/hda2&quot;. I  am about to choose &quot;OK&quot;, but
+then the mount and install takes place and it always bombs on the
+installation of files.
+
+How does everything look so far? Did I do everything correctly? I've done
+a lot of installing over the years, From MCC and SLS, and Yggdrasil LGX,
+to many years of manually setting up fdisk and fstab with Slackware, but
+this was really confusing for me.
+
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001513.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+	<LI>Next message: <A HREF="001528.html">[Sorcerer-admins] Detailed installation issues....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1517">[ date ]</a>
+              <a href="thread.html#1517">[ thread ]</a>
+              <a href="subject.html#1517">[ subject ]</a>
+              <a href="author.html#1517">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

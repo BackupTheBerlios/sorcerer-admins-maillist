@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Configuring Init scripts...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Configuring%20Init%20scripts...&In-Reply-To=%3C596b75860809240344s10abf3d3gdc73f4fdcaa95f23%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000784.html">
+   <LINK REL="Next"  HREF="000786.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Configuring Init scripts...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Configuring%20Init%20scripts...&In-Reply-To=%3C596b75860809240344s10abf3d3gdc73f4fdcaa95f23%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Configuring Init scripts...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep 24 12:44:53 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000784.html">[Sorcerer-admins] Configuring Init scripts...
+</A></li>
+        <LI>Next message: <A HREF="000786.html">[Sorcerer-admins] X11R7.4 gnome 2.24 firefox 3.0.2 arrival.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#785">[ date ]</a>
+              <a href="thread.html#785">[ thread ]</a>
+              <a href="subject.html#785">[ subject ]</a>
+              <a href="author.html#785">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Sep 23, 2008 at 6:49 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> So sorry... I was doing
+</I>&gt;<i> chmod o-x
+</I>&gt;<i> not a-x
+</I>&gt;<i>
+</I>&gt;<i> was thinking o meant owner not other.
+</I>
+Oh, no problem.
+We all do that sometimes.
+And I'm not just saying that.
+I have done it before.
+
+Sometimes I type dc instead of cd.
+I have typed dirt instead of dir,
+lust instead of list, etc...
+However, I knew a person that typed in his home directory something like:
+
+$ rm -rf somefile *
+
+and accidentally put a space in front of the *
+Completely cleaned out his home directory that way.
+
+Back in the DOS days I knew someone who had accidentally
+wiped his / directory.
+So to avoid doing that again he made all his files in his root directory
+attrib read only and hidden.
+
+Every use the program killall on Solaris?
+It does not work the same as it does on a GNU box.  *chuckle*
+Also the ls on Solaris requires parameters to occur
+before paths and files.
+What a silly rule!
+
+Anyway, I wrote before:
+
+# chmod a-x
+
+Difficult to mistype.
+However, when I set modes I tend to type:
+chmod 0600 /etc/init.d/some-script
+That way I know the mode is exactly what I want.
+Or chmod 0700 /etc/init.d/some-script if I want it executable.
+Remember when it comes to root
+any executable bit set on a file makes it an executable,
+but mode rules apply as expected for regular users.
+However, init-scripts are run by root.
+Therefore, 600 and 700 are the best choices for setting the mode.
+Since users and others will never be reading, writing, nor running
+init-scripts their modes are 0 for no absolutely no permission.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000784.html">[Sorcerer-admins] Configuring Init scripts...
+</A></li>
+	<LI>Next message: <A HREF="000786.html">[Sorcerer-admins] X11R7.4 gnome 2.24 firefox 3.0.2 arrival.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#785">[ date ]</a>
+              <a href="thread.html#785">[ thread ]</a>
+              <a href="subject.html#785">[ subject ]</a>
+              <a href="author.html#785">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

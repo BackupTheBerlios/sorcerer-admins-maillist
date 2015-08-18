@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unstable sorcery will be rolling out soon.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unstable%20sorcery%20will%20be%20rolling%20out%20soon.&In-Reply-To=%3C596b75861001210531h63d5cb76of04a32a6b08225dc%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001398.html">
+   <LINK REL="Next"  HREF="001401.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unstable sorcery will be rolling out soon.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unstable%20sorcery%20will%20be%20rolling%20out%20soon.&In-Reply-To=%3C596b75861001210531h63d5cb76of04a32a6b08225dc%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unstable sorcery will be rolling out soon.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jan 21 14:31:42 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001398.html">[Sorcerer-admins] Does anyone know of a good(atomic/small) xwindow	client for windows that works well with xorg?
+</A></li>
+        <LI>Next message: <A HREF="001401.html">[Sorcerer-admins] qt-x11-opensource and /bin/pwd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1400">[ date ]</a>
+              <a href="thread.html#1400">[ thread ]</a>
+              <a href="subject.html#1400">[ subject ]</a>
+              <a href="author.html#1400">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am currently testing some changes that obsolete the library cache method for
+preserving old ELF libraries during updates.
+The library cache method was a complicated.
+For a long time, the way it was implemented
+had a rare problem area that could occur
+if libsepol and libselinux were dispelled concurrently.
+Trying to remove installed selinux related spells was the
+only way to fowl up the library cache.
+Because it was such a rare problem
+I took a considerable amount of time thinking
+about how I wanted to improve the library cache.
+
+The new method is simple in concept.
+When an installed spell is dispelled
+the spell's installed files and directories
+are moved from their normal prefix into
+/var/cache/old/
+
+I will skip the technical explanation of how it works.
+It is sufficient to say that /var/cache/old/ is removed only
+when sorcery is absolutely certain that no installed software
+could require a library somewhere within /var/cache/old/
+
+Until /var/cache/old/ is removed,
+which normally will only happen at the completion of a successfully cast spell,
+any spell that was dispelled can be restored from /var/cache/old/
+using the
+# augur undispel $SPELL
+command.
+
+For example assume that the command was issued to dispel wine
+# dispel wine
+Oops, wait, wine will be necessary for running that win32 application.
+Do not try to beat dispel to the reap by pressing ctrl-c
+That could fail and cause files formerly installed by wine
+to stay in the root filesystem as aliens.
+That might be bad later or at least a pain to clean up.
+So let the dispel command complete.
+Then, issue:
+# augur undispel wine
+Faster than the blink of an eye, wine is back!
+
+However, if a spell is cast after wine is dispelled
+and the installed software looks fine to work without
+/var/cache/old/
+then /var/cache/old/ is removed.
+And so goes that bottle of wine.
+
+/var/cache/old/ from here forward will be called the OLD_CACHE
+It is cleared automatically when it can be cleared in order to keep
+/var/cache/old/ from consuming too much disk space.
+
+There is one other nice aspect about the OLD_CACHE.
+Following the successful cast of a spell
+if the OLD_CACHE can not be eliminated
+then it is searched for SUID and SGID files.
+Any SUID or SGID files lose their special mode.
+That way any executable that remains in the $OLD_CACHE
+can not be exploited by a user to gain unauthorized access
+after the installed software has received an update.
+
+So to summarize, the OLD_CACHE will be replacing the LIBRARY_CACHE
+It does what the LIBRARY_CACHE did and it does it better.
+Also the OLD_CACHE can be used to undispel recently dispelled spells.
+That makes running a box without the ARCHIVE_CACHE a bit safer.
+
+Because this transition from LIBRARY_CACHE to OLD_CACHE
+provides better &quot;oh noooooo&quot; protection I am changing
+the default FEATURE set to exclude &quot;archive&quot;
+That means that the archive cache will not be automatically
+enable on freshly deployed box that lack a SA defined FEATURE set.
+If FEATURE is definied in /etc/sorcery/local.config
+then that replaces how FEATURE is defined in /etc/sorcery/config
+And as the file states,
+do not edit /etc/sorcery/config
+Changes there will not stick.
+
+Can you tell that I am somewhat excited about the OLD_CACHE?
+It works better than the LIBRARY_CACHE did
+and it provides a new convenience for SAs
+So far I have successfully tested spells such as:
+readline, ncurses, and glibc using the OLD_CACHE.
+That definitely gives me the satisfaction of knowing
+that it properly fulfills the former duties of the LIBRARY_CACHE
+
+The OLD_CACHE will be ready for SA testing as the unstable version of sorcery
+in the next LAG=0 grimoire release.
+For anyone using a default LAG=1 box
+testing is still more than a day away.
+Remember to switch back to stable sorcery when done testing,
+because one can never be certain of the quality of software provided
+using the unstable version progress.
+
+When I am fully satisfied.
+I will make the new sorcery available as stable version progress.
+So for normal LAG=1 boxes that is at least 3 days away.
+
+As for version progress...
+# augur progress sorcery unstable
+# augur progress sorcery stable
+Switching it is that easy.
+Works for many spells besides sorcery.
+However, the versions that are provided as unstable
+are not usually compile tested.
+And in the case of gnome spells they often require
+other gnome spells to be installed with unstable versions
+in order to successful cast.
+However, both stable and unstable versions are tracked for
+many software projects just in order to provide convenience to SAs.
+
+Any SA that wants to ride their box on bleeding edge software can,
+but Sorcerer's grimoire by default is not bleeding edge.
+Most spells stable version progress has the version that is defined
+as stable by the software authors.
+And that is usually always true unless Sorcerer grimoire gurus
+decide that a stable version is too old and problematic to compile.
+
+More information about version progress is available by typing
+# augur help progress
+Yes, no special web page exists to locate and read about it.
+The sorcery tools, especially augur, provide adequate and verbose help
+information.
+
+Sorry for the long email.
+Evert mentioned that I should inform Sorcerer SAs
+about this change before springing it.
+And so I did.
+However, for most Sorcerer SAs this change, like many others, is transparent.
+It requires nothing new to learn in order to continue using a Sorcerer box
+in the same fashion that one always has.
+sorcery will just work better and provide more convenience for SAs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001398.html">[Sorcerer-admins] Does anyone know of a good(atomic/small) xwindow	client for windows that works well with xorg?
+</A></li>
+	<LI>Next message: <A HREF="001401.html">[Sorcerer-admins] qt-x11-opensource and /bin/pwd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1400">[ date ]</a>
+              <a href="thread.html#1400">[ thread ]</a>
+              <a href="subject.html#1400">[ subject ]</a>
+              <a href="author.html#1400">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

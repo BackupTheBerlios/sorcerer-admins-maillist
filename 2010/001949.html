@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3COF16B0E347.EEAFDB04-ONC22577C2.004BF17B-C22577C2.004C7969%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001948.html">
+   <LINK REL="Next"  HREF="001950.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3COF16B0E347.EEAFDB04-ONC22577C2.004BF17B-C22577C2.004C7969%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Oct 20 15:55:17 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001948.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+        <LI>Next message: <A HREF="001950.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1949">[ date ]</a>
+              <a href="thread.html#1949">[ thread ]</a>
+              <a href="subject.html#1949">[ subject ]</a>
+              <a href="author.html#1949">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>managed to get up also our testing server, sorcerertest64.
+
+multipath-tools was reason why boot stalled, it locked up /dev/sda so it 
+did not managed to remount it as root, so i dispelled multipath-tools and 
+updated initramfs.
+
+For some reason network configuration was missing too, completely deleted, 
+eg. /etc/networks.d/ was showing its default and was missing my networks 
+and links, etc. 
+No idea what deleted it.
+
+Somehow my wish list is that we could do better QA. eg, what did delete 
+network configuration, /etc/hosts file, modified /etc/fstab to missing 
+swap partitions and ext3 -&gt; etx3 typo, and so on.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+ 
+
+&gt;<i> 
+</I>&gt;<i> ppr.silverice.org is up and running again. Several errors which i 
+</I>discovered:
+&gt;<i> 
+</I>&gt;<i> - hostname was wrong (typo) 
+</I>&gt;<i> - somehow /etc/hosts was missing (dunno what deleted it) 
+</I>&gt;<i> - initramfs update actually helped, all vg* scripts are now not runned 
+</I>&gt;<i> - time was wrong, i am not using UTC hwclock, needed to activate 
+</I>&gt;<i> hwclock with --localtime to run 
+</I>&gt;<i> - fstab was messed up! eg. all my swap lines were missing, etc, 
+</I>&gt;<i> dunno what deleted stuff from there 
+</I>&gt;<i> - Its running now on with 1 virtual cpu, because not sure if it can 
+</I>&gt;<i> lock up if i use 2, will try to increace it after i can be sure its 
+</I>&gt;<i> running ok for now. 
+</I>&gt;<i> 
+</I>&gt;<i> Looking now test server, i noticed that fstab inside initramfs has 
+</I>&gt;<i> typo, filesystem is marked as etx3 (should be ext3), dunno how that 
+</I>&gt;<i> was changed.... 
+</I>&gt;<i> 
+</I>&gt;<i> Terveisin/Regards,
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101020/d455ef26/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101020/d455ef26/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001948.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+	<LI>Next message: <A HREF="001950.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1949">[ date ]</a>
+              <a href="thread.html#1949">[ thread ]</a>
+              <a href="subject.html#1949">[ subject ]</a>
+              <a href="author.html#1949">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

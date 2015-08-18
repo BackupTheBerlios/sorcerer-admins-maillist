@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3COF1E57A463.B04DBAD9-ONC22577C2.003C1FCF-C22577C2.003C3E46%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001944.html">
+   <LINK REL="Next"  HREF="001946.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Unexpected%20Maintenance%20-%20unable%20to%20mount%20root%0A%20filesystem%20as%20/media/root&In-Reply-To=%3COF1E57A463.B04DBAD9-ONC22577C2.003C1FCF-C22577C2.003C3E46%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Oct 20 12:58:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001944.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+        <LI>Next message: <A HREF="001946.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1945">[ date ]</a>
+              <a href="thread.html#1945">[ thread ]</a>
+              <a href="subject.html#1945">[ subject ]</a>
+              <a href="author.html#1945">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm, could be, sorcerer test server says, when i goto maintenance mode and 
+try to mount /dev/sda1 /media/root, it says its busy, but 
+ppr.silverice.org does not say busy and i cant mount it.
+
+Looking still way to fix...
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 20.10.2010 13:15:34:
+
+&gt;<i> From: Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Date: 20.10.2010 13:15
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] Unexpected Maintenance - unable to 
+</I>&gt;<i> mount root filesystem as /media/root
+</I>&gt;<i> Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> 
+</I>&gt;<i> The LVM bug I ran into on a recent install also did not use LVM.
+</I>&gt;<i> 
+</I>&gt;<i> What I was seeing was that the disks were being kept busy by the buggy
+</I>&gt;<i> lvm, and thus could not be fscked or mounted.
+</I>&gt;<i> If this is indeed what you are seeing, you could try:
+</I>&gt;<i> chmod a-x /etc/init.d/vg*
+</I>&gt;<i> 
+</I>&gt;<i> to turn off LVM initscripts, and try to boot again...
+</I>&gt;<i> 
+</I>&gt;<i> Hmm... I have forgotten how to re-generate the /etc/rc.X
+</I>&gt;<i> directories... Does this happen automatically upon boot?
+</I>&gt;<i> 
+</I>&gt;<i> -Evert-
+</I>&gt;<i> 
+</I>&gt;<i> On Wed, Oct 20, 2010 at 4:33 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; They dont use LVM, its just sda1 for / (ext3) and sda5 for swap, no 
+</I>LVM is
+&gt;<i> &gt; used there.... but i dont know whats happening and how can i fix it.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I can goto maintenance mode and do: mount /dev/sda1 /media/root just 
+</I>fine
+&gt;<i> &gt; (and then chroot /media/root), but if i want to eg. cast spells etc, 
+</I>whole
+&gt;<i> &gt; servers goes locked state and eats all CPU, cant really do nothingmore 
+</I>than
+&gt;<i> &gt; bring them down with force.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Terveisin/Regards,
+</I>&gt;<i> &gt;   Pekka Panula, Net Servant Oy
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 20.10.2010 11:58:08:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; From: Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; Date: 20.10.2010 11:58
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] Unexpected Maintenance - unable to
+</I>&gt;<i> &gt;&gt; mount root filesystem as /media/root
+</I>&gt;<i> &gt;&gt; Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; This is not related to the LVM bug we discovered the other day?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Wed, Oct 20, 2010 at 2:22 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Hmm, i am getting error during boot process on ppr.silverice.org 
+</I>and on
+&gt;<i> &gt;&gt; &gt; our
+</I>&gt;<i> &gt;&gt; &gt; test server.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; &quot;Unable to mount root filesystem as /media/root&quot; is error i am 
+</I>getting.
+&gt;<i> &gt;&gt; &gt; Any
+</I>&gt;<i> &gt;&gt; &gt; ideas whats going on?
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Terveisin/Regards,
+</I>&gt;<i> &gt;&gt; &gt;   Pekka Panula, Net Servant Oy
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Servers are under quick maintenance because i am having some wierd
+</I>&gt;<i> &gt;&gt; &gt;&gt; Virtualbox related error(s). So i am rebooting all hosts and
+</I>&gt;<i> &gt;&gt; &gt;&gt; updating Virtualbox.
+</I>&gt;<i> &gt;&gt; &gt;&gt; ETA 1 hour.
+</I>&gt;<i> &gt;&gt; &gt;&gt;
+</I>&gt;<i> &gt;&gt; &gt;&gt; Terveisin/Regards,
+</I>&gt;<i> &gt;&gt; &gt;&gt;   Pekka Panula, Net Servant
+</I>&gt;<i> &gt;&gt; &gt;&gt; Oy_______________________________________________
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -- 
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101020/8d4b4858/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101020/8d4b4858/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001944.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+	<LI>Next message: <A HREF="001946.html">[Sorcerer-admins] Unexpected Maintenance - unable to mount root filesystem as /media/root
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1945">[ date ]</a>
+              <a href="thread.html#1945">[ thread ]</a>
+              <a href="subject.html#1945">[ subject ]</a>
+              <a href="author.html#1945">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

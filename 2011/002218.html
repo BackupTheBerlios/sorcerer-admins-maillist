@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Want a faster Sorcerer's parallel init system?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Want%20a%20faster%20Sorcerer%27s%20parallel%20init%20system%3F&In-Reply-To=%3CCA%2BT4wDj1NazrqkJAKsgRZP4Dov3NkH3U5Zw4tqXuqVoOabgGfg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002217.html">
+   <LINK REL="Next"  HREF="002219.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Want a faster Sorcerer's parallel init system?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Want%20a%20faster%20Sorcerer%27s%20parallel%20init%20system%3F&In-Reply-To=%3CCA%2BT4wDj1NazrqkJAKsgRZP4Dov3NkH3U5Zw4tqXuqVoOabgGfg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Want a faster Sorcerer's parallel init system?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jul 17 18:47:56 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002217.html">[Sorcerer-admins] blame it on the init system changes...
+</A></li>
+        <LI>Next message: <A HREF="002219.html">[Sorcerer-admins] Some augur commands that used to be but not	anymore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2218">[ date ]</a>
+              <a href="thread.html#2218">[ thread ]</a>
+              <a href="subject.html#2218">[ subject ]</a>
+              <a href="author.html#2218">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Of course Sorcerer boxes will not be the fastest booting distro.
+That is a given compromise because
+Sorcerer provides a rich and useful initramfs.
+However, a while back there was discussion
+about making Sorcerer's init faster.
+And it remained on my todo list until recently.
+
+Sorcerer's parallel init works by grouping init-scripts into sublevels.
+All init-scripts in a sublevel begin executing concurrently.
+After all init-scripts in the sublevel complete
+then the init-scripts in the next sublevel begin.
+
+This method is easy and uncomplicated to implement
+while providing a moderate gain in speed.
+However, it was criticized because a single slow init-script
+could delay progression to the next sublevel.
+
+I recently implemented a very simple modification
+that allows some init-scripts to declare themselves as fast.
+It might be an oxymoronic choice of words,
+because init-scripts that declare themselves fast
+might be among the slowest to start.
+However, this declaration permits
+the init-script to run without delaying
+the progression to the next sublevel.
+Here is a list of init-scripts that were given the &quot;fast&quot; declaration:
+
+cups
+dhcpd
+gdm
+boot-blaze
+sentinel-memory
+sentinel-resume
+sentinel-space
+sentinel-sync
+swap
+kdm-v4
+fancontrol
+sensord
+sensors
+metalog
+mysqld
+slapd
+sshd
+postgresql
+shishid
+smartd
+xdm
+
+And here is an example of how it works.
+Please consider:
+
+# ls /etc/rc.d/rc4.d | tail -n 20
+S02cups
+S02dbus-daemon
+S02dhcpd
+S02fancontrol
+S02kdm-v4
+S02mysqld
+S02named
+S02nscd
+S02ntpd
+S02sensord
+S02shishid
+S02slapd
+S02snd-seq-oss
+S02ssh-keygen
+S03alsactl
+S03avahi-daemon
+S03metalog
+S03sshd
+S04avahi-dnsconfd
+S04smartd
+
+In the above selection of ordered symbolic links to init scripts
+we can see that kdm-v4 runs on sublevel S02
+kdm-v4 might require considerable time before it returns.
+However, sublevel S03 will begin without waiting for kdm-v4 to complete.
+We also know that cups mysql and dhcpd are also declared to be fast.
+Therefore, the completion of those scripts do not generate a delay
+before beginning runlevel S03.
+
+This compromise maintains a simple implementation
+and yet permits utilizing many installed CPU cores.
+It does not introduce additional overhead, monitoring, scanning, nor looping.
+Consequently, it might be faster than an attempt at perfect parallelism.
+init-scripts still start in proper order
+and when necessary they complete in proper order.
+
+Does this new speed advantage comes at a cost in performance or functionality?
+Neither is sacrificed.
+The outcome of running the init-script
+still writes the error code or empty file within /var/log/init/
+And the output of the init-script is captured in the console log
+/var/log/console
+
+Do sysinit init-scripts run in parallel?
+The sysinit init-scripts do not run in parallel.
+This is because sysinit init-scripts execute quickly
+or are extremely order sensitive.
+Most of the sysinit init-scripts {,un}load a module or mount a virtual
+file system.
+However, /etc/init.d/udevtrigger generates a workload of coldplug events
+that udevd completes with parallel process.
+udevtrigger does not delay the completion of sysinit.
+sysinit init-scripts continue executing until /etc/init.d/udevsettle runs.
+udevrtrigger and fsck are tasks with parallelism.
+That gains speed during execution of sysinit.
+However, any attempt at parallelizing the execution of sysinit init-scripts
+would not gain even a second faster boot speed.
+That is why parallel init-script execution only happens during runlevel 2 and 4.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002217.html">[Sorcerer-admins] blame it on the init system changes...
+</A></li>
+	<LI>Next message: <A HREF="002219.html">[Sorcerer-admins] Some augur commands that used to be but not	anymore
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2218">[ date ]</a>
+              <a href="thread.html#2218">[ thread ]</a>
+              <a href="subject.html#2218">[ subject ]</a>
+              <a href="author.html#2218">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

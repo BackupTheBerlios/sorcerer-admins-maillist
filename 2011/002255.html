@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] processing the complaint box again...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20processing%20the%20complaint%20box%20again...&In-Reply-To=%3CCA%2BT4wDjkee7k%3DA%3DZ1DGxX2ZXDVq13WDaWtLMbR%2Bmaf%2BksBe%2Bpw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002254.html">
+   <LINK REL="Next"  HREF="002256.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] processing the complaint box again...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20processing%20the%20complaint%20box%20again...&In-Reply-To=%3CCA%2BT4wDjkee7k%3DA%3DZ1DGxX2ZXDVq13WDaWtLMbR%2Bmaf%2BksBe%2Bpw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] processing the complaint box again...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep 15 07:54:07 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002254.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+        <LI>Next message: <A HREF="002256.html">[Sorcerer-admins] enhanced security...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2255">[ date ]</a>
+              <a href="thread.html#2255">[ thread ]</a>
+              <a href="subject.html#2255">[ subject ]</a>
+              <a href="author.html#2255">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Sep 14, 2011 at 7:55 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Wed, Sep 14, 2011 at 8:55 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On 14 September 2011 06:00, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>
+&gt;&gt;<i> However, you could make it flash if sysinit detects a hanging process?
+</I>&gt;<i>
+</I>&gt;<i> Someone might confuse that with some sort of failure indicated by
+</I>&gt;<i> the BIOS of the motherboard.
+</I>&gt;<i> However, the idea is somewhat interesting and perhaps useful.
+</I>&gt;<i>
+</I>&gt;<i> The nice aspect about the Sorcerer sysinit which
+</I>&gt;<i> runs nearly exclusively only what is required to achieve
+</I>&gt;<i> the outcome of a successful mount of a real root file system
+</I>&gt;<i> is that sysinit appears to never hang on Sorcerer.
+</I>&gt;<i> However, SAs have reported that problems with udev
+</I>&gt;<i> can cause an udevsettle to run the entire length of the timeout.
+</I>&gt;<i> That would not be a hang, but rather merely an excessive delay.
+</I>
+
+I wrote and abandoned 4 implementations for implementing timeouts on
+init-scripts.
+The most recent implementation was fun.
+A sentinel that runs only during sysinit and runlevel
+monitors and kill off init-scripts that continue running
+after a pre-determined time limit.
+It was an efficient implementation, but perhaps a bit complex.
+
+I abandoned the implementation when I remembered
+that a new version of coreutils installed a program called timeout.
+And using that program to run init-scripts is an efficient simple method
+to enforce either a specified or default timeout for all init-scripts
+run during sysinit and runlevel.
+
+The default timeout will be 1 hour.
+Yes that may seem excessively long.
+Yet 1 hour should be long enough to fsck file systems
+and/or to synchronize RAIDs.
+And if a remotely located box appears to hang during boot
+then I typically wait an hour before reporting the problem
+to someone who can identify and fix the problem locally.
+Yet that type of problem is not caused by a Sorcerer init-script.
+However, if a remotely located Sorcerer box were to hang during boot
+then I rather it boot an hour later than for it to hang forever.
+
+init-scripts gain a new implicit function called timeout.
+Consequently, timeout 300 could be added to an init-script
+to ensure that it receives a 5 minute timeout instead of the 1 hour default.
+The added functionality comes with minimal complexity.
+Unfortunately, /bin/timeout
+executes the term and kill without providing
+any notification to the system logger.
+
+How is that for a start?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002254.html">[Sorcerer-admins] processing the complaint box again...
+</A></li>
+	<LI>Next message: <A HREF="002256.html">[Sorcerer-admins] enhanced security...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2255">[ date ]</a>
+              <a href="thread.html#2255">[ thread ]</a>
+              <a href="subject.html#2255">[ subject ]</a>
+              <a href="author.html#2255">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

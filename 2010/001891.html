@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lilo does not compile - several problems	with	it
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%0A%09with%09it&In-Reply-To=%3COFB9462891.FF98C519-ONC225778B.0020584E-C225778B.00263A56%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001889.html">
+   <LINK REL="Next"  HREF="001892.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lilo does not compile - several problems	with	it</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lilo%20does%20not%20compile%20-%20several%20problems%0A%09with%09it&In-Reply-To=%3COFB9462891.FF98C519-ONC225778B.0020584E-C225778B.00263A56%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] lilo does not compile - several problems	with	it">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu Aug 26 08:57:32 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001889.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+        <LI>Next message: <A HREF="001892.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1891">[ date ]</a>
+              <a href="thread.html#1891">[ thread ]</a>
+              <a href="subject.html#1891">[ subject ]</a>
+              <a href="author.html#1891">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> &gt; Good news is that grimoire does includes Dev86 (why its spell name got 
+</I>a
+&gt;<i> &gt; capitalised D, should it be just dev86?), i founded it and casted it.
+</I>&gt;<i> 
+</I>&gt;<i> # grep source /root/.sorcery/grimoire/Dev86
+</I>&gt;<i>     source <A HREF="http://www.debath.co.uk/dev86/Dev86src-$VERSION.tar.gz">http://www.debath.co.uk/dev86/Dev86src-$VERSION.tar.gz</A>
+</I>&gt;<i> 
+</I>&gt;<i> Why does the software author have capitalize the 'd' in the tarball 
+</I>name?
+
+No idea. Some uses dev86 and some people calls its Dev86. 
+Its difficult to say because its homepage does not tell much about it.
+
+&gt;<i> &gt; 3. problem. Then i noticed several problems with Dev86 spell. It does 
+</I>not
+&gt;<i> &gt; install those required binaries, like bcc, bcc-cpp, bcc-cc1, copt and
+</I>&gt;<i> &gt; unproto what lilo is trying to use.
+</I>&gt;<i> 
+</I>&gt;<i> I will try recasting Dev86 to see what the problem might be.
+</I>&gt;<i> No problem.
+</I>&gt;<i> The install log for Dev86 was the same as before.
+</I>&gt;<i> # diff /etc/sorcery/log/install/Dev86 Dev86
+</I>&gt;<i> 
+</I>&gt;<i> # augur install Dev86 | grep /usr/bin/bcc
+</I>&gt;<i> /usr/bin/bcc
+</I>
+I think problem is newer DESTDIR based compile. I think Dev86 sets some 
+prefixes that it uses to wrong location, based on DESTDIR, so after we 
+install Dev86, it still assumes those are located at 
+/usr/src/sorcery/.destdir/... and so on...
+lilo compile log tells me:
+------------8&lt;------------
+bcc -Md -ansi -I.. -I/usr/lib/bcc/include -c -O -DHAS_VERSION_H 
+-DHAS_LIBDEVMAPPER_H -DLILO=0xbb920890 -DLCF_BDATA -DLCF_DSECS=3 
+-DLCF_EVMS -DLCF_IGNORECASE -DLCF_LVM -DLCF_NOKEYBOARD -DLCF_ONE_SHOT 
+-DLCF_PASS160 -DLCF_REISERFS -DLCF_REWRITE_TABLE -DLCF_SOLO_CHAIN 
+-DLCF_VERSION -DLCF_VIRTUAL -DLCF_MDPRAID -DLCF_DEVMAPPER -o lilo.o 
+../lilo.c
+Unable to execute bcc-cpp.
+------------8&lt;------------
+
+&gt;<i> &gt; What i would like to see is that we
+</I>&gt;<i> &gt; switch over GRUB2, it looks promising and its what all major distros 
+</I>uses,
+&gt;<i> &gt; it's been maintained and developed actively and it got more features 
+</I>than
+&gt;<i> &gt; lilo can provide.
+</I>&gt;<i> 
+</I>&gt;<i> Last I looked the new grub was also considered unstable.
+</I>
+Nowdays its a default on eg. Ubuntu, which is widely used distro, also 
+Debian (Squeeze) is switching to use it too.
+Its been actively developed and maintained, which lilo nor legacy-grub is. 
+Thats a default win for GRUB2 :-)
+It has some features that are missing and maybe its not tested yet so much 
+as legacy-grub but you cant deny thats the road to go.
+
+Take a look this page: <A HREF="https://help.ubuntu.com/community/Grub2">https://help.ubuntu.com/community/Grub2</A> it has some 
+info about it.
+
+&gt;<i> It might also be a tad bit easier to mis-install it
+</I>&gt;<i> since it does not use /dev device names.
+</I>
+It uses UUIDs. I think there is still some uses disk+partition scheme too, 
+which is confusing. 
+
+&gt;<i> My challenge about grub is still the same.
+</I>&gt;<i> I do not use it and so I do not know how to
+</I>&gt;<i> integrate it with sorcery's init-scripts.
+</I>&gt;<i> However, if someone writes decent init-scripts
+</I>&gt;<i> that work as good as those for lilo
+</I>&gt;<i> then it would be possible to add grub as an option.
+</I>
+Indeed, its not a easy task to handle GRUB2 configuration scripts, because 
+if you do it wrong, your box does not boot anymore.
+
+Anyway, as lilo developments is kinda dead nowdays, its just matter of 
+time we have to switch some other bootloader. 
+
+One big reason is that uEFI BIOSes are coming, i mean, on server side, 
+uEFI is _standard_ nowdays, has been year ot two, atleast on IBM stuff. 
+
+Since GPT is also part of uEFI specs, you cant use LILO there, so, we are 
+actually not even supporting todays servers fully. We are using their 
+legacy boot modes nowdays. 
+
+Legacy modes works, not a problem for now, but we are steadily making old 
+BIOS obsolete and switch over to uEFI completely and thats scenario where 
+you can't use LILO because its missing support. afaik if you have over 2TB 
+drives you need to use GPT. I dont have a clue what lilo does if you have 
+more than 2TB drive?
+
+Not saying GRUB2 works perfectly on uEFI systems, but it has GPT support, 
+LILO does not have (?). 
+
+Terveisin/Regards,
+   Pekka Panula, Sofor Oy - Jatkuvat palvelut
+   Phone: GSM: +358 50 384 3232
+   Sofor Service desk: 010 470 7900 
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100826/f75e9c45/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100826/f75e9c45/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001889.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+	<LI>Next message: <A HREF="001892.html">[Sorcerer-admins] lilo does not compile - several problems with	it
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1891">[ date ]</a>
+              <a href="thread.html#1891">[ thread ]</a>
+              <a href="subject.html#1891">[ subject ]</a>
+              <a href="author.html#1891">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

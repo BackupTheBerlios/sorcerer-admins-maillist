@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] -O3 optimizations...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCA%2BT4wDgbe4nKkpBbhXSbk2GX3hA655MeS%2Bh4XiASRd2QznVLMg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002221.html">
+   <LINK REL="Next"  HREF="002223.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] -O3 optimizations...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCA%2BT4wDgbe4nKkpBbhXSbk2GX3hA655MeS%2Bh4XiASRd2QznVLMg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] -O3 optimizations...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jul 31 23:12:56 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002221.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+        <LI>Next message: <A HREF="002223.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2222">[ date ]</a>
+              <a href="thread.html#2222">[ thread ]</a>
+              <a href="subject.html#2222">[ subject ]</a>
+              <a href="author.html#2222">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for opening the discussion.
+It began with an email from Evert requesting
+that I remove the -O3 from the compilation of binutils.
+CFLAGS CXXFLAGS and LDFLAGS that are specified
+in a spell's declaration section only have effect when
+a spell is not assigned a cpref file.
+And of course the less than 20 spells that use -O3 I test.
+However, I do not test -O3 on all architectures.
+
+-O3 makes compilation require longer.
+-O3 might expedite execution of code.
+Therefore, the only benefit of using -O3
+is for compilation of software projects
+where their process runs a CPU core at full bore
+for more than a second.
+If sustained full load is not achieved for more than a second
+then there is next to no benefit for using -O3
+when the optimization risks bugs and requires longer.
+
+Consequently compression programs, bash, MesaLib,
+ffmpeg and some software that is expected to be CPU intensive
+or to be competing with other processes for the CPU
+are compiled with -O3 in order to give Sorcerer a slight
+edge in performance without a significant deficit in compile time.
+It is just enough additional optimization provided for software
+that I hope will deter SAs that are eager to try compiling
+their box with -O3 everything and other unsafe gcc optimizations.
+
+In the past I have had SAs compile boxes with -O3 and
+2 other unsafe gcc optimizations and then tell me how
+terrible Sorcerer is because everything segfaults and crashes.
+Yet unlike them I do not dive into waters of uncertain depth,
+yet instead carefully check the compilation and runtime performance
+of each spell compiled with -O3.
+I am not implying &quot;leave the optimization choice to me,&quot;
+but rather that I will test optimization more so than a typical Sorcerer SA.
+However, I can make mistakes because I do not test on all architectures.
+
+Consequently, if we see segfaulting in binutils and suspect -O3
+then we should report what software segfaulted during compilation.
+and on what architecture with what version of binutils and gcc.
+That way we can gain more certainty of where the problem exists.
+If a problem is distribution wide
+then I can adjust the spell so that all installed versions of binutils
+are recompiled as necessary without -O3 optimization.
+
+Because I do not know if the problem with binutils
+is caused by -O3 optimization nor if the problem is distribution wide
+I merely removed the -O3 from the CFLAGS for binutils
+so that it will use sorcerer default optimizations or
+the SA's assigned cpref file.
+
+It is worth saying that the runtime errors that
+I have seen that involve optimization tend not to be random.
+Some software partially works, especially if the problem exists in a library.
+However, where -O3 did not work involving compression programs
+then the program failed every time it was run.
+
+Therefore, I would suggest that if the problem happens twice
+or is entirely repeatable then try without unsafe optimization
+and see if the problem disappears.
+If the problem only happens once
+then it might not be caused by compilation time optimization.
+There is a surprising amount of complexity and interaction
+with software and hardware.
+Potentially, even a problem reading from disk, memory, swap,
+or latency might cause a random error.
+Compiling 1000 software projects on a fit box still
+has a slim probability of encountering 1 random non-repeatable error.
+That is also the reason for immune-sentinel-retry.
+It can retry a failed spell after a certain interval
+and can be made to retry more than once if the SA wants.
+
+Sorry for being overly verbose.
+What I want to know is...
+Is ld segfaulting on other boxes?
+I am not encountering a problem with ld compiled with -O3.
+Thus far we only have Evert's report.
+With more information we can decide if binutils
+should be recompiled -O2 distribution wide,
+be left as it is, or have -O3 optimization restored to the spell.
+
+I have no problem leaving binutils without -O3 optimization.
+However, SAs might be surprised by how much CPU cycles
+binutils uses during updates.
+Even when ccache may defer some of the cost of compilation
+all object files must still be linked or stuffed into ar archives.
+
+
+On Sun, Jul 31, 2011 at 2:16 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there, Sorcerer Admins.
+</I>&gt;<i>
+</I>&gt;<i> This is something of an old debate, but I do have a few thoughts on
+</I>&gt;<i> the subject, and would like to hear what other Sorcerer admins think.
+</I>&gt;<i>
+</I>&gt;<i> I recently discovered that binutils was compiled with -O3, and created
+</I>&gt;<i> an ld that was segfaulting on my hardware.
+</I>&gt;<i> I forced it to -O2, and recompiled. ld no longer segfaults on my arch.
+</I>&gt;<i> ( Intel Centrino2 )
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> When I first started using Sorcerer, there were no CFLAGS in spells,
+</I>&gt;<i> and whatever the SA decided to compile for was accepted. Being young
+</I>&gt;<i> and on a slow machine, I compiled an entire system with -O3. --- And
+</I>&gt;<i> was sorry I did. Not only did it take much longer to compile, it was
+</I>&gt;<i> also horribly broke.
+</I>&gt;<i>
+</I>&gt;<i> After reading quite a bit on the subject, and quite a few days
+</I>&gt;<i> experimenting, me default is &#160;-O2 since -O2 is what most binary
+</I>&gt;<i> compiled software is shipped with. As such is by far the most tested
+</I>&gt;<i> configuration.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer's default -Os only makes a difference on ancient hardware
+</I>&gt;<i> which has tiny cache and slow memory bandwitdh. On a modern machine I
+</I>&gt;<i> can't tell the difference.
+</I>&gt;<i>
+</I>&gt;<i> -O3 is used very rarely, because speed gains are not universal and
+</I>&gt;<i> have to be measured on a case by case basis. Whatever speed gains are
+</I>&gt;<i> achieved are offset against possible instabilities that this
+</I>&gt;<i> optimization level may cause. A few notable exceptions are ffmpeg, and
+</I>&gt;<i> Mesalib, for which the authors recommend -O3 for their sources, and
+</I>&gt;<i> thus get a bit of testing.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> So, it is my position that a distribution should not apply -O3 to it's
+</I>&gt;<i> core utilities, like we are doing in bash and binutils. While this may
+</I>&gt;<i> work on some architectures, it may be unstable on others, and we
+</I>&gt;<i> should aim for stability rather than speed.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer already has a tool for specifying special CFLAGS for specific spells.
+</I>&gt;<i> The way I think it should work is as follows:
+</I>&gt;<i>
+</I>&gt;<i> An SA like Kyle, that spends the majority of his time in bash, might
+</I>&gt;<i> want to test bash with -O3. If it's stable enough, create a
+</I>&gt;<i> /etc/sorcery/cpref file where -O3 is applied.
+</I>&gt;<i> augur cpref $SPELL $CONF_FILE_NAME would then only apply -O3 for that spell.
+</I>&gt;<i>
+</I>&gt;<i> Another SA might want to do it with mysql to squeeze a little more out
+</I>&gt;<i> of the hardware available.
+</I>&gt;<i>
+</I>&gt;<i> I use a lot of video stuff, so I would compile my video utilities with
+</I>&gt;<i> -O3, and leave the rest of my boxen as stable as possible.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> In the end, I suppose it boils down to this....
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> As a control freak Sorcerer SA, I want to have control over what
+</I>&gt;<i> compiler flags my sources get compiled with. But I am also lazy, and
+</I>&gt;<i> don't want to be over-riding all CFLAGS everywhere, as some spells
+</I>&gt;<i> actually only compile with very specific compiler flags. Specifically,
+</I>&gt;<i> I don't want to be overriding a spell's CFLAGS to make my box more
+</I>&gt;<i> stable.
+</I>&gt;<i>
+</I>&gt;<i> The CFLAGS in the spells then override the CFLAGS I specify in
+</I>&gt;<i> /etc/cpref/default, as they should. Putting CFLAGS in spells are
+</I>&gt;<i> useful when a spell is unstable/uncompilable with safe options, or
+</I>&gt;<i> have very specific CFLAG requirements.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Lately I have seen -O3 cropping up in the grimoire more and more
+</I>&gt;<i> often, and I feel that this is a practice that needs to be
+</I>&gt;<i> discouraged, as it may make some architectures unstable.
+</I>&gt;<i>
+</I>&gt;<i> Putting -O3 on spells should be done by the SA for spells on his own
+</I>&gt;<i> system only, the only exceptions being sources where the source
+</I>&gt;<i> authors actually specify -O3.
+</I>&gt;<i> An SA that then want's to mess with a spell's CFLAGS can do so through
+</I>&gt;<i> augur cpref, for his own box, but can't blame the distribution for any
+</I>&gt;<i> instability that it causes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I feel that even though Sorcerer is a sources-based distribution, I
+</I>&gt;<i> would rather that Sorcerer be known for rock solid stability and ease
+</I>&gt;<i> of maintenance.
+</I>&gt;<i>
+</I>&gt;<i> Anybody have a different view?
+</I>&gt;<i> --
+</I>&gt;<i> -Evert-
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002221.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+	<LI>Next message: <A HREF="002223.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2222">[ date ]</a>
+              <a href="thread.html#2222">[ thread ]</a>
+              <a href="subject.html#2222">[ subject ]</a>
+              <a href="author.html#2222">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New year same problems :)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C596b75860801102331q58fa63cel11df8f74b2be0480%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000358.html">
+   <LINK REL="Next"  HREF="000354.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New year same problems :)</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C596b75860801102331q58fa63cel11df8f74b2be0480%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New year same problems :)">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan 11 08:31:10 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000358.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+        <LI>Next message: <A HREF="000354.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#352">[ date ]</a>
+              <a href="thread.html#352">[ thread ]</a>
+              <a href="subject.html#352">[ subject ]</a>
+              <a href="author.html#352">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 10, 2008 2:36 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> S02lvm (logical volume manager?) needs to have mounts before it can run
+</I>&gt;<i> S04mount should probably run before S02lvm ?
+</I>
+I was reasonably certain it as the other way around.
+If the root filesystem exists on a logical volume
+then mount can not execute until lvm does.
+And mount should not execute until fsck does.
+Therefore, lvm should occur before fsck and
+consequently before mount.
+If that order is incorrect
+then please explain why lvm should execute after fsck and mount?
+
+
+&gt;<i> was going to complain there was no modprobe... but /sbin isn't in the
+</I>&gt;<i> default path of /bin/bash that's running *shrug* found that.
+</I>
+modprobe now executes
+after udev in runlevels 1 2 3 4 5.
+There are two reasons for that.
+Initially, the initramfs did not have a complete set of modules
+for the loading kernel, although now it does.
+Second, udev is assumed to load the necessary modules for
+devices and filesystems in order to properly clear sysvinit
+
+It is now possible to move modprobe to sysinit
+if you prefer and have it execute before or after udev.
+Of course, I prefer a good reason to make the change
+so I can feel some assured that I am will be avoiding
+more problems than it causes.  :)
+
+
+&gt;<i> S00proc doesn't mount proc?
+</I>
+Sure it does.
+
+&gt;<i> it gets into lsb/init-functions, is testing something like mount...
+</I>&gt;<i>
+</I>&gt;<i> parse start
+</I>&gt;<i> case &quot;$1&quot; instart
+</I>&gt;<i> case $SERV in
+</I>&gt;<i> startm
+</I>&gt;<i> sed 's/#.*//' /etc/fstab [filters down to not commented lines I guess]
+</I>&gt;<i> grep -qw /proc
+</I>
+Oh, right...  Now that is a bug.
+And a potentially bad bug at that.
+
+You have /proc in /fstab
+So S00proc did not mount proc.
+Thanks for spotting that.
+Obviously, checking for /proc /sys /dev in /etc/fstab is unwise.
+Thanks for finding it and pointing it out.
+I did not discover it because my /etc/fstabs were already adjusted
+to not include virtual filesystems.
+I created a backward incompatibility when I generalized
+the mounting for virtual filesystems.
+
+&gt;<i> Also, isn't there a ';' missing after 'then log_success_msg  &quot;$NAME mounted&quot;
+</I>
+';' is not required there
+
+If it was missing ';' then a bash error message would occur.
+
+&gt;<i> so S00proc start doesn't do anything
+</I>&gt;<i> neither does S00sys
+</I>
+I estimate the 3 virtual fileystems that should not have an /etc/fstab
+check are:
+/proc /sys /dev because all 3 would probably be mounted before
+the mount init-script executes.
+
+Thanks for the bug reports.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000358.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+	<LI>Next message: <A HREF="000354.html">[Sorcerer-admins] A couple problems, one with a solution
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#352">[ date ]</a>
+              <a href="thread.html#352">[ thread ]</a>
+              <a href="subject.html#352">[ subject ]</a>
+              <a href="author.html#352">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

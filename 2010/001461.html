@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] udev does not create sda, sdb and md0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20does%20not%20create%20sda%2C%20sdb%20and%20md0&In-Reply-To=%3C27f41a931002090825k29cd015fne6548f0edccb9395%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001460.html">
+   <LINK REL="Next"  HREF="001463.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] udev does not create sda, sdb and md0</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20does%20not%20create%20sda%2C%20sdb%20and%20md0&In-Reply-To=%3C27f41a931002090825k29cd015fne6548f0edccb9395%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] udev does not create sda, sdb and md0">evorster at gmail.com
+       </A><BR>
+    <I>Tue Feb  9 17:25:39 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001460.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+        <LI>Next message: <A HREF="001463.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1461">[ date ]</a>
+              <a href="thread.html#1461">[ thread ]</a>
+              <a href="subject.html#1461">[ subject ]</a>
+              <a href="author.html#1461">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah, I use the monolithic kernel as well.
+
+It really is faster... faster to compile, faster to run...
+
+Saying it receives no testing is a little unfair. It just gets more
+difficult to switch between linux-modular and linux with every release of
+Sorcery.
+
+I see the need for a modular kernel on an I/R, but once installed, and an SA
+knows how to roll his own kernel, the overhead of making a new initramfs
+seems superfluous. Also, there is less to go wrong, as there is less
+complexity with a monolithic kernel.
+
+Which kernel version, and which udev version are you using?
+
+Did you recently &quot;tweak&quot; the kernel a bit?
+
+-Evert Vorster-
+
+On Tue, Feb 9, 2010 at 2:34 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> &gt; will try if needed, but it still boots ok, but when boot is done and when
+</I>&gt;<i> i
+</I>&gt;<i> &gt; can login to system, its missing /dev/sda, sdb and md0, but udev has
+</I>&gt;<i> managed
+</I>&gt;<i> &gt; todo other devices ok afaik... so i dont rule out that current boot
+</I>&gt;<i> &gt; procedure with current init-scripts causes this because i dont use
+</I>&gt;<i> modular
+</I>&gt;<i> &gt; kernel spell.
+</I>&gt;<i>
+</I>&gt;<i> In theory using a monolithic custom kernel without initrmfs to boot
+</I>&gt;<i> should still work.
+</I>&gt;<i> However, in practice it receives no testing anymore.
+</I>&gt;<i> Since you can boot your box and
+</I>&gt;<i> then make temporary repairs
+</I>&gt;<i> then if I were you I would try using one or two versions
+</I>&gt;<i> of udev that are older than current to see if
+</I>&gt;<i> the problem might indeed be caused by udev.
+</I>&gt;<i> Because your disk controller drives are compiled
+</I>&gt;<i> into the kernel and not modules
+</I>&gt;<i> udev might not handle them as a cold plug event
+</I>&gt;<i> and therefore might not create device nodes for them,
+</I>&gt;<i> because no modules have to be loaded.
+</I>&gt;<i>
+</I>&gt;<i> I also agree that the problem might be caused by
+</I>&gt;<i> a Sorcerer init-script.
+</I>&gt;<i> However, I tend to be more suspicious of udev.
+</I>&gt;<i>
+</I>&gt;<i> The problem should be identified and properly fixed.
+</I>&gt;<i> However, if one were to circumvent it for convenience
+</I>&gt;<i> then those missing device nodes could be added to
+</I>&gt;<i> /lib/udev/dev/
+</I>&gt;<i> Then they would be copied into /dev upon boot.
+</I>&gt;<i> This is not a proper solution.
+</I>&gt;<i> It merely circumvents the problem of not having
+</I>&gt;<i> /dev/sd* device nodes during boot.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I might actually pray for devtmpfs, <A HREF="http://lwn.net/Articles/330985/">http://lwn.net/Articles/330985/</A> ,
+</I>&gt;<i> &gt; <A HREF="http://lwn.net/Articles/331818/">http://lwn.net/Articles/331818/</A> , <A HREF="http://lwn.net/Articles/370418/">http://lwn.net/Articles/370418/</A>
+</I>&gt;<i>
+</I>&gt;<i> I also read about the resurgence of interest in devfs or devtmpfs.
+</I>&gt;<i> Indeed it does create device nodes for hardware
+</I>&gt;<i> whether the driver is compiled into the kernel or loaded as a module.
+</I>&gt;<i> However, devtmpfs is not in any way useful for booting
+</I>&gt;<i> using a modular kernel and initramfs,
+</I>&gt;<i> because something must load modules in proper order.
+</I>&gt;<i> That something is udev.
+</I>&gt;<i> Also udev has rules in order to give device nodes
+</I>&gt;<i> proper ownership and permission.
+</I>&gt;<i> devtmpfs might not have that yet.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; Could that be activated and then delete udev?
+</I>&gt;<i>
+</I>&gt;<i> That requires more than a minute's worth of consideration.
+</I>&gt;<i> I played with it briefly before and
+</I>&gt;<i> then decided to stick with udev and tmpfs for /dev
+</I>&gt;<i> However, I do not remember my reason for that decision,
+</I>&gt;<i> and I did not write notes about the experiement.
+</I>&gt;<i> I was merely curious to see what would appear in /dev/
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; I hate udev, it sucks big time.
+</I>&gt;<i>
+</I>&gt;<i> The udev idea is great, the implementation sometimes is lacking.
+</I>&gt;<i>
+</I>&gt;<i> &gt; Why, because its too much kernel version dependent, i mean, old kernel
+</I>&gt;<i> &gt; and new udev its nogo, then new kernel and old udev, its also nogo,
+</I>&gt;<i> grrrrrr.
+</I>&gt;<i>
+</I>&gt;<i> Yes, this is true.
+</I>&gt;<i> As soon as a new awesome kernel feature
+</I>&gt;<i> appears for more than a month
+</I>&gt;<i> then udev wants to start using it.
+</I>&gt;<i> And generally in the past with the bugs udev had
+</I>&gt;<i> updating was often better than staying as is.
+</I>&gt;<i>
+</I>&gt;<i> The coldplug system that I created for replicating
+</I>&gt;<i> the outcome of previous udev handled coldplug events
+</I>&gt;<i> I created as a compromise to udev so that it could be used
+</I>&gt;<i> during boot when udev is being flaky.
+</I>&gt;<i> It is probably not faster than using devtmpfs
+</I>&gt;<i> with a monolithic kernel.
+</I>&gt;<i> However, it can preserve proper ownership and permissions
+</I>&gt;<i> and it is already tested and works on Sorcerer boxes
+</I>&gt;<i> that use linux-modular with initramfs.
+</I>&gt;<i>
+</I>&gt;<i> Whether devtmpfs can be used in place of udev
+</I>&gt;<i> at least for monoltihic kernels requires a bit more
+</I>&gt;<i> discussion and consideration.
+</I>&gt;<i> If implemented incorrectly it either could block
+</I>&gt;<i> linux-modular boxes from being able to boot properly
+</I>&gt;<i> or it could be cast accidentally and then cause that problem.
+</I>&gt;<i> Did you read anything about how node
+</I>&gt;<i> ownership and permission should be maintained when
+</I>&gt;<i> using the new devtmpfs?
+</I>&gt;<i>
+</I>&gt;<i> And what will your box do for hotplug events without udev?
+</I>&gt;<i> Does it not have any hotplug events?
+</I>&gt;<i> Can you put in a digital camera and remove it
+</I>&gt;<i> or a removable SCSI style thumb stick USB memory drive?
+</I>&gt;<i> Does that work properly without udev to handle the events?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100209/0357724d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100209/0357724d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001460.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+	<LI>Next message: <A HREF="001463.html">[Sorcerer-admins] udev does not create sda, sdb and md0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1461">[ date ]</a>
+              <a href="thread.html#1461">[ thread ]</a>
+              <a href="subject.html#1461">[ subject ]</a>
+              <a href="author.html#1461">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

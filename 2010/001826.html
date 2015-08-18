@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] openssh failed to install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3CAANLkTil7y6IaWFswU9BjVysgIxV3IEczwowq5iZYBMDh%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001815.html">
+   <LINK REL="Next"  HREF="001832.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] openssh failed to install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3CAANLkTil7y6IaWFswU9BjVysgIxV3IEczwowq5iZYBMDh%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] openssh failed to install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 21 19:28:47 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001815.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+        <LI>Next message: <A HREF="001832.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1826">[ date ]</a>
+              <a href="thread.html#1826">[ thread ]</a>
+              <a href="subject.html#1826">[ subject ]</a>
+              <a href="author.html#1826">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>gzip -cd tcp_wrappers_7.6.tar.gz | tar --no-same-owner
+--no-same-permissions -C /tmp/open -ixf -
+tar: Skipping to next header
+tar: Exiting with failure status due to previous errors
+
+I do not have an easy solution for that just yet.
+The tarball is improper?
+This problem seems consistently repeatable with
+tar versions 1.23 and 1.22
+
+tcp_wrappers_7.6.tar.gz 	98 KB 	04/08/1997 	12:00:00 AM
+
+Maybe tar worked slightly differently
+during the previous millennium?
+For the moment...
+extract the tarball to a directory.
+retar it
+replace the tarball in /var/cache/sources/tcp_wrappers/7.6/
+
+Oddly, I am not recalling any similar problems
+reported with tcp_wrappers
+I have no guesses about when this started happening.
+
+To be very specific about this problem.
+cast tries to decompress and untar the source.
+tar exits with an error.
+cast removes any directories/files created.
+cast tries to decompress and untar it again.
+tar exits with an error, again.
+cast decides that the tarball must be corrupt.
+cast removes the tarball from /var/cache/sources.
+the spell fails to compile.
+
+My preference is to not use tcp_wrappers with openssh.
+tcp_wrappers is an optional requirement.
+I intended to remove from the grimoire in 2009.
+However, SAs that did not want to set up proper iptables
+firewalling rules wanted me to continue including
+tcp_wrappers in the grimoire.
+
+I am not treating this as a sorcery bug at this time.
+Sorcerer is not responsible for tcp_wrappers tarball nor
+download server providing a problematic tarball.
+
+I am not removing the -i from the tar command,
+because that solves more problems than it causes.
+I would have to retest decompression and extraction
+of 4000 sources if I remove the -i
+
+Does anyone want to recommend a substitute for
+tcp_wrappers?
+There might be one or two stubborn software projects
+in the grimoire that will fail to compile without tcp_wrappers.
+However, openssh is not one of them.
+
+As I said above
+please re-roll the tcp_wrappers tarball
+before casting it otherwise cast will remove it from
+/var/cache/sources/tcp_wrappers/7.6/
+and fail the tcp_wrappers cast attempt.
+
+Sorcerer maintainers did not roll the tcp_wrappers tarball.
+The primary hosting is not on Sorcerer servers.
+The tarball does not compile out of box
+and requires patching prior to compiling.
+The original software author should have updated
+his source years ago to fix that.
+
+Sorcerer might not be the most ideal place
+to report a bug about a tarball rolled 13 years ago.
+Then again after 13 years of absolutely no maintenance
+who cares if it is buggy, problematic, or a security risks?
+You really want to be using tcp_wrappers, yes?
+*lol*
+
+# augur forget tcp_wrappers
+# cast openssh
+
+When it asks if you want tcp_wrappers as an optional
+please say no.
+
+If someone who uses tcp_wrappers wants
+for a better solution
+then please implement one.
+This ancient source is causing more problems than it is worth.
+I would prefer to dispose of it.
+
+
+On Wed, Jul 21, 2010 at 1:26 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> &#160;Here I also found the problem.
+</I>&gt;<i>
+</I>&gt;<i> Openssh needs tcpwrappers.
+</I>&gt;<i>
+</I>&gt;<i> And tcpwrappers had a compile error.
+</I>&gt;<i>
+</I>&gt;<i> percent.c
+</I>&gt;<i> File to patch :
+</I>&gt;<i> Skipping patch.
+</I>&gt;<i> 2 out of 2 hunks ignored.
+</I>&gt;<i> can't find file to patch at input line 109
+</I>&gt;<i> Perhaps you used the wrong -p or --strip option.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001815.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+	<LI>Next message: <A HREF="001832.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1826">[ date ]</a>
+              <a href="thread.html#1826">[ thread ]</a>
+              <a href="subject.html#1826">[ subject ]</a>
+              <a href="author.html#1826">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

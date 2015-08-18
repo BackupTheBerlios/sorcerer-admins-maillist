@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTim2f59ES3KqI8j9Sm7DIjbzF_piKkjfXHQHVqMt%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001682.html">
+   <LINK REL="Next"  HREF="001684.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTim2f59ES3KqI8j9Sm7DIjbzF_piKkjfXHQHVqMt%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sun Jun 27 00:18:21 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001682.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001684.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1683">[ date ]</a>
+              <a href="thread.html#1683">[ thread ]</a>
+              <a href="subject.html#1683">[ subject ]</a>
+              <a href="author.html#1683">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>dhcpcd dors try once then if succeed fork to background
+
+by the way maybe dhcp spell shall be improved, because it compile both the
+server and the client.... however the client don't work on all my networks
+and I need the server when the box is used as gateway (ie most of the time)
+but by default the network scripts are trying first dhclient.... maybe
+another option in the configuration file? something like
+DHCLIENT=/sbin/dhcpcd
+
+maybe there shall be another protection :
+at the begin of the network start, setsid a network start session, at the
+end of the network start session script, check if there are still process
+sharing the SID, if yes wait for them to finish, if no then simply exit....
+
+like this we protect the network scripts from orphaning processes
+what do you think of that?
+thanks and regards
+JLM
+
+On Sat, Jun 26, 2010 at 2:26 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> networks uses a lockfile rather than a SID or PID
+</I>&gt;<i> because for some types of network connections
+</I>&gt;<i> a program does not have to be constantly running.
+</I>&gt;<i> Therefore, /etc/init.d/networks start
+</I>&gt;<i> is assumed never to end unless
+</I>&gt;<i> /etc/init.d/networks stop
+</I>&gt;<i> is issued.
+</I>&gt;<i>
+</I>&gt;<i> I do not use dhcpcd, except sometimes in qemu.
+</I>&gt;<i> Does it stay up always and renew the lease every time?
+</I>&gt;<i> Does it crash
+</I>&gt;<i> Should the network templates be re-written so
+</I>&gt;<i> that they properly pkill dhcpcd if it is running
+</I>&gt;<i> when /etc/init.d/networks stop is run.
+</I>&gt;<i> I do not remember what happens.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sat, Jun 26, 2010 at 10:03 AM, jean-luc malet
+</I>&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; dhcpcd is launched by the network service...... again we fall into the
+</I>&gt;<i> trap
+</I>&gt;<i> &gt; of having a service that spawn a child that we can't reliably kill
+</I>&gt;<i> without
+</I>&gt;<i> &gt; SID files
+</I>&gt;<i> &gt; I said that launching and stoping services are unreliable because it
+</I>&gt;<i> works
+</I>&gt;<i> &gt; 80 to 90% of time.... computers are binary 0 or 1....
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100626/a62db7c5/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100626/a62db7c5/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001682.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001684.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1683">[ date ]</a>
+              <a href="thread.html#1683">[ thread ]</a>
+              <a href="subject.html#1683">[ subject ]</a>
+              <a href="author.html#1683">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

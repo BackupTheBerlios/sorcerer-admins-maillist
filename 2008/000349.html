@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New year same problems :)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C8596d02a0801101336x57f3f405tb27565a7e79e36aa%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000348.html">
+   <LINK REL="Next"  HREF="000350.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New year same problems :)</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C8596d02a0801101336x57f3f405tb27565a7e79e36aa%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New year same problems :)">d3ck0r at gmail.com
+       </A><BR>
+    <I>Thu Jan 10 22:36:49 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000348.html">[Sorcerer-admins] ATI 9800 pro melts yet another fan.
+</A></li>
+        <LI>Next message: <A HREF="000350.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#349">[ date ]</a>
+              <a href="thread.html#349">[ thread ]</a>
+              <a href="subject.html#349">[ subject ]</a>
+              <a href="author.html#349">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay not exactly the same... the box still doesn't boot, but at least
+it gets past udev startup.
+
+I notice while starting stuff by hand, I am going through
+/etc/rc.d/rcS.d and running each one in order with start
+
+(started with 2.6.23.12 rdinit=/bin/bash )
+
+
+S02lvm (logical volume manager?) needs to have mounts before it can run
+S04mount should probably run before S02lvm ?
+
+....
+was going to complain there was no modprobe... but /sbin isn't in the
+default path of /bin/bash that's running *shrug* found that.
+
+....
+
+S00proc doesn't mount proc?
+
+it gets into lsb/init-functions, is testing something like mount...
+
+parse start
+case &quot;$1&quot; instart
+case $SERV in
+startm
+sed 's/#.*//' /etc/fstab [filters down to not commented lines I guess]
+grep -qw /proc
+
+[end]
+
+I run that by hand, and it end up doing the 'else' condition of that
+if... there
+
+the actual line is
+
+if ! sed 's/#.*//' /etc/fstab | grep -qw &quot;$NAME&quot; &amp;&amp; .....
+
+that first expression fails, and there is no else clause in init-functions
+
+if ! sed 's/#.*//' /etc/fstab | grep -qw &quot;$NAME&quot; then echo yes; else echo no; fi
+
+prints 'no'
+
+
+Also, isn't there a ';' missing after 'then log_success_msg  &quot;$NAME mounted&quot;
+
+so S00proc start doesn't do anything
+neither does S00sys
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000348.html">[Sorcerer-admins] ATI 9800 pro melts yet another fan.
+</A></li>
+	<LI>Next message: <A HREF="000350.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#349">[ date ]</a>
+              <a href="thread.html#349">[ thread ]</a>
+              <a href="subject.html#349">[ subject ]</a>
+              <a href="author.html#349">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

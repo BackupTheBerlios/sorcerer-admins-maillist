@@ -1,0 +1,560 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Detailed installation issues....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Detailed%20installation%20issues....&In-Reply-To=%3C596b75861003151230o3cea9c31l817b08594b531162%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001531.html">
+   <LINK REL="Next"  HREF="001514.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Detailed installation issues....</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Detailed%20installation%20issues....&In-Reply-To=%3C596b75861003151230o3cea9c31l817b08594b531162%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Detailed installation issues....">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 15 20:30:07 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001531.html">[Sorcerer-admins] Detailed installation issues....
+</A></li>
+        <LI>Next message: <A HREF="001514.html">[Sorcerer-admins] NFS mount problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1538">[ date ]</a>
+              <a href="thread.html#1538">[ thread ]</a>
+              <a href="subject.html#1538">[ subject ]</a>
+              <a href="author.html#1538">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I strongly recommend a 2G swap partition for any box
+that does not have an excessive amount of RAM.
+For boxes that have an excessive amount of RAM
+then a 1G swap partition is excellent.
+Basically, some portions of processes load into memory
+and that memory never changes while the process runs.
+Also that portion of memory might never be accessed.
+Therefore, having swap space allows linux to move
+that memory to disk while making more RAM available
+for caches and buffers and other processes.
+
+I have run boxes without any swap.
+Yes it works.
+But somehow the performance does not seem exactly the same.
+With today's boxes having ample fixed disk space
+a 1G swap partition is not much of a waste even if
+only 5% of it is ever in use.
+
+Whether to have swap space or not is up to the SA.
+Most Sorcerer boxes will compile on tmpfs.
+Some sources such as firefox, qt, and others
+will consume a large portion of memory during compilation.
+Having swap helps ensure that a box will not run out of memory
+and yet will still remain somewhat effective at disk caching
+and keeping other processes running at peak.
+
+There are slight differences in swapping on IA32 and x86_64 boxes.
+For one the page size differs.
+IA32 can swap at minimum 4K of memory to disk.
+x86_64 can swap at minimum 64K of memory to disk.
+Therefore, swapping tends to be less fragmented
+and faster on x86_64 boxes.
+However, x86_64 boxes under memory duress would not
+be able to swap as much memory to disk as IA32.
+Therefore, I recommend that only IA32 be configured
+with a small amount of RAM, and that x86_64 boxes
+have at least 3G or more RAM installed.
+Because the code size is somewhat larger on x86_64
+and the default integer size is twice as large as IA32
+one should consider that memory usage on x86_64
+is roughly 1.5 times that of IA32.
+Therefore, what amounts to 3G of RAM on an IA32
+has the feel and performance of 2G of RAM on x86_64.
+This is just a rough estimate, of course.
+
+When building a box please consider the amount of RAM
+required to perform the role the box is intended
+and then add 1G more ontop of that so that updating
+the box will show no significant performance drain.
+
+Swap space provides a nice compromise and this explains why.
+/root/.sorcery/ is tmpfs
+It will normally have about 64M to 128M on it.
+It is swappable and thus can be freed from RAM
+when it is not in use.
+/usr/src/sorcery/ is tmpfs
+It will normally have less than 128M of usage,
+but is allowed up to 3G of memory.
+The only time /usr/src/sorcery/ requires
+a large amount of memory
+is for compiling software such as firefox.
+
+Normally, a box might require roll specific RAM + 256M
+in order to update without showing any impact.
+However, role RAM + 1G provides excellent coverage
+for compiling everything without showing
+any impact upon performance.
+However, even so the largest of large sources such as firefox
+and/or qt might still require more than 1G of memory during
+compilation.
+Therefore, this is where the swap space keeps a box from
+grinding to a halt and running out of memory.
+
+So to make it simple I recommend:
+1G swap if the box has &gt; 4G of RAM
+2G of swap if the box has &lt; 4G of RAM
+
+I understand if that seems a bit confusing
+consider that the RAM requirements for pre-compiled
+binary based distributions only specify what is required
+in order to run software such as xorg, firefox, and KDE.
+However, with Sorcerer the SA must make that slight
+allowance for some additional memory that is used during
+updates.
+Otherwise the SA would have to reduce the box to runlevel S or 1
+and terminate services during updates.
+And Sorcerer boxes are intended to maintain nearly uninterrupted
+up-time of services while updating.
+
+Anyway, that said I have Sorcerer boxes deploy
+that have only 512M of RAM and 2G of swap space.
+Depending on what a box is used for
+then even low RAM configurations are possible.
+However, do not expect rip-roaring performance
+if a box is so short on RAM that is must almost constantly
+be reading and writing to space space.
+
+
+On Mon, Mar 15, 2010 at 2:58 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">bradley at northtech.us</A>&gt; wrote:
+&gt;<i> Hi Evert,
+</I>&gt;<i>
+</I>&gt;<i> pls see comments below...
+</I>&gt;<i>
+</I>&gt;&gt;<i> Not much time on this end, but I do see something serious.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> swap is not mounted on the directory tree as such. That's why the &quot;none&quot;
+</I>&gt;&gt;<i> tag
+</I>&gt;&gt;<i> is used instead of a mount-point.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> From reading through what you have attempted so far, it looks to me that
+</I>&gt;&gt;<i> you
+</I>&gt;&gt;<i> mounted both hda1 and hda2 to / in the fstab.
+</I>&gt;<i>
+</I>&gt;<i> oic! You're talking about this:
+</I>&gt;<i>
+</I>&gt;<i> &lt;snip&gt;
+</I>&gt;<i>
+</I>&gt;&gt;&gt;<i> Now on to the next partition, /dev/hda2, which I have designated as a
+</I>&gt;&gt;&gt;<i> 3GB
+</I>&gt;&gt;&gt;<i> Swap partition, since this is a source based distro that needs a lot of
+</I>&gt;&gt;&gt;<i> virtual memory for compile time.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Device &#160;/dev/hda2
+</I>&gt;&gt;&gt;<i> Mount &#160; /
+</I>&gt;&gt;&gt;<i> Filesystem &#160; &#160; &#160;ext4
+</I>&gt;&gt;&gt;<i> Options &#160; &#160; &#160; &#160; defaults,noatime
+</I>&gt;&gt;&gt;<i> Dump &#160; &#160; &#160; &#160; &#160; &#160;0
+</I>&gt;&gt;&gt;<i> Order &#160; &#160; &#160; &#160; &#160; 0
+</I>&gt;&gt;&gt;<i> Feature &#160; &#160; &#160; &#160; -0 dir_index,filetype,sparse_super
+</I>&gt;&gt;&gt;<i> Check
+</I>&gt;&gt;&gt;<i> Encryption
+</I>&gt;&gt;&gt;<i> Empty &#160; &#160; &#160; &#160; &#160; All fields removing entry
+</I>&gt;&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &lt;/snip&gt;
+</I>&gt;<i>
+</I>&gt;<i> The installer did indeed change my mount point entry from '/swap' to '/'
+</I>&gt;<i> didn't it?
+</I>&gt;<i>
+</I>&gt;<i> Definitely not good!
+</I>&gt;<i>
+</I>&gt;<i> /dev/hda2 was set to type 82 (Linux Swap) and itialized as such, but I
+</I>&gt;<i> would suppose that not entering the mount point would be best, which would
+</I>&gt;<i> presumably enter 'NONE' for me.
+</I>&gt;<i>
+</I>&gt;<i> Regardless, the logic of creating a swap partition for the purposes of the
+</I>&gt;<i> manual are moot anyway, and I'm going to leave the default swap file in
+</I>&gt;<i> there instead.
+</I>&gt;<i>
+</I>&gt;<i> I'm not really sure of an advantage to this, I've always created a
+</I>&gt;<i> partition for swap, but was checking the script for sinstall which creates
+</I>&gt;<i> the swap file and initializes it instead and that will work just fine
+</I>&gt;<i> (although personally, I think more than 256MBytes for a compile intensive
+</I>&gt;<i> OS might be better)
+</I>&gt;<i>
+</I>&gt;<i> Thanks Evert!
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Bad things happen when you try this.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So, in short, leave the swap to mount to &quot;none&quot;
+</I>&gt;<i>
+</I>&gt;<i> Will do ;)
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hope this helps..
+</I>&gt;&gt;<i> -Evert Vorster-
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Mar 12, 2010 at 10:15 PM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">bradley at northtech.us</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Okay a detailed analysis of the installation issues were asked for. And
+</I>&gt;&gt;&gt;<i> considering that there are no documents related to installing Sorcerer,
+</I>&gt;&gt;&gt;<i> and the emailed docs that are now in the recent archives of this list
+</I>&gt;&gt;&gt;<i> are
+</I>&gt;&gt;&gt;<i> inaccurate (in that they do not describe what really occurs in
+</I>&gt;&gt;&gt;<i> chronological order, and therefore leave out so much of what happens
+</I>&gt;&gt;&gt;<i> that
+</I>&gt;&gt;&gt;<i> the user does not know what to skip or when - in fact, If I read it
+</I>&gt;&gt;&gt;<i> correctly, it indicated to just do the install and let Sorcerer figure
+</I>&gt;&gt;&gt;<i> out
+</I>&gt;&gt;&gt;<i> on it's own how to configure /etc/fstab, format the file systems,
+</I>&gt;&gt;&gt;<i> etc...),
+</I>&gt;&gt;&gt;<i> I decided to do a write up on the installation program, showing exactly
+</I>&gt;&gt;&gt;<i> what happens, when, in the hopes that this might shed some light on just
+</I>&gt;&gt;&gt;<i> where SAs are having issues.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> And I'm not a beginning SA either. IMO, given the current state of the
+</I>&gt;&gt;&gt;<i> sinstall process, it would be better (even for a noob) to just perform
+</I>&gt;&gt;&gt;<i> the
+</I>&gt;&gt;&gt;<i> fdisk, fstab, mkfs's, swapons, etc., by hand.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> We really need to fix the sinstall process so it can be understood by
+</I>&gt;&gt;&gt;<i> people, IMO, and I would like to help with that process as well as
+</I>&gt;&gt;&gt;<i> develop
+</I>&gt;&gt;&gt;<i> a comprehensive set of docs to make the installation, compile, and
+</I>&gt;&gt;&gt;<i> configuration process straight-forward and understandable.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This will go a long way towards the adoption of this really kewl distro
+</I>&gt;&gt;&gt;<i> :)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> -----### The Installation Process as it currently is ###-----
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Immediately after selecting the default keyboard mapping, a message is
+</I>&gt;&gt;&gt;<i> displayed saying:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;rpcbind: cannot bind * on udp6: address already in use&quot;
+</I>&gt;&gt;&gt;<i> &quot;rpcbind: cannot bind tcp6: address already in use&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> then the screen to continue the boot process comes up. Selecting
+</I>&gt;&gt;&gt;<i> continue
+</I>&gt;&gt;&gt;<i> boot displays:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;Welcome to Sorcerer.&quot;
+</I>&gt;&gt;&gt;<i> &quot;Please login as root.&quot;
+</I>&gt;&gt;&gt;<i> &quot;Press enter for password.&quot;
+</I>&gt;&gt;&gt;<i> &quot;/sbin/sinstall
+</I>&gt;&gt;&gt;<i> to begin a menu driven installation.&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Then a login prompt comes up, but before one can enter, 'root', and
+</I>&gt;&gt;&gt;<i> press
+</I>&gt;&gt;&gt;<i> enter for the blank password they are disrupted by a message saying:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;Fri Mar12 11:55:16&quot;
+</I>&gt;&gt;&gt;<i> &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at hostname</A>:~# /Mar 12 11:55:18 hostname.unknown kernel: Error:
+</I>&gt;&gt;&gt;<i> Driver
+</I>&gt;&gt;&gt;<i> 'pcspkr' is already registered, aborting...&quot;
+</I>&gt;&gt;&gt;<i> &quot;Mar 12 11:55:18 hostname.unknown kernel: piix4_smbus 0000:00:07.0:
+</I>&gt;&gt;&gt;<i> SMBus
+</I>&gt;&gt;&gt;<i> base address uninitialized - upgrade BIOS or use force_addrr=0xaddr&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> At this point, if you know what's going on, you can enter root in the
+</I>&gt;&gt;&gt;<i> middle of a blank field, and then you'll get the password prompt.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> When you enter the blank password, you receive a message saying:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;~bash: /: is a directory
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Fri Mar 12 12:05:47
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at hostname</A>:~#&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> At this point, if the user is not completely confused, they can enter
+</I>&gt;&gt;&gt;<i> /sbin/sinstall, and bring up the installer.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> lsmod (optional) #I do nothing
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> modprobe (optional) #I do nothing
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> rmmod (optional) #I do nothing
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> mbr (optional) &#160;#I enter this, choose /dev/hda, and it sets the MBR
+</I>&gt;&gt;&gt;<i> (presumably).
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> partition (optional) #I enter this, and create a /dev/hda1 of about
+</I>&gt;&gt;&gt;<i> 18GBytes (18431.86), set it bootable, create a /dev/hda2 of about
+</I>&gt;&gt;&gt;<i> 3GBytes
+</I>&gt;&gt;&gt;<i> (3042.91), out of a total of 20GB, set its type to '83', write the new
+</I>&gt;&gt;&gt;<i> partition table, and exit.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> (That's actually the display from cfdisk, which I don't use. I use
+</I>&gt;&gt;&gt;<i> fdisk,
+</I>&gt;&gt;&gt;<i> because I'm more comfortable with it, so the actual report is:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> /dev/hda1 &#160; &#160; &#160; * &#160; &#160; &#160; 1 &#160; &#160; &#160; 35714 &#160; 17999824+ &#160; &#160; &#160; 83 &#160; &#160; &#160;Linux
+</I>&gt;&gt;&gt;<i> /dev/hda2 &#160; &#160; &#160; &#160; &#160; &#160; &#160; 35715 &#160; 41610 &#160; 2971584 &#160; &#160; &#160; &#160; 82 &#160; &#160; &#160;Linux
+</I>&gt;&gt;&gt;<i> swap
+</I>&gt;&gt;&gt;<i> / Solaris
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> At this point, the installer reports that both the 'mbr' and 'partition'
+</I>&gt;&gt;&gt;<i> sections are &quot;complete&quot;, so I move on to &quot;modify_fstab (required)&quot;.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The user is presented with a rather confusing menu that displays the
+</I>&gt;&gt;&gt;<i> following:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> device &#160; &#160; &#160; &#160; &#160;mount filesys option d o
+</I>&gt;&gt;&gt;<i> /dev/hda1 &#160; &#160; &#160; none unknown defauults, natime 0 0
+</I>&gt;&gt;&gt;<i> /dev/hda2 &#160; &#160; &#160; none unknown defaults, natime 0 0
+</I>&gt;&gt;&gt;<i> /swap &#160; &#160; &#160; &#160; &#160; none swap defaults 0 0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Now, I don't really have a problem with /etc/fstab, but getting through
+</I>&gt;&gt;&gt;<i> this section is totally confusing.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'll go through these one by one, saving &quot;device&quot; for last, since it is
+</I>&gt;&gt;&gt;<i> the weirdest.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> /dev/hda1:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Device &#160;/dev/hda1
+</I>&gt;&gt;&gt;<i> Mount &#160; /
+</I>&gt;&gt;&gt;<i> Filesystem &#160; &#160; &#160;ext4
+</I>&gt;&gt;&gt;<i> Options &#160; &#160; &#160; &#160; defaults,noatime
+</I>&gt;&gt;&gt;<i> Dump &#160; &#160; &#160; &#160; &#160; &#160;0
+</I>&gt;&gt;&gt;<i> Order &#160; &#160; &#160; &#160; &#160; 0
+</I>&gt;&gt;&gt;<i> Feature &#160; &#160; &#160; &#160; -0 dir_index,filetype,sparse_super
+</I>&gt;&gt;&gt;<i> Check
+</I>&gt;&gt;&gt;<i> Encryption
+</I>&gt;&gt;&gt;<i> Empty &#160; &#160; &#160; &#160; &#160; All fields removing entry
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Basically, all I did was set the mount point to &quot;/&quot;, and chose the
+</I>&gt;&gt;&gt;<i> &quot;ext4&quot;
+</I>&gt;&gt;&gt;<i> filesystem (which is the default). Everything else looks good to me.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Now on to the next partition, /dev/hda2, which I have designated as a
+</I>&gt;&gt;&gt;<i> 3GB
+</I>&gt;&gt;&gt;<i> Swap partition, since this is a source based distro that needs a lot of
+</I>&gt;&gt;&gt;<i> virtual memory for compile time.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Device &#160;/dev/hda2
+</I>&gt;&gt;&gt;<i> Mount &#160; /
+</I>&gt;&gt;&gt;<i> Filesystem &#160; &#160; &#160;ext4
+</I>&gt;&gt;&gt;<i> Options &#160; &#160; &#160; &#160; defaults,noatime
+</I>&gt;&gt;&gt;<i> Dump &#160; &#160; &#160; &#160; &#160; &#160;0
+</I>&gt;&gt;&gt;<i> Order &#160; &#160; &#160; &#160; &#160; 0
+</I>&gt;&gt;&gt;<i> Feature &#160; &#160; &#160; &#160; -0 dir_index,filetype,sparse_super
+</I>&gt;&gt;&gt;<i> Check
+</I>&gt;&gt;&gt;<i> Encryption
+</I>&gt;&gt;&gt;<i> Empty &#160; &#160; &#160; &#160; &#160; All fields removing entry
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> At this point, I do something wrong and the /dev/hda2 entry disappears,
+</I>&gt;&gt;&gt;<i> I
+</I>&gt;&gt;&gt;<i> try to edit the /swap entry and it disappears too, then I try to check
+</I>&gt;&gt;&gt;<i> out
+</I>&gt;&gt;&gt;<i> the device entry and something unintelligible flashes by the screen to
+</I>&gt;&gt;&gt;<i> fast to tell what it says, I'm told that something didn't get completed,
+</I>&gt;&gt;&gt;<i> and since I can't seem to put back the /dev/hda2 entry to give myself a
+</I>&gt;&gt;&gt;<i> big swap disk, I move on...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Since I know that something has gone bad wrong, I checkout the entry
+</I>&gt;&gt;&gt;<i> entitled, &quot;reload fstab&quot;. That seems to put everything back to the way
+</I>&gt;&gt;&gt;<i> it
+</I>&gt;&gt;&gt;<i> originally was, so I go back and do the fstab again:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So I enter the /dev/hda2 again and set the mount point to /swap. Then I
+</I>&gt;&gt;&gt;<i> set the filesystem to swap, when I come out of that screen, it says my
+</I>&gt;&gt;&gt;<i> mount point is none, but that the filesystem is swap.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I figure that for some reason, the installer system must be correct so I
+</I>&gt;&gt;&gt;<i> move ahead...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I enter the /swap selection on the screen that I had no understanding as
+</I>&gt;&gt;&gt;<i> to why it existed in the first place (Interestingly enough, it said that
+</I>&gt;&gt;&gt;<i> the swap size was only 256MBytes), select &quot;Device&quot;, then edit nothing
+</I>&gt;&gt;&gt;<i> because something flashes across the screen and the menu appears again.
+</I>&gt;&gt;&gt;<i> I
+</I>&gt;&gt;&gt;<i> &quot;Done&quot; exit back to the main fstab menu but before I get there it says
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;Essential fields are missing, Emptying entry.&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It throws me completely out of the fstab edit sub-menu and back to the
+</I>&gt;&gt;&gt;<i> installer. So I go back into the edit fstab sub-menu and this looks
+</I>&gt;&gt;&gt;<i> about
+</I>&gt;&gt;&gt;<i> as good now to me now as it's going to (I've gone through this several
+</I>&gt;&gt;&gt;<i> times - there are no docs to help out here.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It shows:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> device &#160; &#160; &#160; &#160; &#160;mount filesys options d o
+</I>&gt;&gt;&gt;<i> /dev/hda1 &#160; &#160; &#160; / ext4 defaults,noatime 0 0
+</I>&gt;&gt;&gt;<i> /dev/hda2 &#160; &#160; &#160; none swap default 0 0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> So, since I haven't been into the &quot;device&quot; entry yet, I do so:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> hm... Okay now, it says, &quot;Please visit every menu item except the Empty
+</I>&gt;&gt;&gt;<i> All Fields&quot;. So I will, but first, the display looks like this before I
+</I>&gt;&gt;&gt;<i> edit it:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Device
+</I>&gt;&gt;&gt;<i> Mount
+</I>&gt;&gt;&gt;<i> Filesystem &#160; &#160; &#160;swap
+</I>&gt;&gt;&gt;<i> Options
+</I>&gt;&gt;&gt;<i> Dump
+</I>&gt;&gt;&gt;<i> Order
+</I>&gt;&gt;&gt;<i> Size
+</I>&gt;&gt;&gt;<i> Check
+</I>&gt;&gt;&gt;<i> Empty &#160; &#160; &#160; &#160; &#160; All fields removing entry
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Note that there is a &quot;Size field instead of a feature field, and the
+</I>&gt;&gt;&gt;<i> &quot;Encryption&quot; field is not there.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> First, I go into &quot;Device&quot;, and something unintelligible flashes across
+</I>&gt;&gt;&gt;<i> the
+</I>&gt;&gt;&gt;<i> screen.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Next, I go into &quot;Mount&quot; I enter /swap, but when exiting, it says &quot;none&quot;.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> But it now says the following, which looks as good as I can get it (sine
+</I>&gt;&gt;&gt;<i> it won't let me put /dev/hda2 into &quot;Device&quot;, and won't let me enter the
+</I>&gt;&gt;&gt;<i> mount point of &quot;/swap&quot; either). So I make one more adjustment (to
+</I>&gt;&gt;&gt;<i> &quot;Size&quot;)
+</I>&gt;&gt;&gt;<i> before moving on, noting the new settings below before doing so:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Device
+</I>&gt;&gt;&gt;<i> Mount &#160; &#160; &#160; &#160; &#160; none
+</I>&gt;&gt;&gt;<i> Filesystem &#160; &#160; &#160;swap
+</I>&gt;&gt;&gt;<i> Options &#160; &#160; &#160; &#160; default
+</I>&gt;&gt;&gt;<i> Dump &#160; &#160; &#160; &#160; &#160; &#160;0
+</I>&gt;&gt;&gt;<i> Order &#160; &#160; &#160; &#160; &#160; 0
+</I>&gt;&gt;&gt;<i> Size &#160; &#160; &#160; &#160; &#160; &#160;3042 #(because, according to cfdisk, /dev/hda2 is
+</I>&gt;&gt;&gt;<i> 3042.91)
+</I>&gt;&gt;&gt;<i> Feature &#160; &#160; &#160; &#160; -0 dir_index,filetype,sparse_super
+</I>&gt;&gt;&gt;<i> Check
+</I>&gt;&gt;&gt;<i> Empty &#160; &#160; &#160; &#160; &#160; All fields removing entry
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;Essential fields are missing, Emptying entry.&quot;, is the message I get at
+</I>&gt;&gt;&gt;<i> this point, which I find interesting, so I go back into &quot;modify_fstab&quot;
+</I>&gt;&gt;&gt;<i> from the main install menu to take a look:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It shows:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> device &#160; &#160; &#160; &#160; &#160;mount filesys options d o
+</I>&gt;&gt;&gt;<i> /dev/hda1 &#160; &#160; &#160; / ext4 defaults,noatime 0 0
+</I>&gt;&gt;&gt;<i> /dev/hda2 &#160; &#160; &#160; none swap default 0 0
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> hm... I would prefer if that &quot;device&quot; entry wasn't there, since I don't
+</I>&gt;&gt;&gt;<i> know what that is, but the other two entries look really good. Let's
+</I>&gt;&gt;&gt;<i> move
+</I>&gt;&gt;&gt;<i> on...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> modify_fstab is showing as (complete)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Since there aren't ANY installation docs (Which I'm considering writing
+</I>&gt;&gt;&gt;<i> as
+</I>&gt;&gt;&gt;<i> a manual, BTW) the next two entries are &quot;init_filesys (optional)&quot;, and
+</I>&gt;&gt;&gt;<i> &quot;mount (required)&quot;.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Now, I know you can't mount &#160;before &quot;mkfs -t...&quot;, so I choose
+</I>&gt;&gt;&gt;<i> &quot;init_filesys&quot; - even though it says &quot;optional&quot; - BECAUSE IT IS NOT
+</I>&gt;&gt;&gt;<i> OPTIONAL - You MUST format the partition in real life before you can
+</I>&gt;&gt;&gt;<i> mount
+</I>&gt;&gt;&gt;<i> and copy files over....
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> The screen says:
+</I>&gt;&gt;&gt;<i> &quot;[ ] /dev/hda1 &#160; &#160; &#160; &#160; &#160;/ ext4 defaults,noatime 0 0&quot;
+</I>&gt;&gt;&gt;<i> &quot;[ ] /dev/hda2 &#160; &#160; &#160; &#160; &#160;none swap default 0 0&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hey this looks good, actually, maybe I did it right this time! so I
+</I>&gt;&gt;&gt;<i> select
+</I>&gt;&gt;&gt;<i> both and wait while the (presumably) mkfs -t ext4, mkswap, swapon, etc.,
+</I>&gt;&gt;&gt;<i> whatever... goes through its process....
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;[*] /dev/hda1 &#160; &#160; &#160; &#160; &#160;/ ext4 defaults,noatime 0 0&quot;
+</I>&gt;&gt;&gt;<i> &quot;[*] /dev/hda2 &#160; &#160; &#160; &#160; &#160;none swap default 0 0&quot;
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> It asks me to confirm that all data will be lost. Sure, no prob!
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;mkfs.ext4 -0 dir_index.filetype,sparse_super /dev/hda1&quot; appears to be
+</I>&gt;&gt;&gt;<i> the
+</I>&gt;&gt;&gt;<i> command it's going to run. Looks good to me, so I select &quot;Yes&quot;.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;writing inode tables: x/130&quot;...
+</I>&gt;&gt;&gt;<i> &quot;creating journal (32768 blocks):&quot;...
+</I>&gt;&gt;&gt;<i> &quot;Writing superblocks and filesystem accounting information: done&quot;...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> And then it takes the user back to a screen that says:
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;ext4 successfully created on /dev/hda1&quot;. I select &quot;OK&quot; and...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;Please confirm it is okay that all data on /dev/hda2 is lost?&quot; I choose
+</I>&gt;&gt;&gt;<i> &quot;Yes&quot;...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Now it says, &quot;mkswap /dev/hda2&quot;. I choose &quot;Yes&quot;...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> &quot;swap successfully created on /dev/hda2&quot;. I &#160;am about to choose &quot;OK&quot;,
+</I>&gt;&gt;&gt;<i> but
+</I>&gt;&gt;&gt;<i> then the mount and install takes place and it always bombs on the
+</I>&gt;&gt;&gt;<i> installation of files.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> How does everything look so far? Did I do everything correctly? I've
+</I>&gt;&gt;&gt;<i> done
+</I>&gt;&gt;&gt;<i> a lot of installing over the years, From MCC and SLS, and Yggdrasil LGX,
+</I>&gt;&gt;&gt;<i> to many years of manually setting up fdisk and fstab with Slackware, but
+</I>&gt;&gt;&gt;<i> this was really confusing for me.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001531.html">[Sorcerer-admins] Detailed installation issues....
+</A></li>
+	<LI>Next message: <A HREF="001514.html">[Sorcerer-admins] NFS mount problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1538">[ date ]</a>
+              <a href="thread.html#1538">[ thread ]</a>
+              <a href="subject.html#1538">[ subject ]</a>
+              <a href="author.html#1538">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

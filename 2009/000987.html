@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Status report
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Status%20report&In-Reply-To=%3C596b75860901261103j118c11cej6d80b9d0e70f21da%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000986.html">
+   <LINK REL="Next"  HREF="000988.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Status report</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Status%20report&In-Reply-To=%3C596b75860901261103j118c11cej6d80b9d0e70f21da%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Status report">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jan 26 20:03:13 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000986.html">[Sorcerer-admins] Status report
+</A></li>
+        <LI>Next message: <A HREF="000988.html">[Sorcerer-admins] Status report
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#987">[ date ]</a>
+              <a href="thread.html#987">[ thread ]</a>
+              <a href="subject.html#987">[ subject ]</a>
+              <a href="author.html#987">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have nothing against using grub.
+Someone who uses grub should write the support for it.
+I use lilo.
+That is why the initramfs support and integration with lilo is excellent.
+Unlike grub that must be installed in the MBR
+lilo can be installed both in boot blocks or the MBR.
+
+Edit /etc/lilo.conf*
+Please remember that /etc/lilo.conf and /etc/lilo.conf.fast
+are constructed files and therefore to properly make the change
+also /etc/lilo.conf.head must be adjusted.
+Chance the boot = to specify the entire disk instead of a partition.
+So instead of /dev/sda1 use /dev/sda
+Instead of /dev/hda1 use /dev/hda
+Run lilo
+Look for error messages.
+Reboot.
+Enter BIOS/CMOS setup menu
+Make certain that disk is on the boot list.
+Continue booting.
+
+It is true that I do not present an option about where to install lilo
+in the menu driven installer.
+It selects the boot block of /boot if /boot is definied
+or the boot block of /
+However, that should be sufficient for installation.
+After the first reboot just use the above steps.
+Two lilos will be installed.
+However, since booting runs the MBR first
+the lilo in the MBR will run.
+In order to return to using the lilo in a boot block
+a ms-sys bootable MBR must be installed in the MBR.
+
+
+On Mon, Jan 26, 2009 at 4:24 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Sorry about big delay but there was a major setback on my home made new
+</I>&gt;<i> server, it did not supported 8GB RAM (lousy Intel G41 chipset, grrr). I did
+</I>&gt;<i> make a ticket to manufacturer (=Asus), but it seems they support 8GB only
+</I>&gt;<i> using some memory kits they are tested and unfortunately my 8GB memory kit
+</I>&gt;<i> was not on their supported list, i waited also for new BIOS update but it
+</I>&gt;<i> did not helped on my case. So, because 8GB was needed i did buy new
+</I>&gt;<i> motherboard (Asus P5Q Pro) and i have now server running.
+</I>&gt;<i>
+</I>&gt;<i> Specs: Intel Q6600 Quad core CPU, Asus P5Q Pro motherboard, 8 GB memory kit,
+</I>&gt;<i> 3*750GB Samsung Spinpoint <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">F1 at Linux</A> software Raid-5. Main OS is installed on
+</I>&gt;<i> USB stick (Ubuntu Intrepid Ipex, eg. 8.10).
+</I>&gt;<i>
+</I>&gt;<i> Now the real problems, as Sorcerer uses lilo, its does not support
+</I>&gt;<i> paravirtualization. I think GRUB is kinda must if paravirtualized system is
+</I>&gt;<i> wanted to get booted.
+</I>&gt;<i> What i encountered during installer that it was not possible to install lilo
+</I>&gt;<i> to MBR and when i did manually installed it, it did not booted, i did
+</I>&gt;<i> receive error messages but no workarounds available... Oh, virtualization
+</I>&gt;<i> technology was KVM.
+</I>&gt;<i>
+</I>&gt;<i> Has anyone using GRUB with Sorcerer atm? I think if Sorcerer wants to
+</I>&gt;<i> support virtualization it need to have also option to use GRUB, because what
+</I>&gt;<i> i did search using google it does not look good, mostly all uses grub
+</I>&gt;<i> instead lilo so there are not so much support using LILO.
+</I>&gt;<i>
+</I>&gt;<i> Kyle, can we eg. if i like install Debian/Ubuntu or CentOS or some other
+</I>&gt;<i> distro which i can boot using paravirtualized drivers or try to mess with
+</I>&gt;<i> GRUB?
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>   Pekka Panula, Net Servant Oy
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000986.html">[Sorcerer-admins] Status report
+</A></li>
+	<LI>Next message: <A HREF="000988.html">[Sorcerer-admins] Status report
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#987">[ date ]</a>
+              <a href="thread.html#987">[ thread ]</a>
+              <a href="subject.html#987">[ subject ]</a>
+              <a href="author.html#987">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

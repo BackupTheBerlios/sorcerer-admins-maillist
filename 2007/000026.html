@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] 'augur sync' problem?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%27augur%20sync%27%20problem%3F&In-Reply-To=%3C200701091613.34265.jazz_johnson%40verizon.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000015.html">
+   <LINK REL="Next"  HREF="000027.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] 'augur sync' problem?</H1>
+    <B>Jeremy Johnson</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%27augur%20sync%27%20problem%3F&In-Reply-To=%3C200701091613.34265.jazz_johnson%40verizon.net%3E"
+       TITLE="[Sorcerer-admins] 'augur sync' problem?">jazz_johnson at verizon.net
+       </A><BR>
+    <I>Tue Jan  9 22:13:33 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000015.html">[Sorcerer-admins] Sorcerer boxes...
+</A></li>
+        <LI>Next message: <A HREF="000027.html">[Sorcerer-admins] nas spell installs to /usr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have an old Pentium III with Sorcerer installed which I update somewhat 
+infrequently because it's a slow computer.
+But recently I've been getting some X crashes which seem to leave the
+onboard i810 graphics unable to be reset:
+
+ipeir: 0 iphdr: 50c00004
+LP ring tail: 7648 head: 6730 len: f001 start 780000
+eir: 0 esr: 0 emr: 3d
+instdone: ff3a instpm: 0
+memmode: 4 instps: 810
+hwstam: 9ac7 ier: 0 imr: 9ac7 iir: 0
+
+Fatal server error:
+Active ring not flushed
+
+
+
+So I thought I would 'augur sync' and upgrade X:
+But after upgrading my installed grimoires I got all these errors
+saying that root directories couldn't be removed:
+
+
+ue Jan  9 17:00:41 EST 2007
+Leeching sources for spell grimoire
+* About to connect() to sorcerer.silverice.org port 80
+*   Trying 213.250.93.33... connected
+* Connected to sorcerer.silverice.org (213.250.93.33) port 80
+&gt;<i> GET /download/grimoire/grimoire-2007-9.tar.bz2 HTTP/1.1
+</I>&gt;<i> User-Agent: curl/7.15.5 (i686-pc-linux-gnu) libcurl/7.15.5 OpenSSL/0.9.8b 
+</I>zlib/1.2.3
+&gt;<i> Host: sorcerer.silverice.org
+</I>&gt;<i> Accept: */*
+</I>&gt;<i>
+</I>&lt; HTTP/1.1 200 OK
+&lt; Date: Tue, 09 Jan 2007 20:59:07 GMT
+&lt; Server: Apache/2.2.3 (Unix) DAV/2 PHP/5.2.0
+&lt; Last-Modified: Tue, 09 Jan 2007 00:00:59 GMT
+&lt; ETag: &quot;15ee-923b8-3db104c0&quot;
+&lt; Accept-Ranges: bytes
+&lt; Content-Length: 598968
+&lt; Content-Type: application/x-tar
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  
+Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  584k  100  584k    0     0   168k      0  0:00:03  0:00:03 --:--:--  
+249kConnection #0 to host sorcerer.silverice.org left intact
+
+* Closing connection #0
+Waiting for compilation of grimoire to begin
+Press q to quit augur scry.
+Compile log for grimoire  2007-9
+Built with sorcery thaumaturgy-20061211-2 and gcc 4.1.0
+Built on Tue Jan  9 17:01:09 EST 2007
+Traced with sentinel.
+Preparing to install grimoire
+Dispelled spell: grimoire
+Merging Grimoires.
+Downloading:    grimoire-miffe
+Watching download for grimoire-miffe
+Waiting for download to begin.
+Press q to quit
+Pressing a will abort download.
+Pressing q will quit watching.
+Pressing s will skip to next server.
+Tue Jan  9 17:02:08 EST 2007
+Leeching sources for spell grimoire-miffe
+* About to connect() to download.berlios.de port 80
+*   Trying 195.37.77.141... connected
+* Connected to download.berlios.de (195.37.77.141) port 80
+&gt;<i> GET /miffe-grimoire/miffe-spells-20061117-1.tar.bz2 HTTP/1.1
+</I>&gt;<i> User-Agent: curl/7.15.5 (i686-pc-linux-gnu) libcurl/7.15.5 OpenSSL/0.9.8b 
+</I>zlib/1.2.3
+&gt;<i> Host: download.berlios.de
+</I>&gt;<i> Accept: */*
+</I>&gt;<i>
+</I>&lt; HTTP/1.1 200 OK
+&lt; Date: Tue, 09 Jan 2007 21:00:33 GMT
+&lt; Server: Apache/2.0.54 (Linux/SUSE)
+&lt; X-Powered-By: PHP/4.4.0
+&lt; Cache-Control: must-revalidate, post-check=0, pre-check=0
+&lt; Content-Length: 279707
+&lt; Content-Transfer-Encoding: binary
+&lt; Content-Disposition: attachment; filename=&quot;miffe-spells-20061117-1.tar.bz2&quot;;
+&lt; Connection: close
+&lt; Content-Type: application/x-download
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  
+Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  273k  100  273k    0     0   165k      0  0:00:01  0:00:01 --:--:--  
+240kClosing connection #0
+
+Waiting for compilation of grimoire-miffe to begin
+Press q to quit augur scry.
+Compile log for grimoire-miffe  20061117-1
+Built with sorcery thaumaturgy-20061211-2 and gcc 4.1.0
+Built on Tue Jan  9 17:02:27 EST 2007
+Traced with sentinel.
+Preparing to install grimoire-miffe
+Dispelled spell: grimoire-miffe
+Merging Grimoires.
+Cast:   Tue Jan  9 17:02:23 EST 2007    grimoire        2007-9
+rm: cannot remove `/Sorcerer': Is a directory
+rm: cannot remove `/WXP': Is a directory
+rm: cannot remove `/Z': Is a directory
+rm: cannot remove `/bbin': Is a directory
+rm: cannot remove `/bin': Is a directory
+rm: cannot remove `/boot': Is a directory
+rm: cannot remove `/cdrom': Is a directory
+rm: cannot remove `/data': Is a directory
+rm: cannot remove `/dev': Is a directory
+rm: cannot remove `/devices': Is a directory
+rm: cannot remove `/etc': Is a directory
+rm: cannot remove `/etc.old': Is a directory
+rm: cannot remove `/etc.sav': Is a directory
+sed: -e expression #1, char 10: unterminated `s' command
+
+New: rm: cannot remove `/home': Is a directory
+Imaging provides pil, python imaging library.
+New: rm: cannot remove `/lib': Is a directory
+LPRng provides LPR print spooler functionality.
+New: rm: cannot remove `/lib.broke': Is a directory
+LPRngTool provides a GUI for LPRng.
+New: PyOpenGL provides Python binding to OpenGL and related APIs.
+New: rm: cannot remove `/lib.old': Is a directory
+brutalchess is a 3D chess game.
+New: rm: cannot remove `/lost+found': Is a directory
+rm: cannot remove `/misc': Is a directory
+rm: cannot remove `/mnt': Is a directory
+dreamchess is a 3D chess game.
+New: rm: cannot remove `/net': Is a directory
+rm: cannot remove `/opt': Is a directory
+rm: cannot remove `/other': Is a directory
+engauge-digitizer converts an image showing a graph or map into numbers
+New: rm: cannot remove `/proc': Is a directory
+expresskeys enables certain keys on recent Wacom tablets
+New: rm: cannot remove `/raidstuff': Is a directory
+gcc-v3.2: gcc-v2.3 provides gcc version 3.2.x
+New: rm: cannot remove `/root': Is a directory
+geany is a small C editor using GTK2.
+New: rm: cannot remove `/sbin': Is a directory
+glchess is a 2D/3D chess interface for the GNOME desktop.
+New: rm: cannot remove `/smb': Is a directory
+gphotofs provides a fuse filesystem for digital camera applications.
+New: rm: cannot remove `/swapfile': Is a directory
+rm: cannot remove `/sys': Is a directory
+gtkam is a GTK-frontend to gphoto2.
+New: rm: cannot remove `/tmp': Is a directory
+libchipcard3 is a library for accessing chipcards via terminals/readers.
+New: rm: cannot remove `/usr': Is a directory
+libexif-gtk is something.
+New: libgphoto2-sharp provides C sharp bindings for libgphoto2
+New: rm: cannot remove `/var': Is a directory
+rm: cannot remove `/windows': Is a directory
+libpthread-stubs provides library for...
+New: libstroke is a stroke translation library.
+New: linuxwacom provides drivers and libraries for Wacom tablets
+New: mkcomposecache is used for creating global (system-wide) Compose cache 
+file...
+New: numpy adds a fast and sophisticated array facility to Python.
+New: pygtkglext provids Python bindings for gtkglext
+New: rendercheck is a program to test a Render extension implementation.
+New: setuptools enables easier building and distribution of Python packages.
+New: slibo is a 2D/3D chess interface for KDE.
+New: wacom-config is GUI tool for configuring wacom tablets
+New: xf86-video-impact provides video driver Impact driver
+New: xf86-video-wsfb provides video driver for X11R7
+Synchronization is complete.
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at PIII</A>:/usr/local/rep/db# rm: cannot remove `/Sorcerer': Is a directory
+rm: cannot remove `/WXP': Is a directory
+rm: cannot remove `/Z': Is a directory
+rm: cannot remove `/bbin': Is a directory
+rm: cannot remove `/bin': Is a directory
+rm: cannot remove `/boot': Is a directory
+rm: cannot remove `/cdrom': Is a directory
+rm: cannot remove `/data': Is a directory
+rm: cannot remove `/dev': Is a directory
+rm: cannot remove `/devices': Is a directory
+rm: cannot remove `/etc': Is a directory
+rm: cannot remove `/etc.old': Is a directory
+rm: cannot remove `/etc.sav': Is a directory
+rm: cannot remove `/home': Is a directory
+rm: cannot remove `/lib': Is a directory
+rm: cannot remove `/lib.broke': Is a directory
+rm: cannot remove `/lib.old': Is a directory
+rm: cannot remove `/lost+found': Is a directory
+rm: cannot remove `/misc': Is a directory
+rm: cannot remove `/mnt': Is a directory
+rm: cannot remove `/net': Is a directory
+rm: cannot remove `/opt': Is a directory
+rm: cannot remove `/other': Is a directory
+rm: cannot remove `/proc': Is a directory
+rm: cannot remove `/raidstuff': Is a directory
+rm: cannot remove `/root': Is a directory
+rm: cannot remove `/sbin': Is a directory
+rm: cannot remove `/smb': Is a directory
+rm: cannot remove `/swapfile': Is a directory
+rm: cannot remove `/sys': Is a directory
+rm: cannot remove `/tmp': Is a directory
+rm: cannot remove `/usr': Is a directory
+rm: cannot remove `/var': Is a directory
+rm: cannot remove `/windows': Is a directory
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at PIII</A>:/usr/local/rep/db#
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at PIII</A>:/usr/local/rep/db# rm: cannot remove `/Sorcerer': Is a directory
+rm: cannot remove `/WXP': Is a directory
+rm: cannot remove `/Z': Is a directory
+rm: cannot remove `/bbin': Is a directory
+rm: cannot remove `/bin': Is a directory
+rm: cannot remove `/boot': Is a directory
+rm: cannot remove `/cdrom': Is a directory
+rm: cannot remove `/data': Is a directory
+rm: cannot remove `/dev': Is a directory
+rm: cannot remove `/devices': Is a directory
+rm: cannot remove `/etc': Is a directory
+rm: cannot remove `/etc.old': Is a directory
+rm: cannot remove `/etc.sav': Is a directory
+rm: cannot remove `/home': Is a directory
+rm: cannot remove `/lib': Is a directory
+rm: cannot remove `/lib.broke': Is a directory
+rm: cannot remove `/lib.old': Is a directory
+rm: cannot remove `/lost+found': Is a directory
+rm: cannot remove `/misc': Is a directory
+rm: cannot remove `/mnt': Is a directory
+rm: cannot remove `/net': Is a directory
+rm: cannot remove `/opt': Is a directory
+rm: cannot remove `/other': Is a directory
+rm: cannot remove `/proc': Is a directory
+rm: cannot remove `/raidstuff': Is a directory
+rm: cannot remove `/root': Is a directory
+rm: cannot remove `/sbin': Is a directory
+rm: cannot remove `/smb': Is a directory
+rm: cannot remove `/swapfile': Is a directory
+rm: cannot remove `/sys': Is a directory
+rm: cannot remove `/tmp': Is a directory
+rm: cannot remove `/usr': Is a directory
+rm: cannot remove `/var': Is a directory
+rm: cannot remove `/windows': Is a directory
+rm: cannot remove `/Sorcerer': Is a directory
+rm: cannot remove `/WXP': Is a directory
+rm: cannot remove `/Z': Is a directory
+rm: cannot remove `/bbin': Is a directory
+rm: cannot remove `/bin': Is a directory
+rm: cannot remove `/boot': Is a directory
+rm: cannot remove `/cdrom': Is a directory
+rm: cannot remove `/data': Is a directory
+rm: cannot remove `/dev': Is a directory
+rm: cannot remove `/devices': Is a directory
+rm: cannot remove `/etc': Is a directory
+rm: cannot remove `/etc.old': Is a directory
+rm: cannot remove `/etc.sav': Is a directory
+rm: cannot remove `/home': Is a directory
+rm: cannot remove `/lib': Is a directory
+rm: cannot remove `/lib.broke': Is a directory
+rm: cannot remove `/lib.old': Is a directory
+rm: cannot remove `/lost+found': Is a directory
+rm: cannot remove `/misc': Is a directory
+rm: cannot remove `/mnt': Is a directory
+rm: cannot remove `/net': Is a directory
+rm: cannot remove `/opt': Is a directory
+rm: cannot remove `/other': Is a directory
+rm: cannot remove `/proc': Is a directory
+rm: cannot remove `/raidstuff': Is a directory
+rm: cannot remove `/root': Is a directory
+rm: cannot remove `/sbin': Is a directory
+rm: cannot remove `/smb': Is a directory
+rm: cannot remove `/swapfile': Is a directory
+rm: cannot remove `/sys': Is a directory
+rm: cannot remove `/tmp': Is a directory
+rm: cannot remove `/usr': Is a directory
+rm: cannot remove `/var': Is a directory
+rm: cannot remove `/windows': Is a directory
+rm: cannot remove `/Sorcerer': Is a directory
+rm: cannot remove `/WXP': Is a directory
+rm: cannot remove `/Z': Is a directory
+rm: cannot remove `/bbin': Is a directory
+rm: cannot remove `/bin': Is a directory
+rm: cannot remove `/boot': Is a directory
+rm: cannot remove `/cdrom': Is a directory
+rm: cannot remove `/data': Is a directory
+rm: cannot remove `/dev': Is a directory
+rm: cannot remove `/devices': Is a directory
+rm: cannot remove `/etc': Is a directory
+rm: cannot remove `/etc.old': Is a directory
+rm: cannot remove `/etc.sav': Is a directory
+rm: cannot remove `/home': Is a directory
+rm: cannot remove `/lib': Is a directory
+rm: cannot remove `/lib.broke': Is a directory
+rm: cannot remove `/lib.old': Is a directory
+rm: cannot remove `/lost+found': Is a directory
+rm: cannot remove `/misc': Is a directory
+rm: cannot remove `/mnt': Is a directory
+rm: cannot remove `/net': Is a directory
+rm: cannot remove `/opt': Is a directory
+rm: cannot remove `/other': Is a directory
+rm: cannot remove `/proc': Is a directory
+rm: cannot remove `/raidstuff': Is a directory
+rm: cannot remove `/root': Is a directory
+rm: cannot remove `/sbin': Is a directory
+rm: cannot remove `/smb': Is a directory
+rm: cannot remove `/swapfile': Is a directory
+rm: cannot remove `/sys': Is a directory
+rm: cannot remove `/tmp': Is a directory
+rm: cannot remove `/usr': Is a directory
+rm: cannot remove `/var': Is a directory
+rm: cannot remove `/windows': Is a directory
+rm: cannot remove `/Sorcerer': Is a directory
+rm: cannot remove `/WXP': Is a directory
+rm: cannot remove `/Z': Is a directory
+rm: cannot remove `/bbin': Is a directory
+rm: cannot remove `/bin': Is a directory
+rm: cannot remove `/boot': Is a directory
+rm: cannot remove `/cdrom': Is a directory
+rm: cannot remove `/data': Is a directory
+rm: cannot remove `/dev': Is a directory
+rm: cannot remove `/devices': Is a directory
+rm: cannot remove `/etc': Is a directory
+rm: cannot remove `/etc.old': Is a directory
+rm: cannot remove `/etc.sav': Is a directory
+rm: cannot remove `/home': Is a directory
+rm: cannot remove `/lib': Is a directory
+rm: cannot remove `/lib.broke': Is a directory
+rm: cannot remove `/lib.old': Is a directory
+rm: cannot remove `/lost+found': Is a directory
+rm: cannot remove `/misc': Is a directory
+rm: cannot remove `/mnt': Is a directory
+rm: cannot remove `/net': Is a directory
+rm: cannot remove `/opt': Is a directory
+rm: cannot remove `/other': Is a directory
+rm: cannot remove `/proc': Is a directory
+rm: cannot remove `/raidstuff': Is a directory
+rm: cannot remove `/root': Is a directory
+rm: cannot remove `/sbin': Is a directory
+rm: cannot remove `/smb': Is a directory
+rm: cannot remove `/swapfile': Is a directory
+rm: cannot remove `/sys': Is a directory
+rm: cannot remove `/tmp': Is a directory
+rm: cannot remove `/usr': Is a directory
+rm: cannot remove `/var': Is a directory
+rm: cannot remove `/windows': Is a directory
+
+
+
+Well, I'm glad my root directories weren't deleted,
+but I am curious as to what was going on.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000015.html">[Sorcerer-admins] Sorcerer boxes...
+</A></li>
+	<LI>Next message: <A HREF="000027.html">[Sorcerer-admins] nas spell installs to /usr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#26">[ date ]</a>
+              <a href="thread.html#26">[ thread ]</a>
+              <a href="subject.html#26">[ subject ]</a>
+              <a href="author.html#26">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

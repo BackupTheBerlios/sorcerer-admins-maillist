@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] konsole a bit buggy?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20konsole%20a%20bit%20buggy%3F&In-Reply-To=%3C596b75861002200729qa32b154l4eb8f2c472e4d51d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001476.html">
+   <LINK REL="Next"  HREF="001479.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] konsole a bit buggy?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20konsole%20a%20bit%20buggy%3F&In-Reply-To=%3C596b75861002200729qa32b154l4eb8f2c472e4d51d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] konsole a bit buggy?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb 20 16:29:56 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001476.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+        <LI>Next message: <A HREF="001479.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1478">[ date ]</a>
+              <a href="thread.html#1478">[ thread ]</a>
+              <a href="subject.html#1478">[ subject ]</a>
+              <a href="author.html#1478">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Feb 19, 2010 at 11:03 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Sound output on my version of KDE 4.4.0 is completely gone.
+</I>&gt;<i>
+</I>&gt;<i> I can now see backends in the backend menu, but I have tried outputting
+</I>&gt;<i> sound, and have had simply no luck whatsoever.
+</I>&gt;<i>
+</I>&gt;<i> I have even re-compiled all the software on my laptop, still no luck.
+</I>&gt;<i>
+</I>&gt;<i> amarok and xine now segfault when starting, too.
+</I>&gt;<i>
+</I>&gt;<i> I am tempted to go back to the previous version of KDE and wait for the next
+</I>&gt;<i> release.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>
+My best guess is that Jan already has a solution to this.
+He reported some sound problems with kde-v4 4.3.5
+If I recall correctly he said something about installing
+an old phonon over qt-x11-opensource's phonon was
+sufficient for solving that problem.
+However, now qt-everywhere-opensource does not install phonon.
+And the phonon installed is version 4.3.80 from KDE's svn.
+Sound seems to work for me,
+no crashing of xine.
+But if xine was crashing then that might explain
+a problem with audio.
+
+# augur elfof phonon | grep xine
+xine-lib
+
+phonon uses xine as it's backend for audio output.
+Perhaps it might also be able to use pulseaudio.
+I do not have pulseaudio installed.
+And that might be why audio works on my workstation.
+
+/etc/xdg/autostart/pulseaudio-kde.desktop
+/etc/xdg/autostart/pulseaudio.desktop
+
+Perhaps pulse audio server is automatically started
+
+# grep user /etc/dbus-1/system.d/pulseaudio-system.conf
+  &lt;!-- System-wide PulseAudio runs as 'pulse' user. This fragment is
+       not necessary for user PulseAudio instances. --&gt;
+  &lt;policy user=&quot;pulse&quot;&gt;
+
+But maybe it requires a special user account for it to work?
+
+If pulse audio is installed
+then I would recommend
+# augur forget pusleaudio
+# dispel pulseaudio
+# cast eject
+
+Following the cast of eject cast will
+re-compile the spells which require pulseaudio's ELF.
+After that I would recommend logging out,
+restarting kdm,
+logging back in
+and then trying audio.
+If it works, maybe pulseaudio is the problem.
+
+I will have a glance at pulse audio documentation
+to see if I am omitting something important that
+the spell aught to do to ensure that pulseaudio can work.
+Generally, when possible I try to avoid software
+audio channel mixers such as
+enlightenment sound daemon and pulseaudio.
+
+However, foremost I recommend investigating
+and solving the xine segfaulting on the box.
+Fixing that might be enough to fix the problem.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001476.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+	<LI>Next message: <A HREF="001479.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1478">[ date ]</a>
+              <a href="thread.html#1478">[ thread ]</a>
+              <a href="subject.html#1478">[ subject ]</a>
+              <a href="author.html#1478">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

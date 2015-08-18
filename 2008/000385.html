@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Some errors during boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Some%20errors%20during%20boot&In-Reply-To=%3COFD745CCA1.C7CF8D51-ONC22573DF.00254709-C22573DF.002587E0%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000382.html">
+   <LINK REL="Next"  HREF="000383.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Some errors during boot</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Some%20errors%20during%20boot&In-Reply-To=%3COFD745CCA1.C7CF8D51-ONC22573DF.00254709-C22573DF.002587E0%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Some errors during boot">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Tue Jan 29 07:49:55 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000382.html">[Sorcerer-admins] Some errors during boot
+</A></li>
+        <LI>Next message: <A HREF="000383.html">[Sorcerer-admins] Beware linux version 2.6.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#385">[ date ]</a>
+              <a href="thread.html#385">[ thread ]</a>
+              <a href="subject.html#385">[ subject ]</a>
+              <a href="author.html#385">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>All boot errors did go away when i casted udev init-functions and 
+init-scripts, thanks.
+
+Anyway, i did augur sync, newer and update, some reason it did not update 
+those 3 spells, they newer showed up in augur newer but manually after i 
+casted and rebooted, all good.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 28.01.2008 22:04:50:
+
+&gt;<i> This type of problem may have occured
+</I>&gt;<i> if a box did not update with:
+</I>&gt;<i> 
+</I>&gt;<i> # augur sync
+</I>&gt;<i> # augur newer
+</I>&gt;<i> # augur update
+</I>&gt;<i> 
+</I>&gt;<i> In this event it is easy to fix.
+</I>&gt;<i> # cast grimoire
+</I>&gt;<i> # cast udev init-functions init-scripts
+</I>&gt;<i> 
+</I>&gt;<i> Reason:
+</I>&gt;<i> init-scripts changed available versions
+</I>&gt;<i> however udev and init-functions
+</I>&gt;<i> did not change available versions.
+</I>&gt;<i> They are driven to recast by the current function check.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Here is the logic to the start()
+</I>&gt;<i> when it is not explicitly definied
+</I>&gt;<i> in an init-script.
+</I>&gt;<i> 
+</I>&gt;<i> If [ -n &quot;$SERV&quot; ] then start a daemon
+</I>&gt;<i> if NAME begins with / then mount a filesystem.
+</I>&gt;<i> If none of the above is true
+</I>&gt;<i> then assume name is a kernel module and load it.
+</I>&gt;<i> 
+</I>&gt;<i> Therefore, init-scripts such as
+</I>&gt;<i> /etc/init.d/dev must look like:
+</I>&gt;<i> 
+</I>&gt;<i> NAME='/dev'
+</I>&gt;<i> OPTS='-o defaults,size=1m,nr_inodes=4k,mode=0755 -t tmpfs tmpfs'
+</I>&gt;<i> 
+</I>&gt;<i> and not have a
+</I>&gt;<i> SERV=mount
+</I>&gt;<i> line in them.
+</I>&gt;<i> 
+</I>&gt;<i> The concept is simple to understand.
+</I>&gt;<i> Most init-scripts do one of 3 things.
+</I>&gt;<i> They, start and stop daemons.
+</I>&gt;<i> Or they mount or unmount filesystems.
+</I>&gt;<i> Or they load or unload kernel modules.
+</I>&gt;<i> Therefore, most init-scripts can be very minimal.
+</I>&gt;<i> The logic in /lib/lsb/init-functions should be
+</I>&gt;<i> able to decide the correct course of action.
+</I>&gt;<i> However, I will adjust that so that
+</I>&gt;<i> the check for a name beginning with /
+</I>&gt;<i> will occur before a check for [ -n &quot;$SERV&quot; ]
+</I>&gt;<i> That should reduce the chance of problems
+</I>&gt;<i> occurring from slightly incorrect init-scripts.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Jan 28, 2008 10:53 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; On Monday 28 January 2008, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> wrote:
+</I>&gt;<i> &gt; &gt; Hi
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; here is couple screenshots what i get when i boot my sorcerer, it 
+</I>got full
+&gt;<i> &gt; &gt; of udevd errors saying its read-only filesystem.
+</I>&gt;<i> &gt; Yes, there was a problem with init-scripts and init-functions last 
+</I>week.
+&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080129/3154a7e9/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080129/3154a7e9/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000382.html">[Sorcerer-admins] Some errors during boot
+</A></li>
+	<LI>Next message: <A HREF="000383.html">[Sorcerer-admins] Beware linux version 2.6.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#385">[ date ]</a>
+              <a href="thread.html#385">[ thread ]</a>
+              <a href="subject.html#385">[ subject ]</a>
+              <a href="author.html#385">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCAER78vSkuq54Jkr6_aRj%3DpHp4csjXy2y2YtpD%2BTabTFf_VJ6%3Dg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002333.html">
+   <LINK REL="Next"  HREF="002335.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%0A%20not%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCAER78vSkuq54Jkr6_aRj%3DpHp4csjXy2y2YtpD%2BTabTFf_VJ6%3Dg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists">evorster at gmail.com
+       </A><BR>
+    <I>Mon Jul 23 08:23:11 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002333.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+        <LI>Next message: <A HREF="002335.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2334">[ date ]</a>
+              <a href="thread.html#2334">[ thread ]</a>
+              <a href="subject.html#2334">[ subject ]</a>
+              <a href="author.html#2334">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there...
+
+As Kyle said, 3000+ spells is a lot to keep track of, and as long as a
+spell works, it sticks around, even if its a little old.
+
+Demetri, from your description of the problem, it sounds like you have a
+video driver problem.
+If you give us your hardware configuration, I might be able to give you
+some pointers on how to set it up.
+
+When you see the blinking cursor, Hold down &quot;Ctrl&quot; and hit &quot;C&quot;
+
+You should now be able to log in.
+Enter lspci and hit &quot;Enter&quot;
+
+This will give you a list of what hardware is in your system.
+If you feel like troubleshooting this issue for yourself, read:
+
+/var/log/Xorg.0.log
+See what modules are being loaded to get your X going, and where it is
+failing.
+
+You can edit /etc/X11/xorg.cfg, but please read the manual on that first,
+by running man xorg.cfg
+
+You can test various configurations by running &quot;startx&quot; When successful,
+you will get a very basic window manager instead of that blinking cursor.
+If you get the cursor again, you get to try again, free of charge.
+
+When you finally have a working X config, exit out of the window manager by
+either pressing &quot;Ctrl&quot; and &quot;Backspace&quot; together, or typing &quot;exit&quot; into the
+left-most terminal.
+
+Once you exit there, you can start the proper window manager by entering:
+/etc/init.d/kdm restart
+and hitting Enter.
+
+Good luck.
+
+-Evert-
+
+
+On 22 July 2012 12:51, Demetri Salamander &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">demetrisalamander at gmail.com</A>&gt;wrote:
+
+&gt;<i>
+</I>&gt;<i> I have not visited the Sorcerer IRC channel in ages.
+</I>&gt;<i> First, xchat is broke.
+</I>&gt;<i> I might try fixing it again,
+</I>&gt;<i> but the software authors have not released a new tarball
+</I>&gt;<i> since 20100529 which is just over 2 years ago.
+</I>&gt;<i> I wonder if the software authors are not interested
+</I>&gt;<i> in providing maintenance for it?
+</I>&gt;<i> It may be suffering from more crushing bugs rather than merely
+</I>&gt;<i> being incompatible with current glib headers.
+</I>&gt;<i> -------------
+</I>&gt;<i>
+</I>&gt;<i> I keep up with the news. You are 2 years behind on xchat, sir. They
+</I>&gt;<i> stopped supporting it 2 years ago and only want money now and only for
+</I>&gt;<i> Windows. They no longer contribute for Linux and Windows people have to pay
+</I>&gt;<i> for xchat. I know a lot and hear a lot about programs all the time. I keep
+</I>&gt;<i> up with the news on programs when I use them. I've had to find alternative
+</I>&gt;<i> IRC instead. I used to go out searching for new programs all the time and
+</I>&gt;<i> try out a lot of programs.
+</I>&gt;<i>
+</I>&gt;<i> Right now I cannot install Sorcerer. It is not working properly enough and
+</I>&gt;<i> I have already reinstalled several times with the same results of just a
+</I>&gt;<i> black screen with a blinking cursor as a result. You are telling me to fix
+</I>&gt;<i> the installation issue and this will take a long while for me. I am trying
+</I>&gt;<i> to find a recording desktop software and then once I can do that then I can
+</I>&gt;<i> show you. I only have my desktop right now and would have to find a program
+</I>&gt;<i> that can do that in Linux until I can get my Windows machine that has that
+</I>&gt;<i> stuff. Or maybe anyone here can find out how to record the desktop on Linux?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> I am useful but it's also good to keep up on the news instead of being
+</I>&gt;<i> behind by a few years. Also, going back to square one: Trying to fix your
+</I>&gt;<i> installation issue.
+</I>&gt;<i>
+</I>&gt;<i> -Demetri Salamander
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+Those who do not understand UNIX are doomed to reinvent it, poorly.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20120723/5f8ce52c/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20120723/5f8ce52c/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002333.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+	<LI>Next message: <A HREF="002335.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2334">[ date ]</a>
+              <a href="thread.html#2334">[ thread ]</a>
+              <a href="subject.html#2334">[ subject ]</a>
+              <a href="author.html#2334">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

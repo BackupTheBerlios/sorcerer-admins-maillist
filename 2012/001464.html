@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.17.1331738370.12121.sorcerer-admins%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001433.html">
+   <LINK REL="Next"  HREF="001466.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.17.1331738370.12121.sorcerer-admins%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:19:14 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001433.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="001466.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1464">[ date ]</a>
+              <a href="thread.html#1464">[ thread ]</a>
+              <a href="subject.html#1464">[ subject ]</a>
+              <a href="author.html#1464">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>However, mounting devtmpfs on /dev
+using the mount command did work.
+At first I was hoping that by having devtmpfs and modules
+on the initramfs that somehow coldplug events could
+be handled automatically without udev.
+That was why I started experimenting with it.
+However /dev was practically empty until I started loading modules.
+I did not read about a way to generate or handle cold plug events
+without using udev.
+A semi usable substitute for udev was what I hoped to discover.
+
+So far we know that udev works with tmpfs mounted on /dev
+Also we know that previous cold plug events can be replicated
+by adding coldplug to the kernel command line.
+I wrote that code maybe sometime around December last year.
+However, we do not know if using devtmpfs on /dev
+will work properly with udev.
+Is anyone eager to test it?
+Currently, /dev is full of nodes that often do not have
+the root group owning the node.
+I see audio, video, floppy, disk, lp, kmem, tty
+The linux-modular kernels already have devtmpfs
+compiled into them.
+I did not bother removing that after tersting.
+
+x86_64-2.6.32.7:CONFIG_DEVTMPFS=y
+x86_64-2.6.32.7:CONFIG_DEVTMPFS_MOUNT=y
+
+And the DEVTMPFS does not mount at boot
+as suggested by the documentation.
+
+# grep &quot;/dev &quot; /proc/mounts
+tmpfs /dev tmpfs rw,relatime,size=1024k,nr_inodes=65536,mode=755 0 0
+
+Otherwise that would read devtmpfs instead of tmpfs.
+
+So who wants to have devtmpfs mounted on /dev
+instead of tmpfs when a kernel has devtmpfs listed in
+/proc/filesystems?
+And before you cast your vote in favor
+then please test it to make certain that
+udev rules for ownership and mode are properly applied
+for device nodes created by devtmpfs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001433.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="001466.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1464">[ date ]</a>
+              <a href="thread.html#1464">[ thread ]</a>
+              <a href="subject.html#1464">[ subject ]</a>
+              <a href="author.html#1464">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

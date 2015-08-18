@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please be aware that booting is receiving another revision.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCAMjKNNNjGM%3DnQM4wNGL2GQzQSbqqGDM36ytzw23%2BUyWkeK2nog%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002230.html">
+   <LINK REL="Next"  HREF="002232.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please be aware that booting is receiving another revision.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCAMjKNNNjGM%3DnQM4wNGL2GQzQSbqqGDM36ytzw23%2BUyWkeK2nog%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please be aware that booting is receiving another revision.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Wed Aug  3 21:21:21 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002230.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+        <LI>Next message: <A HREF="002232.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2231">[ date ]</a>
+              <a href="thread.html#2231">[ thread ]</a>
+              <a href="subject.html#2231">[ subject ]</a>
+              <a href="author.html#2231">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I already had a regular (ie msdos) mbr.... it was working with lilo...
+in the partition table the /dev/sda2 is marked as bootable
+syslinux is installed on /dev/sda2
+as far as I know, msdos mbr only chainload to the bootable partition....
+I'm wrong?
+thanks and regards
+JLM
+
+On Wed, Aug 3, 2011 at 8:04 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> It could be that you need to install the bootblock for syslinux.
+</I>&gt;<i>
+</I>&gt;<i> Assuming that your bootable partition is on /dev/sda1, and that you
+</I>&gt;<i> don't have an MBR...
+</I>&gt;<i>
+</I>&gt;<i> cat /usr/share/syslinux/mbr.bin &gt; /dev/sda
+</I>&gt;<i>
+</I>&gt;<i> This will put the MBR from syslinux to your first SATA drive. If you
+</I>&gt;<i> are multi-booting, DON'T do this....
+</I>&gt;<i>
+</I>&gt;<i> If you are multibooting, point your boot manager at the partition you
+</I>&gt;<i> installed Sorcerer in.
+</I>&gt;<i>
+</I>&gt;<i> Hope this helps...
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 3 August 2011 09:30, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi
+</I>&gt;<i> &gt; I followed the instruction and I now can't boot the server.... I always
+</I>&gt;<i> get
+</I>&gt;<i> &gt; &quot;Boot error&quot; at start....
+</I>&gt;<i> &gt; rebooted several time trying to update syslinux, initrd.... no success
+</I>&gt;<i> &gt; any idea?
+</I>&gt;<i> &gt; thanks and regards
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Sun, Jul 3, 2011 at 1:04 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # find /boot/initrf/ /boot/*/modules -type f
+</I>&gt;<i> &gt;&gt; /boot/initrf/bin
+</I>&gt;<i> &gt;&gt; /boot/initrf/etc
+</I>&gt;<i> &gt;&gt; /boot/initrf/lib
+</I>&gt;<i> &gt;&gt; /boot/initrf/lib64
+</I>&gt;<i> &gt;&gt; /boot/initrf/sbin
+</I>&gt;<i> &gt;&gt; /boot/initrf/usr
+</I>&gt;<i> &gt;&gt; /boot/2.6.39.1/modules
+</I>&gt;<i> &gt;&gt; /boot/2.6.39.2/modules
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; In a couple of days files such as those will appear on boxes that
+</I>&gt;<i> update.
+</I>&gt;<i> &gt;&gt; The initramfs is no longer a concatenation of 2 large cpio files.
+</I>&gt;<i> &gt;&gt; Rather it is the concatenation of several small files.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Boxes that boot with lilo will have initramfs files concatenated into
+</I>&gt;<i> &gt;&gt; /boot/$VERSION/initrf
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Boxes that boot with extlinux will references
+</I>&gt;<i> &gt;&gt; each compressed cpio file
+</I>&gt;<i> &gt;&gt; individually in the extlinux.conf
+</I>&gt;<i> &gt;&gt; Consequently, boxes booting with extlinux will save some space on /boot/
+</I>&gt;<i> &gt;&gt; while boxes booting with lilo must have the individual files cpio files
+</I>&gt;<i> &gt;&gt; concatenated into a single file.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Segregating the initramfs into several cpio files
+</I>&gt;<i> &gt;&gt; allows for individual checking
+</I>&gt;<i> &gt;&gt; to discern which cpio file must be updated.
+</I>&gt;<i> &gt;&gt; Regenerating only some of the cpio files
+</I>&gt;<i> &gt;&gt; is faster than regenerating all of them.
+</I>&gt;<i> &gt;&gt; Therefore, 7 cpio files seems to be
+</I>&gt;<i> &gt;&gt; a reasonable division along directory boundaries.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Boxes that boot with lilo
+</I>&gt;<i> &gt;&gt; require no special adjustment.
+</I>&gt;<i> &gt;&gt; It is already tested.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; However, boxes booting with extlinux
+</I>&gt;<i> &gt;&gt; will require a newer extlinux.conf.
+</I>&gt;<i> &gt;&gt; Therefore, run
+</I>&gt;<i> &gt;&gt; # /etc/init.d/extlinux force
+</I>&gt;<i> &gt;&gt; on those boxes to ensure that the configuration files update.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Basically, until the next I/R release
+</I>&gt;<i> &gt;&gt; there should be no Sorcerer boxes that are booting with extlinux.
+</I>&gt;<i> &gt;&gt; However, for SAs that manually switched
+</I>&gt;<i> &gt;&gt; please also manually regenerate extlinux.conf
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> -Evert-
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110803/cf25bc6f/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110803/cf25bc6f/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002230.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+	<LI>Next message: <A HREF="002232.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2231">[ date ]</a>
+              <a href="thread.html#2231">[ thread ]</a>
+              <a href="subject.html#2231">[ subject ]</a>
+              <a href="author.html#2231">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

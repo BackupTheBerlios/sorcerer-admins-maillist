@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] XIM failing...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20XIM%20failing...&In-Reply-To=%3C596b75860805311549l6f642e84xefedbbd4280ee9a6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000484.html">
+   <LINK REL="Next"  HREF="000486.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] XIM failing...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20XIM%20failing...&In-Reply-To=%3C596b75860805311549l6f642e84xefedbbd4280ee9a6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] XIM failing...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jun  1 00:49:22 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000484.html">[Sorcerer-admins] XIM failing...
+</A></li>
+        <LI>Next message: <A HREF="000486.html">[Sorcerer-admins] XIM failing...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#485">[ date ]</a>
+              <a href="thread.html#485">[ thread ]</a>
+              <a href="subject.html#485">[ subject ]</a>
+              <a href="author.html#485">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Although I did not understand everything that came
+before the last question
+the answer to:
+&quot;When prompted for 'select individual locales' it's okay that I said
+'no' right ?&quot;
+
+is yes that is okay.
+
+If you do not select individual locales to build
+then a very large set of locales are built that
+cover nearly anything anyone could want,
+and it probably consumes about 300M
+
+I have only a few locales built.
+
+# locale -a
+C
+en_US
+en_US.iso88591
+en_US.utf8
+ja_JP.eucjp
+ja_JP.utf8
+POSIX
+
+
+My default locale is
+
+# echo $LANG
+en_US.UTF-8
+
+Seems to work okay for me.
+
+I do not have a spell for xfte.
+My workstation does not have mono installed.
+And the first program that comes to mind that
+uses SDL accepts keyboard input is mplayer.
+Ah, come to think of it I never use the mplayer GUI.
+
+Does typing work in an xterminal or konsole
+or any terminal emulator?
+
+Some programs may not be working properly because
+they are compiled with unsafe optimizations that the SA selected.
+If the conjecture is that the problem is with the X11R7
+components that came with the I/R
+then it is easy enough to rebuild all of them.
+
+# cast $( augur installed X11R7 )
+
+The augur command will guess that you want
+all installed spells with attribute X11R7 since there
+is not X11R7 spell.
+
+Also you may not be using xim as you expect.
+If scim is installed then you may be using scim.
+I use scim with anthy and scim-bridge-*
+This allows me to easily type Japanese kana.
+However, if it is causing the problem
+then you can dispel anything installed that
+is scim
+
+#  augur installed | grep scim
+scim
+scim-anthy
+scim-bridge-gtk+
+scim-bridge-qt3
+scim-bridge-qt4
+scim-ccinput
+scim-input-pa
+
+or
+
+# dispel --unsafe $( augur installed | grep scim )
+
+As for xim I know nothing useful about it.
+I hope scim is causing the problem.
+However, you could try some other xim replacement
+such as scim, but one that works better for what
+you want to input.
+
+
+
+On Sat, May 31, 2008 at 1:32 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> XIM is an X Input Method
+</I>&gt;<i>
+</I>&gt;<i> man XOpenIM
+</I>&gt;<i>
+</I>&gt;<i> at this point having barely installed any sort of system this is the
+</I>&gt;<i> third instance I've found that relates to this call failing.
+</I>&gt;<i>
+</I>&gt;<i> xfte (the x flavor of the editor that requires slang which requires
+</I>&gt;<i> gpm) first time I touch a key, the XOpenIM method returns NULL.
+</I>&gt;<i> Basically it's kinda a call that takes all NULL parameters except the
+</I>&gt;<i> *display.
+</I>&gt;<i>
+</I>&gt;<i> mono - first tiime I hit a key in an application failes
+</I>&gt;<i>
+</I>&gt;<i> ggi fails also to get the XIM.
+</I>&gt;<i>
+</I>&gt;<i> SDL does work to read the keys.
+</I>&gt;<i>
+</I>&gt;<i> This call has something to do with Locale.
+</I>&gt;<i>
+</I>&gt;<i> When prompted for 'select individual locales' it's okay that I said 'no' right ?
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000484.html">[Sorcerer-admins] XIM failing...
+</A></li>
+	<LI>Next message: <A HREF="000486.html">[Sorcerer-admins] XIM failing...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#485">[ date ]</a>
+              <a href="thread.html#485">[ thread ]</a>
+              <a href="subject.html#485">[ subject ]</a>
+              <a href="author.html#485">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

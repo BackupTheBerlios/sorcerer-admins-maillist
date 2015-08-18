@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Important Changes...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Important%20Changes...&In-Reply-To=%3CAANLkTikm15UrYZrVoq9IJomUTVfMMXGSo9s80vz_xzWF%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001680.html">
+   <LINK REL="Next"  HREF="001686.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Important Changes...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Important%20Changes...&In-Reply-To=%3CAANLkTikm15UrYZrVoq9IJomUTVfMMXGSo9s80vz_xzWF%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Important Changes...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jun 30 23:02:18 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001680.html">[Sorcerer-admins] where are ping and ping6?
+</A></li>
+        <LI>Next message: <A HREF="001686.html">[Sorcerer-admins] Important Changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1685">[ date ]</a>
+              <a href="thread.html#1685">[ thread ]</a>
+              <a href="subject.html#1685">[ subject ]</a>
+              <a href="author.html#1685">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I completed edited the majority of spells in the grimoire.
+I removed calls to url()
+I removed calls to prepare_install()
+I rewrote build() to install to a location specified
+by the variable $DESTDIR
+Whew!
+Took a long time to review all those sources and make files!
+
+Some SAs might wonder why Sorcerer was using sentinel
+instead of DESTDIR for confining/tracking installation of software.
+The answer is simple.
+Sorcerer is such an old distribution that when Sorcerer began
+no sources support installation to DESTDIR.
+DESTDIR was not standard in autotools nor anything else
+when Sorcerer began.
+Over the years it has gradually been catching on.
+Now DESTDIR has better support than bzip2ed source tarballs.
+Yet not every source that supports a DESTDIR type installation
+uses the variable DESTDIR.
+So the implementation is not uniform.
+
+Today almost all current sources support DESTDIR
+or something like it to assist in package creation.
+In the case of Sorcerer; packages are not being created.
+Even so DESTDIR has some nice benefits that make
+finding out what installed where easier than with sentinel.
+symbolic links in directories do not have to be canonicalized.
+Newer glibc can go ahead and hide the creation of hard linked files
+from sentinel and any other preloadable library
+and it does not matter.
+Everything that should be installed goes from $DESTDIR to /
+and therefore is easily tracked with an invocation of find.
+
+Not that anyone will notice a few seconds of difference,
+but software will probably compile, install, track a little bit faster now.
+
+For the most part using DESTDIR solves more problems than it creates.
+Unfortunately, there are a few obstacles I have yet to overcome.
+Sources that create and install linux kernel modules, except linux sources,
+often do not support DESTDIR or anything like it.
+Also the spell mod-cband,
+which installs an apache module
+capable of limiting the bandwidth apache httpd consumes,
+does not seem to have an obvious method
+for transitioning the build() to using a DESTDIR style method.
+
+Most other spells I converted.
+Some very old spells I discarded from the grimoire.
+And I might have successfully fixed a few spells.
+Not by intention, yet indexing seems significantly faster now.
+
+Because this is a very large change
+I recommend holding off on rebuilding production boxes.
+Definitely, test rebuilds on dev boxes first.
+And please report problems.
+
+The most likely problem is that a source will compile
+and install files and it will disregard DESTDIR and
+install files directly in / or /usr and those files and
+directories will become aliens.
+Fortunately, thanks to sorcery-alien finding aliens is easy.  :)
+So fixing spells that install aliens should not be a terrible problem
+to clean up.
+
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001680.html">[Sorcerer-admins] where are ping and ping6?
+</A></li>
+	<LI>Next message: <A HREF="001686.html">[Sorcerer-admins] Important Changes...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1685">[ date ]</a>
+              <a href="thread.html#1685">[ thread ]</a>
+              <a href="subject.html#1685">[ subject ]</a>
+              <a href="author.html#1685">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

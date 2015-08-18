@@ -1,0 +1,508 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please forgive the excessive recompilation...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20forgive%20the%20excessive%20recompilation...&In-Reply-To=%3CCA%2BT4wDjqYX__4V%2BFWA5o4PWv13%2B0oAtOwhx4uNkN7GJSfqjrLQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002472.html">
+   <LINK REL="Next"  HREF="002474.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please forgive the excessive recompilation...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20forgive%20the%20excessive%20recompilation...&In-Reply-To=%3CCA%2BT4wDjqYX__4V%2BFWA5o4PWv13%2B0oAtOwhx4uNkN7GJSfqjrLQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please forgive the excessive recompilation...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 17 03:08:20 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002472.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+        <LI>Next message: <A HREF="002474.html">[Sorcerer-admins] baresha512
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2473">[ date ]</a>
+              <a href="thread.html#2473">[ thread ]</a>
+              <a href="subject.html#2473">[ subject ]</a>
+              <a href="author.html#2473">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Oct 15, 2013 at 2:16 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hi there..
+</I>&gt;<i>
+</I>&gt;<i> I have personally seen a couple of 20Mb Seagate MFM hard drives run
+</I>&gt;<i> constantly from the day that they were the biggest storage a person could
+</I>&gt;<i> buy till the day they were obsolete, almost a decade later. This was  in a
+</I>&gt;<i> Novell Netware server, and they never missed a beat. It is my personal
+</I>&gt;<i> opinion that as long as you don't move a hard drive while it's spinning,
+</I>&gt;<i> and keep it cool, you can't wear out a hard drive just by using it.
+</I>&gt;<i>
+</I>
+I wish it were so.
+I have crashed enough fixed disks to know
+that the very nature of a fixed disk was to crash.
+In the early days of fixed disks for PCs,
+fixed disk size was measured such as:
+10 megabytes; 20 megabytes; 40 megabytes.
+And a type of combination removable fixed disk existed
+that was called a bernoulli.
+
+Those were supposed to have the head ride above the disk
+on a cushion of air and therefore were supposed to never
+suffer data loss from what was most often expected to be caused
+by the crashing of a head onto the platter.
+However, fixed disks can fail for a variety of other reasons.
+5 years was previously a nice long life for a fixed disk.
+10 years is an unreasonably long life.
+If those seagates were immortal then they really were the best purchase.
+All I remember about them was that a friend told me that the company
+was started by an ex-marine, maybe he knew the person?
+As for myself, the brand I tended to purchase was Western Digital.
+They crashed eventually.
+Maybe I should have purchased seagate instead?  *chuckles*
+
+
+Anyways, I welcome the utility, and it's fairly smart not to wipe the
+&gt;<i> kernel cache for what is basically a sequential one-time read of the root
+</I>&gt;<i> file system. I guess this is why dd has the same functionality as well. I
+</I>&gt;<i> wonder if tar also has this functionality, since tar's main use case is
+</I>&gt;<i> reading through a lot of files.
+</I>&gt;<i>
+</I>
+Apparently, it lacks the ability.
+However, that does beg the question of where else would O_DIRECT prove
+useful.
+
+Most of us will have /aux/run/ on a dedicated file system.
+That is good for performance.
+Would tmpfs be better?
+
+A software project typically installs all it's files
+at the same time rather than installing each file
+after it compiles and links.
+Therefore, files exist on /aux/run/destdir/
+for an extremely limitation duration.
+tar eventually reads the files from /aux/run/destdir/
+into a tarball which it then immediately extracts
+onto the root file system /
+Then the files on /aux/run/destdir/$SPELL/ are deleted.
+And that removes those files blocks from the kernel's block cache.
+However, the content for the files written to /
+will still be retained in the kernel's block cache.
+
+If /aux/run/destdir/ is tmpfs is that better?
+If no swapping occurs then the throughput can be faster.
+However, the effect is exactly the same.
+Deleting the files on tmpfs also removes the blocks
+from the kernel's block cache.
+
+I have not yet played with O_DIRECT used for writing files.
+Would it write the content immediately
+or delay until a sync of a file system
+or delay the commit value is reached?
+I do not know.
+Potentially, if physically writing to the device can be pre-empted
+in favor of reading from the device
+then cached performance can be better.
+However, having the file content stored in the kernel's block cache
+for a full duration does not provide benefit.
+Eventually, those blocks would become old and unused and age out.
+The least useful blocks are then removed from the kernel's cache.
+No doubt that mechanism does require some processing cycles.
+However, if sufficient installed RAM exists
+then blocks from more frequently accessed files
+will not be displaced from the kernel's block cache
+by the files being installed to /
+
+With that said I would still want for a mechanism
+that could instruct the kernel to more immediately
+discard the blocks written.
+But that also requires a bit of effort
+that might not necessarily yield added benefit.
+
+The dd utility can accomplish cleaning the kernel's block cache
+of a file's content as soon as the file is closed
+when the &quot;nocache&quot; parameter is specified.
+Unfortunately, nocache is not documented in open's manual page.
+I might be able to find a clue in dd's source code.
+However, I always prefer to clean room write my implementations.
+
+The &quot;nocache&quot; functionality added to tar could be beneficial.
+I am reasonably certain that tar opens or accesses or
+at least gathers a list of all the files it will process
+before it begins adding those files to a tarball.
+That way tar can identify if two or more of the files
+entering into a tarball are linked.
+And I do not mean dynamic linking nor symbolic linking,
+but the type of linking accomplished by invoking &quot;ln&quot;
+without the &quot;-s&quot; parameter.
+So my opinion is that &quot;nocache&quot; would be always good
+for reading files with tar.
+And &quot;nocache&quot; could be beneficial as a possibility
+when extracting files from a tarball.
+
+However, some people might disagree because
+the kernel will eventually dispose of less than useful
+data that is in the block cache when new data is introduced
+or when pressure on memory demands more free memory.
+The Linux kernel always attempts to maintain
+a certain amount of &quot;free memory.&quot;
+And at the same time it allows processes to overcommit
+memory utilization by allocating address space
+and not populating it with RAM until necessary.
+Populating address space with RAM happens as required.
+It happens into response to what is called a &quot;page fault.&quot;
+However, I digress.
+
+My point was that for anything except a large amount of data
+then most people will feel assured that the kernel will
+eventually clean it's own cache will maintaining blocks
+for more frequently accessed files and discarding blocks
+for files that are no longer interesting.
+
+O_DIRECT becomes most useful when forethought
+indicates that the amount of data processed will
+deluge the kernel's block cache.
+In other words so much data will be read in so little time
+that the result will necessarily displace
+potentially useful blocks from frequently accessed files.
+Therefore, O_DIRECT then improves performance
+by preserving the existing content of the kernel's block cache.
+
+What we are anticipating amounts to a rare scenario.
+Another possible use for bare could be copying a file.
+Let us say that a SSD from a video camera contains 4 gigabyte file.
+The file should be copied from the SSD to a file system on the fixed disk.
+Then the file will be edited on the fixed disk.
+The blocks stored on the SSD are useful only that one time
+when they are read in order to be copied.
+So why store those in the kernel's block cache?
+$ dd direct if=/media/camera/4g.raw of=~/video/new/20131028.raw
+And dd can do it just like that.
+But does it to direct access for only reading or only writing or both?
+I do not know.
+$ echo &quot;/media/camera/4g.raw&quot; | bare -d ~/video/new/20131028.raw
+This command will omit using the kernel's cache for reading
+however, it will use the kernel's cache while writing
+~/video/new/20131028.raw
+Therefore, portions if not all of the freshly written file
+will exist in the kernel's cache.
+
+$ cp /media/camera/4g.raw ~/vide/new/20131028.raw
+Doing this will store equal portions of both files in the kernel's block
+cache.
+If the computer has 16G of RAM installed then great.
+If it has only 8G of RAM installed then not all of the destination file
+will fit within the kernel's block cache.
+
+If using bare and the computer has 8G of RAM
+then the entire output file will be cached.
+If only 4G of RAM is installed
+then most of the output file will be cached.
+
+It is a rare sort of what if.
+And even if the file is not cached
+then reading it from disk while editing
+will not induce much delay since encoding
+and editing speed is less than the speed at which
+the device can read the raw video file.
+
+Even so the idea is worthy of a moment of consideration.
+
+Back when RAM was scarce
+then efficient utilization was paramount.
+Now that anyone can build a box with 64G of installed RAM
+then nearly everything read or written can be cached indefinitely.
+Even so efficient resource utilization is not without benefit.
+
+The kernel wastes some processor cycles defragmentting free RAM.
+When continuous free RAM can be gathered
+then it can be provided in 2 megabyte huge pages.
+Seems like my computer is not doing so good at that at the moment.
+
+# grep DirectMap2M /proc/meminfo
+DirectMap2M:      342016 kB
+
+Some is better than none.  :)
+334 megabytes of RAM were provided in 2M map.
+That requires less overhead to manage.
+And it populated the address with memory faster.
+To populate 2 megabytes of RAM with 4K pages
+requires 512 page faults.
+If it is work for the kernel to accomplish
+then it it consumes processing cycles
+that would otherwise be granted to process.
+To populate 2 megabytes of RAM with a 2 megabyte page
+requires a single page fault.
+All the processing cycles the kernel did not spent
+can now be granted to processes instead.
+
+So what is the relationship between large pages and the kernel's block
+cache?
+RAM being consumed by the kernel's block cache is in 2M large pages.
+Only RAM that is free can be defragmentted and
+and some of it provided as large pages.
+Therefore, adequate free RAM can promote performance
+while inefficient use of the kernel's block cache diminishes performance.
+The difference in processor utilization is as the facts suggest.
+However, that small amount of savings does
+not allow processes to run 512 times faster.
+They run about 1% to 5% faster.
+The difference depends upon how much memory a process utilizes.
+5% faster and while not waiting for data to be read
+for blocks that should already have been in the kernel's block cache
+amounts to a significant performance gain.
+Fixed disks are slow so estimate a 5% to 10% performance gain.
+
+But that is not what someone using a workstation will see.
+If terminating firefox and then restarting it,
+which should be done no less frequently than daily
+in order to avoid bugs that crash it,
+then having those blocks cached allows
+firefox to restart more quickly.
+The difference is more pronounced if the files that firefox must read
+are scattered across the fixed disk instead of located
+in close physical proximity.
+firefox also reads a number of files from a user's home directory.
+Consequently, there is a bit to be read.
+It probably will not all be in the cache.
+But some of it cached allows faster loading than none of it cached.
+
+Perhaps the next design of a microprocessor
+will allow addressing of more than 64G.
+If so then RAM might no longer be considered a scarce resource.
+For the past few decades RAM has been a scarce resource
+and but also used to cache disk backed data
+because fixed disks provide much slower access to data.
+However, the situation is changing already.
+
+The kernel now supports the use of a SSD
+as a backing for the kernel's cache that
+is used in conjunction with system RAM.
+The SSD becomes the last stop data reaches
+before being cast out of the cache.
+
+I do not use the new functionality.
+However, I like the concept.
+I am waiting for improvements in the implementation.
+Specifying too large amount of RAM to remain free
+creates a detriment to performance.
+However, at the same time if a portion of the kernel's cache
+is backed by the SSD
+then I would prefer if less system RAM could be allocated
+to the kernel's cache.
+For the most part the result would be a greater availability
+of free RAM.
+However, if the kernel did assign the RAM to a process
+then the kernel would not immediately try to reclaim the RAM
+in order to again reach an absurd quantity of free RAM.
+RAM reclamation by both swapping and reducing the amount
+of blocks in the kernel's block cache can be induced
+by both pressure by processes for RAM and by
+the variable which specifies the amount of free RAM
+that the kernel should strive to maintain.
+
+I might be able to already accomplish what I want.
+However, a while has elapsed since I read the relevant documentation.
+The method to achieve what I want might be possible
+but slightly less than obvious such as potential uses for nocache.
+But at least I have O_DIRECT at my command now.
+That much is pleasing.
+
+
+While high throughput is commendable, being nice to the other running
+&gt;<i> utilities, especially as far as disk I/O is concerned, is top priority. You
+</I>&gt;<i> yourself said that the main purpose of this utility is to provide
+</I>&gt;<i> robustness to Sorcery. Having it complete in record time is a nice
+</I>&gt;<i> benefit... but some of us have stupidly large root filesystems, and may not
+</I>&gt;<i> want to wait for a lengthy disk I/O to complete before feeding our CPU.
+</I>&gt;<i>
+</I>
+That is a curious thought.
+Nothing short of starving the utilities' supply of processor cycles
+would make it compete for data less aggressively.
+
+The utility will not run concurrently with other utilities that demand high
+I/O
+Therefore, it will not compete with till, rush, post, reap, and other such
+utilities.
+However, it will compete with &quot;moil&quot; and &quot;load.&quot;
+moil and load do not create heavy I/O.
+As far as load is concerned if the files arrive before compilation can begin
+then speed is not a factor.
+As for moil, moil is accessing a large portion of data that is already
+cached.
+moil will access make, gcc, ld, and the source tree and portions of
+/usr/include/
+Thanks to till's execution the source tree might already remain in the
+kernel's block cache.
+However, till does work a bit ahead of moil and therefore
+the file's blocks might have already exited.
+So the situation is not ideal.
+
+If the utility is rate limited
+then it will still be generating I/O bursts
+at regular intervals such as 1s or 0.1s intervals.
+Even if a delay is introduced
+a probability exists that the kernel has already
+fulfilled a file read request made by cpp
+invoked by make, invoked by moil.
+Since at most 2 processes are competing for file data
+those requests are fulfilled by the kernel.
+However, they are fulfilled approximately half as fast.
+Rate limiting one utility definitely sacrifices performance.
+But because of the sporadic nature that compilation requires file data;
+no guarantee exists that the sacrifice of throughput by one program
+translates into a gain of throughput by another program.
+Helping to preserve the content of the kernel's block cache
+is as much effective help as a rate limiting utility can provide.
+
+If a method existed to tell the kernel, &quot;feed me data whenever,&quot;
+then that would be excellent and I would use it.
+At the moment the kernel does not recognize that
+one process could be more lazy
+and less concerned with performance
+as compared with another process.
+And while the control group provides excellent controls
+for partitioning processor utilization;
+the knobs on a 40 year old black and white television
+work better for controlling the picture
+than what control groups provides for controlling throughput.
+Even ionice seems to fall a bit short of expectations.
+
+Given the near impossibility that the two or more requests
+for data blocks appear to the kernel at exactly the same time;
+the kernel will tend to fulfill requests according to first come first
+served.
+Many processes run with buffers as small as 4096 bytes.
+And such a program creates a barrage of requests
+as compared to a program that requests 64K per read.
+
+I do not know exactly how the kernel handles that.
+Can part of the 64K block be read
+then can the kernel switch and fulfill the 4096 byte read.
+Probably so.
+And if so... then processes that want lazy throughput
+should request large blocks and have a means to indicate
+that the data can arrive anytime between now and tomorrow.  :)
+If that is possible then I am uncertain about how to make it happen.
+
+Using mmaping the kernel can be instructed to precache
+a file even before the memory area is accessed.
+And the kernel will provide every bit of data ASAP.
+So requesting data ASAP is more easily accomplished
+in comparison to telling the kernel anytime.
+
+The one aspect that remains certain
+is that verifying file integrity concurrently while spells moil
+is faster than running the integrity before or after spells moil.
+Since we all have SMP computers
+we want to use those processor cycles
+instead of allowing them to goto idle
+while we wait impatiently for a task to complete
+where we entirely expect the outcome to prove
+that no file corruption exists.
+If the file verification task was done in series
+and must be performed before moil begins
+then impatient SAs would either kill it or code it out.
+
+Waiting for it is dumb.
+Everything is probably fine anyway.
+# kill -9 ...
+*chuckles*
+
+So the slight performance hit caused by running
+scanning concurrently with moil is far more welcomed
+than having scanning run as a spell
+or having scanning performed prior to moil.
+Or at least that is how I anticipate it.
+
+So in conclusion,
+aside from file integrity scanning
+and copying absurdly large files
+I do not currently anticipate
+other potential beneficial uses for O_DIRECT.
+However, while web searching
+for what others wrote concerning O_DIRECT
+I encountered articles promoting the
+theoretical potential benefit for a database program
+accessing a partition on a fixed disk with O_DIRECT.
+I do know that some databases can utilize
+partitions instead of storing files on a file system.
+However, I do not know if databases perform their own caching
+and therefore could gain benefit for using O_DIRECT
+
+O_DIRECT would be most useful for a virtual machine program such as qemu.
+The kernel that runs within the virtual machine would accomplish it's own
+caching.
+Therefore, having the host kernel and the client kernel both cache the same
+space on the fixed disk becomes a waste of RAM.
+To be frank, I do not know if a virtual machine emulation programs do file
+access using O_DIRECT.
+My guess would be that they should, but probably do not.
+
+I can understand anyone's position that providing O_DIRECT
+might add complexity for unused functionality.
+However, direct file access has yet a few rare uses.
+Given that consideration
+I understand why coreutils maintainers
+do not want O_DIRECT functionality for any program except dd.
+
+One task in a million will benefit from O_DIRECT
+and 1000 of those will work fine without it.
+However, for file verification the data being read
+must come from the device which backs the file system
+and not the kernel's cache.
+And that is the best reason I can conjecture
+for the utilization of O_DIRECT.
+
+Please pardon the ultra verbosity.
+Thanks for the interest.
+
+I went all out with writing a C program
+to accomplish the task with eloquence and efficiency
+instead of slapping down 5 lines of shell script
+that involve xargs dd and sha512sum.
+If what I normally serve seems like slop
+then when this hot meal arrives
+it will dine like fine cuisine.
+
+A few more aspects yet remain.
+But probably nobody is feeling more impatient than me.
+Hopefully, the changes will arrive at all our computers next week.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131016/a4ac1c81/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131016/a4ac1c81/attachment-0001.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002472.html">[Sorcerer-admins] Please forgive the excessive recompilation...
+</A></li>
+	<LI>Next message: <A HREF="002474.html">[Sorcerer-admins] baresha512
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2473">[ date ]</a>
+              <a href="thread.html#2473">[ thread ]</a>
+              <a href="subject.html#2473">[ subject ]</a>
+              <a href="author.html#2473">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

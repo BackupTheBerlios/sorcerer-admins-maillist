@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] CAST_RATE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20CAST_RATE&In-Reply-To=%3CAANLkTik676CHH-JrXiDJCz%2BJgeO0%3Dc7JBwPYSbGvOHsZ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002083.html">
+   <LINK REL="Next"  HREF="002085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] CAST_RATE</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20CAST_RATE&In-Reply-To=%3CAANLkTik676CHH-JrXiDJCz%2BJgeO0%3Dc7JBwPYSbGvOHsZ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] CAST_RATE">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb 19 01:25:53 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002083.html">[Sorcerer-admins] documentation and Sorcerer x86_64 multilib
+</A></li>
+        <LI>Next message: <A HREF="002085.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2084">[ date ]</a>
+              <a href="thread.html#2084">[ thread ]</a>
+              <a href="subject.html#2084">[ subject ]</a>
+              <a href="author.html#2084">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Prior to adding parallel make support and multilib support to cast;
+the CAST_RATE variable made sense.
+There was an expected correlation between CAST_RATE and loadavg.
+This has changed.
+
+In theory a cast rate of 4 could create a loadavg of up to 32
+on a 4 core box provided that both the spells and sources
+are an ideal combination to create that type of overwhelming event.
+Obviously, such a heavy resource usage might deplete all available memory.
+Therefore, I am considering a long term solution for avoiding
+an accidental denial of service combination of spell casting.
+
+Seems that part of the solution should be to set CAST_RATE dynamically.
+In this fashion cores can be optimally loaded.
+Additionally, there is a new feature toggle called &quot;min.&quot;
+The &quot;min&quot; feature provides for minimal resource consumption during cast.
+This could be ideal for production machines that are updating automatically.
+If cast creates a loadavg of less than 2 at nice 15
+then that should not cause a disruption of services.
+
+I will skip the long technical explanations of the cast multilib
+compilation methods
+and the explanation about parallel make and the boons and banes of it all.
+Probably what most SAs want to know is how to cast spells the fastest
+or how to cast spells with minimal resource usage.
+With the &quot;min&quot; feature enabled then resource usage will be minimal.
+Otherwise, boxes will try to load all the cores during updating,
+yet still be mindful of the loadavg created by other non sorcery
+related processes.
+
+Please excuse that I will become technical for just a few paragraphs.
+
+I expect some SAs are thinking that,
+&quot;My power monger machine runs fine at loadavg 20
+and does not skip any frames during games or movies.
+Yes, I agree that modern boxes are amazing.
+However, both memory and CPU cycles go to waste
+when the loadavg rises about 1 beyond the installed core count.
+Therefore, trying to moderate the loadavg to a sane value
+should provide the best performance during casting.
+
+However, also do not be overly paranoid about loadavg.
+A loadavg of 1 requires the constant loading of a single core.
+Therefore, a loadavg of 5 on a 4 core box can be interpreted to indicate
+that a process which requires 100% of a CPU core should run
+at 80% of normal speed as compared to a loadavg of 4 or less
+when all process received an equal share of CPU.
+However, this is not the situation on a Sorcerer box.
+Cast runs at nice level 15.
+Therefore, cast defers a large portion of CPU power
+to process that are running at a lower nice value.
+Because of this updating can happen concurrently on boxes
+without causing a disruption in services.
+And yes that is part of the magic that makes Sorcerer amusing
+for demonstrating how boxes can compile software, run movies,
+and play games all at the same time without skipping a frame.
+And it also helps keep our production boxes at near 100% uptime.
+
+
+Ah on the topic of performance,
+although a bit misplaced in this message,
+qemu-kvm works excellent on Sorcerer and
+with the proper kvm kernel modules loaded
+can provide virtual machine emulation at near 100% the speed of native
+process execution.
+Unfortunately, it does have a modest overhead in memory usage
+looks like about 10% of what was granted to the virtual machine
+will also be allocated by qemu.
+At least I am excited by this performance boon because
+new I/R images can be tested much faster than before.
+
+Sorry for the excessive amount of news posts to the list this week.
+And now back to the regularly scheduled broadcast of silence.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002083.html">[Sorcerer-admins] documentation and Sorcerer x86_64 multilib
+</A></li>
+	<LI>Next message: <A HREF="002085.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2084">[ date ]</a>
+              <a href="thread.html#2084">[ thread ]</a>
+              <a href="subject.html#2084">[ subject ]</a>
+              <a href="author.html#2084">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

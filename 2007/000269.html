@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Casting of 'services' hangs
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Casting%20of%20%27services%27%20hangs&In-Reply-To=%3C596b75860709221108v67bf4a9cm926381d545c8e220%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000268.html">
+   <LINK REL="Next"  HREF="000270.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Casting of 'services' hangs</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Casting%20of%20%27services%27%20hangs&In-Reply-To=%3C596b75860709221108v67bf4a9cm926381d545c8e220%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Casting of 'services' hangs">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep 22 20:08:18 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000268.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+        <LI>Next message: <A HREF="000270.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#269">[ date ]</a>
+              <a href="thread.html#269">[ thread ]</a>
+              <a href="subject.html#269">[ subject ]</a>
+              <a href="author.html#269">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Seems very unusual.
+
+If something incredibly strange happens, like above,
+you may have to issue
+pkill cast
+Then, take a look at the process list using top and/or ps
+and see if anything is still running that should not be.
+Then, perhaps kill that also.
+
+Generally, it can be dangerous to pkill cast because it
+may be in the process of installing files.
+Some files may be installed, all that is installed might not be tracked, etc...
+
+The only thing about the services spell that might cause it to hang appears
+to be the grep statement in it.
+grep runs incredibly slow on some boxes.
+Not 13 hours type slow.
+But I suppose it could if it encounter that sort of bug.
+
+I replaced that grep with a sed statement
+and it will go out in the next massive grimoire update.
+Thanks for reporting the problem.
+It probably is not distribution wide, I hope.
+
+As for setting up a windows environment.
+Cast wine and use kde together and that seems to work.
+After installing wine run winecfg as the user who wants to
+install and run win32 software.
+That will allow setting up of the type of M$ compatible API
+and the directories, and so forth.
+Much software can now be run within wine.
+wine updates more frequently than once per month.
+
+The main problem you may encounter is that z: or some other
+letter may be mapped to your home directory.
+Some malicious win32 software might bug, spy, trojan, virus,
+delete, overwrite, encrypt, or corrupt files in your home directory.
+Just because you run your win32 software within wine will
+not protect your home directory against the ill effects of running malware.
+It could, perhaps, even install a custom plugin for firefox within your
+home directory to spy on your web browsing.
+
+Another option is to run an actually M$ operating system within qemu.
+qemu's ia32 emulation is decent.
+It's x86_64 emulation is slow.
+But it is an option.
+
+
+On 9/22/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+&gt;<i> Yesterday I started an update of my x86_64 box and I ran into a problem.  I
+</I>&gt;<i> cast
+</I>&gt;<i> augur synch
+</I>&gt;<i> augur newer &gt;&gt;newer.txt
+</I>&gt;<i>
+</I>&gt;<i> Then I looked in newer.txt to see what was needed.  The box I'm running on I
+</I>&gt;<i> haven't yet been able to succesfully get a windows environment running, and
+</I>&gt;<i> I've run into issues when I load the cast que up with a lot of spells so I
+</I>&gt;<i> have gotten into the habit of piping lists to text files, then casting the
+</I>&gt;<i> spells one at a time.  Anyway, one of the first spells I tried to cast was
+</I>&gt;<i> 'services'.  I cast
+</I>&gt;<i>
+</I>&gt;<i> cast -c services
+</I>&gt;<i>
+</I>&gt;<i> Leech went and downloaded the source, Then my box seemed to compile the
+</I>&gt;<i> spell, but it has been stuck for about 15 hours now displaying the following
+</I>&gt;<i>
+</I>&gt;<i> Compile log for services 2007-9
+</I>&gt;<i>  Built with sorcery thaumaturgy-20070907-0 and gcc 4.2.1
+</I>&gt;<i> Built on Sat Sept 22 05:19:50 CDT 2007
+</I>&gt;<i> Traced with sentinal
+</I>&gt;<i> Preparing to install services
+</I>&gt;<i> Dispelled spell: services
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This is where it hangs.  I let it run all night last night to see if it
+</I>&gt;<i> would finish, but I don't think it should be taking this long.  I have tried
+</I>&gt;<i> to quit but the box appears to be locked.  I hit
+</I>&gt;<i> 'q', got nothing, I tried 'ctl-c' and nothing.  I don't want to hard restart
+</I>&gt;<i> the box incase it will break something.  Any suggestions as to what I need
+</I>&gt;<i> to do?  Or what I did wrong?
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000268.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+	<LI>Next message: <A HREF="000270.html">[Sorcerer-admins] Casting of 'services' hangs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#269">[ date ]</a>
+              <a href="thread.html#269">[ thread ]</a>
+              <a href="subject.html#269">[ subject ]</a>
+              <a href="author.html#269">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

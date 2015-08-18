@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Ntp build fails
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Ntp%20build%20fails&In-Reply-To=%3CBANLkTikFkRuB7m3eiERfXej4HtamtuORvg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002114.html">
+   <LINK REL="Next"  HREF="002118.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Ntp build fails</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Ntp%20build%20fails&In-Reply-To=%3CBANLkTikFkRuB7m3eiERfXej4HtamtuORvg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Ntp build fails">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Apr 16 22:16:16 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002114.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+        <LI>Next message: <A HREF="002118.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2117">[ date ]</a>
+              <a href="thread.html#2117">[ thread ]</a>
+              <a href="subject.html#2117">[ subject ]</a>
+              <a href="author.html#2117">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Apr 16, 2011 at 10:09 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> low priority:
+</I>&gt;<i> NTP tries to reference a symbol MOD_NANO which I guess has been
+</I>&gt;<i> depricated and should be ADJ_MONO... &#160;a search for 'ntp mod_nano' will
+</I>&gt;<i> reveal what I'm tlakin bout - seems each distributor has their own
+</I>&gt;<i> workaround - really should be fixed in ntp I would think.
+</I>&gt;<i>
+</I>&gt;<i> other question - does xorg work if I don't select any fonts? &#160;during
+</I>&gt;<i> 'cast xorg' no fonts are selected by default...
+</I>
+
+Probably having some fonts installed would be useful.
+xf86-font installs as mandatory requirements:
+
+font-adobe-75dpi font-adobe-utopia-75dpi font-alias font-cursor-misc
+font-misc-misc
+
+I also install some additional fonts on boxes.
+
+# augur installed font
+cantarell-fonts
+corefonts
+dejavu-ttf
+font-adobe-100dpi
+font-adobe-75dpi
+font-adobe-utopia-75dpi
+font-adobe-utopia-type1
+font-alias
+font-cursor-misc
+font-misc-misc
+font-xfree86-type1
+freefont
+kochi-substitute
+webfonts
+xf86-font
+
+
+xf86-font is required by the xorg spell.
+So if xorg is cast
+then some fonts also are installed.
+
+I did a cast of ntp.
+No problem.
+However, the box already has updated linux kernel headers.
+Updating the installed linux kernel headers
+prior to casting ntp might be a solution.
+I did not suspect that and so the &quot;ntp&quot; spell
+does not have a requirement on the
+&quot;linux-headers&quot; spell.
+Thanks for reporting it.
+I will add the requirement.
+
+If ntp does not compile after all installed software is upgraded
+then please report that to the ntp software authors also.
+I prefer to avoid an attempt at writing a patch
+for a problem that I am not seeing happen.
+I would not know where to begin.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002114.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+	<LI>Next message: <A HREF="002118.html">[Sorcerer-admins] Ntp build fails
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2117">[ date ]</a>
+              <a href="thread.html#2117">[ thread ]</a>
+              <a href="subject.html#2117">[ subject ]</a>
+              <a href="author.html#2117">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%20not%0A%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDjDdq9kFc5-%3DuN3GD%3DvdXDhoeLxbJ%2BGqkS_T2igURT7sw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002326.html">
+   <LINK REL="Next"  HREF="002328.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/init.d/wpa_supplicant%20configure%20%3C--%20do%20not%0A%20run%20if%20/etc/wpa_supplicant/wpa_supplicant.conf%20already%20exists&In-Reply-To=%3CCA%2BT4wDjDdq9kFc5-%3DuN3GD%3DvdXDhoeLxbJ%2BGqkS_T2igURT7sw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 21 00:12:34 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002326.html">[Sorcerer-admins] immune-exam-dispel
+</A></li>
+        <LI>Next message: <A HREF="002328.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2327">[ date ]</a>
+              <a href="thread.html#2327">[ thread ]</a>
+              <a href="subject.html#2327">[ subject ]</a>
+              <a href="author.html#2327">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Someone reported being unable to properly modify
+/etc/wpa_supplicant/wpa_supplicant.conf
+after reading the wpa_supplicant.conf manual page.
+The person insistently requested that I present menu driven fluff
+to assist with the generation of /etc/wpa_supplicant/wpa_supplicant.conf
+
+Consequently, I modified /etc/init.d/wpa_supplicant
+to accept configure as a parameter
+and present a menu driven configuration menu.
+It prompts the person at the keyboard for information
+that is later stored by the program and used
+for the automatic generation of
+/etc/init.d/wpa_supplicant/wpa_supplicant.conf
+
+When the init-script /etc/init.d/wpa_supplicant
+runs with the start parameter for the first time
+then if /etc/wpa_supplicant/wpa_supplicant.conf is not present
+and /etc/iinit.d/wpa_supplicant has not previously run
+then a single timed query will prompt the person at the keyboard
+for the one-time opportunity of running the configuration menu.
+If declined then the menu can later be accessed by running
+# /etc/init.d/wpa_supplicant configure
+
+If /etc/wpa_supplicant/wpa_supplicant.conf is present
+then the configuration menu is not run
+nor is the one-time prompt presented.
+Be aware that if the configuration menu is run
+then /etc/wpa_supplicant/wpa_supplicant.conf will be overwritten.
+It's previous content will be entirely and irrevocably lost.
+However, if running /etc/init.d/wpa_supplicant.conf for a second time
+then answers to previous queries are loaded from
+/etc/init.d/conf.d/wpa_supplicant
+and used to provide suggested defaults while making modifications.
+
+The information is read from /etc/init.d/conf.d/wpa_supplicant because
+this has a lower probability of introducing a parsing error
+as compared with parsing and extracting the information
+directly from /etc/wpa_supplicant/wpa_supplicant.conf
+So if starting /etc/init.d/wpa_supplicant configure accidentally
+then rather than risking data loss by pressing ctrl-c
+instead less /etc/wpa_supplicant/wpa_supplicant.conf
+in a separate virtual console or terminal emulation window
+in order to apply the previous configuration information
+to the new configuration if that information is not already
+stored as variables in /etc/init.d/conf.d/wpa_supplicant
+
+Unfortunately, I lack the means to test
+every possible configuration setting for
+/etc/wpa_supplicant/wpa_supplicant.conf
+Therefore, only the WPA-PSK key management method
+is supported by the menu driven configuration.
+Selecting OTHER will provide instructions to
+read the manual page and manually edit
+/etc/wpa_supplicant/wpa_supplicant.conf
+
+As far as I know wpa_supplicant is only used only on wireless networks.
+However, nothing prevents it from being used on wired networks.
+However, the menu driven configuration
+only provides network interface selections
+for wireless interface devices.
+If a wireless interface device is not present or malfunctioning
+at the time the configuration menu runs
+then selecting the interface will provide instructions
+to re-run the configuration menu
+at a later time when wireless interfaces are available.
+
+I make no attempt to teach the person at the keyboard
+the methods for gathering information and debugging problems involving
+wireless network adapters.
+If the person at the keyboard is a SA then they already have the
+required skills.
+If not then the system/network administrators should be contacted instead.
+
+I previously promised that this functionality
+would be implemented prior to rolling new I/Rs.
+And so here it is.
+However, I have more to accomplish before rolling new I/Rs.
+Therefore, please exercise patience while awaiting the new I/Rs.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002326.html">[Sorcerer-admins] immune-exam-dispel
+</A></li>
+	<LI>Next message: <A HREF="002328.html">[Sorcerer-admins] /etc/init.d/wpa_supplicant configure &lt;-- do not run if /etc/wpa_supplicant/wpa_supplicant.conf already exists
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2327">[ date ]</a>
+              <a href="thread.html#2327">[ thread ]</a>
+              <a href="subject.html#2327">[ subject ]</a>
+              <a href="author.html#2327">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

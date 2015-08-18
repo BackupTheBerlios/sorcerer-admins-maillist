@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] openssh failed to install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3CAANLkTil2cy_vaHkkcbdsNlka4RL9_igO9Y2W5tHpzal2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001842.html">
+   <LINK REL="Next"  HREF="001786.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] openssh failed to install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20openssh%20failed%20to%20install&In-Reply-To=%3CAANLkTil2cy_vaHkkcbdsNlka4RL9_igO9Y2W5tHpzal2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] openssh failed to install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 22 23:13:44 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001842.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+        <LI>Next message: <A HREF="001786.html">[Sorcerer-admins] heimdal install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1844">[ date ]</a>
+              <a href="thread.html#1844">[ thread ]</a>
+              <a href="subject.html#1844">[ subject ]</a>
+              <a href="author.html#1844">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Maybe I forgot to do something?
+
+Try:
+# augur forget tcp_wrappers
+# augur merge
+# cast openssh
+
+It should work.
+I have boxes with openssh installed,
+but not tcp_wrappers installed.
+
+# augur version tcp_wrappers; augur version openssh
+tcp_wrappers inactive
+5.5p1
+
+Alternatively, you could try rerolling a tcp_wrappers
+tarball and casting it.
+The tcp_wrappers spell works provided that
+content from the tcp_wrappers tarball can be extracted
+without error.
+
+
+On Thu, Jul 22, 2010 at 1:59 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> Hello Kyle,
+</I>&gt;<i>
+</I>&gt;<i> this problem still exist,
+</I>&gt;<i>
+</I>&gt;<i> When I do augur forget tcp_wrappers and then cast openssh the compile
+</I>&gt;<i> still&#160;chrashes on&#160;tcp_wrappers.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Date: Thu, 22 Jul 2010 01:37:16 -0700
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Sorcerer-admins] openssh failed to install
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I admit that tcp_wrappers is a necessary evil
+</I>&gt;&gt;<i> for making some software work.
+</I>&gt;&gt;<i> But if there is a lingering popularity for tcp_wrappers
+</I>&gt;&gt;<i> then where is the source being maintained?
+</I>&gt;&gt;<i> I saw a replacement for it on freshmeat dated in 2003.
+</I>&gt;&gt;<i> But those hyperlinks are dead.
+</I>&gt;&gt;<i> Did the project discontinue due to apathy?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Although I have not looked
+</I>&gt;&gt;<i> at tcp_wrappers source in great detail
+</I>&gt;&gt;<i> I would expect that since it receives TCP requests first
+</I>&gt;&gt;<i> tcp_wrappers could become a target for attack.
+</I>&gt;&gt;<i> Could there be a tcp_wrappers targeted attack
+</I>&gt;&gt;<i> upon sshd or some other tcp_wrappers enabled
+</I>&gt;&gt;<i> service that could break into a box?
+</I>&gt;&gt;<i> openssl and openssh are updated almost constantly
+</I>&gt;&gt;<i> fixing potential security vulnerabilities and bugs.
+</I>&gt;&gt;<i> Consequently, we can rest easy at night
+</I>&gt;&gt;<i> expecting that our current version of openssh
+</I>&gt;&gt;<i> should not be an easy egg to crack.
+</I>&gt;&gt;<i> However comparing tcp_wrappers releases to openssh
+</I>&gt;&gt;<i> protection from tcp_wrappers feels like a
+</I>&gt;&gt;<i> 13 year old condom baked in sunlight.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I want to know if we can do better than tcp_wrappers.
+</I>&gt;&gt;<i> That is why I did a quick scan on freshmeat
+</I>&gt;&gt;<i> to see if there was a replacement.
+</I>&gt;&gt;<i> I did not look over hill an dale for a replacement.
+</I>&gt;&gt;<i> I should have checked google.
+</I>&gt;&gt;<i> But then the power went out
+</I>&gt;&gt;<i> due to summer lightening storms.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> tcp_wrappers release is 13 years old.
+</I>&gt;&gt;<i> If the date on the ftp server is accurate
+</I>&gt;&gt;<i> then that much can be accepted as fact.
+</I>&gt;&gt;<i> Does that not warrant concern?
+</I>&gt;&gt;<i> Is there no security auditing on it?
+</I>&gt;&gt;<i> Do we want software that has not
+</I>&gt;&gt;<i> been updated nor audited for 13 years
+</I>&gt;&gt;<i> to act as a prophylactic for where our boxes'
+</I>&gt;&gt;<i> sensitive services are exposed to the Internet?
+</I>&gt;&gt;<i> Does such a concern seem irrational?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> My suggestion that SAs avoid using tcp_wrappers
+</I>&gt;&gt;<i> is an attempt to make their boxes more secure
+</I>&gt;&gt;<i> rather than less secure.
+</I>&gt;&gt;<i> Smug feelings about using tcp_wrappers
+</I>&gt;&gt;<i> might turn into irate vehemence
+</I>&gt;&gt;<i> if we became aware of an effective attack
+</I>&gt;&gt;<i> that can be used on tcp_wrappers enabled boxes.
+</I>&gt;&gt;<i> If someone discovered how to break into boxes
+</I>&gt;&gt;<i> or even DOS services
+</I>&gt;&gt;<i> by exploiting a bug in tcp_wrappers and
+</I>&gt;&gt;<i> did a massive simultaneous attack
+</I>&gt;&gt;<i> then that would be the stuff of movies. *lol*
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hopefully, that helps explain my point of view
+</I>&gt;&gt;<i> so my perspective does not seem extreme,
+</I>&gt;&gt;<i> but instead only cautious and concerned.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Jul 21, 2010 at 6:53 PM, Bradley D. Thornton
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;&gt;<i> &gt; Hash: RIPEMD160
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I'm of the same opinion as Jan on this Kyle. I use/depend upon
+</I>&gt;&gt;<i> &gt; tcp_wrappers for things like NFS and portsentry, etc.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; To me, it's kind of a 'standard' thing, expected to be part of a UNIX
+</I>&gt;&gt;<i> &gt; installation, and used regularly.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I don't always use netfilter, often depending upon PfSense firewalls on
+</I>&gt;&gt;<i> &gt; the perimeter, and quite often will just quickly enter some jerk into
+</I>&gt;&gt;<i> &gt; /etc/hosts.deny (even on a LAN) for simplicity ;)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; To do that w/iptables might require four or five rules, when I can do it
+</I>&gt;&gt;<i> &gt; on a single line in /etc/hosts/deny for particular services.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; wrt things like portsentry, I like the redundancy and have no problems
+</I>&gt;&gt;<i> &gt; removing false positives from iptables AND /etc/hosts.deny as
+</I>&gt;&gt;<i> &gt; a regular course of re-allowing access.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Not to mention its integral relationship to NFS. I'm hoping you'll
+</I>&gt;&gt;<i> &gt; rethink your inclinations on this Kyle, and then we can all go back to
+</I>&gt;&gt;<i> &gt; hating Redhat - coz it's fun! :)
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; um... okay, time for a non-sequitur: I'm really incensed about what I
+</I>&gt;&gt;<i> &gt; perceive as perhaps the demise of Sun and Solaris. I don't think any of
+</I>&gt;&gt;<i> &gt; us would be here quite like we are now if it wasn't for Bill Joy, his
+</I>&gt;&gt;<i> &gt; BSD and IP stack, and I'm very saddened every time I see another aspect
+</I>&gt;&gt;<i> &gt; of Sun Microsystem's contributions to our world being re-branded under
+</I>&gt;&gt;<i> &gt; Oracle.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I've got what I think is the very last free release of Solaris 10 (the
+</I>&gt;&gt;<i> &gt; October edition) in a boxed set. Dunno where things are going from here,
+</I>&gt;&gt;<i> &gt; but I'm not optimistic.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; On 7/21/2010 11:38 AM, Jan Merka wrote:
+</I>&gt;&gt;<i> &gt;&gt; On Wednesday, July 21, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> &gt;&gt;&gt; If someone who uses tcp_wrappers wants
+</I>&gt;&gt;<i> &gt;&gt;&gt; for a better solution
+</I>&gt;&gt;<i> &gt;&gt;&gt; then please implement one.
+</I>&gt;&gt;<i> &gt;&gt;&gt; This ancient source is causing more problems than it is worth.
+</I>&gt;&gt;<i> &gt;&gt;&gt; I would prefer to dispose of it.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; I use tcp_wrappers on my servers together with iptables. Tcp_wrappers
+</I>&gt;&gt;<i> &gt;&gt; are
+</I>&gt;&gt;<i> &gt;&gt; still extremely convenient because they enable the use of
+</I>&gt;&gt;<i> &gt;&gt; /etc/hosts.allow and
+</I>&gt;&gt;<i> &gt;&gt; /etc/hosts.deny. I use it primarily due to NFSv4 and DenyHost services.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; Do you have a suggestion as to what (how) could replace tcp_wrappers?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; - --
+</I>&gt;&gt;<i> &gt; Bradley D. Thornton
+</I>&gt;&gt;<i> &gt; Manager Network Services
+</I>&gt;&gt;<i> &gt; NorthTech Computer
+</I>&gt;&gt;<i> &gt; TEL: +1.760.666.2703 &#160;(US)
+</I>&gt;&gt;<i> &gt; TEL: +44.702.405.1909 (UK)
+</I>&gt;&gt;<i> &gt; <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; -----BEGIN PGP SIGNATURE-----
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; iQEcBAEBAwAGBQJMR6S2AAoJEE1wgkIhr9j3Yz4H/0+bBtwO9gGmwgVAONMmvonV
+</I>&gt;&gt;<i> &gt; fZ+XKRW/HSmmNtD9ufmJ2M6uBVV61XCMTbuV7E8eOiB0jHClf5H0WPsDFcfo/wIJ
+</I>&gt;&gt;<i> &gt; 42FpajjHSbT8Pc/KD5fAh7p4cBHfIQ7/aOHwZkruOjq7ktwRkFNQ2+tv3iIsJ3xc
+</I>&gt;&gt;<i> &gt; AUQ9jplIlA51ZhjmNfkFY76xsJLigySvGJbVkVbvzI+ChgYN5y84dq1RSjUtFEae
+</I>&gt;&gt;<i> &gt; B4t45JaLVi8IOwj8mpIIWftYmCHd62dH99Zw886kONKIln9lJ7Ki9zg3AbmxYGIB
+</I>&gt;&gt;<i> &gt; sutYRtgW8JVYp8nuDRQH1qbeAOB54aZ2y0gi7JLj8j9UIVOJReXFjkqZyBxnQvs=
+</I>&gt;&gt;<i> &gt; =NizO
+</I>&gt;&gt;<i> &gt; -----END PGP SIGNATURE-----
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Tijd voor een nieuwe telefoon? Bekijk de mogelijkheden van een Windows
+</I>&gt;<i> Phone!
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001842.html">[Sorcerer-admins] openssh failed to install
+</A></li>
+	<LI>Next message: <A HREF="001786.html">[Sorcerer-admins] heimdal install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1844">[ date ]</a>
+              <a href="thread.html#1844">[ thread ]</a>
+              <a href="subject.html#1844">[ subject ]</a>
+              <a href="author.html#1844">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

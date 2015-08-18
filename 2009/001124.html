@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] useless jdk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C596b75860905101457u79ad286eodd42432318553586%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001123.html">
+   <LINK REL="Next"  HREF="001134.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] useless jdk</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C596b75860905101457u79ad286eodd42432318553586%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] useless jdk">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May 10 23:57:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001123.html">[Sorcerer-admins] useless jdk
+</A></li>
+        <LI>Next message: <A HREF="001134.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1124">[ date ]</a>
+              <a href="thread.html#1124">[ thread ]</a>
+              <a href="subject.html#1124">[ subject ]</a>
+              <a href="author.html#1124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>64010078 /var/cache/sources/jdk/7-ea-bin-b58-linux-i586-08_may_2009/jdk-7-ea-bin-b58-linux-i586-08_may_2009.bin
+
+425d84c4662589d507462d051a92ed56
+/var/cache/sources/jdk/7-ea-bin-b58-linux-i586-08_may_2009/jdk-7-ea-bin-b58-linux-i586-08_may_2009.bin
+
+Yup, it is in there.
+
+# find . -name libjavaplugin_oji.so
+./jdk1.7.0/jre/plugin/i386/ns7/libjavaplugin_oji.so
+./jdk1.7.0/jre/plugin/i386/ns7-gcc29/libjavaplugin_oji.so
+
+Probably the jdk that was downloaded on your box is a partial.
+Since it is not a known filetype the sorcery tools have no method
+for detecting if the entire file was downloaded or just part.
+This would not be a problem if jdk development team distributed
+jdk as a .tar.gz or a .tar.bz2 instead
+This is one of the few sources in the grimoire
+that could be downloaded as a partial
+since almost every source is a compressed tarball.
+
+Sorry for the inconvenience.
+
+
+On Sun, May 10, 2009 at 1:31 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# augur version jdk
+</I>&gt;<i> 7-ea-bin-b58-linux-x64-08_may_2009
+</I>&gt;<i>
+</I>&gt;<i> dim mai 10 22:25:27
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# augur install jdk
+</I>&gt;<i>
+</I>&gt;<i> dim mai 10 22:26:55
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# augur install jdk | grep firefox
+</I>&gt;<i>
+</I>&gt;<i> dim mai 10 22:27:15
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# augur install jdk | grep libjavaplugin
+</I>&gt;<i>
+</I>&gt;<i> dim mai 10 22:27:43
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:~# unzip -l
+</I>&gt;<i> /var/cache/sources/jdk/7-ea-bin-b58-linux-x64-08_may_2009/* |grep plugin
+</I>&gt;<i> warning
+</I>&gt;<i> [/var/cache/sources/jdk/7-ea-bin-b58-linux-x64-08_may_2009/jdk-7-ea-bin-b58-linux-x64-08_may_2009.bin]:
+</I>&gt;<i> 77260 extra bytes at beginning or within zipfile
+</I>&gt;<i> &#160; (attempting to process anyway)
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160;&#160;&#160; 0&#160; 05-08-09 11:34&#160;&#160; jdk1.7.0/demo/scripting/jconsole-plugin/
+</I>&gt;<i> &#160;&#160;&#160; 29843&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/scripting/jconsole-plugin/jconsole-plugin.jar
+</I>&gt;<i> &#160;&#160;&#160; 25932&#160; 05-08-09 11:30&#160;&#160; jdk1.7.0/demo/scripting/jconsole-plugin/src.zip
+</I>&gt;<i> &#160;&#160;&#160;&#160; 3211&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/scripting/jconsole-plugin/build.xml
+</I>&gt;<i> &#160;&#160;&#160;&#160; 2544&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/scripting/jconsole-plugin/README.txt
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160;&#160;&#160; 0&#160; 05-08-09 11:34
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160; 444&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/build.properties
+</I>&gt;<i> &#160;&#160;&#160;&#160;&#160;&#160;&#160; 0&#160; 05-08-09 11:34
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/nbproject/
+</I>&gt;<i> &#160;&#160;&#160;&#160; 3511&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/nbproject/netbeans-targets.xml
+</I>&gt;<i> &#160;&#160;&#160;&#160; 6190&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/nbproject/project.xml
+</I>&gt;<i> &#160;&#160;&#160;&#160; 4301&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/nbproject/jdk.xml
+</I>&gt;<i> &#160;&#160;&#160;&#160; 2050&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/nbproject/file-targets.xml
+</I>&gt;<i> &#160;&#160;&#160;&#160; 3802&#160; 05-08-09 11:30
+</I>&gt;<i> jdk1.7.0/demo/nbproject/scripting/jconsole-plugin/build.xml
+</I>&gt;<i>
+</I>&gt;<i> well I don't know how you manage to have a plugin.... since it's not present
+</I>&gt;<i> in the zip autoextracting file....
+</I>&gt;<i> thanks and best regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Kyle Sallee wrote:
+</I>&gt;<i>
+</I>&gt;<i> How old is that grimoire you are using?
+</I>&gt;<i> Attached is a gziped jdk spell.
+</I>&gt;<i> Please use this one.
+</I>&gt;<i> Ungzip and make it executable before adding it to /root/.sorcery/grimoire/
+</I>&gt;<i> please.
+</I>&gt;<i>
+</I>&gt;<i> The current version of jdk is:
+</I>&gt;<i>
+</I>&gt;<i> 7-ea-bin-b58-linux-x64-08_may_2009
+</I>&gt;<i>
+</I>&gt;<i> I only have the version prior to that installed, currently.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> # augur install jdk | grep firefox
+</I>&gt;<i> /usr/lib/firefox-3.0.10/plugins/libjavaplugin_oji.so
+</I>&gt;<i>
+</I>&gt;<i> Yet, it appears to install a firefox plugin.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, May 10, 2009 at 5:49 AM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> jdk 1.7.0 don't provide firefox plugin
+</I>&gt;<i> this is pain in the ass and I couldn't find any clue howto activate java
+</I>&gt;<i> on firefox with this release
+</I>&gt;<i> on a bsd forum they say that you have to fall back on 1.6
+</I>&gt;<i> where did the free version of jvm gone?
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001123.html">[Sorcerer-admins] useless jdk
+</A></li>
+	<LI>Next message: <A HREF="001134.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1124">[ date ]</a>
+              <a href="thread.html#1124">[ thread ]</a>
+              <a href="subject.html#1124">[ subject ]</a>
+              <a href="author.html#1124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

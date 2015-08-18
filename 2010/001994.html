@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] multipathd
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20multipathd&In-Reply-To=%3COF486CBDC3.E624AE68-ONC22577D0.00252C23-C22577D0.0025A4C0%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001993.html">
+   <LINK REL="Next"  HREF="001995.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] multipathd</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20multipathd&In-Reply-To=%3COF486CBDC3.E624AE68-ONC22577D0.00252C23-C22577D0.0025A4C0%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] multipathd">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Wed Nov  3 07:51:09 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001993.html">[Sorcerer-admins] multipathd
+</A></li>
+        <LI>Next message: <A HREF="001995.html">[Sorcerer-admins] multipathd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1994">[ date ]</a>
+              <a href="thread.html#1994">[ thread ]</a>
+              <a href="subject.html#1994">[ subject ]</a>
+              <a href="author.html#1994">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+This was problem when i rebooted ppr64.silverice.org, it did locked up sda 
+and boot process stalled there. I dispelled it and boot was again working.
+
+I use multipath on our CentOS servers, and it does not do that sort of 
+things under it, so there must be some reason why its locking up sda. 
+I recall its using some sort of blacklist in its config file, maybe that 
+config file is without blacklist so it does tries to multipath your main 
+drive because 
+its not forbidden. 
+
+Looking one of my CentOS servers /etc/multipath.conf there is this 
+blacklist:
+
+blacklist {
+       wwid 3600508e00000000011663a2739fbf30f
+        devnode &quot;^(ram|raw|loop|fd|md|dm-|sr|scd|st)[0-9]*&quot;
+        devnode &quot;^hd[a-z]&quot;
+}
+
+Is this sort of blacklist also in sorcerer's multipath.conf? If there is 
+no one i think it needs one.
+
+Terveisin/Regards,
+   Pekka Panula, Sofor Oy - Jatkuvat palvelut
+
+
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 03.11.2010 06:29:15:
+
+&gt;<i> From: Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> To: Sorcerer List &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>&gt;
+</I>&gt;<i> Date: 03.11.2010 06:29
+</I>&gt;<i> Subject: [Sorcerer-admins] multipathd
+</I>&gt;<i> Sent by: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A>
+</I>&gt;<i> 
+</I>&gt;<i> Is multipath-tools or multipathd starting during sysinit causing grief?
+</I>&gt;<i> While testing new I/Rs I saw something unexpected.
+</I>&gt;<i> multipathd locked /dev/sda and all partitions on it.
+</I>&gt;<i> I could not initialize file systems nor mount file systems on those 
+</I>&gt;<i> partitions.
+</I>&gt;<i> However, multipathd's death grip was released after issuing:
+</I>&gt;<i> 
+</I>&gt;<i> /sbin/multipath -F
+</I>&gt;<i> 
+</I>&gt;<i> Therefore, I wrote an init-script called multipath-flush
+</I>&gt;<i> to do just that after multipathd is started during sysinit.
+</I>&gt;<i> This is necessary for new Install/Rescue disks that can be used for
+</I>&gt;<i> installation.
+</I>&gt;<i> Otherwise, the fixed disks will be locked up by multipathd.
+</I>&gt;<i> However, the new init-script might cause problems
+</I>&gt;<i> for deployed boxes that require multipathd.
+</I>&gt;<i> I do not know exactly since I do not use the program.
+</I>&gt;<i> 
+</I>&gt;<i> Anyone with experience with multipathd
+</I>&gt;<i> please lend insight leading to a better solution.
+</I>&gt;<i> Otherwise I intend to go with this solution for now.
+</I>&gt;<i> 
+</I>&gt;<i> With LVM2 and multipathd taking turns at holding our partitions for 
+</I>ransom,
+&gt;<i> I am beginning to wish for simple days before such conveniences.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101103/bfb04ae8/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101103/bfb04ae8/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001993.html">[Sorcerer-admins] multipathd
+</A></li>
+	<LI>Next message: <A HREF="001995.html">[Sorcerer-admins] multipathd
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1994">[ date ]</a>
+              <a href="thread.html#1994">[ thread ]</a>
+              <a href="subject.html#1994">[ subject ]</a>
+              <a href="author.html#1994">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

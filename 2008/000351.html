@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New year same problems :)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C8596d02a0801101525g5369d780yd49c41805afbb995%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000350.html">
+   <LINK REL="Next"  HREF="000353.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New year same problems :)</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20year%20same%20problems%20%3A%29&In-Reply-To=%3C8596d02a0801101525g5369d780yd49c41805afbb995%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New year same problems :)">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri Jan 11 00:25:29 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000350.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+        <LI>Next message: <A HREF="000353.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#351">[ date ]</a>
+              <a href="thread.html#351">[ thread ]</a>
+              <a href="subject.html#351">[ subject ]</a>
+              <a href="author.html#351">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Okay , having investigate this some more I find that there are
+problems with ATI chipset SATA.
+
+Gentoo had problems.
+Sidux live CD
+
+they all share a common factor, AHCI and ATI and piix4 sort of notations.
+
+There's some sort of DMA conflict.
+
+I found /sys/bus/pci/devices/*/modalias
+
+which I can feed to modprobe by hand
+
+pretty much everything loads, unless it's a disc controller!
+
+A few things left to try out 'pci=nomsi' 'hda=noprobe' 'hda=none' boot
+parameters.....
+
+
+On Jan 10, 2008 1:36 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Okay not exactly the same... the box still doesn't boot, but at least
+</I>&gt;<i> it gets past udev startup.
+</I>&gt;<i>
+</I>&gt;<i> I notice while starting stuff by hand, I am going through
+</I>&gt;<i> /etc/rc.d/rcS.d and running each one in order with start
+</I>&gt;<i>
+</I>&gt;<i> (started with 2.6.23.12 rdinit=/bin/bash )
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> S02lvm (logical volume manager?) needs to have mounts before it can run
+</I>&gt;<i> S04mount should probably run before S02lvm ?
+</I>&gt;<i>
+</I>&gt;<i> ....
+</I>&gt;<i> was going to complain there was no modprobe... but /sbin isn't in the
+</I>&gt;<i> default path of /bin/bash that's running *shrug* found that.
+</I>&gt;<i>
+</I>&gt;<i> ....
+</I>&gt;<i>
+</I>&gt;<i> S00proc doesn't mount proc?
+</I>&gt;<i>
+</I>&gt;<i> it gets into lsb/init-functions, is testing something like mount...
+</I>&gt;<i>
+</I>&gt;<i> parse start
+</I>&gt;<i> case &quot;$1&quot; instart
+</I>&gt;<i> case $SERV in
+</I>&gt;<i> startm
+</I>&gt;<i> sed 's/#.*//' /etc/fstab [filters down to not commented lines I guess]
+</I>&gt;<i> grep -qw /proc
+</I>&gt;<i>
+</I>&gt;<i> [end]
+</I>&gt;<i>
+</I>&gt;<i> I run that by hand, and it end up doing the 'else' condition of that
+</I>&gt;<i> if... there
+</I>&gt;<i>
+</I>&gt;<i> the actual line is
+</I>&gt;<i>
+</I>&gt;<i> if ! sed 's/#.*//' /etc/fstab | grep -qw &quot;$NAME&quot; &amp;&amp; .....
+</I>&gt;<i>
+</I>&gt;<i> that first expression fails, and there is no else clause in init-functions
+</I>&gt;<i>
+</I>&gt;<i> if ! sed 's/#.*//' /etc/fstab | grep -qw &quot;$NAME&quot; then echo yes; else echo no; fi
+</I>&gt;<i>
+</I>&gt;<i> prints 'no'
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Also, isn't there a ';' missing after 'then log_success_msg  &quot;$NAME mounted&quot;
+</I>&gt;<i>
+</I>&gt;<i> so S00proc start doesn't do anything
+</I>&gt;<i> neither does S00sys
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000350.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+	<LI>Next message: <A HREF="000353.html">[Sorcerer-admins] New year same problems :)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#351">[ date ]</a>
+              <a href="thread.html#351">[ thread ]</a>
+              <a href="subject.html#351">[ subject ]</a>
+              <a href="author.html#351">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

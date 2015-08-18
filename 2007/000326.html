@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Where did it go?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Where%20did%20it%20go%3F&In-Reply-To=%3C596b75860711210034o23d336c8lc0c1ce41df95ad06%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000325.html">
+   <LINK REL="Next"  HREF="000327.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Where did it go?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Where%20did%20it%20go%3F&In-Reply-To=%3C596b75860711210034o23d336c8lc0c1ce41df95ad06%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Where did it go?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Nov 21 09:34:56 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000325.html">[Sorcerer-admins] no glui?
+</A></li>
+        <LI>Next message: <A HREF="000327.html">[Sorcerer-admins] Where did it go?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#326">[ date ]</a>
+              <a href="thread.html#326">[ thread ]</a>
+              <a href="subject.html#326">[ subject ]</a>
+              <a href="author.html#326">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On the next cast or update of sysvinit the runlevel logs will change location.
+Both the sysvinit and runlevel logs are now stored in /etc/init.d/log/
+Strange location, yet necessary.
+Since /var may not be mounted at boot time
+/var/log/ may not exist, and even if it did exist
+it would be only read only.
+Consequently, a very tiny tmpfs is mounted on /etc/init.d/log/
+in order to store the sysinit and runlevel logs.
+
+Additionally, Jeanluc Malet requested the possibility that
+the sysinit and runlevel can be directed to specific ttys
+instead of being sent to /dev/console.
+When the sysvinit spell is cast it will give the defaults of
+/dev/tty9 and /dev/tty10 for the sysinit and runlevel logs, respectively.
+Those are also virtual console 9 and virtual console 10, respectively.
+You may change it then if you desire different character devices.
+The device nodes are copied to directory /etc/init.d/dev/
+and renamed to /etc/init.d/dev/si and /etc/nit.d/dev/rl
+That way they are certain to be present at boot time
+even before udev has populated /dev
+
+/etc/profile from the bash spell has changed.
+I did want the potential problems that come from
+that being customized and edited.
+The next cast of bash installs an /etc/profile that looks like:
+
+
+for          REPLY in /etc/bash.d/noninteractive/*
+do  if [ -x $REPLY ]; then . $REPLY; fi
+done
+
+if [ -n &quot;$PS1&quot; ]; then
+ for         REPLY in /etc/bash.d/interactive/*
+ do if [ -x $REPLY ]; then . $REPLY; fi
+ done
+fi
+
+
+Yes, that is all of it.
+The way it works is very simple.
+For running a shell script the files in /etc/bash.d/noninteractive/
+are sourced in.
+For running a BASH command prompt
+all the files from both /noninteractive/ and /interactive/
+directories are sourced in.
+
+In those directories are shell script fragments
+for setting such things as the prompt,
+the LANG environment variable, and so forth.
+
+In the future I expect that this may be easier,
+although not entirely faster
+than storing it all in a single file.
+However, I can easily add additional menus
+in sorcery for the easy editing of
+the LANG, EDITOR and other environment variables.
+
+On boxes where /etc/profile is already customized
+the customized version will remain in effect.
+Remove it and recast bash if you want the new /etc/profile.
+
+Indexing was changed.
+Indexing and re-indexing now happens only when required.
+When the index is not required
+merely running the sorcery tools will not generate an index.
+Indexing now presents the percent completed
+for each second of delay.
+Additionally, on demand reindexing to deal
+with a single or few modified spells is much faster.
+It may finish sufficiently fast to give cause to doubt if it worked.
+
+The choice of editors for the Install/Rescue disk will now be nano,
+vim, and zile.
+nano, vim, and zile are clones of pico, vi and emacs, respectively.
+That covers all the familiar bases, yes?
+
+I am still honing the next Install/Rescue disks.
+They will be the best yet thus far
+and the last released in 2007.
+If all the changes required were a kernel with compiled in USB support
+then both new I/Rs would have been completed weekends ago.
+Unfortunately, it is more complicated than that.
+Since you are all very capable SAs nobody mentioned how
+the templates provided by the networks spell were all for iproute2
+while the IRs only had net-tools installed.
+However, I did discover and correct that incongruence.
+The next IRs will have networks spell installed
+and iproute2 installed and not net-tools.
+Sorry if that caused anyone inconvenience while deploying new boxes.
+
+If you notice any incongruities in the current IRs please let me know
+so that those oversights can be corrected before the next IRs are completed.
+Also if you want additional functionality it is not yet too late to
+send a request.
+The improved sysvinit logging was a fulfilled SA request.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000325.html">[Sorcerer-admins] no glui?
+</A></li>
+	<LI>Next message: <A HREF="000327.html">[Sorcerer-admins] Where did it go?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#326">[ date ]</a>
+              <a href="thread.html#326">[ thread ]</a>
+              <a href="subject.html#326">[ subject ]</a>
+              <a href="author.html#326">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

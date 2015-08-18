@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] New IA32 I/R Available for Download.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20IA32%20I/R%20Available%20for%20Download.&In-Reply-To=%3C596b75860805080704xe70d19aj41b371b2da080e49%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000421.html">
+   <LINK REL="Next"  HREF="000422.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] New IA32 I/R Available for Download.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20New%20IA32%20I/R%20Available%20for%20Download.&In-Reply-To=%3C596b75860805080704xe70d19aj41b371b2da080e49%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] New IA32 I/R Available for Download.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu May  8 16:04:13 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000421.html">[Sorcerer-admins] libgcrypt problem
+</A></li>
+        <LI>Next message: <A HREF="000422.html">[Sorcerer-admins] libtool .la files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#419">[ date ]</a>
+              <a href="thread.html#419">[ thread ]</a>
+              <a href="subject.html#419">[ subject ]</a>
+              <a href="author.html#419">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A complete recompilation of the I/R should have eliminated
+the potential for any remaining Athlon-XP optimized executables.
+Again it should be suitable for i586 and newer compatible Intel
+architecture 32 bit.
+
+These first three improvements circumvent common SA mistakes.
+
+1. Selecting a partition boot block for installing lilo
+will automatically make that partition the only active
+bootable partition on that device,
+
+2. Selecting a partition's boot block for installing lilo
+causes a confirmation to install a bootable MBR.
+
+3. Partitions configured as part of a software RAID
+will have their types changed to FDh.
+Using partition type FDh and the information stored
+in the partition header the Linux kernel can
+auto-detect and activate the RAIDs
+without an /etc/mdadm.conf configuration file.
+
+
+The following have configuration support in the menu driven installer:
+
+1. Software RAID ( man md; man mdadm for more info)
+
+2. LVM2 (Logical Volume Managment 2, HowTo is available at <A HREF="http://tldp.org">http://tldp.org</A> )
+
+3. LUKS encrypted devices, ( Linux User Key Setup, man cryptsetup 1.0.6 )
+
+/ can be mounted on any of the 3 above block devices
+instead of an ordinary partition.
+However, those advanced configurations also required a dedicated
+ext2 /boot partition of 256M to 1G.
+A Software RAID or LVM2 Logical Volume can also have LUKS
+encryption enabled upon it
+And any of the above block devices can host either swaps or filesystems.
+
+A notebook with a dedicated ext2 /boot partition
+and a LUKS encrypted swap partition and LUKS encrypted / partition
+would provide excellent security while powered down.
+But the cost for that configuration is no suspend to disk.
+And up to 8 simultaneous passwords for activating the encryption
+can be added and revoked an infinite amount of times.
+
+A LUKS encrypted device specified in /etc/fstab
+that lacks the noauto option will cause a password prompt
+during boot if the device hosts a filesystem and not a swap.
+Encrypted swaps cause no password prompt during boot.
+
+
+
+Here is what did not make it onto the new I/R:
+
+SELinux support is still half baked.
+It is probably just a couple of scripts
+and hours of testing away from being complete.
+However, work on complete SELinux support was suspended
+in order to deliver this improved and bug fixed I/R
+faster than humanly possible.
+
+EVMS, similar to LVM2 since they both provide front ends
+to configuring the the Linux kernel's device-mapper,
+is also not included on the I/R.
+EVMS is more complicated and more problematic to use than LVM2.
+
+
+As usual please report bugs if you want fixes.
+Please enjoy this finely honed Sorcerer Install/Rescue image.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000421.html">[Sorcerer-admins] libgcrypt problem
+</A></li>
+	<LI>Next message: <A HREF="000422.html">[Sorcerer-admins] libtool .la files
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#419">[ date ]</a>
+              <a href="thread.html#419">[ thread ]</a>
+              <a href="subject.html#419">[ subject ]</a>
+              <a href="author.html#419">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

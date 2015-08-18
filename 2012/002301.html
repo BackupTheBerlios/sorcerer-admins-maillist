@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20updates%20and%20kde%20is%20no%20longer%20installed%20to%0A%09/opt/kde4&In-Reply-To=%3CCA%2BT4wDiMK0Vp5AzXPCpO92Cxgy5cNzF3QNuk4p8tuXzaYKDVtw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002298.html">
+   <LINK REL="Next"  HREF="002302.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20updates%20and%20kde%20is%20no%20longer%20installed%20to%0A%09/opt/kde4&In-Reply-To=%3CCA%2BT4wDiMK0Vp5AzXPCpO92Cxgy5cNzF3QNuk4p8tuXzaYKDVtw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Feb  6 10:51:17 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002298.html">[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+</A></li>
+        <LI>Next message: <A HREF="002302.html">[Sorcerer-admins] updates and kde is no longer installed	to	/opt/kde4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2301">[ date ]</a>
+              <a href="thread.html#2301">[ thread ]</a>
+              <a href="subject.html#2301">[ subject ]</a>
+              <a href="author.html#2301">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Feb 5, 2012 at 9:01 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hey there.
+</I>&gt;<i>
+</I>&gt;<i> I am completing a rebuild with yesterday's grimoire just about now. 88
+</I>&gt;<i> spells to go.
+</I>&gt;<i> Not many failures so far, but still the upgraded spells are actually still
+</I>&gt;<i> in the queue.
+</I>
+There will be failures, if gnome components are installed.
+gnome is a mess.
+It requires both stable and unstable source tarballs
+and not all of it compiles.
+Some of the errors are focused around gobject-introspection.
+But to not have gobject-introspection installed prevents compilation
+of pygobject-v3 and libpeas.
+And that blocks compilation of totem and gedit.
+I have wasted more than a couple of days trying different combinations
+of gnome software to see if there is yet a solution to this insane puzzle.
+I am still at it.
+
+&gt;<i> We really should only support one version of KDE at a time.
+</I>
+Even if KDE authors state otherwise that is exactly what KDE typically does.
+Something such as the qmake from qt3 can not co-exist with the same name
+in /usr/bin as the qmake from qt-everywhere-opensource.
+And obviously, the qmake from qt3 must be used to compile KDE3.
+
+Also KDE is not multilib.
+However a multilib installation of KDE is provided on Sorcerer,
+because the 32-bit portions are stored in /opt/32bit a separate prefix.
+Installing all of it into /usr does not work.
+Bit specific version files exist with the same names.
+
+&gt;<i> KDE does have ways of installing it in a home directory for the adventurous few that want to try it out.
+</I>
+Sometimes home style installations only work in obsolete documentation.
+However, if anyone was interested in software installed to their home directory
+then the zero install project might be a good method for giving software a try
+by the use of pre-compiled binary packages installed into one's home directory
+instead of doing a full compilation of software.
+
+
+&gt;<i> That way, when KDE 5 comes around, we can have either KDE 5 or 4 installed,
+</I>&gt;<i> but not both.
+</I>
+Uncertain what we can assume about what the KDE team will do.
+For the moment they are slowly feeding metal pineapples with the pin pulled
+to some of their source tarballs.
+Therefore, kdeutils, kdeadmin, kdeaccessibility, kdegraphics and
+kdeedu no longer exist.
+Instead many separate tiny tarballs exist that provide some of the
+same programs.
+My guess is that they are making KDE easier and faster for a
+customized download and installation.
+In that respect KDE is becoming a bit more like gnome.
+However, they are not going crazy with giving every tarball a unique
+version number
+which is impelling my irritation at gnome.
+Therefore, the KDE team is providing a similar convenience sans the
+version insanity.
+However, the changes make for a slightly less than trivial
+checking/preparation of updates for me.
+
+Gnome seems ideally suited for a pre-compiled binary based distribution,
+because I doubt if the gnome quality control team
+does as much compilation testing of their software as I do.
+If they could test better and coordinate their updates so that their
+current product
+with stable tarballs that contain bug fixes all compiles
+then that would be impressive.
+Of course gnome having a gnome-shell that works on all graphics
+hardware would also be impressive.
+Seems like gnome's quality has declined since the of the gnome 1 to
+gnome 2 transition.
+Back when I was complaining about them creating binary incompatible
+versions of gtk+ 1 and 2
+with the exact same names.
+And of course they did that again with gtk+ version 3, which is why we
+have a gtk+-v3 spell.
+
+When gnome does not compile and is not usable on all graphic workstations
+and when we can not update glibc for knowing that the update will cost
+all NFS and RPC functionality,
+and when x86_64 firefox mysteriously crashes on any download attempt
+then all of that gives cause to wonder about the continued usability
+of free software.
+However, I fortunately discovered that only firefox 64-bit compiled
+with gnomevfs support crashes.
+Therefore, disabling gnomevfs support in firefox solves the crashing.
+But that monkey rode on my back for more than a month.
+
+So for the moment KDE seems good to use and gnome and enlightenment
+seem good to avoid using.
+And rather than making any significant progress on my todo list
+I am shuffling around the potential version of installed software
+looking for the mythical combination
+of installed software that makes gnome compile.
+If I do not have it soled by the 10th I will give the broke attribute
+to several spells
+that either cause problems or have problems
+and then leave it that way for 6 months.
+I can not be wasting weeks of Sorcerer dev time because the gnome team
+can not put a release together properly.
+
+There are a number of updates that we will be sitting on for nearly forever.
+The new zlib causes compile failures.
+The new xine-lib causes compile failures.
+The new ffmpeg causes compilation failures.
+And we have been sitting on poppler for a long time already.
+For the most part updating such library spells is not truly a
+distribution decision.
+Rather we wait until software that links with those libraries can
+handle the API changes.
+With important libraries I do extensive testing and if doubts remain
+then the version stays the same.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002298.html">[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+</A></li>
+	<LI>Next message: <A HREF="002302.html">[Sorcerer-admins] updates and kde is no longer installed	to	/opt/kde4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2301">[ date ]</a>
+              <a href="thread.html#2301">[ thread ]</a>
+              <a href="subject.html#2301">[ subject ]</a>
+              <a href="author.html#2301">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

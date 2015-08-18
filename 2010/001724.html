@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on startup
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20startup&In-Reply-To=%3CAANLkTikLlikyQnoSaNQI7EnQSnDptqqTPCW45q7gjfc2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001721.html">
+   <LINK REL="Next"  HREF="001728.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on startup</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20startup&In-Reply-To=%3CAANLkTikLlikyQnoSaNQI7EnQSnDptqqTPCW45q7gjfc2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] dhcp on startup">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sun Jul 11 23:31:12 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001721.html">[Sorcerer-admins] dhcp on startup
+</A></li>
+        <LI>Next message: <A HREF="001728.html">[Sorcerer-admins] dhcp on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1724">[ date ]</a>
+              <a href="thread.html#1724">[ thread ]</a>
+              <a href="subject.html#1724">[ subject ]</a>
+              <a href="author.html#1724">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>here is the way I do it :
+cd /etc/networks.d
+cp templates/links/generic eth-dhcp
+vi eth/dhcp
+seek for the line with IF
+edit it so that it looks like  IF=eth0
+keep all the other lines commented
+:<i>wq
+</I>/etc/init.d/network start
+
+I personally prefer to do a network since I start some other service in my
+case but if you just want dhcp
+
+be careful that dhclient or dhcpcd might not work according to your dhcp
+server... if it's not working try chmod -x $(which dhclient)
+
+best regards
+JLM
+
+On Sun, Jul 11, 2010 at 9:20 PM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+
+&gt;<i>  Hello,
+</I>&gt;<i>
+</I>&gt;<i> What's the best way I can take care that dhcp will start on boot so I can
+</I>&gt;<i> use internet directly.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i> Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.&lt;<A HREF="http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=MessengerHyves&amp;WT.mc_id=msn3">http://www.microsoft.com/netherlands/windowslive/Views/productdetail.aspx?product=MessengerHyves&amp;WT.mc_id=msn3</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100711/64064a89/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100711/64064a89/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001721.html">[Sorcerer-admins] dhcp on startup
+</A></li>
+	<LI>Next message: <A HREF="001728.html">[Sorcerer-admins] dhcp on startup
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1724">[ date ]</a>
+              <a href="thread.html#1724">[ thread ]</a>
+              <a href="subject.html#1724">[ subject ]</a>
+              <a href="author.html#1724">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

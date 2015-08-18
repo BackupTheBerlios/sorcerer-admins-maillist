@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Booting your boxes can become faster!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Booting%20your%20boxes%20can%20become%20faster%21&In-Reply-To=%3C596b75860711081509k1e03d8cx7c38e28ec704e372%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000320.html">
+   <LINK REL="Next"  HREF="000322.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Booting your boxes can become faster!</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Booting%20your%20boxes%20can%20become%20faster%21&In-Reply-To=%3C596b75860711081509k1e03d8cx7c38e28ec704e372%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Booting your boxes can become faster!">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Nov  9 00:09:33 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000320.html">[Sorcerer-admins] Booting your boxes can become faster!
+</A></li>
+        <LI>Next message: <A HREF="000322.html">[Sorcerer-admins] Wierd errors during index
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#321">[ date ]</a>
+              <a href="thread.html#321">[ thread ]</a>
+              <a href="subject.html#321">[ subject ]</a>
+              <a href="author.html#321">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Nov 8, 2007 6:01 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+
+&gt;<i> That's a good new functionality, my laptop has 2GB ram and often after boot
+</I>&gt;<i> there is no more disc access.
+</I>
+Precisely!
+What does every Sorcerer box have in common when they boot?
+Plenty of empty RAM!
+Why wait for it to fill?
+Cram the RAM ASAP.  :)
+Since it is a computer it should anticipate what files will be needed
+and have them loaded into RAM before they are required.
+At least a workstation aught to work that way.
+
+
+&gt;<i> I would have liked to have a config file where to put the binaries we want
+</I>&gt;<i> to have cached too... for example, I know I will run firefox, konqueror,
+</I>&gt;<i> vim, gliv, pidgim at least once during a session but not necessarly during
+</I>&gt;<i> the 5 first minutes but for efficiency I would like to have those preloaded
+</I>&gt;<i> into ram (for example I'm on a trip and want to have only disc access during
+</I>&gt;<i> startup and after only use ram) no matter what.... so is it possible to have
+</I>&gt;<i> thoses files and dependencies preloaded into ram?
+</I>
+Yes, absolutely.
+However, editing /etc/bootblaze.conf
+may not be as effective as allowing bootblaze to
+auto-detect files that are read during the first 5 minutes.
+Take firefox for example.
+Adding /usr/bin/firefox directly to /etc/bootblaze.conf gains no advantage.
+Why?
+
+$ ls -alh /usr/bin/firefox
+-rwxr-xr-x 1 root root 5.2K 2007-11-01 21:46 /usr/bin/firefox
+
+Because /usr/bin/firefox is merely 5.2K.
+firefox requires a long time to load because
+over 100 files including datafiles, executables, and libraries
+are opened when firefox starts.
+To effectively expedite the startup of firefox all those files
+should be entered into /etc/bootblaze.conf in the correct order.
+Fortunately, bootblaze can do that.
+
+# rm -f /etc/bootblaze.conf
+# shutdown -r now
+
+When the box reboots, log in.
+Start the programs that you normally start in their normal order.
+Continue to load the other programs that you might use such as:
+
+&gt;<i> vim, gliv, pidgim at least once during a session but not necessarly during
+</I>&gt;<i> the 5 first minutes
+</I>
+Processes are not required to continue running the entire 5 minutes.
+Quit them anytime.
+After about 5 minutes the disk will become momentarily active as bootblaze
+discovers the files that were read and lists those in /etc/bootblaze.conf
+The files now logged in /etc/bootblaze.conf
+bootblaze will load automatically into RAM during boot,
+consequently, expediting the startup of programs that use those files.
+
+The principle is as simple as a tape recorder.
+Press record for 5 minutes on first boot.
+Press play for 1 minutes on subsequent boots.
+bootblaze does that automatically.
+
+Bootblaze does not track files read from /home /opt /tmp /var
+Therefore, a minimal amount of disk activity
+may happen when programs are started that read
+directories and datafiles in the user's home directory.
+With firefox there is a measurable delay,
+but with most other programs delay is minuscule.
+
+If /etc/bootblaze.conf is over 2 days old during boot
+then bootblaze will again observe files loaded during
+the first 5 minutes and add those to the list in
+/etc/bootblaze.conf while at the same time removing
+from the list any files that no longer exist.
+To put it simply: activate it, configure it and forget about it.
+
+
+You mentioned wanting something that bootblaze is not intended to do:
+
+&gt;<i> (for example I'm on a trip and want to have only disc access during
+</I>&gt;<i> startup and after only use ram) no matter what
+</I>
+Unfortunately, bootblaze can not help you there.
+However, there are yet ways to accomplish that goal.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000320.html">[Sorcerer-admins] Booting your boxes can become faster!
+</A></li>
+	<LI>Next message: <A HREF="000322.html">[Sorcerer-admins] Wierd errors during index
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#321">[ date ]</a>
+              <a href="thread.html#321">[ thread ]</a>
+              <a href="subject.html#321">[ subject ]</a>
+              <a href="author.html#321">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

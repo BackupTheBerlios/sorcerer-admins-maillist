@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lib64 references....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lib64%20references....&In-Reply-To=%3C8596d02a0806261650k2152033fv6bea0ca7caca1bf8%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000570.html">
+   <LINK REL="Next"  HREF="000574.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lib64 references....</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lib64%20references....&In-Reply-To=%3C8596d02a0806261650k2152033fv6bea0ca7caca1bf8%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lib64 references....">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri Jun 27 01:50:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000570.html">[Sorcerer-admins] lib64 references....
+</A></li>
+        <LI>Next message: <A HREF="000574.html">[Sorcerer-admins] lib64 references....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#571">[ date ]</a>
+              <a href="thread.html#571">[ thread ]</a>
+              <a href="subject.html#571">[ subject ]</a>
+              <a href="author.html#571">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Uhmm.... okay sorcery-md5sum is just bad to do... it will cause a LOT
+of recompilations for no particular reason other than configuration
+file changes.
+
+Attached is the log of sorcery-md5sum
+
+espcially /etc/odbc.ini and /etc/odbcinst.ini
+
+Unexpected md5sum	bash	/etc/skel/.bash_profile
+Unexpected md5sum	bash	/etc/skel/.bashrc
+
+I'm not allowed to change how my default users are created?
+
+Unexpected md5sum	samba	/etc/xinetd.d/swat
+
+
+others... like /etc/sorcery/log/compile/* ??
+
+
+
+
+On Thu, Jun 26, 2008 at 4:04 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Continued along this vein...
+</I>&gt;<i>
+</I>&gt;<i> cast sorcery-md5sum
+</I>&gt;<i>
+</I>&gt;<i> okay so some things weren't matching (bash, unixODBC, samba... )
+</I>&gt;<i> erm... linux-modular failed md5sum?  that's odd since I only just got
+</I>&gt;<i> that to cast yesterday it should have been fine... unfortunatly the
+</I>&gt;<i> md5sum list is not saved(?)... so I can't figure out what exactly it
+</I>&gt;<i> failed on (I'm certain I modified nothing in /etc, /bin, /sbin well
+</I>&gt;<i> anywhere except adding one file to /root and modifications to
+</I>&gt;<i> /root/work/* which is my sandbox....
+</I>&gt;<i>
+</I>&gt;<i> it's auto casting the md5sum failures... oh wait
+</I>&gt;<i>
+</I>&gt;<i> there is one at the tail of the log that says that /etc/xinetd.d/swat
+</I>&gt;<i> failed md5sum.  I think I did probably set disable=yes to turn this
+</I>&gt;<i> service off...
+</I>&gt;<i>
+</I>&gt;<i> is there an approved way to do this that will update the md5sum?  I
+</I>&gt;<i> thought there was a maila bout just going into /etc/xinetd.d and
+</I>&gt;<i> setting the disable flag on/off....
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Jun 26, 2008 at 3:06 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On Thu, Jun 26, 2008 at 2:26 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> You may have to check the compile log for
+</I>&gt;&gt;&gt;<i> sorcery-alien and
+</I>&gt;&gt;&gt;<i> then round up illegal aliens for deportation.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> okay - nothing showed up under /lib64
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> a lot of backups and alternate configuration files...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /etc/adjtime (from ntp, no?)
+</I>&gt;&gt;<i> /etc/udev/rules.d (dynamically generated files from udev)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> runtime generated files in /usr/lib/X11/fonts
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> *shrug*
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> anyhow - still don't know how to KNOW there are links in /lib64
+</I>&gt;&gt;<i> especially for packages e2fsprogs and selinux
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> (turns out I don't need to know they are there, in my gadget I can
+</I>&gt;&gt;<i> just run ldconfig as the first thing, then all lbiraries are present
+</I>&gt;&gt;<i> for the first mount -t sysfs none /sys, proc, etc... )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> but if they're not alien, and not in 'install' logs, where else is the
+</I>&gt;&gt;<i> info?  ( just did a grep libblkid -R /etc/sorcery/log/*, there are NO
+</I>&gt;&gt;<i> files which refer to the /lib64/libblkid.so.... and it IS there. )
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Thu, Jun 26, 2008 at 10:27 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> e2fsprogs installs a thing called libblkid.so...
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> /etc/sorcery/log/install/e2fsprogs:/lib/libblkid.so.1
+</I>&gt;&gt;&gt;&gt;<i> /etc/sorcery/log/install/e2fsprogs:/lib/libblkid.so.1.0
+</I>&gt;&gt;&gt;&gt;<i> /etc/sorcery/log/install/e2fsprogs:/usr/lib/libblkid.a
+</I>&gt;&gt;&gt;&gt;<i> /etc/sorcery/log/install/e2fsprogs:/usr/lib/libblkid.so
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> but there is a version of libblkid.so in lib64
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> lrwxrwxrwx  1 root root      18 2008-03-19 11:07 libblkid.so -&gt;
+</I>&gt;&gt;&gt;&gt;<i> /lib/libblkid.so.1
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> there is no references ot this link being installed... so... how is it
+</I>&gt;&gt;&gt;&gt;<i> installed, and how do I know what other packages will have these
+</I>&gt;&gt;&gt;&gt;<i> invisible links?
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: sorcery-md5sum.log
+Type: application/octet-stream
+Size: 4950 bytes
+Desc: not available
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080626/73c6ad40/attachment.obj">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080626/73c6ad40/attachment.obj</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000570.html">[Sorcerer-admins] lib64 references....
+</A></li>
+	<LI>Next message: <A HREF="000574.html">[Sorcerer-admins] lib64 references....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#571">[ date ]</a>
+              <a href="thread.html#571">[ thread ]</a>
+              <a href="subject.html#571">[ subject ]</a>
+              <a href="author.html#571">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

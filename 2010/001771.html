@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] PHP ignores DESTDIR
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20PHP%20ignores%20DESTDIR&In-Reply-To=%3CAANLkTikcrg1xAY4i0OPq45JrDxasACokhLLTxfcPULU6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001770.html">
+   <LINK REL="Next"  HREF="001783.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] PHP ignores DESTDIR</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20PHP%20ignores%20DESTDIR&In-Reply-To=%3CAANLkTikcrg1xAY4i0OPq45JrDxasACokhLLTxfcPULU6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] PHP ignores DESTDIR">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 17 06:31:51 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001770.html">[Sorcerer-admins] PHP ignores DESTDIR
+</A></li>
+        <LI>Next message: <A HREF="001783.html">[Sorcerer-admins] gobject-introspection failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1771">[ date ]</a>
+              <a href="thread.html#1771">[ thread ]</a>
+              <a href="subject.html#1771">[ subject ]</a>
+              <a href="author.html#1771">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Glad I could help.
+Unfortunately, the modification was
+not as easy as I first expected.
+But it was close.
+My 2nd guess was dead on
+and so the spell is now fixed in svn
+and went out in the last LAG=0 grimoire tarball.
+
+
+On Fri, Jul 16, 2010 at 6:59 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Friday, July 16, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> Oops, it does contain a few lines of text
+</I>&gt;&gt;<i> that have the word DESTDIR on them
+</I>&gt;&gt;<i> so it slipped past my grep test because of that.
+</I>&gt;&gt;<i> Unfortunately, detecting those lines with DESTDIR
+</I>&gt;&gt;<i> does not also 100% indicate that php is DESTDIR compatible.
+</I>&gt;&gt;<i> It is not.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, it is like the few sources that use
+</I>&gt;&gt;<i> the environment variable INSTALL_ROOT instead of DESTDIR
+</I>&gt;<i>
+</I>&gt;<i> Thank you, I did not know what to look for but was still hoping that there
+</I>&gt;<i> would be a fairly simple solution, as opposed to patching the php package :)
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;<i>
+</I>&gt;&gt;<i> Thanks for reporting that.
+</I>&gt;&gt;<i> I would not have noticed that until the next php update.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> In some sources, perhaps some of the sources
+</I>&gt;&gt;<i> with a history older than the use of DESTDIR,
+</I>&gt;&gt;<i> the environment variable INSTALL_ROOT
+</I>&gt;&gt;<i> was used instead.
+</I>&gt;&gt;<i> INSTALL_ROOT is rather rare and occurs
+</I>&gt;&gt;<i> in less than 1% of software.
+</I>&gt;&gt;<i> I saw it a few times and therefore
+</I>&gt;&gt;<i> it became my next choice to grep
+</I>&gt;&gt;<i> after reading that DESTDIR does not work.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I suspect this will work and am testing it now.
+</I>&gt;&gt;<i> Thanks again for the report.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Fri, Jul 16, 2010 at 1:24 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;&gt;<i> &gt; The php spell does not work correctly with the DESTDIR, it does not
+</I>&gt;&gt;<i> &gt; install most of the code that it should.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I have been trying to fix the php spell for hours and the solution is
+</I>&gt;&gt;<i> &gt; still eluding me. Has anybody got a solution by any chance?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Thank you,
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Jan
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001770.html">[Sorcerer-admins] PHP ignores DESTDIR
+</A></li>
+	<LI>Next message: <A HREF="001783.html">[Sorcerer-admins] gobject-introspection failed to install
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1771">[ date ]</a>
+              <a href="thread.html#1771">[ thread ]</a>
+              <a href="subject.html#1771">[ subject ]</a>
+              <a href="author.html#1771">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

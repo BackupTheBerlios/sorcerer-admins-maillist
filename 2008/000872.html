@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] augur changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20augur%20changes.&In-Reply-To=%3C596b75860811281526m55d70db4t9454a86a5b96e59b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000862.html">
+   <LINK REL="Next"  HREF="000873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] augur changes.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20augur%20changes.&In-Reply-To=%3C596b75860811281526m55d70db4t9454a86a5b96e59b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] augur changes.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Nov 29 00:26:38 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000862.html">[Sorcerer-admins] New $20 Micro ATX power supply installed.
+</A></li>
+        <LI>Next message: <A HREF="000873.html">[Sorcerer-admins] glibc 2.9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#872">[ date ]</a>
+              <a href="thread.html#872">[ thread ]</a>
+              <a href="subject.html#872">[ subject ]</a>
+              <a href="author.html#872">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>augur has changed somewhat:
+
+source     none            List spells with non source override
+source     spell none      Return to default sources for spell
+source     spell sources   Specify URLs and source files for spell
+sources    dir             Copy sources from dir into the source cache
+sources    file            Copy file             into the source cache
+src        none            View sources for all spells
+src        spells          View sources for spells
+stable     none            View the stable versions for installed spells
+stable     spells          View the stable versions for spells
+
+The new source command is similar to progress.
+It can be used to override the sources for a spell to include also
+download locations.
+In some sense the augur source command replaces the long lost augur
+prefer command
+since it can be used to specify different download servers or a
+desired download server.
+
+# augur help source
+
+When alternate sources or alternate download servers are desired
+then this command can override the url and source specified in a spell.
+For example if one wanted to change the source for bash to trash,
+but maintain the same available version then that command would be:
+# augur source bash <A HREF="ftp://ftp.gnu.org/pub/gnu/bash/trash-\$VERSION.tar.bz2">ftp://ftp.gnu.org/pub/gnu/bash/trash-\$VERSION.tar.bz2</A>
+
+Multiple sources and multiple download servers may be specified just as
+they can be specified in spells.
+However, they must all be specified with a single invocation to
+# augur source
+
+When using the augur source command the $VERSION variable can be used
+or alternately a specific version can be specified which would have a similar
+effect to progress except that sorcery's reported installed version
+for the spell
+may not correctly report the version which is installed.
+Therefore, use of \$VERSION when specifying source overrides is recommended.
+
+The augur source command may be a convenience or an inconvenience if
+set and forgot.
+However, the way it is currently implemented it no additional indexing
+time is required if
+no spells have source overrides.
+
+Therefore, there is only a slight performance cost if a SA elects to
+use source override.
+Without explicitly writing an evaluation table this change clearly has
+more boons than banes.
+However, when very precise control is required then creating custom
+spells is still a good idea.
+
+Hope everyone who celebrated had a fun Thanksgiving.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000862.html">[Sorcerer-admins] New $20 Micro ATX power supply installed.
+</A></li>
+	<LI>Next message: <A HREF="000873.html">[Sorcerer-admins] glibc 2.9
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#872">[ date ]</a>
+              <a href="thread.html#872">[ thread ]</a>
+              <a href="subject.html#872">[ subject ]</a>
+              <a href="author.html#872">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] another benefit of tomoyo...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20another%20benefit%20of%20tomoyo...&In-Reply-To=%3CCA%2BT4wDhFOr7BC2B3n7jrVR-39LpiZ9jve0tghD0orF_A%3DNNBww%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002276.html">
+   <LINK REL="Next"  HREF="002278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] another benefit of tomoyo...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20another%20benefit%20of%20tomoyo...&In-Reply-To=%3CCA%2BT4wDhFOr7BC2B3n7jrVR-39LpiZ9jve0tghD0orF_A%3DNNBww%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] another benefit of tomoyo...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Oct 16 01:12:28 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002276.html">[Sorcerer-admins] relatime...
+</A></li>
+        <LI>Next message: <A HREF="002278.html">[Sorcerer-admins] immune-security-tomoyo...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2277">[ date ]</a>
+              <a href="thread.html#2277">[ thread ]</a>
+              <a href="subject.html#2277">[ subject ]</a>
+              <a href="author.html#2277">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I completed more test for tighter integration between tomoyo and sorcery.
+cast can compile software and do destdir installation within the sorcery domain.
+Therefore, during execution of:
+./configure --prefix=/usr &amp;&amp; make &amp;&amp; make install
+
+/tmp/  /usr/src/  are the only write-able locations.
+
+This change is not a security measure.
+When security is a concern
+then untrusted software should not be installed.
+
+The use of a custom domain for executing the compilation of software
+prevents modification of files in the real root filesystem.
+This is desirable in order to prevent the creation of alien files
+and unexpected modification of installed files.
+
+Some software authors might accidentally or intentionally
+allow their software to do undesirable modifications to installed files.
+In the past one of the most significant culprits was pjproject.
+pjproject modified header files from several other installed software projects
+including glibc's /usr/include/err.h
+Naturally, these modifications happened before the make install.
+Therefore, the modified header files
+did not become shared installed files.
+pjproject stealthily sabotaged header files
+which caused compile errors in other software.
+The problem would continue until effected software upgraded
+or until sorcery's immune system detects and corrects the modified files.
+
+cast using a domain for software compilation ensures
+that a installed/modified file will be tracked
+and owned by the spell that modified/installed it.
+Therefore, tomoyo will automatically
+deny attempts to modify files in the root file system during compilation.
+Tomoyo thwarts pjproject and software projects that do stealthy sabotage.
+
+Yes alternate methods to accomplish this goal exist.
+A preloaded library
+can filter library calls in software
+that is dynamically linked with glibc.
+Yet a pre-loaded library can be thwarted.
+And a preloaded library is not usable on multilib Sorcerer,
+because the software being run during compilation
+might be ELF 32-bit or ELF 64-bit.
+The compiler which is run is always ELF 64-bit on multilib Sorcerer.
+Therefore, much ELF 64-bit software, such as make, ld, gcc, ccache, etc...
+runs during ELF 32-bit compilation on a multilib box.
+
+A method using a fuse file system and chroot was discussed for this task.
+Unfortunately, it introduces undesirable complexity and overhead.
+An implementation involving fuse
+to replace the preloaded sentinel library
+nearly became the alternative
+to the revision to DESTDIR style installation.
+Because dispel had to run before &quot;make install&quot;
+and make modifications to the real root file system
+this method became somewhat problematic
+for exiting the chroot of the virtual file system
+acting as a proxy for the real root file system.
+However, I very much liked this method and almost chose it
+over the near impossible task of rewriting and testing
+every spell in the grimoire in order to support DESTDIR style installation.
+
+A method using a tomoyo domain
+in order to block modifications to the real root file system
+incurs no apparent performance deficit.
+tomoyo runs efficiently in kernel space.
+Therefore, boxes gain the boon
+for almost no additional cost
+in speed and complexity.
+
+Some people might call this modification a &quot;sandbox.&quot;
+However, tomoyo is no playground.
+Incarceration within a domain is not elective.
+Incarceration is mandatory and inescapable.
+Forget the image of a sandbox.
+Imagine a high security prison.
+
+Although inescapable this domain is not a security feature.
+A spell that properly installs /bin/su or other sensitive files
+will be able to disrupt, compromise and sabotage a box.
+However, the modification will be tracked
+since the modified files must be installed
+by using the DESTDIR method.
+Therefore, the install logs for spells will accurately
+report which spell installed what file.
+
+Therefore, at best a domain for sorcery
+will help block the appearance of aliens by that method.
+Yet there are still nearly an unlimited amount of additional
+methods by which aliens can appear on box.
+There poorly design software exists that creates aliens when run.
+system-config-printer writes files to /usr/share/system-config-printer/
+xkeyboard-config that writes files to /usr/share/X11/xkb/compiled/
+Yes I make myself irritated by this because
+when I detect it I must write exceptions in domains to allow it.
+But that is entirely a different discussion.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002276.html">[Sorcerer-admins] relatime...
+</A></li>
+	<LI>Next message: <A HREF="002278.html">[Sorcerer-admins] immune-security-tomoyo...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2277">[ date ]</a>
+              <a href="thread.html#2277">[ thread ]</a>
+              <a href="subject.html#2277">[ subject ]</a>
+              <a href="author.html#2277">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

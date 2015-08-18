@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] howto prevent a module from loading	automatically?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howto%20prevent%20a%20module%20from%20loading%0A%09automatically%3F&In-Reply-To=%3C8596d02a0806090313u122b1c3bn1e715c648ad8a867%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000488.html">
+   <LINK REL="Next"  HREF="000493.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] howto prevent a module from loading	automatically?</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20howto%20prevent%20a%20module%20from%20loading%0A%09automatically%3F&In-Reply-To=%3C8596d02a0806090313u122b1c3bn1e715c648ad8a867%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] howto prevent a module from loading	automatically?">d3ck0r at gmail.com
+       </A><BR>
+    <I>Mon Jun  9 12:13:28 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000488.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+        <LI>Next message: <A HREF="000493.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#491">[ date ]</a>
+              <a href="thread.html#491">[ thread ]</a>
+              <a href="subject.html#491">[ subject ]</a>
+              <a href="author.html#491">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jun 3, 2008 at 1:24 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Writing a rule to prevent a module from loading maybe possible.
+</I>&gt;<i> However, init-scripts can also unload modules.
+</I>&gt;<i> And modules listed in
+</I>&gt;<i> /etc/modules.rm
+</I>
+where is this documented ?  and how is this controlled cause there's
+like a /etc/modules.autoload.d/xxx sort of thing implemented on other
+systems to specify modules which should be loaded (uvesafb for
+instance )
+
+&gt;<i> are unloaded during boot.
+</I>&gt;<i>
+</I>&gt;<i> NVIDIA-Linux-x86.d/init.d.on/nvidiafb
+</I>&gt;<i>
+</I>&gt;<i> Above is an init-script that unloads the
+</I>&gt;<i> nvidiafb module during boot so that pre-compiled
+</I>&gt;<i> binary module provided by NVIDIA-Linux-x86 can
+</I>&gt;<i> be loaded instead.
+</I>&gt;<i> In that instance using an init-script is easiest.
+</I>&gt;<i>
+</I>&gt;<i> There are only a few modules that can not be unloaded.
+</I>&gt;<i> And those require udev rules to avoid.
+</I>&gt;<i>
+</I>&gt;<i> Most modules do not use much RAM.
+</I>&gt;<i> If the box has plenty and there is no module conflict
+</I>&gt;<i> then it may be easiest to leave modules installed.
+</I>&gt;<i>
+</I>&gt;<i> # lsmod | sort -k2rg | head
+</I>&gt;<i>
+</I>&gt;<i> Those modules eat the most RAM.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Jun 2, 2008 at 11:02 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> hi,
+</I>&gt;&gt;<i> I read several ways on the net to prevent a module from beeing
+</I>&gt;&gt;<i> automatically loaded through udev/hotplug....
+</I>&gt;&gt;<i> but none worked...
+</I>&gt;&gt;<i> does someone know how to do that?
+</I>&gt;&gt;<i> does also someone know how to remove all modules that have been loaded
+</I>&gt;&gt;<i> through module dependencies? I have a wifi card that I barelly use and
+</I>&gt;&gt;<i> that load tons of modules... just want to load them through the network
+</I>&gt;&gt;<i> scrip and have all those unloaded also on stop....
+</I>&gt;&gt;<i> best regards
+</I>&gt;&gt;<i> JLM
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000488.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+	<LI>Next message: <A HREF="000493.html">[Sorcerer-admins] howto prevent a module from loading	automatically?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#491">[ date ]</a>
+              <a href="thread.html#491">[ thread ]</a>
+              <a href="subject.html#491">[ subject ]</a>
+              <a href="author.html#491">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

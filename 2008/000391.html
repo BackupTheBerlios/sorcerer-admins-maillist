@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MesaLib failling compilation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20failling%20compilation&In-Reply-To=%3C47AF6C87.7030305%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000390.html">
+   <LINK REL="Next"  HREF="000392.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MesaLib failling compilation</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MesaLib%20failling%20compilation&In-Reply-To=%3C47AF6C87.7030305%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] MesaLib failling compilation">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sun Feb 10 22:28:39 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000390.html">[Sorcerer-admins] Local spells
+</A></li>
+        <LI>Next message: <A HREF="000392.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#391">[ date ]</a>
+              <a href="thread.html#391">[ thread ]</a>
+              <a href="subject.html#391">[ subject ]</a>
+              <a href="author.html#391">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>hi,
+the mesalib spell seems broken...
+augur compile MesaLib :
+Compile log for MesaLib 6.5.2
+Built with sorcery implosion-20080206-0 and gcc 4.2.3
+Built on dim f&#233;v 10 22:02:32 CET 2008
+(cd configs &amp;&amp; rm -f current &amp;&amp; ln -s linux-dri-x86 current)
+make default
+make[1]: entrant dans le r&#233;pertoire &#171; /usr/src/sorcery/MesaLib/Mesa-6.5.2 &#187;
+make[2]: entrant dans le r&#233;pertoire &#171; 
+/usr/src/sorcery/MesaLib/Mesa-6.5.2/src &#187;
+Making sources for linux-dri-x86
+mkdir ../lib
+make[3]: entrant dans le r&#233;pertoire &#171; 
+/usr/src/sorcery/MesaLib/Mesa-6.5.2/src/glx/x11 &#187;
+Makefile:95: depend: Aucun fichier ou r&#233;pertoire de ce type
+touch depend
+makedepend -fdepend -I. -I../../../include 
+-I../../../include/GL/internal -I../../../src/mesa/main 
+-I../../../src/mesa/glapi -I../../../src/mesa/drivers/dri/common 
+`pkg-config --cflags libdrm` -I/usr/X11R6/include glcontextmodes.c 
+clientattrib.c compsize.c eval.c glxcmds.c glxext.c glxextensions.c 
+indirect.c indirect_init.c indirect_size.c indirect_window_pos.c 
+indirect_transpose_matrix.c indirect_vertex_array.c 
+indirect_vertex_program.c pixel.c pixelstore.c render2.c renderpix.c 
+single2.c singlepix.c vertarr.c xfont.c glx_pbuffer.c glx_query.c 
+glx_texture_compression.c dri_glx.c XF86dri.c \
+                ../../../src/mesa/main/dispatch.c 
+../../../src/mesa/glapi/glapi.c ../../../src/mesa/glapi/glthread.c 
+../../../src/mesa/x86/glapi_x86.S
+makedepend: warning:  glcontextmodes.c (reading 
+/usr/X11R6/include/sys/types.h, line 147): cannot find include file 
+&quot;stddef.h&quot;
+        not in ./stddef.h
+        not in ../../../include/stddef.h
+        not in ../../../include/GL/internal/stddef.h
+        not in ../../../src/mesa/main/stddef.h
+        not in ../../../src/mesa/glapi/stddef.h
+        not in ../../../src/mesa/drivers/dri/common/stddef.h
+        not in /usr/include/drm/stddef.h
+        not in /usr/X11R6/include/stddef.h
+        not in /usr/include/stddef.h
+makedepend: warning:  glcontextmodes.c (reading 
+/usr/X11R6/include/X11/Xlib.h, line 75): cannot find include file &quot;stddef.h&quot;
+        not in ./stddef.h
+        not in ../../../include/stddef.h
+        not in ../../../include/GL/internal/stddef.h
+        not in ../../../src/mesa/main/stddef.h
+        not in ../../../src/mesa/glapi/stddef.h
+        not in ../../../src/mesa/drivers/dri/common/stddef.h
+        not in /usr/include/drm/stddef.h
+        not in /usr/X11R6/include/stddef.h
+        not in /usr/include/stddef.h
+makedepend: warning:  glcontextmodes.c (reading 
+../../../include/GL/glext.h, line 3128): cannot find include file &quot;stddef.h&quot;
+        not in ./stddef.h
+        not in ../../../include/stddef.h
+        not in ../../../include/GL/internal/stddef.h
+        not in ../../../src/mesa/main/stddef.h
+        not in ../../../src/mesa/glapi/stddef.h
+        not in ../../../src/mesa/drivers/dri/common/stddef.h
+        not in /usr/include/drm/stddef.h
+        not in /usr/X11R6/include/stddef.h
+        not in /usr/include/stddef.h
+and so on....
+
+# augur history stddef.h
+Spell      Version   Match
+gcc-v4.1   4.1.2     
+/opt/gcc/4.1.2/lib/gcc/i686-pc-linux-gnu/4.1.2/include/stddef.h
+gcc-v4.1   4.1.2     
+/opt/gcc/4.1.2/lib/gcc/i686-pc-linux-gnu/4.1.2/install-tools/include/stddef.h
+wine       0.9.53    /usr/include/wine/msvcrt/stddef.h
+boost      1_34_1    /usr/include/boost-1_34_1/boost/pending/cstddef.hpp
+gcc        4.2.3     /usr/lib/gcc/i686-pc-linux-gnu/4.2.3/include/stddef.h
+gcc        4.2.3     
+/usr/lib/gcc/i686-pc-linux-gnu/4.2.3/install-tools/include/stddef.h
+firefox    2.0.0.11  /usr/include/firefox-2.0.0.11/js/jsstddef.h
+man-pages  2.76      /usr/share/man/man0p/stddef.h.0p
+gcc-v3.4   3.4.6     
+/opt/gcc/3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/include/stddef.h
+gcc-v3.4   3.4.6     
+/opt/gcc/3.4.6/lib/gcc/i686-pc-linux-gnu/3.4.6/install-tools/include/stddef.h
+
+
+why are the gcc's include path not in the seeked path of MesaLib spell?
+
+Best Regards
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000390.html">[Sorcerer-admins] Local spells
+</A></li>
+	<LI>Next message: <A HREF="000392.html">[Sorcerer-admins] MesaLib failling compilation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#391">[ date ]</a>
+              <a href="thread.html#391">[ thread ]</a>
+              <a href="subject.html#391">[ subject ]</a>
+              <a href="author.html#391">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

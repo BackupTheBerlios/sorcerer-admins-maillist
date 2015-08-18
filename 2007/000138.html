@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Leech just waits forever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140204v40020593i5bfabc2d9eda8cb5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000136.html">
+   <LINK REL="Next"  HREF="000140.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Leech just waits forever</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140204v40020593i5bfabc2d9eda8cb5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Leech just waits forever">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 14 11:04:51 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000136.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+        <LI>Next message: <A HREF="000140.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#138">[ date ]</a>
+              <a href="thread.html#138">[ thread ]</a>
+              <a href="subject.html#138">[ subject ]</a>
+              <a href="author.html#138">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Bent has excellent points,
+although they may not apply to a SCSI array with ample space
+on /var/tmp and /var/cache/sources
+
+I have observed that on some boxes IDE controllers reset.
+Often those disk are re-enabled without DMA, without 32 bit mode,
+without read-ahead.
+And sometimes those resets may cause an
+I/O lag that could last for minutes.
+It really is quite annoying.
+A novice SA might conjecture that the box had locked up.
+One might even decide to set up cronjobs on those boxes
+to invoke hdparm periodically to correct after a controller reset.
+Also one could try invoking hdparm with -k from
+/etc/init.d/bootmisc to hopefully keep drive parameters
+set following an unexpected controller reset.
+
+
+My guess is that computers these days do not live up to
+the expectations of computers in the 80s.
+These days, motherboards detonate,
+power supplies burst into flames,
+CPUs melt,
+IDE controllers reset.
+The only two good things I can think of is
+that hard drives are self parking on power off,
+and that vacuum cleaners no longer cause computers to lock up.
+
+But my point is that if you see hardware related problems
+then sometimes one just has to write the necessary cronjobs
+to live with them or replace the hardware.
+Or you could try BIOS upgrades.
+Trade your old problems for new problems.  *chuckle*
+
+On the other hand some careful use of
+pstree, ps, and top might give a clue to what is happening.
+It might be that leech can be invoked with a spell name
+and then do nothing.
+I have seen it happen.
+Like when I had a spell that had a missing &quot;
+And the time when I just could not see to get the SOURCE
+or URL variables correct
+and the time when I had the wrong VERSION.
+And sometimes the VERSION in the grimoire is for a version
+of a source that the software author no longer supplies and
+due to the source not being available it can not be downloaded.
+Due to the way leech operates rather stealthily in the background
+a problem with downloading a source tarball may not be apparent.
+Perhaps a time or two I have went ahead and fetched the source
+using a web browser such as lynx, mozilla, or firefox.
+For a few sources, that required license agreements to download,
+there was no other way to acquire them except with a web browser.
+
+Also you can enable leech_log
+The leech_log feature produces more output during download
+And it also saves that to a log file.
+Normally, you would not see a header request for a source tarball.
+But if leech_log is enabled you would see the header request
+or at least the result of a header request.
+What servers return for a header request these days can be rather odd.
+Some servers do not even return error 404 as they should
+but instead supply some sort of weird file that may or may
+not be HTML that leech may or may not be able to properly discard.
+
+In the past people have asked me....
+How about instead of leeching downloading files it output
+some sort of script that can be executed from a remote machine
+to download those files and not have that script require the sorcery
+tools and a grimoire, etc....
+My answer is still the same...
+If leech could be more simple then it would be more simple.
+The Internet has more than enough oddly configured servers
+that do not do as they are supposed to.
+Therefore, leech tries to do what a SA might do in order to reasonably expect
+that the file downloaded is indeed the file that is wanted and was requested.
+But sometimes leech is wrong.
+
+Sorry about going off topic.
+
+I hope if it is a bug in leech that you are able to track it down.
+Non consistently repeatable errors present the most challenge
+in identifying and fixing.
+That is why cast has the &quot;retry&quot; feature
+and why leech will try each possible URL
+at least twice, if needed, in order to download a source.
+That way it the outcome is not...
+&quot;If first you do not succeed write a bug report.&quot;
+Second tries sometimes succeed.
+
+Remember, if you can not repeat the error
+then chances are neither can we.  :)
+*chuckle*
+
+Thanks for the bug reports.
+
+
+On 8/14/07, bent jakobsen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>&gt; wrote:
+&gt;<i> Hmm strange - but I'm glad that it fixed itself.
+</I>&gt;<i>
+</I>&gt;<i> Hmm I'm thinking about that you might (or might not) have a disk
+</I>&gt;<i> failure or perhaps too heavy diskload on the box ? perhaps someone
+</I>&gt;<i> spooling a lot of print to your box, or perhaps it is running low on
+</I>&gt;<i> disk-space ? Or one or more disks about to going bad ? I'm just
+</I>&gt;<i> guessing...
+</I>&gt;<i>
+</I>&gt;<i> Regarding spells. I checked the logs on my source cache server - it
+</I>&gt;<i> seems there was 5 spells that I had trouble leeching yesterday, I plan
+</I>&gt;<i> to check up on the logs - perhaps later today - to see if the same 5
+</I>&gt;<i> spells remains a problem - or they were only hit by the instabillity
+</I>&gt;<i> of the net (like Kyle described very good). Then I'll look into those
+</I>&gt;<i> spells for further investigation.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; This particular problem which i did have i think it did not have anything
+</I>&gt;<i> &gt; todo with curl, there was no curl process at all.
+</I>&gt;<i> &gt; Because i did not see it actually launched curl and curl from command line
+</I>&gt;<i> &gt; worked fine, something else was wrong.
+</I>&gt;<i> &gt; I dont know what did change but magically it just started to work again and
+</I>&gt;<i> &gt; i did not do anything (seriously nothing changed) except i runned strace
+</I>&gt;<i> &gt; against leech-process and it downloaded source but one minute before that it
+</I>&gt;<i> &gt; did not download anything just waited.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000136.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+	<LI>Next message: <A HREF="000140.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#138">[ date ]</a>
+              <a href="thread.html#138">[ thread ]</a>
+              <a href="subject.html#138">[ subject ]</a>
+              <a href="author.html#138">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

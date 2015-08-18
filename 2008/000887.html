@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MySQL 5.1(.30) stable? no way...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MySQL%205.1%28.30%29%20stable%3F%20no%20way...&In-Reply-To=%3C596b75860812041613n6ed77789s9c3d6b9c29b88d1e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000885.html">
+   <LINK REL="Next"  HREF="000901.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MySQL 5.1(.30) stable? no way...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MySQL%205.1%28.30%29%20stable%3F%20no%20way...&In-Reply-To=%3C596b75860812041613n6ed77789s9c3d6b9c29b88d1e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MySQL 5.1(.30) stable? no way...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Dec  5 01:13:41 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000885.html">[Sorcerer-admins] MySQL 5.1(.30) stable? no way...
+</A></li>
+        <LI>Next message: <A HREF="000901.html">[Sorcerer-admins] Buildboxes, buildbots, etc.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#887">[ date ]</a>
+              <a href="thread.html#887">[ thread ]</a>
+              <a href="subject.html#887">[ subject ]</a>
+              <a href="author.html#887">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>You guys should split this conversation into separate threads.
+?stable? as I tend to write it with ?? means that the word is nebulous.
+Do you mean old software?
+Do you mean software that software authors have released and called stable?
+Do you mean software that still compiles?
+Do you mean software that compiled before
+and does not currently at risk for ELF failure recompilation?
+
+Sorcerer is far more dynamic than a pre-compiled binary based distro.
+Consequently, problems occur both when software becomes too new
+and when software becomes too old.
+
+An ideal Sorcerer box is one where
+all the software required to run can be compiled.
+However, due to the tides of software updating
+some days the boat floats and someday it does not.
+Consequently, I do not try to keep the ship docked.
+Let it float deep in the sea.
+Just assume it has some holes.
+And bail water when it reaches your knee.
+
+Yes there are times when one failed spell or even
+the update of a spell will block the entire compilation
+of kde or gnome or have really big consequences.
+And that is what reporting and fixing is for.
+That is how this boat stays afloat.
+
+Because of this process Sorcerer is able to float
+from past, to present, to future and spare us the
+ordeal of complete re-installation.
+
+However, as I mentioned above if you try to dry dock Sorcerer
+to create this ?stable? grimoire then it may become increasingly
+difficult to integrate newer sources and older sources.
+Pre-compiled binary based distros have less of a problem with this.
+Once a package is compiled and made then compilation is no longer a concern.
+However, with Sorcerer compilation is always a concern.
+And back-porting security fixes is not a picnic.
+
+To achieve a more ?stable? grimoire probably requires someone to
+have a very loaded box that updates weekly, recompiles everything,
+then reports detected problems and solutions back to grimoire maintainers.
+Of course, since each Sorcerer box is unique even that method will
+not spot all potential problems.
+However, the idea is that a more consistent and thorough testing of
+the Sorcerer grimoire will be able to reduce the length of time that
+breaks exist in the grimoire.
+
+It is not a perfect solution.  Why?  Because there is no perfect solution.
+Bugs and API breaks catch software developers as much by surprise as
+they do distribution maintainers and SAs.
+And while a pre-compiled binary based distro that has:
+testing, stable, freeze, and developmental catalogs may appear more stable
+they are also very different from a distribution like Sorcerer.
+Source based and pre-compiled binary based distributions have
+different strengths and weaknesses.
+But that does not make one better than the other.
+Only when the task to be performed is considered can one
+begin to consider which distro is the best tool for the task.
+Afterall, one does not grab a screw driver before realizing
+the tasks is to remove a bolt, right?
+Same sort of thing.
+But I am digressing.
+
+Maximizing Sorcerer's strengths will help it approach optimal performance.
+Making it more like a pre-compiled binary based distro will not.
+For years I have warned against such things.
+&quot;Let's add version information to requirements.  ;)&quot;
+No!  Let's not!
+
+To make Sorcerer like a pre-compiled binary based distro will make Sorcerer
+slower and weaker and Sorcerer will always fail to be better than
+pre-compiled binary based distros at tasks for which
+pre-compiled binary based distros excel at.
+Instead Sorcerer should be good at what Sorcerer is good at.
+If we are just going to copy something, like BSD's portage system,
+or Redhat's RPM, then why even bother creating a distro at all?
+
+Now that said I am not against a having a ?stable? contrib grimoire.
+But if one tries to model such development after Debian
+then disappointment is to be expected.
+
+Now someone wrote that LAG &gt; 0 simply delays the inevitable.
+That is not exactly correct.
+LAG=7 gives a SA 7 days to
+# augur progress
+a spell so that their production boxes do not encounter
+a problem that they detected on their dev/testing box.
+Is that a bad compromise?
+
+What?  You do not run a dev box?
+Fine, why not just allocate some extra disk space
+to deploy a chrooted Sorcerer installation for testing
+at LAG=0 or LAG=1?
+
+At the cost of disks these days we can all afford the spend
+the pennies for such a small amount of peace of mind.
+Why?  Because in the production environment the boxes must work!
+
+I have done the exact same thing with Debian and with Solaris.
+Dev/testing boxes save downtime.
+Because they expect the unexpected.
+
+PLAN 1
+
+So in summary:
+
+1. Distribution maintained
+2. A supreme pizza box updates weekly and rebuilds weekly.
+3. Bug reports from supreme pizza box go back to step 1.
+4. SAs run dev boxes at LAG=0 or LAG=1
+5. SAs report bugs back to step 1.
+6. SAs temporarily avert problems on production boxes using augur progress
+7. Production boxes update at LAG=7 and with appropriate augur progress
+
+The end result is that production boxes are ?stable?.
+
+If we put such a plan into action then many bugs/problems should be
+detected and squished within 9 days with many of them being eliminated
+in under 2 days.
+
+PLAN 2
+
+Another possibility is to adjust how the official grimoire is maintained.
+Consider a monthly cycle.
+The first day of the month the grimoire is considered most stable.
+Days 2-14 version updates are permitted in the grimoire.
+Days 14-27 only changes to spells due to bug reports are made.
+Days 28-end of month, no changes are made.
+
+With this cycle the LAG on the official grimoire will be eliminated
+and the spell adjusted so that the new grimoire version updates only
+once a month on the first day of the month.
+The construction of the grimoire version would change.
+Instead of 2008-339 it would be something like 20081204
+This way SAs can use augur progress to install a mid month
+grimoire to test and report bugs.
+
+Still with plan 2 SAs are expected to update their dev/testing box
+and check for problems before updating their production boxes.
+The big disadvantage to plan 2 is that obviously bug fixes and
+also important security updates could be delayed for as much
+as a month!
+Also if SAs do not testing of mid month grimoires then
+the first day of the month grimoire will be not be any better
+than a grimoire from any random day of the month.
+
+Those are just some rough ideas.
+With refinement they can be made better.
+Eliminating the delayed security updates from plan 2
+could be possible with the addition of a smaller
+grimoire that only contains security updates and is
+rolled daily like the main grimoire.
+
+I can see you want change.
+You want a more ?stable? grimoire.
+That is good.
+Keep thinking and writing your ideas about it.
+There is definitely room for improvement.
+When we all decide what it should be
+then we can make it happen.
+
+As you consider plans and also write your plans remember that ultimately
+the will be evaluated by:
+
+1. effort involved
+2. complexity
+3. efficiency
+4. practicality
+5. will someone really do it?
+
+Will someone really maintain complete 3000+ spell contrib grimoire?
+Obviously, there are benefits but the effort and complexity may be too high
+for that plan to actually be implemented.
+
+Please remember than plans do not have to be perfect.
+Being close to perfect is great!
+Also there is no one best perfect plan.
+Instead we should post some plans
+then post evaluations of the plans
+and discussion and eventually decide by consensus
+what we aught to implement.
+
+I can probably think of a PLAN 3 and a PLAN 4 also,
+but I am really interested in reading what you guys want.
+Why?  Because I am almost always overly complacent about Sorcerer.
+
+Lastly, proposing a plan modeled after how some pre-compiled binary based
+distro works will not be automatically disqualified.
+However, plans that play to the strengths of Sorcerer
+will probably have more boons and therefore a more favorable evaluation.
+
+I tend to make the evaluation charts listing boons and banes.
+However, anyone is welcome to add boons and banes that I missed
+or explain why my evaluation is incorrect.
+And also if you want to put for the effort to build the evaluation charts
+beneath your plans then that will be of great assistance.
+
+That said if you have a very good plan
+then it has a very good chance of being implemented.
+
+Personally, I am very excited to see a discussion about how we
+can improve the Sorcerer experience for SAs.  :)
+Good luck brainstorming your plans.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000885.html">[Sorcerer-admins] MySQL 5.1(.30) stable? no way...
+</A></li>
+	<LI>Next message: <A HREF="000901.html">[Sorcerer-admins] Buildboxes, buildbots, etc.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#887">[ date ]</a>
+              <a href="thread.html#887">[ thread ]</a>
+              <a href="subject.html#887">[ subject ]</a>
+              <a href="author.html#887">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905090920l5771f664jb163bc38c04651c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001090.html">
+   <LINK REL="Next"  HREF="001092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905090920l5771f664jb163bc38c04651c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May  9 18:20:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001090.html">[Sorcerer-admins] Clean setup box
+</A></li>
+        <LI>Next message: <A HREF="001092.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1091">[ date ]</a>
+              <a href="thread.html#1091">[ thread ]</a>
+              <a href="subject.html#1091">[ subject ]</a>
+              <a href="author.html#1091">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Recently, I was thinking that executables can be categorized in 3 ways.
+1. Those that exist but are never run.
+2. Those that exist and are run sometimes.
+3. Those that exist and are run repeatedly.
+
+However, the categories are not a perfect fit for programs.
+/bin/sed for example we normally think of as being category 1.
+Yet libtool runs /bin/sed repeatedly.
+gcc is definitely a category 3 program, because during compilation
+of software make invokes gcc repeatedly, usually each time an object
+file is created.
+
+I am curious about how to make category 3 programs,
+those which are run repeatedly, run faster.
+Optimization is one possibility.
+However, -O3 makes almost no difference for a program that runs for a
+short while.
+Instead static linking will reduce the amount of time required to
+start those programs.
+However, static linking has two obvious costs.
+Statically linked executables require more disk space
+and they do not provide native language translation.
+
+How important is language translation for gcc and sed error messages?
+Is it okay to have a development environment that is almost entirely in English?
+Afterall, sorcery does not have decent language translations.
+User programs and desktop environments and text editors and such
+would still have native language translation where it is already provided.
+
+
+Before someone objects to the huge size difference for static linking,
+I may have a solution for that.
+By static linking with uClibc instead of glibc
+the size of executables that are statically linked with libc.a
+can be reasonable.
+
+I was playing with that recently and wrote a hello.c program that uses printf.
+Here is the size of the executable:
+glibc dynamic linked 5.3K
+uClibc static linked 13K
+glibc static linked 608K
+
+Yes statically linked with uClibc's libc.a is larger than glibc
+dynamically linked.
+But the size difference is reasonable considering that the statically linked
+executable loads even faster than a dynamically linked ELF with prelinking.
+As we remember pre-linking was a mixed boon since it wasted address space,
+but more important modified previously installed ELF libraries and thus
+changing the md5sum signatures for previously installed software.
+There has not even been a new release of prelink since the start of 2006.
+
+Finally have some speed tests on the pentium 3.
+
+1000 invocations:
+
+4.7s with uClibc static
+6.3s with glibc ELF
+5.1s with glibc static
+
+Naturally, I have the output piped to /dev/null for the test.
+And as we can see a very simple executable statically linked with
+uClibc starts faster.
+Also in the dynamically linked version
+there are not that many symbols to resolve
+and link since it is merely a program that invokes printf.
+Consequently, the time required for dynamic linking will be much greater
+for more complex programs that use many libc functions.
+
+Opinions please?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001090.html">[Sorcerer-admins] Clean setup box
+</A></li>
+	<LI>Next message: <A HREF="001092.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1091">[ date ]</a>
+              <a href="thread.html#1091">[ thread ]</a>
+              <a href="subject.html#1091">[ subject ]</a>
+              <a href="author.html#1091">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

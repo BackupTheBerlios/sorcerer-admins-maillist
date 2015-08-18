@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] An important change involving ssh security...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20An%20important%20change%20involving%20ssh%20security...&In-Reply-To=%3CBANLkTimh9P3SnS7eHSiW9LuWtz-978iBVw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002173.html">
+   <LINK REL="Next"  HREF="002175.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] An important change involving ssh security...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20An%20important%20change%20involving%20ssh%20security...&In-Reply-To=%3CBANLkTimh9P3SnS7eHSiW9LuWtz-978iBVw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] An important change involving ssh security...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jun  1 12:47:56 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002173.html">[Sorcerer-admins] Time to quicken the aging immune system.
+</A></li>
+        <LI>Next message: <A HREF="002175.html">[Sorcerer-admins] prior planning prevents PIDF performance...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2174">[ date ]</a>
+              <a href="thread.html#2174">[ thread ]</a>
+              <a href="subject.html#2174">[ subject ]</a>
+              <a href="author.html#2174">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I am adjusting the default /etc/ssh/sshd_config
+so that sshd will use PAM.
+This has an important security consequence.
+While the root password remains empty
+sshd listening on port 22 allow remote root login without a password.
+The proper solution is setting the root password or stopping sshd.
+
+The reason for this change is to provide enhanced
+cgroup functionality for users who log in via getty and ssh.
+
+I usually prefer to skip technical explanations.
+However, this is worth understanding.
+Let us start by examining a simple scenario.
+
+Romeo and Juliet log into the same idle uni-processor box.
+Juliet starts one process that runs full bore.
+Romeo starts 3 processes that run full bore.
+Should Romeo receive 3 times as many CPU cycles as Juliet?
+With the POSIX model of provisioning;
+processes individually compete
+for CPU cycles based upon priority, real-time, and nice.
+That makes competing for resources on POSIX
+somewhat like a corewars game.
+
+However, the addition of cgroup resource provisioning in linux
+allows processes to compete for the CPU as teams or groups.
+However, the word &quot;cgroup&quot; is used instead of the words team or group.
+Now replay the above scenario.
+
+Romeo's cgroup is called romeo.
+All of Romeo's processes are automatically added
+to the romeo cgroup's task list.
+Likewise Juliet's one process is added to the juliet cgroup's task list.
+Consequently, Juliet's 1 process receives 50% of available CPU cycles.
+And Romeo's 3 proccesses each receive 16.66% of available CPU cycles.
+Finally, each user can receive their fair share!
+
+In order to make this happen I adjusted Linux-PAM and openssh spells.
+Unless I adjust the location where the cgroup file system is mounted,
+which is something I ponder every day,
+then user's will receive their cgroup assignment such as:
+
+/dev/cgroup/user/romeo
+/dev/cgroup/user/juliet
+/dev/cgroup/user/shakespeare
+
+Daemons started during init will receive cgroup assignment such as:
+
+/dev/cgroup/daemon/sshd
+/dev/cgroup/daemon/kdm-v4
+
+And the processing of spells receive cgroup assignments such as:
+
+/dev/cgroup/sorcery/cast/gtk+
+/dev/cgroup/sorcery/leech/linux
+
+So as we can see the three major cgroup factions are:
+daemon; user; sorcery
+Currently, the daemon and user factions receive equal shares.
+However, the sorcery faction receives diminished shares of
+the CPU and file system I/O
+Consequently, sorcery can be causing a high loadavg
+and yet user and daemon processes continue running
+so fast that performance loss seems invisible.
+
+Naturally, SA can adjust cgroup provision as desired.
+When adjusting a single user's provisioning
+then the provisioning can be maintained until reboot
+by creating a sub cgroup for that user.
+That is because a cgroup can not be removed
+until it has no sub-cgroups
+and no processes remains on the cgroup's task list.
+
+More fun stuff is planned for cgroup and enhancing init.
+However, this part which contains the security caveat
+deserves advance explanation.
+It should only effect SAs while deploying new boxes
+and also neglecting the most basic step of setting a root password.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002173.html">[Sorcerer-admins] Time to quicken the aging immune system.
+</A></li>
+	<LI>Next message: <A HREF="002175.html">[Sorcerer-admins] prior planning prevents PIDF performance...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2174">[ date ]</a>
+              <a href="thread.html#2174">[ thread ]</a>
+              <a href="subject.html#2174">[ subject ]</a>
+              <a href="author.html#2174">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gcc%20v4.2.x%20update%20and%20net-snmp-config.h&In-Reply-To=%3COFC79AF38C.B092D01A-ONC2257332.002C771A-C2257332.002CF582%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000104.html">
+   <LINK REL="Next"  HREF="000107.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gcc%20v4.2.x%20update%20and%20net-snmp-config.h&In-Reply-To=%3COFC79AF38C.B092D01A-ONC2257332.002C771A-C2257332.002CF582%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu Aug  9 10:11:03 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000104.html">[Sorcerer-admins] qt-x11-free, patch source missing
+</A></li>
+        <LI>Next message: <A HREF="000107.html">[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#105">[ date ]</a>
+              <a href="thread.html#105">[ thread ]</a>
+              <a href="subject.html#105">[ subject ]</a>
+              <a href="author.html#105">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Now this is interesting problem, i have updated GCC 4.2.0/1 and it &quot;fixed&quot; 
+some include-headers files, like /usr/include/net-snmp/net-snmp-config.h 
+and copied it to 
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp, anyway, 
+now that net-snmp is updated some other spells like kdeutils does not 
+compile.
+
+---------------------------8&lt;----------------------------------
+Compile log for kdeutils  3.5.7
+Built with sorcery thaumaturgy-20070808-0 and gcc 4.2.1
+Built on Thu Aug  9 10:43:46 EEST 2007
+Traced with sentinel.
+checking build system type... i686-pc-linux-gnu
+checking host system type... i686-pc-linux-gnu
+checking target system type... i686-pc-linux-gnu
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for -p flag to install... yes
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for kde-config... /usr/bin/kde-config
+checking where to install... /usr (as requested)
+checking for style of include used by make... GNU
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables...
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking dependency style of gcc... gcc3
+checking how to run the C preprocessor... gcc -E
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking dependency style of g++... gcc3
+checking whether gcc is blacklisted... no
+checking whether g++ supports -Wmissing-format-attribute... yes
+checking whether gcc supports -Wmissing-format-attribute... yes
+checking whether g++ supports -Wundef... yes
+checking whether g++ supports -Wno-long-long... yes
+checking whether g++ supports -Wno-non-virtual-dtor... yes
+checking whether g++ supports -fno-reorder-blocks... yes
+checking whether g++ supports -fno-exceptions... yes
+checking whether g++ supports -fno-check-new... yes
+
+....
+
+usr/bin/moc ./walker.h -o walker.moc
+/usr/bin/moc ./hostdialog.h -o hostdialog.moc
+/usr/bin/moc ./configpage.h -o configpage.moc
+/usr/bin/moc ./probedialog.h -o probedialog.moc
+/usr/bin/moc ./chartmonitor.h -o chartmonitor.moc
+creating ksim_snmp_la.all_cpp.cpp ...
+if /bin/sh ../../../libtool --silent --tag=CXX --mode=compile g++ 
+-DHAVE_CONFIG_H -I. -I. -I../../.. -I../../../ksim/library 
+-I/usr/include/qt
+-I.   -DQT_THREAD_SUPPORT  -D_REENTRANT  -Wno-long-long -Wundef -ansi 
+-D_XOPEN_SOURCE=500 -D_BSD_SOURCE -Wcast-align -Wchar-subscripts -Wall -W
+ -Wpointer-arith -DNDEBUG -DNO_DEBUG -O2 -march=i386 -O1 -pipe 
+-Wformat-security -Wmissing-format-attribute -Wno-non-virtual-dtor 
+-fno-exceptio
+ns -fno-check-new -fno-common -DQT_CLEAN_NAMESPACE -DQT_NO_ASCII_CAST 
+-DQT_NO_STL -DQT_NO_COMPAT -DQT_NO_TRANSLATION  -MT ksim_snmp_la.all_cpp.
+lo -MD -MP -MF &quot;.deps/ksim_snmp_la.all_cpp.Tpo&quot; -c -o 
+ksim_snmp_la.all_cpp.lo ksim_snmp_la.all_cpp.cpp; \
+        then mv -f &quot;.deps/ksim_snmp_la.all_cpp.Tpo&quot; 
+&quot;.deps/ksim_snmp_la.all_cpp.Plo&quot;; else rm -f 
+&quot;.deps/ksim_snmp_la.all_cpp.Tpo&quot;; exit 1; fi
+In file included from value.cpp:20,
+                 from ksim_snmp_la.all_cpp.cpp:7:
+../../../config.h:239:1: warning: &quot;PACKAGE_BUGREPORT&quot; redefined
+In file included from snmp_p.h:24,
+                 from snmp.cpp:22,
+                 from ksim_snmp_la.all_cpp.cpp:5:
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp/net-snmp-config.h:958:1: 
+warning: this is the location of the previous definiti
+on
+In file included from value.cpp:20,
+                 from ksim_snmp_la.all_cpp.cpp:7:
+../../../config.h:242:1: warning: &quot;PACKAGE_NAME&quot; redefined
+In file included from snmp_p.h:24,
+                 from snmp.cpp:22,
+                 from ksim_snmp_la.all_cpp.cpp:5:
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp/net-snmp-config.h:961:1: 
+warning: this is the location of the previous definition
+In file included from value.cpp:20,
+                 from ksim_snmp_la.all_cpp.cpp:7:
+../../../config.h:245:1: warning: &quot;PACKAGE_STRING&quot; redefined
+In file included from snmp_p.h:24,
+                 from snmp.cpp:22,
+                 from ksim_snmp_la.all_cpp.cpp:5:
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp/net-snmp-config.h:964:1: 
+warning: this is the location of the previous definition
+In file included from value.cpp:20,
+                 from ksim_snmp_la.all_cpp.cpp:7:
+../../../config.h:248:1: warning: &quot;PACKAGE_TARNAME&quot; redefined
+In file included from snmp_p.h:24,
+                 from snmp.cpp:22,
+                 from ksim_snmp_la.all_cpp.cpp:5:
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp/net-snmp-config.h:967:1: 
+warning: this is the location of the previous definition
+In file included from value.cpp:20,
+                 from ksim_snmp_la.all_cpp.cpp:7:
+../../../config.h:251:1: warning: &quot;PACKAGE_VERSION&quot; redefined
+In file included from snmp_p.h:24,
+                 from snmp.cpp:22,
+                 from ksim_snmp_la.all_cpp.cpp:5:
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp/net-snmp-config.h:970:1: 
+warning: this is the location of the previous definition
+In file included from ksim_snmp_la.all_cpp.cpp:8:
+value.cpp: In constructor 
+'KSim::Snmp::ValueImpl::ValueImpl(variable_list*)':
+value.cpp:103: error: 'ASN_OPAQUE_FLOAT' was not declared in this scope
+value.cpp:105: error: 'union netsnmp_vardata' has no member named 
+'floatVal'
+value.cpp:108: error: 'ASN_OPAQUE_DOUBLE' was not declared in this scope
+value.cpp:110: error: 'union netsnmp_vardata' has no member named 
+'doubleVal'
+make[4]: *** [ksim_snmp_la.all_cpp.lo] Error 1
+make[4]: Leaving directory 
+`/usr/src/sorcery/kdeutils/kdeutils-3.5.7/ksim/monitors/snmp'
+make[3]: *** [all-recursive] Error 1
+make[3]: Leaving directory 
+`/usr/src/sorcery/kdeutils/kdeutils-3.5.7/ksim/monitors'
+make[2]: *** [all-recursive] Error 1
+make[2]: Leaving directory `/usr/src/sorcery/kdeutils/kdeutils-3.5.7/ksim'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/usr/src/sorcery/kdeutils/kdeutils-3.5.7'
+make: *** [all] Error 2
+ESC[31mESC[1m! Problem Detected !ESC[0mESC[0m
+Source tree discarded.
+---------------------------8&lt;----------------------------------
+
+Are those include-files under gcc v4.2.1 safe to remove? 
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070809/9361032e/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070809/9361032e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000104.html">[Sorcerer-admins] qt-x11-free, patch source missing
+</A></li>
+	<LI>Next message: <A HREF="000107.html">[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#105">[ date ]</a>
+              <a href="thread.html#105">[ thread ]</a>
+              <a href="subject.html#105">[ subject ]</a>
+              <a href="author.html#105">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

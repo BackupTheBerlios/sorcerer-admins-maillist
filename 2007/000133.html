@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Leech just waits forever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140048g43214dcj15bad5f9c18a8924%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000131.html">
+   <LINK REL="Next"  HREF="000135.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Leech just waits forever</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140048g43214dcj15bad5f9c18a8924%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Leech just waits forever">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 14 09:48:43 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000131.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+        <LI>Next message: <A HREF="000135.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#133">[ date ]</a>
+              <a href="thread.html#133">[ thread ]</a>
+              <a href="subject.html#133">[ subject ]</a>
+              <a href="author.html#133">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 8/14/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on
+</I>&gt;<i> 14.08.2007 10:28:06:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> This particular problem which i did have i think it did not have anything
+</I>&gt;<i> todo with curl, there was no curl process at all.
+</I>&gt;<i> Because i did not see it actually launched curl and curl from command line
+</I>&gt;<i> worked fine, something else was wrong.
+</I>&gt;<i> I dont know what did change but magically it just started to work again and
+</I>&gt;<i> i did not do anything (seriously nothing changed) except i runned strace
+</I>&gt;<i> against leech-process and it downloaded source but one minute before that it
+</I>&gt;<i> did not download anything just waited.
+</I>
+leech creates a searchable hard link index of the files in /var/cache/sources
+Depending on what it decides it must do...
+that might take a no time, a little time, or a significant amount of time.
+If leech is running, but not curl,
+then you might want to see if leech has invoked find or grep.
+You may find /usr/bin/pstree to be an amusing method for seeing
+how processes are related to each other.
+
+Sorcerer boxes with immensely stocked /var/cache/source/
+directories are known to have an observable delay between when
+# leech $SPELL
+is issued
+and when the actual download begins.
+A delay can also be attribute due to CPU load, or load from cast,
+or leech could be waiting for the right time to download the spell's sources.
+In the event that other spells are being leeched or waiting to leech
+the spell requested to be leeched may have to wait to be processed.
+
+When leech is invoked with a spell name
+it places that spell appropriately into the leech
+queue before leech re-executes itself as a daemon
+to do the actual downloading of the sources for spells.
+Consequently, there should not be a race condition.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000131.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+	<LI>Next message: <A HREF="000135.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#133">[ date ]</a>
+              <a href="thread.html#133">[ thread ]</a>
+              <a href="subject.html#133">[ subject ]</a>
+              <a href="author.html#133">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

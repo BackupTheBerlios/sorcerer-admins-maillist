@@ -1,0 +1,307 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] compile failure on gcc 4.2.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C9104f1fb0708190228l65ba9841o3b144b10dfd82ebf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000179.html">
+   <LINK REL="Next"  HREF="000181.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] compile failure on gcc 4.2.1</H1>
+    <B>John Locke</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C9104f1fb0708190228l65ba9841o3b144b10dfd82ebf%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] compile failure on gcc 4.2.1">loki1725 at gmail.com
+       </A><BR>
+    <I>Sun Aug 19 11:28:27 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000179.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+        <LI>Next message: <A HREF="000181.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#180">[ date ]</a>
+              <a href="thread.html#180">[ thread ]</a>
+              <a href="subject.html#180">[ subject ]</a>
+              <a href="author.html#180">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, so if I do
+
+augur version gcc  I get
+4.2.1
+
+augur version binutils
+binutils inactive
+
+augur version db
+4.6.18
+
+augur version coreutils
+6.7
+
+cast -r -c binutils
+Failed:  Sun Aug 19...... binutils 2.17  autufailed by binutils
+
+Here is the compile log for binutils.  It looks like gcc is broken and can't
+create output files.
+
+which: no gcc in
+(/opt/gcc/current/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin)
+gcc: Success
+Compile log for binutils  2.17
+Built with sorcery thaumaturgy-20070813-0 and gcc
+Built on Sun Aug 19 03:22:10 CDT 2007
+Traced with sentinel.
+C
+ompiling binutils with sysroot support
+creating cache ./config.cache
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking build system type... x86_64-pc-linux-gnu
+checking for a BSD compatible install... /usr/bin/install -c
+checking whether ln works... yes
+checking whether ln -s works... yes
+checking for gcc... gcc
+
+checking whether the C compiler (gcc -march=k8 -Os -Wl,-s -Wl,-O1) works...
+no
+configure: error: installation or configuration problem: C compiler cannot
+create executables.
+
+Compiling binutils with sysroot support
+creating cache ./config.cache
+checking host system type... x86_64-pc-linux-gnu
+checking target system type... x86_64-pc-linux-gnu
+checking build system type... x86_64-pc-linux-gnu
+checking for a BSD compatible install... /usr/bin/install -c
+checking whether ln works... yes
+checking whether ln -s works... yes
+checking for gcc... gcc
+
+checking whether the C compiler (gcc -march=k8 -Os -Wl,-s -Wl,-O1) works...
+no
+configure: error: installation or configuration problem: C compiler cannot
+create executables.
+
+[31m[1m! Problem Detected ![0m[0m
+Source moved to /var/tmp/failed/binutils-2.17
+
+My cpref is the default 'small'
+export     CFLAGS=&quot;-march=k8 -0s&quot;
+export    CXXFLAGS=&quot;-march=k8 -0s&quot;
+export    LDFLAGS=&quot;-Wl, -s -Wl, -01&quot;
+export    PATH=&quot;/opt/gcc/current/bin:$PATH&quot;
+And I've verified that 'current' inside /opt/gcc points to 4.2.1
+
+Interestingly, there is no log for gcc in
+/etc/sorcery/log/compile/# ls gcc*
+gcc-v3.4  gcc-4.0
+
+
+
+On 8/19/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Reads like a mess.
+</I>&gt;<i> But it is probably not difficult to fix.
+</I>&gt;<i>
+</I>&gt;<i> I recommend that you first verify that binutils coreutils and db are
+</I>&gt;<i> installed.
+</I>&gt;<i> Then, issue
+</I>&gt;<i> # augur index
+</I>&gt;<i> That will clear out the old failures.
+</I>&gt;<i>
+</I>&gt;<i> gcc should be installed.
+</I>&gt;<i> If not I hope you have an archive of it or some other gcc installed.
+</I>&gt;<i> If you want to compile gcc with an older version the easiest way to do so
+</I>&gt;<i> is to edit the /root/.sorcery/grimoire/gcc spell
+</I>&gt;<i> and add to it
+</I>&gt;<i> USE_GCC=&quot;gcc-v4.1&quot;
+</I>&gt;<i>
+</I>&gt;<i> Otherwise you will have to create a cpref file
+</I>&gt;<i> and then adjust the cpref for gcc temporarily
+</I>&gt;<i> using the augur cpref.
+</I>&gt;<i>
+</I>&gt;<i> If gcc 4.2.1. is installed then you probably should not have to recast it.
+</I>&gt;<i> Most other failures you can probably ignore.
+</I>&gt;<i> I recommend:
+</I>&gt;<i> # augur sync
+</I>&gt;<i> # augur newer
+</I>&gt;<i> # augur update
+</I>&gt;<i>
+</I>&gt;<i> If db does fail to compile
+</I>&gt;<i> then it can autofail anything that requires it
+</I>&gt;<i> to include coreutils and gcc
+</I>&gt;<i> If that db failed compilation
+</I>&gt;<i> then to correct why it is failing should be a priority.
+</I>&gt;<i> Once db cast correctly it will not cause a string of auto failures.
+</I>&gt;<i> If it remains a problem you can issue:
+</I>&gt;<i>
+</I>&gt;<i> # augur sync
+</I>&gt;<i> # augur newer
+</I>&gt;<i> # augur abort db
+</I>&gt;<i> # augur update
+</I>&gt;<i>
+</I>&gt;<i> In this sequence of command db is removed from the cast queue
+</I>&gt;<i> if it is queued to be cast and therefore allows the other software
+</I>&gt;<i> waiting to be updated to be updated.
+</I>&gt;<i> That might enable most of the installed software to update
+</I>&gt;<i> while leaving db for you to examine the compile log and
+</I>&gt;<i> deduce and correct the compilation problem later.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 8/18/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Ok, so over the past week I've done what I could on this issue when I've
+</I>&gt;<i> had
+</I>&gt;<i> &gt; time.  I have played around with a fe things and I'm pretty sure I'm
+</I>&gt;<i> having
+</I>&gt;<i> &gt; a failure of my gcc.  Some things seem to compile, but a majority of
+</I>&gt;<i> them
+</I>&gt;<i> &gt; fail.  I have tried to dispel gcc, then cast -c -r it again to try and
+</I>&gt;<i> fix
+</I>&gt;<i> &gt; it.  I have done an 'augur synch' within the past thirty minutes, and
+</I>&gt;<i> the
+</I>&gt;<i> &gt; version of gcc available is 4.2.1.  This is what I have on my box right
+</I>&gt;<i> now.
+</I>&gt;<i> &gt;  Anyway, when I try and re-cast gcc I get the following lines.
+</I>&gt;<i> &gt; &quot;Fail: Sun Aug 19 .... binutil 2.17 autofailed by binutils&quot;
+</I>&gt;<i> &gt; &quot;Fail Sun Aug 19..... gcc 4.2.1 autofailed by db&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've tried to dispel and cast binutils and db.  Both generated the
+</I>&gt;<i> &gt; 'autofailed by ...' where they seem to fail themselves.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I tried an 'augur update' earlier today, and got lots and lots of
+</I>&gt;<i> compile
+</I>&gt;<i> &gt; failures.  Not everything failed though.  I don't see an obvious
+</I>&gt;<i> correlation
+</I>&gt;<i> &gt; between what failed and what didn't.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I do see that I have gcc-v3.0 and gcc-v4.0 installed on my box.  I
+</I>&gt;<i> believe
+</I>&gt;<i> &gt; this is from the original install.  Is there anyway to dispel gcc and
+</I>&gt;<i> use
+</I>&gt;<i> &gt; either of these to try and rebuild the newest version of gcc?  And if I
+</I>&gt;<i> do
+</I>&gt;<i> &gt; that, don't I have to go back to previous versions of glibc?  I seem to
+</I>&gt;<i> &gt; remember reading somewhere that glibc and gcc are tied together at the
+</I>&gt;<i> &gt; version level.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Thanks for any suggestions.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Nathan
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On 8/15/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; On 8/14/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A> &gt; wrote:
+</I>&gt;<i> &gt; &gt; &gt; I tried playing with this again today.  I ran augur update, and made
+</I>&gt;<i> &gt; sure my
+</I>&gt;<i> &gt; &gt; &gt; versions of the grimoire, gcc and glibc all matched.  Then I ran
+</I>&gt;<i> sorcery
+</I>&gt;<i> &gt; &gt; &gt; update and got many many failures.  I think the root failure was
+</I>&gt;<i> &gt; busybox.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Please go ahead and dispel busybox.
+</I>&gt;<i> &gt; &gt; Although it is installed, by default, and used during the boot of the
+</I>&gt;<i> I/R
+</I>&gt;<i> &gt; &gt; it is never used after that.
+</I>&gt;<i> &gt; &gt; I should go ahead and adjust the update criteria for busybox
+</I>&gt;<i> &gt; &gt; to dispel it on deployed Sorcerer boxes.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; Anyway, I am going to start over again from scratch.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Almost all spell use the gcc spell for compilation.
+</I>&gt;<i> &gt; &gt; If that is okay, then compilation should be okay.
+</I>&gt;<i> &gt; &gt; Starting over is not advised since there is typically
+</I>&gt;<i> &gt; &gt; no problems too difficult to surmount after managing
+</I>&gt;<i> &gt; &gt; to configure the linux kernel, install the skeleton, boot
+</I>&gt;<i> &gt; &gt; the box, and have it connect to the network.
+</I>&gt;<i> &gt; &gt; After that it only becomes easier.  :)
+</I>&gt;<i> &gt; &gt; Another aspect to consider is that the updated I/R
+</I>&gt;<i> &gt; &gt; are built ontop of the old I/R for the most part simply
+</I>&gt;<i> &gt; &gt; by doing the same that would be accomplished by
+</I>&gt;<i> &gt; &gt; augur sync; augur newer; augur update
+</I>&gt;<i> &gt; &gt; Ultimately, if you try to spot and fix the problems you
+</I>&gt;<i> &gt; &gt; may learn and hone your skills.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; I do not mean to seem insensitive.
+</I>&gt;<i> &gt; &gt; When I was a novice I reinstalled distros like
+</I>&gt;<i> &gt; &gt; Redhat and Debian multiple times on a box.
+</I>&gt;<i> &gt; &gt; I understand that nagging feeling and thought
+</I>&gt;<i> &gt; &gt; that perhaps I installed the wrong thing or omitted
+</I>&gt;<i> &gt; &gt; something else or made some mistake,
+</I>&gt;<i> &gt; &gt; and that starting over with a fresh install
+</I>&gt;<i> &gt; &gt; I will be able to get it entirely correct this time.
+</I>&gt;<i> &gt; &gt; But eventually you can work through it and
+</I>&gt;<i> &gt; &gt; it will only be a memory.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; Sometime before I created Sorcerer
+</I>&gt;<i> &gt; &gt; I was doing Debian installations without
+</I>&gt;<i> &gt; &gt; using the Debian menu driven installer.
+</I>&gt;<i> &gt; &gt; Easily most Sorcerer SAs could do a Sorcerer installation
+</I>&gt;<i> &gt; &gt; without using the sorcerer menu driven installer.
+</I>&gt;<i> &gt; &gt; Eventually, a comprehensive understanding of what must
+</I>&gt;<i> &gt; &gt; be done step by step to deploy a Sorcerer box will become
+</I>&gt;<i> &gt; &gt; as apparent and easy to do as walking and talking concurrently.
+</I>&gt;<i> &gt; &gt; Yes it does become that easy.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; That is why I encourage you to ride out the roughness.
+</I>&gt;<i> &gt; &gt; If the problems do seem insurmountable you can always redeploy,
+</I>&gt;<i> &gt; &gt; but there may be much yet to learn before that.
+</I>&gt;<i> &gt; &gt; Lastly if the box is not sensitive and you want me to take a look at
+</I>&gt;<i> it,
+</I>&gt;<i> &gt; &gt; I can lend you my public ssh key so I can log in as a guest and
+</I>&gt;<i> &gt; &gt; take a quick look.
+</I>&gt;<i> &gt; &gt; There is usually no problem on a sorcerer box that once
+</I>&gt;<i> &gt; &gt; identified can not be fixed with 5 commands or less.
+</I>&gt;<i> &gt; &gt; It is usually far faster than the time required to reinstall
+</I>&gt;<i> &gt; &gt; and then reupdate from an I/R that is 6 months or older.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; &gt; Thanks for you help and suggestions.  I'm very impressed at the
+</I>&gt;<i> level of
+</I>&gt;<i> &gt; &gt; &gt; support around here.
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070819/be2ac0cd/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070819/be2ac0cd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000179.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+	<LI>Next message: <A HREF="000181.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#180">[ date ]</a>
+              <a href="thread.html#180">[ thread ]</a>
+              <a href="subject.html#180">[ subject ]</a>
+              <a href="author.html#180">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

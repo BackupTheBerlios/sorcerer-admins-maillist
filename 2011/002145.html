@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Read now or wonder later.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Read%20now%20or%20wonder%20later.&In-Reply-To=%3CBANLkTikOgcxfiDt_rw6hG88_T6kDpy-rVQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002144.html">
+   <LINK REL="Next"  HREF="002146.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Read now or wonder later.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Read%20now%20or%20wonder%20later.&In-Reply-To=%3CBANLkTikOgcxfiDt_rw6hG88_T6kDpy-rVQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Read now or wonder later.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May  1 06:20:24 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002144.html">[Sorcerer-admins] No large fluffy Sorcerer live CD I/R,	apparently.
+</A></li>
+        <LI>Next message: <A HREF="002146.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2145">[ date ]</a>
+              <a href="thread.html#2145">[ thread ]</a>
+              <a href="subject.html#2145">[ subject ]</a>
+              <a href="author.html#2145">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for reading.
+These changes are worth knowing.
+I expected much longer to complete this.
+However, I am pushing ahead faster than anticipated
+in order to be able to roll new I/Rs next week.
+Yes, a couple of SAs have requested new I/Rs.
+So sorry for the necessary delays.
+
+The changes I am excitedly writing about today
+involve booting and shutdown.
+Over the years I carefully listen to
+SAs' evaluations of booting and shutdown.
+I might not implement everything all at once,
+but feel assured that I am listening.
+For that reason Sorcerer evolves according to SA feedback.
+Evolving according to SA feedback
+rather than copying other distros
+is probably the reason
+why Sorcerer has no problem with
+providing tmpfs on /var/run and /var/lock
+which seems to plague other distros.
+
+Most SAs suggest that init somehow
+run faster or becomes interactive.
+Those topics have received ample discussion.
+Therefore, this time I am trying to solve
+the silently grumbled complaints such as:
+
+&quot;Sometimes on reboot / was not cleanly unmounted.&quot;
+&quot;Shutdown and reboot scrolls faster than I can read.&quot;
+&quot;I want a reboot/shutdown log.&quot;
+&quot;I want interactive shutdown.&quot;
+&quot;I realize that fast booting works on your computers,
+but oddly enough it does not work on mine.&quot;
+
+Maybe those requests come as a surprise.
+That is because the most frequently used complaint box
+is not the Sorcerer SA's email list,
+but instead it is my personal inbox.
+
+Please feel at ease.
+The above inquiries, statements, suggestions
+will now be answered.
+I have some pleasing answers
+in regards to those requests.
+But first a digression.
+
+Virtual console #7 now runs a getty that allows login to the initramfs.
+When logged into the initramfs the real root filesystem is mounted as
+/media/root
+Therefore, when using virtual console #7 for repairs
+the SA enjoys commanding the box
+from a comfortable armchair
+while sitting safely above the real root filesystem.
+Virtual console #7 is intended for SAs
+that want to effect immediate repairs
+without having to reboot with an Install/Rescue disk
+and without having to reboot using the rescue label.
+
+Of course logging into the initramfs
+on virtual console #7 is my favorite improvement.
+It is like sitting in Captain's Kirk's bridge chair.
+Senior level SAs will surely enjoy it.
+However, it was never a SA requested item.
+
+Thank me in advance,
+because I just deleted at least 10 boring paragraphs
+that described the changes and rationale.
+And now let us skip ahead
+to the far more entertaining evaluation of boons and banes.
+
+Banes:
+1. About 60 to 100M of swappable memory
+    is consumed in order to retain the initramfs.
+2. Support for fast booting is sacrificed.
+
+Boons:
+1. Totally clean reboot/shutdown.
+2. Near complete log of reboot/shutdown in /var/log/runlevel.{6,0} ,
+respectively.
+3. Able to pause, review and approve the reboot/shutdown.
+4. Able to login before the executing the final command to halt/reboot.
+5. Able to view reboot/shutdown logs in /var/log/ on next boot.
+6. Able to abort shutdown and rebound box to runlevels 1 through 5.
+7. Able to log into the initramfs on virtual console #7
+    and receive a bird's eye view of the real root filesystem mounted
+on /media/root.
+8. Able to switch to runlevel 7 in order to terminate all gettys,
+except virtual console #7,
+   and therefore be able to manually unmount /media/root
+
+8 boons to 2 banes.
+Easy to understand why I implemented these totally worthy changes
+without first seeking consensus among Sorcerer SAs, yes?
+
+The tmpfs that was formerly mounted on /etc/init.d/log.d/
+is now mounted on /var/log/boot/
+I moved it to more easily copy of /etc/init.d/
+
+
+And now for the FAQ portion:
+
+Q) Will Sorcerer lose the race to become the fastest booting distro?
+A) Yes, because sacrificing all for speed is folly.
+
+Q) Is Sorcerer switching to upstart or an alternative to SystemVInit?
+A) Gains for other methods are insignificant
+    when compared to the sacrifice simplicity,
+    and befuddle expectations about
+    the order of execution of events during boot.
+
+Q) In addition to Sorcerer multilib will there be a Sorcerer multiroot?
+A) An x86_64 Sorcerer multilib installation obsoletes the need
+    for having an additional separate Sorcerer IA32 installation.
+    However, multiroot Sorcerer could be possible with sufficient consensus.
+
+Q) Must SAs do anything differently to boot, run and shutdown?
+A) SAs are not required to do anything differently.
+    Boxes upgrade seamlessly to the new improvements.
+    SAs that do not read this email will probably wonder
+    exactly where in wonderland does virtual console #7 go.
+
+
+[Warning]   [Warning]   [Warning]
+
+Please be aware that /etc/inittab
+will be replaced with a newer inittab.
+Even customized /etc/inittab are replaced.
+However, the default runlevel for the new /etc/inittab
+will be the same as specified in the existing /etc/inittab.
+
+Boxes that do not have properly modified /etc/inittab
+will probably have virtual consoles #1 through #6
+login to the initramfs wonderland
+rather than the real root filesystem
+that is mounted on /media/root/
+If that is the situation then do not panic.
+chroot into /media/root and fix the /etc/inittab
+based upon /etc.ori/inittab or the one from
+/root/.sorcery/grimoire/sysvinit.d/inittab
+
+Therefore, boxes that have very unique /etc/inittab
+will require the attention of the SA in order to
+craft a custom compromise.
+If getty on virtual 7 is disabled in /etc/inittab
+then no virtual consoles will provide a method
+for logging into the initramfs.
+Some boxes might run on a runlevel
+where all virtual consoles are disabled
+so that only a GUI login or kiosk is provided.
+Those types of boxes will require SA intervention.
+Sorry for the inconvenience.
+
+Okay that is all I want to say about that.
+
+In a couple of days boxes using the LAG=1
+grimoire will be able to receive the updates.
+After the first reboot then the
+new jaw dropping functionality becomes active.
+Enjoy.
+
+If anyone on the LAG=0 grimoire receives the
+update tomorrow and discovers a problem
+then please email me ASAP.
+I have tested it thoroughly in qemu
+and on two real computers.
+I wanted to hack it into shape using at least a full week.
+However, due to requests for new I/Rs
+I am deploying the changes in under a week.
+Hopefully, the transition will be smooth,
+otherwise I really need a vacation.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002144.html">[Sorcerer-admins] No large fluffy Sorcerer live CD I/R,	apparently.
+</A></li>
+	<LI>Next message: <A HREF="002146.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2145">[ date ]</a>
+              <a href="thread.html#2145">[ thread ]</a>
+              <a href="subject.html#2145">[ subject ]</a>
+              <a href="author.html#2145">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

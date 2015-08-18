@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] stability... and the possibility of testing systemd for booting Sorcerer boxes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20stability...%20and%20the%20possibility%20of%20testing%0A%20systemd%20for%20booting%20Sorcerer%20boxes.&In-Reply-To=%3CCA%2BT4wDhBF9L28SO4d-Tk4-HmKEMayD40goX4DJJ3OWsRgY3R5g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002300.html">
+   <LINK REL="Next"  HREF="001017.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] stability... and the possibility of testing systemd for booting Sorcerer boxes.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20stability...%20and%20the%20possibility%20of%20testing%0A%20systemd%20for%20booting%20Sorcerer%20boxes.&In-Reply-To=%3CCA%2BT4wDhBF9L28SO4d-Tk4-HmKEMayD40goX4DJJ3OWsRgY3R5g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] stability... and the possibility of testing systemd for booting Sorcerer boxes.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Feb 16 15:58:28 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002300.html">[Sorcerer-admins] Feature request...
+</A></li>
+        <LI>Next message: <A HREF="001017.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2305">[ date ]</a>
+              <a href="thread.html#2305">[ thread ]</a>
+              <a href="subject.html#2305">[ subject ]</a>
+              <a href="author.html#2305">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>In spite of my constant complaining I managed to pound gnome into shape.
+Luck must favor those who keep trying, no?
+Maybe we can do new I/R sometime soon?
+
+Evert mentioned that OpenGL was not working after KDE was moved into /usr
+Glad he spotted and mentioned that.
+I could have failed to know the /usr/lib64 rpath in kde libraries and
+programs for at least a year.
+I normally do not want to use KDE's compositing and eye-candy.
+
+Fixing effected boxes requires recasting of all installed spells with
+attribute kde4.
+Of course if one prefers KDE without the additional eye candy provided
+by compositing
+then leaving KDE as is works fine.
+
+To recast all installed kde4 after installing a current grimoire...
+# au installed kde4 | au begin
+Did anyone expect it would be more difficult?
+
+We also owe Evert thanks for spotting that I did not properly
+copy the linux configs in grimoire/linux.d/
+That is already a moot point,
+but I am committing a new version of linx to svn soon
+and that update will automatically install a linux
+that provides all the modules we expect and possibly require.
+
+
+gnome-screensaver gained an absolute requirement on systemd.
+systemd is a replacement for system V initialization.
+The ideas about how to make a ?better? or at least more parallel boot
+method have been on the discussion table for a few years now.
+Looks like those ideas have materialized in the implementation systemd.
+
+I barely investigated systemd.
+Apparently it is a substitute for sysvinit.
+I do not know if it is suitable for use on Sorcerer.
+Sorcerer boxes have an excellent and useful initramfs.
+Minimalistic initramfs are used on other distros.
+Consequently, far more happens during Sorcerer sysvinit.
+
+Additionally, sytemd relies on auto-mounting partitions and virtual
+file systems,
+starting a daemon that provides and hands-off sockets to other daemons,
+and maybe other fancy things that implement their idea of total
+parallel startup.
+That way only about a handful of services must be started sequentially.
+This differs from the parallel runlvel steps that exist in Sorcerer.
+Sorcerer's init does not become parallel until runlevel execution begins.
+Yet most Sorcerer boxes clear sysinit rapidly.
+Duration varies depending on how fast extlinux
+reads initramfs from disk using BIOS interrupts.
+Therefore, even if Sorcerer did switch from sysvinit to systemd
+the load time of initramfs would not differ
+and the time required for sysinit would likely vanish with parallelism.
+
+Aside from such obvious difference systemd might offer improvements in
+control or logs.
+It might have a method of reporting it's activities on the system bus
+and/or system log.
+And like Sorcerer's enhanced system V init;
+systemd also uses control groups for tracking PIDS of daemons.
+However I have no idea if systemd's use of the cgroup file system
+is similar or compatible with Sorcerer.
+Maybe it might be better?
+
+Considerable off email list chatter exists among Sorcerer developers
+concerning the use of cgroup on Sorcerer.
+Almost no consensus exists.
+Therefore, the current implementation favors simplicity.
+The possibility exists that other distros might have decided upon a
+better implementation.
+
+If systemd becomes a standard
+then SAs will be expected to know how to use it.
+Therefore, Sorcerer staying with sysvinit
+could make Sorcerer appear legacy or lacking.
+The actual reason why we do not already use something like systemd is because
+Sorcerer's SysVinit evolved to make use of new technologies such as
+control groups.
+And Sorcerer somehow missed out on experiencing many boot related
+problems/inconveniences
+that were experienced by other distros.
+Perhaps due to luck we discovered and traveled the less bramble full
+path of booting?
+
+Sorcerer originally was designed as a distro to boot without initramfs.
+However, Sorcerer eventually switched to provide an initramfs
+for different reasons than other distros.
+Consequently, the Sorcerer initramfs was designed differently
+and provides functionality that far exceeds other distros.
+
+If someone expects that systemd on Sorcerer could be a great combination
+then please test it and report the findings.
+Sorcerer has a backward compatible LSB commented init-script system.
+However, Sorcerer init-scripts are not actually LSB compliant init-scripts.
+systemd might not be able to run them without modification.
+If it does work then someone must first test and report so that we can know.
+
+If systemd becomes a standard replacement for sysvinit on other distros
+then I will commence my own investigation perhaps in 2013.
+Otherwise at the moment the task is available for delegation.
+Anyone want command that sub project?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002300.html">[Sorcerer-admins] Feature request...
+</A></li>
+	<LI>Next message: <A HREF="001017.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2305">[ date ]</a>
+              <a href="thread.html#2305">[ thread ]</a>
+              <a href="subject.html#2305">[ subject ]</a>
+              <a href="author.html#2305">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

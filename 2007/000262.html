@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIdia 64 manual install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIdia%2064%20manual%20install&In-Reply-To=%3C596b75860709110802n1088d664xed59867738256099%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000258.html">
+   <LINK REL="Next"  HREF="000261.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIdia 64 manual install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIdia%2064%20manual%20install&In-Reply-To=%3C596b75860709110802n1088d664xed59867738256099%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] NVIdia 64 manual install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Sep 11 17:02:54 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000258.html">[Sorcerer-admins] NVIdia 64 manual install
+</A></li>
+        <LI>Next message: <A HREF="000261.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#262">[ date ]</a>
+              <a href="thread.html#262">[ thread ]</a>
+              <a href="subject.html#262">[ subject ]</a>
+              <a href="author.html#262">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 9/10/07, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> I keep trying to make directories in the source cache, but it never works
+</I>&gt;<i> for me... is there some other index of the source cache that needs to be
+</I>&gt;<i> updated?
+</I>&gt;<i>
+</I>&gt;<i> I made sure that the path was definatly
+</I>&gt;<i> /var/cache/sources
+</I>
+
+$ find /var/cache/sources/NVIDIA* -type f
+/var/cache/sources/NVIDIA-Linux-x86/100.14.11/NVIDIA-Linux-x86-100.14.11-pkg1.run
+/var/cache/sources/NVIDIA-Linux-x86_64/100.14.11/NVIDIA-Linux-x86_64-100.14.11-pkg2.run
+
+That is where they exist on my test box.
+Still quite a bother having to install them manually?
+Reads like a worth request for enhanced augur functionality?
+
+
+source         dir         Copy sources from dir into the source cache
+source         file        Copy file             into the source cache
+source         spell       Print the sources for the spell
+
+
+The convenience of not having to specify the spell or version comes at a cost.
+Sources to be copied into the source cache must be
+a source that is owned by a current version of a spell.
+Otherwise, augur would be unable to determine where the file should go.
+
+Now to test it.
+
+
+# augur source /tmp/try
+`/tmp/try/NVIDIA-Linux-x86_64-100.14.11-pkg2.run' -&gt;
+`/var/cache/sources/NVIDIA-Linux-x86_64/100.14.11/NVIDIA-Linux-x86_64-100.14.11-pkg2.run'
+
+
+# augur source NVIDIA-Linux-x86_64
+NVIDIA-Linux-x86_64-100.14.11-pkg2.run
+
+
+# augur source /tmp/try
+`/tmp/try/bash-3.2.tar.7z' -&gt; `/var/cache/sources/bash/3.2.025/bash-3.2.tar.7z'
+
+
+Looks good to go out in the next sorcery-implosion release.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000258.html">[Sorcerer-admins] NVIdia 64 manual install
+</A></li>
+	<LI>Next message: <A HREF="000261.html">[Sorcerer-admins] syslog-ng 2.x
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#262">[ date ]</a>
+              <a href="thread.html#262">[ thread ]</a>
+              <a href="subject.html#262">[ subject ]</a>
+              <a href="author.html#262">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

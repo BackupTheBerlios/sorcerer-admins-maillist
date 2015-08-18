@@ -1,0 +1,700 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] issue when rebooting boards.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTilBiX_ydHfxAFPVCYj6g3jPCsefw2od2qGbE2LQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001749.html">
+   <LINK REL="Next"  HREF="001702.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] issue when rebooting boards.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20issue%20when%20rebooting%20boards.&In-Reply-To=%3CAANLkTilBiX_ydHfxAFPVCYj6g3jPCsefw2od2qGbE2LQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] issue when rebooting boards.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 14 02:49:22 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001749.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+        <LI>Next message: <A HREF="001702.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1753">[ date ]</a>
+              <a href="thread.html#1753">[ thread ]</a>
+              <a href="subject.html#1753">[ subject ]</a>
+              <a href="author.html#1753">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 13, 2010 at 8:55 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jul 6, 2010 at 11:56 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Jul 6, 2010 at 4:23 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>
+&gt;<i> yes but sadly it won't..... there are always unseen cases that will require
+</I>&gt;<i> manual fixing....
+</I>
+I began work on init.debug
+but have had no time to test it.
+I still probably would prefer
+using rdinit=/bin/bash
+But I am not against creating an init.debug
+for SAs that want to use it to try to
+help with debugging sysinit.
+
+
+&gt;&gt;<i> &gt; what prevent us to have some runlevel dedicated to interactive statup?
+</I>&gt;&gt;<i> &gt; in
+</I>&gt;&gt;<i> &gt; what is it not doable?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Basically, it requires that /etc/inittab also be modified.
+</I>&gt;&gt;<i> I could try to sedit in the required line,
+</I>&gt;&gt;<i> but that might not work because it requires an assumption
+</I>&gt;&gt;<i> that /etc/inittab looks something like the one provided by
+</I>&gt;&gt;<i> Sorcerer.
+</I>&gt;&gt;<i> Sediting a heavily modified /etc/inittab might not work.
+</I>&gt;&gt;<i> Installing a new default /etc/inittab replacing customized
+</I>&gt;&gt;<i> /etc/initab might irritate and inconvenience SAs.
+</I>&gt;<i>
+</I>&gt;<i> what has to be modified in inittab?
+</I>
+A new runlevel line must be introduced in /etc/inittab
+before the lines that start the gettys.
+That way a runlevel 7, for example, could run interactively.
+
+
+&gt;&gt;<i> The best way to make any modification to
+</I>&gt;&gt;<i> the selection of init-scripts run during runlevel
+</I>&gt;&gt;<i> is to handle that at the very end of sysinit.
+</I>
+gettys are not started until just before the runlevel starts.
+At the end of sysinit and before the gettys have started
+an opportunity for interaction with a SA at the console is possible.
+
+
+&gt;&gt;<i> Only when sysinit ends do the virtual consoles gettys
+</I>&gt;&gt;<i> become activated.
+</I>&gt;&gt;<i> Therefore, there exists an opportunity
+</I>&gt;&gt;<i> for one last attempt at interaction.
+</I>&gt;&gt;<i> Once runlevels start the action is fire and forget.
+</I>&gt;<i>
+</I>&gt;<i> not sure I well understood.......
+</I>
+Once login gettys are started
+an interactive runlevel becomes impossible.
+
+
+&gt;&gt;<i> Nothing about runlevel execution should cause the box
+</I>&gt;&gt;<i> to enter into a state where the kernel is crashed
+</I>&gt;&gt;<i> or login is impossible,
+</I>&gt;&gt;<i> provided that the Linux-PAM installation was not already broke.
+</I>&gt;<i>
+</I>&gt;<i> well seems that this assumption is incorrect since it happens that something
+</I>&gt;<i> about runlevel execution cause the login to be impossible since the rootfs
+</I>&gt;<i> is inaccessible.... yes you can login into the ramdisk but rootfs is
+</I>&gt;<i> inaccessible
+</I>
+Being able to log into the initramfs is still awesome.
+A SA can then try to discover what went wrong
+and how to fix it.
+That is not nearly as bad as having a box that
+does not boot and provides no shell.
+Worst case scenarios are when the SA
+must do something manual to fix the problem.
+Okay, maybe worst case scenario is when
+lilo prints LI and freezes or a LI and a number.  :)
+
+Problems with the bootloader or failure to
+load the initramfs require rescue using
+the Install/Rescue CD.
+I understand that for that reason more than any other
+some SAs preferred using monolithic kernels over
+the generic pre-configured modular kernel that I provide.
+Although a kernel which can mount the real rootfs
+without using an initramfs is slightly more robust
+the modular kernel gives far better plug'n'pray.
+
+&gt;&gt;<i> The runlevel log is far from being blind.
+</I>&gt;&gt;<i> Since about 100 init-scripts run during runlevel
+</I>&gt;&gt;<i> I can not read screen scroll fast enough.
+</I>&gt;&gt;<i> If I saw some unusual red
+</I>&gt;&gt;<i> then I check the runlevel log.
+</I>&gt;<i>
+</I>&gt;<i> the problem arise when red lines occurs on runlevel 0 or 6..... how do you
+</I>&gt;<i> check a runlevel log that is no more?
+</I>
+No runlevel log is created for runlevels 0 and 6.
+Those runlevels are intended to be terminal
+and come to completion without interaction.
+Given the command to reboot or shutdown
+a box should accomplish that goal without complaint.
+No extra delay is added to make possible the reading
+of scroll during shutdown/reboot.
+If possible the SA would have to snap memorize
+what is on the screen.
+
+You might ask why not create a runlevel log.
+And put it where?  /var/log/ ? /etc/init.d/log.d/ ?
+All filesystems are unmounted or remounted read only
+during shutdown/reboot
+
+
+&gt;<i> seems that there are issue unmounting drive because I'm not the only one to
+</I>&gt;<i> have fsck clean some orphan on startup....
+</I>&gt;<i> services are in my opinion one of the most important part of the stability
+</I>&gt;<i> of the box.... all red lines require immediate SA intervention in my
+</I>&gt;<i> opinion.... warnings lines only require from time to time checks and I would
+</I>&gt;<i> like to have an INFO lines instead of warning for information such as
+</I>&gt;<i> startup of service....
+</I>
+There was a discussion about that previously.
+I am following the LSB specifications:
+
+<A HREF="http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/iniscrptfunc.html">http://refspecs.linux-foundation.org/LSB_4.0.0/LSB-Core-generic/LSB-Core-generic/iniscrptfunc.html</A>
+
+There is no definition for:
+log_info_msg() function
+
+Please feel free to consider all
+warning messages to be info messages.
+The nomenclature differs but the same meaning is intended.
+
+&gt;<i> not sure that it's a good idea.... I think that kernel parameter is a better
+</I>&gt;<i> idea....
+</I>
+Yes, using kernel command line parameters has some advantages.
+In this scenario using rdinit=/sbin/init.debug
+should be easy enough to start booting using
+the sysinit debugging script
+provided that the SA knows that is possible.
+And, I have not made available /sbin/init.debug yet.
+I might have time to test it tomorrow.
+
+
+&gt;<i> maybe not... maybe.... /etc/mtab is usually a link to /proc/mounts or used
+</I>&gt;<i> to be....
+</I>&gt;<i> this means that to mount other fs proc has to be mounted...
+</I>
+SAs flame me when I symbolic link /proc/mounts to /etc/mtab
+Although that works it loses some conveniences involving
+mounts made automatically through loopback devices.
+Probably a symbolic link for /etc/mtab
+might only be used during sysinit.
+The real root filesystem receives a real /etc/mtab file.
+The /etc/init.d/mtab init-script creates the real /etc/mtab file.
+And yes it requires that /proc and also the real rootfs
+be mounted first.
+But /etc/init.d/mtab will run even if /proc and/or
+the real root filesystem did not mount.
+It is not worth locking.
+Why would I not want /etc/init.d/mtab to run?
+
+
+&gt;<i> I still don't see what is the difference....&#160; anyway if proc service has no
+</I>&gt;<i> Required-Start then it'll obviously fail in S00.... if this is just to have
+</I>&gt;<i> /proc mounted in the first steps... well fine... what is the problem? what
+</I>&gt;<i> prevent to do it? nothing... neither the LSB nor anybody prevent it... it's
+</I>&gt;<i> not against the rules... you can list in Required-Star whatever service the
+</I>&gt;<i> linux distribution decide to be started before...
+</I>
+Nothing prevents me from locking and checking,
+but there is no advantage for that, especially with /proc
+Something I do not advertise is that /proc is mounted by /init
+I do that so I can read the kernel command line from:
+/proc/cmdline
+Yet having /proc or any other filesystem mounted
+will not create an error when /etc/init.d/proc runs.
+/etc/init.d/proc will see that proc is already mounted on /proc
+Therefore, it will print:
+
+Well, it used to print something if I remembered correctly.
+Now it just returns silently.
+But it does not double mount filesystems.
+
+&gt;&gt;<i> If lock files were created then what?
+</I>&gt;<i>
+</I>&gt;<i> lock shall be tmpfs.....
+</I>
+/var/lock is tmpfs.
+I wrote an init-script to mount it.
+Other than networks and lvm
+little else uses it.
+
+
+&gt;&gt;<i> Check for them and fail entire chains of init-scripts
+</I>&gt;&gt;<i> because an earlier init-script failed?
+</I>&gt;<i>
+</I>&gt;<i> what do you prefer? have the system stop and wait for fixes or try to force
+</I>&gt;<i> it running and have un-predictable side effects?&#160; at this time writing we
+</I>&gt;<i> have the second behavior.... it might work, it might not work, it might
+</I>&gt;<i> destroy lot of files.... you can't tell me that you can insure me that a
+</I>&gt;<i> service that WILL misbehave if another isn't started won't be started if the
+</I>&gt;<i> other isn't..... especially because I HAVE THE CASE....
+</I>
+I am very careful about the use of rm.
+However, nearly unpredictable results can happen
+when something unexpected comes first.
+
+My overall predictions were:
+If something unfortunate happens during runlevel
+then the box will still be okay
+and logging in by a getty will be possible.
+If something unfortunate happens during sysinit
+then login gettys will start allowing the SA to log
+into the initramfs instead of the real root filesystem.
+
+Once /sbin/init starts on the initramfs
+instead of the real root filesystem
+then a smooth transition is not possible.
+Once /sbin/init receives process 1
+then /sbin/init is not giving back that process number.
+So if I want to repair errors that happen during sysinit
+then I reboot rdinit=/bin/bash
+This is sometimes necessary
+when I am testing a new version of udev.
+
+If a problem occurred during runlevel start
+then I would not boot any differently.
+I would login, review the runlevel log,
+and debug the specific init-script.
+For that reason I expect that interactive
+sysinit is a better idea than interactive runlevel.
+
+
+&gt;&gt;<i> So would you want to sshd to not be started if
+</I>&gt;&gt;<i> the script specified by $network failed when it ran?
+</I>&gt;<i>
+</I>&gt;<i> YES
+</I>
+Not me.
+But then again the SA would have to chmod 0600
+/etc/init.d/networks
+and create their own init-script that
+# Provides: $network
+and chmod 700 that.
+That is the proper way to do it,
+but also just confusing enough to be frustrating.
+
+
+&gt;&gt;<i> Would you want sshd to not be stopped if
+</I>&gt;&gt;<i> the init-script that controls $networks
+</I>&gt;&gt;<i> did not successfully stop?
+</I>&gt;<i>
+</I>&gt;<i> wrong assumption... stop occurs in reverse order.... anyway in my point of
+</I>&gt;<i> view if sshd stop don't work this require IMMEDIATE SA ATTENTION, ALL
+</I>&gt;<i> STARTED SERVICES SHALL BE STOPABLE
+</I>
+Sorry, stop was not the correct word.
+sshd does not start before $network.
+What I ment to ask is different.
+I meant to ask if $network fails to properly start
+then would you also want sshd to not start.
+I would prefer that sshd start just in case
+the network is configured by another method.
+
+One of my boxes has a wireless NIC
+that very frequently disconnects.
+Therefore, I wrote a separate daemon
+to check if networking is up and then stop
+and restart it if the network interface is down.
+When that box boots
+a chance exists that networking does not start.
+However, I still want sshd to start.
+Eventually, the box will come online.
+
+&gt;&gt;<i> Furthermore, how do init-scripts check for
+</I>&gt;&gt;<i> a lockfile from $network
+</I>&gt;&gt;<i> when $network specifies a generic service name
+</I>&gt;&gt;<i> rather than a specific init-script?
+</I>&gt;<i>
+</I>&gt;<i> if multiple init script provide the same service name only one shall be run.
+</I>&gt;<i> there shall be only one $network lock file, containing a pid of the service
+</I>&gt;<i> handler....
+</I>
+Actually, it does not work that way.
+Anything mode 0700 becomes eligible to run.
+There is no code to decide which/when.
+If two or more init-scripts Provide: $network
+then they would all run.
+
+The $network type service names are
+specified by the LSB documentation.
+I am uncertain how close I follow it,
+the last time I looked at it,
+and if it using $names is of any use.
+
+
+&gt;&gt;<i> Oddly enough the /etc/init.d/networks init-script
+</I>&gt;&gt;<i> writes a locfile /var/lock/networks
+</I>&gt;&gt;<i> That is only used to indicate for the init-script
+</I>&gt;&gt;<i> networks that networks was previously started.
+</I>&gt;<i>
+</I>&gt;<i> well that's bad...
+</I>
+How so?
+Sometimes a network device must be cleanly
+de-activated before it can be re-activated.
+That lock file helps ensure that happens.
+
+
+&gt;<i> I still don't agree... it's doable with signals.... you can stop a process
+</I>&gt;<i> anytime in sleeping and wake it up.... all that you require is atomical (ie
+</I>&gt;<i> locked) write to a file in order to store the pid of the service that want
+</I>&gt;<i> to be woken by the required service. Then have the waiting service sleep for
+</I>&gt;<i> the timeout, and have it trap SIGUSR1 for example.... once the required
+</I>&gt;<i> service decide that other services can be woken, it'll lock the waiters_pid
+</I>&gt;<i> file, create the service PID file, kill SIGUSR1 all pid and free the lock an
+</I>&gt;<i> destroy the waiters_pid file.....
+</I>&gt;<i> no process are running/polling appart the current starting service, none of
+</I>&gt;<i> the waiters are consuming ressources....
+</I>
+You know how to have a process begin in a STOPped state?
+I grant that a BASH script can start itself
+and then stop it's own PID by an invocation to kill.
+That might be undesirable and
+it as costly as a wrapper script since /bin/kill must be run.
+Also I have no idea if an invocation to /bin/kill
+by a BASH script will be able to stop that script
+before the following lines begin executing.
+Under high-load the result might be unpredictable.
+
+Assuming 100 init-scripts start then enter a stopped/waiting state.
+/bin/kill would have to be called to send CONT signals to them.
+That costs some time.
+Also exactly how fast does a process resume execution?
+
+I grant that having all init-scripts start at once is possible.
+Managing that requires at least two invocations of /bin/kill
+per init-script.
+Also there must be a directory that stores the name
+of each init-script, it's service, what it requires first,
+what it requries successful, the PID of the stopped process, etc...
+I can visualize how it works
+and how some PIDs would receive CONT
+and others would receive the TERM.
+However, I can not understand how this
+runs any faster than the current method.
+Not only do the two invocations of kill per init-script
+slow down this method, but the method for determining
+what should go when must loop and is a complex loop.
+It's loop could even be controlled by having init-scripts
+send a signal back to it in order for it to go from STOP to CONT,
+but then that adds yet a 3rd invocation to /bin/kill
+
+The method you described is more efficient
+than how I first envisioned what you wrote.
+However, it is still more complex and requires
+more overhead than the current init system.
+
+&gt;<i> I'm merly certain that I can write something based on signals that won't
+</I>&gt;<i> require much polling time...
+</I>
+I agree that signals could be used to achieve that goal.
+So far I am estimating 3 invocations of /bin/kill per
+init-script and the master loop that controls what runs
+still requires an absurd amount of CPU cycles per loop
+to decide which STOPed processes can be CONT.
+
+
+&gt;<i> in my case there can't be stalls since all service have a timeout..... if
+</I>&gt;<i> one service fails, all the waiters will fails gracefully on timeout....
+</I>
+Even with a signal driven init
+stalls would be possible because
+Sorcerer maintainers might create init-scripts
+that have a recursive requirement loop.
+Which comes first, the chicken or the egg?
+Even if such stall loops were timed out
+the outcome might not be desirable.
+And a timeout would definitely increase
+boot time if a timeout happened.
+
+
+
+&gt;&gt;<i> Having init-scripts run by number is better
+</I>&gt;&gt;<i> because as soon as an init-script is ready to execute
+</I>&gt;&gt;<i> then the init-script can execute.
+</I>&gt;<i>
+</I>&gt;<i> not sure : counter example :
+</I>&gt;<i> S01fastService1
+</I>&gt;<i> S01fastService2
+</I>&gt;<i> S01HUGELongStartService
+</I>&gt;<i> S02fastService3
+</I>&gt;<i>
+</I>&gt;<i> fastService3 only rely on fastService1...... but fastService3 is run after
+</I>&gt;<i> HUGELongStartService.... CQFD (in french what has to be demonstrated)
+</I>
+I understand what you are saying.
+That definitely happens.
+The most CPU/disk intensive init-script
+run during a runlevel step will become the
+last to complete and might leave CPU cores idle.
+It happens.
+But it does not make much of a difference.
+Runlevels have few steps.
+
+
+&gt;&gt;<i> Sorcerer's parallel boot blows away the method
+</I>&gt;&gt;<i> you described by a measure of many seconds.
+</I>&gt;<i>
+</I>&gt;<i> ready to bet?
+</I>
+I could be suckered on that one by a SA
+that writes a sublevel required init-sript
+that invokes the command
+# sleep 60
+*lol*
+
+However, if you write the implementation,
+which would take almost forever since you
+also have to modify hundreds of init-scripts,
+and test the implementation
+then I expect you will not be disappointed by
+Sorcerer's parallel init-script execution speed.
+
+&gt;<i>From my perspective I have nothing to gain
+</I>from making that wager except more work
+than I can possibly accomplish next month.  :)
+
+If the method you envision can be made
+to work without the overhead of 3 calls to /bin/kill
+then that would start to be impressive.
+Additionally, there may be a method
+at the start of booting to arrange the
+data so that the check to see what goes next
+might be accomplished by a single invocation of find.
+If the waiting PIDs each received their own directory.
+And in their directory there existed symbolic links to lock files.
+Then when all of those symbolic links point to valid lock files
+then CONT can be sent to that PID
+and the PID's directory can be removed.
+
+Overhead is now a 1 time cost to set up the initial
+directories of PIDs with symbolic links to lock files +
+per init-script ( 3 invocations of /bin/kill + 1 invocation of find )
+That overhead is nearly manageable.
+However, find is an exceedingly slow program,
+but faster than doing the same with BASH.
+
+# time find /root/.sorcery/grimoire | wc -l
+8293
+
+real    0m0.048s
+user    0m0.017s
+sys     0m0.016s
+
+That is for a box with loadavg 1.
+/root/.sorcery/grimoire is on tmpfs
+and contains subdirectories.
+It is a bit thicker than would be necessary
+for scanning something like
+/var/lock/pids/
+but the overhead would not be slight.
+Let us say the overhead is 0.04s
+100 init-scripts requires 100 iterations.
+That is 100 * 0.04 = 4 seconds.
+Assuming each iteration becomes a bit faster
+then perhaps 2 seconds overhead.
+
+I estimate that on a moderately fast CPU
+that the method you describe would burn
+about 5 or more additional CPU seconds per boot
+as compared to Sorcerer.
+However, on multi-core boxes where Sorcerer
+whittles down to finishing just one init-script left
+in a runlevel step in contrast your method can
+keep nearly all CPU cores loaded at all times
+provided most init-scripts can run concurrently.
+On a SMP box your method might gain an advantage.
+Yet on a single core box my method already has
+an advantage of lower overhead.
+
+If your proposed method had lower overhead
+and lacked the per init-script invocations of
+3x /bin/kill and 1x /bin/find
+then I would feel eager to try it.
+
+Sorcerer's parallel init-script execution runlevels
+has no additional overhead as compared to
+Sorcerer's sequential init-script execution runlevels.
+So naturally, a speed gain is realized for booting
+with the parallel vs sequential runlevels.
+
+# grep initdefault /etc/inittab
+id:5:initdefault:
+
+Even so, I still use a sequential runlevel on all of my boxes.
+*lol*
+I tend to expect that for a few extra seconds of booting
+that provides me with a better idea of what happened when
+during runlevel if something unexpected/undesirable happened.
+
+
+&gt;<i> if none of the init-scripts concurrently running are modifying/mounting the
+</I>&gt;<i> fscked filesystem then I don't see why.....
+</I>
+Well, I mentioned my reasons,
+the primary one being avoiding chaos,
+but more to the point is that the numerous
+steps in sysinit create little to no opportunity
+for parallel execution of init-scripts.
+On my workstation 38 init-scripts execute during sysinit
+and 18 steps exist.
+That is an average of 2.1 init-scripts per step,
+but the distribution is not nearly that even.
+I estimate parallel execution of sysinit init-scripts
+would gain about 1 second faster boot,
+more on SMP boxes, but less on fast boxes.
+sysinit does not normally run long.
+runlevel requires many times longer than sysinit to complete,
+provided udev does not cause a slow down and
+no filesystems are being fscked.
+
+
+&gt;<i> no need to prove me that... I'm already aware of that.... only rcS script
+</I>&gt;<i> have to be really careful on dependency listing...
+</I>
+&gt;<i>From what you want the dependency listing
+</I>must be careful all over.
+But one other aspect seems absolutely essential.
+Your method would require additional overhead
+required to create lock files.
+Lockfile creation overhead is minimal but something
+like lockfiles would be necessary to track what
+init-scripts had successfully executed.
+And in addition to normal lock files your method
+might also benefit for creating yet an additional file
+to indicate when an init-script had run yet failed.
+That way some init-scripts waiting to run would not
+have to wait until a specified timeout had elapsed.
+Instead the master loop could check if the init-scripts
+it is waiting on already ran and failed.
+
+
+&gt;<i> I'm out of time... will read this during the vacation
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>
+The more you request that I think about it
+the more interesting the topic becomes.
+It is a reasonable way of implementing init
+that has the advantage you desire of maximizing
+the amount of init-scripts that can execute concurrently.
+Unfortunately, all of my initial thoughts regarding the overhead
+for an initial implementation suggests that the method
+is complex and CPU tasking.
+
+If you do not mind yielding a little bit more advantage to me
+then the initial implementation of your described method
+can be made without modification to any existing init-scripts.
+However, it would require that init-scripts are invoked with
+a wrapper script that creates a directory such as:
+/var/lock/PID/$$/
+Then, creates symbolic links in /var/lock/PID/$$/ that point
+to service and init-script entries in /var/ock/
+And then executes /bin/kill -STOP $$
+And hopefully the init-script stops before
+it would execute the next command such as:
+&quot;$@&quot;
+Upon successful return a lock file is created
+and /var/lock/PID/$$ is removed.
+Finally, it would have the kill -CONT
+to restart the master/loop program.
+
+Per init-script overhead is now:
+1 wrapper, 3 kill, 1 find, 1 rm -r
+
+Now the hard part remains.
+Write the control loop that gathers information
+to control order of execution of init-scripts.
+It starts by running wrapped all the init-scripts.
+Then it invokes find once to locate directories in
+/var/run/PID/*/ that are empty and it gives
+a CONT to all those PIDs.
+Then the master loop stops itself and waits for a signal.
+When it wakes up, it finds directories in /var/run/PID/*/
+that do not have dangling symbolic links and CONT
+those PIDs.
+
+Okay, basically, that is an idea of how it might work.
+However, it is not without problems.
+If the master loop STOPs and nothing gives it a CONT
+then init-script execution hangs forever.
+Likewise the only init-script running might complete
+and issue a CONT to the master loop just
+before the master loop STOPs
+Then the master loop again never resumes
+and init-script execution is stalled.
+
+Signals seem like an efficient way
+of controlling program execution.
+However, they are not without problems.
+
+Actually, I can take back one reservation.
+The master loop portion could be
+part of the init-script wrapper that runs
+following the the init-script completion.
+That avoids one of the signal problems.
+
+Per init-script overhead now at:
+2x kill, 1x find, 1x rm -r
+
+That is still a huge amount of overhead.
+
+Provided that you switch out the /etc/init.d/prc
+and write the new prc and new init-script wrapper
+then Sorcerer init-scripts are nearly usable as-is.
+The only inefficiency is not knowing whether
+something required is required to start before
+or required to have been successfully started before.
+
+I estimate 8 hours to write the stuff,
+2 hours to debug it,
+10 hours total effort
+to see if it can beat Sorcerer's current method
+for parallel execution of runlevel init-scripts.
+
+Let me know if it is faster, please.  :)
+If you can not write it then I can,
+but not anytime soon because fixing spells
+that broke during the transition to DESTDIR
+is still a priority.
+Ah, man I missed the 00:00 UTC deadline today
+and I have a whole batch of spells ready to go.
+Spent too much time emailing.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001749.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+	<LI>Next message: <A HREF="001702.html">[Sorcerer-admins] issue when rebooting boards.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1753">[ date ]</a>
+              <a href="thread.html#1753">[ thread ]</a>
+              <a href="subject.html#1753">[ subject ]</a>
+              <a href="author.html#1753">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

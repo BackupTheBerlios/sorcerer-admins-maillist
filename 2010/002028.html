@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] quiet?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20quiet%3F&In-Reply-To=%3CAANLkTik0gV8fKGwOda_9Ja9V%3D38TFjpNyNVQ8%3DmBSR0m%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002025.html">
+   <LINK REL="Next"  HREF="002032.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] quiet?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20quiet%3F&In-Reply-To=%3CAANLkTik0gV8fKGwOda_9Ja9V%3D38TFjpNyNVQ8%3DmBSR0m%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] quiet?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Dec 23 02:20:13 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002025.html">[Sorcerer-admins] Yeah I'm wondering too...
+</A></li>
+        <LI>Next message: <A HREF="002032.html">[Sorcerer-admins] quiet?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2028">[ date ]</a>
+              <a href="thread.html#2028">[ thread ]</a>
+              <a href="subject.html#2028">[ subject ]</a>
+              <a href="author.html#2028">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The past couple of days I have been modifying sorcery and spells in order
+to do something amusing which is to compile and install twice spells that
+have the library attribute.
+That way the ELF32 libraries go into lib directories
+and the ELF64 libraries go into lib64 directories.
+
+Making *-config scripts, pkgconfig, and libtool .la, and autotools
+to all work together properly has been challenging.
+But I finally have enough x86_64 CPU power at my disposal
+to shuffle the puzzle pieces into proper position.
+I nearly have all the significant libraries of an I/R installed dual
+architecture,
+but there is still some ways to go.
+
+Hopefully, in 2011 the Sorcerer x86_64 I/R will be dual architecture.
+That will make it somewhat larger than it is currently.
+However, to offset that the dual architecture support can easily
+be discarded to slim it down to a pure x86_64 installation.
+
+At the moment Sorcerer x86_64 can be deployed with a separate
+Sorcerer IA32 installed in /opt/ia32/
+This can be used for running ELF32 programs like wine
+which can only be compiled ELF32.
+The /opt/ia32/ installation does not have to have all the same software
+as installed in the / installation.
+However, it requires just enough to compile whatever IA32 software is required.
+This can make the /opt/ia32/ installation somewhat significant in size.
+
+In contrast dual architecture x86_64 + ELF32 libraries will tend to provide
+additional ELF32 libraries for almost any spell with the library attribute.
+At first this might seem to be a significant waste of space.
+However, installed binaries, data files, and headers are not installed
+in duplicate.
+So dual architecture in / might not require as much space as a separate
+Sorcerer IA32 installation in /opt/ia32/
+
+So in summary initial tests suggest that dual architecture
+Sorcerer x86_64 + ELF32 libraries is possible.
+However, checking and fixing/modifying all the library spells is not easy.
+Fortunately, due to sorcery improvements
+most spells for libraries that do not have a build()
+will cast fine and provide dual architecture libraries.
+Therefore, the change does not necessarily make all
+spells that install libraries to require a build() and to become more
+complicated.
+
+Lastly, the question upon the minds for those eager to to dual ELF libraries is:
+&quot;Can I upgrade an x86_64 installation to dual architecture libraries?&quot;
+&quot;Absolutely, if you know exactly how to do it.&quot;
+Unfortunately, it would not be as simple as casting a spell.
+For those who want a simple transition
+one could start by installing a newer I/R
+that the one I rolled in December 2010.
+
+Once I am done fixing all the spells on the I/R
+to support dual architecture libraries
+then I can roll a new I/R
+January would be an optimistic estimated time to arrival.
+Fortunately, I am in no rush.
+And if the sub-project turns out to be unexpectedly more difficult than expected
+then it might not be completed in 2011.
+It is something that would be nice to do if we can do it,
+but the benefit of having ELF32 libraries on an x86_64 installation is dubious.
+Because it adds an ever-present layer of complexity
+and a convenience that might never be used.
+
+Might turn out like selinux on Sorcerer did.
+So much for that and the the
+Sorcerer PowerPC power, Sorcerer Sparc port,
+Sorcerer Alpha port, and Sorcerer xbox port *lol*
+
+I am still midway in doing the audit of the entire grimoire.
+A-Z and a-b complete.
+So, I have plenty to chew on for the rest of 2010 and into 2011.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002025.html">[Sorcerer-admins] Yeah I'm wondering too...
+</A></li>
+	<LI>Next message: <A HREF="002032.html">[Sorcerer-admins] quiet?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2028">[ date ]</a>
+              <a href="thread.html#2028">[ thread ]</a>
+              <a href="subject.html#2028">[ subject ]</a>
+              <a href="author.html#2028">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] nss won't cast...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20nss%20won%27t%20cast...&In-Reply-To=%3C397687.65151.qm%40web62207.mail.re1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001999.html">
+   <LINK REL="Next"  HREF="002004.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] nss won't cast...</H1>
+    <B>Richard Willard</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20nss%20won%27t%20cast...&In-Reply-To=%3C397687.65151.qm%40web62207.mail.re1.yahoo.com%3E"
+       TITLE="[Sorcerer-admins] nss won't cast...">rwillard_pcpro at yahoo.com
+       </A><BR>
+    <I>Sat Nov  6 20:23:33 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001999.html">[Sorcerer-admins] nss won't cast...
+</A></li>
+        <LI>Next message: <A HREF="002004.html">[Sorcerer-admins] nss won't cast...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2002">[ date ]</a>
+              <a href="thread.html#2002">[ thread ]</a>
+              <a href="subject.html#2002">[ subject ]</a>
+              <a href="author.html#2002">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Perhaps that could be, the start of the compile log looks like this:
+
+Compile log for nss 3.12.7
+Built with sorcery event-20101030-0 and gcc 4.4.3
+Built on Sat Nov&#160; 6 06:51:13 MST 2010
+patch: **** Only garbage was found in the patch input.
+make: Entering directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/nss'
+cd ../coreconf ;&#160; make
+make[1]: Entering directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/co
+reconf'
+cd nsinstall; make export
+make[2]: Entering directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/co
+reconf/nsinstall'
+make[2]: Nothing to be done for 'export'
+make[2]: Leaving directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/cor
+econf/nsinstall'
+cd nsinstall; make libs
+make[2]: Entering directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/co
+reconf/nsinstall'
+
+--- On Sat, 11/6/10, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+From: Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+Subject: Re: [Sorcerer-admins] nss won't cast...
+To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+Date: Saturday, November 6, 2010, 11:21 AM
+
+Perhaps the clue to this problem
+is at the start of the compile log rather than the end.
+
+The patch section should look something like:
+
+patching file nss-3.12.4/mozilla/security/nss/config/Makefile
+patching file nss-3.12.4/mozilla/security/nss/config/nss-config.in
+patching file nss-3.12.4/mozilla/security/nss/config/nss.pc.in
+can't find file to patch at input line 229
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|<i>diff -Naur nss-3.12.4-orig/mozilla/security/nss/Makefile nss-3.12.4/mozilla/sec
+</I>urity/nss/Makefile
+|<i>--- nss-3.12.4-orig/mozilla/security/nss/Makefile&#160; &#160; &#160; 2008-12-02 17:24:39.0000
+</I>00000 -0600
+|<i>+++ nss-3.12.4/mozilla/security/nss/Makefile&#160;&#160;&#160;2009-08-31 19:15:20.000000000 -0
+</I>500
+--------------------------
+File to patch:
+Skip this patch? [y]
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 254
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|<i>diff -Naur nss-3.12.4-orig/mozilla/security/nss/manifest.mn nss-3.12.4/mozilla/
+</I>security/nss/manifest.mn
+|<i>--- nss-3.12.4-orig/mozilla/security/nss/manifest.mn&#160;&#160;&#160;2008-04-04
+</I>15:36:59.000000000 -0500
+|<i>+++ nss-3.12.4/mozilla/security/nss/manifest.mn&#160; &#160; &#160; &#160; 2009-08-31
+</I>19:15:20.000000000 -0500
+--------------------------
+File to patch:
+Skip this patch? [y]
+Skipping patch.
+1 out of 1 hunk ignored
+Compile log for nss 3.12.7
+
+
+I suppose I can retest with version 3.12.8 with and without patches
+to see if it wants to compile.
+The last time I successfully compiled nss was Oct 13 15:52 2010
+So it might have broke since due to other updates?
+Thanks for reporting the problem.
+
+
+
+On Fri, Nov 5, 2010 at 11:01 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi there.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for reporting the problem.
+</I>&gt;<i>
+</I>&gt;<i> One quick thing to try would be to issue
+</I>&gt;<i> augur forget nss
+</I>&gt;<i>
+</I>&gt;<i> and re-setup the thing. I'll see if it compiles on my boxes, even though I don't run GNOME myself.
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Nov 5, 2010 at 4:37 PM, Richard Willard &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwillard_pcpro at yahoo.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have been trying to get gnome to cast for a couple days now and one component, nss-3.12.7, refuses to cast.&#160; Components of gnome require this or require the components that require this.&#160; I have checked the /var/cache/sources/nss/3.12.7 directory and it has a .patch file along with the tarball.&#160; I have also tried downloading the tarball manually and putting it in the directory but it still won't cast.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have tried it with both the ia32 and the x86_64 isos and it is the same with both.&#160; When I check the compile logs it apparently finds a problem and exits.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is what it shows at the bottom of the compile log:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> make[2]: Leaving directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/coreconf/nsinstall'
+</I>&gt;&gt;<i> make[1]: Leaving directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/coreconf'
+</I>&gt;&gt;<i> make: *** No rule to make target ../../nsprpub/configure.&#160; Stop.
+</I>&gt;&gt;<i> make: *** [../../nsprpub/configure] Error 1
+</I>&gt;&gt;<i> make: Leaving directory '/usr/src/sorcery/nss/nss-3.12.7/mozilla/security/nss'
+</I>&gt;&gt;<i> ! Problem Detected !
+</I>&gt;&gt;<i> Source moved to /var/tmp/failed/nss
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I don't know what any of that means or if it is helpful but any help with this would be much appreciated.&#160; If you want or need more information just let me know and I will do my best to provide the info.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>_______________________________________________
+Sorcerer-admins mailing list
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+
+
+
+      
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101106/c7beefce/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101106/c7beefce/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001999.html">[Sorcerer-admins] nss won't cast...
+</A></li>
+	<LI>Next message: <A HREF="002004.html">[Sorcerer-admins] nss won't cast...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2002">[ date ]</a>
+              <a href="thread.html#2002">[ thread ]</a>
+              <a href="subject.html#2002">[ subject ]</a>
+              <a href="author.html#2002">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

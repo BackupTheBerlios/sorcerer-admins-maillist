@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] progress...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTikp8i8I_q_ZAZUAY_UDZGB1dnfPhFL3Lnis2-Cq%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001627.html">
+   <LINK REL="Next"  HREF="001629.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] progress...</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20progress...&In-Reply-To=%3CAANLkTikp8i8I_q_ZAZUAY_UDZGB1dnfPhFL3Lnis2-Cq%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] progress...">evorster at gmail.com
+       </A><BR>
+    <I>Wed May 26 22:38:24 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001627.html">[Sorcerer-admins] progress...
+</A></li>
+        <LI>Next message: <A HREF="001629.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1628">[ date ]</a>
+              <a href="thread.html#1628">[ thread ]</a>
+              <a href="subject.html#1628">[ subject ]</a>
+              <a href="author.html#1628">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Good work on the Sorcerer updates.
+
+Am I right in assuming that the Sorcerer I/R's without xorg will also be a
+smaller download than the current ones?
+
+In that case, I might be tempted to wait a while till they are out. I am
+extremely limited on the download bandwidth that I can use at work.
+
+Thanks for the info. I might even try going from linux-custom to linux
+again...
+
+But I need to have a list of things that need to be installed, scripts in
+/etc/init.d that need to be run in order to have a valid initram
+
+My last one loaded the kernel, but then could not mount the root filesystem
+rw.
+
+-Evert-
+
+On Wed, May 26, 2010 at 1:59 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Some software was written with the expectation that there
+</I>&gt;<i> would never be a db version 5.0.x
+</I>&gt;<i> But there is.
+</I>&gt;<i> I upgraded.
+</I>&gt;<i> And I also sedited several sources
+</I>&gt;<i> in order to make the compile with the newer db.
+</I>&gt;<i> I might not have spotted all the problems.
+</I>&gt;<i> Please report any db related compile problems.
+</I>&gt;<i>
+</I>&gt;<i> Also, thanks to Pekka's excellent services I am now able to compile
+</I>&gt;<i> and update the x86_64 I/R even faster than the IA32.
+</I>&gt;<i> But I am still waiting for some compilation to complete.
+</I>&gt;<i> Perhaps by this weekend we will have new I/Rs.
+</I>&gt;<i> But I have yet to test them.
+</I>&gt;<i>
+</I>&gt;<i> There is some confusion about linux*
+</I>&gt;<i>
+</I>&gt;<i> What was linux is now linux-custom.
+</I>&gt;<i> What was linux-modular is now linux.
+</I>&gt;<i> And of course there are several linux-2.6.* spells also.
+</I>&gt;<i> Why?
+</I>&gt;<i> See what is listed as stable at <A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+</I>&gt;<i> That is why.
+</I>&gt;<i> The linux spell will provide a modular kernel for the latest available
+</I>&gt;<i> linux kernel.
+</I>&gt;<i> The older kernels that are still available, listed as stable and maintained
+</I>&gt;<i> are available with modular config for the other linux-2.6.* spells.
+</I>&gt;<i> The reason for the older kernels is because some hardware drivers
+</I>&gt;<i> break and only work in the older kernels.
+</I>&gt;<i> Who knows when the fixes will move forward?
+</I>&gt;<i>
+</I>&gt;<i> The new I/Rs will come with the linux kernel pre-compiled.
+</I>&gt;<i> It has all the drivers, experimental and stable, for fancy new hardware.
+</I>&gt;<i> The linux kernel to install on boxes is whichever kernel the SA wants to
+</I>&gt;<i> cast.
+</I>&gt;<i> Once a linux kernel is installed
+</I>&gt;<i> then it will take over as the linux-kernel provider.
+</I>&gt;<i>
+</I>&gt;<i> A few boxes might have both gcc and gcc-core installed.
+</I>&gt;<i> Eventually those boxes should only have gcc-core installed.
+</I>&gt;<i> They should fix themselves.
+</I>&gt;<i> But if the box already has gcc-core installed
+</I>&gt;<i> and the SA wants to expedite the fix
+</I>&gt;<i> then dispelling gcc is safe after gcc-core is installed.
+</I>&gt;<i> gcc-g++ is also good to have installed
+</I>&gt;<i> to provide for libstdc++ for c++ sources.
+</I>&gt;<i>
+</I>&gt;<i> Because some SAs prefer to start from a cleaner loadout
+</I>&gt;<i> while others prefer a faster download
+</I>&gt;<i> I am excluding xine codecs fonts and xorg related spells
+</I>&gt;<i> from the next set of I/Rs.
+</I>&gt;<i> That also makes them faster for me to create and check.
+</I>&gt;<i> Compiling xorg should not be too difficult for SAs.
+</I>&gt;<i> Figuring out what fonts to install tends to be the trickiest part.
+</I>&gt;<i>
+</I>&gt;<i> The ati-driver-installer partially pre-compiled something or another
+</I>&gt;<i> seems to be hopeless broke.
+</I>&gt;<i> Even without the spell the thing segfaulted when
+</I>&gt;<i> I tried to install it from command line.
+</I>&gt;<i> I am not eager to rush out and buy an ATI card.
+</I>&gt;<i> But if I was I would re-think the idea since
+</I>&gt;<i> the NVIDIA-Linux-x86 seems to work fine.
+</I>&gt;<i>
+</I>&gt;<i> Looks like xine might have come out on top of the video player contest.
+</I>&gt;<i> In some cases it still might play as fast as MPlayer which is a bit
+</I>&gt;<i> trickier to
+</I>&gt;<i> get working with fonts for subtitles since it requires a font be installed
+</I>&gt;<i> as a file in one's home directory.
+</I>&gt;<i> Also xine might be able to play newer .mkv formats that might
+</I>&gt;<i> look corrupted when viewed in MPlayer.
+</I>&gt;<i> KDE's movie player, if I remembered the name,
+</I>&gt;<i> seems to use xine-lib.
+</I>&gt;<i> So it should basically be a front end to xine
+</I>&gt;<i> and have nearly the same rendering as xine-ui.
+</I>&gt;<i>
+</I>&gt;<i> For those who like a 2D combat/exploration type game
+</I>&gt;<i> I finally updated the crossfire spells.
+</I>&gt;<i> I put forth extra effort to make certain that it works.
+</I>&gt;<i> Overall it looks basically no different than older versions.
+</I>&gt;<i> Sliding the panels apart in the client is as tricky as ever,
+</I>&gt;<i> but necessary to see what is on the floor, inventory,
+</I>&gt;<i> and the informational text.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100526/bc7761af/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100526/bc7761af/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001627.html">[Sorcerer-admins] progress...
+</A></li>
+	<LI>Next message: <A HREF="001629.html">[Sorcerer-admins] progress...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1628">[ date ]</a>
+              <a href="thread.html#1628">[ thread ]</a>
+              <a href="subject.html#1628">[ subject ]</a>
+              <a href="author.html#1628">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

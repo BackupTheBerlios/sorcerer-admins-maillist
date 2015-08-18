@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux-PAM%20compile%20error%2C%20RLIMIT_NICE%20missing&In-Reply-To=%3C596b75860708210940t11557c15r2d287ed42a01c3f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000202.html">
+   <LINK REL="Next"  HREF="000218.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Linux-PAM%20compile%20error%2C%20RLIMIT_NICE%20missing&In-Reply-To=%3C596b75860708210940t11557c15r2d287ed42a01c3f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 21 18:40:28 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000202.html">[Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing
+</A></li>
+        <LI>Next message: <A HREF="000218.html">[Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#212">[ date ]</a>
+              <a href="thread.html#212">[ thread ]</a>
+              <a href="subject.html#212">[ subject ]</a>
+              <a href="author.html#212">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmmm.... That is a toughy.
+
+I just completed a successful compilation of
+Linux-PAM 0.99.8.1 with gcc 4.2.1
+on an i686 architecture.
+glibc 2.6.1 is installed
+Therefore, linux header files 2.6.22.1 are installed.
+Is it possible your box has an older version of glibc installed
+and therefore older linux header files?
+But that aside....
+Why do you expect
+/usr/include/asm-generic/resource.h
+is included?
+It may be so.
+RLIMIT_NICE does not appear to be definied in the Linux-PAM source
+and it occurs in
+
+/usr/include/bits/resource.h:  __RLIMIT_NICE = 13,
+/usr/include/bits/resource.h:#define RLIMIT_NICE __RLIMIT_NICE
+/usr/include/asm-generic/resource.h:#define RLIMIT_NICE         13
+ /* max nice prio allowed to raise to
+/usr/include/asm-generic/resource.h:    [RLIMIT_NICE]           = { 0,
+0 },                             \
+
+# md5sum /usr/include/bits/resource.h /usr/include/asm-generic/resource.h
+9caf456505c1d8a2bd5a00dbeec162e0  /usr/include/bits/resource.h
+855e8bb0ed0c416d435f8adae7fba8a1  /usr/include/asm-generic/resource.h
+
+Any chance those files are not what you expect
+or owned by some spell other than glibc?
+
+You may want to try and augur md5sum check on glibc?
+
+
+On 8/21/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Problem with Linux-PAM. Allthough RLIMIT_NICE is defined at
+</I>&gt;<i> /usr/include/asm-generic/resource.h
+</I>&gt;<i>
+</I>&gt;<i> ---------------------------------------------8&lt;-------------------------------
+</I>&gt;<i> Compile log for Linux-PAM  0.99.8.1
+</I>&gt;<i> Built with sorcery thaumaturgy-20070818-0 and gcc 4.2.1
+</I>&gt;<i> Built on Tue Aug 21 12:20:36 EEST 2007
+</I>&gt;<i> Traced with sentinel.
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/specs/
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/specs/draft-morgan-pam-current.txt
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/specs/rfc86.0.txt
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/Linux-PAM_ADG.pdf
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/Linux-PAM_ADG.txt
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-porting.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-introduction-synopsis.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-security-service-name.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-libpam_misc.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-introduction-description.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-security.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-example.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-security-resources.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-copyright.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-interface-programming-notes.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-overview.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-introduction.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-author.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-libpam-functions.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-interface-by-app-expected.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-interface-of-app-expected.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-glossary.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-security-usre-identity.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/Linux-PAM_ADG.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-interface.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-security-conv-function.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-see-also.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-security-library-calls.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/adg/html/adg-files.html
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/sag/
+</I>&gt;<i> Linux-PAM-0.99.8.1/doc/sag/Linux-PAM_SAG.txt
+</I>&gt;<i>
+</I>&gt;<i> ...
+</I>&gt;<i>
+</I>&gt;<i> gcc -DHAVE_CONFIG_H -I. -I..    -DLIBPAM_COMPILE -I../libpam/include
+</I>&gt;<i> -I../libpamc/include -I../libpam_misc/include -march=pentium4 -O2
+</I>&gt;<i> -fomit-frame-pointer -pipe  -W -Wall -Wbad-function-cast -Wcast-align
+</I>&gt;<i> -Wcast-qual -Wmissing-declarations -Wmissing-prototypes -Wpointer-arith
+</I>&gt;<i> -Wreturn-type -Wstrict-prototypes -Wwrite-strings -Winline -Wshadow -MT
+</I>&gt;<i> tst-pam_access3.o -MD -MP -MF .deps/tst-pam_access3.Tpo -c -o
+</I>&gt;<i> tst-pam_access3.o tst-pam_access3.c
+</I>&gt;<i> mv -f .deps/tst-pam_access3.Tpo .deps/tst-pam_access3.Po
+</I>&gt;<i> /bin/sh ../libtool --tag=CC   --mode=link gcc -DLIBPAM_COMPILE
+</I>&gt;<i> -I../libpam/include -I../libpamc/include -I../libpam_misc/include
+</I>&gt;<i> -march=pentium4 -O2 -fomit-frame-pointer -pipe  -W -Wall -Wbad-function-cast
+</I>&gt;<i> -Wcast-align -Wcast-qual -Wmissing-declarations -Wmissing-prototypes
+</I>&gt;<i> -Wpointer-arith -Wreturn-type -Wstrict-prototypes -Wwrite-strings -Winline
+</I>&gt;<i> -Wshadow -L../libpam -lpam -L../libpam_misc -lpam_misc -Wl,-s
+</I>&gt;<i> -Wl,--as-needed -Wl,-O1 -o tst-pam_access3 tst-pam_access3.o
+</I>&gt;<i> gcc -DLIBPAM_COMPILE -I../libpam/include -I../libpamc/include
+</I>&gt;<i> -I../libpam_misc/include -march=pentium4 -O2 -fomit-frame-pointer -pipe -W
+</I>&gt;<i> -Wall -Wbad-function-cast -Wcast-align -Wcast-qual -Wmissing-declarations
+</I>&gt;<i> -Wmissing-prototypes -Wpointer-arith -Wreturn-type -Wstrict-prototypes
+</I>&gt;<i> -Wwrite-strings -Winline -Wshadow -Wl,-s -Wl,--as-needed -Wl,-O1 -o
+</I>&gt;<i> .libs/tst-pam_access3 tst-pam_access3.o
+</I>&gt;<i> -L/usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam
+</I>&gt;<i> -L/usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam_misc
+</I>&gt;<i> /usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam_misc/.libs/libpam_misc.so
+</I>&gt;<i> /usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam/.libs/libpam.so
+</I>&gt;<i> -ldl
+</I>&gt;<i> creating tst-pam_access3
+</I>&gt;<i> gcc -DHAVE_CONFIG_H -I. -I..    -DLIBPAM_COMPILE -I../libpam/include
+</I>&gt;<i> -I../libpamc/include -I../libpam_misc/include -march=pentium4 -O2
+</I>&gt;<i> -fomit-frame-pointer -pipe  -W -Wall -Wbad-function-cast -Wcast-align
+</I>&gt;<i> -Wcast-qual -Wmissing-declarations -Wmissing-prototypes -Wpointer-arith
+</I>&gt;<i> -Wreturn-type -Wstrict-prototypes -Wwrite-strings -Winline -Wshadow -MT
+</I>&gt;<i> tst-pam_access4.o -MD -MP -MF .deps/tst-pam_access4.Tpo -c -o
+</I>&gt;<i> tst-pam_access4.o tst-pam_access4.c
+</I>&gt;<i> mv -f .deps/tst-pam_access4.Tpo .deps/tst-pam_access4.Po
+</I>&gt;<i> /bin/sh ../libtool --tag=CC   --mode=link gcc -DLIBPAM_COMPILE
+</I>&gt;<i> -I../libpam/include -I../libpamc/include -I../libpam_misc/include
+</I>&gt;<i> -march=pentium4 -O2 -fomit-frame-pointer -pipe  -W -Wall -Wbad-function-cast
+</I>&gt;<i> -Wcast-align -Wcast-qual -Wmissing-declarations -Wmissing-prototypes
+</I>&gt;<i> -Wpointer-arith -Wreturn-type -Wstrict-prototypes -Wwrite-strings -Winline
+</I>&gt;<i> -Wshadow -L../libpam -lpam -L../libpam_misc -lpam_misc -Wl,-s
+</I>&gt;<i> -Wl,--as-needed -Wl,-O1 -o tst-pam_access4 tst-pam_access4.o
+</I>&gt;<i> gcc -DLIBPAM_COMPILE -I../libpam/include -I../libpamc/include
+</I>&gt;<i> -I../libpam_misc/include -march=pentium4 -O2 -fomit-frame-pointer -pipe -W
+</I>&gt;<i> -Wall -Wbad-function-cast -Wcast-align -Wcast-qual -Wmissing-declarations
+</I>&gt;<i> -Wmissing-prototypes -Wpointer-arith -Wreturn-type -Wstrict-prototypes
+</I>&gt;<i> -Wwrite-strings -Winline -Wshadow -Wl,-s -Wl,--as-needed -Wl,-O1 -o
+</I>&gt;<i> .libs/tst-pam_access4 tst-pam_access4.o
+</I>&gt;<i> -L/usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam
+</I>&gt;<i> -L/usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam_misc
+</I>&gt;<i> /usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam_misc/.libs/libpam_misc.so
+</I>&gt;<i> /usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/libpam/.libs/libpam.so
+</I>&gt;<i> -ldl
+</I>&gt;<i> creating tst-pam_access4
+</I>&gt;<i> gcc -DHAVE_CONFIG_H -I. -I..    -DLIBPAM_COMPILE -I../libpam/include
+</I>&gt;<i> -I../libpamc/include -I../libpam_misc/include -march=pentium4 -O2
+</I>&gt;<i> -fomit-frame-pointer -pipe  -W -Wall -Wbad-function-cast -Wcast-align
+</I>&gt;<i> -Wcast-qual -Wmissing-declarations -Wmissing-prototypes -Wpointer-arith
+</I>&gt;<i> -Wreturn-type -Wstrict-prototypes -Wwrite-strings -Winline -Wshadow -MT
+</I>&gt;<i> tst-pam_limits1.o -MD -MP -MF .deps/tst-pam_limits1.Tpo -c -o
+</I>&gt;<i> tst-pam_limits1.o tst-pam_limits1.c
+</I>&gt;<i> tst-pam_limits1.c: In function 'main':
+</I>&gt;<i> tst-pam_limits1.c:130: error: 'RLIMIT_NICE' undeclared (first use in this
+</I>&gt;<i> function)
+</I>&gt;<i> tst-pam_limits1.c:130: error: (Each undeclared identifier is reported only
+</I>&gt;<i> once
+</I>&gt;<i> tst-pam_limits1.c:130: error: for each function it appears in.)
+</I>&gt;<i> make[2]: *** [tst-pam_limits1.o] Error 1
+</I>&gt;<i> make[2]: Leaving directory
+</I>&gt;<i> `/usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1/xtests'
+</I>&gt;<i> make[1]: *** [all-recursive] Error 1
+</I>&gt;<i> make[1]: Leaving directory
+</I>&gt;<i> `/usr/src/sorcery/Linux-PAM/Linux-PAM-0.99.8.1'
+</I>&gt;<i> make: *** [all] Error 2
+</I>&gt;<i> ! Problem Detected !
+</I>&gt;<i> Source tree discarded.
+</I>&gt;<i> ---------------------------------------------8&lt;-------------------------------
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>    Pekka Panula, Net Servant Oy - A Sofor company
+</I>&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000202.html">[Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing
+</A></li>
+	<LI>Next message: <A HREF="000218.html">[Sorcerer-admins] Linux-PAM compile error, RLIMIT_NICE missing
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#212">[ date ]</a>
+              <a href="thread.html#212">[ thread ]</a>
+              <a href="subject.html#212">[ subject ]</a>
+              <a href="author.html#212">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

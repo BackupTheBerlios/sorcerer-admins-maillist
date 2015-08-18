@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C200805121352.33870.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000431.html">
+   <LINK REL="Next"  HREF="000433.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C200805121352.33870.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">merka at highsphere.net
+       </A><BR>
+    <I>Mon May 12 19:52:33 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000431.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000433.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#432">[ date ]</a>
+              <a href="thread.html#432">[ thread ]</a>
+              <a href="subject.html#432">[ subject ]</a>
+              <a href="author.html#432">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Monday 12 May 2008, Kyle Sallee wrote:
+&gt;<i> Networking used to start in runlevels 2 3 4 5.
+</I>&gt;<i> However, networking will now start in sysinit before mount.
+</I>&gt;<i> Likewise NFS client support will now start in sysinit
+</I>&gt;<i> after networking and before mount.
+</I>&gt;<i> This way NFS filesystems can be mounted also.
+</I>&gt;<i> It should be possible to have Sorcerer boxes that have / on NFS.
+</I>&gt;<i> If a box network boots also
+</I>&gt;<i> then creating a Sorcerer thin client
+</I>&gt;<i> should be easy to accomplish.
+</I>&gt;<i>
+</I>&gt;<i> If starting networking in sysinit presents a problem please
+</I>&gt;<i> provided a detailed report.
+</I>
+I can see a potential problem for wireless networking because various 
+utilities are needed for proper configuration. For example, wpa_supplicant is 
+often needed and that in turn may need to run some local scripts. 
+Furthermore, many wireless cards must load firmware from /lib/firmware when 
+the proper kernel module is loaded. In short, I am afraid of this change.
+
+BTW, what about ppp connections? Are those going to be affected in any way? I 
+found recently how handy it is to have this functionality still available, 
+especially when on travel.
+
+&gt;<i> Most networking utilities are already installed in /sbin
+</I>&gt;<i> and therefore should be available on the initramfs.
+</I>&gt;<i> So far one potential problem exists.
+</I>&gt;<i> nmap will not be available from the initramfs.
+</I>&gt;<i> It is a c++ programs and requires libstdc++
+</I>&gt;<i> Therefore, please check activate networking templates
+</I>&gt;<i> and disable or replace the checks that use nmap.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000431.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000433.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#432">[ date ]</a>
+              <a href="thread.html#432">[ thread ]</a>
+              <a href="subject.html#432">[ subject ]</a>
+              <a href="author.html#432">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

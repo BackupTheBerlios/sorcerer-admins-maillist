@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Leech just waits forever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3COFBF3FEEC2.D2774314-ONC2257337.0029501C-C2257337.0029CD1A%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000130.html">
+   <LINK REL="Next"  HREF="000133.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Leech just waits forever</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3COFBF3FEEC2.D2774314-ONC2257337.0029501C-C2257337.0029CD1A%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] Leech just waits forever">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Tue Aug 14 09:36:34 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000130.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+        <LI>Next message: <A HREF="000133.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#131">[ date ]</a>
+              <a href="thread.html#131">[ thread ]</a>
+              <a href="subject.html#131">[ subject ]</a>
+              <a href="author.html#131">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 14.08.2007 10:28:06:
+
+&gt;<i> One way to keep curl from waiting forever is to have
+</I>&gt;<i> 
+</I>&gt;<i> --speed-time 120
+</I>&gt;<i> --speed-limit 256
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> in /root/.curlrc
+</I>&gt;<i> 
+</I>&gt;<i> But there are some servers that sometimes seem to be able to hang it up.
+</I>&gt;<i> In that event you might want to try also...
+</I>&gt;<i> 
+</I>&gt;<i> --connect-timeout 120
+</I>&gt;<i> 
+</I>&gt;<i> That might help resolve that issue.
+</I>&gt;<i> 
+</I>&gt;<i> Usually, before leech downloads a source
+</I>&gt;<i> it makes a connection to the server using a --connect-timout
+</I>&gt;<i> and requests the file's header.
+</I>&gt;<i> If the header is not available then curl skips
+</I>&gt;<i> sending the actual file request to that server.
+</I>&gt;<i> In theory, that aught to avoid curl waiting
+</I>&gt;<i> a very long time during connection.
+</I>&gt;<i> 
+</I>&gt;<i> Also you can go ahead and press 's'
+</I>&gt;<i> while watching a leech of a source.
+</I>&gt;<i> That causes leech to skip ahead to the next server.
+</I>&gt;<i> In some cases it causes it to retry the current server
+</I>&gt;<i> when the next server is the current server.
+</I>&gt;<i> Basically, it doubles up the server list to get at least 2
+</I>&gt;<i> attempts to download in the event that a source has
+</I>&gt;<i> merely 1 download URL.
+</I>&gt;<i> 
+</I>&gt;<i> If all else fails there is always:
+</I>&gt;<i> # su - pkill curl
+</I>&gt;<i> 
+</I>&gt;<i> If you can spot what server is behaving irrationally
+</I>&gt;<i> please report it to the email list so that the spell or
+</I>&gt;<i> spells can be adjusted to avoid using that server.
+</I>&gt;<i> Also you can specify a preference order for servers using augur.
+</I>&gt;<i> The augur help screen explains how.
+</I>&gt;<i> 
+</I>&gt;<i> If it becomes a serious problem then I can modify augur
+</I>&gt;<i> so that a given preference value for a server means that
+</I>&gt;<i> the server is never contacted.
+</I>&gt;<i> That might cause a problem if a certain source can only
+</I>&gt;<i> be downloaded from that server?
+</I>&gt;<i> But sometimes sources can also be downloaded from
+</I>&gt;<i> Bent's partial source cache or the sources that reside
+</I>&gt;<i> at the PPR.
+</I>&gt;<i> But the PPR has been a bit flaky in recent months.
+</I>&gt;<i> If you have to download a source from the PPR
+</I>&gt;<i> you might have to get it with a web browser?
+</I>&gt;<i> 
+</I>&gt;<i> Generally, most sources can be acquired all of the time
+</I>&gt;<i> and those that go unavailable, temporarily, usually are
+</I>&gt;<i> available the following day.
+</I>&gt;<i> Best thing to do is set up a source cache that all the
+</I>&gt;<i> deployed boxes on your network can share.
+</I>&gt;<i> A squid proxy can also be handy for caching source tarballs.
+</I>&gt;<i> 
+</I>&gt;<i> Keep in mind that there a servers such as berlios that permit
+</I>&gt;<i> merely one download of a source tarball from a gateway IP
+</I>&gt;<i> per release or maybe per amount of days?
+</I>&gt;<i> The few source tarballs distributed from berlios.de
+</I>&gt;<i> can be among the slowest and most difficult source tarballs to download,
+</I>&gt;<i> especially if your network does not have a local shared source cache.
+</I>&gt;<i> 
+</I>&gt;<i> Sometimes you can download a tarball for a rare source or a source
+</I>&gt;<i> that is not normally distributed by tarball from Debian's ftp server.
+</I>&gt;<i> I have no clue where to download the libpaper tarball from,
+</I>&gt;<i> but I can always get it from Debian's ftp server which is why
+</I>&gt;<i> the URL for that spell retrieves it from that location.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+This particular problem which i did have i think it did not have anything 
+todo with curl, there was no curl process at all.
+Because i did not see it actually launched curl and curl from command line 
+worked fine, something else was wrong.
+I dont know what did change but magically it just started to work again 
+and i did not do anything (seriously nothing changed) except i runned 
+strace against leech-process and it downloaded source but one minute 
+before that it did not download anything just waited.
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070814/b79964cd/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070814/b79964cd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000130.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+	<LI>Next message: <A HREF="000133.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#131">[ date ]</a>
+              <a href="thread.html#131">[ thread ]</a>
+              <a href="subject.html#131">[ subject ]</a>
+              <a href="author.html#131">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

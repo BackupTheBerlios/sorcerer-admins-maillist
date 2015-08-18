@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] # augur req with more examples for alternate	methods of invocation.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%23%20augur%20req%20with%20more%20examples%20for%20alternate%0A%09methods%20of%20invocation.&In-Reply-To=%3CBANLkTi%3DS_tEDpLV_9oHMJtUYo89NkOH07g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002196.html">
+   <LINK REL="Next"  HREF="002200.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] # augur req with more examples for alternate	methods of invocation.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%23%20augur%20req%20with%20more%20examples%20for%20alternate%0A%09methods%20of%20invocation.&In-Reply-To=%3CBANLkTi%3DS_tEDpLV_9oHMJtUYo89NkOH07g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] # augur req with more examples for alternate	methods of invocation.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jun 10 12:32:14 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002196.html">[Sorcerer-admins] &quot;Sorcerer's Immune System&quot; and &quot;Sorcerer for	Simians&quot;
+</A></li>
+        <LI>Next message: <A HREF="002200.html">[Sorcerer-admins] syslinux's extlinux
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2198">[ date ]</a>
+              <a href="thread.html#2198">[ thread ]</a>
+              <a href="subject.html#2198">[ subject ]</a>
+              <a href="author.html#2198">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># augur req
+works exactly the same as the functions it exposes.
+It accepts spell names on stdin
+and it writes spell names on stdout.
+
+Yet some SAs are either displeased or perplexed
+by having to provide spell names on standard input.
+Luckily today I am providing a lesson in BASH
+that shows examples of # augur req
+that are not shown by # augur help req
+
+Naturally, I show only one method in # augur help req
+I do not want to confuse SAs
+that are new to BASH scripting.
+However, as expected there is usually
+2 or more methods for BASHing something.
+Below I demonstrate 4 methods.
+
+To start with let us assume that we want an arof list for MesaLib.
+arof stands for &quot;All Requirements Of&quot;
+Therefore, the arof list for MesaLib are all the spells
+that must be installed before MesaLib can be installed.
+
+Method 1:
+
+# echo MesaLib | augur req arof
+
+Method 2:
+
+# augur req arof
+MesaLib
+^d
+
+And the ^d means holding down the control key while pressing d.
+
+Method 3:
+
+# augur req arof &lt;&lt; EOF
+MesaLib
+EOF
+
+EOF is just the capital characters E O and F.
+However, any single word will work in place of EOF.
+Just chose something other than a spell name such as.
+
+# augur req arof &lt;&lt; WTFisSTDIN
+MesaLib
+WTFisSTDIN
+
+And for those who are wondering exactly that.
+stdin or standard input is whatever input
+is connected to a program.
+Input might come from the keyboard.
+It might come from a device.
+It might come from the forking process that
+starts the new process.
+It might come from a pipe.
+It might come from a socket.
+stdin could even come from across the Internet.
+When expecting more than a handful of bytes
+then the choice method for input is stdin.
+
+Method 4:
+# augur req arof &lt;&lt;&lt; MesaLib
+
+Method 4b:
+# augur req arof &lt;&lt;&lt; &quot;MesaLib
+firefox
+aumix&quot;
+
+Method 4b allows for addition spells to be specified
+until the SA closes off the string by adding the second double quote character.
+And yes, spell names must be separated by a line feed.
+
+I have read the bash manual page more than 100 times.
+However, just reading it slowly once
+might be sufficient in order to learn alternate methods.
+Method 3 shows an example of &quot;Here Documents.&quot;
+Method 4 shows an example of &quot;Here Strings.&quot;
+
+When I taught system administration
+I provided assigned reading to students.
+I recommended all the manual pages
+installed by: coreutils, grep, bash.
+The list seemed longer back then
+because coreutils had not yet become.
+It was provided by binutils, shellutils, and textutils.
+Also the manual page for findutils,
+and the info page for sed are useful.
+I did not expect my students to write BASH scripts.
+I only expected them to gain enough knowledge
+so that if they must write BASH scripts
+then they would know where to look
+in order to begin the task.
+
+There is no requirement for any senior level SA
+to become my student.
+However, does any senior level SA
+wanted to admit knowing less than
+what my students know?
+:<i>)
+</I>
+There are additional more complicated methods.
+I leave the learning to the SA to discover them.
+Probably most SAs will be satisfied with method 4.
+Method 4 is probably the fastest
+I hope this helps.
+
+I intend to leave # augur req
+the way it is now.
+It will only accept spell names on stdin
+and not as additional parameters.
+
+I do this not to invoke the ire of SAs.
+I do this to motivate them to learn
+what they should already know.
+
+A SAs's power is almost directly proportional to their BASH scripting skill.
+If not BASH then whatever shell they prefer like C Shell or Korn shell
+becomes their wand from which their magic is manifest.
+Do we prefer that our wands remain tiny and flaccid?
+Or do we prefer that our wands become long and erect?
+Make time to open those tomes that we call manual pages.
+Make time to hone the magic.
+The modern magic is waiting to flow into
+anyone who dares to comprehend it!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002196.html">[Sorcerer-admins] &quot;Sorcerer's Immune System&quot; and &quot;Sorcerer for	Simians&quot;
+</A></li>
+	<LI>Next message: <A HREF="002200.html">[Sorcerer-admins] syslinux's extlinux
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2198">[ date ]</a>
+              <a href="thread.html#2198">[ thread ]</a>
+              <a href="subject.html#2198">[ subject ]</a>
+              <a href="author.html#2198">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

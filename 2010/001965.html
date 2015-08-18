@@ -1,0 +1,646 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTimdzog_C9Zv2rUv5ah8G02b5PbC00kLrp4U-ndP%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001964.html">
+   <LINK REL="Next"  HREF="001966.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTimdzog_C9Zv2rUv5ah8G02b5PbC00kLrp4U-ndP%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct 26 13:49:07 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001964.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+        <LI>Next message: <A HREF="001966.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1965">[ date ]</a>
+              <a href="thread.html#1965">[ thread ]</a>
+              <a href="subject.html#1965">[ subject ]</a>
+              <a href="author.html#1965">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the feedback.
+Hearing opinions both in favor and against
+the current init-script policies is important.
+
+Ever since I set this unfavorable policy about
+init-scripts being non customize-able executable files
+strong opposition to the policy has existed.
+However, init-scripts are not configuration files.
+Therefore, modifications are not preserved.
+
+More importantly, modification can lead to problems
+that a SA would not easily perceive, expect,
+nor be able to discover without adequate knowledge
+of how the stock init-scripts have changed and evolved.
+
+If customized init-scripts were supported
+then nothing about
+# ls -lah /etc/init.d/
+would screams out, &quot;I have been customized.&quot;
+Potential problems caused by SA customized init-scripts
+would be more difficult to spot and probably more difficult to fix.
+
+/etc/init.d/README
+
+contains information about how to
+create custom init-scripts from a stock init-scripts.
+It describes how to disable the stock init-script,
+and how to make the custom init-script assume
+the purpose of the stock init-script.
+A custom init-script has a different name than a stock init-script.
+More importantly, a custom init-script is not owned by an installed spell.
+Therefore, a custom init-script does not
+fit the definition of a customized configuration file.
+
+SAs disabling important init-scripts and
+using their own instead can be a significant danger.
+Doing so requires every bit of the inconvenience
+of using the method described in /etc/init.d/README
+instead of trying to customize a stock init-script
+and expecting those changes to be automatically preserved.
+
+This way the SA will not so easily forget what changes they made.
+# ls -lah /etc/init.d/
+will scream out the custom init-scripts
+while the stock init-scripts will obviously be non-executable.
+A SA can easily diff the custom init-script with the stock init-script.
+This way the if the changes seem greater
+than what the SA intended
+then the SA can carefully compare and examine both files
+to determine how to update and fix the custom init-script.
+
+When evaluating whether this is a good, bad or an adequate compromise
+please first read /etc/init.d/README
+Creating custom init-scripts is not easier
+than creating customized init-scripts.
+However, please consider whether
+creating custom init-scripts might be better
+than creating customized init-scripts.
+
+The policy of init-scripts not being customizable config files
+does not prevented SAs from having absolute control
+over which init-scripts execute.
+It does not deny SAs absolute control over the content
+of those init-scripts which run.
+However, a method that requires custom init-scripts
+should help mitigate the worst possible scenario.
+The SA should still have the original stock init-scripts
+in /etc/init.d/ and therefore be able to fix the box
+even when booted with kernel parameter: rdinit=/bin/bash
+
+Also, if a SA is trying out a temporary fix or improvement
+by modifying a stock init-script in /etc/init.d/
+then such a change that might be accidentally forgotten
+would not propagate into a future problem by having
+init-scripts preserved as if they were configuration files.
+
+In years past I occasionally made my own share of
+careless edits of files in /etc/init.d/
+An interruption, having to rise from my chair
+to attend something else for a moment,
+could become just enough to forget about the a change.
+Fortunately, I rest easily knowing that init-scripts
+go back to stock after an update of a spell that installed those init-scripts.
+My changes and modifications will be lost
+unless I did ever step required in order
+to create a custom init-script to take over the task.
+
+Also there is the entirely custom /etc/init.d/bootmisc
+SAs might not want to create individual
+init-scripts to run some programs during boot.
+Those programs can be invoked by /etc/init.d/bootmisc
+
+I like to have /etc/init.d/bootmisc
+start a script that monitors the wireless connection
+that reload the module or restarts the interface as needed
+in order to recover unattended from a disconnect.
+Sometimes I include commands to invoke hdparm.
+/etc/init.d/bootmisc is a nice convenience
+in the true lazy style of a SA that wants
+something to run during boot,
+but does not want to waste a moment
+trying to decide exactly when it should run.
+
+The currently policy for /etc/init.d/ has some inconvenience and some
+convenience.
+However, it is not without merits.
+/etc.ori/ is not included on the initramfs.
+And fortunately, we never have to look in /etc.ori/init.d/
+nor any other unusual place for a stock configuration file.
+Files in /etc/init.d/ that were not created by the SA
+should be stock unmodified init-scripts.
+Careless and temporary edits of init-scripts
+should not fester into a serious problem over time.
+Instead there is a precise and inconvenient way
+for SAs to add a custom init-script
+and disable stock init-scripts.
+This method should nearly preclude the creation of serious problems.
+Immediate problems should not be difficult to fix
+using the unmodified stock init-script in /etc/init.d/
+Unexpected bewildering latent consequences are entirely avoided.
+Stock, current, uncustomized init-script remain in /etc/init.d/
+to server as a reference or replcement when a custom init-script breaks.
+
+No SA will be happy about how everything is handled with Sorcerer.
+The method for handling modified init-scripts is not intuitive.
+I also irritate myself about this!
+I want for nearly all aspects about Sorcerer to seem intuitive.
+
+However when considering
+using a modified init-script on a permanent basis
+the intuitive method must be sublimated
+into a more complex method that
+emphasis an overt, precise, intentional, reversible change.
+The task is not as simple and intuitive
+as merely editing and saving a file.
+It is not fire and forget.
+
+Accomplish the feat of creating a custom init-script
+requires reading the documentation /etc/init.d/README
+which is right there where a SA should easily notice it.
+
+
+Sorry if that presentation seemed too strong.
+I want to present points that strengthen the position.
+I can not compare Sorcerer's method to Debian method,
+because I do not know the method used by Debian maintainers and SAs.
+Also I can not state with certainty
+whether Sorcerer's method is commensurate with Debian.
+
+The Sorcerer method did not come about
+by copying what other distros do.
+Instead this method came about from compromise
+that addresses both the concerns
+of Sorcerer SAs and Sorcerer distribution maintainers.
+
+I do not expect that Sorcerer's method is the best.
+However, over the years it has evolved to this
+tug of war where neither the SAs nor the maintainers
+are being pulled off side.
+
+Maintainers receive their expectation that their
+init-scripts will be installed unmodified.
+This is important because init-scripts are tiny and simple.
+They are without any expectation of modification
+by anyone except the distribution maintainer.
+They contain no provisions by the distribution maintainer
+to anticipate any modifications made by SAs.
+Therefore, init-scripts are only expected to work properly
+when they are entirely stock and unmodified.
+Bug reports about SA modified init-scripts are rejected.
+Those who do distribution wide bug fixing
+and those provide technical support
+want to assume all boxes should work as good
+as when the init-scripts were tested
+before changes were approved and distributed in the grimoire tarball.
+They can not be expected to effectively debug problems
+created by a SA by SA provided init-scripts that are specific to the SA's box.
+
+SAs receive their expectation for a method by where
+they can throw their sabots into the machine.
+And if they followed the documentation
+then they have a better than average chance
+of being able to fix an unintended consequence
+when sabots accidentally become sabotage.
+Sabot is shoe carved from wood.
+This analogy only serves to imply that
+putting one's foot in might ruin the operation of a finely tuned machine.
+
+Does that seem like a bias way of stating the obvious?
+Does it grant too much favor to distribution maintainers?
+Distribution maintainers must have a near cocky
+sense of confidence that their init-scripts should work distribution wide.
+It is a considerable burden that requires much conjecture
+contemplating and testing since not every type of box can be tested.
+When considering the scope of the desired objective
+the task of creating those init-scripts is not enviable.
+
+Likewise when a SA introduces a custom init-script
+then the assumption is that the SA's init-script
+should be far superior for use on that box.
+However, tiny mistakes can happen, even a simple typo.
+And we do not want for a situation
+where the SA is at a prompt during a boot with parameter
+rdinit=/bin/bash
+while knowing that he bugged up a stock init-script with customization
+and is lacking the stock init-script and
+is trying desperately to remember
+the lines from the original and/or surmise which part has the mistake.
+Maybe the SA mistyped a variable such as $RELPY  instead of $REPLY
+It happens to me.
+However, by following the precise method in /etc/init.d/README
+the SA should neither brick their shorts
+nor let lose a drop of perspiration.
+Instead the SA can copy the original init-script over the custom,
+boot normally, and then have another try at creating a custom init-script.
+
+I should explicitly state rather than to imply by example
+that the method described in /etc/init.d/README
+considered that a SA might modify an init-script
+that would run during sysinit.
+Buggy init-scripts that start during run level
+have a far less dire consequences since
+the root file system should already be mounted
+and login gettys are presented before the run level begins executing.
+That way a SA could log in even if run level execution stalls
+due to an init-script that somehow never finishes running.
+
+Is it not annoying that the welcome message
+and prompt from a login getty is over written
+by programs that start during the run level
+and print directly to console or kernel buffer instead of stdout or stderr?
+However, this is the reason why Sorcerer boxes
+might not have a clean and professional looking login prompt
+on virtual console 1.
+Instead they receive the guarantee of being able to log in
+before the run level begins.
+Even if the run level execution stalls and does not complete
+the SA can still log in and examine and fix problems.
+
+Such small things might not seem significant alone.
+But together they each contribute slightly towards
+creating a simple robust and repairable boot method.
+
+As always boot method remains open to debate.
+The method and policies can change this year, next year or anytime.
+However, changes must provide more boon than bane.
+Changes must be reasonable compromises.
+We must not sacrifice simplicity for speed
+nor sacrifice caution for easy configure-ability.
+
+Reaching consensus about compromises
+is perhaps more difficult with Sorcerer than any other distro,
+because Sorcerer was design to fit the whims and requirements
+of senior level SAs.
+
+Distribution maintainers are the generalists.
+They have a good overview.
+They see how the big picture fits together.
+They can fit the puzzle pieces together.
+However, nobody can expect the best fit from a distribution maintainer.
+Instead maintainers provide the base or an adequate starting point.
+
+In contrast, SAs are the specialists.
+SAs have experience and precise knowledge.
+With deployed mission critical software
+the SAs ability to achieve the best outcomes
+is second only to the software authors.
+SAs have the best big picture that involves
+configuration and execution of mission critical software
+on the boxes that they deploy.
+
+And so the problem is that neither SAs nor maintainers are right or wrong.
+Distribution maintainers have the best chance of
+creating distribution wide workable solutions.
+SAs have the best chance of creating box specific solutions.
+This difference in expertise, perspective and role
+is exactly the reason why SAs are required for
+optimal performance and deployment of boxes.
+SAs will see and debug problems that
+distribution maintainers might never encounter.
+
+Distribution maintainers keep in view
+the large picture, the common denominator,
+and the widest possible path to prosperity.
+And this is important because it is why we have
+things like automatic regeneration of initramfs images,
+automatic updating of symbolic links in /etc/rc.d/,
+and automatic updating of /etc/lilo.conf and re-installation.
+The distribution maintainer is
+all about trying to make administration as successful
+as possible for as many SAs as possible
+on many types of uniquely configured Sorcerer boxes.
+
+So both the distribution maintainers are correct and the SAs are correct.
+Since Sorcerer is a distribution designed for senior level SAs
+we must continue to discuss the boons, banes and
+differences of opinions and ideas about implementaiton
+until the most favorable compromises are realized,
+become consensus, and are implemented.
+
+Certainly, each point of view has merits.
+No way that is accomplishing the task
+can be indisputably the wrong way.
+Better that we discuss the specific points of each method.
+We should realize and preserve the points of merit and strength.
+We should illuminate what is lacking and should be discarded or revised.
+There is no use in making the generalization that a method stinks.
+Instead we should follow our nose to the rotten apple
+so that we can precisely excise what is rotten
+instead of throwing out the entire basket of fruit.
+
+To say that the current method is &quot;wrong&quot;
+implies that the method should be discarded.
+And should we put in it's place?
+Should we convert to a method that entirely favors SAs?
+Or should we convert to a method
+that entirely favors distribution maintainers?
+
+Fortunately, we do not have to try either way to know what to expect.
+We have the benefit of hindsight.
+Sorcerer's current method came about through a compromise
+due to trying and bouncing off of the extremes of both method.
+To entirely favor either position enables problems to become
+something that can be easily fixed by SA and not by maintainer
+or easily fixed by maintainer, who might not know about the problem,
+while being difficult to fix by SA.
+Nobody wants to suffer from an itch
+that they can neither reach nor scratch.
+Therefore, neither extreme position is beneficial.
+
+I will not go as far as saying that the current compromise is the right method.
+But how wrong is it?
+It might be a bad compromise, or a bad design, or a bad implementation.
+Yet even so it is currently usable.
+A common cliche is, &quot;Anything which is usable is not half bad.&quot;
+
+I want to say that that the compromise is uneasy.
+Distribution maintainers receive their init-scripts in /etc/init.d/
+SAs are not allowed customize spell provided init-scripts.
+SAs feel irritated about a lack of automatic deference to their judgment.
+
+However, SAs can create their own init-scripts in /etc/init.d/
+SAs also receive the final say about which init-scripts run.
+
+That can create cause for distribution maintainers to feel irritated
+and frustrated when a reported problem is due SA provided init-scripts.
+A distribution maintainer can not properly conjecture, identify nor
+help fix that problem.
+The outcome of the situation depends entirely upon the SA
+until the SA reveals information that hints the problem
+is specific to that box and not distribution wide.
+
+It is a bad compromise because nobody receives exactly what they want.
+It is a good compromise because everyone receives what they
+grow provided they do not plant it in the other guy's garden.
+
+I want to set that all aside and speak frankly.
+I do not like this compromise.
+I prefer customizable init-scripts.
+I prefer modifications to init-scripts to be preserved.
+I want that because
+I am an arrogant SA who expects that the knows
+the Sorcerer init-scripts better than the back of his own hand.
+But the thing about that arrogance is that
+I am the person who designed and wrote all those init-scripts.
+Unlike other SAs I take for granted
+having the knowledge required for creating a customized init-script
+with a high probability of success?
+
+So for years Sorcerer init-scripts
+were treated as customizable configuration files.
+I was a SA.
+I had it my way.
+It worked for me that seemed great for my boxes.
+So what happened to change it?
+
+SAs were reporting problems because their /etc/fstab were missing
+entries for virtual file systems like /proc /sys /dev/pts, etc...
+SAs were complaining about the long, complex init-scripts.
+They were having difficulty modifying them.
+They were having difficulty creating them.
+Time and time again this reflected as if
+the fault was due to the distribution designer/maintainer.
+So gradually, things changed.
+
+LSB style init-scripts displaced
+the near ad-hoc init-scripts in the grimoire
+that were installed using statically assigned numbers
+which control order of execution.
+Long complicated init-scripts were chopped into
+several many smaller role specific init-scripts.
+Common code was factored out of init-scripts
+and added to  init-functions.
+init-scripts improved in quality, conciseness,
+and uniformity of output.
+Virtual file system mounting was moved from
+/etc/fstab into init-scripts
+to ensure that virtual file systems
+were mounted at the right time,
+on the right mount points,
+and with the right mounting parameters.
+And methods for parallel execution of init-scripts
+during run levels was added.
+
+After all of these many fine improvements to
+increase the speed, simplicity, appearance,
+and robustness of booting
+I decided that if SAs want me to do all that
+for their box to boot
+then who has a justified reason refute
+my decision to prevent SAs from
+accidentally sabotaging the booting of boxes?
+And so I declared that init-scripts were precise,
+role specific, finely tuned executable files
+and not configuration files.
+Therefore, customizations will not be preserved.
+
+That was when SAs started saying that I went too far.
+But did it matter?
+The situation could not last.
+SAs could always find a way to thwart me.
+Therefore, if it is their will to do so
+then I should write docs installed as /etc/init.d/README
+that describes exactly the proper way to thwart
+my attempt to control execution of spell provided init-scripts
+and how SAs can provide their own init-scripts.
+And so I did exactly that.
+
+Perhaps we should pause for a moment to ask,
+&quot;Does the distribution maintainer like this added level of complexity
+and inconvenience?&quot;
+The answer is, &quot;No!&quot;
+Even the distribution maintainer is a SA.
+And even the distribution maintainer can not customize init-scripts.
+He also must go through the steps of creating a SA provided custom init-script.
+
+I want to go back to customizable init-scripts.
+I want to go back to the cowboy days where
+SAs were expected to saddled their own horse
+with a kernel that they configured
+or found themselves lacking the skills to ride!
+Those where the days when SAs were king in their own kingdoms,
+binary based distros caused worry,
+a rash and a near annual headache,
+and every bug could be blamed on software authors.
+That made for great times and fond memories.
+But it did not make a for a great distribution.
+SAs that lacked amazing skills
+could not truck with Sorcerer.
+
+Fortunately, Sorcerer went through evolution and compromise.
+It now provides a better experience to a broader audience of SAs.
+The cowboys have not entirely departed.
+And Sorcerer also has city-slickers that expect
+the convenience of plug 'n pray.
+They enjoy the convenience and accommodations of a full service stable
+that waters, feeds, grooms, saddles, and cleans up after their horse.
+And by horse, saddle, and horse manure
+I am making an analogy the linux kernel, initramfs, lilo, init-scripts
+and everything involved with allowing a box to boot and shut down.
+The way Sorcerer is today is much easier.
+Almost everything that can be handled automatically has it's own auto-pilot.
+It is almost as easy to ride
+as a horse that recognizes and accepts both vocal and kick commands.
+
+To regress from that diversion
+back to the main point
+begs the following question.
+&quot;If everything is convenient and automatic
+then why is was customization of init-scripts made
+into a complicated, non-intuitive, inconvenient mess?&quot;
+Well, the answer is that SAs can still be cowboys.
+But with init-scripts they receive a short enough piece of rope
+to discourage the accidental outcome
+of the SA hanging their box to death during boot.
+
+In am imperfect world sometimes imperfect solutions work best.
+Yet almost nobody will be happy with this solution,
+because nobody will know for certain
+if it saved them more headache than it caused.
+
+Now we could try alternate solutions.
+We could have custom init-scripts placed in
+/etc/init.d.custom/ or /etc/init.d/custom/
+If they have the same name
+then symbolic links in /etc/rc.d/rc?.d/
+could point to the init-script in /etc/init.d/custom/
+instead of the stock in /etc/init.d/
+Overall that is a little different.
+Maybe it is a little more simple.
+But it is not more convenient.
+
+Someone should take a new position
+and explain the boons and banes.
+We could do better than what we have.
+But the change should not be made
+for an almost significant gain of simplicity
+that overall is not any different than the current method.
+Instead this requires some fresh creative thinking
+to come up with a design that acknowledges both
+about what distro designers want and what SAs want.
+An idea such as /etc/init.d/custom/ is a good start,
+but seems more like a stepping stone than a final destination.
+
+If we borrow a page from the book being written by
+the udev software authors
+then we see that they moved their rule files from
+/etc/udev/rules.d/
+to
+/lib/udev/rules.d/
+SA installed rule files still go into /etc/udev/rules.d/
+
+Not a bad idea since this change intuitively discourages SAs
+from modify files installed to /lib/udev/rules.d/
+According to the implied, yet not explicitly defined rules:
+files in /lib/ are not expected to be modified;
+files in /etc/ are expected to be modifiable.
+Of course, there are some exceptions to those rules.
+
+So should spell installed init-scripts go into /lib/init.d/
+Should /etc/init.d/ be reserved for SA provided init-scripts?
+Must SA provided init-scripts precisely replace
+the same named init-script in /lib/init.d/
+Which set of LSB comments is used?
+Do we use the LSB comments from the init-script in /lib/init.d/ ?
+Do we use the LSB comment from the init-script in /etc/init.d/ ?
+Or do we try to use both?
+What if the init-script in /etc/init.d/ does not exist in /lib/init.d/
+In that situation should we use the LSB comment in the init-script
+that is in /etc/init.d/ ?
+Or since the init-script does not also exist in /lib/init.d/
+should the init-script with that name in /etc/init.d/ be ignored?
+
+Overall what the udev authors decided seems like a good idea.
+I rarely compliment them, but for this they deserve a gold star.
+However, a udev rule file is not the same as an init-script.
+What they make seem easy
+is for us like a shirt with many loose strings.
+
+I have no inclination towards either of the two methods proposed above.
+That is not to imply that there is anything wrong with them.
+Rather if a change is made
+then the boons should not merely outweigh the banes,
+but the design and implementation should be so awesome
+that contrasting it with our current method gives justified reason to say
+that our current method is the wrong way.
+Until we have another better bed to sleep in
+we would be wise not to discard this one
+for merely a few uncomfortable springs.
+
+So after this long email I want to say
+that the topic is still on the table and
+is still open for discussion.
+Alternate designs would be nice.
+I gave two above just off the top of my head.
+Goes to show that anyone can do it.
+So who is feeling inspired?
+Let us launch our ideas and take turns shooting them down.
+If we find one that we can not blast from the sky
+than that will be the new high flying design for Sorcerer.
+
+
+Thanks for reading.
+Sorry for being overly verbose.
+
+
+
+On Mon, Oct 25, 2010 at 11:08 PM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;&gt;<i> Modifications to init-scripts are not retained across updates.
+</I>&gt;<i>
+</I>&gt;<i> Please, this is IMHO a wrong way.
+</I>&gt;<i>
+</I>&gt;<i> If init-scripts are modified we should have a better plan than just
+</I>&gt;<i> overwrite them.
+</I>&gt;<i> I personally have cursed many times when sorcerer has just overwritten them
+</I>&gt;<i> because i have sometimes
+</I>&gt;<i> heavily modified them.
+</I>&gt;<i>
+</I>&gt;<i> I like debian way, where you can have a choice, to look differences between
+</I>&gt;<i> old and new and you can decide if you want to
+</I>&gt;<i> use old or put new script in place.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i> &#160; Pekka Panula, Sofor Oy - Jatkuvat palvelut
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001964.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+	<LI>Next message: <A HREF="001966.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1965">[ date ]</a>
+              <a href="thread.html#1965">[ thread ]</a>
+              <a href="subject.html#1965">[ subject ]</a>
+              <a href="author.html#1965">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sluggish inaccurate keyboard and mouse events...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sluggish%20inaccurate%20keyboard%20and%20mouse%20events...&In-Reply-To=%3C596b75861001101937v122c629dmcbfbe517f04fab88%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001393.html">
+   <LINK REL="Next"  HREF="001395.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sluggish inaccurate keyboard and mouse events...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sluggish%20inaccurate%20keyboard%20and%20mouse%20events...&In-Reply-To=%3C596b75861001101937v122c629dmcbfbe517f04fab88%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sluggish inaccurate keyboard and mouse events...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jan 11 04:37:34 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001393.html">[Sorcerer-admins] udev 150
+</A></li>
+        <LI>Next message: <A HREF="001395.html">[Sorcerer-admins] x86_64 flashplugin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1394">[ date ]</a>
+              <a href="thread.html#1394">[ thread ]</a>
+              <a href="subject.html#1394">[ subject ]</a>
+              <a href="author.html#1394">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Having X11 handle input events through hal which gets them from
+/dev/event* device nodes
+that are updated by [events/0] kernel process is like the water-slide
+of improvements.
+Sure it is fun and round about,
+but much time and CPU attention is required
+in order to wind around the curves.
+This makes for unresponsive event handling under load,
+especially on single core boxes.
+
+Lost or delayed keyboard and mouse events such as the pressing
+and releasing of keys or buttons or movement can be very annoying.
+It is nearly enough to want to drive a SA to return to using the
+old xf86-input-keyboard and xf86-input-mouse,
+which both will probably disappear in the near future.
+Fortunately, there is an adequate solution.
+
+First, hald will be started at nice -19 so that it is extremely rude about
+grabbing hold of the CPU when it wants it.
+Originally, I was just going to adjust the nice of hald-addon-input.
+But it is probably all connected somehow.
+
+Second, kernel process events/0 will be reniced to -19.
+
+I do not know if this is the optimal method for solving the problem.
+However, it seemed to get the lead out of my box.
+The fixes will go out in the next LAG=0 grimoire.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001393.html">[Sorcerer-admins] udev 150
+</A></li>
+	<LI>Next message: <A HREF="001395.html">[Sorcerer-admins] x86_64 flashplugin
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1394">[ date ]</a>
+              <a href="thread.html#1394">[ thread ]</a>
+              <a href="subject.html#1394">[ subject ]</a>
+              <a href="author.html#1394">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

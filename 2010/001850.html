@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTim6zYkr%3DyJZ1RMz3uuLJH%3DHqsn4b2uRTM_LTNG3%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001847.html">
+   <LINK REL="Next"  HREF="001848.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTim6zYkr%3DyJZ1RMz3uuLJH%3DHqsn4b2uRTM_LTNG3%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jul 26 05:00:45 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001847.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001848.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1850">[ date ]</a>
+              <a href="thread.html#1850">[ thread ]</a>
+              <a href="subject.html#1850">[ subject ]</a>
+              <a href="author.html#1850">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Unfortunately, the Required-Start: Should-Start:
+glues almost all init-scripts together
+more solid than a ball of rice.
+The failure of /etc/init.d/dev-cp
+could cause the failure of nearly everything that comes after
+if a dev-cp is required to run successfully.
+
+However, sometimes problems happen.
+For some odd reason / could be missing from /etc/fstab
+There is an init-script that checks for a root filesystem
+being defined in /etc/fstab.
+If / is not defined in /etc/fstab
+then a menu during booting appears that allows
+the SA to select a device to mount for /
+Could checking for that omission
+and then circumventing the problem
+create a more robust boot method?
+In this situation the overhead for running
+one additional init-script can be mitigated
+by the potential good it can do by circumventing
+a series of problems that would start with
+the failure of being able to mount a real root filesystem.
+
+If booting is intended to be more robust
+then should not init-scripts be introduced
+that anticipate, fix or circumvent problems?
+Would not more init-scripts running be a better method
+than excluding the execution 90% of init-scripts
+when a problem happens early with udev?
+
+Should the purpose of init revision be
+added control, complexity and overhead?
+Or should the goal be to increase robustness
+so that problems which can be anticipated
+can also be handled so that booting will
+still be successful?
+
+
+On Sun, Jul 25, 2010 at 12:28 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+
+&gt;<i> I would look more favorably on a compromise solution where only selected
+</I>&gt;<i> services would not start if there were errors issued by its required services.
+</I>&gt;<i> And for each such case, I would like to see a discussion whether this would be
+</I>&gt;<i> really needed. To summarize, I am OK if only relatively few services did not
+</I>&gt;<i> get executed due to errors of other init.d scripts, i.e. the default state of
+</I>&gt;<i> init.d scripts would be to run regardless.
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001847.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001848.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1850">[ date ]</a>
+              <a href="thread.html#1850">[ thread ]</a>
+              <a href="subject.html#1850">[ subject ]</a>
+              <a href="author.html#1850">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

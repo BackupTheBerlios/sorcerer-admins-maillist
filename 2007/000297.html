@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C200710031900.59918.merka%40highsphere.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000295.html">
+   <LINK REL="Next"  HREF="000298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...</H1>
+    <B>Jan Merka</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20X11R7.3%20hang%20when%20switching%20to%20virtual%0A%09consoles%20and%20exiting...&In-Reply-To=%3C200710031900.59918.merka%40highsphere.net%3E"
+       TITLE="[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...">merka at highsphere.net
+       </A><BR>
+    <I>Thu Oct  4 01:00:59 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000295.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+        <LI>Next message: <A HREF="000298.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#297">[ date ]</a>
+              <a href="thread.html#297">[ thread ]</a>
+              <a href="subject.html#297">[ subject ]</a>
+              <a href="author.html#297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wednesday 03 October 2007, Kyle Sallee wrote:
+&gt;<i> On 10/3/07, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+</I>&gt;<i> &gt; On Saturday 29 September 2007, Kyle Sallee wrote:
+</I>&gt;<i> &gt; &gt; Problem solved in grimoire version 2007-273.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; What has been fixed? Which spell(s)? I am asking because the latest xorg
+</I>&gt;<i> &gt; upgrade has been quite painfull so far and there are still things I have
+</I>&gt;<i> &gt; not been able to resolve.
+</I>&gt;<i>
+</I>&gt;<i> Seems that hang problem may be isolated to the i810 driver
+</I>I recall a hang-up on KDE exit but at the time I attributed it to some x11 
+libraries needing a recompilation.
+
+&gt;<i> provided by xf86-video-intel?
+</I>&gt;<i> I have a box just like that.
+</I>&gt;<i> Fortunately, it is not being used as a work-station.
+</I>&gt;<i> If you find a fix for it, please provide.
+</I>&gt;<i> As of yesterday I checked for a newer version of
+</I>&gt;<i> xf86-video-intel, and none newer were available.
+</I>&gt;<i>
+</I>&gt;<i> &gt; In particular, the xf86-video-intel driver performs much worse than
+</I>&gt;<i> &gt; xf86-video-i810 on my laptop with Intel 855GM graphics, I get diagonal
+</I>&gt;<i> &gt; moire and it always comes up with vertical refresh 11 Hz (!) instead of
+</I>&gt;<i> &gt; configured 60 or 75 Hz. I can switch it to higher refresh rate after it
+</I>&gt;<i> &gt; starts up but it is annoying and the moire remains (and the lousy 3d
+</I>&gt;<i> &gt; performance too).
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So I reverted to the i810 driver.
+</I>&gt;<i>
+</I>&gt;<i> Does the xf86-video-i810 work with X11R7.3 or merely X11R7.2?
+</I>Yes, it does. I currently run xf86-video-i810 1.7.4 with xorg-server 1.4 
+(X11R7.3) and don't have any problems.
+
+&gt;<i>
+</I>&gt;<i> &gt; Next serious issue is the xf86-input-evdev driver, marked as broken in
+</I>&gt;<i> &gt; the grimoire. I have filed a bug report and the response was that version
+</I>&gt;<i> &gt; 1.2.0 is needed. Funny, because the xorg release offers 1.1.2 and if you
+</I>&gt;<i> &gt; look into the individual xorg collection, version 1.1.5 can be found.
+</I>&gt;<i>
+</I>&gt;<i> So what version if xf86-input-evdev driver do you recommend that we use?
+</I>
+I don't have a solution yet, sorry. Currently I just live with the 1.2.0 
+version, which means that I can't use evdev for anything :(
+
+&gt;<i>
+</I>&gt;<i> &gt; After much searching,  I found 1.2.0 in the evdev git repository and it
+</I>&gt;<i> &gt; did compile with xorg-server 1.4. Unfortunately, the driver fails to
+</I>&gt;<i> &gt; load: (EE) Logitech_VX: cannot open input pEvdev
+</I>&gt;<i> &gt; (EE) PreInit returned NULL for &quot;Logitech_VX&quot;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So I submitted another bug report but no response yet. Without working
+</I>&gt;<i> &gt; evdev, the mouse configuration is difficult: If /dev/input/mice is used,
+</I>&gt;<i> &gt; every click is reported twice (both press and release events) which makes
+</I>&gt;<i> &gt; it difficult to get around. This may be solved by some udev rules that
+</I>&gt;<i> &gt; would create a persistently named link in /dev/input for each mice but I
+</I>&gt;<i> &gt; haven't tested it yet (with the laptop I use different mice at home, in
+</I>&gt;<i> &gt; my office and on travel, what a mess - the fallback configuration is now
+</I>&gt;<i> &gt; useless, because it cannot use /dev/input/mice).
+</I>&gt;<i>
+</I>&gt;<i> Section &quot;InputDevice&quot;
+</I>&gt;<i>
+</I>&gt;<i> # Identifier and driver
+</I>&gt;<i>
+</I>&gt;<i>     Identifier  &quot;Mouse1&quot;
+</I>&gt;<i>     Driver      &quot;mouse&quot;
+</I>&gt;<i>     Option &quot;Protocol&quot;    &quot;PS/2&quot; # PS/2 Mouse
+</I>&gt;<i>     Option &quot;Device&quot;      &quot;/dev/misc/psaux&quot;
+</I>&gt;<i>
+</I>&gt;<i> EndSection
+</I>&gt;<i>
+</I>&gt;<i> That could be difficult if you do not have a ps/2 style mouse, yes?
+</I>&gt;<i> I am not effected by that bug.
+</I>&gt;<i> Are there any other work-arounds?
+</I>&gt;<i> I rarely consider mouse configuration with X.
+</I>The box is a laptop with a touchpad which makes the configuration more 
+complicated. Your example is similar to what I use for the touchpad but I 
+like to use a USB mouse (because of the wheel and extra buttons) so my 
+xorg.conf used to have a section
+
+Section &quot;InputDevice&quot;
+        Identifier      &quot;USB Mouse&quot;
+        Driver          &quot;mouse&quot;
+        Option          &quot;SendCoreEvents&quot;
+        #Option         &quot;Protocol&quot;      &quot;auto&quot;
+        Option          &quot;Protocol&quot;      &quot;IMPS/2&quot;
+        #Option         &quot;Device&quot;        &quot;/dev/input/mice&quot;
+        Option          &quot;Device&quot;        &quot;/dev/input/mouse3&quot;
+        Option          &quot;ZAxisMapping&quot;  &quot;4 5&quot;
+        Option          &quot;Buttons&quot;       &quot;6&quot;
+EndSection
+
+where /dev/input/mice was enabled in X11R7.2. Now however, it's use results in 
+double clicks send to x11. Somewhere I found a mention that /dev/input/mice 
+is a hack and should not be used... So a more specific device should be used 
+but it changes on re-plug, it's on my to-do list to adjust udev configuration 
+for the mouse.
+ 
+With evdev driver you can actually use globbing to identify devices (and do 
+more configuration like enabling extra buttons), e.g. here the option &quot;Phys&quot;:
+
+Section &quot;InputDevice&quot;
+        # Logitech VX Revolution 
+        # <A HREF="http://ubuntuforums.org/showthread.php?t=277388">http://ubuntuforums.org/showthread.php?t=277388</A>
+        #<A HREF="http://gentoo-wiki.com/HOWTO_Advanced_Mouse/Individual_Configurations">http://gentoo-wiki.com/HOWTO_Advanced_Mouse/Individual_Configurations</A>
+        Identifier      &quot;Logitech_VX&quot;
+        Driver          &quot;evdev&quot;
+        Option          &quot;SendCoreEvents&quot;
+        Option  &quot;Name&quot;  &quot;Logitech USB Receiver&quot;
+        Option  &quot;Phys&quot;  &quot;usb-*/input0&quot;
+        Option  &quot;HWHEELRelativeAxisButtons&quot; &quot;7 6&quot;
+EndSection               
+
+
+&gt;<i>
+</I>&gt;<i> &gt; Well, if you got suggestion or solutions, I will certainly appreciate
+</I>&gt;<i> &gt; them.
+</I>&gt;<i>
+</I>&gt;<i> ps/2 style port trackball with three buttons?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000295.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+	<LI>Next message: <A HREF="000298.html">[Sorcerer-admins] X11R7.3 hang when switching to virtual	consoles and exiting...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#297">[ date ]</a>
+              <a href="thread.html#297">[ thread ]</a>
+              <a href="subject.html#297">[ subject ]</a>
+              <a href="author.html#297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

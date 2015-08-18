@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] missing dependency on pppoe?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20missing%20dependency%20on%20pppoe%3F&In-Reply-To=%3CAANLkTimT3qeV3J13SEG9hCaLvXaD348Y2RG-3R31FYaE%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001962.html">
+   <LINK REL="Next"  HREF="001971.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] missing dependency on pppoe?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20missing%20dependency%20on%20pppoe%3F&In-Reply-To=%3CAANLkTimT3qeV3J13SEG9hCaLvXaD348Y2RG-3R31FYaE%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] missing dependency on pppoe?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct 26 07:50:35 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001962.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+        <LI>Next message: <A HREF="001971.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1963">[ date ]</a>
+              <a href="thread.html#1963">[ thread ]</a>
+              <a href="subject.html#1963">[ subject ]</a>
+              <a href="author.html#1963">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Oct 25, 2010 at 3:35 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> hi
+</I>&gt;<i>
+</I>&gt;<i> On Mon, Oct 25, 2010 at 9:13 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> execvp
+</I>&gt;&gt;<i> is a function for executing a program from disk.
+</I>&gt;&gt;<i> Strange that it should print an error,
+</I>&gt;&gt;<i> yet not include anything about the file trying to be executed?
+</I>&gt;<i>
+</I>&gt;<i> no idea, strace don't give me more information
+</I>&gt;<i> I've no idea if diffing another strace that works will give me the
+</I>&gt;<i> information
+</I>
+A function call to execute might not be easily traced using strace.
+Perhaps easier to look at the source tree
+to see where it might invoke that function
+or wrappers for it.
+
+&gt;&gt;<i> If rp-pppoe is installed and being used
+</I>&gt;&gt;<i> then perhaps running strings on all of it's files
+</I>&gt;&gt;<i> piped through sort -u
+</I>&gt;&gt;<i> might show a file or more that might be executed
+</I>&gt;&gt;<i> but would not be on the initramfs.
+</I>&gt;<i>
+</I>&gt;<i> this occurs also after real root is mounted.... I suspect that some
+</I>&gt;<i> mandatory tool like ppp/ifconfig/route might be missing (none of them are,
+</I>&gt;<i> but it looks like some 3rd party software is missing)
+</I>
+Does re-casting help?
+I wonder what is missing.
+
+
+&gt;&gt;<i> The directory
+</I>&gt;&gt;<i> /etc/ppp/
+</I>&gt;&gt;<i> is excluded from the initramfs
+</I>&gt;&gt;<i> would that be causing a problem?
+</I>&gt;<i>
+</I>&gt;<i> well yes if it was only hapening on boot... by the way this might be the
+</I>&gt;<i> root cause of another issue I was facing (partial network set)
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That line can be edited out of /etc/init.d/initramfs
+</I>&gt;&gt;<i> and new initramfs images generated and tried
+</I>&gt;&gt;<i> to see if that helps.
+</I>&gt;&gt;<i> What directory holds the configuration files, please?
+</I>&gt;<i>
+</I>&gt;<i> /etc/ppp shall hold everything required
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> What software is being used for the pppoe connection?
+</I>&gt;<i>
+</I>&gt;<i> good question
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> When is the network connection attempting to start and failing?
+</I>&gt;<i>
+</I>&gt;<i> everytime, on boot, after boot
+</I>
+Does the system log or dmesg have any clues about it?
+
+
+&gt;&gt;<i> Please elaborate on &quot;connecting through a 3rd party using pppoe does
+</I>&gt;&gt;<i> works&quot;
+</I>&gt;<i>
+</I>&gt;<i> I've another linux box (work one) that I configured to do the pppoe
+</I>&gt;<i> connection
+</I>&gt;<i> I've no issue connecting with pppoe on this box
+</I>
+Hmm...  What about a local installation to /usr/local or /opt?
+Is installing rp-pppoe by using DESTDIR different or cause problems?
+
+
+&gt;&gt;<i> How does one connect through a 3rd party, please?
+</I>&gt;<i>
+</I>&gt;<i> I've ps -A |grep ppp reporting pppd (and only that)
+</I>&gt;<i> however it was working before recompilation... I suspect something didn't
+</I>&gt;<i> install correctly or got removed because not required anymore but that shall
+</I>&gt;<i> be required for pppoe to work
+</I>&gt;<i> thanks and regards
+</I>&gt;<i> JLM
+</I>
+I hope gradually the solution is approaching.
+If I did not want to cross examine and compare the two boxes
+then I would probably try to make rp-ppoe work on the box that is failing.
+I might even try an alternate installation of the software to /tmp
+or /usr/local/ or a subdirectory of a my user account.
+
+Another possibility would be to recast ppp and net-tools
+to see if that helps the situation.
+
+Also
+# cast sorcery-md5sum
+might identify and fix problems with installed software.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001962.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+	<LI>Next message: <A HREF="001971.html">[Sorcerer-admins] missing dependency on pppoe?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1963">[ date ]</a>
+              <a href="thread.html#1963">[ thread ]</a>
+              <a href="subject.html#1963">[ subject ]</a>
+              <a href="author.html#1963">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

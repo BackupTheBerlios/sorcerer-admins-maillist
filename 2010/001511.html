@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2045%2C%20Issue%207&In-Reply-To=%3C596b75861003101307mc861698i48a1f750535c75e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001509.html">
+   <LINK REL="Next"  HREF="001512.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer-admins%20Digest%2C%20Vol%2045%2C%20Issue%207&In-Reply-To=%3C596b75861003101307mc861698i48a1f750535c75e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Mar 10 22:07:16 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001509.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+        <LI>Next message: <A HREF="001512.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1511">[ date ]</a>
+              <a href="thread.html#1511">[ thread ]</a>
+              <a href="subject.html#1511">[ subject ]</a>
+              <a href="author.html#1511">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There is a rumor that an ISO9660 image can be
+dd onto a USB memory stick for a one time permanent transfer
+that becomes bootable and irreversible.
+I have not tried it.
+isolinux would not be able to boot of a USB stick,
+however lilo has no problem with it if the image on the
+USB stick is ext2 or ext3.
+
+Unfortunately, using lilo for the boot program would
+probably make it so that USB memory stick might only
+be bootable on a box with the same fixed disk configuration.
+Probably grub would work for booting it since grub can
+read ext2 filesystems and the SA would be able to select
+a kernel and initramfs image to load.
+
+If the filesystem on the USB stick is FAT32,
+which would be acceptable
+for storing a kernel, initramfs, and tar.xz archives,
+then syslinux would be able to load the kernel and
+initramfs image.
+This I have not tested.
+However, syslinux contains loaders for loading linux
+off of FAT32, ext2 and 3, and ISO9660.
+And inside the tarball is even some legacy documentation
+that describes how to set up linux for loading from a zip disk.
+
+Another solution for booting is to use a network enabled
+boot floppy image loader.
+There is a project for that being hosted somewhere one
+www.kernel.org
+Basically, from the floppy is loaded a bootloader that is
+capable of downloading the kernel from the Internet and
+also an initramfs image.
+If using a distribution already configured for use with this
+then the entire root filesystem can be mounted read/only
+as a thin client by using a fuse filesystem what downloads
+data as necessary over HTTP or HTTPs by using byte
+range requests.
+Basically, it is httpfs.  :)
+
+Someone clever with a bit of time to allocate to the task
+can also make thin clients out of Sorcerer if they wanted.
+But it seems less than practical these days with the
+affordability of fixed disks and the large strain thin clients
+can place upon a network.
+
+Probably, I would not bother to create a Sorcerer I/R
+that is bootable from USB.
+Instead I would install Sorcerer to a USB memory stick.
+In that fashion it would be bootable
+and contain a complete base installation that can easily be
+copied onto the fixed disk of another box.
+Installing from something like that is basically,
+fdisk it,
+make a filesytem, cp -ax everything into the new filesystem,
+mount --bind some virtual filesystems,
+chroot in and adjust fstab and lilo,
+break the chroot,
+reboot,
+disconnect the USB memory stick and boot using
+the fixed disk installation of Sorcerer.
+
+If there is an ideal method for making a USB stick I/R
+then please someone do tell, because I do not know.
+Trying the dd from iso9660 image onto the USB memory stick
+seems like a good first try.
+Sure, the USB memory stick might be ruined.
+But it also might create an image that isolinux can boot.
+In that case it would work even better than a CD since
+it would be free of burn errors and access files much
+faster than a CDROM drive can.
+Since the Sorcerer I/R is less than 512M
+a 512M USB memory stick would be the cheapest
+ideal choice to demolish using dd.
+In the future I might start doing that merely because
+burned CDs can be faulty or sometimes read faulty
+in some drives where in other drives they read fine.
+
+
+On Tue, Mar 9, 2010 at 9:16 PM, Mike Flanagan &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">gentoo.mike at gmail.com</A>&gt; wrote:
+&gt;<i> Any suggestions for getting the iso bootable off usb, or suggestions for
+</I>&gt;<i> windows counterparts to get sorceror I/R to boot off usb for installations
+</I>&gt;<i> sake, I don't use cd/dvd medium due to not being eco friendly.
+</I>&gt;<i>
+</I>&gt;<i> But so far I've tried unetbootin, doesn't seem to take too well to it.
+</I>&gt;<i>
+</I>&gt;<i> At this point ill take any suggestions (easy / hard methods )
+</I>&gt;<i>
+</I>&gt;<i> Thanks in advance
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001509.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+	<LI>Next message: <A HREF="001512.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 45, Issue 7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1511">[ date ]</a>
+              <a href="thread.html#1511">[ thread ]</a>
+              <a href="subject.html#1511">[ subject ]</a>
+              <a href="author.html#1511">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

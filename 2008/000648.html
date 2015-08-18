@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807251616s6447092br76d58acc94b5ec6e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000647.html">
+   <LINK REL="Next"  HREF="000650.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807251616s6447092br76d58acc94b5ec6e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 26 01:16:26 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000647.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000650.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#648">[ date ]</a>
+              <a href="thread.html#648">[ thread ]</a>
+              <a href="subject.html#648">[ subject ]</a>
+              <a href="author.html#648">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jul 25, 2008 at 10:59 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Friday 25 July 2008, Kyle Sallee wrote:
+</I>&gt;&gt;<i> As to the question of the urban legend of 100,000 to 1,000,000
+</I>&gt;&gt;<i> writes before a USB memory stick begins to fail?
+</I>&gt;<i> There are two different technologies: (1) flash memory sticks with ~100,000
+</I>&gt;<i> writes, and (2) the SSD (solid-state disks) with &gt;1e6 writes. Furthermore,
+</I>&gt;<i> some devices (SSDs, but not sure if all of them; I am pretty sure flash
+</I>&gt;<i> memories do not have this) employ wear leveling alghorithms to avoid writing
+</I>&gt;<i> to the same memory cells all the time.
+</I>
+That was what I read also.
+Yet even a million or so writes is not much.
+However, it does suggest that deploying Sorcerer
+on 64G USB stick may be worth the extra cost.
+The larger the USB, the more free area, the greater the
+probability it can re-use the least used areas when writing,
+rather than grooving out a section of it.
+I also read that defragmenting a filesystem on USB stick
+yields no performance gain and increased wear and tear.
+That makes sense, since there is no head seek time when
+reading files, directories, and fragments.
+
+Perhaps eventually advanced USB memory sticks will be able to
+detect and isolated areas that are no longer reliably written?
+Better than a USB memory stick slowing turning into Swiss cheese.
+
+
+
+&gt;<i> Such high commit values are not necessary. Take for example a 32GB flash
+</I>&gt;<i> memory with expectancy of 100,000 writes. If you were to continuosly write to
+</I>&gt;<i> this stick at 10MB/s, it would take 3.2e10^8 seconds (~10.1 years) to kill
+</I>&gt;<i> it.
+</I>
+I agree that syslog writes would probably not punish it much
+merely because the amount of information written is tiny.
+But updating of installed spells causes significant writing.
+Not sure if 10 year life span is reasonable.
+However a 5 year life span would be sufficient.
+I would not be surprised if we retired USB sticks every 5 years
+to gain the larger faster version.
+
+
+&gt;<i> So for a common
+</I>&gt;<i> desktop use, I would not worry about killing it at all (in a reasonable time
+</I>&gt;<i> frame).
+</I>
+If that is the case
+then we need only determine what the better USB memory stick products are.
+We do not want to bust the bank,
+but we do not want to go cheap and
+receive lousy performance and a short life.
+
+
+&gt;&gt;<i> As for selecting any 32G USB stick at random?
+</I>&gt;<i> Some of the flash cards (and SSDs?) are slow because they do not use DMA or
+</I>&gt;<i> only older (and slower) modes. Unfortunately, this information is very
+</I>&gt;<i> difficult to get unless buying some pricey memories (several hundreds dollars
+</I>&gt;<i> and up).
+</I>
+SanDisk Corp. Cruzer Micro 4GB Flash Drive
+
+Here is something strange.
+That is how lsusb identifies it.
+However, it is actually a 2G flash drive.
+I ran hdparm -tT on it.
+
+ Timing cached reads:   604 MB in  2.00 seconds = 301.60 MB/sec
+ Timing buffered disk reads:   80 MB in  3.00 seconds =  26.66 MB/sec
+
+The results are about what one would expect for an older
+slow spin 30G IDE fixed disk.
+The IDE drive can do about 30 MB/sec,
+but it has a head seek time.
+Having no head seek time makes a great improvement
+in file access speed on a USB memory stick.
+Booting, for example, involves access of many small files
+that are located at different places on the disk.
+A fixed disk is slow at moving the head in order to read all the files.
+The greater maximum throughput of the fixed disk
+is always bottle necked by the head seek time.
+In contrast the USB memory stick with no head seek time
+boots much faster than fixed disk.
+
+My 4 biggest concerns about the USB memory sticks are:
+lifespan, connectivity, size, cost.
+
+If lifespan is not an issue anymore
+and we have size 32G and 64G
+then now is the appropriate time
+to redesign Sorcerer deployment
+for USB sticks instead of fixed disk.
+
+I am not suggesting a live USB flash drive distro.
+No tricks for this.
+Instead we will use the USB flash drive same as a fixed disk.
+The main differences are:
+higher commit value,
+always tmpfs for /tmp
+never defrag,
+and UUID identification of partitions in /etc/fstab and /etc/lilo.conf
+
+The last step may require a little reading.
+A UUID is a sequence of bytes to create a universally unique identification.
+A UUID is written to a partition.
+Then that partition is identifiably by the kernel by UUID.
+Even if the kernel renames disks from hda to sda, or, sda to hda
+or disks are added or removed, UUIDs will not change.
+Therefore, specifying partitions and devices by UUID
+instead of /dev/sdd4 will enable them to be properly located
+even when the USB stick moves to a different computer.
+
+Using labels might also work, but they may be filesystem dependent?
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000647.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000650.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#648">[ date ]</a>
+              <a href="thread.html#648">[ thread ]</a>
+              <a href="subject.html#648">[ subject ]</a>
+              <a href="author.html#648">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

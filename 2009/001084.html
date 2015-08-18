@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] run requirements vs build requirements
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C596b75860904201304y215959fh8561fab56a80557c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001079.html">
+   <LINK REL="Next"  HREF="001081.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] run requirements vs build requirements</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20run%20requirements%20vs%20build%20requirements&In-Reply-To=%3C596b75860904201304y215959fh8561fab56a80557c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] run requirements vs build requirements">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 20 22:04:14 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001079.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+        <LI>Next message: <A HREF="001081.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1084">[ date ]</a>
+              <a href="thread.html#1084">[ thread ]</a>
+              <a href="subject.html#1084">[ subject ]</a>
+              <a href="author.html#1084">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Apr 20, 2009 at 12:03 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i> How about we just do program that will output binary version of spells, eg.
+</I>&gt;<i> it removes all devel stuff like includes, etc, parts not needed to run
+</I>&gt;<i> spell, so we can do binary version of Sorcerer. If user wants to compile
+</I>&gt;<i> stuff then (s)he just casts full version of spells... or something like
+</I>&gt;<i> that... &#160;Basicly you just need one server to compile your enviroment and
+</I>&gt;<i> other machines can use that machine's binary versions...
+</I>
+It is easier than that.
+To make a runtime only installation of Sorcerer execute:
+
+# rm -rf /usr/{include,lib{,64}/*.a}
+
+However, using find is probably better since
+the above command has a tiny probability of over-running
+the command line parameter limit.
+
+I figure it is easier to install proper spell archives
+and simply rm what is not desired.
+
+
+&gt;<i> We are already loosed our freedom to choose our depencies anyway, i mean X
+</I>&gt;<i> Windows System is mandatory, etc. that sort of stuff.
+</I>
+xorg is not mandatory.
+However, it can occur through optionals.
+For example....
+core requires a spell that provides system-logger.
+rsyslog can provide system-logger
+rsyslog can have an optional on postgresql
+postgresql has an optional on tk
+tk requires libXft and libXScrnSaver
+Therefore, spell &quot;core&quot; can have libX11 in it's
+requirement list although libX11 is not
+a mandatory requirement for the spell &quot;core&quot;
+
+
+&gt;<i> Just an idea... hybrid distro, source and binary combined...or something...
+</I>
+Haha, no chance.
+I already have enough to do with 3000 spells.
+Why would I want to turn 3000 spells into 9000+
+spells like pre-compiled binary based distros do with
+segregation the installation of source trees into
+separate packages.
+At least with Sorcerer one has 1/3 or less the headache
+as with a pre-compiled binary based distro,
+especially if that distro does stuff like breaking net-tools,
+bind, iproute2, coreutils into separate packages that install
+just single executables such as ip, ping, dig, named, etc...
+
+Sorcerer may not look like it offers much software selection,
+but it has at least as much software as would any
+pre-compiled binary based distro with 10,000 packages offers.
+
+Having over 1000 installed &quot;packages&quot; is tedious micro-management
+to decide exactly what should be kept and what can be discarded.
+I remember a decade ago looking at the list of installed software
+in dselect and list of available software in dselect and thinking
+what a chore it is to go through it all.
+That was with Debian.
+At least before we transitioned from XFree86 to xorg
+we could enjoy boxes with as little as a couple hundred installed spells.
+But now 400 to 1400 installed spells is not uncommon.
+At least the dispel menu in sorcery offers a quick and sane way
+to select spells for removal without having to manually inspect
+and consider all 1000 installed spells.
+
+I recall someone wrote some sort of orphan program in order
+to discover installed packages on Debian that were not required
+and offer the SA the opportunity to remove that software.
+At least with Sorcerer that is not required.
+Our dispel menu in sorcery is a very sane and quick way
+of dispelling stale software.
+
+I would not be surprised if the average SA has no clue about
+what half the installed software on their box does.
+I would not be surprised if the average SA does not
+know the names of half the installed software on their box.
+At least with Sorcerer, SAs have a chance of understanding
+what is installed, what it should do, and why it is installed.
+
+Back in the DOS days I could know every file on my fixed disk.
+Those days will never return.
+However, Sorcerer offers intimacy with a box as close as that
+can approximate with a modern selection of software.
+
+At the same time Sorcerer offers profiles that allow
+many spells to be part of a group of spells such as:
+&quot;core&quot; &quot;gnome&quot; &quot;kde&quot;
+That way SAs that want to keep their relationship with their box
+strictly professional and not at all intimate can use profile spells
+when they are available.
+
+Few SAs have expressed any interest in profile spells.
+That is why there are so few profile spells.
+However, there could be more profile spells that can control
+various aspects in a top down orderly fashion.
+With profiles the role of a box could be selected as:
+server, workstation, or both.
+A desired web server to install could be selected from a list of webservers.
+The same for a database if a database is required, etc...
+It would be possible if those profile spells were written.
+
+For the moment categories offer a poor substitute for better profile spells.
+Still SAs can get the desired software installed the way it is,
+if the SA knows what software they want installed.
+But it is not at all friendly to a new SA who does not even
+know what spells gcc and make are supposed to do.
+
+Currently, sorcery's cast is optimized for speed.
+It sometimes ask more optional requirement questions than necessary.
+It probably asks them in an order that has nothing to do with the order
+in which the spells would be installed.
+It is not as suitable for elaborate profile spells as it could be.
+But it is fast.
+
+I toughed on the subject of profile spells,
+because they can expand the convenience offered to SAs
+similar to what might be offered with pre-compiled binary based distros,
+while still using the same sorcery tools without much modification.
+
+
+As for categories and attributes.
+Many spells could use some cleaning.
+SAs introduce spells into the grimoire entirely weird new categories
+and attributes instead of using those that are already defined.
+Consequently, it makes finding some spells difficult
+when one is searching by category or attribute and not name.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001079.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+	<LI>Next message: <A HREF="001081.html">[Sorcerer-admins] run requirements vs build requirements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1084">[ date ]</a>
+              <a href="thread.html#1084">[ thread ]</a>
+              <a href="subject.html#1084">[ subject ]</a>
+              <a href="author.html#1084">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

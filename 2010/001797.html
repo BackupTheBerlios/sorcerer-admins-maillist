@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3C4C44E438.5020200%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001795.html">
+   <LINK REL="Next"  HREF="001801.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3C4C44E438.5020200%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">Bradley at NorthTech.US
+       </A><BR>
+    <I>Tue Jul 20 01:48:08 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001795.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001801.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1797">[ date ]</a>
+              <a href="thread.html#1797">[ thread ]</a>
+              <a href="subject.html#1797">[ subject ]</a>
+              <a href="author.html#1797">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+Hi Kyle,
+
+I typically run XFS and haven't experienced any problems with it on
+Sorcerer. However, I'm a bit of a stickler to creating /dev/hda1 as a
+primary boot partition of about 100MBytes, I stick to Lilo, and I format
+that filesystem as Ext2.
+
+But that's just me.
+
+There are things you can't do with XFS, although it is superior in most
+other respects to Ext4, which I almost never use (Google chose it over
+XFS but said it was a very close call), one of those things being the
+inability to shrink partitions (which is of no consequence to me).
+
+The other filesystem I like is ReiserFS. Most of the decision in
+determining on whether I'm going to go w/XFS or ReisferFS is based on
+the average size of the files on that volume - one is better w/bigger
+files, while the other one is better w/smaller files.
+
+All things being the same, I choose XFS. Even if I no longer use Irix ;)
+
+I just have always liked the fact that I can revert to an LCD (Least
+Common Denominator) wrt filesystems if I have an issue, making it easy
+to access my /boot on /dev/hda1.
+
+Where I differ from Sorcerer, and where I had most of my dificulties,
+was in creating a swap partition instead of the swap file in the
+standard installation. I could be wrong, and might be creating extra
+work for myself, but I like the idea of SWAP memory on its own actual
+partition (Kyle, what are your thoughts on this?).
+
+This I typically put this on /dev/hda2
+
+regardless of the SWAP issue/prefs, perhaps Roelof could benefit from a
+/boot on the primary, bootable partition of /dev/hda1 - I glean that
+there is no support for booting / as XFS from the Sorcerer I/R ???
+
+Dunno if something like Knoppix supports that, as I have a custom
+Slackware CD I spun to support such a mount wrt XFS.
+
+On 7/19/2010 3:06 PM, Kyle Sallee wrote:
+&gt;<i> Does anyone else know?
+</I>&gt;<i> I do not use xfs file systems.
+</I>&gt;<i> Why would it complain about a non existent user ID.
+</I>&gt;<i> And your UID during initramfs would be 0
+</I>&gt;<i> which is root.
+</I>&gt;<i> Seems confusing.
+</I>&gt;<i> I am having trouble surmising the cause
+</I>&gt;<i> of this problem without stepping into it.
+</I>&gt;<i> Is it the same situation that happened
+</I>&gt;<i> on the previous Sorcerer installation?
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Jul 19, 2010 at 7:31 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hello Kyle,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Another problem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I did all the updates with a few problems. See the other topics.
+</I>&gt;&gt;<i> I shutdown my computer.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now I want to boot into Sorcerer but now even with the cd I can't boot into
+</I>&gt;&gt;<i> the system.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I see this message when I boot with the cd.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> fsck from util-ng.218
+</I>&gt;&gt;<i> /sbin/fsck.xfs
+</I>&gt;&gt;<i> UID     does not exist.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So the second time I can't boot because the disk can't be found.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I checked the disk with speedfan and found no problems. The healt of the
+</I>&gt;&gt;<i> disk is 98%.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Roelof
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ________________________________
+</I>&gt;&gt;<i> SMS &quot;HOTMAIL&quot; naar 3010 en ontvang gratis de juiste instellingen voor
+</I>&gt;&gt;<i> Hotmail op je mobiele telefoon.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.760.666.2703  (US)
+TEL: +44.702.405.1909 (UK)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAwAGBQJMROQ4AAoJEE1wgkIhr9j3GbQIAKOt/u+2OuhpUFncU2rgVYNM
+2VFYnVJCqLEXAvy5ByPUHlsK0r/4Esa15GbzF/l+kWJ3d3lwGjES0kJquD1f2cR7
+CsCbMz9Px9a+apNCCJ99zgmHpAhjcILiUMBnUlKKeHK6v4gIGrv3a03F0v2sA/Vn
+cB11IKwno3iB+loNNM0Le1TxRLuYX0oR/8rV2NrJRx95kW2P+2oAaU69WS6zgV6i
+kfMI+QjNCiGvrQqG75ZZa6hrBbZ6v5oRDemXE5U7Grv0uJ4C/jlR0rofxYh9tq6N
+swrFf6Je/CuhMqZrc0Th5kPxBhfE6yYwGuX4cAfdHAoW9386N5oKWQhYDKJs9Fo=
+=5Cru
+-----END PGP SIGNATURE-----
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001795.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001801.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1797">[ date ]</a>
+              <a href="thread.html#1797">[ thread ]</a>
+              <a href="subject.html#1797">[ subject ]</a>
+              <a href="author.html#1797">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

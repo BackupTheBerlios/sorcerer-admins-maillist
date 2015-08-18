@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] arbitrary version progress in action...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20arbitrary%20version%20progress%20in%20action...&In-Reply-To=%3CAANLkTim9DkRH2nsae9yUwFfe%2B3LhFzB-JNEagCozJQif%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002094.html">
+   <LINK REL="Next"  HREF="002096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] arbitrary version progress in action...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20arbitrary%20version%20progress%20in%20action...&In-Reply-To=%3CAANLkTim9DkRH2nsae9yUwFfe%2B3LhFzB-JNEagCozJQif%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] arbitrary version progress in action...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 14 23:27:01 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002094.html">[Sorcerer-admins] semi-derailed augur newer and augur sync...
+</A></li>
+        <LI>Next message: <A HREF="002096.html">[Sorcerer-admins] php segfault when using libphp5.so...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2095">[ date ]</a>
+              <a href="thread.html#2095">[ thread ]</a>
+              <a href="subject.html#2095">[ subject ]</a>
+              <a href="author.html#2095">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE># echo linux | augur avail
+linux   2.6.27.x        2.6.27.58
+linux   2.6.30.x        2.6.30.10
+linux   2.6.32.x        2.6.32.28
+linux   2.6.34.x        2.6.34.8
+linux   2.6.35.x        2.6.35.11
+linux   2.6.36.x        2.6.36.4
+linux   av      2.6.37.3
+linux   iv      2.6.37.3
+linux   stable  2.6.37.3
+
+This shows that there are several possible version progress to select for linux.
+This box has stable version progress selected.
+Consequently, the installed, available, and stable versions are concurrent.
+
+For boxes that require drivers from older branches of the kernel
+can subscribe to some of those branches that are listed on
+<A HREF="http://www.kernel.org/">http://www.kernel.org/</A>
+In order to clearly separate the branch from the version
+the branches have names that end with .x
+
+Therefore, reasoning follows that:
+
+# augur progress linux 2.6.36.x
+# echo linux | augur avail
+Indexing Complete
+linux   2.6.27.x        2.6.27.58
+linux   2.6.30.x        2.6.30.10
+linux   2.6.32.x        2.6.32.28
+linux   2.6.34.x        2.6.34.8
+linux   2.6.35.x        2.6.35.11
+linux   2.6.36.x        2.6.36.4
+linux   av      2.6.36.4
+linux   iv      2.6.37.3
+linux   stable  2.6.37.3
+
+That sets the available version of linux to 2.6.36.4
+which is the most recently released kernel for that branch.
+
+# augur progress linux stable
+
+That sets linux's version progress back to stable.
+
+So what happens when a box is subscribed to
+2.6.32.x version progress for linux and that version progress goes away?
+It might not be desirable,
+but it will probably start following &quot;stable.&quot;
+With linux this is not so much a problem
+since 4 older versions are kept in /boot and /lib/modules/
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002094.html">[Sorcerer-admins] semi-derailed augur newer and augur sync...
+</A></li>
+	<LI>Next message: <A HREF="002096.html">[Sorcerer-admins] php segfault when using libphp5.so...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2095">[ date ]</a>
+              <a href="thread.html#2095">[ thread ]</a>
+              <a href="subject.html#2095">[ subject ]</a>
+              <a href="author.html#2095">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

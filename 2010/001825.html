@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CSNT118-W18422D9ECBADD8AE52A53EAEA10%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001823.html">
+   <LINK REL="Next"  HREF="001830.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CSNT118-W18422D9ECBADD8AE52A53EAEA10%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">rwobben at hotmail.com
+       </A><BR>
+    <I>Wed Jul 21 18:20:51 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001823.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001830.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1825">[ date ]</a>
+              <a href="thread.html#1825">[ thread ]</a>
+              <a href="subject.html#1825">[ subject ]</a>
+              <a href="author.html#1825">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Oke, 
+
+ 
+
+No problem.
+
+ 
+
+And how can I recreate the initramfs.
+
+ 
+
+Roelof
+
+
+ 
+&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Date: Wed, 21 Jul 2010 11:44:24 -0400
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> 
+</I>&gt;<i> On Wednesday, July 21, 2010, Roelof Wobben wrote:
+</I>&gt;<i> &gt; &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>
+</I>&gt;<i> &gt; &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; &gt; Date: Wed, 21 Jul 2010 10:38:48 -0400
+</I>&gt;<i> &gt; &gt; Subject: Re: [Sorcerer-admins] can't boot into my system
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; On Wednesday, July 21, 2010, Roelof Wobben wrote:
+</I>&gt;<i> &gt; &gt; &gt; Hello Jan,
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; 
+</I>&gt;<i> &gt; &gt; &gt; I agree with you but the two partitions with /dev/hdc* are not mounted
+</I>&gt;<i> &gt; &gt; &gt; during boot and the one with uuid is booted.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; I don't know your setup but typically you need to boot from the rescue
+</I>&gt;<i> &gt; &gt; CD, fix your /etc/fstab, rerun lilo if necessary, and redo the initramfs
+</I>&gt;<i> &gt; &gt; image. Then the system should boot again.
+</I>&gt;<i> &gt; &gt; 
+</I>&gt;<i> &gt; &gt; J.
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; My setup is :
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /dev/hdc1 /boot ext2
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /dev/hdc2 / xfs
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /dev/hdc3 swap
+</I>&gt;<i> Then your /etc/fstab could look like this:
+</I>&gt;<i> 
+</I>&gt;<i> /dev/hdc1 /boot ext2 defaults,noatime 0 1
+</I>&gt;<i> /dev/hdc2 / xfs defaults,noatime 0 1
+</I>&gt;<i> /dev/hdc3 swap swap defaults 0 1
+</I>&gt;<i> 
+</I>&gt;<i> If your installation uses initramfs then after modifying the /etc/fstab config 
+</I>&gt;<i> file you still need to recreate the initramfs image so the new /etc/fstab is 
+</I>&gt;<i> used during boot.
+</I>&gt;<i> 
+</I>&gt;<i> J.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; My fstab looks like this :
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; UUID= &lt; a lot of numbers and caracters&gt; / xfs defaults, noatime 0 0
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; UUID = &lt;empty&gt; /boot ext2 defaults, noatime 0 0
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; #swap
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; /dev/hdc3 none swap defaults 0 0
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; 
+</I>&gt;<i> &gt; _________________________________________________________________
+</I>&gt;<i> &gt; Download nu eenvoudig leuke Emoticons voor je Messenger GRATIS
+</I>&gt;<i> &gt; <A HREF="http://www.rulive.nl/aspx/emoticons.aspx">http://www.rulive.nl/aspx/emoticons.aspx</A>
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+Een netbook met Windows 7? Hier vind je alles dat je moet weten.
+<A HREF="http://www.windows.nl/netbook">http://www.windows.nl/netbook</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100721/317f9379/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100721/317f9379/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001823.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001830.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1825">[ date ]</a>
+              <a href="thread.html#1825">[ thread ]</a>
+              <a href="subject.html#1825">[ subject ]</a>
+              <a href="author.html#1825">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sent the wrong pic...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sent%20the%20wrong%20pic...&In-Reply-To=%3C596b75861003151248n1f2659f3q98d6895a2b0987e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001532.html">
+   <LINK REL="Next"  HREF="001526.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sent the wrong pic...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sent%20the%20wrong%20pic...&In-Reply-To=%3C596b75861003151248n1f2659f3q98d6895a2b0987e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sent the wrong pic...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 15 20:48:54 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001532.html">[Sorcerer-admins] Sent the wrong pic...
+</A></li>
+        <LI>Next message: <A HREF="001526.html">[Sorcerer-admins] ISO Problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1539">[ date ]</a>
+              <a href="thread.html#1539">[ thread ]</a>
+              <a href="subject.html#1539">[ subject ]</a>
+              <a href="author.html#1539">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for that.
+There are a number of strange things
+that Sorcerer boxes do that depart from
+the expected way to do them
+For example:
+First, log files that are created during boot are stored
+in /etc/init.d/log.d/
+Yes that is not in /var/log/
+Why?
+Because /var/log/ would not exist on an initramfs
+and /etc/init.d/log.d/ would exist
+After the real root filesystem is mounted
+the tmpfs mounted at /etc/init.d/log.d/
+is simply moved to the /etc/init.d/log.d/
+on the real / partition.
+That does not require a copy or a write of those
+files to the real / filesystem and thus saves on unnecessary
+disk wear and tear.
+
+Second, Sorcerer boxes have an /etc.ori/
+What is /etc.ori/  ?
+It contains nearly the same files are are stored in /etc/
+But the files in /etc.ori/ remain unmodified from the files
+originally installed by the spell or source.
+In that fashion a SA can more easily uncustomize
+a configuration file since a backup of the original
+is already available in /etc.ori/
+Also /etc.ori/ barely uses any space.
+
+Not in any documentations or specifications
+have I seen written anything about providing
+an /etc.ori/ nor anything like it.
+However, in the past SAs did complain about
+either not being able to easily uncustomize configuration files
+or being able to easily know the exactly what the difference
+is between the customized and uncustomized versions.
+However, now with /etc.ori/ all those problems are easily
+surmountable.
+And since /etc.ori/ is right there in /
+the SA is certain to notice that it exists.
+
+My point is that Sorcerer is not necessarily constructed in a way
+that strictly conforms to specifications, but rather allows
+some departure from the norm based upon what SAs
+say that they want or require.
+
+Sorcerer, for example can run LSB compliant init-scripts.
+However, most Sorcerer init-scripts are not LSB compliant
+although they start with typical LSB init-script comment section.
+Sorcerer init-scripts are made to be smaller, faster
+have less potential for bugs as compared to
+strictly LSB compliant init-scripts.
+
+By providing such conveniences Sorcerer
+yields a bit more control over to the SA
+than it would compared to a source based distro
+that does not deviate from specifications
+in order to better meet SA requirements.
+However, even with that there are still many aspects
+that are determined at the distribution level are not
+easily customizable by SAs.
+
+For example, init-scripts are critical importance.
+They exist in /etc/init.d/ and therefore are
+stored under /etc/ which is a location
+that is normally used for configuration files.
+However, /etc/init.d/ are not treated as configuration files
+and therefore they are not allowed to be customized.
+Modifications to spell owned files in /etc/init.d/
+are lost when the spell is updated.
+However, a SA could elect to create a different spell
+that provides the original spell and also installs what
+the SA requires for init-scripts.
+And that new spell can be stored in the local grimoire.
+This extra effort is required so that SA do not
+accidentally mess up a box by modifying files in
+/etc/init.d/ that aught not be modified or would
+disappear or change in their role upon an update.
+
+A good example of semi-volatile init-scripts
+are those which are installed by the init-script spell.
+Those are init-scripts which would be required
+on all Sorcerer boxes.
+However, unlike pre-compiled binary based distros
+that might install init-scripts for software which is not installed,
+Sorcerer boxes tend to only install init-scripts for the software
+which is installed.
+
+SAs can still disable init-scripts from automatic execution
+by giving the init-script a mode of 0600 instead of 0700
+
+So in summary, yes some weird things happen in Sorcerer,
+but they are due to what SAs have requested in the past.
+And overall the changes tend to provide
+a greater boon than bane.
+But the way some things are done in Sorcerer
+might be entirely different from every other distribution.
+Yet usually that is not a bad thing.
+
+
+On Mon, Mar 15, 2010 at 3:00 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">bradley at northtech.us</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> I'll include an explanation for this in the installation manual :)
+</I>&gt;<i>
+</I>&gt;&gt;<i> Yes it is a fun thing.
+</I>&gt;&gt;<i> Some programs write directly to console
+</I>&gt;&gt;<i> and others use an absurd loglevel.
+</I>&gt;&gt;<i> As for those that write to the kernel log
+</I>&gt;&gt;<i> I can set the loglevel to a point where nothing
+</I>&gt;&gt;<i> would be displayed on console.
+</I>&gt;&gt;<i> But that would also hide very important error messages
+</I>&gt;&gt;<i> that a SA should become immediately aware of.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now there is yet another solution.
+</I>&gt;&gt;<i> That error message seen obfuscating the login
+</I>&gt;&gt;<i> is actually due to something odd that Sorcerer is doing.
+</I>&gt;&gt;<i> Sorcerer makes available all of the gettys even before
+</I>&gt;&gt;<i> the first runlevel init-script executes.
+</I>&gt;&gt;<i> This has several effects.
+</I>&gt;&gt;<i> First, a hang during runlevel startup will not
+</I>&gt;&gt;<i> prevent someone from being able to login at a virtual console.
+</I>&gt;&gt;<i> Second, getty login is made available faster than usual.
+</I>&gt;&gt;<i> Third, annoying programs that print to /dev/console
+</I>&gt;&gt;<i> or the kernel log with an absurd loglevel will write
+</I>&gt;&gt;<i> to the screen causing scroll and possibly obscuring
+</I>&gt;&gt;<i> the welcome and login prompt.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So the other solution is obviously....
+</I>&gt;&gt;<i> Do not activate getty logins until after
+</I>&gt;&gt;<i> the runlevel has completed which is probably
+</I>&gt;&gt;<i> what most other POSIX do.
+</I>&gt;&gt;<i> However, that would make a hang or even
+</I>&gt;&gt;<i> a long delay during runlevel startup very annoying!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> So that is why Sorcerer boxes risk a slightly
+</I>&gt;&gt;<i> messy welcome/login prompt in order to
+</I>&gt;&gt;<i> ensure that a login prompt definitely appears.
+</I>&gt;&gt;<i> Depending on how many services start during
+</I>&gt;&gt;<i> runlevel and the speed of the fixed disk
+</I>&gt;&gt;<i> and whether errors occur and other factors
+</I>&gt;&gt;<i> the time to complete the runlevel might vary
+</I>&gt;&gt;<i> between 1 second and over a minute.
+</I>&gt;&gt;<i> For most modern boxes the delay is minimal.
+</I>&gt;&gt;<i> However, just in case a bad init-script or service
+</I>&gt;&gt;<i> could potentially hang the runlevel startup
+</I>&gt;&gt;<i> I decided that starting the gettys first
+</I>&gt;&gt;<i> was the lesser of two evils.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Like with many implementations there might not
+</I>&gt;&gt;<i> necessarily be a right or wrong way to do it.
+</I>&gt;&gt;<i> However, given the customizability of Sorcerer
+</I>&gt;&gt;<i> some SAs will eventually write an init-script
+</I>&gt;&gt;<i> that hangs the runlevel startup.
+</I>&gt;&gt;<i> At least with this method of implementation
+</I>&gt;&gt;<i> the worst case scenario is not as bad as it could be
+</I>&gt;&gt;<i> since the SA can log in and view the runlevel log to
+</I>&gt;&gt;<i> find out how far the runlevel progressed.
+</I>&gt;&gt;<i> Definitely, we risk sacrificing a good appearance
+</I>&gt;&gt;<i> for avoiding the situation where a SA is unable to
+</I>&gt;&gt;<i> login to the box to fix an unanticipated error during boot.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Of course like any aspect about Sorcerer
+</I>&gt;&gt;<i> it is open to debate as long as someone will
+</I>&gt;&gt;<i> provide both lists of boons and banes to discuss.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, Mar 13, 2010 at 12:39 AM, Bradley D. Thornton
+</I>&gt;&gt;<i> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> I sent the good pic going into the install manual, instead of the one
+</I>&gt;&gt;&gt;<i> that
+</I>&gt;&gt;&gt;<i> shows how the console messages obfuscates the root login...
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> This should be the right one ;)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> --
+</I>&gt;&gt;&gt;<i> Kindest regards,
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Bradley D. Thornton
+</I>&gt;&gt;&gt;<i> Manager Network Services
+</I>&gt;&gt;&gt;<i> NorthTech Computer
+</I>&gt;&gt;&gt;<i> TEL: +1.760.666.2703
+</I>&gt;&gt;&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001532.html">[Sorcerer-admins] Sent the wrong pic...
+</A></li>
+	<LI>Next message: <A HREF="001526.html">[Sorcerer-admins] ISO Problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1539">[ date ]</a>
+              <a href="thread.html#1539">[ thread ]</a>
+              <a href="subject.html#1539">[ subject ]</a>
+              <a href="author.html#1539">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

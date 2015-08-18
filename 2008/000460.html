@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Newer I/Rs are now available.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Newer%20I/Rs%20are%20now%20available.&In-Reply-To=%3C596b75860805241339m6d025e35w5aebb57bd8dfa120%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000456.html">
+   <LINK REL="Next"  HREF="000457.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Newer I/Rs are now available.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Newer%20I/Rs%20are%20now%20available.&In-Reply-To=%3C596b75860805241339m6d025e35w5aebb57bd8dfa120%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Newer I/Rs are now available.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 24 22:39:55 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000456.html">[Sorcerer-admins] Newer I/Rs are now available.
+</A></li>
+        <LI>Next message: <A HREF="000457.html">[Sorcerer-admins] bluetooth : incomplete dependencies?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#460">[ date ]</a>
+              <a href="thread.html#460">[ thread ]</a>
+              <a href="subject.html#460">[ subject ]</a>
+              <a href="author.html#460">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry about that.
+p7zip always creates files mode 0600.
+Every other POSIX compliant program respects umask.
+p7zip does not.
+I forget to fix it.
+The files are now readable.
+
+I did not create a sdelta3 port for windoze.
+Seems like the demand for sources
+for POSIX compliant software on
+windoze boxes is very low.
+It should be possible to create the port.
+Adjust a few includes and
+the location of the temporary file
+and it might just work.
+
+The BSD port was troublesome
+because BSD's malloc is half broken.
+But when sdelta switched to using mmap
+the BSD port started working almost as good as Linux.
+And sdelta also compiles on Solaris.
+
+Of course Linux, BSD, and Solaris are more alike than windoze.
+sdelta3 cygwin would probably be an easier port than
+creating a native win32 port.
+If you have a win32 compiler and an itch to scratch
+you are welcome to try making it compile.
+sdelta3 is actually a very simple program although
+it swallows files whole with mmap which makes it
+in that respect unusual.
+
+
+
+On Fri, May 23, 2008 at 2:40 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On Fri, May 23, 2008 at 2:24 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On Fri, May 23, 2008 at 1:09 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> This batch of I/Rs are bug fixes for the previous releases.
+</I>&gt;&gt;&gt;<i> They are not fully tested unlike the previous releases.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Cannot access the 5-8 to 5-13 sdelta - server reports....
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> erm... even if I could ... I don't have a linux box available with the
+</I>&gt;<i> cd image and the sd3... I do have a windows box, but I can't find
+</I>&gt;<i> sdelta3 for windows :( any clues ?
+</I>&gt;<i>
+</I>&gt;&gt;<i> Access forbidden!
+</I>&gt;&gt;<i> You don't have permission to access the requested object. It is either
+</I>&gt;&gt;<i> read-protected or not readable by the server.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you think this is a server error, please contact the webmaster.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Previous releases are available in old if there is a problem
+</I>&gt;&gt;&gt;<i> with these bug fixed releases.
+</I>&gt;&gt;&gt;<i> Please report problems, as usual, so that they can be fixed
+</I>&gt;&gt;&gt;<i> in future releases.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Note both the x86_64 IA32 I/Rs have LUKS, LVM2, and software raid support.
+</I>&gt;&gt;&gt;<i> However, selinux support is still incomplete.
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000456.html">[Sorcerer-admins] Newer I/Rs are now available.
+</A></li>
+	<LI>Next message: <A HREF="000457.html">[Sorcerer-admins] bluetooth : incomplete dependencies?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#460">[ date ]</a>
+              <a href="thread.html#460">[ thread ]</a>
+              <a href="subject.html#460">[ subject ]</a>
+              <a href="author.html#460">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/services
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/services&In-Reply-To=%3C596b75860905241719v2ea3bc5ep5ff08b1001d0a679%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001224.html">
+   <LINK REL="Next"  HREF="001226.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/services</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/services&In-Reply-To=%3C596b75860905241719v2ea3bc5ep5ff08b1001d0a679%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /etc/services">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon May 25 02:19:02 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001224.html">[Sorcerer-admins] usind dhcpd
+</A></li>
+        <LI>Next message: <A HREF="001226.html">[Sorcerer-admins] IA32 2009 2nd release.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1225">[ date ]</a>
+              <a href="thread.html#1225">[ thread ]</a>
+              <a href="subject.html#1225">[ subject ]</a>
+              <a href="author.html#1225">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Someone was mentioning that there should be more checking
+to ensure that services specified in xinetd configuration files
+have entries also in /etc/services
+So I did some checking.
+So far I fixed the xinetd configuration files installed by heimdal.
+Also those files will now install with services off
+since kerberos 5 is required on almost every box,
+yet is not usually implemented as the authentication method.
+
+In addition I decided to make /etc/services work a bit more like
+how SAs might expect it to work based upon other configuration files.
+
+/etc/services.d/
+is the directory that contains the files
+that are concatenated into /etc/services
+
+Also /etc/services is stripped of comments.
+To read the comments, instead read or grep files in
+/etc/services.d/
+By elimination of the comments from /etc/services
+the size of /etc/services has been reduced by half.
+That will reduce memory consumption and
+increase the speed at which services names to port numbers
+and reverse inquiries are complete.
+/etc/services is still huge!
+203K
+All this file is for is mapping textual names to TCP and UDP port numbes.
+It is almost unbelievably large.
+And of course 95% and more of the services listed in /etc/services
+are services that are never used.
+
+Anyway, I tend to get in the mood to do these last hour sweeping changes
+right before releasing new I/R because I tend to see something that
+I do not quite like, but am used to regularly ignoring.
+:<i>)
+</I>
+The IA32 I/R should be ready very soon.
+I have had two complete successful installs and reboot tests with it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001224.html">[Sorcerer-admins] usind dhcpd
+</A></li>
+	<LI>Next message: <A HREF="001226.html">[Sorcerer-admins] IA32 2009 2nd release.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1225">[ date ]</a>
+              <a href="thread.html#1225">[ thread ]</a>
+              <a href="subject.html#1225">[ subject ]</a>
+              <a href="author.html#1225">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

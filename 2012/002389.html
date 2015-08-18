@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] immune-security-tomoyo...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20immune-security-tomoyo...&In-Reply-To=%3CCA%2BT4wDjP5M7z%2BPu2Xu4m5_n%3DekBPWQh3ewTvPgiOTinKT15szw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002388.html">
+   <LINK REL="Next"  HREF="002390.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] immune-security-tomoyo...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20immune-security-tomoyo...&In-Reply-To=%3CCA%2BT4wDjP5M7z%2BPu2Xu4m5_n%3DekBPWQh3ewTvPgiOTinKT15szw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] immune-security-tomoyo...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Aug 31 03:45:23 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002388.html">[Sorcerer-admins] git support
+</A></li>
+        <LI>Next message: <A HREF="002390.html">[Sorcerer-admins] Help? SSHD version mismatch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2389">[ date ]</a>
+              <a href="thread.html#2389">[ thread ]</a>
+              <a href="subject.html#2389">[ subject ]</a>
+              <a href="author.html#2389">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A while back I repaired an obviously broke domain file.
+And in the process unintentionally revealed additional errors
+in both sorcery and the domain.
+It is all fixed.
+However, some boxes might not want to update.
+If so then this is how to update a box that has immune-security-tomoyo
+installed.
+
+Temporarily enable domain_log
+Then cast grimoire and wait for it.
+cast sorcery and wait for it
+cast immune-security-tomoyo and wait for it.
+Disable the domain_log feature.
+Reboot.
+Now the box will be able to update
+automatically if configured to do so or manually if not.
+
+The new domain rules also place a restriction on files and directories
+within /home/
+And that restriction is &quot;only the owner.&quot;
+This has the effect of making home directories private
+while within the user domain.
+
+If it is an inconvenience then the SA should configure another location
+outside of /home where users can share files.
+
+Basically, the immune-security-tomoyo applies Tomoyo rules to enforce
+the standard linux security model.
+Even if EUID 0 is acquired making modifications to files within
+/etc /usr /bin /sbin /lib /lib64 /opt will not be possible
+until successfully transitioning into the user domain.
+And that requires explicit authentication with a password.
+
+When a box has immune-security-tomoyo installed
+then the sorcery domain is used while compiling and installing software.
+It has the effect of not allowing configure nor make to install or modify files
+in /bin /sbin /lib /lib64 /usr /opt
+Therefore, it should reduce the amount of aliens that appear.
+However, when the domain_log feature is enabled
+then tomoyo's learning feature is enabled while a spell casts
+in order to learn requirements that are not easily apparent.
+
+So basically the problem that would prevent updating
+will not manifest with domain_log feature active.
+It is not actually a derailment of updates,
+and is definitely not distribution wide.
+It only effects a few of the boxes deployed with
+immune-security-tomoyo installed.
+Sorry for the inconvenience.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002388.html">[Sorcerer-admins] git support
+</A></li>
+	<LI>Next message: <A HREF="002390.html">[Sorcerer-admins] Help? SSHD version mismatch
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2389">[ date ]</a>
+              <a href="thread.html#2389">[ thread ]</a>
+              <a href="subject.html#2389">[ subject ]</a>
+              <a href="author.html#2389">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

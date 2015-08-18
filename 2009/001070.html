@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C596b75860904170901g34a6bf5bk4dba3c51100a3faa%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001069.html">
+   <LINK REL="Next"  HREF="001071.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] lvm, suspend, raid, swap, encryption...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20lvm%2C%20suspend%2C%20raid%2C%20swap%2C%20encryption...&In-Reply-To=%3C596b75860904170901g34a6bf5bk4dba3c51100a3faa%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] lvm, suspend, raid, swap, encryption...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Apr 17 18:01:22 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001069.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+        <LI>Next message: <A HREF="001071.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1070">[ date ]</a>
+              <a href="thread.html#1070">[ thread ]</a>
+              <a href="subject.html#1070">[ subject ]</a>
+              <a href="author.html#1070">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Apr 16, 2009 at 1:51 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+
+&gt;<i> 2) in sorcerer it's not possible to use software raid on top of lvm, since
+</I>&gt;<i> lvm shall be activated first before raid is activated, however I'm not sure
+</I>&gt;<i> that raid array can be dynimically updated like lvm allow
+</I>
+When I was deciding how it aught to work I found it interesting that
+certain choices had to be made that exclude some methods.
+Having LVM2 on top of software RAIDs made sense at the time.
+Use the software RAID to group up the disks.
+Use the LVM2 to break it down.
+However, LVM2 can also be used to group disks.
+But it does not have the same benefits of the software RAID.
+Are there reasons why this order is a mistake or less useful
+than had it been the other way around?
+
+
+&gt;<i> 3) encryption is the only thing that would work ;)
+</I>&gt;<i> so I'll drop the idea of using lvm, it's sure interesting to be more
+</I>&gt;<i> flexible and allow fast resizing of partitions, however I don't change&#160; my
+</I>&gt;<i> partition size every weekend and the actual size seems to fit me...
+</I>&gt;<i> I'll then simply activate my suspend (there are boons with suspend,
+</I>&gt;<i> especially on laptops when you run out of battery and don't wanna loose all
+</I>&gt;<i> your open applications...) and toy around with ext4....
+</I>
+Using LUKS encrypted partitions on a notebook that can suspend to disk
+seems counter intuitive, as I mentioned previously.
+Something that might otherwise be encrypted could end up
+written to the swap unencrypted during the suspend.
+If someone managed to un-suspend from disk the notebook
+then the encryption key for / or /home will be loaded back into
+memory and those filesystems will be mounted
+when the notebook resumes running
+if those filesystems were mounted when the notebook was suspended.
+
+
+Although I have not checked prices on large solid state drives,
+probability for an extra $100 a notebook can have a USB
+solid state drive to store almost everything required.
+The fixed disk could be turned into an extra long term
+storage area and spun up and down only when required.
+Probably a memory drive will not be as fast as a fixed disk,
+but the random access times should be excellent!
+It could make loading programs such as firefox nearly instant.
+firefox, for example, access many files while loading.
+And while each file might not be fragmented,
+they might not be close to each other on disk.
+
+Maybe longer battery life can be achieved by not using the fixed disk drive?
+I vaguely recollect seeing a notebook that advertised a battery charge
+that would power and run the notebook for 7 hours.
+Keep a notebook at 12.5% throttle, do not use the fixed disk drive,
+reduce LCD back-light intensity and maybe it can run for a while?
+Obviously, with 35W CPUs the notebook computer is not yet
+approaching the efficiency of a solar calculator.  *lol*
+Yes, I want a 16 gigaherts, 16 core, 256 bit, solar powered notebook.  :)
+Maybe someday, yes?
+
+I am open to suggestions for making Sorcerer
+boot and shutdown run faster.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001069.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+	<LI>Next message: <A HREF="001071.html">[Sorcerer-admins] lvm, suspend, raid, swap, encryption...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1070">[ date ]</a>
+              <a href="thread.html#1070">[ thread ]</a>
+              <a href="subject.html#1070">[ subject ]</a>
+              <a href="author.html#1070">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

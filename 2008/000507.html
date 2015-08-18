@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] A proper shutdown is more than a good idea...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20proper%20shutdown%20is%20more%20than%20a%20good%20idea...&In-Reply-To=%3C596b75860806161347i2d415f0bye940220456e5e276%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000506.html">
+   <LINK REL="Next"  HREF="000508.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] A proper shutdown is more than a good idea...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20proper%20shutdown%20is%20more%20than%20a%20good%20idea...&In-Reply-To=%3C596b75860806161347i2d415f0bye940220456e5e276%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] A proper shutdown is more than a good idea...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jun 16 22:47:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000506.html">[Sorcerer-admins] grimoire 2008-169
+</A></li>
+        <LI>Next message: <A HREF="000508.html">[Sorcerer-admins] gdm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#507">[ date ]</a>
+              <a href="thread.html#507">[ thread ]</a>
+              <a href="subject.html#507">[ subject ]</a>
+              <a href="author.html#507">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Previously, cast used CPU cycles each during each spell
+to determine if depmod should be run
+and to determine if symbolic links in /etc/rc.d/*/ should be regenerated.
+
+Now, modules.dep and symbolic links to init-scripts
+are regenerated as required during shutdown.
+This is very much like initramfs where a check is executed
+first during shutdown to determine if regeneration is required.
+
+Will it make shutdown slower?
+Both the checks together cost less than a second.
+However, if updating is required
+then shutdown time will be a few seconds longer.
+
+Overall this minor and almost inconsequential change
+conserves CPU during each spell cast.
+However, please remember to issue
+# shutdown -r now
+or
+# shutdown -h now
+after extensive updates and especially when a new kernel is installed.
+
+If you want to run the init-scripts manually
+then the order for execution is:
+
+/etc/init.d/depmod
+/etc/init.d/rc.d
+/etc/init.d/initramfs
+
+parameters are not required.
+
+Starting with sorcery implosion-20080616-0
+cast will no longer run /lib/lsb/install_initd nor depmod.
+
+The above described change is
+transparent and inconsequential to most Sorcerer SAs,
+however I expect a few SAs will want to know about it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000506.html">[Sorcerer-admins] grimoire 2008-169
+</A></li>
+	<LI>Next message: <A HREF="000508.html">[Sorcerer-admins] gdm
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#507">[ date ]</a>
+              <a href="thread.html#507">[ thread ]</a>
+              <a href="subject.html#507">[ subject ]</a>
+              <a href="author.html#507">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

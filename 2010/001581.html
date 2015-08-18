@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Dependancy missing?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dependancy%20missing%3F&In-Reply-To=%3Cl2s596b75861005032002pd115b4c7pd15d10d8285e83fc%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001580.html">
+   <LINK REL="Next"  HREF="001582.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Dependancy missing?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Dependancy%20missing%3F&In-Reply-To=%3Cl2s596b75861005032002pd115b4c7pd15d10d8285e83fc%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Dependancy missing?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue May  4 05:02:55 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001580.html">[Sorcerer-admins] Dependancy missing?
+</A></li>
+        <LI>Next message: <A HREF="001582.html">[Sorcerer-admins] .xz files don't get handled right?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1581">[ date ]</a>
+              <a href="thread.html#1581">[ thread ]</a>
+              <a href="subject.html#1581">[ subject ]</a>
+              <a href="author.html#1581">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oh, that does seem odd.
+
+
+# grep gmp /etc/sorcery/log/elf/gcc-core
+/usr/libexec/gcc/i686-pc-linux-gnu/4.4.3/cc1    /usr/lib/libgmpxx.so.4  gmp
+/usr/libexec/gcc/i686-pc-linux-gnu/4.4.3/cc1    /usr/lib/libgmp.so.3    gmp
+
+gmp is one of those libraries required by gcc
+So it must not be carelessly removed.
+However, the alien version of gmp installed on the box
+should be removed before it causes more headache.
+
+# ls -lah /usr/lib/libgmp*
+-rwxr-xr-x 1 root root  771 Apr 15 23:39 /usr/lib/libgmp.la
+lrwxrwxrwx 1 root root   15 Apr 15 23:39 /usr/lib/libgmp.so -&gt; libgmp.so.3.5.2
+lrwxrwxrwx 1 root root   15 Apr 15 23:39 /usr/lib/libgmp.so.3 -&gt; libgmp.so.3.5.2
+-rwxr-xr-x 1 root root 253K Apr 15 23:39 /usr/lib/libgmp.so.3.5.2
+-rwxr-xr-x 1 root root  824 Apr 15 23:39 /usr/lib/libgmpxx.la
+lrwxrwxrwx 1 root root   17 Apr 15 23:39 /usr/lib/libgmpxx.so -&gt;
+libgmpxx.so.4.1.2
+lrwxrwxrwx 1 root root   17 Apr 15 23:39 /usr/lib/libgmpxx.so.4 -&gt;
+libgmpxx.so.4.1.2
+-rwxr-xr-x 1 root root  11K Apr 15 23:39 /usr/lib/libgmpxx.so.4.1.2
+
+
+See how there is no libgmp.so.3.6.0 on the test box.
+No alien no problem.
+To discover installed aliens please:
+
+# cast sorcery-alien
+
+And then look at the compile log.
+
+# augur compile sorcery-alien
+
+Please carefully move aliens out of the main filesystem
+to ensure that no bad break occurs.
+
+Because you have a
+lrwxrwxrwx 1 root root      15 May  3 18:44 /usr/lib/libgmp.so.3 -&gt;
+libgmp.so.3.6.0
+
+on that box
+there might be a problem with missing symbols
+for running programs linked with gmp
+once that points correctly to libgmp.so.3.5.2
+That might even cause a problem for gcc.
+If necessary temporarily move the alien libgmp
+and symbolic link to /usr/local/lib
+Make sure the correct library and symbolic link
+are present in /usr/lib/
+recompile gcc-core
+Then remove the libgmp from /usr/local/lib
+
+Seems strange that the box ended up with multiple gmp installed.
+That should not happen.
+Sorry for the inconvenience.
+
+
+
+On Mon, May 3, 2010 at 6:46 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> ppl failed to build, when cast by hand, it claimed GMP of sufficient
+</I>&gt;<i> version was not found. &#160;casting gmp update. &#160;probably ppl needs
+</I>&gt;<i> dependancy on gmp.
+</I>&gt;<i>
+</I>&gt;<i> Hmm.. no... snippet of configure log from ppl...
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> checking for the GMP library version 4.1.3 or above... no
+</I>&gt;<i> configure: error: Cannot find GMP version 4.1.3 or higher.
+</I>&gt;<i> GMP is the GNU Multi-Precision library:
+</I>&gt;<i> see <A HREF="http://www.swox.com/gmp/">http://www.swox.com/gmp/</A> for more information.
+</I>&gt;<i> When compiling the GMP library, do not forget to enable the C++ interface:
+</I>&gt;<i> add --enable-cxx to the configuration options.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> previously this just finished....
+</I>&gt;<i>
+</I>&gt;<i> make[1]: Leaving directory `/usr/src/sorcery/gmp/gmp-4.3.2'
+</I>&gt;<i> Cast: &#160; Mon May &#160;3 18:44:21 PDT 2010 &#160; &#160;gmp &#160; &#160; 4.3.2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> so probably the find in the configure is bad?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001580.html">[Sorcerer-admins] Dependancy missing?
+</A></li>
+	<LI>Next message: <A HREF="001582.html">[Sorcerer-admins] .xz files don't get handled right?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1581">[ date ]</a>
+              <a href="thread.html#1581">[ thread ]</a>
+              <a href="subject.html#1581">[ subject ]</a>
+              <a href="author.html#1581">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Leech just waits forever
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140038q5fca2790j13b1bef8f69daa34%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000129.html">
+   <LINK REL="Next"  HREF="000130.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Leech just waits forever</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Leech%20just%20waits%20forever&In-Reply-To=%3C596b75860708140038q5fca2790j13b1bef8f69daa34%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Leech just waits forever">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug 14 09:38:13 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000129.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+        <LI>Next message: <A HREF="000130.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#132">[ date ]</a>
+              <a href="thread.html#132">[ thread ]</a>
+              <a href="subject.html#132">[ subject ]</a>
+              <a href="author.html#132">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>It should be understood that since leech and cast operate as background
+daemons that a strace on leech can carry over to a cast on a spell.
+So to put it simply.... only strace leech when you know that
+a cast can not follow leech because the cast queue is empty.
+Otherwise strace might run through many vforks?
+
+leech has a race condition only when the box is heavily loaded.
+In that event the actual number of spells being leeched may
+exceed the specified $LEECH_RATE
+
+# augur scry  $SPELL
+
+May somtimes stop displaying a scry for a spell
+during the time that spell goes from leeching to casting.
+That may depend upon a variety of things.
+But if you want to continue an augur scry  $SPELL
+after it exited prematurely then just issue
+# augur scry $SPELL
+
+It is not a serious bug.
+
+There are no known race conditions concerning cast.
+However, if a box was under extreme load then it may
+be possibile that the $CAST_RATE is momentarily exceeded.
+
+Extreme load is usually 20.0 load or higher and may involve swap trashing.
+Given that it is not something that I see on a
+Sorcerer box it is not something I try to fix.
+
+When Sorcerer SA set $LEECH_RATE to 255
+Setting $LEECH_RATE over 5 is not recommended.
+3 is good for most boxes.
+2 is often ideal.
+Afterall, you probably a box does not require the sources
+to be downloaded any faster than are needed for compilation.
+
+Most of my boxes are configured
+CAST_RATE=3
+LEECH_RATE=2
+
+In the rare event that a server is causing curl to hang...
+the LEECH_RATE=2 or LEECH_RATE=3
+can usually give ample time for other sources tarballs
+to be downloaded.
+And hopefully, the time required for other unrelated
+spells to compile will grant curl enough time to timeout
+and either retry that source or allow leech to progress
+at downloading other sources.
+
+Ah.... if it is not apparent...
+CAST_RATE=3 means that at most
+3 source tarballs can be untarred, configured, compiled, and installed
+concurrently.
+Likewise
+LEECH_RATE=2 means that at most 2 source tarballs
+can be downloaded concurrently.
+
+
+On 8/14/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on
+</I>&gt;<i> 13.08.2007 16:10:20:
+</I>&gt;<i>
+</I>&gt;<i>  &gt; Okay - then it is not the same problem - fair enough.
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; But still, do it wait on an outside connection ? px. check lsof -i
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; Or is it waiting for another process to finish ?
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; When does this situation happens ? What are happing else on the box at
+</I>&gt;<i>  &gt; the time ?
+</I>&gt;<i>
+</I>&gt;<i> Its older installation not sure what update broke it.
+</I>&gt;<i> Since its server which have lots of connections its hard to use lsof -i,
+</I>&gt;<i> because it shows lots of connections.
+</I>&gt;<i>
+</I>&gt;<i> What is somewhat wierd that it works now, one minute ago leech just waited
+</I>&gt;<i> then minute later it just works. No idea what happened, why it just works
+</I>&gt;<i> now, i did not do anything except straced it.
+</I>&gt;<i> Race condition and strace slowed it down so it passed it?
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; On 8/13/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on
+</I>&gt;<i>  &gt; &gt; 13.08.2007 13:15:54:
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt;  &gt; Yes I have seen this happen also - I think it was because that some
+</I>&gt;<i>  &gt; &gt;  &gt; server did not response  in a correct manner, therefore it need to
+</I>&gt;<i>  &gt; &gt;  &gt; timeout before it goes furthere
+</I>&gt;<i>  &gt; &gt;  &gt;
+</I>&gt;<i>  &gt; &gt;  &gt; I therefore created a curl rc file - with some new timeout values -
+</I>&gt;<i>  &gt; &gt;  &gt; check man curl for ideas.
+</I>&gt;<i>  &gt; &gt;  &gt; (as I can not remember those values I used right now)
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt; I dont see that it tries to run curl ever. So dont think problem is
+</I>&gt;<i> with
+</I>&gt;<i>  &gt; &gt; curl.
+</I>&gt;<i>  &gt; &gt; So, next idea?
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt; Terveisin/Regards,
+</I>&gt;<i>  &gt; &gt;    Pekka Panula, Net Servant Oy - A Sofor company
+</I>&gt;<i>  &gt; &gt;    Phone: +358 6 432 3232, GSM: +358 50 384 3232
+</I>&gt;<i>  &gt; &gt;    <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt; _______________________________________________
+</I>&gt;<i>  &gt; &gt; Sorcerer-admins mailing list
+</I>&gt;<i>  &gt; &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt; &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; --
+</I>&gt;<i>  &gt; Best regards
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; Bent Jakobsen
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; MSN: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>
+</I>&gt;<i>  &gt; -----------------------
+</I>&gt;<i>  &gt; Sorcerer poetry in code
+</I>&gt;<i>  &gt; Magic in action
+</I>&gt;<i>  &gt; -----------------------
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; Real Unix/Linux men, do not use Emacs, neither vi, neither ed
+</I>&gt;<i>  &gt; They use cat, and get it right the first time
+</I>&gt;<i>  &gt;
+</I>&gt;<i>  &gt; Real Windows men, do not click, neither use Notepad, neither use edlin
+</I>&gt;<i>  &gt; They use echo, and get it right the first time
+</I>&gt;<i>  &gt; _______________________________________________
+</I>&gt;<i>  &gt; Sorcerer-admins mailing list
+</I>&gt;<i>  &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>  &gt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> Terveisin/Regards,
+</I>&gt;<i>    Pekka Panula, Net Servant Oy - A Sofor company
+</I>&gt;<i>    Phone: +358 6 432 3232, GSM: +358 50 384 3232
+</I>&gt;<i>    <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000129.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+	<LI>Next message: <A HREF="000130.html">[Sorcerer-admins] Leech just waits forever
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#132">[ date ]</a>
+              <a href="thread.html#132">[ thread ]</a>
+              <a href="subject.html#132">[ subject ]</a>
+              <a href="author.html#132">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

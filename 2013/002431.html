@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcerer web pages and ppr services are down	atm
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcerer%20web%20pages%20and%20ppr%20services%20are%20down%0A%09atm&In-Reply-To=%3CCA%2BT4wDi6C-KNQG7gJQnPB2QKJS5vK9eBn%2BvOaVJn85Gw%3D6qyuA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002430.html">
+   <LINK REL="Next"  HREF="002432.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcerer web pages and ppr services are down	atm</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcerer%20web%20pages%20and%20ppr%20services%20are%20down%0A%09atm&In-Reply-To=%3CCA%2BT4wDi6C-KNQG7gJQnPB2QKJS5vK9eBn%2BvOaVJn85Gw%3D6qyuA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcerer web pages and ppr services are down	atm">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jun  3 16:33:57 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002430.html">[Sorcerer-admins] sorcerer web pages and ppr services are down	atm
+</A></li>
+        <LI>Next message: <A HREF="002432.html">[Sorcerer-admins] webserver and services are restored...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2431">[ date ]</a>
+              <a href="thread.html#2431">[ thread ]</a>
+              <a href="subject.html#2431">[ subject ]</a>
+              <a href="author.html#2431">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I also am unable to log in with ssh.
+Could be that that I misconfigured networking.
+Networking on the Ethernet adapters should begin during sysinit.
+Then, the VETH are created.
+One of each VETH pair are moved into a root file system.
+Then later during runlevel the VETH in each root file system is initialized.
+The IP address to use is determined by the VETH's name.
+And then any other IP address to assign to the VETH
+is acquired from /etc/hosts where the the content of /etc/rootname
+matches a line providing an IP address in /etc/hosts
+
+If a line accidentally existed but perhaps should not have
+then the same IP address might have been assigned to the
+Ethernet adapter in the rootfs and the VETH in the root file system.
+I do not know what happens if that happens,
+but if it happens it probably might not work.
+
+If only ssh worked I might be able to identify and fix other problems
+remotely.
+However, at the moment logind is likely to be running.
+If not then a login is started on virtual console #2 that lasts as long as
+sysinit.
+Error messages in the login scroll remain in the screen buffer
+provided that the active virtual console is not changed.
+Scrolling the visible portion of the screen buffer
+is accomplished by pressing and holding the left shift key
+while pressing either page up or page down keys.
+On some computers all the lines from the moment the kernel first
+started printing them until the completion of the runlevel will be visible.
+
+Hints about what init-scripts passed and failed are stored in /var/log/init/
+Those that failed have directories in /var/log/init/failed/
+The /var/log/init/ on the rootfs differs from the /var/log/init/ on root
+file systems.
+The rootfs one only contains information about init-scripts that ran during
+sysinit.
+Likewise the /var/log/init/ on root file systems on provide information
+that pertains to what happened during the runlevel execution
+for that root file system.
+
+By first scrolling upwards from the end of the boot
+any clues about what failed should be there.
+If logind is running then login to the rootfs and root file system should
+be possible.
+If logind is not running then login would be possible during sysinit
+by switching to the second or next active virtual console.
+If for some reason that did not work then a shell can be provide
+instead of going through the normal login process by booting a label
+and providing the additional kernel parameter of bash
+That is preferred over rdinit=/bin/bash because on some computers
+modules must be loaded before a USB keyboard becomes available.
+
+The fault of the computers not booting is mine.
+I made some sort of error.
+I was not able to check it, because the computer is located remotely.
+If I were debugging the problem then I would be curious as to
+whether the network adapter in the rootfs is configured correctly
+and as to whether the VETH in the root file system configured correctly.
+
+If ssh access is restored then I can probably investigate and repair
+any lingering problems.
+Since I feel certain that I remembered to put the rootname in /etc/rootname
+then my best guess why networking might not be working is that
+a line exists in /etc/hosts for the rootname and that same IP address
+is being assigned to the network adapters in the rootfs and
+the VETH in the root file system.
+But that is just a wild guess.
+
+
+On Mon, Jun 3, 2013 at 3:09 AM, &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+
+&gt;<i> Virtualbox crashed last night. I have host machine up and running, but
+</I>&gt;<i> sorcerer and ppr machines wont boot to login-prompt nor can i ssh to them.
+</I>&gt;<i>
+</I>&gt;<i> ATM have no clue what to fix because init seems to be so much different
+</I>&gt;<i> than last time i checked it, which was like over year ago.
+</I>&gt;<i>
+</I>&gt;<i> I can get to prompt when i do control-alt-del and choose sulogin, now i
+</I>&gt;<i> need more info what should i do.
+</I>&gt;<i>
+</I>&gt;<i> Heres screenshot:
+</I>&gt;<i>
+</I>&gt;<i> after that last INIT line, nothing happens it seems.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130603/cfa3fba5/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130603/cfa3fba5/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002430.html">[Sorcerer-admins] sorcerer web pages and ppr services are down	atm
+</A></li>
+	<LI>Next message: <A HREF="002432.html">[Sorcerer-admins] webserver and services are restored...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2431">[ date ]</a>
+              <a href="thread.html#2431">[ thread ]</a>
+              <a href="subject.html#2431">[ subject ]</a>
+              <a href="author.html#2431">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

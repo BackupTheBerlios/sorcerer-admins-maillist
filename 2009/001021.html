@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] To preserve or to backup, that is the question, no longer!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20preserve%20or%20to%20backup%2C%20that%20is%20the%20question%2C%0A%20no%20longer%21&In-Reply-To=%3C49A0185D.4050509%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001010.html">
+   <LINK REL="Next"  HREF="001022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] To preserve or to backup, that is the question, no longer!</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20To%20preserve%20or%20to%20backup%2C%20that%20is%20the%20question%2C%0A%20no%20longer%21&In-Reply-To=%3C49A0185D.4050509%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] To preserve or to backup, that is the question, no longer!">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sat Feb 21 16:06:05 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001010.html">[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+</A></li>
+        <LI>Next message: <A HREF="001022.html">[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1021">[ date ]</a>
+              <a href="thread.html#1021">[ thread ]</a>
+              <a href="subject.html#1021">[ subject ]</a>
+              <a href="author.html#1021">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee wrote:
+&gt;<i> For a while I considered that preserve/backup feature was confusing.
+</I>&gt;<i> I barely remembered which was which nor which did what.
+</I>&gt;<i> Consequently, I am removing it.
+</I>&gt;<i>
+</I>&gt;<i> I do not recall the original purpose of the backup/preserve feature.
+</I>&gt;<i>   
+</I>backup feature was because long time ago sorcery was not stable enough 
+for my own usage.... I crashed the box several times without backup to 
+restore and then had to preform a whole install... however this don't 
+appears to be the case now (more than 1 year without reinstall...)
+&gt;<i> I tend to expect that the SA or SAs that requested it did
+</I>&gt;<i> were not clear about what they wanted.
+</I>&gt;<i> This is what happens when an idea
+</I>&gt;<i> is not carefully considered prior to implementation.
+</I>&gt;<i> It creates something that is confusing, difficult, and probably less
+</I>&gt;<i> than desired.
+</I>&gt;<i> Therefore, I am removing it.
+</I>&gt;<i>   
+</I>well we discussed long time though... ;)
+for preserve I've no idea about what it was doing.... backup was 
+creating incremental backup of the system to allow an emergency recovery 
+using simply tar
+then with a small subset of statically linked apps you could still boot 
+on the system and restore it...
+&gt;<i> The following will be the current rules regarding most files in /etc/
+</I>&gt;<i> The rules below do not apply to files in /etc/{gconf,sorcery,init.d}/
+</I>&gt;<i>
+</I>&gt;<i> When a spell is dispelled,
+</I>&gt;<i> it's modified files from /etc/
+</I>&gt;<i> are transferred to /etc.sav/
+</I>&gt;<i> where only /etc.sav/ renames /etc/
+</I>&gt;<i> This way after the the updated spell finishes installing
+</I>&gt;<i> modified /etc/ files can be transferred back into /etc/
+</I>&gt;<i> Convenient, yes?
+</I>&gt;<i>
+</I>&gt;<i> The original /etc/ files for spells are now installed in both
+</I>&gt;<i> /etc/ and also /etc.ori/
+</I>&gt;<i> This way diffing a modified and original /etc/ file
+</I>&gt;<i> is as easy as executing the diff command.
+</I>&gt;<i> Yes, /etc.ori/ is a bit non standard.
+</I>&gt;<i> And so is /etc.sav/
+</I>&gt;<i> However, these aught to give SAs
+</I>&gt;<i> greater convenience than the choice between
+</I>&gt;<i> a preserve and backup rules.
+</I>&gt;<i> And most boxes have plenty of space to nearly replicate /etc/
+</I>&gt;<i>
+</I>&gt;<i> The files in /etc.ori/ are merely for SA convenience.
+</I>&gt;<i> They have no checksums.
+</I>&gt;<i> Consequently, removing them should not create problems.
+</I>&gt;<i>
+</I>&gt;<i> Although not /etc/ files,
+</I>&gt;<i> all files installed in /usr/doc/ /usr/share/doc/ /usr/share/locale/LC_MESSAGES/
+</I>&gt;<i> can also be removed anytime.
+</I>&gt;<i> No CPU cycles or disk wear and tear is wasted on
+</I>&gt;<i> checking the content of files that are often unessential.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Did someone ask how to reconfigure all the installed spells on a Sorcerer box.
+</I>&gt;<i>
+</I>&gt;<i> # rm /etc/sorcery/log/config/*/sorcery /etc/sorcery/log/opt.{on,off}/*
+</I>&gt;<i> # cast --deps $( augur installed )
+</I>&gt;<i>
+</I>&gt;<i> However, I have not tried it.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001010.html">[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+</A></li>
+	<LI>Next message: <A HREF="001022.html">[Sorcerer-admins] To preserve or to backup, that is the question,	no longer!
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1021">[ date ]</a>
+              <a href="thread.html#1021">[ thread ]</a>
+              <a href="subject.html#1021">[ subject ]</a>
+              <a href="author.html#1021">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

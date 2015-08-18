@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] current I/R does not install bootloader
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3COF36BD7F10.DF1D4444-ONC225751C.003BDCF8-C225751C.003D0A97%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000923.html">
+   <LINK REL="Next"  HREF="000926.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] current I/R does not install bootloader</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20current%20I/R%20does%20not%20install%20bootloader&In-Reply-To=%3COF36BD7F10.DF1D4444-ONC225751C.003BDCF8-C225751C.003D0A97%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] current I/R does not install bootloader">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu Dec 11 12:06:43 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000923.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+        <LI>Next message: <A HREF="000926.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#925">[ date ]</a>
+              <a href="thread.html#925">[ thread ]</a>
+              <a href="subject.html#925">[ subject ]</a>
+              <a href="author.html#925">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE><A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-bounces at lists.berlios.de</A> wrote on 11.12.2008 12:30:23:
+
+&gt;<i> &gt; Pretty sure initramfs does not cast at all.
+</I>&gt;<i> &gt; Hmm, i might now suspect chroot casting does not work at current I/R 
+</I>.iso.
+&gt;<i> 
+</I>&gt;<i> The none of the chrooted casting worked then?
+</I>
+Hmm, i think it did not cast anything at any point. I partitioned disk, 
+did format partitions, etc. and transfer files, but i dont recall it did 
+any cast operations, so that why i suspect chroot cast did not worked (and 
+because i did try it manually, chroot /media/root/, and it did not find 
+shell, or something. If i recall right, there was indeed no shell at 
+/bin...
+
+&gt;<i> That is a bit of a problem.
+</I>&gt;<i> Yet it will have to wait until I roll the next I/Rs
+</I>&gt;<i> 
+</I>&gt;<i> &gt;&gt; If a SA does not do the compilation step as part of the installation
+</I>&gt;<i> &gt;&gt; then the SA will have to manually chroot to /media/root/
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Hmm, i think i did try to chroot to /media/root/ but it did not 
+</I>worked.
+&gt;<i> &gt; So perhaps transfer is to blame?
+</I>&gt;<i> 
+</I>&gt;<i> Well if transferring did not work then chroot building would not work,
+</I>&gt;<i> however there would also probably be nothing installed.
+</I>&gt;<i> How did you make it work with nothing installed?
+</I>&gt;<i> Did you do a manual installation?
+</I>
+It did transfer files ok, atleast it did not report any errors (or i did 
+not see any errors atleast) and when i did goto /media/root/ it was full 
+of files/directories, looked ok. Except there was no any point 
+/etc/lilo.conf, only those lilo.conf.head, etc, so i manually made 
+lilo.conf using them and manually runned lilo command, it has parameter to 
+use directory as root directory so it did not needed chrooting.
+
+&gt;<i> Evert gave me extensive input for what he wants to see in the next
+</I>&gt;<i> menu driven I/R installer.
+</I>&gt;<i> Consequently, I have to do full testing on it anyway.
+</I>&gt;<i> It is nearly a one menu design.
+</I>&gt;<i> It feels a bit overwhelming to me,
+</I>&gt;<i> but we shall see if it works or not.
+</I>&gt;<i> Evert did not like the idea of having to leave the disk menu
+</I>&gt;<i> with partitions mounted in order to goto the compile menu.
+</I>&gt;<i> It was perhaps counter intuitive?
+</I>
+Perhaps more wizard like could be better? Like all others distros does 
+installer, they are wizard like. That might be better approach than 
+manually selecting menus, etc. thats confusing.
+ 
+&gt;<i> I miss the days when I had enough CPU power to grind out I/Rs
+</I>&gt;<i> one day after the next if a bad mistake was made.
+</I>&gt;<i> But there was no x86_64 port back then.
+</I>
+Well just wait when i get my new server online so we can virtualize 
+devboxes, allthough testing I/R might be difficult to handle unless i make 
+you an access to main linux where virtual servers are runned/created. 
+Think i will use KVM, instead Xen. 
+I managed to get HDD drivers yesterday, 3 * 750GB SATA 2 drivers, just 
+testing them on software raid, RAID5, sequential read speed about 
+250MB/sec (thats bytes not bits) at beginning part and end part gives 
+about 100MB/sec. Will test also RAID10... But with RAID5 i will get 1.5TB 
+space... 
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081211/86c7609b/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081211/86c7609b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000923.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+	<LI>Next message: <A HREF="000926.html">[Sorcerer-admins] current I/R does not install bootloader
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#925">[ date ]</a>
+              <a href="thread.html#925">[ thread ]</a>
+              <a href="subject.html#925">[ subject ]</a>
+              <a href="author.html#925">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

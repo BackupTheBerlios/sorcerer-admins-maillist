@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] useless jdk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C1de9d39c0905141040p628b3036t3e86e8828f1a5359%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001180.html">
+   <LINK REL="Next"  HREF="001193.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] useless jdk</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C1de9d39c0905141040p628b3036t3e86e8828f1a5359%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] useless jdk">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu May 14 19:40:07 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001180.html">[Sorcerer-admins] useless jdk
+</A></li>
+        <LI>Next message: <A HREF="001193.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1182">[ date ]</a>
+              <a href="thread.html#1182">[ thread ]</a>
+              <a href="subject.html#1182">[ subject ]</a>
+              <a href="author.html#1182">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>that's not true if you're far from consuming all memory.... on my
+system with my own use I have no swap/disk activity at all
+so you gain the performance of having more registers available also...
+
+that's why I'm really surprised by such use of memory usage of thoses
+applications
+for me if it appears in VIRT this means that this memory has been
+allocated (by malloc, new, calloc....) or that it is on the stack (so
+as local variables) this means that those app do allocate memory they
+don't use (some pages goes to swap endlessly) or do consume that many
+memory (memory leaks?) and for me it don't even come to my mind to
+write software that do so simple task and consume that much memory
+
+JLM
+
+
+On Thu, May 14, 2009 at 1:28 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> There are 3 things we should remember.
+</I>&gt;<i>
+</I>&gt;<i> More memory consumed = more page faulting = slower programs.
+</I>&gt;<i> Something that I discovered with the sdelta series of programs
+</I>&gt;<i> was that it was faster to repeatedly calculate as required a block size
+</I>&gt;<i> using a subtraction of offsets rather than to store block sizes
+</I>&gt;<i> using additional memory.
+</I>&gt;<i> An x86_64 operating system uses by default
+</I>&gt;<i> 64 bit integers instead of 32 bit integers.
+</I>&gt;<i> 64 bit are twice as large and therefore use twice as much memory.
+</I>&gt;<i> The x86_64 instruction set is also a bit larger.
+</I>&gt;<i> Consequently, x86_64 will use more memory.
+</I>&gt;<i> Using more memory = slower execution.
+</I>&gt;<i>
+</I>&gt;<i> Almost all programs used today are written for 32 bit architecture,
+</I>&gt;<i> and some would still work on 16 bit architecture.
+</I>&gt;<i> Programs designed for 32 bit architecture run no faster for
+</I>&gt;<i> being compiled on 64 bit architecture.
+</I>&gt;<i> Some programs do use 64 bit integers explicitly,
+</I>&gt;<i> such as the programs that I write.
+</I>&gt;<i> However, the compiler can still handle 64 bit integer math using
+</I>&gt;<i> 32 bit registers by using additional instructions.
+</I>&gt;<i>
+</I>&gt;<i> While 64 bit architecture does allow addressing nearly 64G of memory,
+</I>&gt;<i> few programs address more than 1G of memory,
+</I>&gt;<i> mostly by design, but a few respect the limitations of
+</I>&gt;<i> being run on 32 bit operating systems.
+</I>&gt;<i>
+</I>&gt;<i> So will running a 64 bit operating system grant better program performance?
+</I>&gt;<i> Probably not.
+</I>&gt;<i> It uses a bit more memory and a bit more disk space than IA32.
+</I>&gt;<i> However, there are some instances where a 64 bit operating system
+</I>&gt;<i> would be good for the task:
+</I>&gt;<i> a dedicated high a capacity database server;
+</I>&gt;<i> a top level domain name server.
+</I>&gt;<i>
+</I>&gt;<i> When there is a great deal of data that is needed
+</I>&gt;<i> and must be accessed quickly,
+</I>&gt;<i> and have as much stored in RAM as possible
+</I>&gt;<i> then those roles are better suited to 64 bit architecture
+</I>&gt;<i> than 32 bit architecture,
+</I>&gt;<i> and a box fully loaded with RAM.
+</I>&gt;<i>
+</I>&gt;<i> So with that said, no Sorcerer SA need be sad
+</I>&gt;<i> about running Sorcerer IA32 on their x86_64 boxes
+</I>&gt;<i> instead of Sorcerer x86_64.
+</I>&gt;<i> With delayed bus writes and half sized integers
+</I>&gt;<i> performance of an IA32 operating system on an x86_64 box
+</I>&gt;<i> aught to be excellent.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, May 13, 2009 at 1:22 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> That, and flash support are the two main reasons I have decided to run 32bit
+</I>&gt;&gt;<i> on my Core2.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> :(
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001180.html">[Sorcerer-admins] useless jdk
+</A></li>
+	<LI>Next message: <A HREF="001193.html">[Sorcerer-admins] useless jdk
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1182">[ date ]</a>
+              <a href="thread.html#1182">[ thread ]</a>
+              <a href="subject.html#1182">[ subject ]</a>
+              <a href="author.html#1182">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] (no subject)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%28no%20subject%29&In-Reply-To=%3CCAER78vQZd7gdDpo%2BOrXevmCUfGJPuFEor6oCKT2XA-nFQromMQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002360.html">
+   <LINK REL="Next"  HREF="002362.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] (no subject)</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%28no%20subject%29&In-Reply-To=%3CCAER78vQZd7gdDpo%2BOrXevmCUfGJPuFEor6oCKT2XA-nFQromMQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] (no subject)">evorster at gmail.com
+       </A><BR>
+    <I>Fri Aug 10 08:56:03 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002360.html">[Sorcerer-admins] (no subject)
+</A></li>
+        <LI>Next message: <A HREF="002362.html">[Sorcerer-admins] rdinit=/bin/bash is a bummer with a USB keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2361">[ date ]</a>
+              <a href="thread.html#2361">[ thread ]</a>
+              <a href="subject.html#2361">[ subject ]</a>
+              <a href="author.html#2361">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there, Leanna.
+
+Welcome to Sorcery.
+
+You won't find many Sorcerer admins that are dual-booting, but fortunately
+for you, I am one.
+I'm sure that I don't have to repeat all the warnings about backing up your
+data before trying to install an OS to your hard disk.
+
+Sorcery setup does not support dual booting as such, but does not get in
+it's way either.
+
+As such I highly recommend that you use your already installed OS to
+re-partition and make space for Sorcery.
+
+If you have the disk space available, 100GB for a single Sorcery partition
+would leave you with plenty of room to grow. If free space is tight, you
+can still install Sorcery in 40GB of space, but it won't be as comfy.
+
+There is no need to change your bootloader, grub is fine.
+
+Something to watch out for, is that grub and the rest of the world number
+partitions differently from each other. In your case, when you make the
+sorcery partition, simply make it a unique size, and take a note of that
+size. Take a note of the name that Grub calls it, and the size that you
+allocated to it.
+
+Now, when you run the Sorcery installer, install to your newly created
+partition. It's been a few years since I ran the Sorcerer installer, so I
+might be fuzzy on a few details, but I do believe that you can actually
+boot in &quot;I/R&quot; ( Install/Rescue ) mode, pop down to the shell and run cfdisk
+to inspect your partitions, and see what names sorcery will be giving them.
+Please be careful not to write with cfdisk, just take a look and quit
+without writing anything to disk.
+
+So, run the installer again, and install Sorcery to the partition that you
+created earlier.
+
+Boot into your installed OS, and update GRUB to chainload the partition
+that you created.
+
+You should now be able to dual boot between Sorcery and your other OS.
+
+So, let me reply to your other questions:
+
+
+1. Is it required to set up a wired or wireless connection during
+&gt;<i> installation?
+</I>&gt;<i>
+</I>Not really, but you will need an internet connection for Sorcery when you
+want to update/install anything, obviously.
+If you have DHCP enabled wired or wireless, Sorcery should detect and use
+it automatically.
+
+
+
+&gt;<i> 2. Are there any post-install necessities?
+</I>&gt;<i>
+</I>Reading lots of manuals, unfortunately.
+Fortunately, Kyle included loads of help on the command line. If you find
+any of that useful, drop him a mail expressing your gratitude. :)
+For starters, you can run sorcery. Just type &quot;sorcery&quot; on the command line,
+and press enter. There is a graphical menu to help you.
+
+Later on, you will find that running &quot;augur&quot; directly is more efficient,
+but have a good play with the sorcery menu first.
+
+
+
+&gt;<i> 3. I went a bit into the installation before rewinding, and I noticed this
+</I>&gt;<i> doesn't seem to use the grub bootloader. The thing is, I already have grub.
+</I>&gt;<i> Is there a way for Sorcerer to use grub, or do I have to install lilo?
+</I>&gt;<i>
+</I>Grub is fine, as I explained above.
+
+
+Any more questions, I will be happy to help.
+
+Kind regards,
+-Evert Vorster-
+
+P.S. it's not often that we get a newbie around here, and your questions
+and remarks are incredibly important to us in making Sorcery more newbie
+friendly. So, please feel free to jot down what you have problems with,
+what you found easy and your overall user experience... and send that back
+to us to help us improve.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20120810/2e924f40/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20120810/2e924f40/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002360.html">[Sorcerer-admins] (no subject)
+</A></li>
+	<LI>Next message: <A HREF="002362.html">[Sorcerer-admins] rdinit=/bin/bash is a bummer with a USB keyboard
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2361">[ date ]</a>
+              <a href="thread.html#2361">[ thread ]</a>
+              <a href="subject.html#2361">[ subject ]</a>
+              <a href="author.html#2361">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

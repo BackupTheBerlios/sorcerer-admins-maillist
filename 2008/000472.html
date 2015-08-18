@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] httpd installs to /usr/local/ ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20httpd%20installs%20to%20/usr/local/%20%3F&In-Reply-To=%3COF7C3B8AA0.43EBEE93-ONC2257458.00393A64-C2257458.0039593D%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000474.html">
+   <LINK REL="Next"  HREF="000473.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] httpd installs to /usr/local/ ?</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20httpd%20installs%20to%20/usr/local/%20%3F&In-Reply-To=%3COF7C3B8AA0.43EBEE93-ONC2257458.00393A64-C2257458.0039593D%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] httpd installs to /usr/local/ ?">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu May 29 12:26:23 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000474.html">[Sorcerer-admins] perl 5.10.0 sources failed to download
+</A></li>
+        <LI>Next message: <A HREF="000473.html">[Sorcerer-admins] httpd installs to /usr/local/ ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#472">[ date ]</a>
+              <a href="thread.html#472">[ thread ]</a>
+              <a href="subject.html#472">[ subject ]</a>
+              <a href="author.html#472">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+I just updated httpd and i am now wondering why it seems to installs 
+itself to under /usr/local/? Anyone else noticed this problem?
+
+------------------8&lt;-------------------
+/etc/init.d/httpd
+/etc/sorcery/log/compile/httpd
+/etc/sorcery/log/compile/httpd.gz
+/etc/sorcery/log/elf/httpd
+/etc/sorcery/log/id/httpd
+/etc/sorcery/log/install/httpd
+/etc/sorcery/log/la/httpd
+/etc/sorcery/log/md5sum/httpd.gz
+/etc/sorcery/log/snap/httpd.gz
+/etc/sorcery/log/version/httpd
+/usr
+/usr/local/apache2
+/usr/local/apache2/bin
+/usr/local/apache2/bin/ab
+/usr/local/apache2/bin/apachectl
+/usr/local/apache2/bin/apr-1-config
+/usr/local/apache2/bin/apu-1-config
+/usr/local/apache2/bin/apxs
+/usr/local/apache2/bin/checkgid
+/usr/local/apache2/bin/dbmmanage
+/usr/local/apache2/bin/envvars
+/usr/local/apache2/bin/envvars-std
+
+.... and so on
+
+/usr/local/apache2/modules/mod_ssl.so
+/usr/local/apache2/modules/mod_status.so
+/usr/local/apache2/modules/mod_substitute.so
+/usr/local/apache2/modules/mod_unique_id.so
+/usr/local/apache2/modules/mod_userdir.so
+/usr/local/apache2/modules/mod_usertrack.so
+/usr/local/apache2/modules/mod_version.so
+/usr/local/apache2/modules/mod_vhost_alias.so
+/usr/share
+/usr/share/httpd
+/usr/share/httpd/cgi-bin.ssl
+/usr/share/httpd/htdocs.ssl
+/usr/share/httpd/logs
+/var
+/var/lib
+/var/lib/httpd
+/var/lib/httpd/run
+------------------8&lt;-------------------
+
+Compile log
+------------------8&lt;-------------------
+Compile log for httpd 2.2.8
+Built with sorcery implosion-20080526-0 and gcc 4.3.0
+Built on Thu May 29 13:16:59 EEST 2008
+cp: cannot stat `ssl-std.conf': No such file or directory
+sed: can't read ssl-std.conf.b4: No such file or directory
+found apr source: srclib/apr
+found apr-util source: srclib/apr-util
+rebuilding srclib/apr/configure
+buildconf: checking installation...
+buildconf: python version 2.5.1 (ok)
+buildconf: autoconf version 2.62 (ok)
+buildconf: libtool version 1.5.26 (ok)
+Copying libtool helper files ...
+buildconf: Using libtool.m4 at /opt/libtool/share/aclocal/libtool.m4.
+Creating include/arch/unix/apr_private.h.in ...
+configure.in:143: warning: AC_COMPILE_IFELSE was called before 
+AC_USE_SYSTEM_EXTENSIONS
+../../lib/autoconf/specific.m4:385: AC_USE_SYSTEM_EXTENSIONS is expanded 
+from...
+../../lib/autoconf/specific.m4:456: AC_MINIX is expanded from...
+configure.in:143: the top level
+configure.in:143: warning: AC_RUN_IFELSE was called before 
+AC_USE_SYSTEM_EXTENSIONS
+Creating configure ...
+configure.in:143: warning: AC_COMPILE_IFELSE was called before 
+AC_USE_SYSTEM_EXTENSIONS
+../../lib/autoconf/specific.m4:385: AC_USE_SYSTEM_EXTENSIONS is expanded 
+from...
+../../lib/autoconf/specific.m4:456: AC_MINIX is expanded from...
+configure.in:143: the top level
+configure.in:143: warning: AC_RUN_IFELSE was called before 
+AC_USE_SYSTEM_EXTENSIONS
+Generating 'make' outputs ...
+rebuilding rpm spec file
+rebuilding srclib/apr-util/configure
+
+Looking for apr source in /usr/src/sorcery/httpd/httpd-2.2.8/srclib/apr
+Creating include/private/apu_config.h ...
+Creating configure ...
+Generating 'make' outputs ...
+
+... etc
+------------------8&lt;-------------------
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080529/dcab20dd/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20080529/dcab20dd/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000474.html">[Sorcerer-admins] perl 5.10.0 sources failed to download
+</A></li>
+	<LI>Next message: <A HREF="000473.html">[Sorcerer-admins] httpd installs to /usr/local/ ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#472">[ date ]</a>
+              <a href="thread.html#472">[ thread ]</a>
+              <a href="subject.html#472">[ subject ]</a>
+              <a href="author.html#472">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

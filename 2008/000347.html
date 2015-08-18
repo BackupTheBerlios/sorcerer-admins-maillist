@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] tcp_wrappers instead of iptables?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20tcp_wrappers%20instead%20of%20iptables%3F&In-Reply-To=%3C596b75860801081158p77c26297ue18a999703270ff5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000344.html">
+   <LINK REL="Next"  HREF="000348.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] tcp_wrappers instead of iptables?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20tcp_wrappers%20instead%20of%20iptables%3F&In-Reply-To=%3C596b75860801081158p77c26297ue18a999703270ff5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] tcp_wrappers instead of iptables?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jan  8 20:58:55 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000344.html">[Sorcerer-admins] tcp_wrappers instead of iptables?
+</A></li>
+        <LI>Next message: <A HREF="000348.html">[Sorcerer-admins] ATI 9800 pro melts yet another fan.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#347">[ date ]</a>
+              <a href="thread.html#347">[ thread ]</a>
+              <a href="subject.html#347">[ subject ]</a>
+              <a href="author.html#347">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Jan 8, 2008 9:16 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Monday 07 January 2008, Kyle Sallee wrote:
+</I>&gt;<i> &gt; Does anyone have an objection to static configuration of ports involving
+</I>&gt;<i> &gt; NFS? Does anyone have it already configured with static port numbers?
+</I>&gt;<i> Yes, my boxes use static ports for NFS.
+</I>&gt;<i>
+</I>&gt;<i> &gt; What port numbers should it be assigned?
+</I>&gt;<i> Should be user configured, depends on local network setup.
+</I>&gt;<i>
+</I>&gt;<i> What happens to DenyHosts now that you plan to drop tcp_wrappers? I use
+</I>&gt;<i> DenyHosts on all boxes with public IP addresses to curtail ssh attacks and
+</I>&gt;<i> email reports.
+</I>
+How is using DenyHosts better than using iptables
+to control access to ssh and log and drop potential attacks?
+The reason I am asking is because I understand how iptables can do that.
+However, I have no experience with DenyHosts.
+I do not want to conjecture or prejudice myself one way or the other about it.
+However, I am under the impression that packet filtering is handled
+more efficiently within the kernel rather than user space.
+
+True, I want to drop tcp_wrappers.
+But rather than just kicking it straight out of the grimoire
+I am opening the topic for discussion and debate.
+I hope to arrive at a solution that is both good
+in the short term and also good in the long term.
+The transition to iptables might be a good solution
+for the distant future, because it will not require a
+patch to compile like tcp_wrappers does.
+And should someone notice a problem with it
+we can expect a fix from the linux maintainers.
+Afterall, 11 years is a long time for a security
+related piece of software to go without a security patch.
+And the fact that we use a patch to compile it,
+and have since 2005, suggests that tcp_wrappers
+is no longer maintained software.
+
+tcp_wrappers may have the comfortable feeling
+of an old and familiar cane.
+But the termites of time have been eating away at it.
+And nobody knows if we can count on it for another decade?
+In contrast to iptables...
+Sure, there was ipchains before and now iptables.
+But the linux kernel still supports ipchains should a SA want to use it.
+When the linux kernel switches to whatever replaces iptables
+there is a chance that iptables will continue to be maintained
+for a while yet to come.
+
+Now at best I have presented only a one sided opinion.
+Since I do not use tcp_wrappers I have nothing positive to say about it.
+However, I did use it in 1999 and 2000 and thought it was a very
+convenient way to restrict access to services.
+But that was close to a decade ago.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000344.html">[Sorcerer-admins] tcp_wrappers instead of iptables?
+</A></li>
+	<LI>Next message: <A HREF="000348.html">[Sorcerer-admins] ATI 9800 pro melts yet another fan.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#347">[ date ]</a>
+              <a href="thread.html#347">[ thread ]</a>
+              <a href="subject.html#347">[ subject ]</a>
+              <a href="author.html#347">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

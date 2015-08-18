@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] How to deploy a new box from an old box...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20to%20deploy%20a%20new%20box%20from%20an%20old%20box...&In-Reply-To=%3C596b75860808291420o317adad7ra7d960844f8896c4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000736.html">
+   <LINK REL="Next"  HREF="000738.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] How to deploy a new box from an old box...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20How%20to%20deploy%20a%20new%20box%20from%20an%20old%20box...&In-Reply-To=%3C596b75860808291420o317adad7ra7d960844f8896c4%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] How to deploy a new box from an old box...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Aug 29 23:20:54 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000736.html">[Sorcerer-admins] I/R Building... and observations about	current...
+</A></li>
+        <LI>Next message: <A HREF="000738.html">[Sorcerer-admins] How to deploy a new box from an old box...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#737">[ date ]</a>
+              <a href="thread.html#737">[ thread ]</a>
+              <a href="subject.html#737">[ subject ]</a>
+              <a href="author.html#737">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I used this method to make backups, about a decade ago.
+However, it is still just as applicable today in order to start
+a new Sorcerer box, using an deployed Sorcerer box as a reference.
+And it is a good compromise between speed and simplicity.
+
+Boot the new box with the I/R
+Start networking.
+Create filesystems.
+Mount filesystems.
+
+Using ssh, with compression level 9 enabled,
+start an invocation of tar on the source box that outputs to stdout.
+Because it is invoked through ssh the output goes straight over ssh
+to the destination computer.
+pipe the output of ssh on the destination computer into tar
+and specify the new filesystems as the destination.
+
+By doing this tar is invoked on the source computer to gather files
+and that ?tarball? is sent streaming to the destination computer were
+it is unpacked as fast as it is created.
+ssh handles the compression to use both CPUs to deliver more data
+over the network.
+
+Of course to do backups I would merely pipe the output of tar on the
+destination computer into a &gt; something.tar.gz
+But by piping output into tar a filesystem can be loaded rapidly.
+
+With a fast enough network this method for deploying a new box
+from an old box has a great combination of speed and simplicity.
+There is no initial preparation work.
+No new ISO9660 images must be made.
+No need to save tarballs to disk.
+
+Of course there are other methods:
+dd can be used to mirror local partitions;
+cp can be used locally;
+cp can be used with NFS;
+rsync can be used locally or networked;
+scp alone can be used or tried
+( but scp will not preserve ownership/mode, and probably can not
+transfer nodes );
+etc...
+
+There are yet more methods.
+Subsequent deployments of Sorcerer is not limited by Sorcerer.
+As expected SA knowledge determines what can be done.
+
+Better stocked I/Rs would be nice, if I had the CPU power to create them.
+But eventually even using 7za compression the 650M limit would be encountered.
+And I know of at least two SA that do not want to download a 650M I/R
+
+Yet a SA could create a new ideal deployment of Sorcerer in a chrooted
+filesystem
+on an already deployed box.
+Then using the above method that new deployment can be transferred from the
+host computer to the target computer via the network ssh and tar.
+This is probably the among the fastest and easiest
+method to achieve the exact deployment desired.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000736.html">[Sorcerer-admins] I/R Building... and observations about	current...
+</A></li>
+	<LI>Next message: <A HREF="000738.html">[Sorcerer-admins] How to deploy a new box from an old box...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#737">[ date ]</a>
+              <a href="thread.html#737">[ thread ]</a>
+              <a href="subject.html#737">[ subject ]</a>
+              <a href="author.html#737">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

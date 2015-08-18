@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] holding your breath while waiting for updates?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTilpzMsRLiNb9jqhZna3OiPAaOI_UN8_c7nYEr68%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001658.html">
+   <LINK REL="Next"  HREF="001662.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] holding your breath while waiting for updates?</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTilpzMsRLiNb9jqhZna3OiPAaOI_UN8_c7nYEr68%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] holding your breath while waiting for updates?">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Fri Jun 18 23:34:13 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001658.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+        <LI>Next message: <A HREF="001662.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1660">[ date ]</a>
+              <a href="thread.html#1660">[ thread ]</a>
+              <a href="subject.html#1660">[ subject ]</a>
+              <a href="author.html#1660">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>However, suggestions and feedback do not go to waste.
+I put the suggestions about setsid to good use.
+Thanks.
+With newer sorcery the augur abort function will
+properly kill all the processes that it should kill
+and should not leave a configure script hanging.
+
+
+playing with SID? ;) good news!
+
+On Thu, Jun 17, 2010 at 3:50 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Testing this time required longer than usual.
+</I>&gt;<i> But the testing is progressing.
+</I>&gt;<i> Soon a new glibc and KDE-v4 will be available.
+</I>&gt;<i>
+</I>&gt;<i> Additionally, I was playing around with prelink.
+</I>&gt;<i> Yes, it is a waste of time.
+</I>&gt;<i> But some might misjudge Sorcerer for avoiding it.
+</I>&gt;<i>
+</I>&gt;<i> I have integrated prelinking with cast again.
+</I>&gt;<i> Prelinking will not modify the libraries that not owned by the spell being
+</I>&gt;<i> cast.
+</I>&gt;<i> Years ago that either was not possible with prelink,
+</I>&gt;<i> or required modification of prelink's source
+</I>&gt;<i> or was something that
+</I>&gt;<i> I did not allocate enough time to figure out.
+</I>&gt;<i> However, now it seems to work.
+</I>&gt;<i> Naturally, the first spell prelinked must be glibc.
+</I>&gt;<i> That is because every ELF prelinks with ELF libraries from glibc.
+</I>&gt;<i>
+</I>&gt;<i> Anything that casts will attempt to prelink it's ELF libraries
+</I>&gt;<i> and prelink it's ELF executables with ELF libraries that
+</I>&gt;<i> are already prelinked or being prelinked for the spell being cast.
+</I>&gt;<i> Therefore, some or all of the files attempting to prelink might not be
+</I>&gt;<i> prelinked.
+</I>&gt;<i>
+</I>&gt;<i> For example, let's say that a box has glibc prelinked
+</I>&gt;<i> and is casting gmp
+</I>&gt;<i> /usr/lib/libgmp.so.3.5.2
+</I>&gt;<i> will prelink
+</I>&gt;<i> However,
+</I>&gt;<i> /usr/lib/libgmpxx.so.4.1.2
+</I>&gt;<i> will not prelink unless the installed libstdc++
+</I>&gt;<i> provided by gcc-g++ was prelinked before.
+</I>&gt;<i> So in this example
+</I>&gt;<i> only part of the installed ELF libraries
+</I>&gt;<i> installed by gmp will prelink.
+</I>&gt;<i> That is not bad.
+</I>&gt;<i>
+</I>&gt;<i> So the next question on many SAs minds might be, &quot;What is prelinking?&quot;
+</I>&gt;<i> When ELF executables run then libraries must be loaded and symbols
+</I>&gt;<i> resolved.
+</I>&gt;<i> prelinking allows for part of that to happen in advance in a somewhat
+</I>&gt;<i> static way
+</I>&gt;<i> so that ELF executables can load with a bit less CPU usage.
+</I>&gt;<i> Does this make programs run faster?
+</I>&gt;<i> No.
+</I>&gt;<i> If a program is loaded repeatedly
+</I>&gt;<i> then the very slight speed gain from prelinking
+</I>&gt;<i> will allow that program to run more times per second
+</I>&gt;<i> than it would if the program was not prelinked.
+</I>&gt;<i>
+</I>&gt;<i> Q: So does prelinking make a difference?
+</I>&gt;<i> A: Not at all.
+</I>&gt;<i> Q: Should I recompile all installed software on a box
+</I>&gt;<i>  in order to gain an advantage from prelinking?
+</I>&gt;<i> A: No that will just add wear and tear to the fixed disk.
+</I>&gt;<i> Q: Do I invoke prelink from a command line?
+</I>&gt;<i> A: No prelink is automatically invoked by cast
+</I>&gt;<i> and running it from command line should not prelink anything.
+</I>&gt;<i>
+</I>&gt;<i> If a program is to be loaded and run repeatedly
+</I>&gt;<i> oh like 1000 times per second
+</I>&gt;<i> and that is maxing the cores
+</I>&gt;<i> then prelinking the program might allow it to run 2000 times per second.
+</I>&gt;<i> That might expedite incredibly bad written shell scripts.
+</I>&gt;<i> But it has no effect on sorcery,
+</I>&gt;<i> because the sorcery tools are efficient fast scripts.
+</I>&gt;<i>
+</I>&gt;<i> Maximum repeated start up speed for a program is achieved
+</I>&gt;<i> when the program is statically linked and already in the kernel's cache.
+</I>&gt;<i> No relocation, no ELF libraries.
+</I>&gt;<i> Such programs are rare on Sorcerer,
+</I>&gt;<i> but I have decided to add another.
+</I>&gt;<i>
+</I>&gt;<i> /usr/libexec/ccache/ccache is now statically linked.
+</I>&gt;<i> Even faster than a static linked ccache is
+</I>&gt;<i> a static linked unstable version of ccache.
+</I>&gt;<i> Unfortunately, it is not compatible
+</I>&gt;<i> with old saved ccached object files.
+</I>&gt;<i> But it is plenty fast on the re-compile
+</I>&gt;<i> and might now be the fastest of any compiler cache type program.
+</I>&gt;<i> Hopefully, the 3.0 stable release of ccache will be soon.
+</I>&gt;<i> Basically, any upgrade of gcc or ccache invalidates
+</I>&gt;<i> all the saved object files.
+</I>&gt;<i> Yup, everything in /var/cache/ccache/ goes to waste.
+</I>&gt;<i>
+</I>&gt;<i> However, suggestions and feedback do not go to waste.
+</I>&gt;<i> I put the suggestions about setsid to good use.
+</I>&gt;<i> Thanks.
+</I>&gt;<i> With newer sorcery the augur abort function will
+</I>&gt;<i> properly kill all the processes that it should kill
+</I>&gt;<i> and should not leave a configure script hanging.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100618/38f13f3e/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100618/38f13f3e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001658.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+	<LI>Next message: <A HREF="001662.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1660">[ date ]</a>
+              <a href="thread.html#1660">[ thread ]</a>
+              <a href="subject.html#1660">[ subject ]</a>
+              <a href="author.html#1660">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

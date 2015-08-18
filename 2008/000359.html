@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] kde 4.0
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%204.0&In-Reply-To=%3C596b75860801150420g74afaf86wf09036f71b9f6493%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000356.html">
+   <LINK REL="Next"  HREF="000360.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] kde 4.0</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20kde%204.0&In-Reply-To=%3C596b75860801150420g74afaf86wf09036f71b9f6493%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] kde 4.0">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Jan 15 13:20:03 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000356.html">[Sorcerer-admins] stunnel
+</A></li>
+        <LI>Next message: <A HREF="000360.html">[Sorcerer-admins] kde 4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#359">[ date ]</a>
+              <a href="thread.html#359">[ thread ]</a>
+              <a href="subject.html#359">[ subject ]</a>
+              <a href="author.html#359">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The update should work okay.
+kde 4.0 aught to work.
+However, there are some issues.
+
+When you login it might not play any sound.
+Perhaps in ~/.xsession-errors it will print:
+open_jack_plugin: Error: Failed to connect to JACK server
+open_jack_plugin: (did you start 'jackd' server?)
+
+Not sure if it is related.
+No further information about that issue yet.
+
+You may have on the desktop icons for home and trash with no image.
+You can remove those icons or give them new pictures.
+They are left over from kde 3.x
+
+.xsession-errors may have errors about io-slave protocol for file not found.
+The solution is:
+
+$ rm -f ~/.kde/share/config/ksycoca
+$ rm -r /var/tmp/kdecache-$USERNAME/ksyscoca
+$ kbuildsycoca4
+
+To be entirely certain kde 4.0 will work as expected you may want to
+log out of kde
+and entirely remove ~/.kde and /var/tmp/kdecache-$USERNAME
+If they are missing and you login with kdm
+then those directories will be created and properly filled.
+
+If you invoke qjackctl it may not be able to start jackd
+Reconfigure it to start jackd without real-time priority.
+Then, it can start.
+
+The requirement lists for kde 4.0 source tarballs are
+more simple than kde 3.x
+There are a few new requirements.
+However, many old optional requirements are removed.
+
+With the exception of qt-x11-opensource
+kde 4.0 compiles faster than kde 3.x
+autoconf, automake, libtool was removed.
+They compile using cmake and make.
+libtool was horribly inefficient.
+
+arts is gone.
+There was no arts release for kde 4.0
+Perhaps kde can run without a sound server?
+Perhaps it requires jackit.
+It does have some support for jackit sound server.
+I expect to learn more about this while using it.
+
+Due to shared name space along with the convenience of a /usr installation
+KDE 3.x and KDE 4 can not be concurrently installed.
+Other distros may support this.
+Sorcerer will not.
+
+Many spells that require kdelibs and kdebase from version 3.x are now
+broken, yet unmarked.
+cast will not be able to compile them nor heal them.
+Some of them already will enter the dispel queue upon # augur newer.
+Some time will be required before all the spells requiring kde 3.x are
+properly sorted.
+If you update then you may have to do without some of them.
+
+koffice for kde 4.0 is available as unstable software.
+I am currently testing it.
+In a day or two it will probably enter the grimoire.
+
+Some other software in the grimoire with versions currently compatible
+with kde 3
+have newer and/or developmental/unstable versions available that are
+compatible with kde 4.
+The spells will be updated.
+This will require some time.
+
+KDE 4.0 has a somewhat slower heavier feel to the GUI than KDE 3.x
+The K menu is initially confusing to navigate.
+Click the left vertical column with the triangle pointing
+to the left in order to return to the previous menu layer.
+Right click the K menu icon and adjust properties
+application launcher settings to increase the amount of items
+that it will display on a menu in order to avoid having to scroll
+up and down on the menu.  20 seems to be a good number.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000356.html">[Sorcerer-admins] stunnel
+</A></li>
+	<LI>Next message: <A HREF="000360.html">[Sorcerer-admins] kde 4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#359">[ date ]</a>
+              <a href="thread.html#359">[ thread ]</a>
+              <a href="subject.html#359">[ subject ]</a>
+              <a href="author.html#359">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Stable Grimoire
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Stable%20Grimoire&In-Reply-To=%3C596b75860812061303l2135da15i6e24b0386ff7ea1b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000888.html">
+   <LINK REL="Next"  HREF="000895.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Stable Grimoire</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Stable%20Grimoire&In-Reply-To=%3C596b75860812061303l2135da15i6e24b0386ff7ea1b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Stable Grimoire">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Dec  6 22:03:21 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000888.html">[Sorcerer-admins] Stable Grimoire
+</A></li>
+        <LI>Next message: <A HREF="000895.html">[Sorcerer-admins] Stable Grimoire
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#894">[ date ]</a>
+              <a href="thread.html#894">[ thread ]</a>
+              <a href="subject.html#894">[ subject ]</a>
+              <a href="author.html#894">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> At the very least, before Kyle rolls an I/R, there should be a little time
+</I>&gt;<i> where I or somebody with some spare CPU test compiles for every spell they
+</I>&gt;<i> got, and report compile failures and hopefully fixes back to Kyle so that
+</I>&gt;<i> the I/R has some chance of successfully compiling everything.
+</I>
+That seems reasonable, however not necessarily critical.
+The initial installation of a Sorcerer I/R requires very little compilation.
+After configuring the network and rebooting to the newly installed Sorcerer
+the SA should first sync so that the grimoire and sorcery are current,
+then newer; then update; and only after that begin installing new spells.
+By this method the grimoire used to install software on the box is not
+the same grimoire that came on the I/R
+
+
+&gt;<i> What I personally would like to see here is that when Kyle decides to test a
+</I>&gt;<i> new feature, he could call the testing version of sorcery sorcery-dev or
+</I>&gt;<i> something. Then we can have a good play at it, and see if there are any
+</I>&gt;<i> show-stoppers before calling it default and letting everybody in on the fun.
+</I>
+I have done that in the past.
+Nobody used the test version.
+End result is that it is released eventually
+and would still contain the same bugs that
+nobody spotted and reported.
+
+
+&gt;<i> This approach has a few advantages.
+</I>&gt;<i> 1. Warning. There is nothing like finding your box borked in the morning
+</I>&gt;<i> after it was working just fine yesterday.
+</I>&gt;<i> 2. Recoverability. Knowing you can go back to the default branch to test
+</I>&gt;<i> differences is reassuring.
+</I>&gt;<i> 3. Safety. Some people do not like testing, others do. By having the people
+</I>&gt;<i> that like doing testing doing the testing, bugs bet squashed before it goes
+</I>&gt;<i> distro-wide.
+</I>&gt;<i> 4. Effort. Kyle makes the changes he wants to make, puts it out as dev or
+</I>&gt;<i> testing or whatever. If no-one is interested in testing the new features,
+</I>&gt;<i> then he just releases it distro-wide and it is basically back to where we
+</I>&gt;<i> are now.
+</I>&gt;<i> 5. Structure. Since we know we are testing, we can do all the things with
+</I>&gt;<i> Sorcery that we do, and check the output.
+</I>&gt;<i>
+</I>&gt;<i> Let me be the first to sign up as a beta tester of new features!
+</I>
+Sure.
+In recent months or perhaps years my custom is to often upload sorcery
+yet not update the version of sorcery in the svn grimoire.
+Instead I test the newer sorcery on 3 of my boxes.
+You can always try such sorcery, but it might have incredibly nasty errors.
+One of the more recent sorcery I had uploaded that way once installed
+was not able to download/leech sources.
+I fixed it, but I forgot what the cause of the problem was.
+However, the main idea is simple.
+Nobody should probably use my testing sorcery
+because it can come with bugs that make all you have
+ever seen before pale in comparison.
+
+If you feel squeamish about sorcery then do:
+# cast grimoire; augur available sorcery
+If the date is more than 3 days old then
+the bugs are probably squished and nothing
+new was added and nothing old was subtracted.
+
+Now let us assume I did a separate test version of sorcery
+for the changes to incorporate latest() functionality for spells
+as a new selectable spell version progress.
+Until SAs eventually updated to the dev sorcery then everytime
+the grimoire is index it will blow error messages such as:
+bash: latest: command not found
+bash: latest: command not found
+bash: latest: command not found
+etc...
+
+That said many of the changes in sorcery are done to support
+changes made in the grimoire.
+It is a symbiotic relationship.
+That is why creating a testing release for sorcery is not as easy
+as it would be for many other types of software.
+
+
+&gt;<i> Kyle, these are just ideas, and I do not want to make sweeping changes to
+</I>&gt;<i> the whole of Sorcerer. I see a little room for improvement in the way we do
+</I>&gt;<i> things, and am just curious if you agree.
+</I>
+Some of the best martial techniques contain
+very subtle and efficient movement.
+I agree that the more which can be accomplished
+for less effort is probably better than making
+big leaps that require the solid dedication of
+5 people to make work.
+
+I know what I am about to say will sound like bragging,
+but please bear with me since after 8 years of Sorcerer development,
+I can say that I make it work by maximizing my contributions
+so that in many aspects I can do the work that in a binary
+based distro would require a team of people to accomplish.
+Therefore, plans that require big effort would considerably
+go against the grain of the last 8 years of Sorcerer development.
+
+That said I both agree and disagree with Evert's question.
+Sometime sweeping changes can provide a great deal of gain
+while also minimizing complexity and effort.
+The switch to version progress and having most spell variables
+defined by functions was a very sweeping change.
+And for it we have a cleaner looking grimoire,
+less chance of unpaired &quot; and ' in spells,
+spells that are more functional,
+and SAs receive more control over available versions of spells,
+indexing is faster, etc...
+Sometimes we step and sometimes we leap.
+It all depends on what the evaluation chart indicates.
+And that is why Sorcerer becomes better at being Sorcerer
+instead of mutating into something hideous.
+
+But with that said I am not taking credit more than 35% for
+what modern Sorcerer has become.
+I make many decision concerning what will be implemented,
+but as the years grow larger in number the suggestions and
+feedback from SAs have substantial impact on how Sorcerer has changed.
+More than anything else that is what makes Sorcerer a fun and useful distro.
+
+Although Sorcerer is a mature distro in the sense it has been around
+for a while,
+it is not mature in the sense of a human adult who has finished growing.
+Almost nothing about Sorcerer is a rule engraved in stone.
+Change is both Sorcerer's greatest strength and greatest weakness.
+And for that reason we should also take great consideration and time
+in evaluating change to make sure that it will eventually accomplish
+what we want.
+
+I apologize for making such a verbose answer to Evert's question.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000888.html">[Sorcerer-admins] Stable Grimoire
+</A></li>
+	<LI>Next message: <A HREF="000895.html">[Sorcerer-admins] Stable Grimoire
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#894">[ date ]</a>
+              <a href="thread.html#894">[ thread ]</a>
+              <a href="subject.html#894">[ subject ]</a>
+              <a href="author.html#894">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

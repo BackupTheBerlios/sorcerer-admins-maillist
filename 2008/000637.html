@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807241401q4db9f528je9528f57bf383cb1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000636.html">
+   <LINK REL="Next"  HREF="000640.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860807241401q4db9f528je9528f57bf383cb1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jul 24 23:01:43 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000636.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+        <LI>Next message: <A HREF="000640.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#637">[ date ]</a>
+              <a href="thread.html#637">[ thread ]</a>
+              <a href="subject.html#637">[ subject ]</a>
+              <a href="author.html#637">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Image a bootable USB memory stick
+with one unencrypted boot partition
+and one entirely encrypted / partition?
+I designed and tested it.
+The devices names are correctly located by UUID.
+Booting and updating the stick from different boxes
+with different amounts of installed fixed disks does not cause a problem.
+
+
+Boons:
+
+1. Keep your IA32 USB stick and boot Sorcerer from any box IA32 or
+x86_64 box with non-broken BIOS.
+
+2. aes-xts-plain encryption provides absolute security for your files.
+    If the USB stick is lost / will never be mountable without the
+proper password.
+
+3. No head seek time for random access and file loading.
+    Therefore, faster execution of sysinit and runlevels during boot.
+
+4. Less power consumption than fixed disk provides longer notebook battery life.
+
+5. Produces less heat than fixed disk and/or CDROM.
+
+6. The installation is bootable and runable and not like the CDROM I/Rs.
+
+7. Fast access for small files, due to no head seek time.
+
+
+Banes:
+
+1. Slower maximum speed for file reading and writing as compared to a
+modern fixed disk.
+
+2. Lilo loading initramfs and linux by BIOS calls is slower
+    than syslinux loading intiramfs and linux from CDROM by BIOS calls,
+    and much slower than lilo loading initramfs and kernel from fixed disk.
+    However, speed of this initial loading may depend on the box/BIOS
+
+3. Limited maximum number of rewrites will cause USB stick to fail much
+    faster than an average fixed disk.
+
+4. Requires 20+ steps to create bootable USB Sorcerer
+    as compared to the 1 step simplicity of burning a CDROM I/R image.
+
+5. Slow access for large files due to lower throughput than fixed disk.
+
+
+Here is what I would like help discovering:
+
+What are the best USB memory sticks for installing Sorcerer on
+that will have good speed, maximum life, and at least 32G of space?
+
+
+The deployment of Sorcerer onto USB memory sticks has two probable methods.
+
+1. I snail mail the USB memory stick with Sorcerer properly loaded and tested.
+
+2. Add an additional method onto the menu driven installer for the I/Rs
+to automatically partition, encrypt, and install Sorcerer onto the USB
+memory stick
+with the only question asked being the encryption password.
+
+
+Is anyone interested in this technology?
+
+If your company buys them from me pre-installed,
+a SA will still be required to change the encryption password
+and change the root password,
+and install and configure additional software.
+
+However, if purchased from me I intend to include:
+installed KDE-v3, KDE-v4, GNOME, a nearly complete source cache
+an hour of email technical support per key,
+limited to 2 hours per week per customer
+with all remaining support hours expiring one month from date of delivery.
+
+
+Expectations:
+
+With high ext3 commit value and updating only once per month
+I expect that an installation of Sorcerer on USB will last
+about 2 maybe 3 years, but duration depends on amount of writes
+and quality of USB stick.
+
+For those who do not require terabytes of space
+Sorcerer on stick provides a greater convenience than fixed disk.
+For workstation deployment and notebook deployment
+Sorcerer on stick may be faster and easier than fixed disk
+since notebooks will be interchangeable while
+notebook users retain their personal USB memory sticks.
+
+While a bootable USB memory stick for an operating system is a usable,
+it is not an ideal solution compared to fixed disks.
+For every boon there is a bane.
+
+USB memory stick booting is not recommended for servers because
+on some boxes BIOS/CMOS must be entered on every boot
+and the USB memory stick must be selected at a boot priority
+than the real installed fixed disk.
+
+While the / is entirely encrypted the initramfs and linux kernel
+on the unencrypted partition is entirely not encrypted.
+If someone obtained the USB memory stick
+then that person could install a trojaned kernel
+or a program that runs during sysinit or runlevel execution
+that effectively roots the box and/or uploads information
+from the box to another once it is booted.
+Therefore, encryption could be defeated if the USB memory stick
+momentarily left possession of the intended owner
+and was returned an used again after modifications
+are made to the unencrypted partition.
+
+
+Your input is invited.
+I hope we can decide IF and HOW Sorcerer on stick should be provided.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000636.html">[Sorcerer-admins] grimore-miffe questionaire and important	changes
+</A></li>
+	<LI>Next message: <A HREF="000640.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#637">[ date ]</a>
+              <a href="thread.html#637">[ thread ]</a>
+              <a href="subject.html#637">[ subject ]</a>
+              <a href="author.html#637">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

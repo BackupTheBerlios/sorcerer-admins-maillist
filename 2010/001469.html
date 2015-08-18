@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Update failures
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Update%20failures&In-Reply-To=%3C596b75861002112305k5cff419dv9e12dde095e9cc6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001468.html">
+   <LINK REL="Next"  HREF="001470.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Update failures</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Update%20failures&In-Reply-To=%3C596b75861002112305k5cff419dv9e12dde095e9cc6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Update failures">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Feb 12 08:05:11 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001468.html">[Sorcerer-admins] Update failures
+</A></li>
+        <LI>Next message: <A HREF="001470.html">[Sorcerer-admins] kde-v4 4.4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1469">[ date ]</a>
+              <a href="thread.html#1469">[ thread ]</a>
+              <a href="subject.html#1469">[ subject ]</a>
+              <a href="author.html#1469">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thank you for the bug report.
+However, please also report bugs caused by software authors
+to the software authors' email lists in order for
+those software authors to become aware of their bugs
+and fix them upstream.
+
+Just because almost any bug
+can be fixed at the distribution level
+does not mean that every bug
+should be fixed at the distribution level.
+gentoo developers decided to implement
+both the simple and also INCORRECT solution.
+Just because distribution maintainers can
+does not mean that they should
+assume any responsibility for the fitness of software
+which the distribution neither provides
+as a source tarball nor a pre-compiled binary package.
+
+P.S.
+I am disabling tcp_wrappers support in stunnel.
+It compiles fine that way.
+I do not care if stunnel authors fix the bug or not.
+tcp_wrappers made no new releases since 1997.
+It is dead, gone, decayed, and pushing up daisies.
+It even requires a 3K patch to compile.
+It should not belong on any box that has in-kernel
+firewall support such as linux, which has iptables and ipchains.
+
+
+On Thu, Feb 11, 2010 at 8:38 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> was recently syncing to all the latest packages, but stunnel fails to build.
+</I>&gt;<i>
+</I>&gt;<i> gcc -march=native -Os -Wall -Wshadow -Wcast-align -Wpointer-arith
+</I>&gt;<i> -I/usr/include -Wl,-s -o stunnel file.o client.o log.o options.o
+</I>&gt;<i> protocol.o network.o resolver.o ssl.o ctx.o verify.o sthreads.o
+</I>&gt;<i> stunnel.o pty.o libwrap.o &#160;-lz -ldl -lutil -lnsl -lpthread -L/usr/lib
+</I>&gt;<i> -lssl -lcrypto
+</I>&gt;<i> libwrap.o: In function `check_libwrap':
+</I>&gt;<i> libwrap.c:(.text+0x21): undefined reference to `request_init'
+</I>&gt;<i> libwrap.c:(.text+0x2b): undefined reference to `sock_host'
+</I>&gt;<i> libwrap.c:(.text+0x35): undefined reference to `hosts_access'
+</I>&gt;<i>
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160;--- configure &#160; 2008-05-18 07:46:08.000000000 -0400
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160;+++ /tmp/configure &#160; &#160; &#160;2008-09-26 22:44:02.000000000 -0400
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160;@@ -23452,6 +23452,7 @@
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; cat &gt;&gt;confdefs.h &lt;&lt;\_ACEOF
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160; #define HAVE_LIBWRAP 1
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160; _ACEOF
+</I>&gt;<i> &#160;&gt; &#160; &#160; &#160;+LIBS=&quot;-lwrap $LIBS&quot;
+</I>&gt;<i>
+</I>&gt;<i> &#160;This is how Gentoo fixed it as well but it would have thought that the
+</I>&gt;<i> &#160;tcp_wrappers/buildlink3.mk would have taken care of this. &#160;If I bump
+</I>&gt;<i> &#160;stunnel to 4.26 locally it folds at the same point on OpenSolaris so I
+</I>&gt;<i> &#160;don't _think_ this is a NetBSD specific issue.
+</I>&gt;<i>
+</I>&gt;<i> ... the same -lwrap can be applied to the ./configure in the spell.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> in the spell modified
+</I>&gt;<i>
+</I>&gt;<i> default_build
+</I>&gt;<i>
+</I>&gt;<i> to
+</I>&gt;<i>
+</I>&gt;<i> LIBS=-lwrap default_build
+</I>&gt;<i>
+</I>&gt;<i> now it builds.
+</I>&gt;<i>
+</I>&gt;<i> --------------
+</I>&gt;<i> had some issues with vlc and rrdtool failing to link with lua, recast
+</I>&gt;<i> lua, now both built.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001468.html">[Sorcerer-admins] Update failures
+</A></li>
+	<LI>Next message: <A HREF="001470.html">[Sorcerer-admins] kde-v4 4.4.0
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1469">[ date ]</a>
+              <a href="thread.html#1469">[ thread ]</a>
+              <a href="subject.html#1469">[ subject ]</a>
+              <a href="author.html#1469">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

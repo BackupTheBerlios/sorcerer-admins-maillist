@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091217x54af81eew23db28f68c9a3829%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001094.html">
+   <LINK REL="Next"  HREF="001105.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091217x54af81eew23db28f68c9a3829%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May  9 21:17:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001094.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001105.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1100">[ date ]</a>
+              <a href="thread.html#1100">[ thread ]</a>
+              <a href="subject.html#1100">[ subject ]</a>
+              <a href="author.html#1100">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> so I prefer by far using dynamic linked library, it don't waste disk
+</I>&gt;<i> size, when a library upgrade you don't have to recast everything (yes
+</I>&gt;<i> consider this : if you statically linked with a lib that have an issue,
+</I>&gt;<i> you don't have simply to cast the lib again to fix the issue, you have
+</I>&gt;<i> to cast all spell that have been statically linked with those)
+</I>
+For the above reason I have never wanted Sorcerer to
+be an entirely statically linked distribution.
+However, if security issues in uClibc are infrequent
+then the probability of a complete rebuild is unlikely,
+if uClibc was provided only for static linking.
+However, if Sorcerer did transition to uClibc
+then there would be both static and ELF linking to libc.so.0
+
+Obviously the gain for static linking is most apparent
+on executables that are loaded frequently.
+And by frequently, I mean several times a second.
+static linking firefox, for example, would grant no benefit
+that could be easily recognized.
+Therefore, for user apps such firefox and desktop environments
+static linking wastes while providing a negligible speed increase.
+Jan provide a good insight about SDD drives.
+With no seek time they read multiple files nearly as fast as single files.
+Statically linked executables would still start faster on SDD drives,
+but the initial reading of files from ?disk? to RAM would be no faster.
+
+When I did my speed test with a hello.c program.
+Naturally, those 1000 consecutive executions of the program
+were done from cached RAM and not from disk.
+statically linked executables start faster not for having to
+read less files on disk, but because there is less runtime linking.
+Dynamically linked ELFs are like a puzzle that must be assembled
+everytime one wants to look at the picture.
+Statically linked executables are like a puzzle already glued together.
+Since runtime linking happens quickly on modern computers,
+the time required for runtime linking is not usually considered.
+But it exists.
+
+
+&gt;<i> I would be more happy to see the .a removed from my disk... their
+</I>&gt;<i> presence not only waste disk space but also drop performance since a
+</I>&gt;<i> directory with a large set of object is slower to access.
+</I>
+I agree.
+About half a year ago I went through the grimoire making more
+libraries install only shared versions and thus eliminating the
+presence of the static .a libraries on updates.
+Yet even for the benefit of RAM conversation and reduce disk consumption
+there are times when using static linking provides better performance.
+
+However, when using only glibc
+I waffled about the benefit of static linking.
+static linking with glibc creates executables that are huge!
+I want to infer from that that glibc is not intended for static linking.
+However uClibc is intended for static linking.
+When it comes to sinking a screw
+a screw driver is better tool than a claw hammer.
+Likewise, uClibc is a better tool for static linking.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001094.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001105.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1100">[ date ]</a>
+              <a href="thread.html#1100">[ thread ]</a>
+              <a href="subject.html#1100">[ subject ]</a>
+              <a href="author.html#1100">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

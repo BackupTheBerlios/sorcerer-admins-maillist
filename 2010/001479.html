@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] konsole a bit buggy?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20konsole%20a%20bit%20buggy%3F&In-Reply-To=%3C596b75861002200734y7cf675efg6d39920293648992%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001478.html">
+   <LINK REL="Next"  HREF="001480.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] konsole a bit buggy?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20konsole%20a%20bit%20buggy%3F&In-Reply-To=%3C596b75861002200734y7cf675efg6d39920293648992%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] konsole a bit buggy?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb 20 16:34:32 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001478.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+        <LI>Next message: <A HREF="001480.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1479">[ date ]</a>
+              <a href="thread.html#1479">[ thread ]</a>
+              <a href="subject.html#1479">[ subject ]</a>
+              <a href="author.html#1479">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah, I forgot to add something...
+
+-----------------------------------------------------------------------------
+-- The following OPTIONAL packages could NOT be located on your system.
+-- Consider installing them to enable more features from this software.
+-----------------------------------------------------------------------------
+   * Gluon is a high-level game development library for the KDE
+desktop enviornment. Granatier uses KAL for sound output. (Granatier
+will use Phonon for sound output. For better sound experience please
+use KAL from the gluon project. or higher)  &lt;FALSE&gt;
+     <A HREF="http://gluon.tuxfamily.org">http://gluon.tuxfamily.org</A>
+-----------------------------------------------------------------------------
+
+That was in the kdegames-v4 compile log.
+Impressive colorful graphics.
+But where are the source tarballs hidden?
+I have no idea of KDE authors intend gluon
+could be used as a drop in replacement for phonon.
+I doubt it.
+It might merely be something additional that can
+be optionally used for some libraries/programs such as
+Granatier.
+Oh, grantatier is a bomberman clone, maybe like loadrunner?
+I just used a KDE menu to discover that.  :)
+Well, anyway, this does not seem relevant.
+xine and pulseaudio still seem like better
+areas of investigation.
+
+
+On Sat, Feb 20, 2010 at 8:29 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> On Fri, Feb 19, 2010 at 11:03 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Sound output on my version of KDE 4.4.0 is completely gone.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I can now see backends in the backend menu, but I have tried outputting
+</I>&gt;&gt;<i> sound, and have had simply no luck whatsoever.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have even re-compiled all the software on my laptop, still no luck.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> amarok and xine now segfault when starting, too.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am tempted to go back to the previous version of KDE and wait for the next
+</I>&gt;&gt;<i> release.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> -Evert-
+</I>&gt;<i>
+</I>&gt;<i> My best guess is that Jan already has a solution to this.
+</I>&gt;<i> He reported some sound problems with kde-v4 4.3.5
+</I>&gt;<i> If I recall correctly he said something about installing
+</I>&gt;<i> an old phonon over qt-x11-opensource's phonon was
+</I>&gt;<i> sufficient for solving that problem.
+</I>&gt;<i> However, now qt-everywhere-opensource does not install phonon.
+</I>&gt;<i> And the phonon installed is version 4.3.80 from KDE's svn.
+</I>&gt;<i> Sound seems to work for me,
+</I>&gt;<i> no crashing of xine.
+</I>&gt;<i> But if xine was crashing then that might explain
+</I>&gt;<i> a problem with audio.
+</I>&gt;<i>
+</I>&gt;<i> # augur elfof phonon | grep xine
+</I>&gt;<i> xine-lib
+</I>&gt;<i>
+</I>&gt;<i> phonon uses xine as it's backend for audio output.
+</I>&gt;<i> Perhaps it might also be able to use pulseaudio.
+</I>&gt;<i> I do not have pulseaudio installed.
+</I>&gt;<i> And that might be why audio works on my workstation.
+</I>&gt;<i>
+</I>&gt;<i> /etc/xdg/autostart/pulseaudio-kde.desktop
+</I>&gt;<i> /etc/xdg/autostart/pulseaudio.desktop
+</I>&gt;<i>
+</I>&gt;<i> Perhaps pulse audio server is automatically started
+</I>&gt;<i>
+</I>&gt;<i> # grep user /etc/dbus-1/system.d/pulseaudio-system.conf
+</I>&gt;<i> &#160;&lt;!-- System-wide PulseAudio runs as 'pulse' user. This fragment is
+</I>&gt;<i> &#160; &#160; &#160; not necessary for user PulseAudio instances. --&gt;
+</I>&gt;<i> &#160;&lt;policy user=&quot;pulse&quot;&gt;
+</I>&gt;<i>
+</I>&gt;<i> But maybe it requires a special user account for it to work?
+</I>&gt;<i>
+</I>&gt;<i> If pulse audio is installed
+</I>&gt;<i> then I would recommend
+</I>&gt;<i> # augur forget pusleaudio
+</I>&gt;<i> # dispel pulseaudio
+</I>&gt;<i> # cast eject
+</I>&gt;<i>
+</I>&gt;<i> Following the cast of eject cast will
+</I>&gt;<i> re-compile the spells which require pulseaudio's ELF.
+</I>&gt;<i> After that I would recommend logging out,
+</I>&gt;<i> restarting kdm,
+</I>&gt;<i> logging back in
+</I>&gt;<i> and then trying audio.
+</I>&gt;<i> If it works, maybe pulseaudio is the problem.
+</I>&gt;<i>
+</I>&gt;<i> I will have a glance at pulse audio documentation
+</I>&gt;<i> to see if I am omitting something important that
+</I>&gt;<i> the spell aught to do to ensure that pulseaudio can work.
+</I>&gt;<i> Generally, when possible I try to avoid software
+</I>&gt;<i> audio channel mixers such as
+</I>&gt;<i> enlightenment sound daemon and pulseaudio.
+</I>&gt;<i>
+</I>&gt;<i> However, foremost I recommend investigating
+</I>&gt;<i> and solving the xine segfaulting on the box.
+</I>&gt;<i> Fixing that might be enough to fix the problem.
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001478.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+	<LI>Next message: <A HREF="001480.html">[Sorcerer-admins] konsole a bit buggy?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1479">[ date ]</a>
+              <a href="thread.html#1479">[ thread ]</a>
+              <a href="subject.html#1479">[ subject ]</a>
+              <a href="author.html#1479">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

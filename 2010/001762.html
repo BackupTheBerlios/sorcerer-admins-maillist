@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] how to read this output from augur update
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20how%20to%20read%20this%20output%20from%20augur%20update&In-Reply-To=%3CAANLkTiktttmj5d1O4Rr6WBolYDrOZ7-Tgbai5b0ufVco%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001760.html">
+   <LINK REL="Next"  HREF="001735.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] how to read this output from augur update</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20how%20to%20read%20this%20output%20from%20augur%20update&In-Reply-To=%3CAANLkTiktttmj5d1O4Rr6WBolYDrOZ7-Tgbai5b0ufVco%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] how to read this output from augur update">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 16 00:15:00 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001760.html">[Sorcerer-admins] how to read this output from augur update
+</A></li>
+        <LI>Next message: <A HREF="001735.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1762">[ date ]</a>
+              <a href="thread.html#1762">[ thread ]</a>
+              <a href="subject.html#1762">[ subject ]</a>
+              <a href="author.html#1762">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ParserFactory.pm
+is installed by perl--XML-SAX
+and perl--XML-SAX might currently be broke.
+Thanks for reporting the problem.
+I will see what solution I can find for this
+since it hampers compilation further up a
+requirement list.
+
+Please keep in mind that distribution maintainers
+are not responsible for the fitness of software.
+The person who wrote perl--XML-SAX perl module
+was not affiliated with Sorcerer.
+So if there is no easy fix for it I will probably
+not be trying to hack that person's software into shape.
+
+Please edit /root/.sorcery/grimoire/perl--XML-SAX
+Remove either the line that says
+attribute broke
+Or remove the word broke from the line
+that starts with attribute
+But do not leave a line that starts with
+attribute but has nothing which follows it.
+
+Then add a build function such as:
+
+build(){
+ local PVER=$( installed_version perl )
+ local  PERL5LIB
+ export PERL5LIB=$DESTDIR/usr/lib/perl5/site_perl/$PVER
+ default_build
+}
+
+That should help it install.
+The last release of perl--XML-SAX was from 2008
+It is not fully DESTDIR compliant,
+but that seems at least to help it install
+and not error at the last part.
+
+Recast perl--XML-SAX
+Then just to be on the safe side
+go ahead and
+# rm /root/.sorcery/queue/fail
+And finally cast whatever software that
+was failing before due to perl--XML-SAX
+
+Sorry for the inconvenience.
+
+
+
+On Thu, Jul 15, 2010 at 1:25 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+&gt;<i> hello,
+</I>&gt;<i>
+</I>&gt;<i> This problem is solved but another problem has arisen.
+</I>&gt;<i>
+</I>&gt;<i> I get now a lot of autofailures on docbook2X.
+</I>&gt;<i>
+</I>&gt;<i> When I do a augur compile docbook2X I see this message :
+</I>&gt;<i>
+</I>&gt;<i> Can't locate xml/sax/ParserFactory.pm.
+</I>&gt;<i>
+</I>&gt;<i> Roelof
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> Date: Wed, 14 Jul 2010 13:20:52 -0700
+</I>&gt;&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> Subject: Re: [Sorcerer-admins] how to read this output from augur update
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This is not a problem.
+</I>&gt;&gt;<i> The problem is remembering what I did
+</I>&gt;&gt;<i> in order to fix the glibc-locales spell.
+</I>&gt;&gt;<i> Oh yes, I remember now.
+</I>&gt;&gt;<i> The fixed version might not
+</I>&gt;&gt;<i> have yet gone out in the grimoire.
+</I>&gt;&gt;<i> So...
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # nano /root/.sorcery/grimoire/glibc-locales
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> find the locale_archive(){
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Beneath it is a line that should read:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> local TMP=$DESTDIR/usr/lib/locale/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Then a few lines under that is a line which should read:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> localedef -i $SOURCE -c -f $CHARMAP --prefix=$DESTDIR $NAME
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Please correct both lines.
+</I>&gt;&gt;<i> The second line to correct if it is incorrect
+</I>&gt;&gt;<i> probably has a --prefix=$TMP instead of --prefix=$DESTDIR
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> After glibc-locales is fixed
+</I>&gt;&gt;<i> press ctrl-x then y and enter to save.
+</I>&gt;&gt;<i> Now issue:
+</I>&gt;&gt;<i> # augur forget glibc-locales
+</I>&gt;&gt;<i> # cast glibc-locales
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Please select the default locale and any
+</I>&gt;&gt;<i> other locales that you want to compile.
+</I>&gt;&gt;<i> The default locale will become assigned
+</I>&gt;&gt;<i> to the LANG environment variable automatically.
+</I>&gt;&gt;<i> The compiled locales become part of the
+</I>&gt;&gt;<i> /usr/lib/locale/locale-archive
+</I>&gt;&gt;<i> database of locales.
+</I>&gt;&gt;<i> I do not recommend building all locales,
+</I>&gt;&gt;<i> because then /usr/lib/locale/locale-archive
+</I>&gt;&gt;<i> would be hundreds of megabytes large.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> en_US.UTF-8/UTF-8
+</I>&gt;&gt;<i> en_US/ISO-8859-1
+</I>&gt;&gt;<i> ja_JP.EUC-JP/EUC-JP
+</I>&gt;&gt;<i> ja_JP.UTF-8/UTF-8&quot;
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Those are the locales that I compile.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> en_US.UTF-8
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This is the my default locale.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> That creates:
+</I>&gt;&gt;<i> -rw-r--r-- 1 root root 3.6M Jul 12 14:55 /usr/lib/locale/locale-archive
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 3.6M is considerably large,
+</I>&gt;&gt;<i> but far more favorable in size than 360M.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If you are not certain what the locale database is
+</I>&gt;&gt;<i> then a short explanation is that it contains information
+</I>&gt;&gt;<i> that is used to help support the output of programs
+</I>&gt;&gt;<i> translated into a desired language provided that both
+</I>&gt;&gt;<i> those translations exists and the locale database exists.
+</I>&gt;&gt;<i> The desired translation is selected by
+</I>&gt;&gt;<i> the LANG environment variable.
+</I>&gt;&gt;<i> It makes more sense when configuring the glibc-locales spell,
+</I>&gt;&gt;<i> because it shows the correlation between
+</I>&gt;&gt;<i> the somewhat strange language character-set abbreviations
+</I>&gt;&gt;<i> and the actual given English name for the language.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I apologize if the glibc-locales spell is a bit broke.
+</I>&gt;&gt;<i> Somehow I messed it up while editing the thousands
+</I>&gt;&gt;<i> of spells that required changes in order to become
+</I>&gt;&gt;<i> DESTDIR compatible.
+</I>&gt;&gt;<i> Thankfully Evert spotted and reported that break already.
+</I>&gt;&gt;<i> I intended the fix to go out with yesterday's LAG=0 grimoire,
+</I>&gt;&gt;<i> but I am expecting that I was distracted at the time
+</I>&gt;&gt;<i> and forgot to re-submit the changes that failed on
+</I>&gt;&gt;<i> the first commit because ipython differed.
+</I>&gt;&gt;<i> So I missed the daily deadline.
+</I>&gt;&gt;<i> That aside,
+</I>&gt;&gt;<i> glibc-locales will definitely be fixed
+</I>&gt;&gt;<i> with today's LAG=0 grimoire release.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Normally, the installed locales database for your box
+</I>&gt;&gt;<i> would not be messed up if not for the mistake
+</I>&gt;&gt;<i> I made while transitioning spells to DESTDIR.
+</I>&gt;&gt;<i> I apologize for the inconvenience.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Wed, Jul 14, 2010 at 5:04 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Hello Kyle,
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I did a little investigation on my system and I googled a bit.'
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; I think the first problem is the locale problem.
+</I>&gt;&gt;<i> &gt; Then I can recast perl
+</I>&gt;&gt;<i> &gt; After that recast perl--xml-sax.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; In the installation I choose only the nl locales because I live in the
+</I>&gt;&gt;<i> &gt; Netherlands.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Can you help me debug the locale problem ?
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Roelof
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; ________________________________
+</I>&gt;&gt;<i> &gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>
+</I>&gt;&gt;<i> &gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; Date: Wed, 14 Jul 2010 08:13:31 +0000
+</I>&gt;&gt;<i> &gt; Subject: Re: [Sorcerer-admins] how to read this output from augur update
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Hello Kyle,
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; That problem is solved but another problem has arisen.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; When I want to recast ccache to look if the problem stays away&#160;then the
+</I>&gt;&gt;<i> &gt; install stops because of a problem with perl--XML-SAX.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; So I try to recast perl-XML-SAX and I see this message :
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; perl : warning. Please check your locale settings.
+</I>&gt;&gt;<i> &gt; LANGUAGE=(unset)
+</I>&gt;&gt;<i> &gt; LC_ALL = (unset)
+</I>&gt;&gt;<i> &gt; LC_COLLATE=&quot;C&quot;
+</I>&gt;&gt;<i> &gt; LANG=<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nl_NL at Euro</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Can't locate XML/SAX.pm in %inc.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; So it looks that all the compile errors point to one problem.
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; Roelof
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;&gt; Date: Tue, 13 Jul 2010 14:50:11 -0700
+</I>&gt;&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] how to read this output from augur
+</I>&gt;&gt;<i> &gt;&gt; update
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; If /usr/bin/awk is missing
+</I>&gt;&gt;<i> &gt;&gt; then recast gawk.
+</I>&gt;&gt;<i> &gt;&gt; Looks like gawk source makes that symbolic link.
+</I>&gt;&gt;<i> &gt;&gt; I added a current() to the spell
+</I>&gt;&gt;<i> &gt;&gt; so that any boxes missing /usr/bin/awk
+</I>&gt;&gt;<i> &gt;&gt; will also automatically recast gawk.
+</I>&gt;&gt;<i> &gt;&gt; No need for a /usr/local/bin/awk symbolic link to gawk.
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt;
+</I>&gt;&gt;<i> &gt;&gt; On Tue, Jul 13, 2010 at 2:35 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;&gt;<i> &gt;&gt; wrote:
+</I>&gt;&gt;<i> &gt;&gt; &gt; I suspect that the gawk spell used
+</I>&gt;&gt;<i> &gt;&gt; &gt; to make a symbolic link from gawk to /usr/bin/awk
+</I>&gt;&gt;<i> &gt;&gt; &gt; But there is no build() on gawk anymore.
+</I>&gt;&gt;<i> &gt;&gt; &gt; So I queued it for checking.
+</I>&gt;&gt;<i> &gt;&gt; &gt; In the meanwhile you might try:
+</I>&gt;&gt;<i> &gt;&gt; &gt;
+</I>&gt;&gt;<i> &gt;&gt; &gt; # mkdir -p /usr/local/bin
+</I>&gt;&gt;<i> &gt;&gt; &gt; # ln -s /usr/bin/gawk /usr/local/bin/awk
+</I>&gt;&gt;<i> &gt;&gt; &gt;
+</I>&gt;&gt;<i> &gt;&gt; &gt; If the installation of gawk does not correctly
+</I>&gt;&gt;<i> &gt;&gt; &gt; make that symbolic link
+</I>&gt;&gt;<i> &gt;&gt; &gt; then I will add a build() to gawk and a current()
+</I>&gt;&gt;<i> &gt;&gt; &gt; to correct existing installations that lack a
+</I>&gt;&gt;<i> &gt;&gt; &gt; /usr/bin/awk
+</I>&gt;&gt;<i> &gt;&gt; &gt;
+</I>&gt;&gt;<i> &gt;&gt; &gt; Sorry for the inconvenience.
+</I>&gt;&gt;<i> &gt;&gt; &gt; Thanks for reporting the problem.
+</I>&gt;&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt; ________________________________
+</I>&gt;&gt;<i> &gt; De nieuwste Internet Explorer: snel, eenvoudig en veilig. Download nu!
+</I>&gt;&gt;<i> &gt; ________________________________
+</I>&gt;&gt;<i> &gt; Rulive: De nieuwste tips en tricks voor de echte messenger fan.
+</I>&gt;&gt;<i> &gt; _______________________________________________
+</I>&gt;&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> &gt;
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i> ________________________________
+</I>&gt;<i> Voeg eenvoudig je Hyves vrienden toe aan je Hotmail en Messenger.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001760.html">[Sorcerer-admins] how to read this output from augur update
+</A></li>
+	<LI>Next message: <A HREF="001735.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1762">[ date ]</a>
+              <a href="thread.html#1762">[ thread ]</a>
+              <a href="subject.html#1762">[ subject ]</a>
+              <a href="author.html#1762">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

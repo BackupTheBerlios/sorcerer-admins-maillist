@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gdm failure
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20failure&In-Reply-To=%3CAANLkTinGLSRPQGTXBydWXYyNs2xYfhTLsg8--To-q%2B%3D4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002038.html">
+   <LINK REL="Next"  HREF="002040.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gdm failure</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20failure&In-Reply-To=%3CAANLkTinGLSRPQGTXBydWXYyNs2xYfhTLsg8--To-q%2B%3D4%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gdm failure">d3ck0r at gmail.com
+       </A><BR>
+    <I>Mon Jan  3 06:40:25 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002038.html">[Sorcerer-admins] gdm failure
+</A></li>
+        <LI>Next message: <A HREF="002040.html">[Sorcerer-admins] gdm failure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2039">[ date ]</a>
+              <a href="thread.html#2039">[ thread ]</a>
+              <a href="subject.html#2039">[ subject ]</a>
+              <a href="author.html#2039">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm I did recast libvorbis, which should have installed libvrobisfile,
+the .la file has no reference to /usr/lib ... I did that cast command
+there, it didn't find anything...
+
+I did check in cd /etc/sorcery/log/install
+&gt;<i> # cast $( grep -l &quot;\.la$&quot; * ) hmm... something like that I actually did
+</I>
+ cast $(grep \\\.la * |grep lib/ | sed 's/\([^:]*\):.*/\1/g' |sort -u)
+
+so any .la in lib/ ... but anyhow libvorbis wasn't in /usr/lib as
+indicated by it's .la...also when I tried to take the config line from
+config.log and re-run the configure to see if that had anything, it
+failed to find doctool or something(?) ... I guess cast runs in a
+different environment?
+
+Is there a way to 'augur event' and just get what the last events were
+? there was a whole mess of spells that came back auto-failed after
+the above cast...
+
+Sun 02 Jan 2011 07:00:31 AM PST  scim  1.4.9  Fore  FAIL Auto
+Sun 02 Jan 2011 09:24:31 PM PST  scim  1.4.9  Fore  Cast ELF
+Sun 02 Jan 2011 09:24:31 PM PST  scim  1.4.9  Fore  Miss ELF
+Sun 02 Jan 2011 09:25:55 PM PST  scim  1.4.9  Fore  FAIL Auto
+Sun 02 Jan 2011 09:34:29 PM PST  scim  1.4.9  Fore  Cast SA
+
+if Miss ELF, what do I do to find out which it's missing?
+
+
+On Sun, Jan 2, 2011 at 5:20 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Normally, cast can detect and fix such problems
+</I>&gt;<i> using the LA check.
+</I>&gt;<i> But apparently that is not 100% effective.
+</I>&gt;<i> Therefore, I recommend something like:
+</I>&gt;<i>
+</I>&gt;<i> # cast $( LC_ALL=C grep -l &quot;vorbisfile&quot; {/,/usr/}lib{,64}/*.la | augur
+</I>&gt;<i> from | cut -d : -f1 | sort -u )
+</I>&gt;<i>
+</I>&gt;<i> The installed libraries for libvorbis must have moved on an update
+</I>&gt;<i> or a recast and some stale libtool la file from something else
+</I>&gt;<i> that directly or indirectly requires libvorbis's libraries must reference
+</I>&gt;<i> the old /usr/lib/ location and not the new /usr/lib64/ location.
+</I>&gt;<i>
+</I>&gt;<i> Sorry for the inconvenience.
+</I>&gt;<i> I am moving install locations of libraries in order to have ELF32
+</I>&gt;<i> in lib/ and ELF64 in lib64/
+</I>&gt;<i> It is not always essential, but tends to be beneficial for libtool.
+</I>&gt;<i> Libtool .la files have a tendency to insert a -L/usr/lib or -L/usr/lib64
+</I>&gt;<i> into the LDFLAGS.
+</I>&gt;<i> And a -L/usr/lib can cause problems for /bin/ld if and when it selects an
+</I>&gt;<i> ELF32 library from /usr/lib/ instead of the ELF64 library from /usr/lib64/
+</I>&gt;<i> when doing ELF64 linking.
+</I>&gt;<i> Likewise a -L/usr/lib64 can cause /bin/ld to select the wrong ELF64
+</I>&gt;<i> library from /usr/lib64/ instead of using the ELF32 library from /usr/lib/
+</I>&gt;<i> when doing ELF32 linking.
+</I>&gt;<i>
+</I>&gt;<i> The only true multilib source that comes to mind is gcc.
+</I>&gt;<i> Every other source must be compiled twice to create
+</I>&gt;<i> two sets of libraries. &#160;Sources that compile with the assistance
+</I>&gt;<i> of autoconf must be explicitly told to install libraries into lib64 directories.
+</I>&gt;<i> Most sources that compile using cmake can not be told
+</I>&gt;<i> to install into lib64 directories and must have source files edited
+</I>&gt;<i> in order to make it so.
+</I>&gt;<i>
+</I>&gt;<i> So unfortunately, x86_64 boxes might be doing a bit of recompiling
+</I>&gt;<i> that might seem unnecessary in order to adjust to the change in
+</I>&gt;<i> install locations of libraries.
+</I>&gt;<i> Worst case scenario for fixing a difficult to understand libtool
+</I>&gt;<i> problem would be to recompile all installed spells that
+</I>&gt;<i> install libtool la files.
+</I>&gt;<i> Something like:
+</I>&gt;<i> # cd /etc/sorcery/log/install
+</I>&gt;<i> # cast $( grep -l &quot;\.la$&quot; * )
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Jan 2, 2011 at 3:47 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> &#160;CCLD &#160; gdm-user-switch-applet
+</I>&gt;&gt;<i> libtool: link: cannot find the library `/usr/lib/libvorbisfile.la' or
+</I>&gt;&gt;<i> unhandled argument `/usr/lib/libvorbisfile.la'
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I tried to recast libvorbis that didn't help.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There is nothing in /usr/lib/libvo*
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> gcc is working though :)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002038.html">[Sorcerer-admins] gdm failure
+</A></li>
+	<LI>Next message: <A HREF="002040.html">[Sorcerer-admins] gdm failure
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2039">[ date ]</a>
+              <a href="thread.html#2039">[ thread ]</a>
+              <a href="subject.html#2039">[ subject ]</a>
+              <a href="author.html#2039">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

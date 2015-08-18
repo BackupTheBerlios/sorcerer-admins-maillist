@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Security, encryption and the next I/R
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Security%2C%20encryption%20and%20the%20next%20I/R&In-Reply-To=%3C596b75860805040816u2362231cve674cc26537d7cb4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000413.html">
+   <LINK REL="Next"  HREF="000423.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Security, encryption and the next I/R</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Security%2C%20encryption%20and%20the%20next%20I/R&In-Reply-To=%3C596b75860805040816u2362231cve674cc26537d7cb4%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Security, encryption and the next I/R">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May  4 17:16:44 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000413.html">[Sorcerer-admins] initramfs
+</A></li>
+        <LI>Next message: <A HREF="000423.html">[Sorcerer-admins] Security, encryption and the next I/R
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#414">[ date ]</a>
+              <a href="thread.html#414">[ thread ]</a>
+              <a href="subject.html#414">[ subject ]</a>
+              <a href="author.html#414">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The next I/R is already under construction.
+It will have support for creating LUKS encrypted partitions.
+Yes even / can be an encrypted partition.
+And also dedicated swap partitions can be encrypted.
+
+Also the next I/R will support EVMS, enterprise volume management system.
+EVMS can use the device-mapper in order to restructure disk and/or partitions
+into groups which can be accessed as single volumes.
+Using EVMS is not required.
+fdisk is still available for disk partitioning.
+
+Lastly, the grimoire is being adjusted so that libselinux is no longer optional.
+Eventually, all boxes will update to having libselinux support and
+Linux-PAM installed.
+Yes Linux-PAM is required for use with libselinux.
+However, libselinux also requires a kernel compiled with libselinux
+support enabled,
+otherwise a libselinux box acts just like an normal box.
+
+linux-modular version 2.6.25.1 will be selinux enabled.
+It will boot with selinux enabled.
+However, it will be in permissive mode and therefore merely
+log denials of access instead of enforcing them.
+Of course it can be boot with kernel parameter:
+selinux=0
+to entirely disable selinux support.
+
+The move to supporting selinux is due to several factors.
+selinux support has been in the vanilla linux kernel for a while.
+grsecurity did not make it into the linux kernel.
+Almost all of the sources for utilities that require selinux patches,
+except sysvinit, have had those patches merged into their vanilla sources.
+Many major distributions have selinux support already.
+Most of the spells required for selinux, except refpolicy,
+already existed in the Sorcerer grimoire.
+Basically, selinux has been sitting half baked
+in the Sorcerer grimoire for years.
+In theory it was usable if a SA could acquire the missing parts
+such as default policies and a patched sysvinit.
+But I doubt anyone bothered to try selinux on Sorcerer.
+
+For those not familiar with selinux it enables restricting what
+files can be read, written, and run by several different means
+besides the traditional owner group and mode.
+To begin with it uses the extended attributes.
+And for that reason it must be installed on ext2, ext3, xfs, or jfs
+with extended attributes enabled.
+Much reading is required to learn how to wield selinux
+You may want to start with:
+
+<A HREF="http://www.lurking-grue.org/selinuxHOWTO.html">http://www.lurking-grue.org/selinuxHOWTO.html</A>
+<A HREF="http://www.lurking-grue.org/writingselinuxpolicyHOWTO.html">http://www.lurking-grue.org/writingselinuxpolicyHOWTO.html</A>
+
+I am still reading those.
+
+linux-modular 2.6.25.1 will also have support for: smack
+It is a less complicated alternative to selinux
+<A HREF="http://www.schaufler-ca.com/">http://www.schaufler-ca.com/</A>
+smack-utils is already in the grimoire.
+Not certain what else is required in order to configure and use smack yet.
+I decided I would concentrate on selinux first and smack second
+to make it seem like a downhill run.
+
+
+<A HREF="http://www.saout.de/tikiwiki/tiki-index.php?page=EncryptedDeviceUsingLUKS">http://www.saout.de/tikiwiki/tiki-index.php?page=EncryptedDeviceUsingLUKS</A>
+
+I nearly forgot, but that is the wiki for LUKS.
+Unfortunately, it is not absolute correct about the file commands/parameters.
+But it is incredibly easy to set up a LUKS encrypted partition
+which can have up to 8 simultaneous separate passwords to enable it.
+The init-script is already available in the grimoire to enable them during boot.
+To start using it be certain that cryptsetup version 1.0.6 is installed
+and /etc/init.d/luks exists.
+
+The next I/R should be entertaining even for Sorcerer veterans.
+Here are some potential challenges to try:
+
+Try making filesystems on logical groups instead of physical partitions.
+Try making encrypted / installations.
+Try setting up a box with full and functional selinux support that
+does not lock you into a corner as soon as enforcing mode is enabled.
+
+selinux, it is probably best enabled and enforced on servers rather
+than workstations.
+Many daemons/services still run as root.
+A successful exploit of a root run daemon may give the attacker root
+access to a box.
+However, if selinux is properly configured then the &quot;identity&quot; running
+that daemon
+may only have only limited access to the files that the daemon would
+normally access.
+Therefore, if the attack was upon a webserver then the attacker might
+only gain the ability
+to corrupt and modify hosted webpages and websites.
+If the attack was upon an email server then only email might be effected.
+However, the attacker would not gain the ability to modify /etc/shadow
+or other files installed in / and /usr, etc...
+selinux seems like locking processes inside of a shatterproof glass boxes.
+With selinux installed root != root.
+roles help control access.
+
+It is probable that attacks designed to gain root will probably happen
+mostly on services
+running on ports 0 &lt; 1024, because only a root process can bind to those ports.
+Therefore, an email server running on port 25 will most likely be
+running as root.
+selinux niche is probably to protect and isolate servers running under
+the root account.
+But the reference policy has policies for nearly everything even such
+programs as tvtime.
+
+It may be a matter of opinion whether setting up selinux policies is easier
+or whether writing an init script to run a daemon as non root user
+within a chroot is easier.
+Since bind's named is a frequent target for attack
+the bind spell in the grimoire
+already makes use of named's command line parameters
+to execute the server using a non root account within a chroot jail.
+However, not all servers are that easy to run that way.
+Yet typically merely running a server with a non root account
+is enough to limit the potential access a successful attack can gain.
+
+Although xinetd is inefficient.
+It does provide a method for limiting access and to a server,
+not unlike using iptables,
+but also to enable the server to start as a non root user.
+xinetd runs as root so it can bind to ports 0 &gt; 1024,
+however the program xinetd invokes does not have to be run as root.
+
+Lastly, some services which do not have to be run as root can be run
+on higher ports such as a webserver on port 8080.
+It is possible for firewalls to translate not only addresses but also ports
+so that a server running on port 8080 on the host box appears to be accessible
+on port 80 from boxes contacting the firewall from the outside.
+Also by using iptables port forwarding can be configured on the same box.
+
+Consequently, a securely configured box is not necessarily more secure
+when it is configured with selinux, grsecurity, rsbac, etc...
+However, it could be.
+Most importantly, the effectiveness of security is the sum of the
+knowledge and effort from the SA.
+
+rsbac and grsecurity still exist in the grimoire for those who want to try them.
+They are similar to selinux, but less complicated.
+Just as there at least 6 different ways to do encryption on a linux box
+there are at least 6 different ways to do enhanced security.
+app-armor, I merely know by name, apparently is something like
+grsecurity/selinux.
+
+Deciding between old coke, new coke, coke 0, coke without caffeine, diet coke
+is far easier than deciding between grsecurity, rsbac, and selinux.
+I hate coke.
+None for me thanks.
+
+I know some SAs will feel that way about selinux.
+You can pry it off using augur exile if you want,
+but it will not hurt to leave installed and add the
+kernel parameter to lilo.conf.head and lilo.conf
+to disable selinux during boot.
+
+Lastly, there may be some optimization mistakes on the 20080501 i586 I/R
+An unknown ( 60+ ) amount of installed spells may be optimized to run
+on athlon-xp hardware.
+They might not run on i586 or error with an invalid instruction.
+Oops.
+Naturally, I am doing a complete recompilation of the i586 I/R
+About 150 spells remain to compile.
+Therefore, it may not be ready next week.
+However, it may be possible to use the 20080501 i586 I/R for installation
+on i686 and i586 architecture inspite of the mistake and
+then do a rebuild afterward.
+Good luck.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000413.html">[Sorcerer-admins] initramfs
+</A></li>
+	<LI>Next message: <A HREF="000423.html">[Sorcerer-admins] Security, encryption and the next I/R
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#414">[ date ]</a>
+              <a href="thread.html#414">[ thread ]</a>
+              <a href="subject.html#414">[ subject ]</a>
+              <a href="author.html#414">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

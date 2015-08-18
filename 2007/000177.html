@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] compile failure on gcc 4.2.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C9104f1fb0708182306u366f9ea5re38318c7424ee9d1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000142.html">
+   <LINK REL="Next"  HREF="000178.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] compile failure on gcc 4.2.1</H1>
+    <B>John Locke</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20compile%20failure%20on%20gcc%204.2.1&In-Reply-To=%3C9104f1fb0708182306u366f9ea5re38318c7424ee9d1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] compile failure on gcc 4.2.1">loki1725 at gmail.com
+       </A><BR>
+    <I>Sun Aug 19 08:06:21 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000142.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+        <LI>Next message: <A HREF="000178.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#177">[ date ]</a>
+              <a href="thread.html#177">[ thread ]</a>
+              <a href="subject.html#177">[ subject ]</a>
+              <a href="author.html#177">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, so over the past week I've done what I could on this issue when I've had
+time.  I have played around with a fe things and I'm pretty sure I'm having
+a failure of my gcc.  Some things seem to compile, but a majority of them
+fail.  I have tried to dispel gcc, then cast -c -r it again to try and fix
+it.  I have done an 'augur synch' within the past thirty minutes, and the
+version of gcc available is 4.2.1.  This is what I have on my box right
+now.  Anyway, when I try and re-cast gcc I get the following lines.
+&quot;Fail: Sun Aug 19 .... binutil 2.17 autofailed by binutils&quot;
+&quot;Fail Sun Aug 19..... gcc 4.2.1 autofailed by db&quot;
+
+I've tried to dispel and cast binutils and db.  Both generated the
+'autofailed by ...' where they seem to fail themselves.
+
+I tried an 'augur update' earlier today, and got lots and lots of compile
+failures.  Not everything failed though.  I don't see an obvious correlation
+between what failed and what didn't.
+
+I do see that I have gcc-v3.0 and gcc-v4.0 installed on my box.  I believe
+this is from the original install.  Is there anyway to dispel gcc and use
+either of these to try and rebuild the newest version of gcc?  And if I do
+that, don't I have to go back to previous versions of glibc?  I seem to
+remember reading somewhere that glibc and gcc are tied together at the
+version level.
+
+Thanks for any suggestions.
+
+Nathan
+
+On 8/15/07, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> On 8/14/07, John Locke &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">loki1725 at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; I tried playing with this again today.  I ran augur update, and made
+</I>&gt;<i> sure my
+</I>&gt;<i> &gt; versions of the grimoire, gcc and glibc all matched.  Then I ran sorcery
+</I>&gt;<i> &gt; update and got many many failures.  I think the root failure was
+</I>&gt;<i> busybox.
+</I>&gt;<i>
+</I>&gt;<i> Please go ahead and dispel busybox.
+</I>&gt;<i> Although it is installed, by default, and used during the boot of the I/R
+</I>&gt;<i> it is never used after that.
+</I>&gt;<i> I should go ahead and adjust the update criteria for busybox
+</I>&gt;<i> to dispel it on deployed Sorcerer boxes.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; Anyway, I am going to start over again from scratch.
+</I>&gt;<i>
+</I>&gt;<i> Almost all spell use the gcc spell for compilation.
+</I>&gt;<i> If that is okay, then compilation should be okay.
+</I>&gt;<i> Starting over is not advised since there is typically
+</I>&gt;<i> no problems too difficult to surmount after managing
+</I>&gt;<i> to configure the linux kernel, install the skeleton, boot
+</I>&gt;<i> the box, and have it connect to the network.
+</I>&gt;<i> After that it only becomes easier.  :)
+</I>&gt;<i> Another aspect to consider is that the updated I/R
+</I>&gt;<i> are built ontop of the old I/R for the most part simply
+</I>&gt;<i> by doing the same that would be accomplished by
+</I>&gt;<i> augur sync; augur newer; augur update
+</I>&gt;<i> Ultimately, if you try to spot and fix the problems you
+</I>&gt;<i> may learn and hone your skills.
+</I>&gt;<i>
+</I>&gt;<i> I do not mean to seem insensitive.
+</I>&gt;<i> When I was a novice I reinstalled distros like
+</I>&gt;<i> Redhat and Debian multiple times on a box.
+</I>&gt;<i> I understand that nagging feeling and thought
+</I>&gt;<i> that perhaps I installed the wrong thing or omitted
+</I>&gt;<i> something else or made some mistake,
+</I>&gt;<i> and that starting over with a fresh install
+</I>&gt;<i> I will be able to get it entirely correct this time.
+</I>&gt;<i> But eventually you can work through it and
+</I>&gt;<i> it will only be a memory.
+</I>&gt;<i>
+</I>&gt;<i> Sometime before I created Sorcerer
+</I>&gt;<i> I was doing Debian installations without
+</I>&gt;<i> using the Debian menu driven installer.
+</I>&gt;<i> Easily most Sorcerer SAs could do a Sorcerer installation
+</I>&gt;<i> without using the sorcerer menu driven installer.
+</I>&gt;<i> Eventually, a comprehensive understanding of what must
+</I>&gt;<i> be done step by step to deploy a Sorcerer box will become
+</I>&gt;<i> as apparent and easy to do as walking and talking concurrently.
+</I>&gt;<i> Yes it does become that easy.
+</I>&gt;<i>
+</I>&gt;<i> That is why I encourage you to ride out the roughness.
+</I>&gt;<i> If the problems do seem insurmountable you can always redeploy,
+</I>&gt;<i> but there may be much yet to learn before that.
+</I>&gt;<i> Lastly if the box is not sensitive and you want me to take a look at it,
+</I>&gt;<i> I can lend you my public ssh key so I can log in as a guest and
+</I>&gt;<i> take a quick look.
+</I>&gt;<i> There is usually no problem on a sorcerer box that once
+</I>&gt;<i> identified can not be fixed with 5 commands or less.
+</I>&gt;<i> It is usually far faster than the time required to reinstall
+</I>&gt;<i> and then reupdate from an I/R that is 6 months or older.
+</I>&gt;<i>
+</I>&gt;<i> &gt; Thanks for you help and suggestions.  I'm very impressed at the level of
+</I>&gt;<i> &gt; support around here.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070819/77c3afaa/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070819/77c3afaa/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000142.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+	<LI>Next message: <A HREF="000178.html">[Sorcerer-admins] compile failure on gcc 4.2.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#177">[ date ]</a>
+              <a href="thread.html#177">[ thread ]</a>
+              <a href="subject.html#177">[ subject ]</a>
+              <a href="author.html#177">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] can't boot into my system
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CAANLkTilhA1-pGoR_2ikiLDNo4NOtfpm4JlIudcQlZtBi%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001838.html">
+   <LINK REL="Next"  HREF="001810.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] can't boot into my system</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20can%27t%20boot%20into%20my%20system&In-Reply-To=%3CAANLkTilhA1-pGoR_2ikiLDNo4NOtfpm4JlIudcQlZtBi%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] can't boot into my system">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jul 21 04:54:29 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001838.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+        <LI>Next message: <A HREF="001810.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1811">[ date ]</a>
+              <a href="thread.html#1811">[ thread ]</a>
+              <a href="subject.html#1811">[ subject ]</a>
+              <a href="author.html#1811">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Jul 20, 2010 at 1:32 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+
+&gt;<i> This all started back when HDDs exceeding 1024 cylinders needed a
+</I>&gt;<i> workaround. So we started creating a /boot on an /XdX1 primary, bootable
+</I>&gt;<i> flagged partition.
+</I>
+Yeah, I also rolled a kernel in those days which
+I could not boot.
+Was funny.
+I asked a friend what to do about it.
+He said copy the file.
+I did, and it landed at the other end of the disk
+within the 1024 cylinder.
+Then, it booted.
+Even though /boot partition is no longer
+required to get around the 1024 cylinder problem
+having a /boot partition is not without advantages.
+
+
+&gt;<i> Ext2 had/has a filesize limit of I believe 2GB, which, gave me problems
+</I>
+I have had files in excess of 2G on ext3.
+I am uncertain if ext3 is that much different
+than ext2 with a journal attached.  :)
+Limit regarding the size of files that can be accessed
+depends on what functions are used for file access.
+With IA32 there is still a choice.
+With x86_64 only the 64 bit functions are used.
+
+
+&gt;<i> when I started mastering the .COM zone myself for failsafe reasons years
+</I>&gt;<i> ago.
+</I>
+Wow small world.
+I have not seen a .com zone file since
+the days before the .com was moved off
+of the root name servers.
+I was probably in charge of the least capable root name server.
+How embarrassing.
+But it was not my fault that the Internet connection
+was like trying to suck an elephant through a drinking straw.
+
+
+&gt;<i> Nowadays, most folks don't understand the significance of a /boot on its
+</I>&gt;<i> own partition, but there are nevertheless still a lot of good reasons
+</I>&gt;<i> for the implementation of that practice :)
+</I>
+I can think of many.  :)
+
+
+&gt;<i> Sorry that you ran up against this, but hey, you got some kewl practice
+</I>&gt;<i> in Sorcerer installs eh?
+</I>
+The installer still needs improvement.
+More screens with useful information
+to help guide SAs through the steps
+would be useful.
+I did not do a great job with it.
+I paved the roads, but mostly
+left out the sign posts.  :)
+But a person too familiar with the streets
+drives them without every looking at a sign post.
+So I sort of forgot where they should go.
+
+Even this moment I am thinking that I should
+probably be driving in more sign posts
+or rolling new I/Rs.
+But I am still waiting for the dust to settle
+following the transition to DESTDIR.
+Just last night Jan pointed out a spot
+where I was doing something in the wrong
+order which would cause the potentially
+useful files in /etc.ori/ to not be installed.
+How embarrassing since I like to boast
+about having the convenience of /etc.ori/
+on Sorcerer boxes!
+
+So today I am playing with my uClibc port of Sorcerer.
+I have had it for probably over a year now,
+but rarely have time to play with it.
+Creating a usable uClibc configuration is tricky.
+Having stuff compile and work with it is also challenging.
+It is mostly usable as a libc implementation,
+but not a drop in replacement like eglibc.
+
+Mostly, I like uClibc.
+If uClibc swallowed a frag grenade like xorg did
+and re-appeared as several small easy to install sources
+then it could have the potential to do to glibc
+what xorg did to XFree86.  :)
+Really, I liked XFree86, everything except the
+massive amount of effort to create the configuration
+file prior to compiling it.
+Sorcerer went a long time before switching to xorg
+and for a few years supported both XFree86 and xorg,
+back around the time when Sorcerer was hosted at
+aakin.net.
+
+Anyway, so when the dust has settled from
+the DESTDIR transition I will roll new I/Rs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001838.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+	<LI>Next message: <A HREF="001810.html">[Sorcerer-admins] can't boot into my system
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1811">[ date ]</a>
+              <a href="thread.html#1811">[ thread ]</a>
+              <a href="subject.html#1811">[ subject ]</a>
+              <a href="author.html#1811">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

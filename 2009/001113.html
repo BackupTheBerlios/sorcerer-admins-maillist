@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091917p5dabc65el53655105ff3ba871%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001108.html">
+   <LINK REL="Next"  HREF="001093.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091917p5dabc65el53655105ff3ba871%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May 10 04:17:28 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001108.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001093.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1113">[ date ]</a>
+              <a href="thread.html#1113">[ thread ]</a>
+              <a href="subject.html#1113">[ subject ]</a>
+              <a href="author.html#1113">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, May 9, 2009 at 5:28 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Saturday 09 May 2009, Kyle Sallee wrote:
+</I>&gt;&gt;<i> uClibc would be a better choice for Sorcerer.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If Sorcerer did eventually transition over to an almost entirely
+</I>&gt;&gt;<i> uClibc based distribution
+</I>&gt;&gt;<i> then the problems with non binary compatible upgrades may
+</I>&gt;<i>
+</I>&gt;<i> My boxes also run bunch of binary packages unfortunately. Not sure how those
+</I>&gt;<i> would run with uClibc.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>
+It is difficult to yet determine that.
+However, as long as glibc ELF libraries are provided
+then software linked with glibc ELF libraries should run.
+At the very least /lib/ld-linux.so.2 and
+/lib64/ld-linux-x86-64.so.2 must remain in their current locations.
+Those are hardcoded into ELF executables.
+gcc tells ld to add it to ELF executables during compilation.
+However, the rest of glibc's ELF libraries can be anywhere
+specified in /etc/ld.so.conf
+
+I saw recently that a newer version of OOo is available.
+I have not made time to adjust the spell.
+However we probably use a pre-compiled version
+that it is dynamically linked with glibc.
+Therefore, for spells such as
+OOo-bin and jdk
+Sorcerer should continue to provide
+glibc's ELF libraries along with appropriate libstdc++ ELF libraries
+
+However, software natively compiled on Sorcerer would
+be linked with uClibc instead of glibc.
+If that happened
+then glibc would likely be a cross-compile target.
+And the native $MACHTYPE for our boxes would change from
+i686-pc-linux-gnu to i686-linux-uClibc
+And a similar change for x86_64 and i586 names.
+
+For the moment I am treating compilation to uClibc
+as a cross compile target,
+as if it were an entirely different architecture.
+It seems to be the only way to handle it reliably without encounter
+and creating additional problems.
+But if enough installed software on a Sorcerer box was
+re-compiled and linked with uClibc
+then uClibc would become the native and glibc the cross.  :)
+
+Considering how sentinel must also be linked with the same C library
+as the running ELFs I have not yet thought of an easy way to accomplish
+the transition.
+Perhaps if I can create sentinel without linking it
+to libc.so.6 and libdl.so.2 and ld-linux.so.2 ?
+Maybe it can adapt for the ELF being run?
+I will have to give it a try.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001108.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001093.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1113">[ date ]</a>
+              <a href="thread.html#1113">[ thread ]</a>
+              <a href="subject.html#1113">[ subject ]</a>
+              <a href="author.html#1113">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

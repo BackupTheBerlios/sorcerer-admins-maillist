@@ -1,0 +1,360 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] please forgive the downtime...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20please%20forgive%20the%20downtime...&In-Reply-To=%3CCA%2BT4wDgC%3Dgro4xpc4y9%2BpRVmV%2Bhog_yERbuTBcyEvKCPWUDfLA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002474.html">
+   <LINK REL="Next"  HREF="002476.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] please forgive the downtime...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20please%20forgive%20the%20downtime...&In-Reply-To=%3CCA%2BT4wDgC%3Dgro4xpc4y9%2BpRVmV%2Bhog_yERbuTBcyEvKCPWUDfLA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] please forgive the downtime...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Nov  1 19:46:50 CET 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002474.html">[Sorcerer-admins] baresha512
+</A></li>
+        <LI>Next message: <A HREF="002476.html">[Sorcerer-admins] calibre...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2475">[ date ]</a>
+              <a href="thread.html#2475">[ thread ]</a>
+              <a href="subject.html#2475">[ subject ]</a>
+              <a href="author.html#2475">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Due to change in internals variables in sorcery
+the script that rolls the catalog failed.
+Should be fixed already.
+
+Yesterday, I was checking to see if lighttpd could serve files
+over the same connection faster than httpd.
+It did not.
+
+Perhaps the one aspect that I liked most about
+the current catalog distribution method
+was that it avoided sending a complete list of cataloged spells.
+However, that was the single aspect that Evert loathed the most.
+Thanks to considerable feedback and constructive criticism
+we will now be trying the catalog system
+that is designed and implemented according to Evert's suggestions.
+
+I designed and implemented the new system.
+It should be closer to what Evert desired.
+Much of that conversation was probably off the email list.
+It spanned many messages.
+However, I wanted to make proper mention of that for two reasons.
+First, if it seems better or performs better
+then thank Evert for contributing his ideas and feedback.
+Second, I only changed the catalog update method once
+on my whim this year.
+This unprecedented second time is because the implementation
+of Evert's suggestions seems to have sufficient merit.
+
+If cups printing is working again after mysteriously not working
+then thank Evert for investigating and discovering that important
+components had been removed from the cups' software project tarball
+and are now provided in separate tarballs such as cups-filters.
+I had my eyes on so many other aspects
+that I failed to notice and read the relevant information
+until after Evert investigated and reported it.
+
+Evert did not expect to be credited and thanked for that
+since it is typical Evert style of contribution,
+but I felt very pleased to be able to delegate the cups situation
+and feel fully confident that Evert would discover the solution.
+
+If email was not silent I would suggest applause for Evert,
+because he is a consistent contributor of feed back, bug reports, etc..
+Thanks to Evert the quality of this POSIX is sustained.
+
+Right, now back to the description of new changes.
+I will attempt a succinct explanation along with the logic.
+First of all I granted the complete list of cataloged spells.
+Naturally, that would combined each spell's most recent date
+to determine if a previously downloaded spell should be downloaded again.
+However, the list of spells and list of edits are two separate files.
+The reason for that is the reduction of bytes downloaded.
+The list of spells only changed when I add a new spell
+or remove an existing spell.
+Far more frequently I edit existing spells.
+Therefore, the list of spells should only be downloaded
+when the remote copy is newer than the local.
+That huge list of spells requires 14K to download.
+But it should not download often.
+
+The list of edits for spell is the traditional YYYYMMDD format.
+It is a 4.3K download.
+Combined both files can download in approximately
+4 seconds on a 56.6 kilobaud analog modem.
+Not bad at all.
+
+After a sorcery acquires current copies of both files
+then it can compare with the local catalog to determine
+what spells require downloading.
+Spells are stored in individual tarballs.
+However, most updates will not require
+downloading more than a fraction
+of the total spells hosted.
+Thanks to a recent adjustment
+a complete list of spells requires approximately
+3000 files downloaded.
+
+Note that the FlightGear-Aircraft spell has soaked up
+and can now dynamically provide the sources for
+all the previous FlightGear-Aircraft-* type spells.
+It mitigated a few hundred spells.
+But those who find simulating stimulating
+can still acquire the same aircraft by configuring
+and casting FlightGear-Aircraft
+Please pardon the digression.
+
+Because the spells are individually tarred
+the rate of download is independent of total bandwidth.
+Due to the 4 packet exchange before any file is transferred
+latency mitigates throughput.
+In my situation that latency looked significant.
+So to combat the latency I adjusted the download method
+to permit multiple concurrent connections with the server
+when downloading a large amount of spells.
+As many as 4 concurrent connections can be established.
+Each connection will download 256 spells.
+That mitigates the lengthy TCP connection handshaking.
+However, that said downloading about 3000 files
+still requires duration in proportion with latency.
+It might seem brutal to anyone bouncing packets off of satellites.
+Sorry for that.
+
+Best case scenario...
+While attempting to update the catalog
+the heads for the name and edit files are downloaded.
+The remote copies are not newer.
+And the update is complete.
+Nothing else is downloaded.
+Downloading 2 headers is practically no expense
+for checking to see if updates are available.
+
+Frequent updater scenario...
+The head for the names list is checked and it matches.
+The edit list's head shows a newer file and so the 4.3K
+edit file is downloaded.
+Then about 40 spell tarballs are downloaded.
+They are reasonably small and the total transfer requires
+less than 64 kilobytes of download.
+Not bad, not bad, right?
+
+And the less frequent scenario.
+The 14K name list + 4.3K edit list are downloaded.
+Then about 300 to 400 spells download.
+Total transfer size is less than 256K.
+
+While less efficient than sdelta3 update patches
+the method still offers significant savings
+as opposed to downloading a full catalog tarball on each update.
+And the preparation of the name and edit lists
+and the spell tarballs utilizes minimum processing power.
+This method requires each client computer's sorcery
+to decided which spell files should be downloaded.
+Those are admirable boons.
+
+The obvious bane is the additional strain on the web server.
+Due to latency open connections remain open longer.
+I am not anticipating a problem.
+However, the server can only maintain
+a limited amount of concurrent connections.
+Those limits can probably be increased if a problem occurs.
+
+In retrospect I feel better about this new method.
+I dare say I feel a bit excited about it.
+It's implementation is excitingly simple and eloquent.
+
+At first I loathed the idea of providing a list of spells
+and even a list of edit dates.
+However, since they only download when newer
+that small change helps drastically mitigate
+the amount of bandwidth utilized.
+So it is almost as good as a boon without a commensurate bane.
+
+I remember days long gone, more than a decade ago
+when Redhat had no update method.
+SAs eyeballed a ftp directory containing RPMS
+and manually downloaded that which was not already installed.
+Granted user worms nearly an unlimited amount of time
+to execute exploits in order to gain root access.
+Was a good enough reason to quit using Redhat.
+
+And I remember Debian with it's massive package list.
+It was either completely downloaded or rsynced.
+It was something like a 2 megabyte file.
+Checking for updates was NOT fast,
+especially slow on analog modems.
+So that was a potential 2 megabytes download
+prior to downloading any newer pre-compiled binary packages.
+
+When I contrast this new method with ancient methods
+I experienced with other POSIX
+then I feel like saying a transfer of a few kilobytes
+seems delightfully eloquent in contrast.
+Perhaps we shall all come to appreciate it 2014.
+The method should be available in a day or two
+early November 2013.
+Remember to update.
+The older two methods for catalog acquisition
+become deprecated immediately upon the release
+of a new I/R in 2014.
+Any root file systems left behind in 2014 must update
+installed sorcery first merely to acquire a newer catalog.
+
+
+Technical explanation exists below.
+If not interested in knowing how it all fits together
+then consider this the end of message.
+
+
+Edits was briefly described before as YYYMMDD dates.
+More to explain yet exists.
+
+Edits are not this POSIX's specific versions for spells.
+They literally are a method for dating spell
+that allows for me to locate spells more easily.
+edit dates are right there at the top of spell files.
+3 types exist.
+
+info info last 20131031
+
+The above indicates that the most recent release of a stable source
+was 20131031.
+When I do date subtraction by subtracting this date from the current date
+then I can determine the duration since a new release.
+If I am wondering if a software project died or
+is escaping my automatic surveillance then this date grants a clue.
+
+with info good 20131029
+
+The above date indicates that I manually checked for a newer version
+and then re-cast the existing version on 20131029 and verified that
+it still compiles, links, and installs fine.
+I prefer that software projects release new source tarballs
+approximately once every 6 months.
+If I do not see it happening
+then I tend to visit their webpages and probe.
+Did the software project's webpage relocate?
+Did the download URL change?
+If something important changes then I find it.
+Due to the amount of effort involved
+I can only chase potentially inactive software projects
+approximately once every 6 months.
+However, most new releases of source tarballs
+become checked into the software catalog within a week
+after the software author makes the release.
+Therefore, stale spells become the exception rather than the norm.
+
+with info edit 20130704
+
+The above line indicates when a spell was merely edited.
+Sometimes I make a cosmetic change to a spell.
+Sometimes it might be a bug fix.
+For whatever reason I edit it.
+That above line reminds me of when I did it.
+But it alone does not tell me what I did.
+But it alone is good enough to indicate that
+any downloaded spell with a different date
+must be downloaded again to receive the freshly edited spell.
+
+Some spells will have both a
+with info last
+with info good
+lines.
+The most recent date counts.
+Some spells might have all 3 lines.
+Still the most recent date counts.
+
+I have been dating spells since perhaps sometime in 2012.
+I forgot exactly when I began dating spells.
+I began when I realized that I could display
+the information color coded in the HTML catalog listing
+that I generate periodically.
+It assists with the task of locating newer source tarballs
+without actually manually visiting 3000+ websites with a web browser.
+
+The idea of dating spells was suggested by someone
+perhaps nearly a decade before.
+The recommendation lacked the suggestion of using
+different types of date labels such as &quot;last&quot; &quot;good&quot; and &quot;edit.&quot;
+The recommendation lacked specifying date in YYYYMMDD format.
+
+The conversation ended with something like,
+&quot;look at the date on svn's commit log for the spell.&quot;
+At that time no implementation was made from the recommendation,
+because no sufficient reason was stated
+for why the effort would gain more than it costs.
+
+While I want to offer credit where credit is due
+the suggestion for the use of a date field in spells
+is no more related to my implementation
+than the content of every file is related
+to idea of a &quot;file&quot; or a &quot;file name.&quot;
+Naturally, we can not extend the copyright
+for every files' content to the person who coined
+the word &quot;file&quot; or &quot;file name.&quot;
+
+However, I wanted to blow on that old ember
+to provide a reminder that I try to remember
+every suggestion and discussion and eventually
+utilize the information beneficially even when
+nothing immediately comes from from it.
+
+Please be specific and elaborate on the benefit
+and the utilization of the idea when making suggestions.
+Since plenty more exists than can be accomplished
+new implementations become only when an evaluation
+of their boons outweigh their banes.
+
+Thanks for reading the entire message.
+And thanks again to Evert for solid feedback.
+Originally, I did not want a method that involved
+transferring a list of spells.
+But as I explained above,
+only transferring the list when it changes
+it a good compromise.
+We can all feel pleased and excited
+that this POSIX continues to evolve.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131101/45ff9bf0/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20131101/45ff9bf0/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002474.html">[Sorcerer-admins] baresha512
+</A></li>
+	<LI>Next message: <A HREF="002476.html">[Sorcerer-admins] calibre...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2475">[ date ]</a>
+              <a href="thread.html#2475">[ thread ]</a>
+              <a href="subject.html#2475">[ subject ]</a>
+              <a href="author.html#2475">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

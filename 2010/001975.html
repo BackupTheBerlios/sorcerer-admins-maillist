@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The flags that are flying above the two	kernel camps...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20flags%20that%20are%20flying%20above%20the%20two%0A%09kernel%20camps...&In-Reply-To=%3CAANLkTingt6P3jV6VWqxNsUSdqmq%2B0_NwpHPCUVbdo6Ju%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001970.html">
+   <LINK REL="Next"  HREF="001977.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The flags that are flying above the two	kernel camps...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20flags%20that%20are%20flying%20above%20the%20two%0A%09kernel%20camps...&In-Reply-To=%3CAANLkTingt6P3jV6VWqxNsUSdqmq%2B0_NwpHPCUVbdo6Ju%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The flags that are flying above the two	kernel camps...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 28 07:54:50 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001970.html">[Sorcerer-admins] The flags that are flying above the two	kernel camps...
+</A></li>
+        <LI>Next message: <A HREF="001977.html">[Sorcerer-admins] The flags that are flying above the two	kernel camps...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Oct 26, 2010 at 9:00 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> From the linux-custom camp:
+</I>&gt;<i>
+</I>&gt;<i> Apart from lightning fast compilations, fast boot times and a lean
+</I>&gt;<i> /boot, linux-custom offers the ability to run without initramfs by
+</I>&gt;<i> building everything needed into the kernel.
+</I>
+Yet that is a 4 edged swords.
+Drivers that go buggy are more easily handled
+by unloading and reloading modules.
+Without that...
+Then again, some driver modules can not be unloaded,
+because they are in use.
+In the past while using a custom kernel configuration
+I was able to do a nice mix of modules and monolithic drivers.
+An entirely monolithic kernel might be a bit faster and secure,
+but has that down side of requiring a reboot
+when something unexpected happens.
+
+
+&gt;<i> It also offers the ability to explicitly turn off hardware that is not
+</I>&gt;<i> required/dodgey.
+</I>
+Many drivers are buggy.
+At least for the ones that are not needed for installed hardware
+those modules are not loaded into the modular kernel.
+Therefore, buggy drivers are not normally a problem
+if they are not loaded modules.
+
+
+&gt;<i> So it's well worth the time tuning the config for linux-custom.
+</I>
+It is difficult to feel otherwise.
+Then again being able to plug in my camera and
+have it detected as a USB mass storage device
+and have everything set up for it automatically
+was a great feeling also.
+I never had to know exactly what modules would
+have to be loaded in order for that to work.
+Even today I am still not certain because
+I have not made time to look and compare.
+
+
+&gt;<i> This localmodconfig thing looks like it could be a great help for linux-custom.
+</I>
+I agree.
+But it also might be a one way ticket on a train
+that is destined to derail someday when required
+drivers/modules become renamed or deprecated.
+
+&gt;<i> It requires building the full linux spell, booting it
+</I>&gt;<i> once, and then updating the linux config spell, right?
+</I>
+Technically, one could boot the rescue kernel
+or use the kernel provided from the Install/Rescue disk
+after Sorcerer is installed.
+Therefore, doing a compilation of linux is optional.
+However, a kernel provided by linux must be running
+when doing that make target
+otherwise one can only expect to receive modules
+for the modules that are loaded.
+
+
+&gt;<i>I have trouble
+</I>&gt;<i> seeing how it would help someone running the linux spell, apart from
+</I>&gt;<i> helping that person cast the linux-custom spell. &#160;:)
+</I>
+Yes.
+That odd, but potentially useful make target
+is definitely aimed at scratching the itch of
+the wanna be cowboy SA who wishes to convert
+from a very complete modular kernel
+to a far more precise configuration that compiles
+only the modules required for that specific box.
+
+
+&gt;<i> hmm.....
+</I>&gt;<i>
+</I>&gt;<i> It seems worth the trouble on a build box where the hardware is not
+</I>&gt;<i> going to change for years and years, but the kernel might be re-built
+</I>&gt;<i> a few times.
+</I>
+On one hand a decent lucky box might be good to go for many years
+of continuous use.
+On the other hand one might pry the fixed disk out of a
+smoldering chassis or from backups and then want
+to run it on a machine with different and/or perhaps better hardware.
+
+As long as the box also has a rescue kernel installed
+and initramfs support enabled
+then whatever the linux-custom configuration would not matter.
+The old fixed disk could be booted in newer hardware provided
+that the rescue kernel and rescue initramfs are used.
+
+For that reason more so than any
+I have a difficult time finding any indisputable reason
+against using linux-custom provided that the SA
+can manage to create a usable .config that works
+with all the hardware they want.
+
+As for me, I am still feeling too lazy to not use the linux spell.
+Maybe I might make a single exception on one box.
+If the box was a laptop with limited disk space
+then that might be a good choice for linux-custom
+if clearly no new or unusual hardware was expected
+to be used on the laptop.
+I have no idea how many people save their laptop fixed disks.
+And aside from a RAM upgrade not much else about a laptop's
+internal hardware should be expected to change.
+That is why I conjecture it to be a good choice.
+
+I want to say that the use of linux-custom and also
+the decision to use it is entirely a matter of opinion and preference.
+There are clearly boons and banes,
+but none that make it clearly a right or wrong decision.
+Although I can conjecture many situations that favor one
+way or the other I have difficulty conjecturing a definition situaton
+where one or the other must be used.
+
+However, if one had to administrate and update 100 laptops
+and they all have different configurations
+and the users like to plug all sorts of things into them
+then the modular linux spell starts to become a clear choice.
+Overall the linux spell should require less SA effort than linux-custom
+even after linux-custom is improved with that new make target.
+
+So I would have to say that when a SA has more computers
+to administrate than they can count on one hand using binary
+then the full service linux spell starts to seem indispensable.
+
+
+&gt;<i> Saying all that, the linux spell has the benefit that you just don't
+</I>&gt;<i> have to care about what gets plugged into the machine, and also you
+</I>&gt;<i> are able to run your linux on many different boxes... Ideal for
+</I>&gt;<i> installers and people who don't rebuild/reboot their boxes all too
+</I>&gt;<i> often.
+</I>&gt;<i>
+</I>&gt;<i> I'm glad that we have the choice between lean and all-you-can-eat when
+</I>&gt;<i> it comes to linux kernel in Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i> Thanks for all the hard work, Kyle.
+</I>&gt;<i>
+</I>&gt;<i> I normally have trouble figuring out whether [x] mean on or off.
+</I>&gt;<i>
+</I>&gt;<i> What would have been helpful, would be consistency across the
+</I>&gt;<i> spells... or, consider the following two equivalent spell options:
+</I>&gt;<i>
+</I>&gt;<i> [ ] with $OPTION
+</I>&gt;<i> [x] without $OPTION
+</I>&gt;<i>
+</I>&gt;<i> To me that would mean this option is not run, right? If we make &quot;with&quot;
+</I>&gt;<i> and &quot;without&quot; standard across spells, then we could pick and choose
+</I>&gt;<i> the defaults for spells without confusion.
+</I>&gt;<i> -Evert-
+</I>
+This last part could be called a design flaw on my part.
+I tried to go very close with what was in the ./configure --help
+It is a bit difficult to explain.
+With most spells the switches would be a parameter to configure.
+Normally, the parameter would not be passed.
+Most of those additional switches a SA would either
+not want as parameters to ./configure
+or would prefer the --without- variety that disables something.
+Given that consideration then the way that switches normally works
+for most spells makes sense.
+
+However, with linux most SAs would normally want everything included.
+And so they are being asked to explicitly state what should be omitted.
+I could write it so it would be something like
+
+switch WITH_NETDEV_1000 OMIT_NETDEV_1000  1000 Mbps network adapter drivers....
+
+However, I opted for something slightly different.
+The reason for that is because a SA might see
+the linux configuration screen but accidentally
+hit enter before coming to realization about what it is.
+If the SA did that
+then all those [ ] boxes would indicate that all those
+categories of drivers should be omitted from compilation.
+That is far more congruent with the way switches were intended to work.
+However, it is way too dangerous for linux.
+
+Is there any SA on the email list
+that has not at least once held down enter
+or tapped it a few extra times during
+spell configuration in order to enable optionals
+for software that is already installed?
+
+Normally, a SA wants to expect
+that they can go through all those configuration screens
+and tap enter each time and have the outcome be okay.
+And that is exactly the way it is now.
+It is safe to tap enter.
+It is only unsafe if the SA becomes confused
+and does [x] in all those boxes and create a kernel
+that lacks drivers for networking.
+
+I want to give that more consideration
+to see if there is an easy solution that
+would help eliminate or further minimize
+the possibility for confusion with linux configuration.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001970.html">[Sorcerer-admins] The flags that are flying above the two	kernel camps...
+</A></li>
+	<LI>Next message: <A HREF="001977.html">[Sorcerer-admins] The flags that are flying above the two	kernel camps...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1975">[ date ]</a>
+              <a href="thread.html#1975">[ thread ]</a>
+              <a href="subject.html#1975">[ subject ]</a>
+              <a href="author.html#1975">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

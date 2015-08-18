@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] linux is it more stable or less stable?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Cq2v596b75861004181559i53f4abfeo1128bb1dea8da164%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001575.html">
+   <LINK REL="Next"  HREF="001576.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] linux is it more stable or less stable?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Cq2v596b75861004181559i53f4abfeo1128bb1dea8da164%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] linux is it more stable or less stable?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 19 00:59:46 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001575.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+        <LI>Next message: <A HREF="001576.html">[Sorcerer-admins] Puppy example... and this is why we do not press	ctrl-c while running sorcery scripts...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1574">[ date ]</a>
+              <a href="thread.html#1574">[ thread ]</a>
+              <a href="subject.html#1574">[ subject ]</a>
+              <a href="author.html#1574">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Apr 17, 2010 at 10:30 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hmm...
+</I>&gt;<i>
+</I>&gt;<i> I guess I am the only one that runs linux-custom, then, huh?
+</I>&gt;<i>
+</I>&gt;<i> Personally, I would have called it linux-monolithic, but that's only because
+</I>&gt;<i> it sounds better. :)
+</I>
+Ah, but a custom linux kernel does not have to be monolithic.
+With the way some kernel drivers are glitchy
+sometimes overcoming a problem requires
+that a module be unloaded and reloaded.
+But compiling drivers directly into the kernel
+would create a situation where to overcome
+a glitch would require a full reboot.
+Disk and filesystem drivers must be installed 100% of the time,
+since one can not so easily unmount the /,
+unload the filesystem and/or disk module,
+and then remount /
+However, other modules for removable devices
+especially the USB related modules tend to be a bit
+glitchy and might occasionally benefit from unloading
+and reloading.
+
+&gt;<i> I do have a suggestion for automatic kernel versions.
+</I>&gt;<i>
+</I>&gt;<i> latest would be the absolute newest that the kernel community has to offer.
+</I>&gt;<i> stable would be the highest patch number of the previous release.
+</I>&gt;<i> secure would be the highest patch number of the release before that.
+</I>
+It is not as if a similar thought did not cross my mind.
+Unfortunately, linux is a situation that is best handled by
+the exclusive provides system rather than version progress.
+Only linux-custom should a SA use version progress to
+set to a specific version.
+Anyone who decides to use a developmental/rc kernel
+then that can not possibly be a production box.
+BTW, the linux-stable spell does select a different
+path to the source in order to be able to download
+a kernel from the testing directory if the version contains &quot;rc&quot;
+
+
+&gt;<i> One day, I'll convince someone else that running monolithic is faster...
+</I>
+With a cast time under 5 minute
+there is no doubt that a custom kernel compiles faster
+and uses less disk space.
+However, depending upon how it is configured
+it might not run as fast as the configurations that I provide.
+I have put forth effort to discover which configurations
+tend to run best on on SMP IA32 and SMP.
+
+For a long time I had a configuration that worked fine
+until switching to xf86-input-evdev
+Then, I had to change the kernel configuration
+and renice some processes to ensure that input is handled promptly.
+That way high CPU load does not cause sluggish or lagged input.
+
+So there is a bit to consider about how to
+gain a good performance/experience on a Linux/glibc box.
+For now the way linux{,-*} spells are configured provides
+a good compromise that should ensure that users
+of a box have a good experience while at the same time
+does not terribly erode the raw processing power.
+
+As I mentioned in previous emails
+for the adventurer SA there are some interesting make targets
+available for the linux kernel.
+I will run make help now to find them...
+
+localmodconfig  - Update current config disabling modules not loaded
+
+Okay that is one of them.
+I used to know every module that my boxes would load
+and exactly what configuration options to set.
+Ah, what a waste of human memory.  :)
+module names and drivers keep changing anyway.
+Who can stay ontop of it all anymore?
+That is a good reason why new Sorcerer SAs
+would not want to be responsible for creating a kernel config.
+
+However, if someone wanted to attempt to
+go from a deployed box to linux-custom
+then the above option might be useful for trimming
+the kernel down to size.
+I have not tried it, but it seems like a good place to start.
+
+Back during the 2.0, 2.2, and 2.4 kernels
+creating a custom config was
+then still a bit complex, but do-able.
+Yet the recent 2.6 kernels have a bewildering
+amount of menus, drivers, and options.
+And it keeps getting larger.
+Even an experienced SAs might miss out on
+adding some good/useful modules/drivers
+during kernel updates if using a custom config.
+
+And that is why using the configs I provide
+should grant a good experience/performance/convenience
+even for the slight cost of being modular.
+
+If one has a box that is booted and idle
+then one can do a little speed test on it
+to gain a rough idea of performance.
+This test might be interesting for those
+who want to compare monolithic/modular kernel speed.
+But that performance difference might be too slight to measure.
+Instead this tends to be good at showing
+how much CPU power is being sacrificed
+when clocking down one's CPU speed and voltage
+for battery savings on a laptop.
+Being able to write values directly to /proc
+to adjust cpu throttling on laptops is very cool.  :)
+
+#!/bin/bash
+
+TOTAL=0
+
+LAST=$SECONDS
+while (( LAST == SECONDS )); do :; done
+
+for ((OUTSIDE=0; OUTSIDE&lt;10; OUTSIDE++)); do
+LAST=$SECONDS
+LOOP=0
+while (( LAST == SECONDS )); do (( LOOP++ )); done
+#echo $LOOP
+(( TOTAL += LOOP ))
+done
+(( AVG = TOTAL / 10 ))
+echo $AVG
+
+I know, it's a BASH script, but it only took a minute to write.
+The values output by the script mean nothing on their own.
+Yet one can ponder the meaning of the different output values
+while the CPU is configured for difference performance.
+The ratio of the values can indicate performance loss/boost.
+
+
+P.S.
+None of my boxes run custom kernels now.
+I happily forgot all about it year ago.
+So I do practice what I preach.
+I am not hiding any custom kernel configs.
+I have put forth effort to ensure that boxes
+running with a mostly modular config that I provide
+will probably be able to boot even if udev is broke
+and not loading modules and creating nodes in /dev/
+
+SAs still deserve a choice whether to use the configuration
+that I provide for distribution wide use or to create
+custom configurations for linux.
+But the potential performance gain is not worth the effort.
+
+If anyone has a box that can boot a monolithic kernel
+and also a Sorcerer distribution wide kernel
+then I am curious about the results from the speed test script.
+Please be sure to ensure the box is idle first
+and run the test a few times to ensure that the output
+values are remaining nearly constant.
+Results from that testing might help settle the debate
+about how much performance is sacrificed for modularity.
+
+I can not run the test myself, because
+I have not created custom box specific kernel .config
+since the time I introduced the modular linux spell and
+announced that this would be the way linux would be
+handled for all fresh installs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001575.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+	<LI>Next message: <A HREF="001576.html">[Sorcerer-admins] Puppy example... and this is why we do not press	ctrl-c while running sorcery scripts...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1574">[ date ]</a>
+              <a href="thread.html#1574">[ thread ]</a>
+              <a href="subject.html#1574">[ subject ]</a>
+              <a href="author.html#1574">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

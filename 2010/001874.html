@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init... speed, control, or robustness?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTim8gMmuM082h3pMDBgPiTogsGo2Xu8YL5wV21Ey%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001867.html">
+   <LINK REL="Next"  HREF="001873.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init... speed, control, or robustness?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...%20speed%2C%20control%2C%20or%20robustness%3F&In-Reply-To=%3CAANLkTim8gMmuM082h3pMDBgPiTogsGo2Xu8YL5wV21Ey%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init... speed, control, or robustness?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jul 30 04:40:41 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001867.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+        <LI>Next message: <A HREF="001873.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1874">[ date ]</a>
+              <a href="thread.html#1874">[ thread ]</a>
+              <a href="subject.html#1874">[ subject ]</a>
+              <a href="author.html#1874">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Jul 28, 2010 at 2:16 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> writing the exit status of an init script is unsafe because the service
+</I>&gt;<i> might die.....
+</I>
+An example of that would be
+when networking is set up on a wireless interface
+that has a propensity to disconnect.
+
+
+&gt;<i> what I was proposing is to not rely on the service that might die, have
+</I>&gt;<i> different bugs from each others, but an service manager, that will be common
+</I>&gt;<i> and then share the same issues (then easier to fix)
+</I>&gt;<i> such process have to :
+</I>&gt;<i> - not consume any resources in normal operation (appart a little bit of
+</I>&gt;<i> memory) ie not access the FS, not use the CPU, unless asked for it
+</I>&gt;<i> - use mechanism not involving &quot;slow&quot; devices such as hard drives....
+</I>
+And such a service manager would know
+how to check if networks is still up
+given how the type and amount of network
+interfaces on a box varies?
+
+The concept of writing a monitor program is not new in Sorcerer.
+It was called the Sorcerer immune system.
+All sorts of things can be monitored provided
+that it is hand coded.
+Unfortunately, the idea of a single program that monitors
+anything and everything that could be wanted
+is doomed to fail from the start.
+
+&gt;<i> not consume any resources is achieved by the use of SIGNALS, the process
+</I>&gt;<i> mainly sleep, waiting for a signal to occurs, this signal can be for
+</I>&gt;<i> signaling that a child has died (SIGCHLD), that a communication service has
+</I>&gt;<i> some request to do (SIGIO)
+</I>
+Yup, that is the Sorcerer immune system.
+By loading the BASH preloadable /usr/libexec/bash/sleep
+the monitoring process can sleep at will
+without wasting resources to invoke /usr/bin/sleep
+
+
+&gt;<i> fast communication between process is achieved by the use of unix sockets, a
+</I>&gt;<i> small protocol has to be implemented like
+</I>&gt;<i> &lt; REGISTER PID
+</I>&gt;&gt;<i> REGISTER OK
+</I>&gt;<i> &lt; STOP
+</I>&gt;&gt;<i> STOP OK
+</I>&gt;<i> &lt; STATUS
+</I>&gt;&gt;<i> I'm running and my childes are also
+</I>
+
+PIDs?  Again?
+If a process needs nanny sitting and has a PID
+then /sbin/init does this.
+search for respawn in the manual page for inittab
+
+echo $$ &gt; /var/run/$PIDFILE
+is a plenty fast enough way to write a PID
+that requires no sockets, no listening daemon,
+and is already supported by the majority
+of software that writes PID files.
+
+
+&gt;<i> each service begin by reading a configuration file saying what initscript
+</I>&gt;<i> provide what service, what it requires and other informations gathered into
+</I>&gt;<i> the init script itself, that file can be created when doing the rc
+</I>&gt;<i> symlinks.....
+</I>&gt;<i>
+</I>&gt;<i> then after that on a startup a service wrapper do
+</I>&gt;<i> 1) open or create the unix socket
+</I>&gt;<i> 2) start the child service in it's group idea
+</I>&gt;<i> 3) wait for an event (either child exit or opening socket or communication
+</I>&gt;<i> on the socket)
+</I>&gt;<i> 4) do the cleanup on exit (kill the group ID)
+</I>&gt;<i>
+</I>&gt;<i> overhead? a socket opening.... communication through a socket (almost
+</I>&gt;<i> instant, only involve kernel)
+</I>&gt;<i> no lock file, no PID file.... a reliable communication between services (if
+</I>&gt;<i> a service exit, the communication channel will close and the clients will be
+</I>&gt;<i> notified....)
+</I>&gt;<i> JL
+</I>
+And what is done about all the services
+that write their PIDs to /var/run/$PIDF ?
+Will you start them
+then wait for an indeterminate amount of time
+for the pid file to appear
+to cat the content of the pid file to a socket?
+
+Evert,
+do you still have that hyperlink to the SysV init replacement
+that uses the automounter and socket buffer?
+I know there is already a project that does what JeanLuc wants.
+
+Doing a web search I found:
+<A HREF="http://www.nico.schottelius.org/software/cinit/">http://www.nico.schottelius.org/software/cinit/</A>
+But that is not the one that uses the automounter
+and socket buffers, yes?
+It has some links to other inits at the bottom.
+<A HREF="http://0pointer.de/blog/projects/systemd.html">http://0pointer.de/blog/projects/systemd.html</A>
+Ah, that is the URL I want JeanLuc to have an opportunity to read.
+
+The idea is that it starts about 5 services before everything
+such as whatever is required for an automounter
+a socket buffer and other stuff.
+Then the expectation is that ever other service
+can be started in parallel.
+Looks awesome, except, there is no way
+to hop across the transition from the initramfs rootfs
+to a real root filesystem.
+Also the re-execution of coldplug events for udevd
+is not something that should be done in parallel.
+
+Attempts at creating perfect parallelizing init-script
+executions always have drawbacks.
+They have exceptions that can not be run in parallel.
+They can not cross over a divide such as the
+transition between initramfs to real rootfs.
+They are incredibly complicated and require
+that the person maintaining the init system have
+extensive knowledge about the services started
+to include what they require started,
+the sockets they use and create,
+and what else will try to communicate with them, etc...
+
+34 lines to achieve a good amount of parallelization
+during runlevel init-script execution is not a bad compromise
+between simplicity and speed.
+And I barely have to know anything about the services
+that a box in order to create init-scripts.
+I only must know what must be run before.
+
+Creating a more complicated init is easy.
+Creating a better init is difficult.
+I knew that much back when there was a discussion
+about how to improve Sorcerer init-scripts.
+That discussion lasted a year before deciding
+to stay with System V and implement a
+LSB compatible method to control order of execution.
+
+The discussion about how to improve init-scripts
+lasted at least a year before any implementation was created.
+And even then the transition was not easy and would
+have been much bumpier without Jan helping to spot
+and fix problems with init-scripts.
+
+Discussion about what would be a better method for
+execution of init-scripts should at least have a duration
+of a year so that we can avoid regret.
+Such a change probably ultimately requires the modification
+and testing of hundreds of init-scripts.
+That requires considerable effort.
+Would be very regretful to introduce a system for
+running init-scripts that is too complicated to understand
+when something undesirable happens.
+
+I do not understand why complexity and control
+is favored over simplicity and robustness.
+Complexity and control of init-script execution
+can be increased without a gain of even a
+0.0001% better probability of a successful boot
+when something unexpected happens.
+
+Increasing the probability of a successful boot
+even when undesirable events happen
+can be achieved by the improvement of init-scripts.
+Robustness is achieved not by increasing
+the complexity and control of the system that
+is used to execute init-scripts.
+Robustness is achieved by writing better init-scripts.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001867.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+	<LI>Next message: <A HREF="001873.html">[Sorcerer-admins] init... speed, control, or robustness?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1874">[ date ]</a>
+              <a href="thread.html#1874">[ thread ]</a>
+              <a href="subject.html#1874">[ subject ]</a>
+              <a href="author.html#1874">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

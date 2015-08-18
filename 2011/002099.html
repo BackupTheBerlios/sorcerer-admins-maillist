@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] More about arbitrary version progress
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20More%20about%20arbitrary%20version%20progress&In-Reply-To=%3CAANLkTi%3D9TGzEkbmWCQFct%2BW62Umqzqy%2BPBrGobnjS7ne%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002098.html">
+   <LINK REL="Next"  HREF="002100.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] More about arbitrary version progress</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20More%20about%20arbitrary%20version%20progress&In-Reply-To=%3CAANLkTi%3D9TGzEkbmWCQFct%2BW62Umqzqy%2BPBrGobnjS7ne%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] More about arbitrary version progress">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Mar 18 17:13:01 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002098.html">[Sorcerer-admins] php segfault when using libphp5.so...
+</A></li>
+        <LI>Next message: <A HREF="002100.html">[Sorcerer-admins] Help w/IRC chan
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2099">[ date ]</a>
+              <a href="thread.html#2099">[ thread ]</a>
+              <a href="subject.html#2099">[ subject ]</a>
+              <a href="author.html#2099">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The definition of a spell has changed again.
+And I expect some SAs will become irritated by
+the total deprecation of the invocation of functions:
+unstable(); secure(); legacy(); stable().
+However, this change is not merely for the benefit of a handful of spells.
+Such functions are being relinquished in favor of better methods.
+
+To recapitulate the previous email;
+arbitrary version progress is specified in a spell
+by syntax such as:
+
+version stable 12.3 12.2 12.1
+version unstable 13.90 13.89 13.70
+version legacy 0.9 0.8
+version elephant trunk-2009
+
+The first parameter to the function version() is the label for the
+version progress.
+What follows are the list of versions in the order of most recent to oldest.
+While a bit more verbose than writing invocations to stable and unstable
+the change is in favor for allow arbitrary labels for version progress,
+such as the label &quot;elephant.&quot;
+But if the choice of &quot;elephant&quot; seemed strange
+then consider that there exists a release of sylpheed called &quot;claws.&quot;
+Perhaps eventually even those spells will be rewritten to the methods
+of arbitrary version progress.
+That fact demonstrates that strange release labels exist.
+And now spells can handle arbitrary version progress labels
+such as &quot;claws&quot; and &quot;fangs.&quot;
+That much is not new information, but provided in a previous email.
+Paragraphs below provide new information.
+
+Some spells have ugly case statements.
+Depending on $VERSION
+the source() function is invoked differently.
+That can be because the stable and developmental source tarballs
+significantly differ in their name or because their download directories differ.
+Therefore, should not the source() function also work like the
+version() function?
+Example:
+
+source stable <A HREF="http://elephants-r-us.com/Stable/pachyderm-$VERSION.stable.tar.bz2">http://elephants-r-us.com/Stable/pachyderm-$VERSION.stable.tar.bz2</A>
+source unstable
+<A HREF="http://elephants-r-us.com/Devel/pachyderm-$VERSION.snapshot.tar.bz2">http://elephants-r-us.com/Devel/pachyderm-$VERSION.snapshot.tar.bz2</A>
+
+Looking good so far?
+But must all spells be rewritten to explicitly state the version progress
+as the first parameter when invoking source()?
+No, that would be too much effort.
+source() without a version progress works identical to how it currently works.
+Backward compatibility is maintained.
+Therefore,
+
+source <A HREF="http://elephants-r-us.com/archive/pachyderm-$VERSION.tar.bz2">http://elephants-r-us.com/archive/pachyderm-$VERSION.tar.bz2</A>
+
+is still valid and works without specifying the version progress.
+And also the invocation of source without version progress implies
+that the source is valid for all available version progress for the spell.
+
+Useful, yes?
+
+However, the use of conditional syntax
+during the information declaration portion of a spell
+might also have similar syntax again during the build() function.
+That would be the situation when
+different releases of the sources
+have different build methods.
+Therefore, arbitrary version progress can now also be applied
+by allowing the spell author to create a spell such as:
+
+version stable 12.3 12.2 12.1
+version unstable 13.90 13.89 13.70
+...
+
+build_stable(){ ./configure --prefix=/usr ... ;}
+build_unstable(){ cmake ... ;}
+
+The use of the new functionality
+allows for cleaner looking spells.
+Coding a build() function or build_$PROGRESS() style functions
+is the prerogative of the spell author.
+Therefore, it is still optional
+when a custom build() function is not required.
+
+The cost to benefit analysis is nearly an even trade.
+The banes of these changes include a slight
+increase in the complexity of spell authorship
+and a slight increase in the size of spells.
+The boons allow for spells to be better adapted to
+the what software authors provide for sources.
+And the elimination of a some conditional syntax
+from spells allows for cleaner looking and easier to read spells.
+Given that the counts for banes and boons both equal 2
+the change seems to provide a gain
+that is commensurate for the pain.
+
+I also want to add that the implementation choice,
+which was one of several possible methods,
+provides a good compromise between functionality, convenience and complexity.
+Spells must still be written such that versions and version progress
+must occur prior to invoking source with the $VERSION variable as a parameter.
+But that has always been a limitation of spells.
+No new limitations were introduced.
+Therefore, overall spells are still very similar to how they were last year,
+but with a some useful new optional functionality.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002098.html">[Sorcerer-admins] php segfault when using libphp5.so...
+</A></li>
+	<LI>Next message: <A HREF="002100.html">[Sorcerer-admins] Help w/IRC chan
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2099">[ date ]</a>
+              <a href="thread.html#2099">[ thread ]</a>
+              <a href="subject.html#2099">[ subject ]</a>
+              <a href="author.html#2099">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

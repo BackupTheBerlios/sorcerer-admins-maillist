@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> No subject
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.2.1331738360.12121.sorcerer-admins%40lists.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000448.html">
+   <LINK REL="Next"  HREF="000701.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>No subject</H1>
+    <B></B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20No%20subject&In-Reply-To=%3Cmailman.2.1331738360.12121.sorcerer-admins%40lists.berlios.de%3E"
+       TITLE="No subject">
+       </A><BR>
+    <I>Wed Mar 14 16:19:14 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000448.html">No subject
+</A></li>
+        <LI>Next message: <A HREF="000701.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#649">[ date ]</a>
+              <a href="thread.html#649">[ thread ]</a>
+              <a href="subject.html#649">[ subject ]</a>
+              <a href="author.html#649">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>       Instead of giving the device explicitly, one may indicate the (ext2  or
+       xfs)  filesystem that is to be mounted by its UUID or volume label (cf.
+       e2label(8) or  xfs_admin(8)),  writing  LABEL=&lt;label&gt;  or  UUID=&lt;uuid&gt;,
+       e.g.,   `LABEL=Boot'   or  `UUID=3e6be9de-8139-11d1-9106-a43f08d823a6'.
+       This will make the system more robust: adding or removing a  SCSI  disk
+       changes the disk device name but not the filesystem volume label.
+
+Lables may not be unique on a box, but should be.
+UUIDs are unique, unless a partition is copied using dd.
+Lables may give important clues about what a partition is for.
+UUIDs are only useful if one happens to remember a part of
+the sequence belongs to a certain partition.
+
+With the added complexity of LVM2's volume groups I did not want
+to add UUID and label complexity to the Sorcerer installer.
+However, to go with USB we will have to use UUID,
+because UUIDs are supposed to be unique while labels might not be unique.
+
+Here is an example of /etc/fstab with a UUID:
+
+UUID=7408b91f-ebf1-4be0-a1cb-eb6094ceafdf /boot ext2 defaults,noatime 0 1
+
+Yes that is just as long as it looks.
+
+Here is an example of a UUID used in /etc/lilo.conf
+
+boot = /dev/disk/by-uuid/7408b91f-ebf1-4be0-a1cb-eb6094ceafdf
+
+Using a combination like above for /boot guarantees that
+lilo always installs to the boot block of the correct boot partition.
+There is probably a more eloquent way to do it,
+but this way works fine.
+
+
+syslinux provides some information about USB flash drives.
+
+The proper mode to boot a USB key drive in is &quot;USB-HDD&quot;.  That is the
+ONLY mode in which the C/H/S geometry encoded on the disk itself
+doesn't have to match what the BIOS thinks it is.  Since geometry on
+USB drives is completely arbitrary, and can vary from BIOS to BIOS,
+this is the only mode which will work in general.
+
+Some BIOSes have been reported (in particular, certain versions of the
+Award BIOS) that cannot boot USB keys in &quot;USB-HDD&quot; mode.  This is a
+very serious BIOS bug, but it is unfortunately rather typical of the
+kind of quality we're seeing out of major BIOS vendors these days.  On
+these BIOSes, you're generally stuck booting them in USB-ZIP mode.
+
+THIS MEANS THE FILESYSTEM IMAGE ON THE DISK HAS TO HAVE A CORRECT
+ZIPDRIVE-COMPATIBLE GEOMETRY.
+
+A standard zipdrive (both the 100 MB and the 250 MB varieties) have a
+&quot;geometry&quot; of 64 heads, 32 sectors, and are partitioned devices with a
+single partition 4 (unlike most other media of this type which uses
+partition 1.)  The 100 MB variety has 96 cylinders, and the 250 MB
+variety has 239 cylinders; but any number of cylinders will do as
+appropriate for the size device you have.  For example, if your device
+reports when inserted into a Linux system:
+
+
+For initial testing I transformed the geometry to zipdrive
+and used partition 4 for /boot and partition 1 for /
+
+However, using partition 1 for /boot and 2 for / will probably work fine.
+If Jan's idea about lifespan holds true perhaps even having a dedicated
+swap partition on the USB stick is not necessarily a bad move
+if the computer is not expected to already have 2G of installed RAM.
+
+I wonder if broke BIOS already have firmware updates to fix
+flash drive booting to avoid the necessity of zipdisk geometry?
+
+Therefore, based upon current information
+I will add UUID support to the menu driven installer.
+Then we can lay out new installations of Sorcerer
+on USB memory sticks as easily as we would install to fixed disk.
+The only bane would be those long cryptic UUIDs in /etc/fstab and /etc/lilo.
+
+What we still require is someone to do the research to
+identify the best makes of USB sticks for deploying Sorcerer upon,
+with consideration for liespan, performance, ease of connecting, price, etc...
+Considering the many makers it is no small task to gather the information.
+I recommend limiting the search and evaluation to size 32G and larger.
+Any volunteers for the task?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000448.html">No subject
+</A></li>
+	<LI>Next message: <A HREF="000701.html">No subject
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#649">[ date ]</a>
+              <a href="thread.html#649">[ thread ]</a>
+              <a href="subject.html#649">[ subject ]</a>
+              <a href="author.html#649">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

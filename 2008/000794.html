@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] x86 spells on x86_64
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20x86%20spells%20on%20x86_64&In-Reply-To=%3C596b75860810091627m467dc7abv258ec13ac98eabb7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000793.html">
+   <LINK REL="Next"  HREF="000795.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] x86 spells on x86_64</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20x86%20spells%20on%20x86_64&In-Reply-To=%3C596b75860810091627m467dc7abv258ec13ac98eabb7%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] x86 spells on x86_64">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Oct 10 01:27:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000793.html">[Sorcerer-admins] x86 spells on x86_64
+</A></li>
+        <LI>Next message: <A HREF="000795.html">[Sorcerer-admins] Should have mentioned it sooner...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#794">[ date ]</a>
+              <a href="thread.html#794">[ thread ]</a>
+              <a href="subject.html#794">[ subject ]</a>
+              <a href="author.html#794">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Oct 9, 2008 at 2:44 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> Hi,
+</I>&gt;<i> just to inform that there are several spells (acroread, openoffice...) that
+</I>&gt;<i> install x86 binaries into x86_64 host....
+</I>
+Please file bug reports concerning availability of pre-compiled
+binaries with the software vendors, please.
+
+
+&gt;<i> there is nothing wrong with that since if all libs were installed they could
+</I>&gt;<i> run... however
+</I>&gt;<i>
+</I>&gt;<i> - sorcerer is not well suited to make x86 and x86_64 libs/binaries installed
+</I>&gt;<i> together on the same tree (thanks to most of them that don't support lib64
+</I>&gt;<i> install dirs)
+</I>&gt;<i> - sorcerer is not well suited yet to compile all requirements of an x86
+</I>&gt;<i> binary and install them into a subtree (best method is to install a rescue
+</I>&gt;<i> disc into the subtree)
+</I>
+Keeping a separate and updated installation of Sorcerer in a subdirectory
+is a fine method for running ia32 pre-compiled binaries.
+
+
+&gt;<i> as a consequence, I think that thoses spell shall be modified, either to
+</I>&gt;<i> prevent them to cast on wrong architecture, or to install the x86_64
+</I>&gt;<i> binaries if available
+</I>
+they are now broke on x86_64
+
+
+If every software author provided support for x86_64 so that when compiled
+on that architecture it installs libraries in lib64 directories then maybe the
+idea might have some merit.
+However, as it is now it is half-***ed
+
+Even if I tried to force lib64 directory installation by moving stuff,
+I would encounter numerous problems like the time I tried that before.
+Numerous libtool pkgconfig problems would occur.
+Segregating pkgconfig into /usr/lib64/pkgconfig/ and /usr/lib/pkgconfig/
+would not be difficult.
+However, insuring the correct .la file is used whether it be from /usr/lib/
+/usr/lib64/ maybe very challenging.
+Can not have the .la for the ELF32 libraries being used when compiling ELF64,
+nor vice versa.
+
+And even if I surmounted those problems there would be even more
+very significant problems if trying to compile IA32 ELFs using a multilib gcc.
+Installation could be considerable problematic if ELF32 executables are
+run with an ELF64 sentinel preloaded library.
+And x86_64 architecture would be larger since
+I would have to make every source that installs libraries to compile
+twice to create both ELF64 and ELF32 libraries.
+
+While not impossible, I would probably require an actual x86_64 box
+if I want to complete the task within my lifetime.
+
+And the result would probably of sufficient complexity that
+spell authorship would be beyond the capabilities of most SAs,
+because they would have to be able to write spells that work on
+both x86_64 and ia32 architecture and carefully read all Makefiles
+to ensure that ELF32 executables are not being installed over ELF64.
+
+Take the update of make, for example.
+What if an ELF32 make is installed over the ELF64 make?
+No problem, right?
+However, the next time make is invoked during the second half
+of compiling make, make fails to run?
+Why?
+The sentinel library preloaded is ELF64 and the make being run is ELF32.
+Same goes for binutils, coreutils, gcc, glibc, and plenty of other spells.
+
+Separate installations of Sorcerer x86_64 and ia32 are eloquent.
+Attempting to merge and maintain it
+in the same root filesystem
+is like a conjoined twin.
+
+Now, you can graft an IA32 installation onto an x86_64 installation
+and control where the extra arms protrude...
+
+Inescapably /lib/ld-linux.so.2 must be a symbolic link to an ELF32
+dynamic linker.
+Why?
+Because every ELF32 executable has /lib/ld-linux.so.2 hard coded into it.
+Make that first.
+Example:
+
+# rm /lib/ld-linux.so.2
+# ln -s /opt/ia32/lib/ld-linux.so.2 /lib/
+
+If anyone executed the above commands on an ia32 box
+then glibc is now broke.
+To fix it type:
+
+# /lib/ld-2.7.so /bin/rm /lib/ld-linux.so.2
+# /lib/ld-2.7.so /bin/ln -s ld-2.7.so /lib/ld-linux.so.2
+
+The fix commands differ if the installed glibc is a different version than 2.7
+
+Then add to /etc/ld.so.conf
+the directories that contain ELF32 libraries
+and run ldconfig.
+Example:
+
+# cp /etc/ld.so.conf /etc/ld.so.conf.old
+# echo /opt/ia32/lib &gt;&gt; /etc/ld.so.conf
+# echo /opt/ia32/usr/lib &gt;&gt; /etc/ld.so.conf
+# ldconfig
+
+If &gt; is typed instead of &gt;&gt;
+copy the old back to the original
+and try again.
+
+After doing that running AdobeReader and OOo-bin
+and other ELF32 executables may be possible
+assuming that there is a sufficient ia32 installation of
+Sorcerer in /opt/ia32
+
+The above commands may require some modification.
+Since I do not have an x86_64 box
+I have never tried it.
+However, I estimate a high probability that something
+like the above will work.
+
+If someone wants to try it and report to me the exact commands
+that were used and works
+then we can add it to documentation somewhere?
+Or add it to the AdobeReader and OOo-bin spells?
+That way we can have IA32 executable support grafted onto x86_64
+without having to make a serious mess out of the grimoire and cast.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000793.html">[Sorcerer-admins] x86 spells on x86_64
+</A></li>
+	<LI>Next message: <A HREF="000795.html">[Sorcerer-admins] Should have mentioned it sooner...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#794">[ date ]</a>
+              <a href="thread.html#794">[ thread ]</a>
+              <a href="subject.html#794">[ subject ]</a>
+              <a href="author.html#794">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

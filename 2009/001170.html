@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] xinetd log (really attached)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20xinetd%20log%20%28really%20attached%29&In-Reply-To=%3C596b75860905130213h25d078dftabac8ffc1fb9df14%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001167.html">
+   <LINK REL="Next"  HREF="001155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] xinetd log (really attached)</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20xinetd%20log%20%28really%20attached%29&In-Reply-To=%3C596b75860905130213h25d078dftabac8ffc1fb9df14%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] xinetd log (really attached)">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May 13 11:13:58 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001167.html">[Sorcerer-admins] xinetd log (really attached)
+</A></li>
+        <LI>Next message: <A HREF="001155.html">[Sorcerer-admins] minor update - monotone is 0.44 now
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1170">[ date ]</a>
+              <a href="thread.html#1170">[ thread ]</a>
+              <a href="subject.html#1170">[ subject ]</a>
+              <a href="author.html#1170">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, May 12, 2009 at 10:17 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Well... there's no signficant configuration reached by forgetting and
+</I>&gt;<i> re-casting xinetd... so out-of-the-box it's excessively noisy.
+</I>
+xinetd only provides a few services by itself.
+Many of them are probably disabled by default
+and must have their conf file edited to enable them.
+
+&gt;<i>.. were there other spells that configure themselves as xinetd services that
+</I>&gt;<i> could be re-cast to clean it?
+</I>
+Most services that can be launched by xinetd
+that also install a service configuration file for xinetd
+usually have that service disabled by default.
+Therefore, the installed file must be edited by the SA
+in order to activate the service.
+
+
+&gt;<i>&#160;why are services names missing from /etc/services?
+</I>
+Maybe it's IANA's fault?
+Maybe it's software authors' fault by not following
+the service names listed by IANA?
+Take your pick.
+Since I neither specify what services are official
+nor write software that uses xinetd
+I know that it is not my fault.  :)
+
+
+&gt;<i>&#160;shouldn't having the default configuration files at
+</I>&gt;<i> least make sure definitions for their respecitve services exist at
+</I>&gt;<i> installation?
+</I>
+If I write the xinetd configuration file for the service
+then usually it does appear in /etc/services
+However, some of those I have not checked in years.
+They may be obsolete or been given a new designation by IANA.
+
+A box will automatically receive new /etc/services and /etc/protocols
+that are downloaded from IANA and stuffed into a tarball at
+the Sorcerer's website.
+However, boxes that do not have the spells
+&quot;services&quot; &quot;protocols&quot; installed
+will not have those files updated.
+
+Some SAs use custom /etc/services.
+They expect that service to port translation is slow
+and that /etc/services wastes memory.
+
+536K 2009-05-02 19:49 /etc/services
+
+Indeed 536K for some 5000 service to port number translations
+is a bit excessive.
+
+If a SA wants a service to run on a specific port
+then a service name is not always required.
+The SA could write the xinetd service file using
+a port number instead.
+Or at least that used to work if it no longer does.
+
+The xinetd service files that we have control over
+are those in the grimoire in directories
+/root/.sorcery/grimoire/*.d/xinetd.d/
+It is only about 30 files.
+
+Feel free to fix them up and commit the changes to svn if you want.
+It is a worth endeavor.
+I could put it on my todo list.
+But I still have the x86_64 I/R to complete compilation,
+the IA32 I/R to complete compilation,
+updates,
+the port of the IA32 to uClibc to complete.
+Only 300+ more spells to compile to complete the new port.
+So far so good.
+Looks like I am done cross-compiling
+and have enough of a base system to natively compile
+for the i586-linux-uclibc target.
+And although sorcery can help me do most of the work,
+I still have to watch it like a hawk due to little things,
+such as me forgetting to compile functionality into uClibc
+that is required by some spell casting
+or if something requiring glibc should be invoked during
+compilation and incur a segfault, etc...
+gettext has me a bit worried.
+However, it has so many requirements to compile first,
+before I can compile it.
+I might yet have to think of a way to step around that.
+
+I saw something interesting today.
+A CPU overheated.
+And the error messages were exactly what I would expect for a glibc break.
+It surprised me since it happened during a copy command
+and there was no way the command could break the hosts's glibc.
+As expected, after I cooled it off and replaced the heatsink's fan
+the box booted without problems.
+No glibc break afterall.
+
+I still expect to have to replace that heatsink and fan again,
+because the fan I attached to the old heatsink would not turn
+when I attached it properly.
+So I tried to screw it on upside down.
+Turns great now.
+But not sure if it cools that good.  :)
+Funny, huh?
+
+Hope everyone is having a good week.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001167.html">[Sorcerer-admins] xinetd log (really attached)
+</A></li>
+	<LI>Next message: <A HREF="001155.html">[Sorcerer-admins] minor update - monotone is 0.44 now
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1170">[ date ]</a>
+              <a href="thread.html#1170">[ thread ]</a>
+              <a href="subject.html#1170">[ subject ]</a>
+              <a href="author.html#1170">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

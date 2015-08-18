@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W166BA5DF0D113945BC39A1AEBE0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001778.html">
+   <LINK REL="Next"  HREF="001782.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W166BA5DF0D113945BC39A1AEBE0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Sun Jul 18 12:38:38 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001778.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001782.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1779">[ date ]</a>
+              <a href="thread.html#1779">[ thread ]</a>
+              <a href="subject.html#1779">[ subject ]</a>
+              <a href="author.html#1779">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+Oke,
+
+ 
+
+But one thing you said I don't understand.
+
+ 
+
+I thought that sed statement on floppy drives must be :
+
+ 
+
+\,^/dev/fd[0-9],
+
+ 
+
+Instead of 
+
+ 
+
+\,^/dev/fd[0-9],d
+
+ 
+
+Otherwise the installer looks still for the floppy disk.
+
+ 
+
+Roelof
+
+ 
+
+ 
+
+
+ 
+&gt;<i> Date: Sun, 18 Jul 2010 03:22:53 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> That is insightful.
+</I>&gt;<i> Many aspects of the menu driven installer
+</I>&gt;<i> connects back to
+</I>&gt;<i> list_parts()
+</I>&gt;<i> 
+</I>&gt;<i> It might contain the only invocation of sed
+</I>&gt;<i> with a command line parameter that
+</I>&gt;<i> could be as long as 93 characters or more.
+</I>&gt;<i> So if the sed statement to filter out floppy disks is broke
+</I>&gt;<i> then that also explains why the devices did
+</I>&gt;<i> not automatically show upon the fstab menu.
+</I>&gt;<i> Currently, that sed statement should look like:
+</I>&gt;<i> 
+</I>&gt;<i> sed '\,^/dev/loop,d
+</I>&gt;<i> \,^/dev/mapper/,p
+</I>&gt;<i> \,^/dev/mapper/,d
+</I>&gt;<i> \,^/dev/fd[0-9],d
+</I>&gt;<i> \,^/dev/sr[0-9],d
+</I>&gt;<i> \,[0-9],p;d'
+</I>&gt;<i> 
+</I>&gt;<i> When editing that sed statement please be very careful.
+</I>&gt;<i> Not writing a proper line to remove all the floppy devices
+</I>&gt;<i> was how I introduced an problem into the installer.
+</I>&gt;<i> Perhaps if you executed the sed -i command
+</I>&gt;<i> on /sbin/install as I recommend in the README
+</I>&gt;<i> then I somehow miswrote that instruction in the README.
+</I>&gt;<i> If that is so, please let me know.
+</I>&gt;<i> Also you could try editing the
+</I>&gt;<i> the menu driven install script with nano.
+</I>&gt;<i> 
+</I>&gt;<i> Although the current problem with sinstall
+</I>&gt;<i> that I created was more due to my ignorance than a typo
+</I>&gt;<i> Retrospect tends to show that sed statements
+</I>&gt;<i> are magnets for typos.
+</I>&gt;<i> And sometimes finding the responsible sed command
+</I>&gt;<i> is difficult since they almost all execute within pipes.
+</I>&gt;<i> 
+</I>&gt;<i> Although the menu driven installer is easy
+</I>&gt;<i> to fix since it is a BASH script
+</I>&gt;<i> my style of writing BASH scripts tends to
+</I>&gt;<i> produce programs that execute very quickly
+</I>&gt;<i> but are more than challenging to debug.
+</I>&gt;<i> Seeing what goes on when tracing BASH
+</I>&gt;<i> script through the execution of pipes
+</I>&gt;<i> often looks very different than the BASH script.
+</I>&gt;<i> First of all, the end pieces of pipes
+</I>&gt;<i> start before the beginning.
+</I>&gt;<i> And if that was not confusing enough then
+</I>&gt;<i> lines in several piped together functions
+</I>&gt;<i> might list in a slightly unexpected order
+</I>&gt;<i> and not separate and neat like in the program.
+</I>&gt;<i> So doing bash -x and understanding what shows is tricky.
+</I>&gt;<i> And if that was not enough to baffle trace debugging
+</I>&gt;<i> the use of dialog tend to overwrite useful scroll on the screen.
+</I>&gt;<i> Consequently, when I am testing my BASH script
+</I>&gt;<i> I tend to pull it apart and test functions individually.
+</I>&gt;<i> Testing it all together is like trying to pull bubblegum out of hair.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks for trying to fix this.
+</I>&gt;<i> Probably success will be better on your next attempt.
+</I>&gt;<i> Originally, you fixed the sed statement adequately.
+</I>&gt;<i> If you were to do that again
+</I>&gt;<i> then the menu driven installer should work
+</I>&gt;<i> as good as it did when it was previously successful.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Sun, Jul 18, 2010 at 2:34 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hello Kyle
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I think i found a little bug.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; When you choose Device You very shortly see this message : sed: -e
+</I>&gt;<i> &gt; expression 1, char 93: unknown command: `
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; Date: Sat, 17 Jul 2010 15:36:01 -0700
+</I>&gt;<i> &gt;&gt; From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> &gt;&gt; To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; That might be a bug in the menu driven installer.
+</I>&gt;<i> &gt;&gt; Normally, it detects partition,
+</I>&gt;<i> &gt;&gt; and it identifies the filesystem on them
+</I>&gt;<i> &gt;&gt; and makes an entry for it in the fstab menu.
+</I>&gt;<i> &gt;&gt; However, if no entry exists
+</I>&gt;<i> &gt;&gt; then selecting the top item in the menu list
+</I>&gt;<i> &gt;&gt; will allow the SA to enter in a device name
+</I>&gt;<i> &gt;&gt; and manually create an entry.
+</I>&gt;<i> &gt;&gt; If that fails to work
+</I>&gt;<i> &gt;&gt; then you could try a manual install.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Installation of an operating system like Sorcerer is rather easy.
+</I>&gt;<i> &gt;&gt; Partition disk,
+</I>&gt;<i> &gt;&gt; do not forget to mark the bootable partition,
+</I>&gt;<i> &gt;&gt; run ms-sys to install a bootable MBR to the device,
+</I>&gt;<i> &gt;&gt; make a filesystem,
+</I>&gt;<i> &gt;&gt; mount it on /media/root,
+</I>&gt;<i> &gt;&gt; copy the contents of the rootfs/initramfs to it,
+</I>&gt;<i> &gt;&gt; copy /media/IR/boot to /media/root/boot,
+</I>&gt;<i> &gt;&gt; unarchive all the archives from /media/IR/var/cache/archive/
+</I>&gt;<i> &gt;&gt; to the new root filesystem /media/root/,
+</I>&gt;<i> &gt;&gt; mount --bind virtual filesystems within the new root filesystem,
+</I>&gt;<i> &gt;&gt; such as
+</I>&gt;<i> &gt;&gt; mount --bind /dev /media/root/dev
+</I>&gt;<i> &gt;&gt; mount --bind /proc /media/root/proc
+</I>&gt;<i> &gt;&gt; ,
+</I>&gt;<i> &gt;&gt; chroot into the new root filesystem,
+</I>&gt;<i> &gt;&gt; edit /etc/fstab and /etc/lilo/head,
+</I>&gt;<i> &gt;&gt; dispel install,
+</I>&gt;<i> &gt;&gt; cast glibc-locales etc kbd
+</I>&gt;<i> &gt;&gt; /etc/init.d/depmod
+</I>&gt;<i> &gt;&gt; /etc/init.d/rc.d
+</I>&gt;<i> &gt;&gt; /etc/init.d/services.d
+</I>&gt;<i> &gt;&gt; /etc/init.d/lilo
+</I>&gt;<i> &gt;&gt; /etc/init.d/initramfs
+</I>&gt;<i> &gt;&gt; ,
+</I>&gt;<i> &gt;&gt; exit the chroot,
+</I>&gt;<i> &gt;&gt; umount the virtual filesystems,
+</I>&gt;<i> &gt;&gt; umount /media/root,
+</I>&gt;<i> &gt;&gt; reboot
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The menu driven installer is suppose
+</I>&gt;<i> &gt;&gt; to provide a somewhat familiar path
+</I>&gt;<i> &gt;&gt; through those steps so the SA can
+</I>&gt;<i> &gt;&gt; reach the outcome faster and with less effort.
+</I>&gt;<i> &gt;&gt; Creating LUKS encrypted filesystems, LVM2,
+</I>&gt;<i> &gt;&gt; or mdraids seem far more complicated without
+</I>&gt;<i> &gt;&gt; the assistance of the menu driven installer.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; If you discover why the menu driven installer
+</I>&gt;<i> &gt;&gt; is unable to locate partitions
+</I>&gt;<i> &gt;&gt; then I would be eager to know.
+</I>&gt;<i> &gt;&gt; Did you happen to change the incomplete sed
+</I>&gt;<i> &gt;&gt; command from one that filters out /dev/fd[0-9]
+</I>&gt;<i> &gt;&gt; to one that filters out /dev/hd*
+</I>&gt;<i> &gt;&gt; I have a difficult time guessing why
+</I>&gt;<i> &gt;&gt; the partition would not show up in the installer's
+</I>&gt;<i> &gt;&gt; fstab creation menu.
+</I>&gt;<i> &gt;&gt; But like I said above
+</I>&gt;<i> &gt;&gt; a device can be entered manually
+</I>&gt;<i> &gt;&gt; provided that the SA is sure that will work.
+</I>&gt;<i> &gt;&gt; If it does not work then /media/root will not mount
+</I>&gt;<i> &gt;&gt; the installation will install files to the rootfs/initramfs
+</I>&gt;<i> &gt;&gt; and it will fill up and the computer will probably halt
+</I>&gt;<i> &gt;&gt; from running out of RAM.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Sat, Jul 17, 2010 at 3:31 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt; &gt; Hello,
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; I know why the root is empty.
+</I>&gt;<i> &gt;&gt; &gt; Because of a reinstall I made the partitions again and the file system
+</I>&gt;<i> &gt;&gt; &gt; again.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; But still it seems that the installer can't find it and fdisk can find
+</I>&gt;<i> &gt;&gt; &gt; it.
+</I>&gt;<i> &gt;&gt; &gt; I find it wierd that I cannot put any value in the device section of the
+</I>&gt;<i> &gt;&gt; &gt; installer.
+</I>&gt;<i> &gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt; &gt; Roelof
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ________________________________
+</I>&gt;<i> &gt; De nieuwste Internet Explorer: snel, eenvoudig en veilig. Download nu!
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+De Nieuwste Internet Explorer speciaal voor Hotmail, download nu gratis
+<A HREF="http://www.microsoft.com/netherlands/ie8/hotmail.htm">http://www.microsoft.com/netherlands/ie8/hotmail.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100718/e603b51e/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100718/e603b51e/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001778.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001782.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1779">[ date ]</a>
+              <a href="thread.html#1779">[ thread ]</a>
+              <a href="subject.html#1779">[ subject ]</a>
+              <a href="author.html#1779">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

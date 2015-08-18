@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] MACHTYPE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MACHTYPE&In-Reply-To=%3Cw2p27f41a931004162113r8e37d7c1lb13d951a2e23f681%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001562.html">
+   <LINK REL="Next"  HREF="001564.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] MACHTYPE</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20MACHTYPE&In-Reply-To=%3Cw2p27f41a931004162113r8e37d7c1lb13d951a2e23f681%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] MACHTYPE">evorster at gmail.com
+       </A><BR>
+    <I>Sat Apr 17 06:13:53 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001562.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+        <LI>Next message: <A HREF="001564.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1563">[ date ]</a>
+              <a href="thread.html#1563">[ thread ]</a>
+              <a href="subject.html#1563">[ subject ]</a>
+              <a href="author.html#1563">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah...
+
+One thing to add. If you are running a monolithic kernel, and want to have
+more than 4GB of RAM on a 32bit system, just enable PAE in the kernel.
+
+-Evert-
+
+On Fri, Apr 16, 2010 at 11:11 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> A box that is installed from the x86_64 I/R
+</I>&gt;<i> and boots with that kernel will return
+</I>&gt;<i> x86_64 for
+</I>&gt;<i> $ uname -m
+</I>&gt;<i>
+</I>&gt;<i> A box installed from the Sorcerer IA32 I/R
+</I>&gt;<i> will return i586 or i686
+</I>&gt;<i> for uname -m depending upon the architecture.
+</I>&gt;<i> It however, will not return x86_64 for uname -m
+</I>&gt;<i> because the running kernel is not 64 bit capable.
+</I>&gt;<i>
+</I>&gt;<i> If uname -m does not return x86_64
+</I>&gt;<i> and the box has an x86_64 CPU
+</I>&gt;<i> and you want the additional headaches
+</I>&gt;<i> additional RAM consumption and
+</I>&gt;<i> slight speed increases of x86_64
+</I>&gt;<i> then the correct solution is to install
+</I>&gt;<i> Sorcerer from the x86_64 I/R and not the IA32 I/R
+</I>&gt;<i>
+</I>&gt;<i> If a person already knows to migrate from
+</I>&gt;<i> IA32 to x86_64 without asking questions
+</I>&gt;<i> then go ahead and do it.
+</I>&gt;<i> Most SAs would not be able to accomplish the task.
+</I>&gt;<i> As for me I would lack the time to accomplish it.
+</I>&gt;<i> Since I already created a port of Sorcerer to x86_64,
+</I>&gt;<i> thanks to help from Jan Merka,
+</I>&gt;<i> I would simply install from the x86_64 I/R.
+</I>&gt;<i>
+</I>&gt;<i> Do not expect that that the BASH spell can be edited
+</I>&gt;<i> so that it sets MACHTYPE to x86_64-pc-linux-gnu
+</I>&gt;<i> and that automatically makes it an x86_64 installation.
+</I>&gt;<i> No that just causes additional problems in the grimoire
+</I>&gt;<i> for spells that use $MACHTYPE as a fast way to
+</I>&gt;<i> detect if a box is IA32 or x86_64 in order to properly
+</I>&gt;<i> adjust a spell.
+</I>&gt;<i>
+</I>&gt;<i> Setting MACHTYPE incorrectly creates problems.
+</I>&gt;<i> The bash spells is doing the correct thing
+</I>&gt;<i> by the method of how it sets MACHTYPE.
+</I>&gt;<i> The only reason that it sets MACHTYPE in bash
+</I>&gt;<i> instead of using what is already set
+</I>&gt;<i> is because the MACHTYPE for IA32 installs
+</I>&gt;<i> begins as i586-pc-linux-gnu
+</I>&gt;<i> After bash casts it changes to i686-pc-linux-gnu
+</I>&gt;<i> Does that change anything about the way code is
+</I>&gt;<i> optimized for the installed CPU?
+</I>&gt;<i> In almost all situations it changes nothing
+</I>&gt;<i> except for very few sources
+</I>&gt;<i> that disregard CFLAGS and CXXFLAGS
+</I>&gt;<i> and attempt to set their own based upon $MACHTYPE
+</I>&gt;<i>
+</I>&gt;<i> Please do not mess with MACHTYPE
+</I>&gt;<i> :)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100417/729fb3fb/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100417/729fb3fb/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001562.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+	<LI>Next message: <A HREF="001564.html">[Sorcerer-admins] MACHTYPE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1563">[ date ]</a>
+              <a href="thread.html#1563">[ thread ]</a>
+              <a href="subject.html#1563">[ subject ]</a>
+              <a href="author.html#1563">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

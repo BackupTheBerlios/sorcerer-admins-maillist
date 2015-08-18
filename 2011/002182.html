@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%0A%09mandatory.&In-Reply-To=%3CBANLkTikk3mQX%2ByJKQGtHJwxZwhGYH9g7kw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002180.html">
+   <LINK REL="Next"  HREF="002184.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Either%20no%20/boot%20or%20a%202G%20/boot%20becomes%0A%09mandatory.&In-Reply-To=%3CBANLkTikk3mQX%2ByJKQGtHJwxZwhGYH9g7kw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jun  4 13:25:39 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002180.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+        <LI>Next message: <A HREF="002184.html">[Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2182">[ date ]</a>
+              <a href="thread.html#2182">[ thread ]</a>
+              <a href="subject.html#2182">[ subject ]</a>
+              <a href="author.html#2182">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Jun 3, 2011 at 1:44 PM, Bradley D. Thornton
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Bradley at northtech.us</A>&gt; wrote:
+&gt;<i> -----BEGIN PGP SIGNED MESSAGE-----
+</I>&gt;<i> Hash: RIPEMD160
+</I>&gt;<i>
+</I>&gt;<i> As always Kyle, thanks for sharing your thought process in your posts.
+</I>&gt;<i> FYI, it helps more than you may know ;)
+</I>
+Thanks for saying so.
+Often my ideas differ from trends of other distros
+so providing explanation helps show the reason why
+rather than making silent changes,
+keeping SAs in the dark
+or spewing semi random looking mandates.
+The 2G /boot might be the strangest aspect of Sorcerer,
+but it is made with consideration for both present and future conditions.
+Obviously, hindsight is 20/20 and
+consequently, I do not have a history of making
+the best size recommendations for /boot
+If every possible lilo label were used
+then 2G would not be enough for the current implementation.
+
+$ ls -lah /boot/2.6.39.1/{linux,initrf*}
+-rw------- 1 root root  97M Jun  3 07:24 /boot/2.6.39.1/initrf
+-rw------- 1 root root  97M Jun  3 06:39 /boot/2.6.39.1/initrf.old
+-rw------- 1 root root 2.0M Jun  3 01:55 /boot/2.6.39.1/linux
+
+As it is now each label can require about about 200M.
+If we switch to a bootloader than supports loading multiple
+initrf with a kernel then about half the above size can be
+factored out into an initramfs that is common for all boot labels.
+However, as it stands linux will not change position when
+initramfs images are updated.
+And by keeping initrf.old from the previous time
+then the box can survive at least one reboot
+where for some unexpected reason lilo refuses to reinstall.
+
+$ ls -lah /boot/rescue/{linux,initrf*}
+-rw------- 1 root root  41M May 23 23:53 /boot/rescue/initrf
+-rw------- 1 root root 1.9M May 23 23:53 /boot/rescue/linux
+
+This is a bit more ideal because neither the linux or initrf files
+will change their position on disk when other initramfs are updated.
+
+Some boxes will not have sufficient space on /boot
+for initrf.old files.
+So those boxes will do a copy, fail,
+then remove the initrf.old and do the copy again.
+So I am not forcing the expansion of /boot on boxes
+that are incapable.
+However, the gradual growth of initrf is not easily mitigated.
+
+
+&gt;<i> Yes we hashed this out here on the list a little less than a year ago,
+</I>&gt;<i> due to issues, in particular, with XFS.
+</I>
+Perhaps I remember it as &quot;XFS does not have a reserved boot sector?&quot;
+I have since updated the menu driven installer to disallow combinations
+that I know will not work without a dedicated /boot.
+And I have also recently modified it to enforce a 2G /boot
+
+
+&gt;<i> I'm wondering if there are any actual advantages/disadvantages
+</I>&gt;<i> to using ext3 or otherwise on /boot.
+</I>
+Many SAs would feel tempted to use ext3 instead of ext2
+because ext3 is expected to be superior to ext2.
+However, what are the advantages to ext3 over ext2?
+ext3 can play back a journal instead of fscking
+after rebooting unclean.
+ext3 has delayed write I/O
+And ext3 has a journal that consumes actual disk space.
+
+$ find /boot | wc -l
+26
+
+So first we see that /boot has very few nodes to check
+and is a modest size of 2G so fscking /boot requires
+a bit less time than a sneeze.
+
+&gt;<i>From examining the initramfs and sorcery tools we see
+</I>that files are not created on /boot but instead created elsewhere
+and then copied onto /boot.
+And nearly anytime /boot is updated an immediate sync follows
+because we want to know for certain that the on disk data
+exactly matches how it should be.
+So there is no use for delayed writing and a journal.
+
+So a /boot with ext3 is basically an ext2 boot that has less space
+because some space is being consumed by a journal
+and also is a file system that updates slower because it would
+not immediately sync but instead have a 5 second commit interval value.
+
+Back when I used ext3 for file systems,
+ext3 could be mounted without a journal to provide an ext2.
+So when doing backups I always mounted the backup file system
+as ext2, although it really was an ext3.
+This granted greater throughput.
+ext3 and ext4 are useful for / file systems that are always mounted and in use.
+However, for /boot and backup file systems ext2
+can be a better choice for faster more immediate throughput.
+ext3 for /boot merely wastes space on a journal.
+
+# umount /boot
+# time fsck.ext2 -f /dev/sda1
+e2fsck 1.41.14 (22-Dec-2010)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Pass 5: Checking group summary information
+/dev/sda1: 35/131072 files (22.9% non-contiguous), 170837/524288 blocks
+
+real    0m1.311s
+user    0m0.300s
+sys     0m0.140s
+
+*Achew*
+Oh, so close, I was almost faster than fsck.
+
+
+&gt;<i> Maybe it's time that I look at ext3/4 for /boot? yes/no?
+</I>
+Mine is only one point of view with no shortage of ignorance.
+There might be compelling reasons for using ext3 or ext4 for /boot.
+However, at the moment the only thought that comes to mind
+is that /boot has nearly infinitely more inodes than it requires.
+
+Probably making the best /boot file system involves
+trimming the extra inodes and excessive amount of super blocks.
+However, for most boxes /boot on Sorcerer should be a regular
+no frills ext2 file system.
+
+Thanks for asking.
+I realize that my selection of such things as ext2 for /boot
+and 2G for boot might often seem like mere personal preference.
+But there is some logic behind the selections.
+And I am trying to create a path that is sufficiently easy
+for new Sorcerer SAs to traverse.
+When a SA transitions to Sorcerer
+they usually have memorized only the old paradigm
+from pre-compiled binary based distros.
+Therefore, assumptions about /boot
+have a high probability of being incorrect.
+Sometimes the /boot or lack of /boot might even be unusable.
+
+SAs unaware of Sorcerer's different compromises may become irritated.
+They know without doubt that 100M is plenty for /boot.
+And yet the box fails to boot after the first update of linux.
+They knowing that 1G is sufficient for swap.
+And yet the newly deployed box swap locks to a halt.
+This cause irritation to many new Sorcerer SAs
+especially when they do not understand why it happened.
+
+Consequently, I added to my todo list to add a section
+to the menu driven installer that explains the Sorcerer paradigm.
+It is not to say that I never bothered to do it.
+But I tried submitting a series of papers to freshmeat
+to explain the source based paradigm
+and they would not publish nor even award me a complimentary T-shirt.
+And so the files became lost long ago.
+Yet I suppose after all that time I have nearly forgotten what
+the old paradigm was or how Sorcerer differs.
+To summarize it in a single sentence
+I would probably say that the old paradigm was
+to aspire to the very least common denominator among 80386 computers.
+When expanded to the distro-specific aspects such as /boot,
+memory utilization, cpu utilization, and bandwidth utilization
+and contrasting Sorcerer with a pre-compiled binary based distro
+then we start to see that the two are as different as the sun and the moon.
+Pre-compiled based distros are like the moon which reflect the light
+of the far greater box that was used to compile the packages.
+And Sorcerer boxes are like the sun which radiates
+it's own unique warmth and light.
+
+Hopefully, I can explain the technical differences,
+provide interesting metaphorical contrast,
+and yet still have it entirety be succinct.
+
+The few technical details that the menu driven installer currently provides
+are only available for viewing when the SA makes a selection
+between &quot;novice&quot; and &quot;expert&quot; mode.
+I was made an incorrect assumption to put it there.
+Obviously it goes unread.
+Hopefully, I can fix that in the next set of I/Rs.
+Hate to be this way, but I guess I must use a
+&quot;shove it in their face&quot; approach.
+I realize it will be a bit more than annoying,
+because we will have to tap enter a few times
+and then confirm that we understood before
+proceeding with installation.
+But it is the lesser of two evils compared to a SA
+doing an installation that will become problematic.
+
+That might become a compromise that helps
+push Sorcerer in a direction of becoming a distribution
+suitable for use by experienced SAs.
+I never wanted it to be this way,
+but more aggressive measures will be required
+to ensure the SA complies.
+
+For the moment I already changed the implementation
+to disallow the SA defining /boot on a partition
+that is less than 2G.
+But I could easily automatically partition
+the disk to create a 2G /boot partition
+with the bootable flag enabled and force
+that on all installations.
+I irritate myself thinking about that.
+
+For all it's flexibility the menu driven installer probably has
+more ways to create a failed installation
+than ways to create valid installations.
+I want to give skilled SAs
+a nice long rope to accomplish what they want
+with the convenience of using the menu driven installer.
+Yet at the same time when novice SAs
+stretch their necks and dangle from the rope
+then they blame me.
+&gt;<i>From my point of view it is a perplexing challenge.
+</I>
+Every now and then SAs write to say,
+&quot;Sorcerer is too difficult to install.&quot;
+Really?  Is it?
+Without watching what they do I might never know.
+With few exceptions it is merely a matter of
+pressing arrow keys, space bar, and enter.
+I am not certain what to think about it.
+
+Hopefully, the future will bring changes that
+helps new SAs across the bridge
+without the experienced SAs feeling
+shackled and dragged across.
+
+So maybe an automatically created /boot partition for &quot;novice&quot; mode,
+and merely the 2G size enforcement for &quot;expert&quot; mode?
+I can not help making the &quot;novice&quot; mode of the installer
+extremely unpalatable for experienced SAs.
+But we always that the option to switch modes and re-partition.
+
+The novice mode could be made to query an installation device from the SA
+and automatically create a 2G ext2 /boot partition, 4G swap, and to put
+the rest on an ext4 / or is that too harsh?
+Besides an ext2 /boot would probably be unnecessary with an ext4 /
+
+Should the menu driven installer have a
+&quot;novice&quot; mode an &quot;expert&quot; mode and an &quot;automatic&quot; mode?
+Perhaps it should start in automatic mode and ask the SA just one questions?
+Which /dev/sd* device to install Sorcerer?
+With merely the answer to that question
+I can lay that down a Sorcerer installation
+faster and easier than a 4 course meal.
+Is that what new Sorcerer SAs actually require
+so that Sorcerer is no longer too difficult to install?
+
+I am irritating myself merely to ask the question because the answer
+suggests allowing non SAs to try to drive Sorcerer.
+So what comes next?
+Automatic network configuration?
+Boxes that automatically weekly update with no questions asked?
+2 profiles to select from?
+Workstation KDE, Workstation Gnome?
+If the SA is not truly a SA
+then we can abandon all hope of him/her being able to deploy
+a console only server box.
+Shall we do this.
+If so then who wants to help?
+
+I can not help thinking that an automatic installation
+is like giving a noob a stick of C7H5N3O6 to use for a match.
+Will it change everything.
+Or will it explode in their face later?
+
+Okay, I have on my todo list, to consider an automated installation.
+The subject is open to debate and opinions.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002180.html">[Sorcerer-admins] Either no /boot or a 2G /boot becomes	mandatory.
+</A></li>
+	<LI>Next message: <A HREF="002184.html">[Sorcerer-admins] Either no /boot or a 2G /boot	becomes	mandatory.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2182">[ date ]</a>
+              <a href="thread.html#2182">[ thread ]</a>
+              <a href="subject.html#2182">[ subject ]</a>
+              <a href="author.html#2182">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

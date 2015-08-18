@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] network sometime up sometimes won't.....
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20network%20sometime%20up%20sometimes%20won%27t.....&In-Reply-To=%3CAANLkTinVz50p2OBvKnP9Gowju9iB_c%2B09rh3is4AxTJ_%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001956.html">
+   <LINK REL="Next"  HREF="001959.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] network sometime up sometimes won't.....</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20network%20sometime%20up%20sometimes%20won%27t.....&In-Reply-To=%3CAANLkTinVz50p2OBvKnP9Gowju9iB_c%2B09rh3is4AxTJ_%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] network sometime up sometimes won't.....">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 21 15:32:26 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001956.html">[Sorcerer-admins] network sometime up sometimes won't.....
+</A></li>
+        <LI>Next message: <A HREF="001959.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1958">[ date ]</a>
+              <a href="thread.html#1958">[ thread ]</a>
+              <a href="subject.html#1958">[ subject ]</a>
+              <a href="author.html#1958">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Would pppoe be needed for a static Internet connection?
+I do not have pppoe installed on any boxes.
+The information reported suggests a problem with the template
+or the functions.
+Without debugging it I do not have a clue what is going wrong.
+
+If pppoe is required to create a network connection
+then starting networks during sysinit might not work.
+To be more precise I have not tested it
+since I do not have a method for testing pppoe.
+networking is also started during runlevel.
+So if it fails to start during sysinit
+then normally it would start during runlevel
+provided that networks does not expect that
+the start of the network was successful.
+
+Hopefully providing more information about this problem
+will lead to a distribution wide fix.
+For now I require more information before knowing what
+to change where in order to make this work properly.
+
+If I am to make a guess and expect that pppoe is not
+starting from sysinit
+then that might be due to a virtual file system
+not yet being mounted, or missing directories.
+If the required changes can be discovered and reported
+then pppoe could be made to work from sysinit
+if it is not working when started from sysinit.
+Otherwise, if decided that pppoe should not be
+started during sysinit
+then the network functions can be modified so
+that a connection that requires pppoe will not
+be started until runlevel.
+
+Currently, the advantages of starting networks during sysinit
+is that all or part of a / file system could be mounted NFS
+and if a box requires rescuing then having the box connected
+to the network allows files and archives from other boxes
+to be easily transferred over with scp.
+
+However, boxes that are running fine with a normal local installation
+of Sorcerer
+would not necessarily require networks to be started during sysinit.
+An easy way to check that is
+to temporarily modify /etc/init.d/networks
+and rewrite the comment so that it starts only at runlevels.
+
+
+# Default-Start: S 1 2 3 4 5
+
+becomes
+
+# Default-Start: 1 2 3 4 5
+
+However, that change will not exist after the networks spell recasts
+since customized init-scripts are not preserved.
+
+Hopefully, when the problem and solution is understood and explained
+then together we can create a distribution wide solution for this?
+
+
+On Thu, Oct 21, 2010 at 4:15 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> #&#160;ls /etc/init.d/networks &#160;-la
+</I>&gt;<i> -rwx------ 1 root root 1358 Oct 21 00:50 /etc/init.d/networks
+</I>&gt;<i> &#160;ls /etc/rc.d/rc4.d/S0?net*
+</I>&gt;<i> /etc/rc.d/rc4.d/S01networks
+</I>&gt;<i> in startup log I see
+</I>&gt;<i> &#160;* networks checking &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ warning ]
+</I>&gt;<i> &#160;* networks starting &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ warning ]
+</I>&gt;<i> RTNETLINK answers: File exists
+</I>&gt;<i> /sbin/pppoe-start
+</I>&gt;<i> TIMED OUT
+</I>&gt;<i> /sbin/pppoe-start: line 193: &#160; 575 Terminated &#160; &#160; &#160; &#160; &#160; &#160; &#160;$CONNECT &quot;$@&quot; &gt;
+</I>&gt;<i> /dev/null 2&gt;&amp;1
+</I>&gt;<i> &#160;* networks not started &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ failed &#160;]
+</I>&gt;<i> however when I do&#160;&#160;/etc/init.d/networks start, it does start...... it start
+</I>&gt;<i> without any problem
+</I>&gt;<i> what is strange is that in my network I've a static ethernet, a pppoe....
+</I>&gt;<i> and it looks like the ethernet did start.....
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+</I>&gt;<i> et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001956.html">[Sorcerer-admins] network sometime up sometimes won't.....
+</A></li>
+	<LI>Next message: <A HREF="001959.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1958">[ date ]</a>
+              <a href="thread.html#1958">[ thread ]</a>
+              <a href="subject.html#1958">[ subject ]</a>
+              <a href="author.html#1958">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

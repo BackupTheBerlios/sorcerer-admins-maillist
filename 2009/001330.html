@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] poppler-qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20poppler-qt-x11-opensource&In-Reply-To=%3C596b75860910051723r11c0c02i5ab4ede63d72be7b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001326.html">
+   <LINK REL="Next"  HREF="001332.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] poppler-qt-x11-opensource</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20poppler-qt-x11-opensource&In-Reply-To=%3C596b75860910051723r11c0c02i5ab4ede63d72be7b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] poppler-qt-x11-opensource">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Oct  6 02:23:53 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001326.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+        <LI>Next message: <A HREF="001332.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1330">[ date ]</a>
+              <a href="thread.html#1330">[ thread ]</a>
+              <a href="subject.html#1330">[ subject ]</a>
+              <a href="author.html#1330">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>There are 3 different poppler spells
+The reason for this is to entirely avoid
+the addition qt-x11-free or qt-x11-opensource
+as optional requirements to a single poppler spell
+when other spells will definitely require an installed
+poppler that is also has qt-x11-free or qt-x11-opensource support.
+The three spells are:
+
+poppler
+poppler-qt-x11-free
+poppler-qt-x11-opensource
+
+To make certain that they all work
+they do not all install into /usr
+Only poppler installs into /usr
+poppler-qt-x11-free installs into /opt/kde3/
+And poppler qt-x11-opensource installs into /opt/kde4/
+
+Works splendidly on my boxes.
+I am uncertain what the problem is.
+
+As far as I know I do not use the poppler library frequently.
+I have used kde4's okular to read pdf files
+and that worked without a problem
+
+# cat /etc/ld.so.conf
+/usr/lib/nv
+/lib
+/usr/local/lib
+/usr/lib
+/lib.old
+
+As one can see from this example
+I have /usr/lib/nv at the top of /etc/ld.so.conf
+Is it necessary?
+Not sure.
+But I am sure that it will guarantee that the libGL
+libraries in /usr/lib/nv/ are used instead of the
+libGL libraries in /usr/lib/
+
+In this fashion one could select what poppler libraries to use.
+However, generally this should not be required
+for regular, kde3, or kde4 programs.
+Maybe the poppler-qt-x11-free
+or poppler-qt-x11-opensource installation
+on x86_64 goes into lib64 directories under
+/opt/kde3/ or /opt/kde4/ and that causes problems?
+If that is the case then I would not see it because
+I do not have KDE deployed on an x86_64 box.
+
+Difficult to conjecture the best solution to this problem.
+Because KDE is compiled I prefer a solution where
+the KDE executables are compiled with a RPATH
+that would also include the location of the poppler libraries.
+However, then only such KDE software would know where to look
+and any pre-compiled KDE software would not know.
+But even so having /etc/ld.so.conf
+become long and complicated and require manual
+editing is also not a favorable solution.
+
+The x86_64 port of Sorcerer tends to be a difficult beast,
+because the software authors have not all agreed to use
+/lib64/ directories for installing ELF64 libraries.
+Generally, the smoothness with which Sorcerer operates
+is due to the good job that software authors are doing.
+Likewise this speed bump on the x86_64 port
+is also due to to the good job that software authors are doing.
+
+Another more simple solution,
+not that I like it that much,
+is to modify the poppler spells
+to force the same library directories
+that KDE installation uses.
+That should work.
+But it could break if and when KDE changes.
+
+A more thorough change is to try to force
+every source through addition configure parameters
+or custom builds() in spells
+to force the use of /lib/ directories or
+to force the use of /lib64/ directories
+on x86_64.
+
+I expect that there would be problems either way
+and it would require frequent checking to avoid
+breaks and deviations on updates.
+As far as I know use of /lib64/
+for storing ELF glibc libraries is not optional.
+Every ELF64 executable on an IA64 box has
+the static /lib64/ld-linux-x86-64.so.2 hardcoded.
+Therefore, that file must exist in order for
+the runtime linker to be invoked when running
+ELF executables.
+A deviation in it's location requires all ELF64
+executables to be recompiled.
+Also anything other than /lib64/ld-linux-x86-64.so.2
+would be deviation from what is normal for
+x86_64 distributions using glibc and linux.
+
+There are many possible solutions.
+Someone will have to spend a lot of time
+sitting on this egg to hatch out a grimoire
+full of spells that force the use of /lib64/
+directories on x86_64 architecture
+if that is how it should be.
+
+
+On Thu, Oct 1, 2009 at 2:13 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> I really don't understand how to fix this situation because the two poppler-qt
+</I>&gt;<i> spells install libpoppler.so.{4,5} libraries into /opt/kde3/lib and
+</I>&gt;<i> /opt/kde4/lib, respectively. These libraries are required, for example, by
+</I>&gt;<i> kpdf (KDE3) or okular (KDE4). I would think that installing them into /usr/lib
+</I>&gt;<i> could work, right? Another solution seems to be adding /opt/kde4/lib into the
+</I>&gt;<i> /etc/ld.so.conf. But adding both /opt/kde3/lib and /opt/kde4/lib would cause
+</I>&gt;<i> problems I reckon...
+</I>&gt;<i>
+</I>&gt;<i> Any suggestions?
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>&gt;<i>
+</I>&gt;<i> On Saturday 26 September 2009, Jan Merka wrote:
+</I>&gt;&gt;<i> On Friday 25 September 2009, Kyle Sallee wrote:
+</I>&gt;&gt;<i> &gt; Two poppler libraries should be installed
+</I>&gt;&gt;<i> &gt; one is in /opt/kde4/
+</I>&gt;&gt;<i> &gt; the other is in /usr/
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> All libraries are installed in /opt/kde4:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler-glib.so
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler-glib.so.4
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler-glib.so.4.0.0
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler-qt4.so
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler-qt4.so.3
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler-qt4.so.3.2.0
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler.so
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler.so.5
+</I>&gt;&gt;<i> /opt/kde4/lib/libpoppler.so.5.0.0
+</I>&gt;&gt;<i> /opt/kde4/lib/pkgconfig/poppler-cairo.pc
+</I>&gt;&gt;<i> /opt/kde4/lib/pkgconfig/poppler-glib.pc
+</I>&gt;&gt;<i> /opt/kde4/lib/pkgconfig/poppler-qt4.pc
+</I>&gt;&gt;<i> /opt/kde4/lib/pkgconfig/poppler-splash.pc
+</I>&gt;&gt;<i> /opt/kde4/lib/pkgconfig/poppler.pc
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Here is the head of the compilation log:
+</I>&gt;&gt;<i> Compile log for poppler-qt-x11-opensource 0.12.0
+</I>&gt;&gt;<i> Built with sorcery photon-20090902-0 and gcc 4.3.3
+</I>&gt;&gt;<i> Built on Fri Sep 25 15:49:08 EDT 2009
+</I>&gt;&gt;<i> Method: cmake
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I still don't see how to fix the poppler spell.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> J.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001326.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+	<LI>Next message: <A HREF="001332.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1330">[ date ]</a>
+              <a href="thread.html#1330">[ thread ]</a>
+              <a href="subject.html#1330">[ subject ]</a>
+              <a href="author.html#1330">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

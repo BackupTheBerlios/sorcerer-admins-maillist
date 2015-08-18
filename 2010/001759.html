@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] dhcp on boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W29C19D50E835768DEE410DAEBB0%40phx.gbl%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001757.html">
+   <LINK REL="Next"  HREF="001761.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] dhcp on boot</H1>
+    <B>Roelof Wobben</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20dhcp%20on%20boot&In-Reply-To=%3CSNT118-W29C19D50E835768DEE410DAEBB0%40phx.gbl%3E"
+       TITLE="[Sorcerer-admins] dhcp on boot">rwobben at hotmail.com
+       </A><BR>
+    <I>Thu Jul 15 10:23:39 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001757.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+        <LI>Next message: <A HREF="001761.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1759">[ date ]</a>
+              <a href="thread.html#1759">[ thread ]</a>
+              <a href="subject.html#1759">[ subject ]</a>
+              <a href="author.html#1759">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+ Oke
+
+ 
+
+Thank you but that did not solved the problem.
+
+ 
+
+I tried sleep 1 and sleep 10 and the problems stays.
+
+ 
+
+Roelof
+
+ 
+&gt;<i> Date: Wed, 14 Jul 2010 12:53:57 -0700
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] dhcp on boot
+</I>&gt;<i> 
+</I>&gt;<i> POSIX command names like UNIX command names
+</I>&gt;<i> often differ slightly than what they probably aught to be.
+</I>&gt;<i> The command to search for us umount.
+</I>&gt;<i> The line looks like:
+</I>&gt;<i> 
+</I>&gt;<i> LC_ALL=C sort -ur | xargs -r --max-lines=1024 umount -lr
+</I>&gt;<i> 
+</I>&gt;<i> After that line and before the
+</I>&gt;<i> 
+</I>&gt;<i> }
+</I>&gt;<i> 
+</I>&gt;<i> Try inserting
+</I>&gt;<i> 
+</I>&gt;<i> sleep 1
+</I>&gt;<i> 
+</I>&gt;<i> The full command being used to umount filesystems is
+</I>&gt;<i> 
+</I>&gt;<i> cut -d ' ' -f2 /proc/mounts |
+</I>&gt;<i> LC_ALL=C sort -ur | xargs -r --max-lines=1024 umount -lr
+</I>&gt;<i> 
+</I>&gt;<i> That means:
+</I>&gt;<i> 
+</I>&gt;<i> Using space as a delimiter cut everything from /proc/mounts
+</I>&gt;<i> except the second column
+</I>&gt;<i> then sort that list into reverse order and eliminate duplicates,
+</I>&gt;<i> and finally provide that list as parameters to the umount
+</I>&gt;<i> command followed by parameter -lr and with an additional
+</I>&gt;<i> list of parameters no greater than 1024 parameters in length.
+</I>&gt;<i> 
+</I>&gt;<i> Shell programming differs from any other type of programming
+</I>&gt;<i> that I tried before and in many ways is fun and easy.
+</I>&gt;<i> The '|' pipe, the character in between the quotes,
+</I>&gt;<i> is a very useful for shell scripts.
+</I>&gt;<i> The pipe connects the standard output from the
+</I>&gt;<i> program executing in front of the pipe
+</I>&gt;<i> to the standard input of the program that
+</I>&gt;<i> executes after the pipe.
+</I>&gt;<i> The pipe becomes like a bucket brigade.
+</I>&gt;<i> But since we are dealing with computers instead of water
+</I>&gt;<i> it is a bit bucket brigade. :)
+</I>&gt;<i> 
+</I>&gt;<i> If augur is run without parameters
+</I>&gt;<i> then it prints a general help screen where
+</I>&gt;<i> in one column called Stdin some of the
+</I>&gt;<i> parameters have an asterisk *.
+</I>&gt;<i> All augur commands support input as
+</I>&gt;<i> additional command line parameters.
+</I>&gt;<i> However, some of them also will read
+</I>&gt;<i> input from stdin.
+</I>&gt;<i> In that fashion augur commands can easily
+</I>&gt;<i> be joined together using a pipe.
+</I>&gt;<i> One of my favorite examples is:
+</I>&gt;<i> 
+</I>&gt;<i> # augur lone | augur size | sort -g | tee /tmp/piggy.txt
+</I>&gt;<i> 
+</I>&gt;<i> That creates the piggy list and saves it to file /tmp/piggy.txt
+</I>&gt;<i> while also displaying it as scroll on the screen.
+</I>&gt;<i> If a box is low on space or I just want to clean
+</I>&gt;<i> wipe away some programs not being used,
+</I>&gt;<i> which tends to happen on my test box,
+</I>&gt;<i> then I use the piggy list to help decide.
+</I>&gt;<i> 
+</I>&gt;<i> A more menu driven method for removing software
+</I>&gt;<i> is to use sorcery's dispel menu.
+</I>&gt;<i> That helps the SA select software for removal
+</I>&gt;<i> using the same logic used while undressing.
+</I>&gt;<i> When undressing could a person remove their
+</I>&gt;<i> socks before their shoes?
+</I>&gt;<i> Crazy idea yes?
+</I>&gt;<i> 
+</I>&gt;<i> The sorcery's dispel menu also ensures that
+</I>&gt;<i> shoes must be selected for removal
+</I>&gt;<i> before socks become eligible for removal.
+</I>&gt;<i> It is a layered approaching to software removal
+</I>&gt;<i> where the outer most layers must be removed first
+</I>&gt;<i> in order to unlock installed software that is being kept
+</I>&gt;<i> installed because it is required by other installed software.
+</I>&gt;<i> Sorcerer boxes have more layers of software than
+</I>&gt;<i> a fancy pastry cake and less layers than
+</I>&gt;<i> an authentic folded steel Japanese sword.
+</I>&gt;<i> Fortunately, sorcery is there to help.
+</I>&gt;<i> Therefore, the SA does not have to recognize each layer.
+</I>&gt;<i> 
+</I>&gt;<i> Knowing about pipes is useful.
+</I>&gt;<i> Knowing about a Sorcerer box's layers of software is useful.
+</I>&gt;<i> Sorcerer requirements are always recursive rather than absolute.
+</I>&gt;<i> And that is what creates a layered effect.
+</I>&gt;<i> Additionally, I would want to know about all the software
+</I>&gt;<i> installed by the coreutils spell by reading their manual pages.
+</I>&gt;<i> After that I would read the manual pages for sed, grep, find, xargs.
+</I>&gt;<i> And finally, I would read the manual page for BASH.
+</I>&gt;<i> 
+</I>&gt;<i> # augur install coreutils sed grep findutils bash |
+</I>&gt;<i> grep /man/ |
+</I>&gt;<i> xargs man
+</I>&gt;<i> 
+</I>&gt;<i> Just press q to progress to the next manual page.
+</I>&gt;<i> 
+</I>&gt;<i> Yes, that is a lot of reading 101 manual pages,
+</I>&gt;<i> and the bash manual page is very long!
+</I>&gt;<i> But why all the reading?
+</I>&gt;<i> Sorcerer SAs' skill is proportional to their SA skills
+</I>&gt;<i> and almost directly proportional to BASH scripting skill.
+</I>&gt;<i> The better a SA's BASH scripting skill
+</I>&gt;<i> the more effectively that SA can wield sorcery.
+</I>&gt;<i> 
+</I>&gt;<i> Sorcerer was originally designed to scratch an itch
+</I>&gt;<i> that senior level SAs acquire from using a pre-compiled
+</I>&gt;<i> binary based distro.
+</I>&gt;<i> And unfortunately, it still remains a tool where skilled
+</I>&gt;<i> SAs have a much greater capacity to wield than novice.
+</I>&gt;<i> Consequently, almost any output that can be achieved
+</I>&gt;<i> by connecting a few commands together using pipes
+</I>&gt;<i> is not usually scripted as a convenient augur command.
+</I>&gt;<i> 
+</I>&gt;<i> Therefore, overall the best way to increase a SAs
+</I>&gt;<i> ability with sorcery is to increase the SAs ability,
+</I>&gt;<i> especially scripting ability.
+</I>&gt;<i> With Sorcerer there are not a dozens
+</I>&gt;<i> or more GUI programs to learn.
+</I>&gt;<i> The most basic sorcerer commands are:
+</I>&gt;<i> augur cast dispel leech sorcery
+</I>&gt;<i> That in itself is practically nothing to learn,
+</I>&gt;<i> about a 15 minute effort at most.
+</I>&gt;<i> 
+</I>&gt;<i> In contrast, learning about coreutils and BASH
+</I>&gt;<i> and other things useful for a SA can require
+</I>&gt;<i> a week of study.
+</I>&gt;<i> However, such knowledge is not insignificant nor
+</I>&gt;<i> limited to practical use on Sorcerer boxes.
+</I>&gt;<i> coreutils and BASH are installed on almost every POSIX box.
+</I>&gt;<i> Even Solaris and UNIX implementations have
+</I>&gt;<i> commands with the same names that accept
+</I>&gt;<i> similar command line parameters and produce similar output.
+</I>&gt;<i> Most if not almost everything learned about while
+</I>&gt;<i> administrating a Sorcerer box is also knowledge
+</I>&gt;<i> that is applicable while administrating other distros.
+</I>&gt;<i> 
+</I>&gt;<i> Therefore, in summary Sorcerer tends to attract
+</I>&gt;<i> the type of SAs that could deploy a box without
+</I>&gt;<i> a distro or deploy a box with a distro of their own design
+</I>&gt;<i> if that SA had sufficient time to accomplish the task.
+</I>&gt;<i> That does not make Sorcerer the best distro,
+</I>&gt;<i> but it grants experienced SAs nearly as much freedom
+</I>&gt;<i> they could want from a distro while still gaining
+</I>&gt;<i> the benefits of easy software updating.
+</I>&gt;<i> I want to expect about Sorcerer that
+</I>&gt;<i> the division of decision of what happens
+</I>&gt;<i> is more equally weighted to SAs rather than distro developers.
+</I>&gt;<i> 
+</I>&gt;<i> Probably the most significant power struggle in Sorcerer
+</I>&gt;<i> is about the init-scripts.
+</I>&gt;<i> It is not just about how init-scripts execute,
+</I>&gt;<i> but more importantly about how
+</I>&gt;<i> I made a distribution wide decision that init-scripts
+</I>&gt;<i> are not configuration files and
+</I>&gt;<i> therefore init-script content is non-customizable
+</I>&gt;<i> unlike other files stored in /etc/
+</I>&gt;<i> With that declaration I also made the provision that
+</I>&gt;<i> SAs who want a customized init-script
+</I>&gt;<i> must take full responsibility for it
+</I>&gt;<i> by creating a custom spell which installs that init-script.
+</I>&gt;<i> 
+</I>&gt;<i> Therefore, the change I recommended by adding
+</I>&gt;<i> a sleep 1 to the /etc/init.d/mount init-script
+</I>&gt;<i> would not be a permanent change.
+</I>&gt;<i> The next time the &quot;init-scripts&quot; spell casts
+</I>&gt;<i> the modified /etc/init.d/mount would be replaced
+</I>&gt;<i> by a stock version.
+</I>&gt;<i> 
+</I>&gt;<i> Since init-scripts can change name, function, and
+</I>&gt;<i> even ordering an init-script that would be permitted
+</I>&gt;<i> customization today could cause a box fail to reboot a year later.
+</I>&gt;<i> That sort of unexpected latency between cause and effect
+</I>&gt;<i> could baffle and frustrate a SA.
+</I>&gt;<i> Therefore, most decisions about init-scripts are made
+</I>&gt;<i> at the distribution level.
+</I>&gt;<i> Such decisions a SA can only overrule by creating custom spells.
+</I>&gt;<i> Unfortunately, understanding how all the init-scripts
+</I>&gt;<i> fit together is not unlike assembling a 200 piece jigsaw puzzle.
+</I>&gt;<i> 
+</I>&gt;<i> I hope that helps provide some useful information.
+</I>&gt;<i> Much of the documentation that Sorcerer SAs
+</I>&gt;<i> would want to use on a daily basis is provided in
+</I>&gt;<i> the form of help screens, manual pages, info pages,
+</I>&gt;<i> /usr/src/linux/Documentation/ /usr/share/doc/ /usr/doc/
+</I>&gt;<i> and basically all of that good stuff is installed on Sorcerer boxes.
+</I>&gt;<i> The next best places to look on the World Wide Web are
+</I>&gt;<i> google's search engine,
+</I>&gt;<i> software author's project and home pages,
+</I>&gt;<i> and &quot;The Linux Documentation Project.&quot;
+</I>&gt;<i> Most Sorcerer spells have a homepage entry
+</I>&gt;<i> that contains the URL to the software author's project
+</I>&gt;<i> website or homepage.
+</I>&gt;<i> However, Sorcerer itself does not provide much documentation,
+</I>&gt;<i> because almost all the docs anyone needs already exists.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Sorcerer is not unlike a ship in a bottle.
+</I>&gt;<i> The bottle is POSIX, Portable Operating System for unIX.
+</I>&gt;<i> POSIX defines what is and should be about distros.
+</I>&gt;<i> The Sorcerer I/R is like a quick start kit.
+</I>&gt;<i> Sorcery is like glue and simple tools for fastening pieces together.
+</I>&gt;<i> And the individual pieces of the boat
+</I>&gt;<i> come from the installed software components.
+</I>&gt;<i> Being Sorcerer SA requires
+</I>&gt;<i> some effort and some skill.
+</I>&gt;<i> But the requirement is not as much
+</I>&gt;<i> as compared to someone who builds
+</I>&gt;<i> model ships inside of bottles. :)
+</I>&gt;<i> Some Sorcerer SAs come to feel a bit of
+</I>&gt;<i> pride and affection for their Sorcerer boxes.
+</I>&gt;<i> They learn how to care for
+</I>&gt;<i> and feed their pet Sorcerer boxes. :)
+</I>&gt;<i> It is not a bad experience for SAs that have
+</I>&gt;<i> the skill and required tenacity to make their boxes thrive.
+</I>&gt;<i> Good luck.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Wed, Jul 14, 2010 at 1:14 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hello,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sorry but I don't see a unmount command in  /etc/init.d/mount so I can't try
+</I>&gt;<i> &gt; it.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Roelof
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I> 		 	   		  
+_________________________________________________________________
+Een netbook met Windows 7? Hier vind je alles dat je moet weten.
+<A HREF="http://www.windows.nl/netbook">http://www.windows.nl/netbook</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100715/53339fba/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100715/53339fba/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001757.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+	<LI>Next message: <A HREF="001761.html">[Sorcerer-admins] dhcp on boot
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1759">[ date ]</a>
+              <a href="thread.html#1759">[ thread ]</a>
+              <a href="subject.html#1759">[ subject ]</a>
+              <a href="author.html#1759">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

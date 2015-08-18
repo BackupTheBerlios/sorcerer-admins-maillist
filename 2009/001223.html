@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] (doing week updates) gmp fails...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%28doing%20week%20updates%29%20gmp%20fails...&In-Reply-To=%3C596b75860905240906g5ae97db0vac83460ddd2c8ade%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001222.html">
+   <LINK REL="Next"  HREF="001278.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] (doing week updates) gmp fails...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20%28doing%20week%20updates%29%20gmp%20fails...&In-Reply-To=%3C596b75860905240906g5ae97db0vac83460ddd2c8ade%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] (doing week updates) gmp fails...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May 24 18:06:25 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001222.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+        <LI>Next message: <A HREF="001278.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1223">[ date ]</a>
+              <a href="thread.html#1223">[ thread ]</a>
+              <a href="subject.html#1223">[ subject ]</a>
+              <a href="author.html#1223">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I used to have the sorcery default to optimization
+-march=native -O,
+however I recently changed that to -march=native -Os.
+The I/Rs have become larger than expected,
+and that may in part be due to the fact that
+a long time ago I used -Os for the I/Rs.
+
+Software that has a tendency to run full bore,
+such as bash ( when used by sorcery ),
+bzip2, gzip, 7za , lzip, etc... still receive the -O3
+optimization instead of the -O2 optimization.
+Even MesaLib receives -O3 optimization,
+because I realize some SA want the
+fastest possible 3D graphics.
+
+The reason I did not want to use -O2 or -O3 for defaults
+was because they contain optimizations that
+require longer for compilation.
+And gcc is does not become any faster with each new release.
+
+Also SAs can still set up a different default cpref,
+or they can specify different cpref for spells.
+
+Also -O3 is not guaranteed to produce code that runs faster than -Os.
+For default -Os may be the faster choice,
+especially for programs that run for a short duration and then exit.
+In the past sometimes -O3 code segfaults.
+And historically the only optimization expected to work
+for compiling glibc was -O2 and therefore
+glibc is always compiled with- O2 optimization
+
+
+On Sat, May 23, 2009 at 3:10 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> :( *pout* man sometimes I really wanna throw a temper tantrum at things :)
+</I>&gt;<i>
+</I>&gt;<i> if I ./configure it with all the options used with the original...
+</I>&gt;<i> (which aI overwrote before I saw before) it works fine... and tests
+</I>&gt;<i> with -O2 -m64 first ... (actually it's all -O2... why does the one
+</I>&gt;<i> cast invokes just use -Os ? )
+</I>&gt;<i>
+</I>&gt;<i> On Sat, May 23, 2009 at 3:03 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> the box is a 32 running on a 64bit host OS in a vmware box as a 32 bit
+</I>&gt;&gt;<i> processor. &#160;It should not compile 64 bit... but it does eventually
+</I>&gt;&gt;<i> decie that the IA=64 and doesn't re-set it to 32... it's trying to
+</I>&gt;&gt;<i> favor the 64... but what controls those intiial compile flags... I
+</I>&gt;&gt;<i> didn't see anywhere where it logged its command line parameters... or
+</I>&gt;&gt;<i> maybe the enviromnet of cast is entirely different than me typing
+</I>&gt;&gt;<i> ./configure
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Sat, May 23, 2009 at 2:55 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> I do not know what is going on with gmp.
+</I>&gt;&gt;&gt;<i> However, perhaps the -march=native
+</I>&gt;&gt;&gt;<i> in CFLAGS might effect what tests configure runs?
+</I>&gt;&gt;&gt;<i> Is the compile error for gmp only on x86_64?
+</I>&gt;&gt;&gt;<i> What about trying the gmp from the version before current?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> On Sat, May 23, 2009 at 2:36 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;<i> ## --------- ##
+</I>&gt;&gt;&gt;&gt;<i> ## Platform. ##
+</I>&gt;&gt;&gt;&gt;<i> ## --------- ##
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> hostname = hostname.unknown
+</I>&gt;&gt;&gt;&gt;<i> uname -m = i686
+</I>&gt;&gt;&gt;&gt;<i> uname -r = 2.6.27.9
+</I>&gt;&gt;&gt;&gt;<i> uname -s = Linux
+</I>&gt;&gt;&gt;&gt;<i> uname -v = #1 SMP Thu Dec 18 22:14:07 MST 2008
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> &lt;cut &#160;(both logs are the same here )&gt;
+</I>&gt;&gt;&gt;&gt;<i> abilist=64 32
+</I>&gt;&gt;&gt;&gt;<i> cclist=gcc icc cc
+</I>&gt;&gt;&gt;&gt;<i> configure:3829: gcc 2&gt;&amp;1 | grep xlc &gt;/dev/null
+</I>&gt;&gt;&gt;&gt;<i> configure:3832: $? = 1
+</I>&gt;&gt;&gt;&gt;<i> ------------&lt;./configure&gt;--------------
+</I>&gt;&gt;&gt;&gt;<i> configure:3886: checking compiler gcc -O2 -pedantic -m64
+</I>&gt;&gt;&gt;&gt;<i> ------------&lt;sorcery cast config.log&gt;--------------
+</I>&gt;&gt;&gt;&gt;<i> configure:3886: checking compiler gcc &#160;-Os
+</I>&gt;&gt;&gt;&gt;<i> -------------&lt;differs from here... ./configure shown&gt;-------------
+</I>&gt;&gt;&gt;&gt;<i> Test compile:
+</I>&gt;&gt;&gt;&gt;<i> configure:3900: gcc -O2 -pedantic -m64 &#160;conftest.c &gt;&amp;5
+</I>&gt;&gt;&gt;&gt;<i> conftest.c:1: sorry, unimplemented: 64-bit mode not compiled in
+</I>&gt;&gt;&gt;&gt;<i> configure:3903: $? = 1
+</I>&gt;&gt;&gt;&gt;<i> failed program was:
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> On Sat, May 23, 2009 at 2:27 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;&gt;&gt;<i> if I go to /var/tmp/failed/gmp* then ./configure;make
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> it builds very well.
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> (hmm... do a short ./configure &gt;log )
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> cat /etc/sorcery/log/compile/gmp*.gz | gzip -d &gt; log2
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> and compare the logs....
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -------- Log (works) -----------
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking whether make sets $(MAKE)... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking whether to enable maintainer-specific portions of Makefiles... no
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking ABI=64
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking compiler gcc -O2 -pedantic -m64 ... no
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking ABI=32
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer ... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer has
+</I>&gt;&gt;&gt;&gt;&gt;<i> sizeof(long)==4... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer
+</I>&gt;&gt;&gt;&gt;&gt;<i> -mtune=core2... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking compiler gcc -m32 -O2 -pedantic -fomit-frame-pointer
+</I>&gt;&gt;&gt;&gt;&gt;<i> -mtune=core2 &#160;-march=core2... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking for gcc... gcc
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking for C compiler default output file name... a.out
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> --------------------
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> --------- Log2 ( built by sorcerer )
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking whether make sets $(MAKE)... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking whether to enable maintainer-specific portions of Makefiles... no
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking ABI=64
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking compiler gcc &#160;-Os ... yes
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking for gcc... gcc
+</I>&gt;&gt;&gt;&gt;&gt;<i> checking for C compiler default output file name... a.out
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> -------------------------------------
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;&gt;<i> why does ./configure test 64bit, and size of long etc? where it only
+</I>&gt;&gt;&gt;&gt;&gt;<i> checks -Os with sorcerer build?
+</I>&gt;&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001222.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+	<LI>Next message: <A HREF="001278.html">[Sorcerer-admins] (doing week updates) gmp fails...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1223">[ date ]</a>
+              <a href="thread.html#1223">[ thread ]</a>
+              <a href="subject.html#1223">[ subject ]</a>
+              <a href="author.html#1223">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

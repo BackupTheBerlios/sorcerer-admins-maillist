@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Poppler &amp; kdegraphics
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3C596b75860708161830r7c2ee418naaf0c45ee86d8820%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000145.html">
+   <LINK REL="Next"  HREF="000109.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Poppler &amp; kdegraphics</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3C596b75860708161830r7c2ee418naaf0c45ee86d8820%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Poppler &amp; kdegraphics">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Aug 17 03:30:27 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000145.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+        <LI>Next message: <A HREF="000109.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE opengl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#150">[ date ]</a>
+              <a href="thread.html#150">[ thread ]</a>
+              <a href="subject.html#150">[ subject ]</a>
+              <a href="author.html#150">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 8/16/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Well, speedwise, we are compiling from sources, its slow process anyway, we
+</I>&gt;<i> can't say we are fastest distro to install new apps anyway.
+</I>
+There are 2 types of slow when it comes to Sorcerer.
+There is the type of slow where a SA must sit and watch
+and the type of slow where a SA can leave and go do other things.
+Before compilation starts a SA must wait and watch to
+see if any questions are asked about optionals for spells.
+However, after compilation begins the SA can quit scry
+log out, and work on other tasks.
+Therefore, compilation slowness does not waste SA time.
+However, waiting to be asked questions about optionals
+on spells before compilation does waste SA time.
+That is why I want that to run faster
+even faster than it does currently.
+
+
+&gt;<i> So what it's doing when generating index, its checking requirement and doing
+</I>&gt;<i> some index from requirement (some sort of pre-calc?) and thats why it would
+</I>&gt;<i> slow index generation?
+</I>
+It does not do that.
+I wish it could.
+At one time it did.
+But not only was it slow,
+but it ment that re-indexing
+had to be done when a SA's
+selection of optionals had been received.
+In other words, before the SA says X does optionally require Y
+either the index had to assume it did or assume it did not.
+That is why that code was removed from indexing.
+
+What indexing does is separate information in spells into a form
+that can be processed faster later when requirement chains of
+for spells are to be calculated.
+All the absolute requirements for a spell are put in a file.
+All the optional requirements for a spell are put into a file.
+That way the file content can be accessed with a &lt;
+And that is faster than sourcing in the spell and then
+doing some sort of echo involving ${REQ[]}
+
+Indexing also produces a list of how spells should be ordered.
+The order of spells assumes that any optional requirement that
+can be on is on.
+That assumption allows for the generation of an ordered list of
+all spells in the grimoire that will be valid no matter which optionals
+for spells are selected as on or off.
+
+And of course indexing builds some other important list such as
+files and directories that should be protected and excluded,
+and also the URL mirrors that sources define and it creates
+lists of spells by their categories and attributes.
+Everything indexing does generally makes whatever will happen
+later happen much faster than it would without an index.
+It is not unlike the index of a book.
+Without the grimoire index in several instances the entire grimoire
+would have to be executed or grepped in order to locate information.
+
+The cost of generating the index is paid back completely almost
+immediately because the speed gain for other operations involving
+one or more spells is that much faster.
+
+
+&gt;<i> I like current speedy index generation (compared when it was so damn slow),
+</I>&gt;<i> but can those parts move to eg. when cast is about to run first time?
+</I>
+They do....
+When immune is executed at boot
+neither the grimoire is merged nor is an index generated.
+Jan and some other SAs mentioned it expedited the booting
+process on notebooks.
+
+However, the execution of augur, cast, leech, dispel, sorcery
+and so forth will cause a merge and index if it does not exist.
+The high probability that the index or merged grimoire will be used
+is the reason why invocation of those 5 tools begin with a check to
+see if the merged grimoire and index are available.
+It is faster to do that check merely once when any of those tools
+are invoked as opposed to doing a check every time before the
+index or merged grimoire is accessed.
+
+
+&gt;<i> Somehow i feel why Gentoo uses global USE-flag, it has beneficts that those
+</I>&gt;<i> optional parts are set on globally.
+</I>
+Perhaps.
+But with Sorcerer I decided to allow
+precise optional selection for each spell.
+For example...
+aumix has a gtk+ interface.
+I do not like using the gtk+ interface for aumix.
+Therefore, I prefer being able to select gtk+ as off for aumix.
+If I must set gtk+ as globally on or globally off as an optional
+then I would require for my convenience either 3 spells such as:
+aumix; aumix-console; aumix-gtk+
+or a customized aumix spell to compile while sending the
+--without-gtk configure paramter.
+
+
+&gt;<i> Anyway, i think we are missing one feature that might be usefull. Eg. if you
+</I>&gt;<i> cast x.org and you have casted earlier spells which has some libx11, etc,
+</I>&gt;<i> optional part, so i would like to have easy way to re-cast all installed
+</I>&gt;<i> spells which have libx11 as optional part, so it would ask if you want to
+</I>&gt;<i> re-cast this spell with libx11 on.
+</I>
+I do not understand the above request.
+Oh, maybe I do.
+You could try something like
+
+# cast -r -c $(
+( cd  /etc/sorcery/log/opt.off
+  grep -lx libX11 *
+  augur installed
+) | sort | uniq -d )
+
+The above command would allow for each spell that has an
+optional requirement on libX11 that was previously selected as off
+to be reconfigured and recompiled if that spell is still installed.
+
+What would you that functionality if it was added to augur?
+
+
+&gt;<i> Also whats most easiest way to dispell spells, example if you want to
+</I>&gt;<i> dispell x.org, are we missing some sort of depency check here, so if i to
+</I>&gt;<i> dispell xorg, should it also be able to dispell all other spells which
+</I>&gt;<i> requires xorg, some sort of reverse check?
+</I>
+Probably no spells require xorg
+xorg is merely a profile spell.
+Spells might require spells such as libX11
+Many spells require xproto.
+But the very root would probably be X11R6-symlinks
+Having identified the root of that tree of spells you wish to eliminate
+you could issue a command such as:
+
+# dispel X11R6-symlinks $( augur iron X11R6-symlinks )
+
+And a few moments later the box is nothing but console only spells and
+libraries.
+
+Another, but perhaps less precise method might be to try to eliminate
+installed spells by their attribute
+
+# dispel $( augur attribute x11 )
+
+But that may not be as effective as the previous command.
+That is because spells may be installed that should have the x11
+attribute, but do not have the x11 attribute.
+
+If you were wondering how I identified the root spell for
+all spells requiring xorg installed libraries I looked at:
+
+# augur arof libX11
+libgpg-error
+libpthread-stubs
+pkgconfig
+zlib
+libgcrypt
+X11R6-symlinks
+bigreqsproto
+inputproto
+kbproto
+xcb-proto
+xcmiscproto
+xextproto
+xf86bigfontproto
+xproto
+xtrans
+libXau
+libXdmcp
+libxml2
+libxslt
+libxcb
+
+X11R6-symlinks is the highest spell on the list that obviously still belongs
+with the xorg group of spells.
+
+compare that to # augur arof for any other spell that requires x11 libraries
+and you will see that there is a similarity in the output of # augur arof.
+Spells in that list are ordered so that spells that are required
+come before those spells which require them.
+Or you can think of it as an upside down tree with the
+roots growing at the top instead of the bottom.
+
+The limit of what a SA wants to do is unimaginable,
+but the method to accomplish those tasks I imagine
+to usually require merely a few command lines.
+
+I generally do not create new augur commands for tasks
+that can be completed as easily as those I typed above.
+There would be practically no end to it if I did.
+
+But with a good explanation of why the command is needed
+and what it is called then I sometimes do include it.
+For example, # augur newer_ia was a SA requested command
+But newer_ia requires more than 10 lines of code.
+It would be inconvenient to type it on a command line.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000145.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+	<LI>Next message: <A HREF="000109.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE opengl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#150">[ date ]</a>
+              <a href="thread.html#150">[ thread ]</a>
+              <a href="subject.html#150">[ subject ]</a>
+              <a href="author.html#150">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

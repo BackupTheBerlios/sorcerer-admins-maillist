@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] more improved init-scripts
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20improved%20init-scripts&In-Reply-To=%3CCA%2BT4wDhZ54bd6amvBHYq_MqNmNKPb3a4FKtD69351fHxdFLhgA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002233.html">
+   <LINK REL="Next"  HREF="002236.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] more improved init-scripts</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20more%20improved%20init-scripts&In-Reply-To=%3CCA%2BT4wDhZ54bd6amvBHYq_MqNmNKPb3a4FKtD69351fHxdFLhgA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] more improved init-scripts">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug  4 01:34:53 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002233.html">[Sorcerer-admins] more init-script improvements
+</A></li>
+        <LI>Next message: <A HREF="002236.html">[Sorcerer-admins] more improved init-scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2234">[ date ]</a>
+              <a href="thread.html#2234">[ thread ]</a>
+              <a href="subject.html#2234">[ subject ]</a>
+              <a href="author.html#2234">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Remember the useful documentation in
+/etc/fstab that describes how to make a swap file?
+I am removing it.
+Muhahaha.
+Besides SAs already know the fastest way to create a swap file.
+Using dd to fill out a file, yes?
+No, that is the old method.
+
+Today's fun init-script improvements are:
+
+/etc/init.d/loglevel
+/etc/init.d/swap
+
+The loglevel has been configurable for a considerable time.
+But it involved editing /etc/init.d./conf.d/loglevel
+Now instead the init-script provides a dialog
+that explains each log level and allows the SA to select
+the default loglevel for printing kernel messages to console.
+
+# /etc/init.d/swap
+Usage: /etc/init.d/swap {start|stop|configure|status}
+
+Parameter &quot;start&quot; activates swaps which is no different than executing swapon -a
+Parameter &quot;stop&quot; deactivates swaps which is no different than
+executing swapoff -a
+Parameter &quot;status&quot; indicates whether swaps are active.
+
+Parameter &quot;configure&quot; presents dialog menus.
+swapfiles can be created and removed.
+Only swapfiles and not swap partitions can be adjusted.
+The dialogs for creating a swapfile offer a 1 of 4 sizes.
+1G 2G 3G or 4G.
+
+It also asks for a directory for the swapfile.
+The default is /swap/
+That is what I use.
+This differs for the default location for /etc/init.d/sentinel-memory
+The memory sentinel creates and activates swapfiles automatically upon demand.
+However, it's default is /var/cache/swap/
+/etc/init.d/swap and /etc/init.d/sentinel-memory
+must not use the same directory for swap files.
+This is the one and only warning about that.  :)
+
+There is no ideal method for setting up swaps.
+
+High security boxes may benefit for having swap files
+created on an encrypted filesystem.
+Or it might benefit from having an encrypted swap partition.
+
+Normal boxes without encrypted partitions may
+best benefit from having a dedicated 4G swap partition.
+That is the default for Sorcerer Sentient.
+
+Boxes with a mischievous user may benefit from
+having immune-sentinel-memory installed.
+That has an excellent probability of preventing
+a box from running out of memory by
+automatically activating and adding swap files as necessary.
+immune-sentinel-memory is also a default for Sorcerer Sentient.
+
+The cost of swap partitions is that they must typically be designated
+during installation and require a dedicated amount of disk space.
+Swap files can be created and destroyed at any time,
+yet suffer the inefficiency of existing on a file system.
+
+/etc/init.d/swap provides the SA
+the convenience of easy swap file management.
+
+Yes these are trivial improvements.
+They benefit mostly non SAs.
+But they are easy enough to quickly hack.
+And the convenience slowly lowers
+Sorcerer required skill to the beginner level.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002233.html">[Sorcerer-admins] more init-script improvements
+</A></li>
+	<LI>Next message: <A HREF="002236.html">[Sorcerer-admins] more improved init-scripts
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2234">[ date ]</a>
+              <a href="thread.html#2234">[ thread ]</a>
+              <a href="subject.html#2234">[ subject ]</a>
+              <a href="author.html#2234">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

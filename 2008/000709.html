@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] repository support enhancement
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20repository%20support%20enhancement&In-Reply-To=%3C48974B7F.9010805%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000681.html">
+   <LINK REL="Next"  HREF="000711.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] repository support enhancement</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20repository%20support%20enhancement&In-Reply-To=%3C48974B7F.9010805%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] repository support enhancement">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Aug  4 20:33:35 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000681.html">[Sorcerer-admins] swfdec : crash with firefox?
+</A></li>
+        <LI>Next message: <A HREF="000711.html">[Sorcerer-admins] GDM Zenity Dependancy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#709">[ date ]</a>
+              <a href="thread.html#709">[ thread ]</a>
+              <a href="subject.html#709">[ subject ]</a>
+              <a href="author.html#709">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>ok you requested for a more complet spec about progress support and 
+repositories....
+
+here is what I propose :
+each spell have a stable and unstable progress, thoses progress return 
+version values that will then be used by leech
+I propose that the spell can provide a repository() function, this 
+function shall be ran into the directory where we want the repository to 
+be leeched, this function handle all the steps for making a compilable 
+tree (ie create files if needed, at return of the function, you should 
+be able to run build() in the tree without noticing that it's a 
+repository tree)
+
+# repository update : update the repository (there is sources in the dir)
+# repository checkout : checkout a whole new tree (there are no sources 
+in the dir)
+
+leeching from a repository should be activated by an
+# augur progress repository
+if no repository function in the spell, then we shall fallback to stable 
+version (not unstable) and if possible a warning shall be issued when 
+doing the augur progress....
+
+when a spell is leeched, leech shall try in order if there is no user 
+progress specified for the spell :
+- stable
+- unstable
+- repository
+
+if repository shall be leeched :
+- check if there are some source cache, 
+(/var/cache/source/spell/repository/spell-date.tar.gz)
+- if yes : uncompress the tarball into some leech place, pushd into this 
+place, do repository update
+- if no  : create the dir, do repository checkout
+
+
+when an update is done :
+no version information shall be checked, if the spell is cast 10 times 
+in a row, the source shall be updated 10 times in a row....
+
+Best Regards,
+JLM
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000681.html">[Sorcerer-admins] swfdec : crash with firefox?
+</A></li>
+	<LI>Next message: <A HREF="000711.html">[Sorcerer-admins] GDM Zenity Dependancy
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#709">[ date ]</a>
+              <a href="thread.html#709">[ thread ]</a>
+              <a href="subject.html#709">[ subject ]</a>
+              <a href="author.html#709">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

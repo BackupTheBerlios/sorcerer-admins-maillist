@@ -1,0 +1,314 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] What is cooking on the stove?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20What%20is%20cooking%20on%20the%20stove%3F&In-Reply-To=%3C596b75860712130213t5ac82530t6783bf962ef9c6e4%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000329.html">
+   <LINK REL="Next"  HREF="000332.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] What is cooking on the stove?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20What%20is%20cooking%20on%20the%20stove%3F&In-Reply-To=%3C596b75860712130213t5ac82530t6783bf962ef9c6e4%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] What is cooking on the stove?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Dec 13 11:13:07 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000329.html">[Sorcerer-admins] named init script hangs forever
+</A></li>
+        <LI>Next message: <A HREF="000332.html">[Sorcerer-admins] What is cooking on the stove?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#331">[ date ]</a>
+              <a href="thread.html#331">[ thread ]</a>
+              <a href="subject.html#331">[ subject ]</a>
+              <a href="author.html#331">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>SAs that frequently update may have already noticed that some of the
+core spells recast almost daily.
+This is to adjust the init scripts for the changes required
+to enable Sorcerer boxes to boot in both the traditional method
+and and a method that involves an entirely modular linux kernel
+booting from an initramfs image.
+
+The next release of Install/Rescue images will be very different.
+First, they will have a complete installation of xorg and KDE.
+Second, they will have a complete modular kernel.
+Consequently, new boxes will be deployable entirely without
+the skill check required to configure a linux kernel.
+Lastly, the disk images will be much larger
+than previous releases and also lack a companion sources CD.
+However, the single architecture specific CDROM image
+will still be burnable onto a single CDROM.
+
+The changes have several benefits.
+A faster transition from installation to full deployment of a box
+is possible since the near 10 hours required to
+compile linux + xorg + KDE will be unnecessary.
+Second, a SA who wants to strip off the xorg and KDE
+will require less than 5 minutes in Sorcerer's dispel menu
+to accomplish the task.
+Those who want the performance benefits
+of a custom compiled kernel the linux spell
+will still be available to savor the rapture
+of make menuconfig on a linux kernel source.
+Consequently, most of the benefits of the new Install/Rescue image
+come at no additional cost to SAs already enamored
+with the precise configure-ability of Sorcerer!
+
+However, there are some costs to using the new images.
+First, the download will be larger.
+The new images download will be between 450M and 600M
+The x86_64 images will definitely be larger than the ia32.
+Secondly, larger images require longer to burn to disk.
+And larger image burns have a high probability of encountering a burn error.
+Definitely check a dd of burned image
+verse the unburned iso9660 image or md5sum of the iso9660 image.
+It is far better to discover that a burn error exists on the disk
+prior to booting it and beginning installation.
+Consequently, there is no transfer check in the Sorcerer installer anymore.
+
+Currently, I have completed checks of the ia32 image,
+but am not uploading it until I have completed the x86_64 image.
+About 200 more spells require compilation to complete the x86_64 image.
+No telling how long that will require using qemu's x86_64 emulation.
+If I am able to acquire some CPU time on an actual x86_64 box
+then I may be able to have the image ready before the new year.
+
+One of the advantageous of using a completely modular linux kernel
+is that Sorcerer will become for new SAs a plug 'n pray distro.
+For some SAs the advantages of plug 'n pray on unknown hardware
+may outweigh the cost of not using a precisely compiled and optimized
+linux kernel.
+A 5% to 10% efficiency loss is hardly noticeable on a modern box.
+If you have an itch to try it now you can try a cast of linux-modular.
+Be sure that the installed grimoire is 2007-347 or later so that you
+obtain all the require bug fixes necessary to be able to boot from
+an initramfs image.
+And also execute # augur newer; augur update to be certain that
+the required init scripts are compatibility with booting from initramfs.
+Installations with customized /etc/initscript /etc/init.d/mount
+and other customized files in /etc/init.d/ may not survive reboot
+with a modular linux kernel.
+Should a problem occur merely boot from an older,
+but precisely configured linux kernel.
+
+Many who have emailed me already know
+that I have no fondness for using an initramfs during the boot of a box.
+It introduces another level of complexity that SAs must master.
+However, with the Sorcerer implementation the boot from initramfs
+will be nearly identical to the boot from a native on disk root filesystem.
+The main differences is that when booting from initramfs
+the real root filesystem will be located and mounted
+during the execution of /etc/init.d/mount during the sysinit.
+Consequently, scripts that run in sysinit before /etc/init.d/mount can
+execute from the initramfs
+while scripts that run after will execute from the real root
+filesystem that resides on a fixed disk.
+This very simple design and integration with sysvinit
+grants SAs the full benefits of using an initramfs for boot
+without any additional learning required.
+
+Some SAs might yet wonder what benefits can come from booting from
+an initramfs as opposed to filesystem on the fixed disk.
+Primarily, the root filesystem can reside on something other than a partition.
+The root filesystem can be encrypted.
+Or it can reside on a logical device.
+It could be stripped across several disks.
+It could be on a RAID.
+Even if the root filesystem is something unusual
+the kernel image and initramfs must reside on
+/boot partition that is a real partition and preferably an ext2 partition.
+If /boot exists on / and is stripped across several disk in a RAID or
+logical device
+then forget about lilo being able to load it.
+Remember that if you try an exotic configuration.
+
+Basically, the evolution of the linux kernel over the past few years
+has increasingly favored the use of a modular kernel and the delegation
+of what aught to be purely kernel tasks to user space programs such as
+hotplug and udev.
+In order to use some of the more rare configurations that are possible
+an intiramfs image is required.
+Consequently, now you will have all those options while still maintaining
+the configure-ability that you have come to expect from Sorcerer.
+
+Those of you itching to get started with an initramfs image are
+probably wondering
+exactly what is the catch to ensuring that the initramfs image is current.
+Is there some sort of program that must be run to update it?
+Actually, there is.
+However, you never have to worry about it.
+During shutdown a check is made to see if the initramfs image is current.
+If it is not current a new initramfs image is generated and lilo is re-run
+in order to ensure that the next boot is able to use the update initramfs image.
+That implementation decision makes the boon of an initramfs image
+entirely effortless for SAs.
+However, keep in mind that on boxes with the initramfs spell installed
+shutdown may require a minute longer than expected
+in the event that the initramfs image requires updating.
+
+Lastly, there is a noteworthy change involving hotplug and udev.
+Basically all of the hotplug functionality is now delegated to udev.
+Therefore, udev is started twice.
+udev starts once during sysinit where it may be executing from an intiramfs.
+It executes a cold-plug.
+All disk and filesystem related devices have modules loaded as necessary
+to match hardware that is detected as installed.
+Then, during the execution of runlevels 1,2,3,4,5 udev is restarted.
+This time it does another cold-plug event where it loads additional modules
+for NICs and audio cards and other devices.
+udevd remains present in memory, as a daemon, to respond to hotplug events.
+
+This dual startup of udev allows for a more compact intiramfs image
+that does not
+contain modules for audio and networking that will probably not be
+required for booting.
+Since all modules for all available kernels are stored on a single
+initramfs image:
+/boot/initrf.gz
+The, more precise inclusion of modules allows for a more concise
+creation of an initramfs image.
+Keep in mind if you run an initramfs image on a box with a very
+limited amount of installed RAM
+that is may be possible that the initramfs image becomes to large to load.
+However, this problem should be extremely rare if it occurs at all
+since most Sorcerer box have plenty of installed RAM for optimal performance.
+
+In summary the transition to an installation using an entirely modular kernel
+enables SAs that possess all of the potential but not yet the required
+experience
+to wield Sorcerer power.
+If there was ever a test of SA skill required to deploy Sorcerer
+then that test must be the make menuconfig on the linux kernel source.
+Now we can welcome a new generation of Sorcerer SAs that will never have
+to makemenu config on a linux source nor know the difference between
+MTRR ACPID and framebuffers.
+
+In the past we almost never see truly noob questions on the Sorcerer
+email lists,
+because anyone who deploys a Sorcerer box fully deserves the honors of being
+a skilled POSIX system administrator.
+However, in 2008 we should expect some very amusing questions on our email list.
+As usual I expect our present community to be both kind and generous.
+
+Example: How can I know what parameters I can pass to the kernel during boot?
+Answer: Read /usr/src/linux/Documentation/kernel-parameters.txt
+or if it is missing untar a linux kernel and read it from there.
+
+Consequently, anything simple is about probably less than a one paragraph answer
+and anything more complex can probably be answered in a FAQ or HOWTO from
+the Linux Documentation Project at <A HREF="http://www.tldp.org">http://www.tldp.org</A>
+Sorcerer is very complaint with standards.
+Consequently, most generic documentation applies almost 100% to Sorcerer boxes.
+Therefore, I expect that you experienced Sorcerer SAs will readily
+assist the noobs
+with their installation, update, and configuration questions.
+If you deployed a Sorcerer box for a year or more
+then you most certainly have the experienced required
+to answer the next generation of noob questions.
+
+A change has been made to Sorcerer so that init scripts that should
+necessarily be run during boot and shutdown are now placed in
+$SCRIPT_DIR/init.d.on/ instead of $SCRIPT_DIR/init.d/ in the grimoire.
+Consequently, SAs will be less able to misconfigure their boxes.
+This very minor change should enable less experienced Sorcerer SAs
+to achieve successful deployment of Sorcerer with less potential for error.
+
+Regarding a similar concern does anyone mind if all the optional
+requirements in the grimoire
+upon alsa-lib are changed to mandatory requirements upon alsa-lib?
+Do we all use alsa by now?
+Speak up if you still use OSS drivers only.
+
+There are few problems if any with using the kernel's alsa OSS
+compatibility, yes?
+Although this is a very small issue t might make configuration of spells
+a bit faster to not have to answer questions about the inclusion of
+optional alsa.
+The only place it might be a concern is on embedded systems.
+However, such boxes probably do not have software installed
+that supports alsa to begin with?
+
+Lastly, I want to thank everyone who gave feedback, bug reports and
+suggestions in 2007.
+With as much as I do in order to maintain Sorcerer
+I can become rather complacent about conjecturing positive change.
+However, together we have forged a better, faster, more configurable
+Sorcerer distribution.
+Remember that discontentment is merely an impelling reason for positive change.
+Consequently, the benefit of all criticism is evaluated foremost
+rather than stereotyping feedback as either flame email or constructive.
+Please keep that in mind so that you can be most positive and convincing
+in the your recommendations so that the boons and banes of your
+suggested changes
+can be weighed accurately and a positive change can emerge
+from the time invested in the conversation.
+
+Sorcerer evolution over the last 5 years has been influenced greatly by
+the expressed wants and requirements of Sorcerer SAs.
+Although Sorcerer is well over half a decade old,
+nothing about how Sorcerer works is indelibly engraved in stone.
+The fact that Sorcerer design readily bends to the will of the senior level SA
+may be the the least advertised benefit of the distribution.
+
+Sorcerer's niche has been to scratch the itch that senior level SAs
+obtain from deploying binary based distros.
+Even as Sorcerer becomes more accessible to SAs with the potential,
+but not yet the experience to be rated senior level,
+Sorcerer will remain the in the niche of senior level SAs.
+Therefore, Sorcerer will retain an emphasis on strong forward progress while
+maintaining good backward compatibility so that Sorcerer boxes can
+be update on a regular basis continually from time of deployment until
+time of replacement.
+That way senior level SAs can enjoy a 100% rating for maintaining
+their deployed Sorcerer boxes while still gaining plenty of brownie points
+for helping fellow co-workers, wearing other hats, and performing
+the many other duties not generally expected of system administrators.
+More simply put, you need not discloses to your bosses
+how easy Sorcerer administration actually is.
+Use that free time to train up.
+The day that may be close at hand when companies like Cisco providing
+many special purpose devices ranging from web server, DB, router, firewall,
+and everything in between may make obsolete the entertaining tasks
+of network and system administrator.
+Even after our times has come to pass our abilities to learn and adapt will
+grant us a foothold during the technological transition.
+May we continue having fun until that change is upon us.
+
+Happy New Year.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000329.html">[Sorcerer-admins] named init script hangs forever
+</A></li>
+	<LI>Next message: <A HREF="000332.html">[Sorcerer-admins] What is cooking on the stove?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#331">[ date ]</a>
+              <a href="thread.html#331">[ thread ]</a>
+              <a href="subject.html#331">[ subject ]</a>
+              <a href="author.html#331">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

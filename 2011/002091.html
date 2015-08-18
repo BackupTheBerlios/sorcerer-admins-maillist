@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /usr/sbin/lilo round 1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTimiXopjqR9aZFJ%3DK9fK0b5oXsJY7A8o084jDzps%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002090.html">
+   <LINK REL="Next"  HREF="002092.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /usr/sbin/lilo round 1</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/usr/sbin/lilo%20round%201&In-Reply-To=%3CAANLkTimiXopjqR9aZFJ%3DK9fK0b5oXsJY7A8o084jDzps%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] /usr/sbin/lilo round 1">evorster at gmail.com
+       </A><BR>
+    <I>Fri Mar 11 05:23:22 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002090.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+        <LI>Next message: <A HREF="002092.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2091">[ date ]</a>
+              <a href="thread.html#2091">[ thread ]</a>
+              <a href="subject.html#2091">[ subject ]</a>
+              <a href="author.html#2091">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Generally, I assume that convenience and automation is best.
+</I>&gt;<i> However, if the conveniences or automatic execution seems
+</I>&gt;<i> to be more of a bane than a boon then please voice it as Evert did.
+</I>&gt;<i> Sometimes a small bit of adjustment can make the implementation better.
+</I>
+Let's just be clear here. I like the automation, and in my humble
+opinion there should be only one script that uses lilo to update the
+bootblock. This way troubleshooting is easy.
+
+I just don't want that that script to have exactly the same name as an
+already installed systems utility.
+
+
+&gt;<i> Also Evert discovered something that I had not anticipated.
+</I>&gt;<i> If during cast of sysinit the SA selects nodes for character devices
+</I>&gt;<i> where the device would be unavailable during boot
+</I>&gt;<i> then that could cause the execution of sysinit or runlevel
+</I>&gt;<i> to entirely abort due to a broke pipe.
+</I>&gt;<i> Unfortunately, I did not anticipate nor checked for this possibility.
+</I>&gt;<i> Yet, thanks to a report from Evert;
+</I>&gt;<i> /etc/init.d/{rcS,prc} now check that the character device is available.
+</I>&gt;<i> If it is not then it tees the output to console and the log file.
+</I>&gt;<i> Therefore, it should avoid a &quot;device not present&quot; and broken pipe situation.
+</I>Yeah, I break Sorcery often, and in interesting ways.
+
+:<i>)
+</I>
+
+&gt;<i> Might have been great to have an implementation as flexible as that
+</I>&gt;<i> from the start.
+</I>&gt;<i> But sorcery and the grimoire are still evolving to become a better
+</I>&gt;<i> tool for the task.
+</I>&gt;<i> And I probably have a bit more revision to go before
+</I>&gt;<i> I become satisfied with the way arbitrary version progress works.
+</I>I do believe that in the past some developers left Sorcerer because of
+the changing format of the grimoire. However, I can't imagine me using
+the old grimoire now. Hopefully one day we will hit the perfect
+grimoire format, but until that day we should not be scared to update
+stuff.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002090.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+	<LI>Next message: <A HREF="002092.html">[Sorcerer-admins] /usr/sbin/lilo round 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2091">[ date ]</a>
+              <a href="thread.html#2091">[ thread ]</a>
+              <a href="subject.html#2091">[ subject ]</a>
+              <a href="author.html#2091">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

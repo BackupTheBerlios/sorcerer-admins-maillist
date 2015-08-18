@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] sorcery's dispel menu becomes more dangerous.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%27s%20dispel%20menu%20becomes%20more%20dangerous.&In-Reply-To=%3C596b75860805060210y61305782he4b53a1cb87e9b5e%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000424.html">
+   <LINK REL="Next"  HREF="000416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] sorcery's dispel menu becomes more dangerous.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20sorcery%27s%20dispel%20menu%20becomes%20more%20dangerous.&In-Reply-To=%3C596b75860805060210y61305782he4b53a1cb87e9b5e%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] sorcery's dispel menu becomes more dangerous.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue May  6 11:10:43 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000424.html">[Sorcerer-admins] Security, encryption and the next I/R
+</A></li>
+        <LI>Next message: <A HREF="000416.html">[Sorcerer-admins] Booting linux-modular faster...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#415">[ date ]</a>
+              <a href="thread.html#415">[ thread ]</a>
+              <a href="subject.html#415">[ subject ]</a>
+              <a href="author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jean-Luc Malet suggested the usefulness of having sorcery's dispel menu
+also offer spells to be dispelled that are only optionally required by
+other installed spells.
+At first I gave the usual response, &quot;I can't do that, Dave.&quot;
+But after a some hacking here and there it works.
+
+Be careful when using the dispel menu in the next sorcery release.
+It will have an Opt column and spells that are optionally held down will
+be at the bottom of the list.
+However, it does present them as possibilities for removal.
+
+When the queue is executed from sorcery's queue menu
+it will now also forget spells that are queued for dispel.
+When sorcery forgets a spell it merely forgets where that spell was
+selected as optionally on or optionally off by other spells.
+Installed spells that once optionally required that spell
+may present another chance to select it as on during an update.
+
+Therefore, optionally required spells can be selected for dispel using
+the dispel menu
+and they will not automatically re-install later, unless you agree to
+it or a spell is installed
+that has a mandatory requirement on it.
+
+However, removing optionally required spells may create an ELF failure.
+An ELF Failure happens when an installed ELF ( executable or library )
+dynamically links with an ELF library that is no longer installed.
+Eventually, cast will detect this and cause the installed spells
+experiencing ELF failures to recompile and relink.
+That will fix the ELF failure.
+Therefore, removing spells that are still optionally required will
+not usually cause a serious problem on a box,
+but it may cause recompilation of other installed spells.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000424.html">[Sorcerer-admins] Security, encryption and the next I/R
+</A></li>
+	<LI>Next message: <A HREF="000416.html">[Sorcerer-admins] Booting linux-modular faster...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#415">[ date ]</a>
+              <a href="thread.html#415">[ thread ]</a>
+              <a href="subject.html#415">[ subject ]</a>
+              <a href="author.html#415">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

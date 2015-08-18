@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] linux is it more stable or less stable?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Ct2g596b75861004181624i4e2a3140l645e785cced92a5d%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001573.html">
+   <LINK REL="Next"  HREF="001574.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] linux is it more stable or less stable?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20linux%20is%20it%20more%20stable%20or%20less%20stable%3F&In-Reply-To=%3Ct2g596b75861004181624i4e2a3140l645e785cced92a5d%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] linux is it more stable or less stable?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Apr 19 01:24:56 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001573.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+        <LI>Next message: <A HREF="001574.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1575">[ date ]</a>
+              <a href="thread.html#1575">[ thread ]</a>
+              <a href="subject.html#1575">[ subject ]</a>
+              <a href="author.html#1575">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Apr 18, 2010 at 1:02 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;&gt;<i> I guess I am the only one that runs linux-custom, then, huh?
+</I>&gt;<i>
+</I>&gt;<i> Nope, almost all my production servers do run old linux spell, not that
+</I>&gt;<i> current default linux-modular.
+</I>
+That is because most Sorcerer boxes have been
+deployed longer than 3 years.
+Still a SA can update the boxes.
+I have Sorcerer boxes going on 10 years old,
+but they still use the modular linux kernels.
+
+
+&gt;<i> Well, newest ones that are serving Sorcerer project are running modular
+</I>&gt;<i> spell because its a default choice.
+</I>
+:<i>)  Even better than that it works out of box.
+</I>Talk about an easy install, right?
+
+
+&gt;<i> Not sure if you can install anymore old linux spell when installing.
+</I>
+A senior level SA has a 50/50 chance of being able to
+create a custom .config that works
+maybe even better if they use that linux make target
+that generates a config based upon loaded modules.
+
+
+&gt;<i> I like old spell much more than modular version because there is absolutely
+</I>&gt;<i> no need to make monster sized
+</I>&gt;<i> ramdisk to /boot which only purpose is to make linux bootable, because i am
+</I>&gt;<i> already compiled linux kernel with correct
+</I>&gt;<i> drivers to make it bootable. Its just plain wrong to have secondary system
+</I>&gt;<i> that only purpose is to find
+</I>&gt;<i> where your installation resided. Also, its slower.... to boot and to run
+</I>&gt;<i> also your /boot partition size
+</I>&gt;<i> needs to be ten folded if you use it...
+</I>
+The increase in /boot size also was a concern for me.
+And we have discussed several compromises such as
+omitting certain categories of drivers from the initramfs
+such as networking modules if networking does not have
+to start during sysinit.  And also audio modules.
+
+For most boxes the cost of using modular kernels is
+a 1G /boot and 2-10 seconds larger boot time.
+60 seconds after the runlevel begins the initramfs
+is discarded from memory.
+Therefore, no additional persistent memory consumption
+exists for booting from initramfs.
+
+&gt;<i> I can understand why its (modular) been done but its not only way to boot
+</I>&gt;<i> Linux.
+</I>
+True.
+I tried creating a bloated kernel that
+contained all filesystem drivers and
+all disk device drivers, IDE, SCSI, SATA, PATA, etc...
+It was too big to boot.
+And it would have wasted RAM for all those drivers if it did work.
+
+Another option is to create custom configs for boxes
+based upon the output:
+# make localmodconfig
+But will SAs flame me when the .config automatically
+generated from that stops working after updates?
+The probability of that .config becoming useless is too high.
+Boxes must be able to boot.
+And SAs do not always reboot after a kernel update
+to see if the box is still able to boot with installed kernels.
+So going this road could lead to a box that must be booted
+with an Install/Rescue disk and then manually rescued.
+Not to mention if the SA plugs in a removable device
+the plug 'n pray will be plug and NOTHING happens,
+because there is no compiled kernel module to load for the device.
+Oh, boy, boxes boot fast, but sure are useless.
+
+Another option is to have the initramfs split into two initramfs.
+One initramfs can contain the version specific kernel modules.
+Yet a separate initramfs that contains /bin /lib /lib64 /sbin
+can exist and be used in common when booting all kernels.
+Unfortunately, that requires a loader such as grub
+which supports the use of multiple initramfs images.
+lilo is an awesome loader, but only loads one initramfs.
+And I did not want to make time to hack lilo improvements,
+although I did look at the relevant code in lilo.
+And of course we have a nearly yearly discussion about
+why or why not to use grub.
+
+So the compromise I selected which still requires a 1G /boot
+is to provide the fast initramfs image that is created
+automatically while booting.
+If initramfs images do not require regeneration
+then booting can happen using the image in /boot/fast/
+The initramfs in /boot/fast/ has only the files required
+in order to move the box smoothly and quickly through sysinit.
+It boots at nearly the same speed as would
+a box that has a monolithic kernel.
+
+
+Now here is a new compromise I can suggest
+that I only half expect might work.
+I can create a linux-monolthic spell.
+And I can have it craft a .config using that:
+# make localmodconfig
+and attempt to change the modules into compiled in drivers.
+But it probably will not work
+and it will eventually lead down a dead end street.
+But before putting forth the effort to create that spell
+and make it work
+I would like someone to test and show that
+there is a significant gain for using a monolithic kernel.
+Otherwise, I am merely creating a noose for Sorcerer SAs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001573.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+	<LI>Next message: <A HREF="001574.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1575">[ date ]</a>
+              <a href="thread.html#1575">[ thread ]</a>
+              <a href="subject.html#1575">[ subject ]</a>
+              <a href="author.html#1575">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

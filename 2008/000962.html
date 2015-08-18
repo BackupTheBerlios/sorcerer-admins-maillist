@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Fwd%3A%20%5BfmII%5D%20Parallel%20BZIP2%201.0.4%0A%09released%28Default%20branch%29&In-Reply-To=%3C596b75860812231429u8b4a719y523548723337074f%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000960.html">
+   <LINK REL="Next"  HREF="000971.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Fwd%3A%20%5BfmII%5D%20Parallel%20BZIP2%201.0.4%0A%09released%28Default%20branch%29&In-Reply-To=%3C596b75860812231429u8b4a719y523548723337074f%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Dec 23 23:29:00 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000960.html">[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+</A></li>
+        <LI>Next message: <A HREF="000971.html">[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#962">[ date ]</a>
+              <a href="thread.html#962">[ thread ]</a>
+              <a href="subject.html#962">[ subject ]</a>
+              <a href="author.html#962">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Dec 23, 2008 at 7:43 AM, Vincent Penquerc'h
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">vincent.penquerch at cohortstudios.com</A>&gt; wrote:
+&gt;&gt;<i> Second question is &quot;Should pbzip2 be remade as an exclusive
+</I>&gt;&gt;<i> provider for bzip2?&quot;
+</I>&gt;<i> [...]
+</I>&gt;&gt;<i> PBZIP2 is a parallel implementation of the bzip2 block-sorting file
+</I>&gt;<i>
+</I>&gt;<i> I suppose a large part of the decision would depend on whether this
+</I>&gt;<i> is a full reimplementation of the algorithm, or if uses libbz2 as a
+</I>&gt;<i> workhorse. I'd be much more comfortable with the latter.
+</I>
+Wow!
+That was incredibly good thinking.
+Thanks for suggesting it.
+But even if it does use bzip2's library
+pbzip2 itself could contain bugs.
+
+# ldd /usr/bin/pbzip2
+        linux-gate.so.1 =&gt;  (0xb8082000)
+        libpthread.so.0 =&gt; /lib/libpthread.so.0 (0xb8048000)
+        libbz2.so.1.0 =&gt; /lib/libbz2.so.1.0 (0xb8036000)
+        libstdc++.so.6 =&gt; /usr/lib/libstdc++.so.6 (0xb7f53000)
+        libm.so.6 =&gt; /lib/libm.so.6 (0xb7f2d000)
+        libgcc_s.so.1 =&gt; /usr/lib/libgcc_s.so.1 (0xb7f22000)
+        libc.so.6 =&gt; /lib/libc.so.6 (0xb7de6000)
+        /lib/ld-linux.so.2 (0xb8083000)
+
+According to ldd pbzip2 does appear to use bzip2's library.
+
+# cat /etc/sorcery/log/elf/pbzip2
+/usr/bin/pbzip2 /lib/libbz2.so.1.0      bzip2
+/usr/bin/pbzip2 /lib/libc.so.6  glibc
+/usr/bin/pbzip2 /usr/lib/libgcc_s.so.1  gcc
+/usr/bin/pbzip2 /lib/libm.so.6  glibc
+/usr/bin/pbzip2 /lib/libpthread.so.0    glibc
+/usr/bin/pbzip2 /usr/lib/libstdc++.so.6 gcc
+
+The ELF log agrees.
+
+# augur elfof pbzip2
+bzip2
+glibc
+gcc
+
+And augur elfof pbzip2 also agrees.
+
+# augur lclof pbzip2
+bzip2
+glibc
+
+And so does lclof analysis of the compile log.
+
+*chuckles*
+
+I listed all that to show the nifty ways that information
+can be acquired about installed files, especially ELFs
+by both system tools such as ldd, objdump, and
+also the sorcery tools.
+
+Since bzip2 is a compression method with specific sized blocks
+doing concurrent compression of different blocks and then
+merging them together into a single archive is not difficult.
+pbzip2 could be implemented using a bash script and dd.
+However, that would not be eloquent.
+
+The question that comes to mind for me is
+does pbzip2 achieve better decompression speed?
+Afterall most Sorcerer boxes will not roll bzip2 archives,
+but instead will decompress them.
+
+If anyone wants to do testing of compression and decompression
+speeds using pbzip2 vs bzip2 on a dual core box and report results please
+that would give greater support for allowing pbzip2 to replace bzip2.
+Also the transition would not be as easy as expected.
+For the sake of the libraries which are required by several
+other software projects, bzip2 would still have to be installed.
+
+If decompression speed is nearly the same for pbzip2 for average
+sized source tarballs then the complexity of making pbzip2
+a replacement for bzip2 may be unwarranted.
+Keep in mind that a file being compressed with block size of 900K
+would have to be at least larger than 900K to begin to gain any
+speed improvement from pbzip2.
+Likewise for decompression a file must contain multiple compressed
+blocks of data in order for different processors to concurrently
+decompress them.
+However, there are many sources which are large enough.
+However, with larger sources pbzip2 often achieves better compression
+ratio at a speed comparable to bzip2.
+Too bad almost no source tarballs are distributed as .tar.7z
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000960.html">[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+</A></li>
+	<LI>Next message: <A HREF="000971.html">[Sorcerer-admins] Fwd: [fmII] Parallel BZIP2 1.0.4	released(Default branch)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#962">[ date ]</a>
+              <a href="thread.html#962">[ thread ]</a>
+              <a href="subject.html#962">[ subject ]</a>
+              <a href="author.html#962">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

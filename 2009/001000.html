@@ -1,0 +1,323 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] ext4?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ext4%3F&In-Reply-To=%3C596b75860902141050h7ded2055i45cfb4a4e6514b19%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000999.html">
+   <LINK REL="Next"  HREF="000996.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] ext4?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20ext4%3F&In-Reply-To=%3C596b75860902141050h7ded2055i45cfb4a4e6514b19%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] ext4?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb 14 19:50:08 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000999.html">[Sorcerer-admins] ext4?
+</A></li>
+        <LI>Next message: <A HREF="000996.html">[Sorcerer-admins] mysql
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1000">[ date ]</a>
+              <a href="thread.html#1000">[ thread ]</a>
+              <a href="subject.html#1000">[ subject ]</a>
+              <a href="author.html#1000">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the fix.
+However, it previously selected both
+the current name and old name for backward compatibility.
+
+# grep -i ext4 i586.config
+CONFIG_EXT4_FS=m
+CONFIG_EXT4DEV_COMPAT=y
+CONFIG_EXT4_FS_XATTR=y
+CONFIG_EXT4_FS_POSIX_ACL=y
+CONFIG_EXT4_FS_SECURITY=y
+
+# grep -i ext4 x86_64.config
+CONFIG_EXT4DEV_FS=m
+CONFIG_EXT4DEV_FS_XATTR=y
+CONFIG_EXT4DEV_FS_POSIX_ACL=y
+CONFIG_EXT4DEV_FS_SECURITY=y
+
+However, I forgot to make it the same in x86_64.config
+
+In the older kernel versions
+the module is called ext4dev.ko
+while in the newer kernel version the module is called ext4.ko
+What the module is called depends upon the kernel version.
+
+However, for 2.6.28.3 and later kernels
+# find /lib/modules/2.6.28.3 -type f | grep ext4
+/lib/modules/2.6.28.3/kernel/fs/ext4/ext4.ko
+
+The new module name is already in effect.
+And I created it using the exact same .config as was in svn before.
+
+Today I am testing a config for
+linux-modular version 2.6.28.5
+I am just doing the i586 test/compile today.
+The qemu x86_64 is still busy compiling gcc.
+Can take a week to finish something like that.
+But it is already in the second to last stage in the final stage.
+Aught to complete any day now.
+
+Since I did not complete full support for selinux
+I will be excluding it from linux-modular configs.
+I can always add it back in later if a group wants to make progress on it.
+
+Also I am experimenting with the possibility for providing separate
+SMP and nonSMP kernel configurations.
+That way legacy non SMP boxes will benefit from the lower latency
+of having 300 hertz task swapping.
+While, SMP boxes will benefit for more raw CPU power for
+having a tickless configuration.
+
+The tickless configuration on non SMP boxes tends to create
+a performance hit when compiling and running several CPU
+intensive processes.
+Without making a long explanation of it
+I hope this compromise may restore the level of responsiveness
+and performance we previously came to expect from using
+custom kernel configurations,
+while at the same time maintaining the convenience of having
+an entirely no configuration plug and pray modular kernel.
+
+The kernel configs in the grimoire will be obsolete in a few days
+after I have completed creating and checking new kernel configs
+for the newer kernel.
+
+The benefit of a better file system
+seems less important than the benefit more RAM.
+Therefore, in the interest that all latent bugs are discovered
+I am willing to wait until 2010 before deploying production boxes with ext4.
+
+grep -i defrag /usr/src/linux/Documentation/filesystems/ext4.txt
+* Online defrag (patches available but not well tested)
+
+That is listed under &quot;2.2 Candidate features for future inclusion&quot;
+Therefore, I would not expect it in the vanilla kernel.
+When it does become available it might
+not be as beneficial as it might first seem.
+
+Oddly enough defragmenting files does not always lead
+to performance increase and reduced wear and tear.
+Take firefox for example.
+When firefox loads many files are opened and read.
+If those files are defragmented
+then they may become more distantly to each other.
+Consequently, firefox could load slower.
+It is is not merely a theoretical possibility.
+I have seen it happen after a defrag.
+But the best way to test it, of course,
+is to drop all blocks from the cache to ensure
+that all required files are read from disk.
+That is easy enough to accomplish.
+
+# echo 3 &gt; /proc/sys/vm/drop_caches
+
+Apparently, BSDers attempted to tackle this problem
+with UDF filesystem by trying to place files that are
+in a directory closer to each other on the disk.
+I have no idea if that aspect of the implementation
+is true on also for UDF on linux.
+Also it probably does not help that on linux boxes
+tons of files are thrown into directories such as
+bin sbin lib lib64
+
+A BSD user once made some time to explain in email
+why UDF is far superior to ext2 and ext3.
+Unfortunately, I already forgot most of the salient points.
+Yet it made UDF look like a properly ordered book shelf,
+and EXT3 look like a pile of stinking laundry.
+*laughs*
+
+Anyway, no operating system is best at everything.
+Linux's VM at that time was way better than BSD's.
+Maybe it still is?
+
+Does anyone use BSD, NetBSD, or Hurd kernels?
+Please feel free to comment and contrast.
+
+
+On Sat, Feb 14, 2009 at 6:21 AM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> # find /lib/modules | grep ext4
+</I>&gt;<i> /lib/modules/2.6.27.9/kernel/fs/ext4
+</I>&gt;<i> /lib/modules/2.6.27.9/kernel/fs/ext4/ext4dev.ko
+</I>&gt;<i> /lib/modules/2.6.27.4/kernel/fs/ext4
+</I>&gt;<i> /lib/modules/2.6.27.4/kernel/fs/ext4/ext4dev.ko
+</I>&gt;<i>
+</I>&gt;<i> # augur version linux-modular
+</I>&gt;<i> 2.6.28.3
+</I>&gt;<i>
+</I>&gt;<i> I fixed the config file on svn, was selecting ext4dev (deprecated) and not
+</I>&gt;<i> ext4
+</I>&gt;<i>
+</I>&gt;<i> best regards
+</I>&gt;<i> jlm
+</I>&gt;<i>
+</I>&gt;<i> Kyle Sallee wrote:
+</I>&gt;<i>
+</I>&gt;<i> If they are already loaded
+</I>&gt;<i> then they will show in
+</I>&gt;<i>
+</I>&gt;<i> # cat /proc/filesystems | grep ext4
+</I>&gt;<i>         ext4
+</I>&gt;<i>         ext4dev
+</I>&gt;<i>
+</I>&gt;<i> # find /lib/modules | grep ext4
+</I>&gt;<i> /lib/modules/2.6.27.8/kernel/fs/ext4
+</I>&gt;<i> /lib/modules/2.6.27.8/kernel/fs/ext4/ext4dev.ko
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext4
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext4/ext4.ko
+</I>&gt;<i> /lib/modules/2.6.27.9/kernel/fs/ext4
+</I>&gt;<i> /lib/modules/2.6.27.9/kernel/fs/ext4/ext4dev.ko
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Feb 13, 2009 at 1:43 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> does online defragmentation feature has been implemented on ext4, I know
+</I>&gt;<i> that with those new flash drive soon this will be simply a nonsens... but
+</I>&gt;<i> well I still have a regular drive :)
+</I>&gt;<i> anyway I'll check it
+</I>&gt;<i> humm I have some issue
+</I>&gt;<i> CONFIG_EXT4DEV_FS=m
+</I>&gt;<i> CONFIG_EXT4DEV_FS_XATTR=y
+</I>&gt;<i> CONFIG_EXT4DEV_FS_POSIX_ACL=y
+</I>&gt;<i> CONFIG_EXT4DEV_FS_SECURITY=y
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> find /lib/modules/2.6.28.3/ -name &quot;*ext*&quot;
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext2
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext2/ext2.ko
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext3
+</I>&gt;<i> /lib/modules/2.6.28.3/kernel/fs/ext3/ext3.ko
+</I>&gt;<i>
+</I>&gt;<i> so don't know why but on the config file provided with linux-modular (on
+</I>&gt;<i> x86_64) has support for ext4 but no modules are installed
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>&gt;<i> Scruffy Poo wrote:
+</I>&gt;<i>
+</I>&gt;<i> Been playing with ext4 in general on my laptop for the past few weeks.
+</I>&gt;<i>  Thus far, no complaints.  Speed is comparable to JFS, at the least.
+</I>&gt;<i>
+</I>&gt;<i> On Fri, Feb 13, 2009 at 3:47 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Yes, I already included support for EXT4 in the sorcerer menu driven
+</I>&gt;<i> installer.
+</I>&gt;<i> The changes were committed to svn recently.
+</I>&gt;<i>
+</I>&gt;<i> # grep EXT4 /root/.sorcery/grimoire/linux-modular.d/*
+</I>&gt;<i>
+</I>&gt;<i> And it will show that modular EXT4 support is enabled.
+</I>&gt;<i>
+</I>&gt;<i> I will soon be making some changes to the way linux config
+</I>&gt;<i> files are kept in linux-modular.d/ so that SA can more easily
+</I>&gt;<i> select an older version for linux-modular if they want and still
+</I>&gt;<i> have a proper config file for it.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The next release of the Sorcerer I/R will have full EXT4 support.
+</I>&gt;<i>
+</I>&gt;<i> Assuming that an installed kernel is new enough
+</I>&gt;<i> ext4 support should be available already on boxes.
+</I>&gt;<i> ext3 filesystems can be migrated or converted to EXT4
+</I>&gt;<i> which might have disadvantages.
+</I>&gt;<i> The one disadvantage that I already know of is
+</I>&gt;<i> being unable to revert to EXT3 again.
+</I>&gt;<i>
+</I>&gt;<i> I have not tested EXT4 yet.
+</I>&gt;<i> I have merely read a little about it.
+</I>&gt;<i> However, Evert probably has a head start using EXT4.
+</I>&gt;<i> I hope the final implementation of EXT4 was compatible
+</I>&gt;<i> with the development versions otherwise some boxes
+</I>&gt;<i> may require new filesystems to upgrade to the newer kernel.
+</I>&gt;<i>
+</I>&gt;<i> The reason I did not include EXT4 support in the installer
+</I>&gt;<i> was to avoid SAs the inconvenience of the possibility of
+</I>&gt;<i> it breaking when the implementation was finalized.
+</I>&gt;<i> Doing a backup and restore of filesystems
+</I>&gt;<i> is not a fun day Sunday.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Feb 12, 2009 at 2:55 PM, MALET Jean-Luc &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> is there any support for ext4 on sorcerer?
+</I>&gt;<i> even modular kernel seems to not build it
+</I>&gt;<i> best regards
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000999.html">[Sorcerer-admins] ext4?
+</A></li>
+	<LI>Next message: <A HREF="000996.html">[Sorcerer-admins] mysql
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1000">[ date ]</a>
+              <a href="thread.html#1000">[ thread ]</a>
+              <a href="subject.html#1000">[ subject ]</a>
+              <a href="author.html#1000">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

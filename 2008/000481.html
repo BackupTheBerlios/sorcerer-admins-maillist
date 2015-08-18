@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Image Building success!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Image%20Building%20success%21&In-Reply-To=%3C8596d02a0805291908j467c8f6br41e7f2a74744c9f6%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000480.html">
+   <LINK REL="Next"  HREF="000482.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Image Building success!</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Image%20Building%20success%21&In-Reply-To=%3C8596d02a0805291908j467c8f6br41e7f2a74744c9f6%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Image Building success!">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri May 30 04:08:03 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000480.html">[Sorcerer-admins] Missing Files....
+</A></li>
+        <LI>Next message: <A HREF="000482.html">[Sorcerer-admins] openssh changes that can effect /etc/ssh/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#481">[ date ]</a>
+              <a href="thread.html#481">[ thread ]</a>
+              <a href="subject.html#481">[ subject ]</a>
+              <a href="author.html#481">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>(head note): is there a way of shadowing a readd only file system with
+a writable one?
+why isn't [somescrfipt] &quot;#!/bin/bash ...&quot; the same as /bin/bash somescript?
+
+
+I've had some success building these bootable CD images.  Last night I
+had a basic kernel booting with a initfs (which really just had the
+kernel drivers).  It also had busybox so I stubbed /init to run a
+/bin/sh in the middle while I had built some stuff.
+
+Encountered a minor thing...
+  busybox modprobe wouldn't work to load kernel drivers.  Eventually
+installed module-init-tools(?) which required zlib (and which I didn't
+previously have).. then udevd and the kernel began loadding modules.
+The first module i loaded by hand, but after replacing and rebooting,
+modules came in automatically (BusLogic for instance as a vmware scsi
+driver was the first I tried by hand, and busybox's modprobe did not
+load.  It found it, just failed to load it.)
+
+I have a minor issue... and maybe it'll end resolved in other ways...
+
+to get /etc/init.d/udevd et al. to run, I had to prefix it with a
+/bin/bash (yes a full bash, because I expect init scripts are going to
+be smarter than busybox's sh will let them from sorcerer as a trunk).
+
+Why?
+
+I modified /init to be  &quot;#!/bin/bash &quot; instead of &quot;#!/bin/sh&quot;; and
+nothing better happened... this is the /init script which is used on
+sorcerer I/R CDs.  (minus the tail, and only having a /bin/sh in it to
+provide access... ( this script does do /etc/init./udevd start,
+trigger start, settle start   before running /bin/sh ) but I guess
+bash still gets invoked differently from that standpoint than being
+lauched as /bin/bash &lt;some script&gt;?
+
+
+Other question, is there a file system like ISO which can be mounted
+with write access, but really be the read only file system.... (as
+opposed to like mount -t tmpfs; cp; use tmps instead of iso )
+
+regarding concatenating CPIO archives... I started building smaller
+blocks and just leaving them on the ISO image... taking them out of
+the initfs which became 88M (.cpio.gz) and 120M or so as a .cpio.  (a
+lot of it, like the first 27M are gzip compressed kernel modules, so
+there's not much in compression that can happen, or X fonts).
+
+
+so I have like a ...
+
+
+37M initf (busybox, kernel modules, init-functions, udev,
+linux-modular, libselinux, libsepol, zlib, module-init-tools, glibc,
+readdline, ncurses, bash, e2fsprogs (I think this showed up as missing
+when I got modules to start loading, and it recognized partitions),
+util-linux ) (Do I need util-linux? I forget what it had I was
+missing) (13M just for glibc, readline, ncurses, bash!, which the
+remaining 24K is linux itself... )
+
+(so at that point, everything to get /dev, /proc, /sys /, networking,
+low level stuff, running and configured (by hand) should be present)
+
+18M X.gz which is everything required to have X even attempt to run.
+It takes very little time to decompress this...
+
+another 1.9M of intermediate libraries like openssh, libjpeg, png,
+mng, SDL, (ggi? no.), unixobc which application layer requires...
+
+(openssh was added here, because, it had to be somewhere, getting
+updates to and from the box should come from somewhere)
+
+an a 43M user layer which I sorta wanted to build as a ISO - but the
+issue of shadowing it with a hard drive or something... maybe just
+cpio that too...
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000480.html">[Sorcerer-admins] Missing Files....
+</A></li>
+	<LI>Next message: <A HREF="000482.html">[Sorcerer-admins] openssh changes that can effect /etc/ssh/
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#481">[ date ]</a>
+              <a href="thread.html#481">[ thread ]</a>
+              <a href="subject.html#481">[ subject ]</a>
+              <a href="author.html#481">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

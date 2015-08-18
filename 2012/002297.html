@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] updates and kde is no longer installed	to	/opt/kde4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20updates%20and%20kde%20is%20no%20longer%20installed%0A%09to%09/opt/kde4&In-Reply-To=%3C4F2F4A1B.7070809%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002296.html">
+   <LINK REL="Next"  HREF="002298.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] updates and kde is no longer installed	to	/opt/kde4</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20updates%20and%20kde%20is%20no%20longer%20installed%0A%09to%09/opt/kde4&In-Reply-To=%3C4F2F4A1B.7070809%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] updates and kde is no longer installed	to	/opt/kde4">Bradley at NorthTech.US
+       </A><BR>
+    <I>Mon Feb  6 04:33:47 CET 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002296.html">[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+</A></li>
+        <LI>Next message: <A HREF="002298.html">[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2297">[ date ]</a>
+              <a href="thread.html#2297">[ thread ]</a>
+              <a href="subject.html#2297">[ subject ]</a>
+              <a href="author.html#2297">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+Good to hear from you Kyle. I was becoming a bit concerned when there
+was no activity on the list for a month ;)
+
+But then again, no news is often good news :)
+
+On 02/04/2012 05:35 PM, Kyle Sallee wrote:
+&gt;<i> Since kde4 is the only supported version of KDE at the moment
+</I>&gt;<i> kde4 is no longer installed in /opt/kde4 but rather in /usr
+</I>&gt;<i> Therefore, following updates kde might not respond properly
+</I>&gt;<i> and could require that running
+</I>&gt;<i> # /etc/init.d/kdm stop; sleep 10; /etc/init.d/kdm start
+</I>&gt;<i> 
+</I>&gt;<i> The change in location should help allow for some python related modules
+</I>&gt;<i> to be properly detected and used.
+</I>&gt;<i> However, the relocation of KDE will probably become problematic when
+</I>&gt;<i> KDE5 is released.
+</I>&gt;<i> But since that might not even happen in 2012
+</I>&gt;<i> we should probably try to enjoy KDE with as much functionality as possible
+</I>&gt;<i> before the next great upheaval.
+</I>&gt;<i> 
+</I>&gt;<i> The 32bit version of KDE on a multilib system is installed in /opt/32bit/usr
+</I>&gt;<i> The way KDE stores it's compile information requires the use of different
+</I>&gt;<i> prefix for the installation of a 64-bit and 32-bit KDE.
+</I>&gt;<i> I am partially tempted to have /opt/32bit become the new root for all 32-bit
+</I>&gt;<i> software installed an a multilib system.
+</I>&gt;<i> Unfortunately, the segregation requires rewrite of too many spells.
+</I>&gt;<i> I modified only about 150 spells to adjust KDE software installation
+</I>&gt;<i> from /opt/kde4 to /usr
+</I>&gt;<i> 
+</I>&gt;<i> Also included are some updates for gnome software.
+</I>&gt;<i> Also included is a udev update.
+</I>&gt;<i> 
+</I>&gt;<i> Those who do not test udev for distro consumption
+</I>&gt;<i> might be unaware of the prankster nature of udev authors.
+</I>&gt;<i> These are  funny guys.
+</I>&gt;<i> About 1/10th of the time a box will fail to reboot after updating udev.
+</I>&gt;<i> Har har har.
+</I>&gt;<i> 
+</I>&gt;<i> Consequently, I recommend that all boxes have some immediate method for rescue
+</I>&gt;<i> for when a software update renders a box unbootable.
+</I>&gt;<i> The immune-boot-resuce spell provides decent coverage.
+</I>&gt;<i> Having an Install/Rescue CD is also potentially useful.
+</I>&gt;<i> 
+</I>&gt;<i> For those that are wondering why,
+</I>&gt;<i> I am again disallowing the update of zlib.
+</I>&gt;<i> The newer version of zlib breaks compilation of vlc.
+</I>&gt;<i> Not certain what else might break.
+</I>&gt;<i> vlc was certainly sufficient cause.
+</I>&gt;<i> 
+</I>&gt;<i> Also because the KDE update changes the install location from /opt/kde to /usr
+</I>&gt;<i> that change necessitates the re-casting of all software that installed
+</I>&gt;<i> in /opt/kde
+</I>&gt;<i> Consequently, the update will be sort of like a mini-rebuild for that software.
+</I>&gt;<i> The update will require a bit longer than usual.
+</I>&gt;<i> And any SA's clever deviation to omit from recompilation
+</I>&gt;<i> any of the software installed to /opt/kde4
+</I>&gt;<i> because neither the spell nor the source tarball differs
+</I>&gt;<i> will wreck the installation of KDE and make it unusable.
+</I>&gt;<i> So no questions about why spells must re-cast at the same installed
+</I>&gt;<i> version, please.
+</I>&gt;<i> 19/20 times when that happens it happens for a good reason rather than a bug.
+</I>&gt;<i> I did not want to add anything odd to the event logs
+</I>&gt;<i> so here is the reason.
+</I>&gt;<i> The install location of KDE is no longer /opt/kde4, but is /usr.
+</I>&gt;<i> Be aware that customized and locally hosted spells might also require adjustment
+</I>&gt;<i> if previously expecting a KDE or QT installed in /opt/kde4.
+</I>&gt;<i> 
+</I>&gt;<i> The code to force the re-compilation of all software installed to /opt/kde4
+</I>&gt;<i> is a temporary function in the sorcery spell.
+</I>&gt;<i> Like all temporary functions it has a life expectancy of 6 months.
+</I>&gt;<i> Boxes not updated at least once within every 6 months are
+</I>&gt;<i> expected to encounter problems with the transition.
+</I>&gt;<i> So rather than allow a good box succumb to security vulnerabilities
+</I>&gt;<i> and dig itself into a hole
+</I>&gt;<i> I recommend installing the immune-sentinel-sync spell.
+</I>&gt;<i> Contrary to previous implementations the init-script is now configurable
+</I>&gt;<i> and allows for the SA to specify the amount of days between automatic
+</I>&gt;<i> synchronization of installed software with the distribution's current norm.
+</I>&gt;<i> 
+</I>&gt;<i> Not everyone is excited about tomoyo on Sorcerer.
+</I>&gt;<i> Yet I wonder why.
+</I>&gt;<i> The good news is that I have not changed anything about the
+</I>&gt;<i> implementation for over a month.
+</I>&gt;<i> The bad news is /domain/freedom is still a bit long to type.
+</I>&gt;<i> 
+</I>&gt;<i> For the most part all it does is require that the root password
+</I>&gt;<i> or a password provided to a user
+</I>&gt;<i> must be typed before granting write access to /bin /sbin /lib /lib64 /etc /usr
+</I>&gt;<i> That way if EUID 0 is acquired by nefarious methods
+</I>&gt;<i> /domain/freedom must still be executed and provided with an appropriate password
+</I>&gt;<i> before significant file system changes are allowed.
+</I>&gt;<i> By this fashion intruders will encounter a glass wall that no only
+</I>&gt;<i> impedes progress,
+</I>&gt;<i> but also eliminates the possibility erasing their presence from log
+</I>&gt;<i> files on the way out.
+</I>&gt;<i> Obviously, this implementation of tomoyo is not the best method of
+</I>&gt;<i> protection because
+</I>&gt;<i> it does not prevent outright theft of non encrypted data.
+</I>&gt;<i> However, this method of implementation was selected as a compromise,
+</I>&gt;<i> because it enforces the traditional linux/POSIX security model rather
+</I>&gt;<i> than replacing it with a more complicated implementation.
+</I>&gt;<i> Activating the implementation requires
+</I>&gt;<i> # cast immune-security-tomoyo
+</I>&gt;<i> If all the required spells install
+</I>&gt;<i> then tomoyo with the Sorcerer's implementation for enhanced security
+</I>&gt;<i> becomes activate on the next boot.
+</I>&gt;<i> 
+</I>&gt;<i> The tomoyo documentation is sweet,
+</I>&gt;<i> but overall the complexity and preciseness required
+</I>&gt;<i> is about a magnitude greater than configuration for bind and httpd.
+</I>&gt;<i> By accepting and accomplishing that task at the distribution level
+</I>&gt;<i> I am able to provide some tomoyo benefits for SAs
+</I>&gt;<i> while sparing the SA the days worth of study and trial implementations.
+</I>&gt;<i> I suppose someone might be able to easily configure tomoyo
+</I>&gt;<i> for use with a few servers for only 8 hours of study and effort.
+</I>&gt;<i> I required closer to 80 hours study, effort, debugging, testing, and revision.
+</I>&gt;<i> 
+</I>&gt;<i> I have not yet created new Install/Rescue CDs for 2012.
+</I>&gt;<i> Maybe that will happen in Feb?
+</I>&gt;<i> We shall see.
+</I>&gt;<i> Hope everyone's new year started awesomely.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.760.666.2703  (US)
+TEL: +44.203.318.2755 (UK)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Find this cert at x-<A HREF="hkp://pool.sks-keyservers.net">hkp://pool.sks-keyservers.net</A>
+
+iQEcBAEBAwAGBQJPL0oaAAoJEE1wgkIhr9j3+L0IAKV64fCX5/JHj65h4Dl96l6A
+xWg7L0RjzfH0AcxdbSy955ZqyOqDYASJvikC1KaAxpmlPriHoXzVxEl70yDyAg6M
+25nvcRxX9RVlQXngS6Zqb2tH22nYnDcrTUdHF+5UDEsyn1PdVx7wqFWhrVbnVLh+
+EoG1RPEifYfCaKUtyvFLifsfftmBDQhcaf7ij7B8PBuePfnAVxUd4rYCP3ALCAdp
+BOh3srKkN+k3m/OM+sCJ4+hSrWcz+Bz1e5jImqPbNjR9d1PJbMO/359h88z2srCo
+Ndgu+ElZ2U9QGTepeICUDqU3dSAT5ejI+klIUTjQznU+fjl+1i+ucx+v51IAPQ4=
+=M0Ja
+-----END PGP SIGNATURE-----
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002296.html">[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+</A></li>
+	<LI>Next message: <A HREF="002298.html">[Sorcerer-admins] updates and kde is no longer installed to	/opt/kde4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2297">[ date ]</a>
+              <a href="thread.html#2297">[ thread ]</a>
+              <a href="subject.html#2297">[ subject ]</a>
+              <a href="author.html#2297">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

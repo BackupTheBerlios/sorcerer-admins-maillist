@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Opinions please...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091336x263e3887x4cf92e34898a29cf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001102.html">
+   <LINK REL="Next"  HREF="001104.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Opinions please...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Opinions%20please...&In-Reply-To=%3C596b75860905091336x263e3887x4cf92e34898a29cf%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Opinions please...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May  9 22:36:21 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001102.html">[Sorcerer-admins] Opinions please...
+</A></li>
+        <LI>Next message: <A HREF="001104.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1103">[ date ]</a>
+              <a href="thread.html#1103">[ thread ]</a>
+              <a href="subject.html#1103">[ subject ]</a>
+              <a href="author.html#1103">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;&gt;<i> I was just thinking that if uClibc made the soname
+</I>&gt;&gt;<i> the same as the library name
+</I>&gt;&gt;<i> then that would not be half bad.
+</I>&gt;&gt;<i> Afterall why only go halfway along with the disguise
+</I>&gt;&gt;<i> of being an ELF library when it does not properly
+</I>&gt;&gt;<i> change the soname on each binary incompatible release?
+</I>&gt;&gt;<i> Perhaps I can write a patch for that.
+</I>&gt;<i>
+</I>&gt;<i> Heh, I bet the uClibc people would be glad...
+</I>
+I am not entirely sure.
+There are probably reasons for the way it is.
+I am hoping that so few people use it ELF linked
+that questions involving changing the soname
+when binary compatibility breaks
+have not occurred yet.
+Consequently, I submitted the question on their email list.
+Maybe they already have a clever method for updating
+that does not involve cross compiling an entire box?
+
+
+&gt;<i> Still, I am filled with a little trepidation switching to another glibc, if
+</I>&gt;<i> we were too careful to use glibc 2.9, using a completely different library
+</I>&gt;<i> of C.... But I suppose you know best.
+</I>
+Actually, I have my concerns about using anything except glibc 2.7.
+Yet there will come a time for change and Sorcerer should be ready to adapt.
+I was not satisfied with glibc 2.9.
+Since there is no tarball for it
+I have no idea how patches are being made available for it.
+Redhat software authors are also hacking something called newlibc
+However, I know nothing about newlibc other than that.
+Consequently, I figured that if we have to pick a new hull for the ship
+that uClibc could be a good choice.
+But I do not want a drastic and painful switch.
+
+I just test compiled and linked p7zip statically with uClibc.
+1.8M for statically linked with glibc
+1.5M for statically linked with uClibc.
+The small difference I expect is due to that p7zip
+is mostly a c++ program and therefore much of the
+bulk of that executable is probably code from libstdc++.a
+Although it appeared to compile and link okay,
+it segmentation faults when run.
+That is one failed test, unfortunately.
+Consequently, I will have to see what C++ programs
+can be statically linked with uClibc and libstdc++ from gcc
+compiled for use with uClibc.
+The problem may be due to something I did wrong.
+
+This goes to show that I do not necessarily know what is best.
+I am exploring possibilities.
+
+
+&gt;<i> Just as a note... is it really nessecary to download the linux source for
+</I>&gt;<i> linux-headers? I mean, we already have the sources for linux in either linux
+</I>&gt;<i> or linux-modular. These spells should just provide linux-headers, no?
+</I>
+In the past it was not always desirable to change
+the installed version of header files from linux merely
+to match the same version of linux that was installed.
+The factor that mattered most was whether glibc and other
+programs could compile with the newer linux headers.
+Consequently, the task of installing headers for linux
+was delegated to the glibc spell.
+
+Mostly as long as the running kernel is the same version
+or newer than the installed linux kernel headers that were
+also used to compile glibc
+then everything will work as expected.
+However, the converse is that glibc will refuse to run programs
+and state that the running linux is too old.
+I have seen that error message when trying to repair
+a deployed box with a Install/Rescue CD that was too old.
+Consequently, the linux running from the I/R was not new
+enough for the glibc on the deployed filesystem.
+
+Sorry for the digression.
+It is okay for a separate spell to install linux-headers,
+than linux-modular and glibc.
+I already tested glibc to be certain that it compiles
+with the newer linux kernel headers.
+And it is options to glibc's configure that usually
+determine how old the running linux kernel can be.
+
+
+&gt;<i> Just don't forget that at least one Sorcerer SA is still running a
+</I>&gt;<i> Monolithic kernel... :)
+</I>
+As long as you update that kernel it should not become a problem.
+But if it becomes ancient history
+then it is possible that combination of glibc + linux-headers
+could be installed that would refuse to run programs
+while the old linux is running.
+That would be painfully funny, or maybe funny and painful,
+or perhaps just painful?
+It would definitely require rebooting with an Install/Rescue disk to fix.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001102.html">[Sorcerer-admins] Opinions please...
+</A></li>
+	<LI>Next message: <A HREF="001104.html">[Sorcerer-admins] Opinions please...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1103">[ date ]</a>
+              <a href="thread.html#1103">[ thread ]</a>
+              <a href="subject.html#1103">[ subject ]</a>
+              <a href="author.html#1103">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

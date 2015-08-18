@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] automatic restarting of init-scripts by cast?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTimnnpG%2BiNhMD%2B%3D8A5vJG%3D3GzQ-nTPfZ-V7vnzoj%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001985.html">
+   <LINK REL="Next"  HREF="001990.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] automatic restarting of init-scripts by cast?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20automatic%20restarting%20of%20init-scripts%20by%20cast%3F&In-Reply-To=%3CAANLkTimnnpG%2BiNhMD%2B%3D8A5vJG%3D3GzQ-nTPfZ-V7vnzoj%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] automatic restarting of init-scripts by cast?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Oct 29 07:27:03 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001985.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+        <LI>Next message: <A HREF="001990.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1989">[ date ]</a>
+              <a href="thread.html#1989">[ thread ]</a>
+              <a href="subject.html#1989">[ subject ]</a>
+              <a href="author.html#1989">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Well, you did say that Sorcerer is running without a
+</I>&gt;<i> /etc/init.d/config, and I'm just saying that a lot of the things
+</I>&gt;<i> called during the init of a system has a config file already.
+</I>
+Okay, that makes sense.
+init-scripts is more about starting services
+than providing configuration information.
+Almost all services that would be started
+expect to find their configuration information
+supplied in configuration files.
+When parameters are excepted or even expected
+is when that parameter would specify a non-default
+location for configuration files.
+That is more my impression from experience
+rather than a statement of fact.
+
+
+&gt;<i> I don't want those files to be moved, either... &#160;it has taken me long
+</I>&gt;<i> enough to learn where they live, and the software authors also expect
+</I>&gt;<i> their files in specific places.
+</I>
+For better or worse the names of directories
+and locations of files in /etc/
+is a matter of long standing legacy.
+Even the trick I did involving lilo's configuration file
+still required that symbolic link /etc/lilo.conf
+to appease SAs that expect to find an /etc/lilo.conf
+For the most part Sorcerer tends not to break the traditions,
+but instead it bends them and might do things that are not
+explicitly forbidden like providing an /etc.ori/
+
+One of the last big moves on a pan distribution level
+was the attempt to make most software that installs multiple header files
+to install them within a directory in /usr/include/
+instead of installing all the header files directly in /usr/include/
+I vaguely recall a bit of a problem with some software
+not compiling for expecting that readline's header files
+would be installed directly in /usr/include/
+Fortunately, something like that was as easily overcome as adding
+&quot;-I/usr/include/readline&quot; to CFLAGS
+
+However, overall migration of files tends to cause stress
+and sometimes a bit of confusion.
+udev authors seemed brave to me when they changed
+the definitions for rules so that permissions could
+be specified with rules instead of having two types of files.
+Then they did something even more shocking by moving
+their rules files out of /etc/
+I do not dislike where udev has arrived,
+but there was stress at several transitions.
+
+However, that trivia probably does not contribute
+to the main topic of the conversation.
+
+&gt;<i> So far, it looks like almost all the config files are somewhere in
+</I>&gt;<i> /etc. Which is a good thing. I really can't think of a spell that
+</I>&gt;<i> would benefit from having a config that does not already have a config
+</I>&gt;<i> now.
+</I>
+I try to force all config files, yes even those for kde,
+to be installed in /etc/
+Probably I am missing a considerable amount.
+The convenience of something like /etc.ori/ and /etc.sav/
+sort of depends on a configuration file being in /etc/
+and not /opt /usr or some other directory.
+
+
+&gt;<i> There may be some room for improvement in the init-scripts, but is it
+</I>&gt;<i> worth the effort to go scratching around there?
+</I>
+I changed a few lines in share, a few in cast,
+and added 3 to init-functions.
+The effort for the support is not immense.
+But such changes cause a cumulative performance degrade
+and are wasteful if they are not being used.
+That is why I am checking my email frequently
+to see if anyone has sent me an example
+of a custom init-script for httpd or some other service
+in order to give a good indication of how the stock spells
+should be improved in order that SA can modify a configuration
+file for the init-script instead of having to create a custom init-script
+to start such services.
+
+
+&gt;<i> We really should just submit wanted changes to the init-scripts to
+</I>&gt;<i> you, together with motivations and working code. :)
+</I>&gt;<i>
+</I>&gt;&gt;<i> Lines such as:
+</I>&gt;&gt;<i> &#160;* Run /etc/init.d/loopback
+</I>&gt;&gt;<i> &#160;* loopback configuring &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [ warning ]
+</I>&gt;&gt;<i> &#160;* loopback configured &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160;[ success ]
+</I>&gt;&gt;<i> &#160;* Ran /etc/init.d/loopback
+</I>
+
+Ah, I already tested that code.
+Works fine for sysinit and serial run levels.
+I am using cyan for the color of the *
+
+&gt;<i> This is a bit over the top, and not what I was suggesting at all.
+</I>
+Too bad, because logging the start and end of an init-script
+is the only clear way to see if the error message printed
+belongs to that init-script.
+And in some cases it might not even if it is enclosed.
+
+&gt;<i> In my example, it was expressed in one line, not four, which is half the
+</I>&gt;<i> line length of the normal Sorcery init-script log.
+</I>&gt;<i> In your example, it would be written to the log as:
+</I>&gt;<i> init: /etc/init.d/loopback &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; &#160; [success]
+</I>&gt;<i>
+</I>&gt;<i> The first part of the line already says you are calling the script, so
+</I>&gt;<i> no need to say [warning]
+</I>&gt;<i> The script returns it's status at the end of the line, and then it's
+</I>&gt;<i> on to the next init script.
+</I>
+The warning lines are important.
+They indicate that an action is about to happen.
+If the warning line prints and the outcome line does not print
+then that indicates that actions in between caused a hang,
+delay, or some problem.
+My understanding of the use of LSB style logging from init-scripts
+is that the attempted action should be explained,
+executed, and then the outcome revealed.
+One line can not properly replace two lines
+since the action happens in between the two lines.
+
+
+&gt;<i> This is good too.
+</I>&gt;<i> Now if we only could get the scripts to output their messages into the
+</I>&gt;<i> logs as well, that would be fantastic... but that is for another time.
+</I>
+They do.
+All non dialog output from init-scripts is logged.
+Programs that are invoked that decide to write
+their output directly to console or the kernel buffer
+might not be logged.
+That is not an init-script.
+That is a program being run by an init-script.
+If the program outputs on stdout or stderr
+then it's output will be logged.
+
+&gt;<i> I dunno.. these are just ideas I wanted to run past you to make
+</I>&gt;<i> troubleshooting troublesome init scripts easier.
+</I>
+I would not have implemented the code
+had I not anticipated the outcome.
+Boon: trouble shooting init-scripts might be easier.
+Bane: logs from sysinit and runlevel execution become larger.
+It is nearly an evenly weighed trade-off.
+
+&gt;<i> Well, if we did it this way:
+</I>&gt;<i>
+</I>&gt;<i> init: &#160; $INIT_SCRIPT
+</I>&gt;<i> $INIT_SCRIPT: $EXIT_STATUS
+</I>&gt;<i>
+</I>&gt;<i> we get the benefit that no script can hide by just not printing
+</I>&gt;<i> anything to the log.
+</I>&gt;<i> The logs will be exactly as long as they would have been if the init
+</I>&gt;<i> scripts have all had a line for starting and a line for exit status.
+</I>
+An important consideration is being neglected.
+One must assume that at any time that something
+that is happening within an init-script might not return.
+It might hang, forever.
+Waiting for a return state before printing means
+that no warning is given about what is being tried.
+Do we want to be debugging a hang scenario
+without knowing which init-script was executing
+and without knowing what was being tried?
+We can not await an outcome before printing.
+Before then something terrible might have already happened.
+
+
+
+&gt;&gt;<i> That lacks a certain eloquence and convenience.
+</I>&gt;<i> Yup, especially when that script is assumed to be so simple that it
+</I>&gt;<i> cannot fail, and thus did not print an entry in the first place.
+</I>
+The thing is that those really simple init-scripts
+that would exit without printing anything
+is that they do exit because they did nothing that would
+not be done in an init-script that does nothing
+but starts and quits.
+If such simple init-scripts were to fail bad
+then that would indicate a problem in /lib/lsb/init-functions
+that effects all init-scripts that source in /lib/lsb/init-functions.
+So basically, the init-scripts that print nothing and exit are zero threat.
+
+In other words the init-script is like a guy
+who accidentally walking into a woman's bathroom.
+Better that he immediately turns and departs
+without startling anyone by announcing that he is here
+and this is not the expected place.
+
+
+&gt;<i> I could try this on my system first, and see how it goes...
+</I>&gt;<i>
+</I>&gt;<i> I do a lot more rebooting than most, since I run Sorcerer on my
+</I>&gt;<i> laptop, so I am more exposed to init-scripts, and I have to say that I
+</I>&gt;<i> will be the prime benefactor as well, should we decide to make the
+</I>&gt;<i> process more transparent.
+</I>
+I hope debugging problems involving init is fun.
+
+I do not recommend testing such changes
+except on a dedicated test box or virtual machine.
+I kept backups of /etc/init.d/prc and /etc/init.d/rcS in /etc/before/
+so that if booting was a problem
+then I could
+rdinit=/bin/bash
+# cp /before/* /etc/init.d/
+# exec /init
+
+Anyway, I want to re-iterate again
+that for what could go wrong,
+such as udevtrigger loading module i915.ko
+thus causing the screen to blank forever,
+a line should be printed before an event happens
+rather than awaiting the outcome of the event.
+A quick eye could spot that a screen blanked
+forever just as udevtrigger began.
+However, no eye could spot that correlation
+if first the screen blanks forever
+and then the line about udevtrigger is printed.
+
+Just like a regular SA I made the kernel config change,
+recompiled, installed, rebooted and encountered the problem.
+And I debugged it the same way I would any init-script,
+maybe the same way that most any SA would probably
+try to discover and circumvent a problem during sysinit
+on a Sorcerer box.
+At first, I restarted the box as usual a few times
+just to see that the problem was repeatable and
+to have a very good look at exactly what printed
+just before the screen blanked.
+
+I had reasons such as that in mind
+when I decided about when and how init-scripts
+should print messages.
+The screen scroll is formidable,
+however just maybe the last line printed
+will be a good enough clue to direct a SA
+to peck at the problem in the correct init-script.
+
+I am hoping that if init-script quality can be sufficiently improved
+so that SAs will avoid solutions that require custom init-scripts
+then SAs will probably receive less opportunities to
+encounter and debug problems involving sysinit and runlevel start.
+I prefer Sorcerer init to work without fail.
+However, the i915.ko loaded by udevtrigger
+causing a forever blank screen situation
+is an example of a hardware specific problem
+that would not be seen on every box.
+That was not a bug in any init-script.
+However, the problem was still formidable.
+And initially the problem was debugged as if the problem
+was a problem with an init-script.
+So I was thankful to see exactly what was attempted
+just before the screen went blank.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001985.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+	<LI>Next message: <A HREF="001990.html">[Sorcerer-admins] automatic restarting of init-scripts by cast?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1989">[ date ]</a>
+              <a href="thread.html#1989">[ thread ]</a>
+              <a href="subject.html#1989">[ subject ]</a>
+              <a href="author.html#1989">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

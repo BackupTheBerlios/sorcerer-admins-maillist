@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] fun things...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20fun%20things...&In-Reply-To=%3CAANLkTim%2BeV4sNB%2BNR1pF0i_Gt3DPLkvDzG_%2BURGSXHae%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001926.html">
+   <LINK REL="Next"  HREF="001930.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] fun things...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20fun%20things...&In-Reply-To=%3CAANLkTim%2BeV4sNB%2BNR1pF0i_Gt3DPLkvDzG_%2BURGSXHae%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] fun things...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep 16 10:47:19 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001926.html">[Sorcerer-admins] fun things...
+</A></li>
+        <LI>Next message: <A HREF="001930.html">[Sorcerer-admins] fun things...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1927">[ date ]</a>
+              <a href="thread.html#1927">[ thread ]</a>
+              <a href="subject.html#1927">[ subject ]</a>
+              <a href="author.html#1927">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually, I anticipated the request.
+# augur help activity
+
+This activity log generator is similar to the previous incarnation.
+However, no separate activity logs are used.
+Instead this merely seds certain lines of information
+out of # augur event 3650
+
+fail shows lines with events of Fail Auto and Fail Cast
+load shows lines with events of Fail Load and Pass Load
+pass shows lines with events of Pass Cast, Pass Rise, Pass Oust, Pass Void
+
+Even better than using this command is to invoke
+# augur event 365
+
+and sed or grep desired information and pipe it into less or a file.
+This command only exists to provide backward compatibility
+with the previous # augur activity
+which is no longer needed.
+
+# LC_ALL=C augur activity pass | tail -n 10
+
+But that might not be as useful.
+There are several types of pass type events
+and only the &quot;Fore&quot; events count for being current.
+&quot;Yore&quot; events are historical and no longer expected to be current.
+
+# LC_ALL=C augur activity pass | sed &quot;s:  Fore::p;d&quot; | tail -n 10
+
+But if one is only interested in the Pass Cast events that are also Fore...
+
+# LC_ALL=C augur activity pass |
+sed &quot;s:  Fore::p;d&quot; |
+sed &quot;s:  Pass Cast::p;d&quot; |
+tail -n 10
+
+Even the parts of the date on the left column can be trimmed out
+if the seem unnecessary or are causing the lines to be too long.
+sed is awesome for that.
+
+In many ways this # augur activity
+is not much different than
+what can be done directly with
+# augur event
+and a sed command.
+That is because that is exactly how the activity command is implemented.
+
+For a chronological summary of the last 20 events in the last 30 days
+without regard to whether the event is considered &quot;Fore&quot; or &quot;Yore&quot;
+
+# augur event 30 | sed &quot;1,/^$/p;d&quot; | tail -n 20
+
+The sed command chops off the scroll at the empty line
+just before where the summary of events begins.
+Then the tail command limits the output to the most recent 20 lines/events.
+
+If only Fail Cast events are desired...
+
+# augur event 360 | sed &quot;1,/^$/p;d&quot; | tail -n 20 | sed &quot;s:  Pass Cast::p;d&quot;
+
+And change the Pass Cast to Fail Cast
+
+Event logs are available for view directly and can be ordered
+by spell chronologically, or all events chronologically depending
+upon the invocation of ls used, however, no indication of whether
+and event is &quot;Fore&quot; or &quot;Yore&quot; is given by ls unless one wants
+to examine the mode of the file.
+
+# ( cd /var/log/sorcery/event &amp;&amp; ls --sort=time -r | column -t )
+
+The output is very similar, however the date and time is displayed
+by the very large integer in the second column that looks like:
+YYYYMMDDhhmmss
+
+Currently, I have been considering, but have not decided how to
+include additional information in the output of # augur event.
+Some event files are not size 0.
+Some of them have content that further explains the event.
+Usually, those are the &quot;Miss *&quot; events where the content
+of the file will indicate what ELF library or file is missing.
+Perhaps that is only useful for debugging
+since &quot;Miss ELF&quot; and &quot;Miss LA&quot; events are handled
+automatically and normally fixed by cast.
+
+The current event logs, and the
+# augur event $DAYS
+# augur event $SPELL
+commands are in every way superior
+to the old activity logs.
+Unfortunately, they require a tad bit more SA skill in order to squeeze.
+Sed can help separate the juicy desirable information from the pulp.
+grep will work also, but is a little less useful.
+Any sort of stream editor should work.
+
+If for nothing more than the &quot;Yore&quot; and &quot;Fore&quot; assignment to events
+then I would say that the event logs are an improvement.
+However, this revision also consumes less disk space by /var/log/sorcery/event/
+Event logs are reasonably fast to view with &quot;augur event&quot;
+&quot;ls | cat&quot; and &quot;ls | column -t&quot;
+And event logs can now be ordered chronologically to achieve
+the same amount of information as the activity logs and more.
+In the past there were SAs that wanted all the information
+in all 3 activity logs merged and displayed chronologically.
+Now their wish is granted by the output of &quot;augur event&quot;
+or merely by doing the &quot;( cd /var/log/sorcery/event &amp;&amp; ls --sort=time
+-r | column -t )&quot;
+
+Everybody gets what they want,
+except for those still longing for those
+3 files in /var/log/sorcery/activity/
+However, those 3 files can be generated from the output of augur event
+by using one of the commands shown above and
+piping the output into a file such as: &gt; /var/log/sorcery/activity/cast
+
+
+As for tailf for directories...
+about a decade ago I knew the answer.
+Remembering lore is difficult.
+
+Install inotify-tools if it is not already installed.
+
+Also
+
+# gzip -cd /proc/config.gz | grep INOTIFY
+CONFIG_INOTIFY=y
+CONFIG_INOTIFY_USER=y
+
+Or reconfigure the kernel or use linux spell.
+
+Then finally...
+
+# inotifywait -m -q -e create -r /var/log/sorcery/event
+
+And it will print something like:
+
+# inotifywait -m -q -e create -r /var/log/sorcery/event
+/var/log/sorcery/event/ CREATE sorcery-alien    20100916014140  2010-9  Cast SA
+/var/log/sorcery/event/ CREATE sorcery-alien    20100916014208  2010-9
+ Pass Oust
+
+
+And it will spit out a new line every time a file is created.
+Or for a more space economical version...
+
+# ( cd /var/log/sorcery/event &amp;&amp; inotifywait -m -q -e create -r . )
+
+piping output through sed might work
+or it might delay the output of lines.
+I am not certain since I did not try it that way.
+
+
+
+On Wed, Sep 15, 2010 at 11:28 AM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> On Friday, September 10, 2010, Kyle Sallee wrote:
+</I>&gt;&gt;<i> # ls /var/log/sorcery/event | column -t
+</I>&gt;&gt;<i> or
+</I>&gt;&gt;<i> # ls /var/log/sorcery/event | cat
+</I>&gt;<i>
+</I>&gt;<i> Any suggestions on how to replicate the old ways of
+</I>&gt;<i>
+</I>&gt;<i> augur activity cast | tail
+</I>&gt;<i>
+</I>&gt;<i> or
+</I>&gt;<i>
+</I>&gt;<i> tailf /var/log/sorcery/activity/cast
+</I>&gt;<i>
+</I>&gt;<i> would be appreciated. I will try to figure this out but right now I lack the
+</I>&gt;<i> time to focus on this, sorry.
+</I>&gt;<i>
+</I>&gt;<i> Thank you,
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001926.html">[Sorcerer-admins] fun things...
+</A></li>
+	<LI>Next message: <A HREF="001930.html">[Sorcerer-admins] fun things...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1927">[ date ]</a>
+              <a href="thread.html#1927">[ thread ]</a>
+              <a href="subject.html#1927">[ subject ]</a>
+              <a href="author.html#1927">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

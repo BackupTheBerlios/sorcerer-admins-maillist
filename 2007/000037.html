@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] some bug reports, fuse, db, samba
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20some%20bug%20reports%2C%20fuse%2C%20db%2C%20samba&In-Reply-To=%3COFE302B2F9.D54B7ECE-ONC2257283.00311EA8-C2257283.0031AF21%40Sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000034.html">
+   <LINK REL="Next"  HREF="000038.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] some bug reports, fuse, db, samba</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20some%20bug%20reports%2C%20fuse%2C%20db%2C%20samba&In-Reply-To=%3COFE302B2F9.D54B7ECE-ONC2257283.00311EA8-C2257283.0031AF21%40Sofor.fi%3E"
+       TITLE="[Sorcerer-admins] some bug reports, fuse, db, samba">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Thu Feb 15 10:02:40 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000034.html">[Sorcerer-admins] Sorcerer in 2007...
+</A></li>
+        <LI>Next message: <A HREF="000038.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#37">[ date ]</a>
+              <a href="thread.html#37">[ thread ]</a>
+              <a href="subject.html#37">[ subject ]</a>
+              <a href="author.html#37">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+
+Quiet mailinglist but i hope we still got users here.
+
+Trying to cast new fuse, but it gives error at install-stage:
+---------------------------------------------------
+Compile log for fuse  2.6.3
+Built with sorcery thaumaturgy-20070131-0 and gcc 4.1.1
+Built on Thu Feb 15 10:06:16 EET 2007
+Traced with sentinel.
+checking build system type... i686-pc-linux-gnu
+checking host system type... i686-pc-linux-gnu
+checking target system type... i686-pc-linux-gnu
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for style of include used by make... GNU
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables...
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking dependency style of gcc... gcc3
+checking for a sed that does not truncate output... /bin/sed
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for fgrep... /usr/bin/grep -F
+...
+/usr/bin/install -c -m 644 ./udev.rules /etc/udev/rules.d/99-fuse.rules
+make[2]: Leaving directory `/usr/src/sorcery/fuse/fuse-2.6.3/util'
+make[1]: Leaving directory `/usr/src/sorcery/fuse/fuse-2.6.3/util'
+Making install in example
+make[1]: Entering directory `/usr/src/sorcery/fuse/fuse-2.6.3/example'
+make[2]: Entering directory `/usr/src/sorcery/fuse/fuse-2.6.3/example'
+make[2]: Nothing to be done for `install-exec-am'.
+make[2]: Nothing to be done for `install-data-am'.
+make[2]: Leaving directory `/usr/src/sorcery/fuse/fuse-2.6.3/example'
+make[1]: Leaving directory `/usr/src/sorcery/fuse/fuse-2.6.3/example'
+make[1]: Entering directory `/usr/src/sorcery/fuse/fuse-2.6.3'
+make[2]: Entering directory `/usr/src/sorcery/fuse/fuse-2.6.3'
+make[2]: Nothing to be done for `install-exec-am'.
+test -z &quot;/lib/pkgconfig&quot; || mkdir -p -- &quot;/lib/pkgconfig&quot;
+ /usr/bin/install -c -m 644 'fuse.pc' '/lib/pkgconfig/fuse.pc'
+make[2]: Leaving directory `/usr/src/sorcery/fuse/fuse-2.6.3'
+make[1]: Leaving directory `/usr/src/sorcery/fuse/fuse-2.6.3'
+`/lib/pkgconfig/fuse.pc' -&gt; `/usr/lib/pkgconfig/fuse.pc'
+rmdir: removing directory, /lib/pkgconfig
+rmdir: /lib/pkgconfig: Directory not empty
+ESC[31mESC[1m! Problem Detected !ESC[0mESC[0m
+Source tree discarded.
+ESC[35mESC[1mDispelled spell: ESC[37mESC[1mESC[40mfuse-failedESC[0mESC[0m
+Creating symbolic links to startup and shutdown scripts.
+Usage: /etc/init.d/fuse {start|stop}
+---------------------------------------------------
+
+Then for some reason db is always newer, does not matter if i cast it, it 
+always shows in newer_ia list.
+
+Then samba does not compile, after i made some adjustment to spell :) I 
+think its some shell-related system where you use &quot;\&quot; to brake options to 
+multiple lines.
+If you look samba's build(), its looking like this:
+  cd  source
+  ./configure           \
+  --prefix=/usr         \
+  --sysconfdir=/etc     \
+  --localstatedir=/var  \
+  --with-smbmount       \
+  --with-fhs            \
+  --with-shared-modules=idmap_rid \
+  $WITH_PAM             \
+  $OPTS                 &amp;&amp;
+  make                  &amp;&amp;
+  prepare_install       &amp;&amp;
+
+Not sure but in configure-stage it reports this:
+checking whether gcc and cc understand -c and -o together... yes
+checking that the C compiler understands -Werror... yes
+checking that the C compiler understands volatile... yes
+checking uname -s... Linux
+checking uname -r... 2.6.19.2
+checking uname -m... i686
+checking uname -p... unknown
+checking build system type... config.sub: missing argument
+Try `config.sub --help' for more information.
+configure: error: /bin/sh ./config.sub   failed
+/root/.sorcery/grimoire/samba: line 63: --with-pam: command not found
+
+Terveisin/Regards,
+   Pekka Panula, Net Servant Oy - A Sofor company
+   <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">pekka.panula at sofor.fi</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070215/4b3e8bbe/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070215/4b3e8bbe/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000034.html">[Sorcerer-admins] Sorcerer in 2007...
+</A></li>
+	<LI>Next message: <A HREF="000038.html">[Sorcerer-admins] some bug reports, fuse, db, samba
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#37">[ date ]</a>
+              <a href="thread.html#37">[ thread ]</a>
+              <a href="subject.html#37">[ subject ]</a>
+              <a href="author.html#37">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

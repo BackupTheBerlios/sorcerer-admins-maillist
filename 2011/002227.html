@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] -O3 optimizations...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCA%2BT4wDiQC0_JLoeeEjrPK%3DcUBFuCB44LrW1ErMObZ8hZGRBAUQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002226.html">
+   <LINK REL="Next"  HREF="002224.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] -O3 optimizations...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3CCA%2BT4wDiQC0_JLoeeEjrPK%3DcUBFuCB44LrW1ErMObZ8hZGRBAUQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] -O3 optimizations...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Aug  2 22:05:33 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002226.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+        <LI>Next message: <A HREF="002224.html">[Sorcerer-admins] Maintenance: 3.8. between 09:00 - 15:00 (local	time, GMT+3)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2227">[ date ]</a>
+              <a href="thread.html#2227">[ thread ]</a>
+              <a href="subject.html#2227">[ subject ]</a>
+              <a href="author.html#2227">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Aug 1, 2011 at 8:53 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there.
+</I>&gt;<i>
+</I>&gt;<i> Strangely enough, -O2 is better tested than even -O1 or -O0. It's also
+</I>&gt;<i> what most binary software is compiled with. So, -O1 might be less
+</I>&gt;<i> stable than -O2... it's certainly less tested.
+</I>&gt;<i>
+</I>&gt;<i> -O3 the speedups over -O2 is questionable. Have you actually timed
+</I>&gt;<i> bash running with -O2 and bash doing the same job with -O3? And with
+</I>&gt;<i> -O1?
+</I>
+Yes.  Actually, I have a speed program.
+
+On a Pentium M 1300 MHz
+
+# ./loop
+39931
+# unset LANG
+# ./loop
+55714
+
+On a 3000 MHz AMD Phenom
+
+# ./loop
+135957
+# unset LANG
+# ./loop
+193917
+
+Internationalization costs more performance than optimization.
+And the speed at which BASH can run something like
+cast can not easily be measured.
+-O3 optimization on BASH may be insignificant compared
+to other things that can be adjusted in order to increase
+the performance of a BASH script.
+However, BASH compiled with -O3 seems to run fine.
+
+&gt;<i> -O3 on ffmpeg and MesaLib is OK, as the software authors actually
+</I>&gt;<i> specify it, and video work has a lot of loops in that benefit from
+</I>&gt;<i> unrolling, etc.
+</I>
+My BASH speed program does little more than
+increase a counter and run loops.
+However, the execution of a loop in BASH
+is probably coded significantly different
+than a loop in C.
+
+gcc's loop unrolling is fine for loops of finite known iteration.
+Unrolling only eliminates one &quot;loop&quot; instruction per loop.
+And the &quot;loop&quot; instruction decreases CX and does
+a conditional jump if CX is not 0.
+That optimization can be specified without -O3.
+And who is to say if a 500 or 1000 iteration
+loop is best unrolled?
+In lining functions is possible for C authors.
+Maybe they also should unroll loops in C code
+or have a method to tell the gcc compiler specifically
+which loops to unroll?
+
+&gt;<i> Between -O2 and -O1, though, there is a marked difference. You could
+</I>&gt;<i> try it for yourself and see. -O1 is both less tested and horribly
+</I>&gt;<i> slower than -O2, there is no reason to use that. I have used -O1 and
+</I>&gt;<i> -O0 before as a system default, and can tell you from experience that
+</I>&gt;<i> you won't like it.
+</I>
+123092 bash with -O0
+176831 bash with -O1
+190776 bash with -O2
+196087 bash with -O3
+
+Achieving consistent numbers is difficult for this test.
+However, we can see that while -O3 is faster than -O2
+the difference is insignificant.
+-O0 is about 70% as fast as -O1
+-O1 is about 90% as fast as -O2
+-O2 is about 97% as fast as -O3
+
+And the difference is only perceived
+on something that can run a core
+at full bore for seconds at a time.
+And it is difficult to measure since the kernel
+might allocate more or less CPU cycles
+to the process per test run.
+
+Unfortunately, this is not
+the definitive answer about gcc optimization.
+It is merely the output of a speed testing script that I rarely use.
+But if were were to make judgements based upon this,
+unless someone has something better to provide,
+then -O0 is 64% as fast as -O2
+And that speed difference only matters
+for a process trying to at 100% of a CPU core
+for several seconds.
+
+
+&gt;<i> I do believe our distribution default should be: mtune=native -O2 -pipe
+</I>
+real    0m32.370s compile time for -O0
+real    0m39.466s compile time for -O1
+real    0m44.998s compile time for -O2
+real    0m50.160s compile time for -O3
+
+But compilation time increases.
+Compile time of bash with -O0 is 71% the time of -O2
+
+Comparing -O1 to -O2
+Performance 90%, Compile time 87%
+-O1 to -O2 10% performance increase
+and 13% compilation increase.
+For software that is not CPU intensive
+then a 30% overall reduction in compilation time
+for 36% reduction in runtime performance seems favorable.
+-O0 is not a bad choice for most software compilation.
+
+
+&gt;<i> I run march=native -O2 -pipe for everything that does not have CFLAGS
+</I>&gt;<i> specified, but this is non-portable.
+</I>
+It is nearly the same as was Sorcerer default optimizations.
+
+
+&gt;<i> And yes, there are spells that require special flags. That's why we
+</I>&gt;<i> have the CFLAG variable in spells. So, just ripping out all the -O3 in
+</I>&gt;<i> the grimoire is also not advisable.
+</I>
+Replacing the -O3 with -O2
+will cost approximately 3% runtime performance
+but gain approximately 10% compilation speed.
+BASH is not the ideal example,
+because not everything it does during
+configure and make is compilation.
+
+
+&gt;<i> My original point still stands: We should not be using -O3 unless the
+</I>&gt;<i> software author specifies it as both making a difference and is
+</I>&gt;<i> tested.
+</I>
+Speed testing is difficult.
+I am not certain to what extent
+I trust the results I gained while
+attempting to speed test BASH.
+However, the results seem congruent
+with SAs common sense about gcc optimization,
+which is -O3 requires longer to compile
+and might gain about 0% to 5% performance increase.
+
+
+&gt;<i> As a way forward, may I suggest we leave the grimoire as is? There are
+</I>&gt;<i> not that many spells specifying -O3, so it's still easy to monitor.
+</I>
+If everyone will feel more at east without -O3
+then I do not mind eliminating it.
+The performance loss may be anything from nothing to 5%
+depending upon what is running.
+And yet an increase in compilation speed is definite.
+
+
+&gt;<i> Anyone running into any instability might want to go see the flags the
+</I>&gt;<i> spell is compiled with, and if it's -O3, try with -O2 and see if the
+</I>&gt;<i> instability goes away.
+</I>
+Instead if -O3 compilation is prohibited
+then I can be certain that no instability is being
+caused by -O3 compilation.
+Therefore, I will not receive, investigate,
+nor respond to bug reports concerning -O3.
+SAs that want -O3 style optimization can specify
+the individual gcc parameters in a cpref file.
+The -O3 debate is not merely a question
+of runtime performance and compilation time.
+It's a question of runtime performance,
+compilation time, and kyle time.
+Prohibiting -O3 also keeps SAs from
+re-compiling their entire box -O3
+which might produce something undesirable.
+
+
+&gt;<i> If it does, report that back to the Sorcerer
+</I>&gt;<i> lists, and we'll take it out of the grimoire on a case by case basis.
+</I>
+I was doing the -O3 on some spells for the benefit of the SAs.
+But this presents an excellent excuse for me
+to revise the grimoire to -O2 for CPU intensive software
+and set the Sorcerer defaults to -O0
+If SAs are actually wasting time waiting for software to compile
+then -O0 is clearly more favorable than -O2.
+
+-O0 optimization creates software that runs 30% to 40% slower
+But a default of -O0 optimization does not necessarily
+create a box that runs even 3% slower.
+That is because glibc is compiled with -O2.
+And other CPU intensive programs are compiled with -O2.
+Just as spoilers are a wasted expense
+on cars that run less 80 KPH
+so is the use of -O2 a waste on software
+that lacks potential to run full bore
+for more than a second.
+
+Optimization of linux and glibc is most important
+because those layers are closest to the base.
+Almost every program links with glibc
+and uses functions from glibc.
+Likewise glibc uses linux functions.
+So optimization spent there benefits a great many programs.
+
+Optimization on penguin-command,
+which is a missile command style game,
+might make it run with a somewhat lower CPU usage.
+But that makes no difference while still using less than 100%.
+
+Just played some penguin command.
+Here is a line of it as output from the &quot;top&quot; command.
+
+  PID USER     %CPU P %MEM  VIRT  RES  SHR    TIME+  COMMAND
+12646 kyle        5 1  0.5  123m  19m 5452   0:04.63 penguin-command
+
+penguin-command averaged a 4% to 5% CPU usage when compiled with -O0
+And I realize the cycles are mostly used
+for playing the Amiga mod music files.
+Consequently, optimization of SDL_mixer
+would provide more benefit than optimization
+of penguin-command.
+That is because penguin-command links with SDL_mixer
+in order to play the amiga mod file.
+Therefore, most of that 5% CPU cycles are being used
+by SDL_mixer and not penguin-command.
+However, top can not show that.
+
+Even a video player might not suffer a performance deficit
+when compiled with -O0, because the audio/video codecs
+which are using the majority of CPU cycles might come from
+ffmpeg which is optimized with -O2.
+
+Likewise all of KDE, except kde-workspace,
+can be compiled with optimization of -O0
+and that will not create a performance deficit.
+When KDE is running nearly the only KDE owned
+process that is consistently using CPU cylces is kwin.
+And kwin is installed by kde-workspace.
+
+In general heavy optimization is most beneficial on CPU intensive software,
+and often more so on CPU intensive software libraries than on programs.
+
+Software that runs for merely an instant and then exits
+gains more benefit from link optimization or static linking.
+The cost for starting a process is significant.
+For many programs the start speed
+is more significant than execution speed.
+Therefore, a program like ccache
+runs optimally when statically linked.
+Many programs that are frequently invoked
+would benefit from static linking.
+Static linking provides 3 times or faster program start times.
+And program execution speed insignificantly increases.
+However, static programs are larger on disk,
+use more memory, are not i18n translated,
+and do not immediately benefit
+when the libraries they require are updated.
+
+Because static linked executable files
+do not receive immediate security benefits of library updates
+there are very few statically linked programs installed on Sorcerer.
+However, there are some.
+sed and coreutils spells have switches to enable static linking
+for some of the programs that are frequently used.
+sed is notoriously abused by libtool.
+And sorcery frequently uses &quot;cut&quot; &quot;sort&quot; and &quot;uniq&quot;
+However, those processes load and run only for a mere instant.
+
+I consider such things.
+A long time ago I made changes to sorcery
+to test it's execution speed using busybox provided utilities.
+I somewhere have a port of Sorcerer to uClibc instead of glibc.
+I try many absurd things to make Sorcerer faster.
+Trusting my judgement is not a bad idea
+for anyone that is doing less testing than I am.
+
+However, now that the question of optimization
+has once again been put to discussion
+I am in favor of less optimization rather than more optimization.
+I have observed that while CPU speed has increased
+that compilation time has also increased and not remained the same.
+More simply put compilation speed
+is a more important factor today
+than it was a decade ago.
+I expect that a change of defaults to -O0
+can yield approximately a 25% decrease
+in software cast time while yielding almost
+no impact on overall computer performance,
+because the most significant software will
+receive -O2 optimization.
+
+With this change SAs that really want -O2 can
+step up to -O2 by using a default cpref.
+Otherwise cpref frequently has no use for SAs
+that are not authoring software
+nor testing software with debug information included.
+
+
+&gt;<i> P.S. I just want to thank you for all the hard work you put into
+</I>&gt;<i> Sorcerer, Kyle.
+</I>
+Thanks.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002226.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+	<LI>Next message: <A HREF="002224.html">[Sorcerer-admins] Maintenance: 3.8. between 09:00 - 15:00 (local	time, GMT+3)
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2227">[ date ]</a>
+              <a href="thread.html#2227">[ thread ]</a>
+              <a href="subject.html#2227">[ subject ]</a>
+              <a href="author.html#2227">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

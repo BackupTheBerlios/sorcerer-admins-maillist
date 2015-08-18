@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] up left rigth and down arrow don't work in xorg
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%20xorg&In-Reply-To=%3C492B2CC1.4060908%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000849.html">
+   <LINK REL="Next"  HREF="000851.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] up left rigth and down arrow don't work in xorg</H1>
+    <B>MALET Jean-Luc</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20up%20left%20rigth%20and%20down%20arrow%20don%27t%20work%20in%0A%20xorg&In-Reply-To=%3C492B2CC1.4060908%40gmail.com%3E"
+       TITLE="[Sorcerer-admins] up left rigth and down arrow don't work in xorg">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Nov 24 23:37:53 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000849.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+        <LI>Next message: <A HREF="000851.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#850">[ date ]</a>
+              <a href="thread.html#850">[ thread ]</a>
+              <a href="subject.html#850">[ subject ]</a>
+              <a href="author.html#850">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>tried with following configuration :
+Section &quot;InputDevice&quot;
+    Identifier     &quot;keyboard1&quot;
+    Driver         &quot;evdev&quot;
+    Option &quot;XkbModel&quot; &quot;evdev&quot;
+    Option &quot;Device&quot; &quot;/dev/input/event1&quot;
+    Option         &quot;ServerNumLock&quot; &quot;on&quot;
+    Option         &quot;XkbRules&quot; &quot;xorg&quot;
+    Option         &quot;XkbKeycodes&quot; &quot;xfree86+aliases(qwerty)&quot;
+    Option         &quot;XkbTypes&quot; &quot;complete&quot;
+    Option         &quot;XkbCompat&quot; &quot;complete&quot;
+    Option         &quot;XkbGeometry&quot; &quot;pc(pc104)&quot;
+    Option         &quot;XkbSymbols&quot; &quot;us(pc104euro)&quot;
+EndSection
+
+still no change
+I don't use kde but fluxbox, so there is no &quot;keyboard handler&quot; (explain 
+me what have a keyboard handler have to do with a desktop, this is the 
+role of the X11 server)
+any idea?
+hummm the keypad direction keys are working.... will use this waiting 
+for a solution...
+thanks
+jlm
+
+Jan Merka wrote:
+&gt;<i> On Sunday 23 November 2008, MALET Jean-Luc wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> hi,
+</I>&gt;&gt;<i> after some work trying to make my keyboard work, I now have the keyboard
+</I>&gt;&gt;<i> mostly working appart a few keys like the direction keys... I casted xev
+</I>&gt;&gt;<i> and looked at it's output when pressind the keys, I have left mapped on
+</I>&gt;&gt;<i> print, right no symbol, and up/down to some strange value
+</I>&gt;&gt;<i> appart that, all seems to work fine (even the international layout)
+</I>&gt;&gt;<i> I use regular legacy keyboard driver, no evdev....
+</I>&gt;&gt;<i>     
+</I>&gt;<i> That's the problem, use evdev. If you need to configure language, etc., put 
+</I>&gt;<i> that in hal configuration at /etc/hal/fdi/policy/30user/. For examples, see 
+</I>&gt;<i> the default hal configuration in /usr/share/hal/fdi/policy/10osvendor/. 
+</I>&gt;<i> Remove *any* keyboard configuration from xorg.conf!
+</I>&gt;<i> 'lshal'  (grep keyboard) should show you what hal knows about your keyboard 
+</I>&gt;<i> (or other devices), the X11 will take the info from HAL.
+</I>&gt;<i>
+</I>&gt;<i> If you do not want hal, you will need 'AutoAddDevices &quot;off&quot;' in ServerFlags of 
+</I>&gt;<i> xorg.conf. That will however disable hotplugging for X11 also which is not an 
+</I>&gt;<i> option for my laptops but may be acceptable on a desktop.
+</I>&gt;<i>
+</I>&gt;<i> Finally, make sure that your desktop manager also sets the keyboard driver as 
+</I>&gt;<i> evdev. This got me for some time, everything was supposed to work fine 
+</I>&gt;<i> because it was configured as outlined above. Except the KDE had configured 
+</I>&gt;<i> the keyboard to 'PC 104-keys compatible' instead of 'Evdev-managed keyboard', 
+</I>&gt;<i> sigh.
+</I>&gt;<i>
+</I>&gt;<i> Jan
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> any idea?
+</I>&gt;&gt;<i> thanks
+</I>&gt;&gt;<i> JLM
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081124/ef0ab8c4/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20081124/ef0ab8c4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000849.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+	<LI>Next message: <A HREF="000851.html">[Sorcerer-admins] up left rigth and down arrow don't work in	xorg
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#850">[ date ]</a>
+              <a href="thread.html#850">[ thread ]</a>
+              <a href="subject.html#850">[ subject ]</a>
+              <a href="author.html#850">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

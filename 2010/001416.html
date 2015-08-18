@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Basic Sorcerer install instructions.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Basic%20Sorcerer%20install%20instructions.&In-Reply-To=%3C596b75861002031903t772b42c1t88652d81e546f7ce%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001409.html">
+   <LINK REL="Next"  HREF="001410.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Basic Sorcerer install instructions.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Basic%20Sorcerer%20install%20instructions.&In-Reply-To=%3C596b75861002031903t772b42c1t88652d81e546f7ce%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Basic Sorcerer install instructions.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Feb  4 04:03:56 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001409.html">[Sorcerer-admins] Basic Sorcerer install instructions.
+</A></li>
+        <LI>Next message: <A HREF="001410.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1416">[ date ]</a>
+              <a href="thread.html#1416">[ thread ]</a>
+              <a href="subject.html#1416">[ subject ]</a>
+              <a href="author.html#1416">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Feb 3, 2010 at 9:46 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;<i> Hi there, Nathan.
+</I>&gt;<i>
+</I>&gt;<i> Ok, so you got to the 3 step, and stuck there.
+</I>&gt;<i>
+</I>&gt;<i> On the command line, issue:
+</I>&gt;<i> man cfdisk
+</I>&gt;<i> and read a little about what partitions are, and how to create them.
+</I>
+With some rare exceptions
+manual pages are not normally available
+for reading when booted from the I/R
+
+&gt;<i> I do have a couple of questions for you, though.
+</I>&gt;<i>
+</I>&gt;<i> Are you going to try and dual boot after this Sorcerer installation, or is
+</I>&gt;<i> this the only OS on the computer?
+</I>&gt;<i>
+</I>&gt;<i> If you are going to dual boot, I sure hope you have a backup of your windows
+</I>&gt;<i> stuff.
+</I>&gt;<i> In the case of dual booting, I would suggest backing up everything you find
+</I>&gt;<i> important, then re-installing windows, but taking care to limit it's disk
+</I>&gt;<i> usage by erasing it's partition off the disk, and then making a 10GB
+</I>&gt;<i> partition and installing it into there.
+</I>&gt;<i>
+</I>
+
+&gt;<i> Then, I would read the lilo manual on how to do a successful dual boot.
+</I>
+Dual booting with lilo is basically chaining from
+the lilo to the other boot manager/loader.
+
+On a box with windoze ME installed on a secondary disk then
+Adding this to /etc/lilo.conf.tail
+will allow it lilo to chainload to the other bootloader.
+
+other                   =       /dev/hda
+        label           =       wme
+        password        =       dish
+        boot-as         =       0x80
+
+windoze XP can not be chainloaded by running the bootblock
+of the windoze XP partition.
+That will bring up the windoze XP recovery menu.
+Chaining to bootload a windoze partition on the same
+disk that has lilo and/or a POSIX installed is difficult,
+because the newer windoze versions insist upon
+occupying the MBR, master boot record, of the fixed disk.
+The MBR, is considered the very head of the disk.
+When booting from fixed disk the code in the MBR is loaded
+first and executed.
+Typically, that code then loads the code in the boot block
+of the first partition marked as bootable and runs that.
+However, that might not be the situation with newer windoze.
+
+Lilo can be installed in the boot block
+of an ext2, ext3, or ext4 filesystem.
+Space is reserved at the front of those filesystems
+for a bootloader to be installed.
+So what might happen is that instead of running lilo first,
+perhaps a foreign bootloader is loaded first that runs
+and then chains to lilo in order to boot a POSIX.
+I do not know anything about the windoze NT, XP bootloaders,
+which differ from the simple bootable MBR installed in windoze
+95 and 98.
+
+Although I realize that SAs exist that would do so,
+I would at all costs avoid installing windoze and Sorcerer
+to the same fixed disk on separate partitions.
+Almost always a box has at least one unused EIDE,
+SCSI, or SATA connection.
+Buying a separate fixed disk is worth the cost.
+
+Trying to resize an existing partition
+might cause data loss and/or corruption.
+Before modifying a disk that contains data
+that should not be lost; create a backup.
+Anyone can accidentally overwrite a partition
+that one intends to keep.
+I did it not less than a decade ago.
+
+
+&gt;<i> Again, this is not something I have done in a few years.
+</I>&gt;<i>
+</I>&gt;<i> If, on the other hand, Sorcerer is the only operating system that you are
+</I>&gt;<i> going to install, things are a LOT simpler.
+</I>
+Also if Sorcerer occupies one fixed disk
+and other operating systems exist on other fixed disks
+then that also simplifies chain-loading.
+
+
+&gt;<i> For a one-filesystem install of Sorcerer I would not try it in less than
+</I>&gt;<i> 20GB, and 30GB is recommended.
+</I>
+I use 30G drives.  :)
+Sure, they are small, but if the disks do not crash
+then they are nearly golden.  :)
+But sometimes an extra 10G seems useful.
+
+
+&gt;<i> So, create a partition at the beginning of your disk of about 30GB
+</I>&gt;<i> This partition will be called /dev/sda1 from now on...
+</I>&gt;<i> Make the rest of your hard disk into /dev/sda2 ( just make another
+</I>&gt;<i> filesystem that fills the rest of the disk. )
+</I>
+Parts of a disk can be left unallocated to partitions.
+In that event an existing partition can grow in size
+and so can the filesystem.
+I vaguely recall reading about support for
+growable filesystems with ext2,
+but that was a long time ago.
+Probably, by default Sorcerer does not create
+filesystems that can grow.
+
+Other additional useful partitions could be:
+/home
+/srv
+
+
+&gt;<i> Now, in the Sorcerer install menu you can specify in the partition table
+</I>&gt;<i> that:
+</I>&gt;<i> &#160;/dev/sda1 mounts on /
+</I>&gt;<i> and
+</I>&gt;<i> /dev/sda2 mounts on /home
+</I>
+If a dedicated /home partition is not created
+then /home will reside on the / partition.
+That is not necessarily bad.
+
+
+&gt;<i> However, I have a little word of advice for you. We are not mind-readers,
+</I>&gt;<i> and find it really difficult to help someone without a description of the
+</I>&gt;<i> problem.
+</I>&gt;<i>
+</I>&gt;<i> We would find it very helpful of you could add a short description of the
+</I>&gt;<i> steps you took to get to where you are stuck.
+</I>
+While that is true; many tech support questions are also
+answered by merely conjecture.
+By conjecture the odds of receiving a useful answer
+seem to be around 50%  :)
+Tech support by guessing has a surprisingly
+much better rate of success than I would expect.
+But even so detailed reports tend to receive
+the most useful and helpful replies.
+Also without detailed descriptions replies
+to questions might be sprawling and contain
+much digression that could supply answers
+to future anticipated problems.
+I am probably the #1 culprit of writing
+painfully long email replies.  :)
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001409.html">[Sorcerer-admins] Basic Sorcerer install instructions.
+</A></li>
+	<LI>Next message: <A HREF="001410.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1416">[ date ]</a>
+              <a href="thread.html#1416">[ thread ]</a>
+              <a href="subject.html#1416">[ subject ]</a>
+              <a href="author.html#1416">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

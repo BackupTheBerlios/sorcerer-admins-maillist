@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20menu%20driven%20installer%20on%0A%09sorcerer-ia32-20100122%20seems%20broken%20to%20me&In-Reply-To=%3C596b75861002061344s7897468dye5151561b6c8a5f1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001446.html">
+   <LINK REL="Next"  HREF="001440.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20menu%20driven%20installer%20on%0A%09sorcerer-ia32-20100122%20seems%20broken%20to%20me&In-Reply-To=%3C596b75861002061344s7897468dye5151561b6c8a5f1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Feb  6 22:44:59 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001446.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+        <LI>Next message: <A HREF="001440.html">[Sorcerer-admins] rush release...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1445">[ date ]</a>
+              <a href="thread.html#1445">[ thread ]</a>
+              <a href="subject.html#1445">[ subject ]</a>
+              <a href="author.html#1445">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Feb 6, 2010 at 11:53 AM, bent jakobsen &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jakobsen.bent at gmail.com</A>&gt; wrote:
+
+&gt;<i> Well one can also ask, why do I have a fd0 when I do not need it. It is not
+</I>&gt;<i> needed and therefore it is also my fault to have it.
+</I>&gt;<i> So the fault is also mine.
+</I>
+Not your fault.
+That function was clearly buggy.
+I failed to detect it sooner because I never have
+fd0 enabled in qemu.
+
+&gt;<i> To be frank i'm a bit in doubt right now....was it write or perhaps access?
+</I>
+Probably bash opened it for reading.
+When I saw the code I wrote there before
+I was thinking that I should have had file access it directly.
+
+
+&gt;&gt;<i> Change the try function in
+</I>&gt;&gt;<i> /etc/init.d/find_ir to
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &#160; try(){ while read; do mtest &#160; &quot;$REPLY&quot; &amp;&amp; return; done; false; }
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And that will fix the problem with /etc/init.d/find_ir
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Is this the only change you have made ? I'm just asking so that I can test
+</I>&gt;<i> the complete script.
+</I>
+Only that line there and one line in sinstall
+But the line I changed in sinstall only checks to see
+if a filesystem already exists on a partition and tries
+to identify that filesystem using the file command.
+It should work better
+but if I broke it then it makes no difference.
+
+
+&gt;&gt;<i> I apologize for the inconvenience.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Does not matter that much to me, I'm are just having fun :)
+</I>
+Thanks for the bug report otherwise I would not have known.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001446.html">[Sorcerer-admins] The menu driven installer on	sorcerer-ia32-20100122 seems broken to me
+</A></li>
+	<LI>Next message: <A HREF="001440.html">[Sorcerer-admins] rush release...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1445">[ date ]</a>
+              <a href="thread.html#1445">[ thread ]</a>
+              <a href="subject.html#1445">[ subject ]</a>
+              <a href="author.html#1445">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

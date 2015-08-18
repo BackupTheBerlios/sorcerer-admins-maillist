@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init-scripts again
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-scripts%20again&In-Reply-To=%3CCA%2BT4wDhjgkL4BpvdfEuYGmtJyCns1hpLTE1qY2ZGW-H-Yt%2BhHw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002224.html">
+   <LINK REL="Next"  HREF="002233.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init-scripts again</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init-scripts%20again&In-Reply-To=%3CCA%2BT4wDhjgkL4BpvdfEuYGmtJyCns1hpLTE1qY2ZGW-H-Yt%2BhHw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init-scripts again">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Aug  3 04:28:14 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002224.html">[Sorcerer-admins] Maintenance: 3.8. between 09:00 - 15:00 (local	time, GMT+3)
+</A></li>
+        <LI>Next message: <A HREF="002233.html">[Sorcerer-admins] more init-script improvements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2228">[ date ]</a>
+              <a href="thread.html#2228">[ thread ]</a>
+              <a href="subject.html#2228">[ subject ]</a>
+              <a href="author.html#2228">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I was considering init-scripts again today and was not entirely pleased.
+
+Foremost, on my mind is that SAs must know the exact mode
+to set an init-script and which init-scripts must be a certain mode.
+Merely switching the mode of an important init-script
+might prevent proper running, booting, and shutting down.
+
+Consequently, init-scripts now accept the parameter &quot;control.&quot;
+Or rather init-scripts that accept the parameter &quot;control&quot; will accept it.
+# /etc/init.d/$init_script control
+Running this provides a dialog menu driven interface
+that allows the SA to select if the init-script is run automatically
+and whether the init-script restarts automatically during updates.
+
+By this method init-scripts will properly be mode 510 500 or 400.
+And if the SA is not allowed to change the mode
+then the init-script will not accept the parameter &quot;control&quot;
+
+Hopefully, the above change will help SAs avoid confusion
+while at the same time properly controlling which init-scripts
+run automatically and which init-scripts cast can restart
+after a software update.
+However, I realize that some SAs prefer
+a more elaborate interface.
+Consequently, /etc/init.d/Menu is provided.
+
+# /etc/init.d/Menu configure
+
+The above command provides a list of all the init-scripts
+with some cryptic information that explains their mode
+and when then init-scripts run.
+If it does not make sense at a glance
+then do not ask for an explanation,
+because I am still deciding how it should look.
+However, the first column is the name of init-scripts.
+And that is what is most important.
+Selecting an init-script and pressing enter
+reveals a subsequent menu with parameter choices,
+such as start, stop, restart, reload, status, control, etc...
+Then the SA can confirm and execute the command.
+I have yet to decide if /etc/init.d/Menu is helpful or not,
+but maybe after it is less cryptic
+then it could be helpful?
+
+I still have many additional init-scripts in my revision queue.
+Many will receive the parameter &quot;configure&quot;
+That will enable the SA to run
+# /etc/init.d/$init_script configure
+and to set variables for the init-script
+using a dialog menu driven interface.
+That way the SA will not have to edit
+/etc/init.d/conf.d/$init_script
+and avoid the possibilities of
+mistyped variables and a typo.
+
+The above changes are not a significant improvement.
+They are more like gloves for SAs that are
+learning the ropes of the Sorcerer Init System.
+That way SAs can avoid pinched fingers and friction burns.
+
+&quot;configure&quot; &quot;control&quot; and other such parameters are not
+specified in the LSB.
+However, having such parameters
+makes the init system slightly more intuitive.
+
+Sorcerer tires to provide an intuitive experience for SAs.
+The SA must still go looking for the init system first.
+However, upon arrival Sorcerer provides
+nearly as good a training experience
+as an experienced teacher standing behind
+providing instructions about what to read and study.
+Upon making /etc/init.d/ the present working directory
+then the SA is informed of /etc/init.d/README
+which provides documentation concerning init
+and also some other important information regarding init-scripts.
+It is a good compromise as far as documentation is concerned.
+
+When the changes appear in the grimoire
+SAs will be able to do nearly anything desired
+concerning init-scripts by executing
+# /etc/init.d/Menu configure
+instead of reading the documentation.
+This is a good compromise because many SAs
+have not read LSB documentation and
+have no intention of reading Sorcerer documentation.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002224.html">[Sorcerer-admins] Maintenance: 3.8. between 09:00 - 15:00 (local	time, GMT+3)
+</A></li>
+	<LI>Next message: <A HREF="002233.html">[Sorcerer-admins] more init-script improvements
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2228">[ date ]</a>
+              <a href="thread.html#2228">[ thread ]</a>
+              <a href="subject.html#2228">[ subject ]</a>
+              <a href="author.html#2228">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

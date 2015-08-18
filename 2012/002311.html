@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] About the new I/Rs...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20About%20the%20new%20I/Rs...&In-Reply-To=%3CCA%2BT4wDhLR9wPpf_3kGRFsOPwX12KbyscjmbtAqg0FRr-ojL39A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002310.html">
+   <LINK REL="Next"  HREF="002312.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] About the new I/Rs...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20About%20the%20new%20I/Rs...&In-Reply-To=%3CCA%2BT4wDhLR9wPpf_3kGRFsOPwX12KbyscjmbtAqg0FRr-ojL39A%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] About the new I/Rs...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Apr 22 19:14:39 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002310.html">[Sorcerer-admins] new I/Rs
+</A></li>
+        <LI>Next message: <A HREF="002312.html">[Sorcerer-admins] About the new I/Rs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2311">[ date ]</a>
+              <a href="thread.html#2311">[ thread ]</a>
+              <a href="subject.html#2311">[ subject ]</a>
+              <a href="author.html#2311">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The first bug effected only those that tried installing
+from the new I/R within 1 hour of my announcement.
+I forgot to update the provided version of grimoire-sentient.
+This was not a bug with the I/R, but something I forgot to do elsewhere.
+But it is now fixed and so the new I/R will install new software.
+
+The new software provided on the I/R contains security updates for xorg,
+KDE version 4.8.1, a recent version of firefox, and pidgin.
+Pidgin is new to this release of &quot;Sorcerer Sentient.&quot;
+It requires an extreme amount of additional libraries,
+but provides a very nice universal chat client that
+is also compatible with google talk.
+
+I realize that SA probably prefer IRC.
+However, the generation that came later expect that
+ICQ, and all similar chat protocols/programs,
+were the first methods for chatting over the Internet,
+because those were the methods that they first used.
+And so that was the reason for adding pidgin.
+
+Naturally, a considerable amount of software is not provided
+by the default &quot;Sorcerer Sentient&quot; installation.
+That software is still available to those who do a &quot;Sorcerer Modern
+Magic&quot; installation
+or who transition a box to &quot;Sorcerer Modern Magic.&quot;
+&quot;Sorcerer Sentient&quot; is still aimed at providing a decent selection
+of potentially useful software to novice level computer users.
+
+These I/Rs received basic testing of the &quot;novice&quot; level installer,
+because I made minor changes and wanted to verify that
+I did not break anything.
+The installer no longer creates a swap file as the first entry.
+Boxes should have sufficient installed RAM.
+Some of the compressed archives will require nearly 400M of RAM in
+order to decompress.
+Therefore, Sorcerer requires a box with at least 1G of RAM  installed.
+Any less then expect failures if not major swapping.
+
+I am already considering what I want provided on the next I/R
+and on the next &quot;Sorcerer Sentient&quot; release.
+Suggestions are welcome.
+The next release is expected in 3 to 6 months from now.
+3 months if the software catalog looks very good at the time.
+Or 6 months if free software looks problematic or improvements
+and subprojects are causing reasons for delays.
+
+The I/R and the archives provided for &quot;Sorcerer Sentient&quot; installation
+are a matched set.
+Existing I/Rs are now obsolete for the purpose of installing &quot;Sorcerer Sentient&quot;
+Whether they work properly or cause 100+ pre-installed software
+projects to compile
+newer versions is not known nor tested.
+Therefore, anyone who wants to install, please download and use the new I/Rs.
+After much pounding I managed to compact them
+to almost the same size as the previous I/Rs.
+
+As usual please report bugs.
+If no serious show-stopping bugs exist
+then immediate bug fix re-releases will not happen
+and the next release will be considered in about 3 months.
+And please do not assume that I am aware of a bug.
+The I/Rs work for me which is why I was able to create
+and provide the large set of archives for rapid deployment
+of &quot;Sorcerer Sentient&quot; boxes.
+I use a qemu-kvm virtual machine for testing.
+The experience of installing on various real hardware configurations may vary.
+
+As requested I attempted to provide improvements to make the new I/R
+more wireless network friendly.
+wpa_supplicant daemon is started during boot.
+It uses file /etc/wpa_supplicant/wpa_supplicant.conf as it's configuration file.
+Proper modification of that file is required in order to connect to a
+WPA encrypted network.
+It will probably look something like below.
+
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=wpa_priv
+
+network={
+ssid=&quot;network_name&quot;
+scan_ssid=0
+key_mgmt=WPA-PSK
+psk=&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">some_Amaz1ng_P at ssworD</A>&quot;
+}
+
+
+Modify the ssid= and psk= lines in the above example
+will work on a WPA-PSK encrypted wireless network.
+Restarting wpa_supplicant is easy.
+# /etc/init.d/wpa_supplicant restart
+Then launch dhcpcd if automatic configuration is desired.
+
+If /etc/init.d/wpa_supplicant/wpa_supplicant.conf exists at boot and is correct
+then a automatic network configuration will probably be attempted and used.
+Otherwise add a properly modified template to /etc/networks.d/
+Documentation is in /etc/networks.d/templates/README
+# less /etc/networks.d/templates/README
+Basically it is a copy and modify a simple file type of configuration process.
+
+Any box with an ethernet cable connection to the router
+will automatically configure it's network during boot.
+That is both convenient and also how I test the new I/Rs.
+Good luck.
+Hopefully, the new I/Rs will provide a happy fun experience for everyone.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002310.html">[Sorcerer-admins] new I/Rs
+</A></li>
+	<LI>Next message: <A HREF="002312.html">[Sorcerer-admins] About the new I/Rs...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2311">[ date ]</a>
+              <a href="thread.html#2311">[ thread ]</a>
+              <a href="subject.html#2311">[ subject ]</a>
+              <a href="author.html#2311">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

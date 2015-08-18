@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20prohibits%20ctrl-alt-F%23%20%3F&In-Reply-To=%3C596b75860806180922k5a061e97q6faf162029e196c5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000518.html">
+   <LINK REL="Next"  HREF="000520.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20prohibits%20ctrl-alt-F%23%20%3F&In-Reply-To=%3C596b75860806180922k5a061e97q6faf162029e196c5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jun 18 18:22:04 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000518.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+        <LI>Next message: <A HREF="000520.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#519">[ date ]</a>
+              <a href="thread.html#519">[ thread ]</a>
+              <a href="subject.html#519">[ subject ]</a>
+              <a href="author.html#519">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks for the report.
+I will look into the
+System-&gt;Screen resolution
+application problem to see if it
+is also missing for me.
+I would expect that it may be due
+to the content of /etc/X11/xorg.conf
+not having a subsection of Section &quot;Screen&quot;
+such as:
+
+    SubSection     &quot;Display&quot;
+        Viewport    0 0
+        Depth       24
+        Modes      &quot;1024x768&quot; &quot;800x600&quot; &quot;640x480&quot;
+    EndSubSection
+
+Without alternate modes specified in
+/etc/X11/xorg.conf
+there may not be any choices for a
+different resolution than what X
+decides to start with.
+
+Since I like the screen's appearance better in
+1024x768 than 1280x1024 I use modes to
+specify that I do not want 1280x1024 since
+it might be selected automatically if I let
+X make the choice.
+My preference is do to the ancient CRT monitors
+that I use and not font size.  :)
+
+Then again, there may be something missing
+from the gnome installation on that box
+which is required to adjust screen resolution?
+However, I recommend checking
+/etc/X11/xorg.conf
+because it fast to check and fast to fix.
+
+
+On Wed, Jun 18, 2008 at 8:49 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> On Tue, Jun 17, 2008 at 4:01 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Does the problem persist after updating to gdm version 2.20.6, please?
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Login successful.
+</I>&gt;<i>
+</I>&gt;<i> There's a System-&gt;Screen resolution applicatoin that has no content
+</I>&gt;<i> (it has a copule controls, combobox thing, buttons...) just no
+</I>&gt;<i> choices.
+</I>&gt;<i>
+</I>&gt;<i> still can't change screens. (hrm...startx doesn't either)
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000518.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+	<LI>Next message: <A HREF="000520.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#519">[ date ]</a>
+              <a href="thread.html#519">[ thread ]</a>
+              <a href="subject.html#519">[ subject ]</a>
+              <a href="author.html#519">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

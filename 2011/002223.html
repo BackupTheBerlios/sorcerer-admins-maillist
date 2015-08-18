@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] -O3 optimizations...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3COF074DB9A5.DADDF032-ONC22578DF.001E3FD0-C22578DF.00206876%40sofor.fi%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002222.html">
+   <LINK REL="Next"  HREF="002225.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] -O3 optimizations...</H1>
+    <B>Pekka.Panula at sofor.fi</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20-O3%20optimizations...&In-Reply-To=%3COF074DB9A5.DADDF032-ONC22578DF.001E3FD0-C22578DF.00206876%40sofor.fi%3E"
+       TITLE="[Sorcerer-admins] -O3 optimizations...">Pekka.Panula at sofor.fi
+       </A><BR>
+    <I>Mon Aug  1 07:53:58 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002222.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+        <LI>Next message: <A HREF="002225.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2223">[ date ]</a>
+              <a href="thread.html#2223">[ thread ]</a>
+              <a href="subject.html#2223">[ subject ]</a>
+              <a href="author.html#2223">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ah, gcc optimizations. I have used -O3 and always there is some things 
+that go broke. 
+Maybe you do not notice it right a away but years ago when i played cflags 
+i learned that do not bother to use -O3 because it brokes more than it 
+make things go faster. 
+I havent study newer GCC versions if there has been any improvements but i 
+think -march=native is good option (or you could also use -mtune=native) 
+if you are doing local builds and also -fpmath=sse (on 32-bit compiler 
+this needs also -msse or -msse2) should be usefull option. 
+
+I vote for -O2 anytime, -Os is also not usefull anymore. I think there was 
+also a message that Linux kernel removed -Os from its flags because it did 
+not made sense anymore with current CPUs. There was some test runs that 
+showed -O2 and -Os produced about same amount cache misses, but O2 was 
+about 8-10 % faster (on some one benchmark)  than Os...In that light O2 
+wins by default. 
+
+Terveisin/Regards,
+   Pekka Panula, Sofor Oy - Jatkuvat palvelut
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110801/ef1a768c/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110801/ef1a768c/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002222.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+	<LI>Next message: <A HREF="002225.html">[Sorcerer-admins] -O3 optimizations...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2223">[ date ]</a>
+              <a href="thread.html#2223">[ thread ]</a>
+              <a href="subject.html#2223">[ subject ]</a>
+              <a href="author.html#2223">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

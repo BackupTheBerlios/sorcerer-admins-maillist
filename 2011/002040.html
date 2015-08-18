@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gdm failure
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20failure&In-Reply-To=%3CAANLkTikt_LeEgAywkFS6CCDFLsAS_QUPPb80_aN499tF%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002039.html">
+   <LINK REL="Next"  HREF="002041.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gdm failure</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20failure&In-Reply-To=%3CAANLkTikt_LeEgAywkFS6CCDFLsAS_QUPPb80_aN499tF%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gdm failure">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Jan  3 15:27:24 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002039.html">[Sorcerer-admins] gdm failure
+</A></li>
+        <LI>Next message: <A HREF="002041.html">[Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2040">[ date ]</a>
+              <a href="thread.html#2040">[ thread ]</a>
+              <a href="subject.html#2040">[ subject ]</a>
+              <a href="author.html#2040">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sun, Jan 2, 2011 at 10:40 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> Hmm I did recast libvorbis, which should have installed libvrobisfile,
+</I>&gt;<i> the .la file has no reference to /usr/lib ... I did that cast command
+</I>&gt;<i> there, it didn't find anything...
+</I>
+If spell config.site is installed properly
+then libvorbis will probably install into /usr/lib64/
+on x86_64 architecture.
+
+&gt;<i> I did check in cd /etc/sorcery/log/install
+</I>&gt;&gt;<i> # cast $( grep -l &quot;\.la$&quot; * ) hmm... something like that I actually did
+</I>
+When grepping I advise either grepping the compile log
+after the cast is complete or grepping the install log such as:
+
+# augur install libvorbis | grep &quot;\.la$&quot;
+/usr/lib/libvorbis.la
+/usr/lib/libvorbisenc.la
+/usr/lib/libvorbisfile.la
+/usr/lib64/libvorbis.la
+/usr/lib64/libvorbisenc.la
+/usr/lib64/libvorbisfile.la
+
+My test box is multiarch so it appears in both places, however...
+
+
+# augur install libvorbis | grep &quot;\.so\..\..\..&quot; | xargs file
+/usr/lib/libvorbis.so.0.4.5:       ELF 32-bit LSB shared object, Intel
+80386, version 1 (SYSV), dynamically linked, stripped
+/usr/lib/libvorbisenc.so.2.0.8:    ELF 32-bit LSB shared object, Intel
+80386, version 1 (SYSV), dynamically linked, stripped
+/usr/lib/libvorbisfile.so.3.3.4:   ELF 32-bit LSB shared object, Intel
+80386, version 1 (SYSV), dynamically linked, stripped
+/usr/lib64/libvorbis.so.0.4.5:     ELF 64-bit LSB shared object,
+x86-64, version 1 (SYSV), dynamically linked, stripped
+/usr/lib64/libvorbisenc.so.2.0.8:  ELF 64-bit LSB shared object,
+x86-64, version 1 (SYSV), dynamically linked, stripped
+/usr/lib64/libvorbisfile.so.3.3.4: ELF 64-bit LSB shared object,
+x86-64, version 1 (SYSV), dynamically linked, stripped
+
+The one's in /usr/lib/ are ELF 32-bit
+and the ones in /usr/lib64/ are ELF 64-bit.
+
+
+&gt;<i> &#160;cast $(grep \\\.la * |grep lib/ | sed 's/\([^:]*\):.*/\1/g' |sort -u)
+</I>&gt;<i>
+</I>&gt;<i> so any .la in lib/ ... but anyhow libvorbis wasn't in /usr/lib as
+</I>&gt;<i> indicated by it's .la...also when I tried to take the config line from
+</I>&gt;<i> config.log and re-run the configure to see if that had anything, it
+</I>&gt;<i> failed to find doctool or something(?) ... I guess cast runs in a
+</I>&gt;<i> different environment?
+</I>
+Yes cast does run in a different environment.
+And gnome-doc-tools might not be installed correctly.
+If the *.pc files are not in directories such as
+/usr/lib/pkgconfig/ and /usr/lib64/pkgconfig/
+then augur sync and recast gnome-doc-utils.
+I might have bugged that up for a few days or not
+or it might have only been bugged on multilib architecture.
+I checked it, corrected it, and recast it recently on the test box.
+
+&gt;<i> Is there a way to 'augur event' and just get what the last events were
+</I>&gt;<i> ?
+</I>
+# augur event 1
+
+The shows events for the most recent 24 hour period.
+
+&gt;<i> there was a whole mess of spells that came back auto-failed after
+</I>&gt;<i> the above cast...
+</I>&gt;<i>
+</I>&gt;<i> Sun 02 Jan 2011 07:00:31 AM PST &#160;scim &#160;1.4.9 &#160;Fore &#160;FAIL Auto
+</I>&gt;<i> Sun 02 Jan 2011 09:24:31 PM PST &#160;scim &#160;1.4.9 &#160;Fore &#160;Cast ELF
+</I>&gt;<i> Sun 02 Jan 2011 09:24:31 PM PST &#160;scim &#160;1.4.9 &#160;Fore &#160;Miss ELF
+</I>&gt;<i> Sun 02 Jan 2011 09:25:55 PM PST &#160;scim &#160;1.4.9 &#160;Fore &#160;FAIL Auto
+</I>&gt;<i> Sun 02 Jan 2011 09:34:29 PM PST &#160;scim &#160;1.4.9 &#160;Fore &#160;Cast SA
+</I>
+scim might require libraries that are no longer instaled.
+scim might also fail casting.
+I am using ibus at the moment.
+I used to use scim.
+Both are input managers.
+ibus is a bit more difficult to use if Python is not installed correctly
+since ibus uses Pytho.
+input managers are only requires if one wants to input characters
+that can not normally be typed on a keyboard such as
+Japanese hiragana, katakana, and kanji.
+
+
+&gt;<i> if Miss ELF, what do I do to find out which it's missing?
+</I>
+Usually that is not important.
+However, the information is recorded in the file for that event log.
+cat it to read it.
+Sorry, I have not yet decided upon an eloquent way
+to display the content of event logs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002039.html">[Sorcerer-admins] gdm failure
+</A></li>
+	<LI>Next message: <A HREF="002041.html">[Sorcerer-admins] Maintenance on thursday 6.1 - sorcerer.silverice.org and ppr64.silverice.org downtime
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2040">[ date ]</a>
+              <a href="thread.html#2040">[ thread ]</a>
+              <a href="subject.html#2040">[ subject ]</a>
+              <a href="author.html#2040">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer installation
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20installation&In-Reply-To=%3Cv2i27f41a931004171053oa381eb04j2f9d3a3bb0b8da48%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001565.html">
+   <LINK REL="Next"  HREF="001569.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer installation</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20installation&In-Reply-To=%3Cv2i27f41a931004171053oa381eb04j2f9d3a3bb0b8da48%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer installation">evorster at gmail.com
+       </A><BR>
+    <I>Sat Apr 17 19:53:22 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001565.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+        <LI>Next message: <A HREF="001569.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1566">[ date ]</a>
+              <a href="thread.html#1566">[ thread ]</a>
+              <a href="subject.html#1566">[ subject ]</a>
+              <a href="author.html#1566">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Agreed on the x.y.0 releases.
+
+An SA that really wants the latest can always issue:
+
+augur progress $SPELL x.y.0
+
+Thanks for all the effort you put into Sorcery, Kyle.
+
+-Evert-
+
+On Sat, Apr 17, 2010 at 5:47 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Sorry about the slow email responses.
+</I>&gt;<i> I have been busy.
+</I>&gt;<i> However, I am making good progress.
+</I>&gt;<i> Coming soon to a grimoire near you,
+</I>&gt;<i> I plan to have ready the new spells:
+</I>&gt;<i>
+</I>&gt;<i> gcc-core
+</I>&gt;<i> gcc-fortran
+</I>&gt;<i> gcc-g++
+</I>&gt;<i> gcc-java
+</I>&gt;<i> gcc-objc
+</I>&gt;<i>
+</I>&gt;<i> As usual there is no coincidence that these spells
+</I>&gt;<i> have the same names as the source tarballs.
+</I>&gt;<i> gcc-core provides C
+</I>&gt;<i> gcc-g++ provides C++ and libstdc++-v3
+</I>&gt;<i> And the rest are easily guessed, yes?
+</I>&gt;<i>
+</I>&gt;<i> Using these spells provides some simple advantages.
+</I>&gt;<i> First, there is no more menu on a single gcc spell to allow
+</I>&gt;<i> the SA to select which compilers and libraries to create.
+</I>&gt;<i> Instead if a source requires a fortran compiler to compile
+</I>&gt;<i> then that spell can require gcc-fortran.
+</I>&gt;<i> Likewise if a source requires and objective C compiler
+</I>&gt;<i> then that spell can require gcc-objc.
+</I>&gt;<i>
+</I>&gt;<i> Unfortunately, gcc is not as clean cut as that.
+</I>&gt;<i> The other language compilers are built on top of gcc-core.
+</I>&gt;<i> Therefore, compiling each new language also requires
+</I>&gt;<i> the re-compilation of a gcc.
+</I>&gt;<i> However, the spells prevent overlapping file installation.
+</I>&gt;<i> Therefore, for example gcc-g++ requires gcc-core
+</I>&gt;<i> and does not install the same files as gcc-core.
+</I>&gt;<i>
+</I>&gt;<i> I realize that in some ways this is slightly annoying
+</I>&gt;<i> like what a pre-compiled binary based distro would do.
+</I>&gt;<i> However, a pre-compiled binary based distro would provide
+</I>&gt;<i> a package for libstdc++-v3 ELF libraries,
+</I>&gt;<i> a package for libstdc++-v3 ar libraries
+</I>&gt;<i> a package for libstdc++-v3 header files,
+</I>&gt;<i> a package for c++ executables.
+</I>&gt;<i> And maybe even more packages than that
+</I>&gt;<i> just pertaining to the handling of gcc's c++?
+</I>&gt;<i> The outcome, as usual, would look as if
+</I>&gt;<i> the packagers force-fed the gcc tarball
+</I>&gt;<i> a metal pineapple and pulled the pin.
+</I>&gt;<i>
+</I>&gt;<i> However, the new additional spells for gcc
+</I>&gt;<i> in the Sorcerer grimoire follow the natural division
+</I>&gt;<i> that the gcc software authors decided would be
+</I>&gt;<i> useful for precise downloading and compilation.
+</I>&gt;<i> So this is far from the package insanity of a pre-compiled
+</I>&gt;<i> binary based distro with it's gazillions of installed packages.
+</I>&gt;<i>
+</I>&gt;<i> Most boxes will probably only install gcc-core and gcc-g++
+</I>&gt;<i>
+</I>&gt;<i> 26336901 gcc-core-4.4.3.tar.bz2
+</I>&gt;<i>  5945033 gcc-g++-4.4.3.tar.bz2
+</I>&gt;<i> 62944934 gcc-4.4.3.tar.bz2
+</I>&gt;<i>
+</I>&gt;<i> That is approximately half the download as
+</I>&gt;<i> compared to downloading a full gcc-4.4.3.tar.bz2
+</I>&gt;<i> The bad news is that for updates
+</I>&gt;<i> no automatic patching from
+</I>&gt;<i> gcc-4.3.3.tar to gcc-core-4.4.3.tar
+</I>&gt;<i> will happen.
+</I>&gt;<i>
+</I>&gt;<i> Most boxes will do the full 30M download for the update,
+</I>&gt;<i> unless the SA wants to modify the spells first,
+</I>&gt;<i> download, then undo the modifications.
+</I>&gt;<i> Such as changing the source for
+</I>&gt;<i> gcc-core-$VERSION.tar.bz2 to
+</I>&gt;<i> gcc-$VERSION.tar.bz2
+</I>&gt;<i> and changing it's versions to
+</I>&gt;<i> stable core-4.4.3 4.3.3
+</I>&gt;<i> And then re-merging the grimoire after downloads complete.
+</I>&gt;<i> I do not recommend using the SPR in this fashion
+</I>&gt;<i> unless one is comfortable with modifying the spells.
+</I>&gt;<i> Since most source tarballs only change the version portion
+</I>&gt;<i> of a source tarball's filename
+</I>&gt;<i> sorcery's support for arbitrary source tarball
+</I>&gt;<i> translation was removed a long time ago.
+</I>&gt;<i>
+</I>&gt;<i> Lastly, the gcc spells are lagging behind the currently
+</I>&gt;<i> available version of gcc.
+</I>&gt;<i> Why?
+</I>&gt;<i> The most obvious reason is that I am too lazy
+</I>&gt;<i> to detect compile problems
+</I>&gt;<i> and write patches to make 3000+ existing software
+</I>&gt;<i> project's sources compile with gcc released just a week ago.
+</I>&gt;<i> Secondly, one would hope that gcc version 4.4.3
+</I>&gt;<i> would have fewer bugs than gcc version 4.4.0 and
+</I>&gt;<i> fewer bugs than gcc version 4.5.0.
+</I>&gt;<i>
+</I>&gt;<i> Everyone tends to expect that the newest gcc is so much
+</I>&gt;<i> faster at compilation and creates faster code and has better
+</I>&gt;<i> optimization, etc...
+</I>&gt;<i> However, over the course of a decade
+</I>&gt;<i> gcc has become larger and slower.
+</I>&gt;<i>
+</I>&gt;<i> 12,911,721 Mar 22  2001 gcc-2.95.3.tar.gz
+</I>&gt;<i> 82,047,480 Jan 21 13:32 gcc-4.4.3.tar.gz
+</I>&gt;<i>
+</I>&gt;<i> See?
+</I>&gt;<i> The only thing missed by hanging back a few versions
+</I>&gt;<i> is bugs and compile errors.
+</I>&gt;<i>
+</I>&gt;<i> Recently, someone asked me.
+</I>&gt;<i> &quot;Is there support for use of development versions
+</I>&gt;<i> of gcc with Sorcerer?&quot;
+</I>&gt;<i>
+</I>&gt;<i> Many spells do support the easy installation
+</I>&gt;<i> of developmental versions.
+</I>&gt;<i> However, spells like gcc will not support
+</I>&gt;<i> developmental versions.
+</I>&gt;<i> gcc also takes a good step backwards
+</I>&gt;<i> and away from the edge of stability
+</I>&gt;<i> in order to avoid the introduction of new compile errors
+</I>&gt;<i> to software that previously tested okay
+</I>&gt;<i> and also to avoid the potential of runtime errors
+</I>&gt;<i> that could be caused by bugs in gcc's compiler.
+</I>&gt;<i>
+</I>&gt;<i> gcc version 4.5.0 has become available.
+</I>&gt;<i> And in my way of thinking that indicates that
+</I>&gt;<i> now is a good time to try the update to version 4.4.3
+</I>&gt;<i> which might be the last of the version 4.4.x releases of gcc.
+</I>&gt;<i>
+</I>&gt;<i> In the past some people with little or no experience with Sorcerer
+</I>&gt;<i> have criticized Sorcerer for being a
+</I>&gt;<i> &quot;bleeding edge distro&quot; or &quot;unstable distro.&quot;
+</I>&gt;<i> That is entirely untrue.
+</I>&gt;<i> By default the software installed on Sorcerer boxes
+</I>&gt;<i> are almost entirely stable releases
+</I>&gt;<i> except when a stable release
+</I>&gt;<i> is deprecated and no longer compiles.
+</I>&gt;<i>
+</I>&gt;<i> And until recent years,
+</I>&gt;<i> Sorcerer did not back away from providing the most current
+</I>&gt;<i> stable release of gcc.
+</I>&gt;<i> However, after a decade of headaches caused by gcc updates
+</I>&gt;<i> we now make the concession that avoiding the
+</I>&gt;<i> x.y.0 version is best.
+</I>&gt;<i> And we might start doing that with both gnome and KDE releases,
+</I>&gt;<i> because of the careless errors and omissions in their .0 releases
+</I>&gt;<i> that cause additional effort required to create spells that
+</I>&gt;<i> fix those problems and are able to compile the software.
+</I>&gt;<i>
+</I>&gt;<i> For example: eel version 2.26.0 would not compile.
+</I>&gt;<i> ell version 2.26.0 was the most recently available version of eel
+</I>&gt;<i> at the time of the gnome 2.30.0 update.
+</I>&gt;<i> The eel software author removed prototypes for functions
+</I>&gt;<i> that he no longer wanted included in eel because the functions
+</I>&gt;<i> that those function relied upon are no longer included in
+</I>&gt;<i> libgnomeui
+</I>&gt;<i> However, the eel software author
+</I>&gt;<i> left the actual functions in source files.
+</I>&gt;<i> And therefore, I had to realize this problem and write a patch
+</I>&gt;<i> to remove the stale functions
+</I>&gt;<i> thereby fixing the eel source so it would compile.
+</I>&gt;<i>
+</I>&gt;<i> For example when KDE 4.4.0 was released.
+</I>&gt;<i> KDE 4.4.0 required phonon version 4.3.80
+</I>&gt;<i> Where was the phonon 4.3.80 source tarball provided for download?
+</I>&gt;<i> Not on their ftp server.
+</I>&gt;<i> After realizing that newer version of phonon was required
+</I>&gt;<i> I fetched the source from svn and
+</I>&gt;<i> then created a diff style patch
+</I>&gt;<i> to translate the 4.3.0 source tree into the 4.4.0 source tree.
+</I>&gt;<i>
+</I>&gt;<i> Yes, handling of such bugs seem like trivial changes.
+</I>&gt;<i> But such adjustments are only quick and easy to accomplish
+</I>&gt;<i> only if one already knows what must be done.
+</I>&gt;<i> Figuring out the problems and deciding upon the solution
+</I>&gt;<i> can take minutes or even hours of additional effort.
+</I>&gt;<i> If I had not been doing those updates for Sorcerer
+</I>&gt;<i> then as a regular SA I would have skipped those updates entirely.
+</I>&gt;<i>
+</I>&gt;<i> Do I seem to be complaining?
+</I>&gt;<i> I am not complaining.
+</I>&gt;<i> I am making a point that sometimes avoiding the *.0 releases
+</I>&gt;<i> might avoid having to put forth extra effort to compensate
+</I>&gt;<i> for the bugs that the software authors left intact.
+</I>&gt;<i>
+</I>&gt;<i> So in the future if Sorcerer omits providing *.0 releases of
+</I>&gt;<i> gcc, glibc, kde, or gnome
+</I>&gt;<i> then please remember that
+</I>&gt;<i> I do not have an unlimited amount of time
+</I>&gt;<i> to detect and fix the bugs and omissions
+</I>&gt;<i> in these software projects.
+</I>&gt;<i> Also the bug-fixed *.1 releases are often
+</I>&gt;<i> not far behind the *.0 releases.
+</I>&gt;<i>
+</I>&gt;<i> The time elapse between kde 4.4.0 and kde 4.4.1 release
+</I>&gt;<i> was approximately 17 days.
+</I>&gt;<i> That was well worth the wait because the kde screen locking
+</I>&gt;<i> program in kde 4.4.0 would crash and unlock the screen
+</I>&gt;<i> after an incorrect password was supplied a second time.
+</I>&gt;<i> With that consideration in hindsight
+</I>&gt;<i> I wish that I had avoided the kde 4.4.0 release.
+</I>&gt;<i> The thrill of new software lasts for an hour,
+</I>&gt;<i> but the bugs last for about 0.5 to 1.5 months.
+</I>&gt;<i>
+</I>&gt;<i> So in the future please do not be surprised
+</I>&gt;<i> if Sorcerer takes a more conservative approach to updating
+</I>&gt;<i> and skips some *.0 stable releases.
+</I>&gt;<i> We are not trying to second guess
+</I>&gt;<i> the software author about what is stable.
+</I>&gt;<i> Rather from years of hindsight the *.0 stable releases
+</I>&gt;<i> often turn out to be less stable than expected.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100417/f5419bba/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100417/f5419bba/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001565.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+	<LI>Next message: <A HREF="001569.html">[Sorcerer-admins] Sorcerer installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1566">[ date ]</a>
+              <a href="thread.html#1566">[ thread ]</a>
+              <a href="subject.html#1566">[ subject ]</a>
+              <a href="author.html#1566">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

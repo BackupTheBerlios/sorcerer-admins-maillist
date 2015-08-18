@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] holding your breath while waiting for updates?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTilPTALk9VUF30LKb4H_PK3R9Cyj-v0BbNzhsGar%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001652.html">
+   <LINK REL="Next"  HREF="001660.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] holding your breath while waiting for updates?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20holding%20your%20breath%20while%20waiting%20for%20updates%3F&In-Reply-To=%3CAANLkTilPTALk9VUF30LKb4H_PK3R9Cyj-v0BbNzhsGar%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] holding your breath while waiting for updates?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Jun 17 03:50:07 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001652.html">[Sorcerer-admins] svn ending with SIGTERM (15)
+</A></li>
+        <LI>Next message: <A HREF="001660.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1658">[ date ]</a>
+              <a href="thread.html#1658">[ thread ]</a>
+              <a href="subject.html#1658">[ subject ]</a>
+              <a href="author.html#1658">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Testing this time required longer than usual.
+But the testing is progressing.
+Soon a new glibc and KDE-v4 will be available.
+
+Additionally, I was playing around with prelink.
+Yes, it is a waste of time.
+But some might misjudge Sorcerer for avoiding it.
+
+I have integrated prelinking with cast again.
+Prelinking will not modify the libraries that not owned by the spell being cast.
+Years ago that either was not possible with prelink,
+or required modification of prelink's source
+or was something that
+I did not allocate enough time to figure out.
+However, now it seems to work.
+Naturally, the first spell prelinked must be glibc.
+That is because every ELF prelinks with ELF libraries from glibc.
+
+Anything that casts will attempt to prelink it's ELF libraries
+and prelink it's ELF executables with ELF libraries that
+are already prelinked or being prelinked for the spell being cast.
+Therefore, some or all of the files attempting to prelink might not be
+prelinked.
+
+For example, let's say that a box has glibc prelinked
+and is casting gmp
+/usr/lib/libgmp.so.3.5.2
+will prelink
+However,
+/usr/lib/libgmpxx.so.4.1.2
+will not prelink unless the installed libstdc++
+provided by gcc-g++ was prelinked before.
+So in this example
+only part of the installed ELF libraries
+installed by gmp will prelink.
+That is not bad.
+
+So the next question on many SAs minds might be, &quot;What is prelinking?&quot;
+When ELF executables run then libraries must be loaded and symbols resolved.
+prelinking allows for part of that to happen in advance in a somewhat static way
+so that ELF executables can load with a bit less CPU usage.
+Does this make programs run faster?
+No.
+If a program is loaded repeatedly
+then the very slight speed gain from prelinking
+will allow that program to run more times per second
+than it would if the program was not prelinked.
+
+Q: So does prelinking make a difference?
+A: Not at all.
+Q: Should I recompile all installed software on a box
+  in order to gain an advantage from prelinking?
+A: No that will just add wear and tear to the fixed disk.
+Q: Do I invoke prelink from a command line?
+A: No prelink is automatically invoked by cast
+and running it from command line should not prelink anything.
+
+If a program is to be loaded and run repeatedly
+oh like 1000 times per second
+and that is maxing the cores
+then prelinking the program might allow it to run 2000 times per second.
+That might expedite incredibly bad written shell scripts.
+But it has no effect on sorcery,
+because the sorcery tools are efficient fast scripts.
+
+Maximum repeated start up speed for a program is achieved
+when the program is statically linked and already in the kernel's cache.
+No relocation, no ELF libraries.
+Such programs are rare on Sorcerer,
+but I have decided to add another.
+
+/usr/libexec/ccache/ccache is now statically linked.
+Even faster than a static linked ccache is
+a static linked unstable version of ccache.
+Unfortunately, it is not compatible
+with old saved ccached object files.
+But it is plenty fast on the re-compile
+and might now be the fastest of any compiler cache type program.
+Hopefully, the 3.0 stable release of ccache will be soon.
+Basically, any upgrade of gcc or ccache invalidates
+all the saved object files.
+Yup, everything in /var/cache/ccache/ goes to waste.
+
+However, suggestions and feedback do not go to waste.
+I put the suggestions about setsid to good use.
+Thanks.
+With newer sorcery the augur abort function will
+properly kill all the processes that it should kill
+and should not leave a configure script hanging.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001652.html">[Sorcerer-admins] svn ending with SIGTERM (15)
+</A></li>
+	<LI>Next message: <A HREF="001660.html">[Sorcerer-admins] holding your breath while waiting for updates?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1658">[ date ]</a>
+              <a href="thread.html#1658">[ thread ]</a>
+              <a href="subject.html#1658">[ subject ]</a>
+              <a href="author.html#1658">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

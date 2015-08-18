@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] .xz files don't get handled right?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20.xz%20files%20don%27t%20get%20handled%20right%3F&In-Reply-To=%3Co2i596b75861005041753s571c9b7dsc0e400d62bf50d09%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001585.html">
+   <LINK REL="Next"  HREF="001584.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] .xz files don't get handled right?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20.xz%20files%20don%27t%20get%20handled%20right%3F&In-Reply-To=%3Co2i596b75861005041753s571c9b7dsc0e400d62bf50d09%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] .xz files don't get handled right?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed May  5 02:53:48 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001585.html">[Sorcerer-admins] .xz files don't get handled right?
+</A></li>
+        <LI>Next message: <A HREF="001584.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1588">[ date ]</a>
+              <a href="thread.html#1588">[ thread ]</a>
+              <a href="subject.html#1588">[ subject ]</a>
+              <a href="author.html#1588">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>minileech might be broke.
+I have not used it in years.
+It was a SA request thing.
+
+As for protocols...
+That was broke.
+It was broke because IANA changed the filename
+and download location for that file.
+We found out the hard way.
+Fortunately, boxes did not end up with
+an empty /etc/protocols file
+I already fixed the scripts that download from IANA
+and roll the monthly services and protocols tarballs.
+It really is not a problem with xz otherwise
+services would not have updated also since
+that is provided as a .tar.xz
+and sorcery would not update also since
+that is provided as a .tar.xz
+
+I might be wrong since I have done only limited testing.
+However, xz seems as stable as gzip
+and at the moment far more reliable a library than zlib
+Consequently, we are still staying with zlib version 1.2.3
+until the bugs are worked out of zlib version 1.2.5
+
+
+On Tue, May 4, 2010 at 1:40 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> okay - protocols is another one that was failing. &#160; In
+</I>&gt;<i> /var/tmp/failed/protocols/ was a single file 'protocols' which was
+</I>&gt;<i> empty. &#160;I extracted the 7zip
+</I>&gt;<i>
+</I>&gt;<i> &#160;168 pr 30 17:00 /var/cache/sources/protocols/2010-5/protocols-2010-5.tar.xz
+</I>&gt;<i>
+</I>&gt;<i> the tar is 10k, ahe the protocols file in the tar is 0 bytes. &#160;Not
+</I>&gt;<i> sure what's in the tar.
+</I>&gt;<i>
+</I>&gt;<i> the file can be gotten at <A HREF="http://d3x0rbbs.homeip.net:85/protocols-2010-5.tar.xz">http://d3x0rbbs.homeip.net:85/protocols-2010-5.tar.xz</A>
+</I>&gt;<i>
+</I>&gt;<i> shrug - deleting and recasting
+</I>&gt;<i>
+</I>&gt;<i> uhmm... no it's not downloading... tried minileech, fails to retrieve
+</I>&gt;<i> file from sorcerer.silverice.org
+</I>&gt;<i>
+</I>&gt;<i> On Tue, May 4, 2010 at 1:26 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> I take that back, ends up I have to delete the file... it seems to be
+</I>&gt;&gt;<i> empty... but I didn't look at the content sorry... maybe the tar was
+</I>&gt;&gt;<i> empty.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Mon, May 3, 2010 at 11:28 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> it said I had an update of audiofile... and augur version returned
+</I>&gt;&gt;&gt;<i> 0.2.6 and augur available returned 0.2.7, status resulted as failed,
+</I>&gt;&gt;&gt;<i> as compile failure, checking in /var/tmp/failed I didn't found
+</I>&gt;&gt;&gt;<i> audiofile, but the folder was empty. &#160;I did a augur minileech to get
+</I>&gt;&gt;&gt;<i> absolutely the version from the net, moved that into sources, and it
+</I>&gt;&gt;&gt;<i> compiled and worked fine.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I'm having a similar issue with cpio, so I'll pay more attention as I
+</I>&gt;&gt;&gt;<i> fix that one (should be simple)
+</I>&gt;&gt;&gt;<i> I can just go into /var/cache/sources/cpio/&lt;ver&gt; and '7z x *; rm *.xz'
+</I>&gt;&gt;&gt;<i> &#160;and augur retry cpio and it compiles.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> I am having similar problems with mozilla (firefox?)
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> there is a spell called 'flashplugin' which looks like it grabs teh
+</I>&gt;&gt;&gt;<i> adobe falsh plugin and puts it in the right place, but that depends on
+</I>&gt;&gt;&gt;<i> mozilla (shouldn't it depend on firefox?), and mozilla was cast
+</I>&gt;&gt;&gt;<i> failing
+</I>
+I am searching and re-testing the code now
+to see if there is a problem with translating provides
+during spell indexing.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001585.html">[Sorcerer-admins] .xz files don't get handled right?
+</A></li>
+	<LI>Next message: <A HREF="001584.html">[Sorcerer-admins] iputils fails to build
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1588">[ date ]</a>
+              <a href="thread.html#1588">[ thread ]</a>
+              <a href="subject.html#1588">[ subject ]</a>
+              <a href="author.html#1588">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

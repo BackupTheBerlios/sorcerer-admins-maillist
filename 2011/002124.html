@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] I/R anyone?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20I/R%20anyone%3F&In-Reply-To=%3CBANLkTimR59Khb0WckNszxOd9Ai7qA%3D%3DEXg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002116.html">
+   <LINK REL="Next"  HREF="002125.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] I/R anyone?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20I/R%20anyone%3F&In-Reply-To=%3CBANLkTimR59Khb0WckNszxOd9Ai7qA%3D%3DEXg%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] I/R anyone?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Apr 19 07:26:19 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002116.html">[Sorcerer-admins] howto install java
+</A></li>
+        <LI>Next message: <A HREF="002125.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 58, Issue 8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2124">[ date ]</a>
+              <a href="thread.html#2124">[ thread ]</a>
+              <a href="subject.html#2124">[ subject ]</a>
+              <a href="author.html#2124">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I created new I/Rs.
+The new I/Rs pass minimalistic testing.
+One error about not being able to run
+/media/root/etc/init.d/services.d can be ignored.
+Also the I/Rs were accidentally subscribed to the latest branch of glibc.
+And so apparently it works, at least for the I/Rs.
+There might be some programs that no longer want to compile
+because I am upgrading the grimoire's gcc to 2.13
+But here we go anyway.
+I actually wanted to wait until 2.13.1 for the bug fixes.
+
+<A HREF="http://sorcerer.silverice.org/download/iso9660/2011/">http://sorcerer.silverice.org/download/iso9660/2011/</A>
+
+With the exception of providing updated software
+almost nothing else was changed about the I/R,
+except the initramfs is xz compressed which also
+might make the I/R a bit smaller for faster downloading
+and faster burning to CD.
+
+I wanted new I/Rs that at least I can be certain work
+and require no sediting of the sorcery tools by the SA.
+So these will have to do until bugs are reported and
+requests are made.
+I decided to change almost nothing about the menu driven
+installer to avoid the possibility of introducing new bugs.
+And so there is still a bit left on the todo list for that.
+
+So for the most part these new I/Rs should be usable.
+So please try them before trying a 2010 I/R.
+
+Oh, I forgot to mention that the x86_64 I/R is multilib.
+Installing it creates an x86_64 multilib Sorcerer box
+that is capable of running ELF 32-bit i686 executable files.
+
+The most evident effect is that compilation of libraries
+may require more resources or require twice as long.
+That is because many software projects that install libraries
+are compiled twice.
+Both 32-bit and 64-bit versions will usually compile concurrently.
+So it might make those quad core boxes CPU fans roar
+as the loadavg soars.
+But do not be mislead by the high loadavg.
+
+When CPU cycles are allocated according to niceness
+then each spell casting is given an allocation of the CPU cores
+according to the nice value as if all the processes for a single
+spell being cast were merely a single process.
+
+So in theory a single spell being cast could contribute
+( 32-bit + 64-bit ) * cpu_cores to the loadavg.
+Therefore, 2 multilib spells casting concurrently
+might create a loadavg of 16 on a 4 core box.
+While that might be somewhat of a waste of RAM
+it should not deprive nice level 0 process
+more than as if two nice 15 process were running.
+
+For deployed boxes that should allocate minimal resources for updating
+there is the &quot;min&quot; feature which does nearly that.
+The min feature does not make use of make -j and
+individually sequentially casts spells.
+
+Even so SAs could use cpu-affinity to restrict cast to a using
+merely a specific number of CPU cores while leaving the rest
+idle and available for the system and non sorcery started processes.
+Since high loadavg is not a problem
+I often forget how to corral processes.
+The taskset command allows for setting cpu affinity
+which can also be used to deprive CPU cores from
+a process and all subprocesses.
+/bin/taskset is installed by util-linux and has a manual page.
+
+# taskset -c 1 augur begin
+
+That example begins the action while restricting
+cast, leech, and dispel to using just the first CPU core.
+
+I have not played with it much,
+but it might be fun for SAs that want to try it.
+If anyone expresses an interest in it
+then we can make monocore a feature.
+However, if a SA does
+# takset -c ?? augur begin
+then ?? can be whatever mask the SA wants in order
+to allow or reserve as many CPU cores as the SA desires.
+That might be useful if the SA wants to reserve merely
+1 of 4 cores for non sorcery processes
+rather than to choke sorcery down to a single core.
+
+Enjoy playing with the new I/Rs.
+As usual please report bugs.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002116.html">[Sorcerer-admins] howto install java
+</A></li>
+	<LI>Next message: <A HREF="002125.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 58, Issue 8
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2124">[ date ]</a>
+              <a href="thread.html#2124">[ thread ]</a>
+              <a href="subject.html#2124">[ subject ]</a>
+              <a href="author.html#2124">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

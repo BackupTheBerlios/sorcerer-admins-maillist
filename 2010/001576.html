@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Puppy example... and this is why we do not press	ctrl-c while running sorcery scripts...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Puppy%20example...%20and%20this%20is%20why%20we%20do%20not%20press%0A%09ctrl-c%20while%20running%20sorcery%20scripts...&In-Reply-To=%3Cy2y596b75861004200515p662c9c0cv611d7504c910230b%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001574.html">
+   <LINK REL="Next"  HREF="001577.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Puppy example... and this is why we do not press	ctrl-c while running sorcery scripts...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Puppy%20example...%20and%20this%20is%20why%20we%20do%20not%20press%0A%09ctrl-c%20while%20running%20sorcery%20scripts...&In-Reply-To=%3Cy2y596b75861004200515p662c9c0cv611d7504c910230b%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Puppy example... and this is why we do not press	ctrl-c while running sorcery scripts...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Apr 20 14:15:37 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001574.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+        <LI>Next message: <A HREF="001577.html">[Sorcerer-admins] NVIDIA-Linux-x86
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1576">[ date ]</a>
+              <a href="thread.html#1576">[ thread ]</a>
+              <a href="subject.html#1576">[ subject ]</a>
+              <a href="author.html#1576">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Again I want to remind SAs
+that what ctrl-c does to sorcery scripts is NOT a bug.
+It is an unfortunate consequence of user error.
+This example helps explain why using the
+all powerful ctrl-c requires willingness
+to take responsibility for what happens
+or what does not happen.
+
+
+$ cat /tmp/puppy
+#!/bin/bash
+trap bad INT
+bad(){ echo &quot;Bad puppy!&quot; &gt;&amp;2; }
+/bin/sleep 60
+echo &quot;Good puppy!&quot;
+
+
+That is a very easy to understand example script.
+If ctrl-c is pressed
+then that interrupt is handled by bash
+and it transfers control temporarily to
+the bad function which prints Bad puppy.
+
+Now here is what happens when we run it:
+
+$ ./puppy
+Good puppy!
+
+Hmm, that took a full 60 seconds to run.
+I should have put the sleep for only 15, yes?
+And here is when we run it and press ctrl-c
+shortly after starting it.
+
+$ ./puppy
+^CBad puppy!
+Good puppy!
+
+As you can see in both cases
+the program does reach the last line
+which executes and prints &quot;Good puppy!&quot;
+However, when we press ctrl-c
+the trap in the BASH script can
+not prevent the ctrl-c from interrupting
+the /bin/sleep 60 command.
+
+This is why pressing ctrl-c while running
+sorcery scripts can produce unexpected results.
+Since I do not trap it, ctrl-c should abort the sorcery script.
+But it might also abort something that is happening
+that causes indexing to complete early
+yet generate an incomplete index.
+
+I can not attempt to trap ctrl-c and assume
+that nothing unexpected will not happen.
+Something that should have continued running
+definitely aborted and that leads to something
+bad happening.
+
+Okay, how about we try:
+
+$ nohup ./puppy
+nohup: ignoring input and appending output to `nohup.out'
+^C
+
+$ cat /tmp/nohup.out
+Bad puppy!
+Good puppy!
+
+Oh, look same thing.
+Even the very powerful:
+&quot;nohup - run a command immune to hangups, with output to a non-tty&quot;
+can not block the more powerful ctrl-c
+
+ctrl-c causes a SIGINT, interrupt from keyboard,
+and it is difficult if not impossible to trap.
+
+Therefore, the lesson learned from this
+is that pressing ctrl-c is like smacking
+a puppy upside it's head.
+Abused puppies do not behave properly.
+So please be gentle to sorcery scripts.
+Please do not smack them upside the head with ctrl-c.
+And that way sorcery will be a good puppy.  :)
+
+In the future pressing ctrl-c
+will not only cause a sorcery script to abort
+but it will also print an error message
+indicating not to press ctrl-c
+and it will remove almost everything
+from /root/.sorcery/ except the queues.
+This way SAs that insist on pressing ctrl-c
+will cause less inconvenience for themselves.
+However, pressing ctrl-c is still unsupported.
+
+Please do not try to abort sorcery scripts with ctrl-c
+Please do not try to avoid dialog menus by pressing escape.
+sorcery is only intended to work properly
+when it is is used in a proper fashion.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001574.html">[Sorcerer-admins] linux is it more stable or less stable?
+</A></li>
+	<LI>Next message: <A HREF="001577.html">[Sorcerer-admins] NVIDIA-Linux-x86
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1576">[ date ]</a>
+              <a href="thread.html#1576">[ thread ]</a>
+              <a href="subject.html#1576">[ subject ]</a>
+              <a href="author.html#1576">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

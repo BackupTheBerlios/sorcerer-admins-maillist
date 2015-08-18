@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20i915%20module%2C%20xf86-video-intel%2C%20initramfs%2C%0A%20init-scripts%2C%20udev%20and%20other%20important%20changes.&In-Reply-To=%3CAANLkTin0%3DD0_5K-01450UxP%3D4ja8rBevRACf30xeqxiE%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001954.html">
+   <LINK REL="Next"  HREF="001957.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20i915%20module%2C%20xf86-video-intel%2C%20initramfs%2C%0A%20init-scripts%2C%20udev%20and%20other%20important%20changes.&In-Reply-To=%3CAANLkTin0%3DD0_5K-01450UxP%3D4ja8rBevRACf30xeqxiE%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Thu Oct 21 12:59:27 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001954.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+        <LI>Next message: <A HREF="001957.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1955">[ date ]</a>
+              <a href="thread.html#1955">[ thread ]</a>
+              <a href="subject.html#1955">[ subject ]</a>
+              <a href="author.html#1955">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Wed, Oct 20, 2010 at 7:40 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> On Wed, Oct 20, 2010 at 8:48 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; see inline
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Wed, Oct 20, 2010 at 5:12 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The current linux configurations enable mode setting for i915.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # cast linux
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; done
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; The linux spell will install an additional file:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; # cat /etc/modprobe.d/i915.conf
+</I>&gt;<i> &gt;&gt; blacklist i915
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; yep done also
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; This allows booting without having the console perm-blanked
+</I>&gt;<i> &gt;&gt; when udev loads module i915.ko,
+</I>&gt;<i> &gt;&gt; because udev will not load module i915.ko
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Do not pass kernel parameters to disable kernel mode setting.
+</I>&gt;<i> &gt;&gt; When xf86-video-intel loads the i915.ko
+</I>&gt;<i> &gt;&gt; it will require kernel mode setting.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; what is this parameter? was it included by default in lilo.conf before?
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; &lt;...snap...&gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; thanks and regards
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i>
+</I>&gt;<i> The parameter was not in lilo.conf by default.
+</I>&gt;<i> It was a parameter to disable kernel mode setting.
+</I>&gt;<i> I only learned about it because I read about it in other people's posts.
+</I>&gt;<i> Many people were having difficult discovering how to avoid having
+</I>&gt;<i> i915.ko with mode setting perm-blank the console during boot
+</I>&gt;<i> while at the same time being able to use xf86-video-intel.
+</I>&gt;<i> I guessed that screen went blank when udev loaded the console,
+</I>&gt;<i> so I looked through the udev source tree to discover how to
+</I>&gt;<i> prevent udev from loading modules while at the same time
+</I>&gt;<i> hoping that xf86-video-intel would load the module.
+</I>&gt;<i> Turned out to be an optimal combination.
+</I>&gt;<i>
+</I>&gt;<i> Prior to installing Sorcerer on a Pentium M
+</I>&gt;<i> I did not know about this potential problem involving i915.ko
+</I>&gt;<i> And the kernel was configured so that kernel mode setting support
+</I>&gt;<i> was disabled on that module.
+</I>&gt;<i> I do not know if it was an omission on my part
+</I>&gt;<i> or something requested by a SA.
+</I>&gt;<i> But since I had a the laptop to test on
+</I>&gt;<i> I decided to find a combination that works.
+</I>&gt;<i>
+</I>&gt;<i> Whether it works or not might be a bit iffy
+</I>&gt;<i> if the xf86-video-intel or i915.ko is buggy.
+</I>&gt;<i> It seems to work.
+</I>&gt;<i> I did a boot with memtest=8
+</I>&gt;<i> No problems with the RAM.
+</I>&gt;<i> However, the box did occasionally lock up.
+</I>&gt;<i> I suspect xf86-video-intel.
+</I>&gt;<i>
+</I>&gt;<i> However, the CPU is now running at the lowest frequency
+</I>&gt;<i> and that should avoid a lock-up problem caused by a bad
+</I>&gt;<i> design or a problem in the CPU.
+</I>&gt;<i> I doubt the original owner of the laptop
+</I>&gt;<i> did a full bore 1 week burn in test.
+</I>&gt;<i> Perhaps the fastest configuration is not stable
+</I>&gt;<i> at full bore for long periods of time.
+</I>&gt;<i> That is my 2nd most likely guess.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+it's now working.... however I can't login on gnome for some obscure
+reason....
+gdm launch, I can select my user, I type the password in blind mode (only a
+blank box is on screen) and after ages it display a kind of desktop (3 white
+icons on top left corner) whith a dialog box that popup and popout so fast
+that I can't read what is displayed.... and this eats 100% CPU
+looking the logs it seems that the gnome battery applet is segfaulting. one
+time in libc one time in glib....
+I did try to recast gnome-applets spell.... no change
+I did try to recast glib spell.... no change
+I'm trying a whole recompilation of the box, hopping all won't collapse...
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101021/3e480bab/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20101021/3e480bab/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001954.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+	<LI>Next message: <A HREF="001957.html">[Sorcerer-admins] i915 module, xf86-video-intel, initramfs, init-scripts, udev and other important changes.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1955">[ date ]</a>
+              <a href="thread.html#1955">[ thread ]</a>
+              <a href="subject.html#1955">[ subject ]</a>
+              <a href="author.html#1955">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

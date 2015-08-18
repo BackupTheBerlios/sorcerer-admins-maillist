@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] /etc/networks
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C461DF430.3080209%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000079.html">
+   <LINK REL="Next"  HREF="000085.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] /etc/networks</H1>
+    <B>malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20/etc/networks&In-Reply-To=%3C461DF430.3080209%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] /etc/networks">malet.jean-luc at laposte.net
+       </A><BR>
+    <I>Thu Apr 12 10:56:16 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000079.html">[Sorcerer-admins] /etc/networks
+</A></li>
+        <LI>Next message: <A HREF="000085.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee a &#233;crit :
+&gt;<i> On 4/11/07, malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> recently I discovered that all my networks weren't up automaticaly....
+</I>&gt;&gt;<i> after looking the network script I can now say that the script will only
+</I>&gt;&gt;<i> bring up one interface and only one...
+</I>&gt;&gt;<i> what I wanna propose is to create /etc/networks.d/nic_dir/00eth0
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ie create subdirs in /etc/networks.d/ containing ordered scripts
+</I>&gt;&gt;<i> each subdirs appart template one is parsed the current way
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> That is correct.
+</I>&gt;<i> That is because the templates are simple.
+</I>&gt;<i> Combine templates into a single file to bring up multiple networks.
+</I>&gt;<i> The way it works is straight forward.
+</I>&gt;<i> It tries to raise the first network as found in the first file.
+</I>&gt;<i> If it works it is done.
+</I>&gt;<i> If it does not work then it tries the next file.
+</I>&gt;<i> Having subdirectories for containing multiple networks to try
+</I>&gt;<i> is a bit more confusing to set up.
+</I>&gt;<i>   
+</I>well I don't think so, anyway when you install sorcerer you read the 
+readme and well it's not difficult to understand that each directory in 
+/etc/networks.d represent a network and each script in that network is 
+tried until one success
+&gt;<i> What happens if it is trying 3 of the 3 files in a subdir for
+</I>&gt;<i> setting up 3 networks concurrently and it only achieves
+</I>&gt;<i> success for 2 out of the 3?
+</I>&gt;<i> Does it quit?
+</I>&gt;<i> Does it try the next subdirectory that defines more networks?
+</I>&gt;<i> Behavior is undefined and confusing.
+</I>&gt;<i>   
+</I>all networks have to be considered independant and should be tried to get up
+if fact the current method is by far less usefull than the previous 
+/etc/init.d/network one....  because you can't have several network up 
+and catenate template isn't a solution... what if I want to restart my 
+pppoe without dropping my eth0?
+maybe the best is to provide templates to copy to /etc/init.d....
+&gt;<i> The way it works now is not so confusing.
+</I>&gt;<i> Just activate all the networks from a single script.
+</I>&gt;<i> Exit 0 if fine, 1 if a problem exists.
+</I>&gt;<i> No rewriting required.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>   
+</I>&gt;&gt;<i> another whish is to use iproute2 instead of net-tools for script since
+</I>&gt;&gt;<i> thoses tools also have ipv6 support...
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> You can do that if you want.
+</I>&gt;<i> Perhaps you will contribute some templates for
+</I>&gt;<i> suggested IPv6 configuration of networks, please?
+</I>&gt;<i> I wonder if iproute2 is installed on I/Rs?
+</I>&gt;<i> Maybe not.
+</I>&gt;<i>   
+</I>no, I created the spell recently after getting my ipv6 tunnel and beeing 
+unable to use ifconfig to set ip
+&gt;<i> That might be a tiny inconvenience for setting up boxes on IPv6 networks.
+</I>&gt;<i> Hmm, maybe not.
+</I>&gt;<i> ifconfig supports IPv6 addresses.
+</I>&gt;<i>   
+</I>ifconfig support ipv6 displays but not setting :
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:/home/users/jlmalet# ifconfig eth0 ipv6  
+2001:6f8:3b9::4/48    
+ipv6: Unknown host
+ifconfig: `--help' gives usage information.
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:/home/users/jlmalet# ifconfig eth0  2001:6f8:3b9::4/48
+2001:6f8:3b9::4: Unknown host
+ifconfig: `--help' gives usage information.
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:/home/users/jlmalet# ifconfig eth0 192.168.1.3       
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at jlmport</A>:/home/users/jlmalet#
+
+&gt;<i> ifconfig is from net-tools
+</I>&gt;<i> I guess we could do without iproute2,
+</I>&gt;<i> unless there was something specific about it
+</I>&gt;<i> that net-tools does not provide?
+</I>&gt;<i>   
+</I>well net-tools lack lot of ipv6 features in fact.... all people I asked 
+told me to drop it....
+&gt;<i> At least, we need not change all the templates
+</I>&gt;<i> provided to use the iproute2 tools at this moment, yes?
+</I>&gt;<i>   
+</I>no we don't althought it's better to have uniform interface....
+the good thing with ip is also that it can handle route, providing a 
+single way to configure everything related to ip
+&gt;<i> Could be useful having templates that can use either or both?
+</I>&gt;<i> That would be a good idea along with having templates for
+</I>&gt;<i> configuring IPv6 networks.
+</I>&gt;<i> An extra line here and there would not be so tricky.
+</I>&gt;<i> Most interfaces can also be set up to use both IPv4 and IPv6 concurrently, yes?
+</I>&gt;<i> Could be useful.
+</I>&gt;<i>   
+</I>you can use ipv6 and ipv4 at the same time without problem
+for example I have both since I use a tunnel to connect to the 6thbone....
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000079.html">[Sorcerer-admins] /etc/networks
+</A></li>
+	<LI>Next message: <A HREF="000085.html">[Sorcerer-admins] /etc/networks
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

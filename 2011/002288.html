@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] glibc upgrade, Sorcerer's 2nd greatest blunder...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc%20upgrade%2C%20Sorcerer%27s%202nd%20greatest%20blunder...&In-Reply-To=%3CCA%2BT4wDgyXSR%2B9wrSsAmpUQ4vq6%3Dbb2fXHtJGX8CYWciVD7we5g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002287.html">
+   <LINK REL="Next"  HREF="002289.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] glibc upgrade, Sorcerer's 2nd greatest blunder...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20glibc%20upgrade%2C%20Sorcerer%27s%202nd%20greatest%20blunder...&In-Reply-To=%3CCA%2BT4wDgyXSR%2B9wrSsAmpUQ4vq6%3Dbb2fXHtJGX8CYWciVD7we5g%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] glibc upgrade, Sorcerer's 2nd greatest blunder...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Nov  6 20:46:12 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002287.html">[Sorcerer-admins] IANA
+</A></li>
+        <LI>Next message: <A HREF="002289.html">[Sorcerer-admins] cgroup implementation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2288">[ date ]</a>
+              <a href="thread.html#2288">[ thread ]</a>
+              <a href="subject.html#2288">[ subject ]</a>
+              <a href="author.html#2288">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Following someone's advise I added instructions to have gettext's
+library installed
+although I knew that glibc provided the same functionality.
+After the headers and library for gettext's libraries became
+incompatible with glibc
+then boxes broke bad because almost everything was linked with
+gettext's libraries
+and yet gettext's libraries had to be removed.
+Some SAs had to redeploy boxes from I/Rs.
+It was the first great Sorcerer upgrade blunder.
+
+Thanks to Ulrich Drepper we can now enjoy a blast from the past.
+
+&gt;<i>From glibc's NEWS file:
+</I>
+&quot;* The RPC implementation in libc is obsoleted.  Old programs keep working
+  but new programs cannot be linked with the routines in libc anymore.
+  Programs in need of RPC functionality must be linked against TI-RPC.
+  The TI-RPC implementation is IPv6 enabled and there are other benefits.&quot;
+
+That is half correct.
+Everything compiled and linked against glibc version 2.13 or older
+continues to receive it's RPC functionality.
+However, libtirpc requires RPC functions that are no longer provided
+in glibc version 2.14 and above.
+Consequently, libtirpc does not compile.
+Consequently, nfs-utils does not compile.
+Consequently, on a glibc version 2.14.1 box
+NFS works until it must be re-compiled.
+And then it can not be re-compiled or upgraded and remains broke.
+This is slightly more than irritating.
+However, coda can be substituted instead of NFS.
+
+Evert has already reverted his workstation to glibc 2.13
+because kdenlive segmentation faults when run with glibc version 2.14.1
+I discovered that megaglest and additional software segmentation faults
+instead of even being able to start after upgrading to glibc version 2.14.1.
+The typical x86_64 specific crash on firefox download bug seems to be squished,
+but now firefox crashes more randomly and especially when dealing with
+FTP servers.
+Overall glibc version 2.14.1 feels buggier than glibc 2.13
+in spite of 2.14.1 being a bug fix release for the 2.14 branch.
+
+Normally, upgrading glibc would be a sane and positive experience.
+This time we can not bare to go forward.
+However, glibc is not like any other library.
+Software compiled and linked with the newer glibc
+can only be run by the newer glibc.
+Therefore, reverting glibc to 2.13 will cause
+all software that compiled afterward to require
+re-compilation in order to work.
+And if that software was gcc
+then gcc itself will not run.
+If the software is bash
+then the shell will NOT run.
+Some boxes that have upgraded glibc will break BAD!
+Nothing short of a skilled SA and Install/Rescue disk
+will be of use fixing them.
+Sorry about that.
+
+The decision to revert glibc to 2.13 is the lesser of two evils.
+And switching to eglibc, the fork of glibc, is no better of a solution.
+It probably has many of the same bugs since it still imports almost
+all of it's code from glibc.  And it's 2.14 release also lacks RPC.
+eglibc still remains 99.9% glibc with a few additional patches applied.
+
+The glibc software authors decide what glibc should be
+and when it should be released.
+Unfortunately, the quality of glibc 2.14.1 is so lacking
+that some software potentially a larger selection than realized
+remains unusable or crashy with glibc 2.14.1
+
+Unfortunately, I blundered into this because at the time
+the upgrade seem to solve the firefox crashing problem.
+But now more software than firefox is crashing,
+and firefox also still crashes, all-be-it less predictably.
+
+I apologize for racing into the upgrade.
+I did not bother researching what problems might exist
+with glibc 2.14.1 since I would have expected that
+sometime after the release of 2.14.1, 2.14.2 would be
+released to solve problems if they exist.
+
+Unfortunately, encountering bugs is par for the course of free software.
+glibc authors and Sorcerer maintainers have no direct contact.
+They do not warranty the quality or suitability of their software
+and neither does Sorcerer.
+
+When kernel.org is obviously rooted by an unskilled script kiddy
+and glibc, perhaps the single most important library on a box,
+is bugged and missing important functionality it does give cause
+to wonder whether the ship is sinking.
+
+I spent 5 days bailing water trying to make nfs-utils a possibility.
+And I would have had to create close to 100 new spells
+just to make nfs-utils work.
+This is unacceptable.
+
+Anyway, Sorcerer SAs are warned about the reversion.
+And Sorcerer SAs should have their own backups.
+Therefore, the worst possible scenario should involve recovery from a backup.
+
+The good news is that &quot;Sorcerer Sentient&quot; boxes are still protected.
+I have not upgraded their grimoire.
+They still enjoy old bugs instead of new bugs.
+I only upgrade the &quot;Sorcerer Sentient&quot; grimoire before
+doing a new I/R release.
+And the glibc upgrade did not bring us close to a new I/R release
+but delayed that possibility for more than a week.
+
+And so that is the situation.
+
+Frankly, I would be plenty pleased to have boxes that are based on uClibc,
+but that sacrifices the use of pre-compiled drivers for NVIDIA cards,
+pre-compiled plugins for firefox, adobe acrobad, open office and anything
+else that comes pre-compiled.
+
+Likewise I would not be displeased to have more static linking on Sorcerer.
+However, static linking of software introduces several drawbacks in addition
+to increasing the size of installed executable files.
+
+I have yet to discover a compromise that insulates us from bad glibc
+and provides us with compatibility with pre-compiled binary software.
+
+If glibc was like any other ELF library
+then it's soname would change when binary compatibility breaks
+and each new version of glibc would not maintain all the old API
+for every version that came before it.
+If glibc was like any other ELF library
+then boxes could upgrade and downgrade and sidegrade glibc
+any way the SA wants without causing an insurmountable problem.
+Unfortunately, glibc is not that way.
+
+Fortunately, not all boxes will break bad.
+Some might not break at all.
+But be alert and be certain to manually recast
+all software compiled and linked with glibc version 2.14.1
+after glbic version 2.13 is re-installed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002287.html">[Sorcerer-admins] IANA
+</A></li>
+	<LI>Next message: <A HREF="002289.html">[Sorcerer-admins] cgroup implementation...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2288">[ date ]</a>
+              <a href="thread.html#2288">[ thread ]</a>
+              <a href="subject.html#2288">[ subject ]</a>
+              <a href="author.html#2288">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

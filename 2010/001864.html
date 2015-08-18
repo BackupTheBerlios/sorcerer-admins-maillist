@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] auto ignore auto failures?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTikOHK4whZ2_TKjko%3DUCrPO4yS2JuFutB_txAmf-%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001859.html">
+   <LINK REL="Next"  HREF="001865.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] auto ignore auto failures?</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTikOHK4whZ2_TKjko%3DUCrPO4yS2JuFutB_txAmf-%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] auto ignore auto failures?">evorster at gmail.com
+       </A><BR>
+    <I>Tue Jul 27 12:19:07 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001859.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+        <LI>Next message: <A HREF="001865.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1864">[ date ]</a>
+              <a href="thread.html#1864">[ thread ]</a>
+              <a href="subject.html#1864">[ subject ]</a>
+              <a href="author.html#1864">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hmm...
+
+Interesting, and it sounds like it will work better.
+
+I suppose as I am the person who asked for the auto-fail functionality in
+the first place I would be interested in this, and I am! The current
+auto-fail behavior should also be available, though. Just in case we want to
+fall back to it...
+
+One functionality I do miss is the reconfigure option that we used to have
+for cast.
+
+I run linux-custom.
+
+To change the configuration in linux-custom I have to do the following
+steps.
+
+augur version linux-custom
+augur forget linux-custom
+augur progess linux-custom 2.6.34.1
+cast linux-custom
+
+where in the past it used to be:
+cast -r linux-custom
+
+-Evert-
+
+
+
+
+On Mon, Jul 26, 2010 at 9:17 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> To be frank about it,
+</I>&gt;<i> I am not a fan of autofailure.
+</I>&gt;<i> Half, the time I remove the spell from
+</I>&gt;<i> the failed queue that is causing the autofailure
+</I>&gt;<i> move the other spells that were autofailed
+</I>&gt;<i> back into the cast queue.
+</I>&gt;<i> I take those steps to nullify the autofailure.
+</I>&gt;<i>
+</I>&gt;<i> Sometimes autofailure is a convenience.
+</I>&gt;<i> It might keep a SA chasing after an error
+</I>&gt;<i> that is caused by a spell that failed before
+</I>&gt;<i> the one they are examining.
+</I>&gt;<i> However, more often auto failure is an inconvenience.
+</I>&gt;<i>
+</I>&gt;<i> On some boxes where SAs are not paying attention
+</I>&gt;<i> to autofailed spells the auto fail method might be
+</I>&gt;<i> preventing the important updates of installed software
+</I>&gt;<i> and therefore permitting some versions of software
+</I>&gt;<i> with known security vulnerabilities to remain installed.
+</I>&gt;<i>
+</I>&gt;<i> I have half a mind to rewrite the rule so that....
+</I>&gt;<i> A spell can autofail only if it failed to compile
+</I>&gt;<i> and an older version of the spell is not already installed.
+</I>&gt;<i> That way if gtk+ fails compilation and gtk+ is not installed
+</I>&gt;<i> then gtk+ will cause autofailures.
+</I>&gt;<i> However, if gtk+ fails compilation and gtk+ is installed
+</I>&gt;<i> then spells that have gtk+ as part of their requirement chains
+</I>&gt;<i> will not autofail and instead will attempt to cast
+</I>&gt;<i> if they are in the cast queue already.
+</I>&gt;<i>
+</I>&gt;<i> Would anyone object to me changing
+</I>&gt;<i> the autofail rules so that they work that way?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100727/0ccf540d/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100727/0ccf540d/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001859.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+	<LI>Next message: <A HREF="001865.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1864">[ date ]</a>
+              <a href="thread.html#1864">[ thread ]</a>
+              <a href="subject.html#1864">[ subject ]</a>
+              <a href="author.html#1864">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20xf86-input-evdev%0A%20xf86-input-keyboard%09xf86-input-mouse%20hal&In-Reply-To=%3C4B408C8E.40403%40hnp.hu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001386.html">
+   <LINK REL="Next"  HREF="001388.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal</H1>
+    <B>G&#225;sp&#225;r &#193;kos</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20xf86-input-evdev%0A%20xf86-input-keyboard%09xf86-input-mouse%20hal&In-Reply-To=%3C4B408C8E.40403%40hnp.hu%3E"
+       TITLE="[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal">madar at hnp.hu
+       </A><BR>
+    <I>Sun Jan  3 13:24:46 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001386.html">[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal
+</A></li>
+        <LI>Next message: <A HREF="001388.html">[Sorcerer-admins] grub...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1387">[ date ]</a>
+              <a href="thread.html#1387">[ thread ]</a>
+              <a href="subject.html#1387">[ subject ]</a>
+              <a href="author.html#1387">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Sorry, I forgot write that in xf86-input spell.
+
+G&#225;sp&#225;r &#193;kos wrote:
+&gt;<i> Hello,
+</I>&gt;<i>
+</I>&gt;<i> I have xf86-input-evdev as require and optional in LAG0 grimoire.
+</I>&gt;<i>
+</I>&gt;<i> Thanks
+</I>&gt;<i> madar
+</I>&gt;<i>
+</I>&gt;<i> Kyle Sallee wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Look as if the best method of input in X11R7.5 is moving towards evdev.
+</I>&gt;&gt;<i> In general either the combination of
+</I>&gt;&gt;<i> ( xf86-input-keyboard + xf86-input-mouse ) should be used or
+</I>&gt;&gt;<i> ( xf86-input-evdev )
+</I>&gt;&gt;<i> Having both installed can cause problems,
+</I>&gt;&gt;<i> such as the right arrow and page up acting strangely.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> However, that seems to be fixable..
+</I>&gt;&gt;<i> I edited /etc/X11/xorg.conf
+</I>&gt;&gt;<i> And I made certain sections look like this:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Section &quot;ServerLayout&quot;
+</I>&gt;&gt;<i>     Identifier     &quot;Layout0&quot;
+</I>&gt;&gt;<i>     Screen      0  &quot;Screen0&quot; 0 0
+</I>&gt;&gt;<i>     InputDevice    &quot;Keyboard0&quot; &quot;CoreKeyboard&quot;
+</I>&gt;&gt;<i>     InputDevice    &quot;Mouse0&quot; &quot;CorePointer&quot;
+</I>&gt;&gt;<i> EndSection
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Naturally, the Identifier and Screen will vary, but the two important lines
+</I>&gt;&gt;<i> are the InputDevice lines
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And for those sections I have declared:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Section &quot;InputDevice&quot;
+</I>&gt;&gt;<i>     Identifier     &quot;Mouse0&quot;
+</I>&gt;&gt;<i>     Driver         &quot;evdev&quot;
+</I>&gt;&gt;<i> EndSection
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Section &quot;InputDevice&quot;
+</I>&gt;&gt;<i>     Identifier     &quot;Keyboard0&quot;
+</I>&gt;&gt;<i>     Driver         &quot;evdev&quot;
+</I>&gt;&gt;<i> EndSection
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Yes, correct, basically, it is practically no information at all.
+</I>&gt;&gt;<i> Why?
+</I>&gt;&gt;<i> Because xf86-input-evdev gathers information about those devices from hal
+</I>&gt;&gt;<i> So naturally, for this to be able to work
+</I>&gt;&gt;<i> then hal must be installed and running.
+</I>&gt;&gt;<i> Seems to work good on my box.
+</I>&gt;&gt;<i> The keyboard works good the mouse works good, even the scroll wheel works.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now that I have /etc/X11/xorg.conf properly adjusted
+</I>&gt;&gt;<i> I was able to
+</I>&gt;&gt;<i> # dispel --unsafe xf86-input-mouse xf86-input-keyboard
+</I>&gt;&gt;<i> And after that I was able to restart kdm without a problem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now those are installed I do not have to specify
+</I>&gt;&gt;<i> CoreKeyboard nor CorePointer in ServerLayout Section.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Having to adjust /etc/X11/xorg.conf
+</I>&gt;&gt;<i> or even knowing that is the solution to making the keyboard
+</I>&gt;&gt;<i> work properly and stop acting as if it is possessed is tricky.
+</I>&gt;&gt;<i> But overall having a more plug-n-play style detection and use
+</I>&gt;&gt;<i> of keyboard and pointers seems a bit easier.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am adjusting xf86-input to
+</I>&gt;&gt;<i> have a mandatory requirement on xf86-input-evdev
+</I>&gt;&gt;<i> xf86-input-mouse and xf86-input-keyboard are optionals.
+</I>&gt;&gt;<i> Therefore, if a SA wants to stick with the old methods,
+</I>&gt;&gt;<i> either dispel xf86-input, which might require also dispelling xorg
+</I>&gt;&gt;<i> since both spells are profiles.
+</I>&gt;&gt;<i> Or xf86-input-evdev can be exiled first and then dispelled.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> To help out there is an evdev manual page installed
+</I>&gt;&gt;<i> if xf86-input-evdev is installed.
+</I>&gt;&gt;<i> Also some parts of the xorg.conf manual page might also apply.
+</I>&gt;&gt;<i> The evdev manual page seems a bit sparse.
+</I>&gt;&gt;<i> And if making evdev work properly still seems to be a lost cause
+</I>&gt;&gt;<i> then xf86-input-keyboard and xf86-input-mouse are still available,
+</I>&gt;&gt;<i> at least for as long as the xorg team continues making releases for
+</I>&gt;&gt;<i> them which are compatible with the overall xorg release.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Happy 2010 everyone.  :)
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>   
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001386.html">[Sorcerer-admins] xf86-input-evdev xf86-input-keyboard	xf86-input-mouse hal
+</A></li>
+	<LI>Next message: <A HREF="001388.html">[Sorcerer-admins] grub...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1387">[ date ]</a>
+              <a href="thread.html#1387">[ thread ]</a>
+              <a href="subject.html#1387">[ subject ]</a>
+              <a href="author.html#1387">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

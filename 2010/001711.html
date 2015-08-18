@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] at fails compile
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20at%20fails%20compile&In-Reply-To=%3CAANLkTimwZORdXvJEkhzTE-Qk2t1ZHqcezJj9SxaZhdqB%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001709.html">
+   <LINK REL="Next"  HREF="001710.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] at fails compile</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20at%20fails%20compile&In-Reply-To=%3CAANLkTimwZORdXvJEkhzTE-Qk2t1ZHqcezJj9SxaZhdqB%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] at fails compile">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jul 10 22:48:36 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001709.html">[Sorcerer-admins] at fails compile
+</A></li>
+        <LI>Next message: <A HREF="001710.html">[Sorcerer-admins] install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1711">[ date ]</a>
+              <a href="thread.html#1711">[ thread ]</a>
+              <a href="subject.html#1711">[ subject ]</a>
+              <a href="author.html#1711">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The at spell did have problems with it.
+Thanks for reporting it.
+I used at commands more than a decade ago, but not since.
+There was a time when it was good for sending
+out an automated birthday card or having
+a task start after one leaves work.
+However, the more useful command is probably
+the batch command.
+The batch command was designed to be
+able to execute commands when the CPU loadavg is low.
+
+When computers were not nearly as powerful as they are now
+batch was a useful command.
+It is sort of like a printer spool for the CPU.
+However, if one has something they want to run,
+but also wants to use the CPU for other things
+then the better choice is to start a command
+and then renice all of it's processes to a high value.
+
+Maximum nice value is probably 19.
+I use 20 anyway.
+Normal nice value for processes is 0.
+Some kernel threads tend to run at nice -5
+That makes 'em mean.
+Mean processes gain more of the CPU sooner.
+Nice processes tend to yield the CPU and use
+fewer cycles unless a CPU core happens to be idle.
+Even nice 20 processes will run at full bore
+if nothing else requires the CPU.
+However, if all CPU cores are loaded
+then nice 20 processes will tend to use no
+more than 5% of the CPU.
+Roughly...
+Imagine running 2 xz compression commands
+concurrently on a single core CPU.
+Roughly they would share the CPU 50/50
+But if one of the commands was niced to 20
+then sharing would be closer to 95/05
+
+Negative nice values are also possible as I mentioned above.
+However, using a negative nice value can be dangerous
+since a -20 nice process running full bore on a single CPU
+will try to starve off every other process.
+
+Any user can raise the nice value of his proccesses.
+Only root can lower nice values.
+Therefore, a normal user should not ever be
+able to renice a process to -20, not even their own processes.
+
+Unless a SA or user has a specific need for at/batch
+then the at/batch commands are mostly unused
+on modern computers.
+cronjobs in contrast still remain essential.
+
+The reason I took time to explain at/batch
+was because it is likely to unused these days.
+In contrast nice and renice are very useful,
+but also many SAs can get by for years without
+every knowing or learning about nice.
+Modern computers are so powerful
+that one does not have to be nice in order to use them.  :)
+However, on busy computers where several users
+login and share resources then nicing one's
+long duration processes is polite.
+That way users who are actively logging in and running
+commands will have their commands complete sooner
+instead of having to share the CPU cores equally
+with your processes that will be running for the next
+few hours.
+
+Knowing how to nice and write cronjobs
+is more than enough to do periodic scheduling
+of processes and to do CPU load balancing.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001709.html">[Sorcerer-admins] at fails compile
+</A></li>
+	<LI>Next message: <A HREF="001710.html">[Sorcerer-admins] install problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1711">[ date ]</a>
+              <a href="thread.html#1711">[ thread ]</a>
+              <a href="subject.html#1711">[ subject ]</a>
+              <a href="author.html#1711">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,808 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Basic Sorcerer install instructions.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Basic%20Sorcerer%20install%20instructions.&In-Reply-To=%3C27f41a931002030846p1888669i5cc29ed235e5f280%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001415.html">
+   <LINK REL="Next"  HREF="001416.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Basic Sorcerer install instructions.</H1>
+    <B>Evert Vorster</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Basic%20Sorcerer%20install%20instructions.&In-Reply-To=%3C27f41a931002030846p1888669i5cc29ed235e5f280%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Basic Sorcerer install instructions.">evorster at gmail.com
+       </A><BR>
+    <I>Wed Feb  3 17:46:39 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001415.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+</A></li>
+        <LI>Next message: <A HREF="001416.html">[Sorcerer-admins] Basic Sorcerer install instructions.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1409">[ date ]</a>
+              <a href="thread.html#1409">[ thread ]</a>
+              <a href="subject.html#1409">[ subject ]</a>
+              <a href="author.html#1409">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi there, Nathan.
+
+Ok, so you got to the 3 step, and stuck there.
+
+On the command line, issue:
+man cfdisk
+and read a little about what partitions are, and how to create them.
+
+I do have a couple of questions for you, though.
+
+Are you going to try and dual boot after this Sorcerer installation, or is
+this the only OS on the computer?
+
+If you are going to dual boot, I sure hope you have a backup of your windows
+stuff.
+In the case of dual booting, I would suggest backing up everything you find
+important, then re-installing windows, but taking care to limit it's disk
+usage by erasing it's partition off the disk, and then making a 10GB
+partition and installing it into there.
+
+Then, I would read the lilo manual on how to do a successful dual boot.
+Again, this is not something I have done in a few years.
+
+If, on the other hand, Sorcerer is the only operating system that you are
+going to install, things are a LOT simpler.
+
+Here is a short explanation of what is happening. ( For longer explanations,
+wikipedia and google are your friends )
+
+Any computer stores files in a a filesystem. Traditionally file systems go
+on to devices, like hard drives and so on.
+However, you might want to have two or more filesystems on a disk for
+various reasons. In order to do this, you have to subdivide your device....
+with partitions.
+
+ie:
+Say your hard disk is called /dev/sda
+It IS possible to create a filesystem on there that spans the whole thing,
+but this is almost universally NOT recommended.
+
+So, you would pop into a program like cfdisk ( just type cfdisk at a command
+prompt, and hit enter )
+and in there you would see your hard disk.
+
+For a one-filesystem install of Sorcerer I would not try it in less than
+20GB, and 30GB is recommended.
+So, create a partition at the beginning of your disk of about 30GB
+This partition will be called /dev/sda1 from now on...
+Make the rest of your hard disk into /dev/sda2 ( just make another
+filesystem that fills the rest of the disk. )
+
+Now, in the Sorcerer install menu you can specify in the partition table
+that:
+ /dev/sda1 mounts on /
+and
+/dev/sda2 mounts on /home
+
+Here / means root, and a root filesystem is any filesystem that mounts on /
+( root )
+
+I hope this gets you further along in the install.
+
+However, I have a little word of advice for you. We are not mind-readers,
+and find it really difficult to help someone without a description of the
+problem.
+
+We would find it very helpful of you could add a short description of the
+steps you took to get to where you are stuck.
+Also, I find it useful to have a pen-and-paper book open next to a computer
+that I am installing, so that I can write down what is happening, and
+parameters and so on.
+
+Lastly, Good Luck!
+
+-Evert-
+
+
+
+On Wed, Feb 3, 2010 at 4:23 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A> &lt;
+<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+
+&gt;<i> could someone tell me how to create a new sorcerer partition?
+</I>&gt;<i>
+</I>&gt;<i> ---------- Original Message ----------
+</I>&gt;<i> From: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Subject: Sorcerer-admins Digest, Vol 44, Issue 1
+</I>&gt;<i> Date: Wed, 03 Feb 2010 12:02:11 +0100
+</I>&gt;<i>
+</I>&gt;<i> Send Sorcerer-admins mailing list submissions to
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-request at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i>        <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins-owner at lists.berlios.de</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific
+</I>&gt;<i> than &quot;Re: Contents of Sorcerer-admins digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>   1. Sorcerer Install (<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>)
+</I>&gt;<i>   2. Re: Sorcerer Install (Evert Vorster)
+</I>&gt;<i>   3. Re: Sorcerer Install (Kyle Sallee)
+</I>&gt;<i>   4. (no subject)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Wed, 3 Feb 2010 00:51:23 GMT
+</I>&gt;<i> From: &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&quot; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt;
+</I>&gt;<i> Subject: [Sorcerer-admins] Sorcerer Install
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Message-ID: &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">20100202.195123.23873.0 at webmail12.vgs.untd.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=ISO-8859-1
+</I>&gt;<i>
+</I>&gt;<i> Hello my name is Nathan Jeffrey Allen and I just downloaded sorcerer Linux
+</I>&gt;<i> ISO 2010 and want a step by step guide on how to install and run it. Please
+</I>&gt;<i> Advise. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i> PS. i am new to the installation process and all of my prior attempts have
+</I>&gt;<i> left me with an error screen.
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Diet Help
+</I>&gt;<i> Cheap Diet Help Tips. Click here.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL2131/c?cp=nclgJLrXHv14LNtXhgBg_QAAJz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAYQAAAAAA=">http://thirdpartyoffers.juno.com/TGL2131/c?cp=nclgJLrXHv14LNtXhgBg_QAAJz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAYQAAAAAA=</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 2
+</I>&gt;<i> Date: Tue, 2 Feb 2010 23:58:22 -0200
+</I>&gt;<i> From: Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt;
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] Sorcerer Install
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Message-ID:
+</I>&gt;<i>        &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">27f41a931002021758g5e58fd06vfbf0a97374c9c627 at mail.gmail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hi there, Nathan.
+</I>&gt;<i>
+</I>&gt;<i> It's nice to see people join Sorcerer. To  be honest with you, installing
+</I>&gt;<i> Sorcerer is not one of the easiest tasks as once Sorcerer is installed it
+</I>&gt;<i> tends to stay that way. I install Sorcerer quite often, and the last time I
+</I>&gt;<i> did a fresh install was about a year ago.
+</I>&gt;<i>
+</I>&gt;<i> Nevertheless, I would like to help. Can you describe to me where it is that
+</I>&gt;<i> you are getting stuck?
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer install can basically be broken up into a few seperate steps.
+</I>&gt;<i>
+</I>&gt;<i> 1. Sorcerer I/R disk boots, and gives you a prompt.
+</I>&gt;<i> 2. The installer is excuted.
+</I>&gt;<i> 3. Partitions are made
+</I>&gt;<i> 4. Files are transferred
+</I>&gt;<i> 5. MBR is updated ( optional )
+</I>&gt;<i> 6. Reboot into Sorcerer.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Can you describe to me which one of these is giving you a problem, please?
+</I>&gt;<i> -Evert Vorster-
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Feb 2, 2010 at 10:51 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A> &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> &gt; Hello my name is Nathan Jeffrey Allen and I just downloaded sorcerer
+</I>&gt;<i> Linux
+</I>&gt;<i> &gt; ISO 2010 and want a step by step guide on how to install and run it.
+</I>&gt;<i> Please
+</I>&gt;<i> &gt; Advise. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i> &gt; PS. i am new to the installation process and all of my prior attempts
+</I>&gt;<i> have
+</I>&gt;<i> &gt; left me with an error screen.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; ____________________________________________________________
+</I>&gt;<i> &gt; Diet Help
+</I>&gt;<i> &gt; Cheap Diet Help Tips. Click here.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL2131/c?cp=nclgJLrXHv14LNtXhgBg_QAAJz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAYQAAAAAA=">http://thirdpartyoffers.juno.com/TGL2131/c?cp=nclgJLrXHv14LNtXhgBg_QAAJz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAYQAAAAAA=</A>
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL:
+</I>&gt;<i> <A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100202/2570a0b3/attachment-0001.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100202/2570a0b3/attachment-0001.html</A>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 3
+</I>&gt;<i> Date: Wed, 3 Feb 2010 01:47:23 -0700
+</I>&gt;<i> From: Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> Subject: Re: [Sorcerer-admins] Sorcerer Install
+</I>&gt;<i> To: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> Message-ID:
+</I>&gt;<i>        &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">596b75861002030047w28763e15o9789c4c6ba5baa67 at mail.gmail.com</A>&gt;
+</I>&gt;<i> Content-Type: text/plain; charset=UTF-8
+</I>&gt;<i>
+</I>&gt;<i> I have been considering feedback from SAs
+</I>&gt;<i> who have attempted to install Sorcerer,
+</I>&gt;<i> yet did not quite accomplish the task.
+</I>&gt;<i> Frequently, there is the report
+</I>&gt;<i> that goes something like,
+</I>&gt;<i> &quot;It ran out of memory and killed the menu driven installer.&quot;
+</I>&gt;<i>
+</I>&gt;<i> My best guess about this is that SAs are either not
+</I>&gt;<i> specifying a &quot;/&quot; root filesystem in the fstab menu,
+</I>&gt;<i> or not mounting it, or not initializing it before mounting.
+</I>&gt;<i> If a root filesystem on a physical storage device such as a
+</I>&gt;<i> fixed disk or USB memory stick is not mounted on
+</I>&gt;<i> /media/root/
+</I>&gt;<i> then the install script will attempt to do the installation
+</I>&gt;<i> to the initramfs/rootfs filesystem which is memory.
+</I>&gt;<i> This is not desirable.
+</I>&gt;<i>
+</I>&gt;<i> Now I wrote above that a real filesystem must be mounted
+</I>&gt;<i> on /media/root
+</I>&gt;<i> However, the SA does not have to do this manually.
+</I>&gt;<i> The menu driven installer will be able to do this.
+</I>&gt;<i> And in most cases the menu driven installer should do this,
+</I>&gt;<i> rather than the SA.
+</I>&gt;<i>
+</I>&gt;<i> For a filesystem to be created on a device
+</I>&gt;<i> the device must first have partitions.
+</I>&gt;<i> If the fixed disk is not partitioned
+</I>&gt;<i> then select partitioning from the menu,
+</I>&gt;<i> I prefer fdisk, and carve out at least one partition.
+</I>&gt;<i>
+</I>&gt;<i> Even a partition exists on a disk
+</I>&gt;<i> that partition is not suitable for mounting unless
+</I>&gt;<i> a filesystem exists on that partition.
+</I>&gt;<i>
+</I>&gt;<i> In the sorcery's fstab creation menu
+</I>&gt;<i> that partition should be offered as an entry.
+</I>&gt;<i> Select it.
+</I>&gt;<i> Specify that it should be mounted as /
+</I>&gt;<i> because every box must have a / filesystem.
+</I>&gt;<i> That is the root filesystem.
+</I>&gt;<i> Now specify a filesystem for /
+</I>&gt;<i> In the past I tended to use ext3.
+</I>&gt;<i> But for testing I use ext4.
+</I>&gt;<i> Either ext3 or ext4 are good choices.
+</I>&gt;<i> Once those are entered for that partition
+</I>&gt;<i> then that is enough information for the menu
+</I>&gt;<i> driven installer to handle that partition.
+</I>&gt;<i>
+</I>&gt;<i> I do not recommend installing Sorcerer onto a
+</I>&gt;<i> filesystem that already has something else installed.
+</I>&gt;<i> In some cases a SA could manually do this by avoiding
+</I>&gt;<i> the filesystem initialization menu.
+</I>&gt;<i> A SA would want to do this if the SA wants to manually
+</I>&gt;<i> remove everything from that partition except /home/
+</I>&gt;<i> and has already done so before using the sorcery
+</I>&gt;<i> menu driven installer.
+</I>&gt;<i>
+</I>&gt;<i> In the past distributions recommended /home/ be kept
+</I>&gt;<i> on a separate partition to avoid having to wipe it
+</I>&gt;<i> while doing a complete re-install of the operating system
+</I>&gt;<i> that was required every year or two.
+</I>&gt;<i> However, that has never been a requirement with Sorcerer.
+</I>&gt;<i> Sorcerer can be installed once and updated forever
+</I>&gt;<i> as long as those updates are no further than 3 months apart.
+</I>&gt;<i> Longer jumps run greater risks of encountering
+</I>&gt;<i> an unexpected problem that the SA would have to manually solve.
+</I>&gt;<i> However, I digressed.
+</I>&gt;<i> Sorry.
+</I>&gt;<i>
+</I>&gt;<i> Please visit the filesystem initialization menu
+</I>&gt;<i> and select that new partition for initialization.
+</I>&gt;<i> If a partition does not have a filessystem
+</I>&gt;<i> then the partition can no be mounted.
+</I>&gt;<i> So this is an important step.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 4
+</I>&gt;<i> Message-ID:
+</I>&gt;<i>        &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">mailman.58.1265194932.18700.sorcerer-admins at lists.berlios.de</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> the menu driven installer will know what partitions
+</I>&gt;<i> to offer for possible initialization and also what filesystem
+</I>&gt;<i> to create if the partition is to be initialized.
+</I>&gt;<i> To be specific the word initialization in this context
+</I>&gt;<i> means to create a filesystem.
+</I>&gt;<i>
+</I>&gt;<i> Finally, now that there is a root filesystem
+</I>&gt;<i> then the mount menu can be visited and
+</I>&gt;<i> the root filesystem will be mounted as /media/root
+</I>&gt;<i> After that is successful
+</I>&gt;<i> then the install menu can be visited.
+</I>&gt;<i> The menu driven installer will now quickly copy files
+</I>&gt;<i> to the real root filesystem and extract them.
+</I>&gt;<i> In qemu this step requires some time.
+</I>&gt;<i> But on real hardware it is considerably fast.
+</I>&gt;<i> Still there should be enough time to refill one's
+</I>&gt;<i> orange juice glass and look for a rainbow outside.
+</I>&gt;<i>
+</I>&gt;<i> After files are installed
+</I>&gt;<i> there is merely one more step in order for it to become bootable.
+</I>&gt;<i> Visit the compile menu.
+</I>&gt;<i> This one will present many menus that ask questions.
+</I>&gt;<i> At least selecting default locales will expedite compilation,
+</I>&gt;<i> because creating a complete set of locales is time consuming
+</I>&gt;<i> and also wastes about 30M or more megabytes of disk space.
+</I>&gt;<i> The etc spell can be recast later for the convenience
+</I>&gt;<i> of being reminded which files in /etc the SA should edit.
+</I>&gt;<i>
+</I>&gt;<i> After compilation is complete
+</I>&gt;<i> then the box is ready to reboot.
+</I>&gt;<i> After booting from fixed disk,
+</I>&gt;<i> naturally, set a root password,
+</I>&gt;<i> give the box a name,
+</I>&gt;<i> set the system and hardware clock date/time,
+</I>&gt;<i> and finally configure the network by reading files
+</I>&gt;<i> in /etc/networks.d/ and copying and modifying a template
+</I>&gt;<i> that describes the network type.
+</I>&gt;<i> Or if you are feeling lazy and have a DHCP server
+</I>&gt;<i> then type something like
+</I>&gt;<i> dhcpcd eth0
+</I>&gt;<i> to obtain an instant IP address for the eth0 device.
+</I>&gt;<i> Network configuration is the most manual aspect of
+</I>&gt;<i> installing a Sorcerer box.
+</I>&gt;<i>
+</I>&gt;<i> Now that is all done the Sorcerer box is ready
+</I>&gt;<i> for updating and deploying with the software
+</I>&gt;<i> required for mission critical operation.
+</I>&gt;<i> I recommend that this be done in 2 steps.
+</I>&gt;<i> First, update the box.
+</I>&gt;<i> # augur easy
+</I>&gt;<i>
+</I>&gt;<i> Software changes so quickly that half the software
+</I>&gt;<i> on installed by an I/R is already obsolete by the time
+</I>&gt;<i> that you receive it.
+</I>&gt;<i> So having about 100 spells recast is not atypical.
+</I>&gt;<i>
+</I>&gt;<i> Now that is done the exact mission critical spells to
+</I>&gt;<i> install on the box can be selected using sorcery or
+</I>&gt;<i> instead issued as command line parameters to cast.
+</I>&gt;<i> Figuring out what to installs, if doing it by command line,
+</I>&gt;<i> is best done with some assistance from augur.
+</I>&gt;<i> The augur utility has some useful commands for searching
+</I>&gt;<i> the catalog of available software by keyword, category, attribute.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer's catalog of software, also called a grimoire,
+</I>&gt;<i> has about 3000+ entries in it.
+</I>&gt;<i> Yes, that does not seem like much compared to a
+</I>&gt;<i> pre-compiled binary based distro,
+</I>&gt;<i> but that is because Sorcerer does not chop sources
+</I>&gt;<i> into -dev packages, -lib packages, -exe packages,
+</I>&gt;<i> nor does it chop something like coreutils into a bazillaion
+</I>&gt;<i> smaller package for each of the utilities installed.
+</I>&gt;<i> With Sorcerer, entire sources are compiled and installed.
+</I>&gt;<i> Each Sorcerer box can be used for software development.
+</I>&gt;<i> So what would seem like 12000 or more packages in
+</I>&gt;<i> a pre-compiled binary based distro only amounts to about
+</I>&gt;<i> 3000 spells in Sorcerer.
+</I>&gt;<i> In my opinion having fewer spells is less of a brain strain
+</I>&gt;<i> on SAs for selecting software to install,
+</I>&gt;<i> yet at the same time receiving much of the same high
+</I>&gt;<i> quality software provided by other distros.
+</I>&gt;<i>
+</I>&gt;<i> Installing something like kde-v4 is very simple.
+</I>&gt;<i> cast kde-v4
+</I>&gt;<i> gnome is equally simple.
+</I>&gt;<i> cast gnome
+</I>&gt;<i>
+</I>&gt;<i> After the optional and switch menus are visited during cast
+</I>&gt;<i> the rest of the process involving the downloading,
+</I>&gt;<i> compilation, and installation of software is automatic
+</I>&gt;<i> and happens in the background at nice 15.
+</I>&gt;<i> There is no need to wait upon it.
+</I>&gt;<i> Also additional software can be selected for casting
+</I>&gt;<i> and added to the cast queue.
+</I>&gt;<i> sorcery will install the software in the proper order,
+</I>&gt;<i> and often use multiple CPU cores to compile software
+</I>&gt;<i> concurrently for faster installation.
+</I>&gt;<i> This behavior can be set using the CAST_RATE variable
+</I>&gt;<i> which can be set somewhere under one of sorcery's
+</I>&gt;<i> configuration menu when the sorcery tool is invoked.
+</I>&gt;<i>
+</I>&gt;<i> Installing kde-v4 or kde-v3 requires a long time to completion.
+</I>&gt;<i> However, most other software,
+</I>&gt;<i> excluding linux-modular and firefox,
+</I>&gt;<i> installs very fast on box.
+</I>&gt;<i> The process of waiting for software to install might require
+</I>&gt;<i> between 30 minutes or several hours depending upon the
+</I>&gt;<i> load that the SA requested.
+</I>&gt;<i> This is referred to as the &quot;big wait&quot;
+</I>&gt;<i> During this time logging out is fine,
+</I>&gt;<i> just leave the computer on and connected to a network
+</I>&gt;<i> so that it can complete installation of software.
+</I>&gt;<i> Since this time is entirely non-interactive
+</I>&gt;<i> it requires no SA attention.
+</I>&gt;<i>
+</I>&gt;<i> The &quot;big wait&quot; both that happens during the final deployment
+</I>&gt;<i> of sorcerer and when updating sorcerer boxes
+</I>&gt;<i> is the one significant drawback
+</I>&gt;<i> that is common to source based distros.
+</I>&gt;<i> Having software compiled for optimal performance
+</I>&gt;<i> actually requires some time to compile it.
+</I>&gt;<i>
+</I>&gt;<i> However, the &quot;big wait&quot; is not a big factor in the long run.
+</I>&gt;<i> During updates a box does not have to be reduced to runlevel 1.
+</I>&gt;<i> Boxes can be updated while users are logged in
+</I>&gt;<i> and while services are being provided.
+</I>&gt;<i> Services will restart as necessary to start running the
+</I>&gt;<i> newer software once the newer software is installed.
+</I>&gt;<i> And because updating happens in the background at nice 15
+</I>&gt;<i> a box is still available for hard work, or watching videos,
+</I>&gt;<i> or even playing video games while it is updating.
+</I>&gt;<i> The high nice value tells the kernel to provide cast with
+</I>&gt;<i> CPU cycles that would otherwise be idle or wasted.
+</I>&gt;<i> So if nothing heavy is running on the box,
+</I>&gt;<i> besides the casting of spells,
+</I>&gt;<i> then updates will happen quickly.
+</I>&gt;<i> If updating while watching video
+</I>&gt;<i> then the update will require a bit longer to complete
+</I>&gt;<i> than if nearly all CPU cycles could be granted to cast.
+</I>&gt;<i>
+</I>&gt;<i> Please keep in mind that sometime during an update of
+</I>&gt;<i> gnome or kde-v3 or kde-v4 that the GUI login manager
+</I>&gt;<i> will be restarted which will probably abruptly end the X
+</I>&gt;<i> session of any user that is logged in during that time.
+</I>&gt;<i> Sorry about that.
+</I>&gt;<i> Hiding the pid for kdm or gdm which is normally in
+</I>&gt;<i> /var/run/ within a subdirectory called hide
+</I>&gt;<i> will normally keep those from restarting.
+</I>&gt;<i>
+</I>&gt;<i> Other ways to avoid inconveniencing users is to schedule
+</I>&gt;<i> updates by cronjobs that happen during night hours.
+</I>&gt;<i> At many workplaces workstations are left on during night
+</I>&gt;<i> and idle the CPU for nearly 14 hours.
+</I>&gt;<i> Those are awesome times for updating.
+</I>&gt;<i>
+</I>&gt;<i> Now for the final recommendation.
+</I>&gt;<i> Each Sorcerer box is unique because it can have a load out
+</I>&gt;<i> of software on it that might not exist anywhere else.
+</I>&gt;<i> Consequently, very rarely a problem will occur on a box
+</I>&gt;<i> that has a very specific load out of software.
+</I>&gt;<i> And that problem might not occur on my test box during testing.
+</I>&gt;<i> So I could be unaware of it.
+</I>&gt;<i> There was a problem like that a long time ago where
+</I>&gt;<i> maybe db failed to compile if emacs was installed.
+</I>&gt;<i> Or it was something like that where something failed to compile
+</I>&gt;<i> because something else was installed.
+</I>&gt;<i> Consequently, better to stay ahead of breakage
+</I>&gt;<i> than to have it bust down upon your head.
+</I>&gt;<i> The way to stay ahead of breaks is to have a box
+</I>&gt;<i> deployed that is merely for testing, called the &quot;dev&quot; box.
+</I>&gt;<i> Update the dev box before updating any production boxes.
+</I>&gt;<i> That way if a problem could happen on the production boxes
+</I>&gt;<i> then it will first happen on the dev box.
+</I>&gt;<i>
+</I>&gt;<i> If both the dev box and production boxes are on automatic updates
+</I>&gt;<i> then the dev box can be given a LAG=3D0 while the production boxes
+</I>&gt;<i> are given LAG=3D7 in order to create a week's worth of separation.
+</I>&gt;<i> This way problems will occur on the dev box a week ahead
+</I>&gt;<i> of when they would occur on the production box.
+</I>&gt;<i> That gives a SA time to spot a problem and interdict before
+</I>&gt;<i> it becomes a problem on a production box.
+</I>&gt;<i>
+</I>&gt;<i> However, using high LAG values on production boxes means
+</I>&gt;<i> that software updates for both bug fixes and security problems
+</I>&gt;<i> will occur that much slower than when they become available
+</I>&gt;<i> in the LAG=3D0 grimoire.
+</I>&gt;<i> Alas, there is no perfect solution for this.
+</I>&gt;<i> By default Sorcerer boxes have LAG=3D1
+</I>&gt;<i> which is useful if the SA was able to set the
+</I>&gt;<i> date/time for the box, but was unable to do so
+</I>&gt;<i> so that the box knows what the correct UTC date/time is.
+</I>&gt;<i> That could happen for example if the box is dual booted
+</I>&gt;<i> with a windoze operating system that stores date internally
+</I>&gt;<i> in localtime instead of UTC time.
+</I>&gt;<i>
+</I>&gt;<i> Probably, after having one or two
+</I>&gt;<i> successful installations of Sorcerer
+</I>&gt;<i> then using the menu driven installer
+</I>&gt;<i> will seem less of an ordeal.
+</I>&gt;<i> At the moment the menu driven installer
+</I>&gt;<i> merely simplifies the steps of installation
+</I>&gt;<i> by invoking required commands with proper parameters.
+</I>&gt;<i> This is helpful since a SA would not actually have to know
+</I>&gt;<i> the name of the utility for creating a filesystem or the
+</I>&gt;<i> parameters to pass to it.
+</I>&gt;<i> However, the steps involved in installation are not strictly
+</I>&gt;<i> enforced by the menu driven installer.
+</I>&gt;<i> Therefore, the SA must be aware of the general path
+</I>&gt;<i> that one must travel in order to install a POSIX.
+</I>&gt;<i>
+</I>&gt;<i> After mastering the menu driven installer
+</I>&gt;<i> perhaps try attempting a manual install that does not
+</I>&gt;<i> involve using the menu driven installer.
+</I>&gt;<i> Yes, it is possible.
+</I>&gt;<i> And doing so will gain confidence in one's knowledge
+</I>&gt;<i> of how the pieces of a POSIX fit together.
+</I>&gt;<i>
+</I>&gt;<i> Compared to what used to by required in order to manually
+</I>&gt;<i> install Debian more than a decade ago, Sorcerer is a bit
+</I>&gt;<i> more difficult to manually install.
+</I>&gt;<i> But it involves creating a partition, a filesystem, copying files,
+</I>&gt;<i> unarchiving tarballs, editing lilo.conf.head
+</I>&gt;<i> and then running many of the scripts in
+</I>&gt;<i> /etc/init.d/ in order to handle the tedious things like
+</I>&gt;<i> generating the sysvinit /etc/rc.d/rc*.d/* symbolic links,
+</I>&gt;<i> creating the initramfs, installing lilo, etc...
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer is actually even a bit gentle to the SA that
+</I>&gt;<i> tries to do a manual install assuming the attempt is
+</I>&gt;<i> nearly perfect.
+</I>&gt;<i> For example if a root partition is not specified in /etc/fstab
+</I>&gt;<i> then there is a menu that appears during sysinit that allows
+</I>&gt;<i> the SA to specify which partition to mount as the root partition.
+</I>&gt;<i> But even so, eventually /etc/fstab should be properly edited
+</I>&gt;<i> to include a root partition.
+</I>&gt;<i> But not having it that way will not block a box from booting
+</I>&gt;<i> if the SA is willing to assist.
+</I>&gt;<i>
+</I>&gt;<i> Another method might be to try to do the manual install,
+</I>&gt;<i> then fail to be able to boot the box,
+</I>&gt;<i> so then boot using the I/R
+</I>&gt;<i> and select the fixed disk partition for the root filesystem.
+</I>&gt;<i> Now it is loaded, but not yet complete.
+</I>&gt;<i> Check /etc/lilo.conf.head and /etc/fstab and make corrections.
+</I>&gt;<i> Now run /etc/init.d/rc.d.
+</I>&gt;<i> Finally, shutdown -r
+</I>&gt;<i> At this point the shutdown scripts will run that will do the
+</I>&gt;<i> necessary things like creating an initramfs and installing lilo and such.
+</I>&gt;<i> And if it is sufficient then the box will be bootable from fixed disk.
+</I>&gt;<i>
+</I>&gt;<i> The menu driven installer is a big help to SAs
+</I>&gt;<i> for being able to install a box quickly for very little SA attention.
+</I>&gt;<i> Basically, just by pressing arrow keys, space and enter
+</I>&gt;<i> and pressing / at one point
+</I>&gt;<i> is all that is required to go through the menu driven installer
+</I>&gt;<i> after invoking it with sinstall.  :)
+</I>&gt;<i>
+</I>&gt;<i> That said, however you want to install Sorcerer is
+</I>&gt;<i> properly the correct method as long as it is bootable
+</I>&gt;<i> after installation.  :)
+</I>&gt;<i> After creating one Sorcerer box you might want to
+</I>&gt;<i> create a chrooted install to use as a template for new boxes.
+</I>&gt;<i> That way new boxes can be installed by booting from an I/R,
+</I>&gt;<i> creating a filesytem, starting the network,
+</I>&gt;<i> scping a compressed tarball,
+</I>&gt;<i> and then uncompressing it.
+</I>&gt;<i> Other SAs might temporarily install a disk in a removable drive bay
+</I>&gt;<i> and then hot plug it into a Sorcerer box and then do the installation
+</I>&gt;<i> to the removable from the already deployed box.
+</I>&gt;<i> By this method installing without an CD drive is possible.
+</I>&gt;<i>
+</I>&gt;<i> Rumor has it that a USB memory drive can be ruined by
+</I>&gt;<i> dding a bootable CD image, such as Sorcerer's I/R,
+</I>&gt;<i> to the USB memory drive's device.
+</I>&gt;<i> According to rumor the USB memory drive then acts as
+</I>&gt;<i> if it is a bootable detachable CD device.
+</I>&gt;<i> But once written that way the change can not be undone.
+</I>&gt;<i> But $10 or less for a USB thumb drive is cheaper
+</I>&gt;<i> than buying an optical disk drive and also tends to
+</I>&gt;<i> be faster than installing from CD.
+</I>&gt;<i> Also most computers created during 2004 or later
+</I>&gt;<i> are capable of booting from a USB device.
+</I>&gt;<i> Groovy.  :)
+</I>&gt;<i>
+</I>&gt;<i> My advice is to keep trying with the installation.
+</I>&gt;<i> One a person's understanding of the steps required
+</I>&gt;<i> for installation is complete
+</I>&gt;<i> then there is practically no way to mess it up.
+</I>&gt;<i> Failure to achieve an installed Sorcerer box
+</I>&gt;<i> while using the menu driven installer is usually
+</I>&gt;<i> due to a SA skipping an important step.
+</I>&gt;<i> Therefore, be careful.
+</I>&gt;<i> If a menu is marked as optional,
+</I>&gt;<i> but you might be uncertain about what it does
+</I>&gt;<i> then visit that menu and see what it says.
+</I>&gt;<i>
+</I>&gt;<i> Yes, initializing a filesystem is optional if an
+</I>&gt;<i> initialized filesystem already exists.
+</I>&gt;<i> But if it does not already exist
+</I>&gt;<i> then that menu is not optional.  :)
+</I>&gt;<i> Maybe that is strange logic for the use
+</I>&gt;<i> of the word optional.
+</I>&gt;<i> But the word optional does mean that in some cases
+</I>&gt;<i> where the SA has already done that step previously
+</I>&gt;<i> then installation is possible without visiting an optional menu.
+</I>&gt;<i> For example, when installing Sorcerer on a disk while overwriting
+</I>&gt;<i> some other operating system then the disk is already partitioned
+</I>&gt;<i> and therefore visiting the partitioning menu is optional.
+</I>&gt;<i> However, in order to re-use a partition
+</I>&gt;<i> then the filesystem initialization menu should be visited
+</I>&gt;<i> in order to create a new empty filesystem on an existing partition.
+</I>&gt;<i>
+</I>&gt;<i> After some consideration I am guessing that the use of
+</I>&gt;<i> the word &quot;optional&quot; is confusing in the context of the menu
+</I>&gt;<i> driven installer, because the SA must know why a menu
+</I>&gt;<i> is optional in order to determine if the menu should be visited.
+</I>&gt;<i>
+</I>&gt;<i> I must consider this in detail to determine how to help SAs
+</I>&gt;<i> make better choices about skipping optional menus.
+</I>&gt;<i> I can not simply force SAs to initialize every partition that
+</I>&gt;<i> is specified in in the fstab menu,
+</I>&gt;<i> because that could lead to unwanted data loss.
+</I>&gt;<i> So, maybe I can give SAs some second chance
+</I>&gt;<i> at skipped optional menus without forcing them
+</I>&gt;<i> to do them?
+</I>&gt;<i>
+</I>&gt;<i> Obviously, the in this respect the menu driven installer
+</I>&gt;<i> is not buggy, but for SAs very new to Sorcerer
+</I>&gt;<i> the use of the word &quot;optional&quot; is confusing
+</I>&gt;<i> and perhaps misleading?
+</I>&gt;<i>
+</I>&gt;<i> Creating a menu driven installer that is lose enough
+</I>&gt;<i> for senior level SAs to make it do what they want,
+</I>&gt;<i> yet tight enough to keep new SAs from falling through
+</I>&gt;<i> the cracks is difficult.
+</I>&gt;<i> Ultimately, the menu driven installer should be an experience
+</I>&gt;<i> that is survivable without the use of external documentation
+</I>&gt;<i> in order to properly navigate the menus.
+</I>&gt;<i> The use of Sorcerer should be a positive successful
+</I>&gt;<i> hands-on experience where there is no reading 300 pages
+</I>&gt;<i> of documentation before unwrapping the CD.
+</I>&gt;<i> Obviously, the menu driven installer is not there yet.
+</I>&gt;<i> But you will probably enjoy augur's help,
+</I>&gt;<i> both the help menu and
+</I>&gt;<i> the verbose help available on each augur parameter.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Feb 2, 2010 at 6:58 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Hi there, Nathan.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; It's nice to see people join Sorcerer. To=C2=A0 be honest with you,
+</I>&gt;<i> insta=
+</I>&gt;<i> lling
+</I>&gt;<i> &gt; Sorcerer is not one of the easiest tasks as once Sorcerer is installed it
+</I>&gt;<i> &gt; tends to stay that way. I install Sorcerer quite often, and the last
+</I>&gt;<i> time=
+</I>&gt;<i>  I
+</I>&gt;<i> &gt; did a fresh install was about a year ago.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Nevertheless, I would like to help. Can you describe to me where it is
+</I>&gt;<i> th=
+</I>&gt;<i> at
+</I>&gt;<i> &gt; you are getting stuck?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Sorcerer install can basically be broken up into a few seperate steps.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 1. Sorcerer I/R disk boots, and gives you a prompt.
+</I>&gt;<i> &gt; 2. The installer is excuted.
+</I>&gt;<i> &gt; 3. Partitions are made
+</I>&gt;<i> &gt; 4. Files are transferred
+</I>&gt;<i> &gt; 5. MBR is updated ( optional )
+</I>&gt;<i> &gt; 6. Reboot into Sorcerer.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Can you describe to me which one of these is giving you a problem,
+</I>&gt;<i> please=
+</I>&gt;<i> ?
+</I>&gt;<i> &gt; -Evert Vorster-
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Tue, Feb 2, 2010 at 10:51 PM, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i> &gt; &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>&gt; wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Hello my name is Nathan Jeffrey Allen and I just downloaded sorcerer
+</I>&gt;<i> Lin=
+</I>&gt;<i> ux
+</I>&gt;<i> &gt;&gt; ISO 2010 and want a step by step guide on how to install and run it.
+</I>&gt;<i> Ple=
+</I>&gt;<i> ase
+</I>&gt;<i> &gt;&gt; Advise. <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">nathan_allen1 at juno.com</A>
+</I>&gt;<i> &gt;&gt; PS. i am new to the installation process and all of my prior attempts
+</I>&gt;<i> ha=
+</I>&gt;<i> ve
+</I>&gt;<i> &gt;&gt; left me with an error screen.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; ____________________________________________________________
+</I>&gt;<i> &gt;&gt; Diet Help
+</I>&gt;<i> &gt;&gt; Cheap Diet Help Tips. Click here.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL2131/c?cp=3DnclgJLrXHv14LNtXhgBg_QAA=">http://thirdpartyoffers.juno.com/TGL2131/c?cp=3DnclgJLrXHv14LNtXhgBg_QAA=</A>
+</I>&gt;<i>
+</I>&gt;<i> Jz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAYQAAAAAA=
+</I>&gt;<i> =3D
+</I>&gt;<i> &gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; <A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> End of Sorcerer-admins Digest, Vol 44, Issue 1
+</I>&gt;<i> **********************************************
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ____________________________________________________________
+</I>&gt;<i> Home Improvement Projects
+</I>&gt;<i> Do it right the first time.  Click to find contractors to work on your home
+</I>&gt;<i> improvement project.
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://thirdpartyoffers.juno.com/TGL2131/c?cp=R3LAVkFejHzgb4kl9pgztQAAJz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAShAAAAAA=">http://thirdpartyoffers.juno.com/TGL2131/c?cp=R3LAVkFejHzgb4kl9pgztQAAJz1xmZhdDDfML7mr3RkLYho8AAYAAAAAAAAAAAAAAAAAAADNAAAAAAAAAAAAAAAAAAAShAAAAAA=</A>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+<A HREF="http://magnatune.com">http://magnatune.com</A> - Music shared the way it should be.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100203/5170fe97/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100203/5170fe97/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001415.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+</A></li>
+	<LI>Next message: <A HREF="001416.html">[Sorcerer-admins] Basic Sorcerer install instructions.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1409">[ date ]</a>
+              <a href="thread.html#1409">[ thread ]</a>
+              <a href="subject.html#1409">[ subject ]</a>
+              <a href="author.html#1409">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

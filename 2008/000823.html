@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] 3 column ELF logs are coming soon to a Sorcerer	near you.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%203%20column%20ELF%20logs%20are%20coming%20soon%20to%20a%20Sorcerer%0A%09near%20you.&In-Reply-To=%3C596b75860810290133r62030b8fh12e09ea2059dfbaa%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000822.html">
+   <LINK REL="Next"  HREF="000824.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] 3 column ELF logs are coming soon to a Sorcerer	near you.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%203%20column%20ELF%20logs%20are%20coming%20soon%20to%20a%20Sorcerer%0A%09near%20you.&In-Reply-To=%3C596b75860810290133r62030b8fh12e09ea2059dfbaa%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] 3 column ELF logs are coming soon to a Sorcerer	near you.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Oct 29 09:33:23 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000822.html">[Sorcerer-admins] ELF logs...
+</A></li>
+        <LI>Next message: <A HREF="000824.html">[Sorcerer-admins] lsof does not display anything
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#823">[ date ]</a>
+              <a href="thread.html#823">[ thread ]</a>
+              <a href="subject.html#823">[ subject ]</a>
+              <a href="author.html#823">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The ancient ELF logs are one column.
+The old ELF logs are 2 columns.
+And the new ELF logs are 3 columns.
+
+What are the columns?
+
+# cat /etc/sorcery/log/elf/zlib
+/lib/libz.so    /lib/libc.so.6  glibc
+/lib/libz.so.1  /lib/libc.so.6  glibc
+/lib/libz.so.1.2.3      /lib/libc.so.6  glibc
+/usr/lib/libz.so        /lib/libc.so.6  glibc
+/usr/lib/libz.so.1      /lib/libc.so.6  glibc
+/usr/lib/libz.so.1.2.3  /lib/libc.so.6  glibc
+
+
+The first column is the ELF installed by the spell.
+The second column is an ELF required by the ELF installed by the spell.
+The third column is the spell that owns the ELF in the 2nd column.
+
+Confused yet?
+No problem.
+Understanding ELF logs is not necessary nor required.
+
+The 3 column format grants much faster responses to:
+
+augur arof
+augur aron
+augur check
+
+Spell authors use those functions.
+I use augur check for each new version of a spell I check.
+
+The boons are the sweet speed we crave and enjoy.
+And the cost?
+
+/etc/sorcery/log/elf/ grows between about 10% to 15%
+
+Typical workstation:
+
+# du -sm /etc/sorcery/log/* | sort -g | tail -n 4
+12      /etc/sorcery/log/install
+14      /etc/sorcery/log/elf
+14      /etc/sorcery/log/md5sum
+15      /etc/sorcery/log/compile
+
+# du -sm /etc/sorcery/log
+64      /etc/sorcery/log
+
+64M is a tiny drop in the bucket compared to 30G and larger fixed disks.
+64M is still very reasonable size for the unmitigated speed
+from accessing most of that data without compression.
+If all the log files were individually compressed
+they would probably occupy 10M or less.
+But I want speed!
+How about you?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000822.html">[Sorcerer-admins] ELF logs...
+</A></li>
+	<LI>Next message: <A HREF="000824.html">[Sorcerer-admins] lsof does not display anything
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#823">[ date ]</a>
+              <a href="thread.html#823">[ thread ]</a>
+              <a href="subject.html#823">[ subject ]</a>
+              <a href="author.html#823">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

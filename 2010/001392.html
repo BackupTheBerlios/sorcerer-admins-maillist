@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] udev 149...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20149...&In-Reply-To=%3C596b75861001100045i5d09c0abo5f4c0a38bcae0e01%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001389.html">
+   <LINK REL="Next"  HREF="001393.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] udev 149...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20udev%20149...&In-Reply-To=%3C596b75861001100045i5d09c0abo5f4c0a38bcae0e01%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] udev 149...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun Jan 10 09:45:52 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001389.html">[Sorcerer-admins] grub...
+</A></li>
+        <LI>Next message: <A HREF="001393.html">[Sorcerer-admins] udev 150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1392">[ date ]</a>
+              <a href="thread.html#1392">[ thread ]</a>
+              <a href="subject.html#1392">[ subject ]</a>
+              <a href="author.html#1392">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>udev 149 is now finally ready for use.
+Please direct all flames and constructive criticism to the udev
+email list for starting their helper scripts with:
+
+#!/bin/sh -e
+
+The -e parameter tells the shell script execution to exit immediately
+when a command returns with non zero exit.
+Consequently, their scripts end without warning nor notice as soon
+as they encounter something that the script author did not properly anticipate.
+The grimoire update that re-installs coreutils
+with /usr/bin/uname moved to /bin/uname avoids
+/lib/udev/firmware.sh script aborting prematurely
+without any warning when it attempts to execute uname.
+It even executes $( uname -r ) twice instead of just once
+in order to make that script run extra-extra slow.
+However, running uname should not even be required.
+First, firmware is stored in /lib/firmware/ and not /lib/firmware/$( uname -r )
+And second the version of the running kernel is already easily available
+from read REPLY &lt; /proc/version and chopping it on the dotted lines.
+
+This bug has been occurring for the 149 and 146 version of udev.
+For any SAs holding udev back to 142 or lower
+then now is safe to update udev.
+
+The problems caused by udev 144 and newer
+was that firmware can not be automatically loaded for devices
+when their modules are loaded.
+This could also cause udevadm settle to reach the full 180 second timeout
+following the cold plug event re-triggering.
+And the last annoying aspect of this problem was that it required devices
+that were not working properly to have their modules unloaded and reload
+after the real root filesystem was mounted in order for required firmware
+to also be loaded.
+
+Sorry this took me a while to full investigate.
+It required about 8 hours total, and 4 non stop
+a few days ago as I trekked through kernel and kernel module code
+and back to udev while learning how firmware is supposed to
+be automatically loaded.
+
+I am pleased this problem is solved and will not persist with 2010 I/R releases.
+
+However, sometime following linux version 2.6.30.4 some changes
+were made in linux that caused some devices to no longer work properly.
+I am using legacy version progress for linux on one of my boxes in order
+to keep a USB NIC from turning into a purposeless paperweight.
+I have no clues about why that is not working at the moment.
+I have a different box that uses a different USB NIC and different
+kernel modules
+and it runs fine with linux version 2.6.32.2
+Is anyone else holding back the installed version of linux or linux-modular
+for similar hardware support issues?
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001389.html">[Sorcerer-admins] grub...
+</A></li>
+	<LI>Next message: <A HREF="001393.html">[Sorcerer-admins] udev 150
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1392">[ date ]</a>
+              <a href="thread.html#1392">[ thread ]</a>
+              <a href="subject.html#1392">[ subject ]</a>
+              <a href="author.html#1392">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

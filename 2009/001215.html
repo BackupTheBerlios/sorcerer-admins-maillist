@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] The testing continues...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20testing%20continues...&In-Reply-To=%3C596b75860905231259t23b9c41y8c60620ef65c9fdf%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001214.html">
+   <LINK REL="Next"  HREF="001216.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] The testing continues...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20The%20testing%20continues...&In-Reply-To=%3C596b75860905231259t23b9c41y8c60620ef65c9fdf%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] The testing continues...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 23 21:59:40 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001214.html">[Sorcerer-admins] The testing continues...
+</A></li>
+        <LI>Next message: <A HREF="001216.html">[Sorcerer-admins] The testing continues...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1215">[ date ]</a>
+              <a href="thread.html#1215">[ thread ]</a>
+              <a href="subject.html#1215">[ subject ]</a>
+              <a href="author.html#1215">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have no explanation, so far, as to why UUIDs would be different.
+The most obvious conjecture is not that the UUIDs in fstab were incorrect,
+but rather that at some time the UUIDs of those filesystems changed.
+pvcreate creates UUIDs for physical volumes.
+However, does creating a filesystem on that volume
+then also change the UUID?
+And if so, what filesystem?
+I want to check this out please.
+What filesystems were you using, please?
+
+Because the UUID of a filesystem is read
+and then stored in array PUUID
+it is possible that it could change
+and have not been read again.
+
+Perhaps repartitioning a disk,
+then reloading might have caused the
+stored UUID values to become incorrect
+or in the wrong place?
+
+
+
+On Sat, May 23, 2009 at 10:39 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> what about the disk UUIDs ?
+</I>&gt;<i>
+</I>&gt;<i> I didnt' stop anything too soon when I had installed.... during setup
+</I>&gt;<i> I'm very cautious to allow everything to complete and definatly do all
+</I>&gt;<i> steps 'required'...
+</I>&gt;<i>
+</I>&gt;<i> On Sat, May 23, 2009 at 9:03 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> I made it so that sorcery does not invoke the regeneration scripts in
+</I>&gt;&gt;<i> /etc/init.d/
+</I>&gt;&gt;<i> automatically from cast, while casting when booted from the I/R.
+</I>&gt;&gt;<i> Perhaps in the past, a SA too anxious to complete casting might have
+</I>&gt;&gt;<i> ended the chroot too soon and that might have been the reason why
+</I>&gt;&gt;<i> some SAs ended up with boxes where lilo was not installed or
+</I>&gt;&gt;<i> the initramfs was not properly regenerated.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Now, following the completion of cast during the installation
+</I>&gt;&gt;<i> the regeneration scripts are invoked directly from the installer
+</I>&gt;&gt;<i> and run in the foreground so that the completion of those tasks
+</I>&gt;&gt;<i> are waited for before ending the chroot and unmounting
+</I>&gt;&gt;<i> virtual filesystems that were bound into the install filesystem.
+</I>&gt;&gt;<i> With this change proper symlink generation in /etc/rc.d/rc*.d/
+</I>&gt;&gt;<i> will be correct, the initramfs will be correct, and lilo will have
+</I>&gt;&gt;<i> been installed.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I apologize for not having realized that as a possible potential for
+</I>&gt;&gt;<i> causing a failed installation previously.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> This morning I discovered something interesting.
+</I>&gt;&gt;<i> The x86_64 qemu box was lzipping 400+ archives.
+</I>&gt;&gt;<i> At first I could not imagine how they became unlzipped.
+</I>&gt;&gt;<i> In fact they had not.
+</I>&gt;&gt;<i> sorcery-clean, which I forgot to modify to support files with extension .lz,
+</I>&gt;&gt;<i> had wiped /var/cache/archive/ hours earlier.
+</I>&gt;&gt;<i> Therefore, all the archives in /var/cache/archive/ had been recently tarred.
+</I>&gt;&gt;<i> That bug will be fixed in the next grimoire tarball release.
+</I>&gt;&gt;<i> I already commit the fix to svn.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Consequently, today begins yet another day of testing,
+</I>&gt;&gt;<i> which might be more like a half day since my workstation
+</I>&gt;&gt;<i> is busy lziping tarballs.
+</I>&gt;&gt;<i> Still I hope to have some new very clean and very reliable I/Rs
+</I>&gt;&gt;<i> available as soon as they pass testing.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks for your patience and bug reporting.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001214.html">[Sorcerer-admins] The testing continues...
+</A></li>
+	<LI>Next message: <A HREF="001216.html">[Sorcerer-admins] The testing continues...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1215">[ date ]</a>
+              <a href="thread.html#1215">[ thread ]</a>
+              <a href="subject.html#1215">[ subject ]</a>
+              <a href="author.html#1215">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

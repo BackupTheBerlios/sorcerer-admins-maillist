@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Where does a knoobie start?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2013/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Where%20does%20a%20knoobie%20start%3F&In-Reply-To=%3CCA%2BT4wDihmqw%3DM022KttfbyNSyGbidEx%3DhdTbWscTCdUnOGYwgw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002438.html">
+   <LINK REL="Next"  HREF="002440.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Where does a knoobie start?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Where%20does%20a%20knoobie%20start%3F&In-Reply-To=%3CCA%2BT4wDihmqw%3DM022KttfbyNSyGbidEx%3DhdTbWscTCdUnOGYwgw%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Where does a knoobie start?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Aug  5 21:08:54 CEST 2013</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002438.html">[Sorcerer-admins] Where does a knoobie start?
+</A></li>
+        <LI>Next message: <A HREF="002440.html">[Sorcerer-admins] check which disk is which
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2439">[ date ]</a>
+              <a href="thread.html#2439">[ thread ]</a>
+              <a href="subject.html#2439">[ subject ]</a>
+              <a href="author.html#2439">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Mon, Aug 5, 2013 at 11:24 AM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hmm, I actually have both a spare partition and the Sorcerer ISO. Now if
+</I>&gt;<i> only I could get some spare time I would be able to have a play at
+</I>&gt;<i> installing it and booting it in conjunction with my already installed
+</I>&gt;<i> sorcerer. :)
+</I>&gt;<i>
+</I>
+I was not complaining.
+Evert does plenty for promoting the viability and stability of Modern Magic.
+
+
+
+&gt;<i> Come to think of it, the switch over to 3.10.4 had a hiccup, I had to run
+</I>&gt;<i> /etc/init.d/initramfs force-reload before my system would boot properly
+</I>&gt;<i> again.
+</I>&gt;<i>
+</I>
+That seems curious.
+Please investigate if possible.
+I am still on the 3.9.x version progress for Linux because
+the NVIDIA-Linux-x86* proprietary drivers when I previously checked
+were not yet compatible with the 3.10.x releases of Linux.
+I have computers that are on a stable version progress for linux-source.
+However, I might not yet have updated their installed Linux.
+An problem involving initramfs generation seems both odd and rare.
+I hope it happens so I might be able to see the effect and surmise the
+cause.
+Thanks for the forewarning.
+
+A fun thing about free software is we are not all running the same versions
+nor the same manifests of installed software although we are all running
+the same POSIX.
+Consequently, sometimes errors happen for some that do not happen for
+others.
+An example of that would be the now ancient problem of having gettext
+fail compilation if emacs was installed.
+Or maybe it was something else.
+But the point was that one or more software projects failed to compile
+if emacs was detected as installed.
+And it was an error that I never encountered because I never install emacs,
+except on the test box these days.
+I tend to do text editing using nano.
+But that problem involving emacs was probably years ago.
+It was probably sticking in my mind because at the time I was using
+a Pentium 3 for a test computer with limited fixed disk space and so
+the manifest of installed software was considerably less than what is
+supported by the catalog of software available for immediate installation.
+Various reasons can contribute to some people encountering
+problems that others might not.
+In a way administration by source can be a bit like
+a unique adventure for every participant.
+Use of pre-compiled binary packages is far more dull in comparison.  :)
+
+
+
+&gt;<i> Also, I like the newer initscripts that hide the successes and highlight
+</I>&gt;<i> the failures.
+</I>&gt;<i>
+</I>
+Oh that is a good observation, but it deserves elaboration.
+The scroll during boot was mind blowing,
+especially when running runlevels for 6 root file systems.
+My eyeballs were going bouncy bouncy.
+What I wanted was to be informed about errors
+and to not have important scroll escape
+the virtual console's scroll back buffer.
+That was when I decided to allow overwriting
+of messages which indicate a successful outcome.
+I realize the prudence of doing so might seem questionable.
+However, I am guessing that most SAs, myself included,
+care to know what failed and not what went fine.
+I am still considering whether to re-implement it as a toggle.
+Should I allow SAs to select whether warning and success messages
+from init-scripts are overwritten rather than followed by a line feed?
+For the moment I merely implemented what was easiest for me.
+
+Looks awful, but prods a reluctant SA into fixing the issue with the box.
+&gt;<i>
+</I>
+Heheh.
+Yeah, the red stays glued
+and the green vanishes faster than snow during spring.
+When I see the same red lines on all 6 root file systems runlevel
+then that definitely impels me to say, &quot;I must do something about that.&quot;  :)
+
+The main advantage to init-scripts is that the order of execution
+should not vary from the order suggested by the symbolic links to
+those init-scripts.
+Therefore, what should happen properly
+can largely be assumed to happen properly and in proper order.
+In the event of a stall or a bug
+then the currently output line should still provide sufficient information
+in order to surmise the culprit.
+And of course at least one virtual console will provide a login to the
+rootfs
+which should allow the SA to run ps -Af to see precise what is
+stalled/running where.
+
+Both the rate of scroll and amount of lines output during boot is so immense
+that effectively parsing it might be an impossibility for some SAs
+where lines indicating success contribute to the scroll.
+This way seems a bit better.
+I do not know what would be better.
+I am considering whether an error message printed while an init-script runs
+should also indicate the init-script running and the init-script that ran
+before.
+Most of the error messages are sufficiently precise that either the
+init-script
+generating the error message can be known by reading the error message
+or it can be discovered by grepping for the error message in files located
+in /etc/init.d/
+
+I added the above paragraph to my todo list in order to grant further
+consideration.
+The output from init-scripts could benefit from a stronger focus upon what
+is important.
+And in general I accord importance
+to those that fail to execute successfully.
+I am aware that some SAs would want to allocate half the screen
+or the entire screen to looking at a drawing of a penguin or some other
+mascot
+during boot instead of reading the scroll.
+As for me, I rather read the scroll rather than
+having useless fluff occluding the reading
+of potentially important error messages.
+
+I realize it was a change I sprung without any forewarning.
+However, I was busy chasing some sort of boot oddness on my workstation.
+If other SAs will be deploying computers with 3 or more root file systems
+like I do
+then watching scroll during booting will strain the brain if as verbosely
+as before.
+I would estimate it has at least 2 maybe 3 boons
+when compared to that one bane of the loss of verbosity.
+It might induce a small amount of shock when other SAs
+first notice of how much is printing and how little is scrolling.
+It might look like a bug.
+However, I intended for it to run that way.
+
+Boot scroll is a necessary evil.
+We might as well focus upon what had an unexpected outcome
+rather than to allow it to scroll off the screen while feigning ignorance
+is bliss.
+Of course this will induce the illusion of far more red and no sea of green.
+*shrugs*
+But to quote my father,
+&quot;One awe-shit wipes out 10 atta-boys.&quot;
+So in this situation we no longer bother retaining the green lines of
+accolades
+for the init-scripts that successfully completed.
+What remains on the screen is mostly the stench of what went wrong.
+I feel okay about that because it is what I want to know about.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130805/f7f790a6/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20130805/f7f790a6/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002438.html">[Sorcerer-admins] Where does a knoobie start?
+</A></li>
+	<LI>Next message: <A HREF="002440.html">[Sorcerer-admins] check which disk is which
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2439">[ date ]</a>
+              <a href="thread.html#2439">[ thread ]</a>
+              <a href="subject.html#2439">[ subject ]</a>
+              <a href="author.html#2439">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Networking now starts during sysinit
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C8596d02a0805151620y55bc2505h189372c101c8d6f1%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000438.html">
+   <LINK REL="Next"  HREF="000442.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Networking now starts during sysinit</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Networking%20now%20starts%20during%20sysinit&In-Reply-To=%3C8596d02a0805151620y55bc2505h189372c101c8d6f1%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Networking now starts during sysinit">d3ck0r at gmail.com
+       </A><BR>
+    <I>Fri May 16 01:20:07 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000438.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+        <LI>Next message: <A HREF="000442.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#440">[ date ]</a>
+              <a href="thread.html#440">[ thread ]</a>
+              <a href="subject.html#440">[ subject ]</a>
+              <a href="author.html#440">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 5/13/08, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Hmm...
+</I>&gt;<i> Something about this I message I misunderstood.
+</I>&gt;<i> Therefore, I am going to ask about it line by line:
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Tue, May 13, 2008 at 5:53 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i> Uhmm... Sounds like networking should have individual levels
+</I>&gt;<i>
+</I>&gt;<i> How can networking have individual levels?
+</I>&gt;<i> Currently, if the runlevel switches to 0 1 6
+</I>&gt;<i> then networking is shutdown.
+</I>&gt;<i> Therefore, runlevel 1 still creates the expected
+</I>&gt;<i> single user no networking environment.
+</I>&gt;<i>
+</I>
+Yes, but some of network can start in S an some in 3, 4... etc...
+
+which implies multiple (more than 1 ) run level for setting up and
+getting networking going.
+
+&gt;<i>
+</I>&gt;&gt;<i> I ran into problems with networking starting in runlevel 3 because of
+</I>&gt;&gt;<i> X.  I start X in runlevel 3 from inittab, which causes it to start
+</I>&gt;&gt;<i> without network (sometimes start) and sometimes just die.
+</I>&gt;<i>
+</I>&gt;<i> Unless using startx after console login
+</I>&gt;<i> then X should be started automatically from runlevels 4 and 5.
+</I>&gt;<i>
+</I>
+Okay whatever, technicality.... yes standards indicate this is true...
+and all I'd have to do is change the default in inttab to 5 from 3...
+not an issue.
+
+&gt;&gt;<i> I solved my problem by implementing a script to start x also in
+</I>&gt;&gt;<i> runlevel 3 and depended it on the network.
+</I>&gt;<i>
+</I>&gt;<i> If networking starts in sysinit
+</I>&gt;<i> then it will probably be ready for use by the time
+</I>&gt;<i> xdm, gdm, kdm-v3, kdm-v4 or any other GUI login
+</I>&gt;<i> starts in runlevels 4 and 5.
+</I>&gt;<i>
+</I>
+Again, XDM does not have an option to auto login. I do not WANT gdm or
+kdm - as I do not need all their additional bloat of gnome or kde
+libraries.
+
+and yes - option to start networking in S level would have fixed my
+issue also (which was what I was originaly going to do)
+
+&gt;<i>
+</I>&gt;&gt;<i> The problem with this is that X doesn't happily restart.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> The above sentence I am still confused about.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+There is no auto restart when running startx.
+when X exits, it exits.
+
+&gt;&gt;<i> xdm has no auto login feature.
+</I>&gt;<i>
+</I>&gt;<i> I expect that if one were to adjust the configuration
+</I>&gt;<i> files in /etc/X11/xdm/
+</I>&gt;<i> that it is possible to configure xdm
+</I>&gt;<i> to startup kiosk style.
+</I>&gt;<i> I did it at least once back in XFree86 3.something.
+</I>&gt;<i> However, using kdm-v3 or kdm-v4
+</I>&gt;<i> or gdm would probably be easier.
+</I>&gt;<i>
+</I>
+There is NO auto login option for xdm.
+
+See above.
+
+&gt;<i>
+</I>&gt;&gt;<i>  - what's the official good way to have a process restart when it
+</I>&gt;&gt;<i> dies?  init takes care of this very wll.
+</I>&gt;<i>
+</I>&gt;<i> init can be made to restart services as soon as they die
+</I>&gt;<i> by following the instructions in man inittab
+</I>&gt;<i> However, if a service is started from an init-script
+</I>&gt;<i> then it will not automatically restart if it dies.
+</I>&gt;<i>
+</I>
+that's pretty much my point... I would rather that my startx was
+maintained by inittab.
+
+but a really stupid simple script works...
+
+--- watch_task --
+#!/bin/bash
+
+$*
+echo $(date) restarting $* &gt;&gt;/tmp/watch_task.log
+$0 $* &amp;
+
+-------------------
+Not really an issue, but it is a custom hack rather than a standard
+utility to restart a task.
+
+
+&gt;<i> However, it is possible to write the init-script
+</I>&gt;<i> to invoke a wrapper and have that wrapper
+</I>&gt;<i> invoke the desired service and
+</I>&gt;<i> have that wrapper automatically restart the service
+</I>&gt;<i> when the service dies.
+</I>&gt;<i> However, whenever the wrapper program dies
+</I>&gt;<i> then the service will probably no long restart.
+</I>&gt;<i>
+</I>&gt;<i> When init from inittab is instructed to start a service
+</I>&gt;<i> and restart the service whenever the service dies
+</I>&gt;<i> then init will continue doing so until init dies.
+</I>&gt;<i> init never dies, because if it does the kernel will immediately halt.
+</I>&gt;<i>
+</I>&gt;<i> If xserver zapping is permitted I can understand
+</I>&gt;<i> how a use could press ctrl-alt-backspace to kill
+</I>&gt;<i> the X server and then no Xserver would be running.
+</I>&gt;<i> And it is possible that the X server might crash itself.
+</I>&gt;<i> Or if the window manager is holding the X server open
+</I>&gt;<i> and the window manager program crashes then
+</I>&gt;<i> the X server will also close.
+</I>&gt;<i>
+</I>&gt;<i> xdm kdm gdm wrap the X server.
+</I>&gt;<i> If the X server dies then xdm kdm gdm
+</I>&gt;<i> gracefully restart the X server.
+</I>&gt;<i> In most configurations this presents a GUI login.
+</I>&gt;<i> Therefore, it is wise to have a kiosk started by
+</I>&gt;<i> xdm kdm or gdm in order to automatically restart
+</I>&gt;<i> the X server whenever the X server dies.
+</I>&gt;<i> A guest user would probably not know what to do
+</I>&gt;<i> other than restart the box if ctrl-alt-delete works
+</I>&gt;<i> or a reset button or power cord is accessible.
+</I>&gt;<i>
+</I>
+xdm kdm and gdm are not solutions.  They are just adtional problems.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000438.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+	<LI>Next message: <A HREF="000442.html">[Sorcerer-admins] Networking now starts during sysinit
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#440">[ date ]</a>
+              <a href="thread.html#440">[ thread ]</a>
+              <a href="subject.html#440">[ subject ]</a>
+              <a href="author.html#440">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

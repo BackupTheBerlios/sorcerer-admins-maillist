@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] useless jdk
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C596b75860905151627o25d55a2cgc97c43a9245890e7%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001193.html">
+   <LINK REL="Next"  HREF="001127.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] useless jdk</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20useless%20jdk&In-Reply-To=%3C596b75860905151627o25d55a2cgc97c43a9245890e7%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] useless jdk">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat May 16 01:27:04 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001193.html">[Sorcerer-admins] useless jdk
+</A></li>
+        <LI>Next message: <A HREF="001127.html">[Sorcerer-admins] Botan defaults to -m64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1195">[ date ]</a>
+              <a href="thread.html#1195">[ thread ]</a>
+              <a href="subject.html#1195">[ subject ]</a>
+              <a href="author.html#1195">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Thanks to a kernel parameter
+the SA can specify exactly how much RAM that kernel
+should see and be able to use during boot.
+
+The memory page size can be discovered with a libc call.
+However, I forgot which one.  :)
+It is in a manual page somewhere
+or in the glibc online documentation.
+
+In comparison to IA32 x86_64 will tend to waste memory.
+However, the consumption might not be double.
+Programmers are not going to waste effort to detect
+the int size and specify u_int32_t for every int that they
+would normally only require 32-bits for.
+And the compiler does not know if the program requires
+only 32-bit ints or 64-ints when a generic int or unsigned int is declared.
+Consequently, anything int tends to require double the space
+on x86_64 as it would on IA32.
+However, strings, which are series of bytes or characters or 8-bit ints,
+do not require more space on x86_64 than they would on IA32.
+
+For decades I have considered that &quot;int&quot; was improperly designed.
+Precise definitions should be used for memory size grouping.
+bit = 1 bit
+nibble = 4 bit
+byte = 8 bits
+word = 2 bytes
+double word = 4 bytes
+quad word = 8 bytes
+
+Redefining the bit size of a word or bit size of an int
+based upon the CPU architecture is confusing.
+It is as bad as the little endian, big endian, pdp endian situation.
+
+There are types defined in libc and glibc that may vary
+and one would not know if those types specify an integer
+of size 32 bits or of size 64 bits.
+There is plenty of confusing stuff.
+It is possible for a programmer accustomed to writing
+programs on x86_64 architecture with glibc to write a
+program that would not run properly on IA32 architecture
+for lack of adding a line such as:
+
+#define _FILE_OFFSET_BITS    64
+
+
+
+On Fri, May 15, 2009 at 12:18 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> I think that linux allocates larger chunks for applications on boxes
+</I>&gt;<i> that have more memory.... although this box claims 1569032 used, 0
+</I>&gt;<i> swap is ued...
+</I>&gt;<i> an nother box I have 648044 used, 0 swap, basically the same load
+</I>&gt;<i>
+</I>&gt;<i> box1 is 64bit, and has 2G minus a few M for video
+</I>&gt;<i> box2 is 32 bit, and has 1G again minus a few M for vdieo
+</I>&gt;<i>
+</I>&gt;<i> process init on box 1 uses 3776 virt, 616 res, 524 share
+</I>&gt;<i> process init on box 2 uses 1588 virt, 592 res, 520 share
+</I>&gt;<i>
+</I>&gt;<i> top uses 12540 virt on box 1
+</I>&gt;<i> top uses 2200 virt on box 2
+</I>&gt;<i>
+</I>&gt;<i> bash claims 16000-ish virtual memory on box 1
+</I>&gt;<i> bash claims 8000-ish virtual memroy on box 2
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I dobut it's actively using double the memory JUST cause it's 64
+</I>&gt;<i> bit... but since both have 0 swap activity, I'm sure although it's
+</I>&gt;<i> allocated and mapped, it's probably not actually used.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001193.html">[Sorcerer-admins] useless jdk
+</A></li>
+	<LI>Next message: <A HREF="001127.html">[Sorcerer-admins] Botan defaults to -m64
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1195">[ date ]</a>
+              <a href="thread.html#1195">[ thread ]</a>
+              <a href="subject.html#1195">[ subject ]</a>
+              <a href="author.html#1195">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

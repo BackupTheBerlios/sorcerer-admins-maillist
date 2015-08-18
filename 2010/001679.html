@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTimm6o1KZrhPg7Sq1NhV-memtFYYn07UVKiQJbvX%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001677.html">
+   <LINK REL="Next"  HREF="001681.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTimm6o1KZrhPg7Sq1NhV-memtFYYn07UVKiQJbvX%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jun 25 23:36:05 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001677.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001681.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1679">[ date ]</a>
+              <a href="thread.html#1679">[ thread ]</a>
+              <a href="subject.html#1679">[ subject ]</a>
+              <a href="author.html#1679">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>But dhcpcd is not started by an init-script
+The init-script only mounts a virtual filesystem
+that is required by dhcpcd
+
+
+On Thu, Jun 24, 2010 at 1:55 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt; wrote:
+&gt;<i> another missbehaving service :
+</I>&gt;<i> network using
+</I>&gt;<i> /sbin/dhcpcd will spawn dhcpd child but never kill them on stop....
+</I>&gt;<i> I'm not sure that the assumption PID of session leader == SID of session
+</I>&gt;<i> there is something I dislike the most is 'approximation' or&#160; 'guessing' in
+</I>&gt;<i> computer science..... I encounter it everyday at work and I'm tired of
+</I>&gt;<i> it.... I still believe that SID file will solve the solve the issue.
+</I>&gt;<i> JLM
+</I>&gt;<i>
+</I>&gt;<i> On Tue, Jun 22, 2010 at 1:04 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Jun 22, 2010 at 2:23 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;&gt;<i> wrote:
+</I>&gt;&gt;<i> &gt; going back to the SID vs PID
+</I>&gt;&gt;<i> &gt; I just want to say that I'm not found of the concept to approximate SID
+</I>&gt;&gt;<i> &gt; with
+</I>&gt;&gt;<i> &gt; PID.... after-all we aren't sure that this behavior will always be the
+</I>&gt;&gt;<i> &gt; same.... LSF want some PID files ok, but it as proven to be unreliable.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Almost nothing works 100% of the time for 100% of all cases.
+</I>&gt;&gt;<i> Overall the use of PID files works good in almost all cases.
+</I>&gt;&gt;<i> PIDs for a session leader seem to also be the SID.
+</I>&gt;&gt;<i> If that assumption is okay
+</I>&gt;&gt;<i> then we do not have to guess at what number the SID should be.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; Let's take the example of a broken service that spawn several child then
+</I>&gt;&gt;<i> &gt; SEGFAULT. stoping the service shall be able to recover from this
+</I>&gt;&gt;<i> &gt; situation.
+</I>&gt;&gt;<i> &gt; However, the PID file of the service contain a PID that is no more, then
+</I>&gt;&gt;<i> &gt; the
+</I>&gt;&gt;<i> &gt; stop will fail. maybe we need both PID and SID but assuming that PID=SID
+</I>&gt;&gt;<i> &gt; might work a certain time then once someone change the SID generation
+</I>&gt;&gt;<i> &gt; will
+</I>&gt;&gt;<i> &gt; have unpredictable effects
+</I>&gt;&gt;<i> &gt; so I think we need both
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> While a bit on the rare side
+</I>&gt;&gt;<i> that problem obviously can not be solved with a PID file.
+</I>&gt;&gt;<i> It might be solvable using a SID if all children
+</I>&gt;&gt;<i> are within the original session.
+</I>&gt;&gt;<i> The SID would probably be the PID of the session leader
+</I>&gt;&gt;<i> that has already exited or crashed.
+</I>&gt;&gt;<i> If the SID is treated as a SID instead of a PID
+</I>&gt;&gt;<i> then that should work.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; another annoying thing is that I would like to have a way to stop on
+</I>&gt;&gt;<i> &gt; each
+</I>&gt;&gt;<i> &gt; error of service start and stop at startup and shutdown.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Once a runlevel change is requested
+</I>&gt;&gt;<i> what happens next is automatic and non interactive.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There are rare cases during sysinit
+</I>&gt;&gt;<i> and/or during shutdown where
+</I>&gt;&gt;<i> a message is displayed and a timed option
+</I>&gt;&gt;<i> for the SA to present the root password in
+</I>&gt;&gt;<i> order to obtain a root prompt is granted.
+</I>&gt;&gt;<i> Only someone sitting at the console can
+</I>&gt;&gt;<i> provide the root password and gain a root prompt.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> sysinit and shutdow/restart are special
+</I>&gt;&gt;<i> because as far as runlevels go they do not
+</I>&gt;&gt;<i> have TTYs/virtual consoles.
+</I>&gt;&gt;<i> If someone runs telinit or
+</I>&gt;&gt;<i> switches the runlevel
+</I>&gt;&gt;<i> I doubt there is a way to interact
+</I>&gt;&gt;<i> directly with that person.
+</I>&gt;&gt;<i> At best a sulogin could be presented
+</I>&gt;&gt;<i> for a console login if someone happens
+</I>&gt;&gt;<i> to be at the console, knows the root password,
+</I>&gt;&gt;<i> and is looking at the console and not X.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; I noticed that several services display red error lines... but never
+</I>&gt;&gt;<i> &gt; have
+</I>&gt;&gt;<i> &gt; time to see what the process neither investigate... so I think that a
+</I>&gt;&gt;<i> &gt; &quot;debug
+</I>&gt;&gt;<i> &gt; services&quot; boot option could be a good help.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Most &quot;red&quot; messages are not fatal.
+</I>&gt;&gt;<i> Most would not interrupt the booting process.
+</I>&gt;&gt;<i> Almost all of the worst potential problems have
+</I>&gt;&gt;<i> a contingency plan.
+</I>&gt;&gt;<i> Please take the next two cases as examples:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 1. If udev fails
+</I>&gt;&gt;<i> then device nodes can be restored
+</I>&gt;&gt;<i> from a previously saved dev directory
+</I>&gt;&gt;<i> and modules are loaded in correct order
+</I>&gt;&gt;<i> from a previously saved list.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> 2. If / is not specified in /etc/fstab
+</I>&gt;&gt;<i> then someone at the console is prompted
+</I>&gt;&gt;<i> to select / from a list of block devices.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Messages saved from sysinit,
+</I>&gt;&gt;<i> the kernel ring buffer, and runlevels
+</I>&gt;&gt;<i> can be reviewed in the logs stored at
+</I>&gt;&gt;<i> /etc/init.d/log.d/
+</I>&gt;&gt;<i> Therefore, those messages are not lost
+</I>&gt;&gt;<i> if not immediately investigated.
+</I>&gt;&gt;<i> After a box finishes booting
+</I>&gt;&gt;<i> the SA can then decide to handle/investigate the
+</I>&gt;&gt;<i> red messages or ignore them.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; If this option is set,
+</I>&gt;&gt;<i> &gt; sequential launch of services shall be enforced, each service that don't
+</I>&gt;&gt;<i> &gt; start shall prompt the root password, the same shall be done when
+</I>&gt;&gt;<i> &gt; stopping
+</I>&gt;&gt;<i> &gt; services at the end.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> For boxes that have at least one red message
+</I>&gt;&gt;<i> the timeout could create an excessively long
+</I>&gt;&gt;<i> reboot/boot start-up time.
+</I>&gt;&gt;<i> Not a great idea since SAs start to panic if a box
+</I>&gt;&gt;<i> does not become available for login within 3
+</I>&gt;&gt;<i> minutes after issuing a remote reboot request.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> The primary purpose of sysinit and the runlevel
+</I>&gt;&gt;<i> is to get the box up and booted so that someone
+</I>&gt;&gt;<i> can log in or the box can start providing services.
+</I>&gt;&gt;<i> It should do so with as much automation as possible.
+</I>&gt;&gt;<i> If the SA must fix something
+</I>&gt;&gt;<i> then the SA should enter
+</I>&gt;&gt;<i> rdinit=/bin/bash
+</I>&gt;&gt;<i> as a linux kernel parameter.
+</I>&gt;&gt;<i> Then the SA will gain full control of
+</I>&gt;&gt;<i> the box prior to the box running /init
+</I>&gt;&gt;<i> on the initramfs.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If a box can boot and mount the real / filesystem
+</I>&gt;&gt;<i> then this is best.
+</I>&gt;&gt;<i> Why?
+</I>&gt;&gt;<i> Because ctrl-c does not work for process 1,
+</I>&gt;&gt;<i> the SA can not abort programs when interacting
+</I>&gt;&gt;<i> on console or while running process 1.
+</I>&gt;&gt;<i> The SA is provided with no virtual consoles.
+</I>&gt;&gt;<i> Solving problems after a box finishes booting
+</I>&gt;&gt;<i> is usually much better than pausing/interrupting
+</I>&gt;&gt;<i> the boot sequence and allowing the SA to
+</I>&gt;&gt;<i> try to do something about them then.
+</I>&gt;&gt;<i> I also tend to conjecture that fixing problems
+</I>&gt;&gt;<i> after booting completes tends to be safer.
+</I>&gt;&gt;<i> Any problem that led to a cascade of failures
+</I>&gt;&gt;<i> can usually be solved by fixing and running
+</I>&gt;&gt;<i> a few init-scripts in sequence.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> If thorough debugging is required
+</I>&gt;&gt;<i> then the SA should probably start with
+</I>&gt;&gt;<i> rdinit=/bin/bash
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> One of the reasons why scroll might overwrite
+</I>&gt;&gt;<i> the login prompt on a Sorcerer box is because
+</I>&gt;&gt;<i> gettys on virtual consoles are enabled prior to
+</I>&gt;&gt;<i> the start of the runlevel.
+</I>&gt;&gt;<i> That way no hang or problem in the runlevel execution
+</I>&gt;&gt;<i> can keep the SA from being able to log in.
+</I>&gt;&gt;<i> Sorcerer boxes are design to try to achieve
+</I>&gt;&gt;<i> as normal a state as possible and provide a login
+</I>&gt;&gt;<i> so that an remaining errors can at that point
+</I>&gt;&gt;<i> be fixed by the SA.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does anyone else want an interactive booting process?
+</I>&gt;&gt;<i> I can only guess how to do it for sysinit.
+</I>&gt;&gt;<i> Since the runlevel is started by /sbin/init
+</I>&gt;&gt;<i> and happens in the traditional non-interactive way,
+</I>&gt;&gt;<i> pause and interruption of runlevel execution
+</I>&gt;&gt;<i> does not have an obvious method.
+</I>&gt;&gt;<i> When runlevel executes init-scripts in parallel
+</I>&gt;&gt;<i> no method for interruption and pause is possible.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Does anyone have an idea where
+</I>&gt;&gt;<i> having booting stop and allowing the SA
+</I>&gt;&gt;<i> a shell prompt would be useful?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> &gt; thanks and regards
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I am thinking about it.
+</I>&gt;&gt;<i> Nothing comes to mind where
+</I>&gt;&gt;<i> interaction is require during boot
+</I>&gt;&gt;<i> where a method for interaction is not
+</I>&gt;&gt;<i> already provided.
+</I>&gt;&gt;<i> Worst case scenarios still require
+</I>&gt;&gt;<i> booting with rdinit=/bin/bash
+</I>&gt;&gt;<i> And second to worst case scenarios
+</I>&gt;&gt;<i> fail to mount the real / and
+</I>&gt;&gt;<i> keep the initramfs mounted as /
+</I>&gt;&gt;<i> Anything worse than a worse case scenario,
+</I>&gt;&gt;<i> such as the kernel or initramfs being corrupted
+</I>&gt;&gt;<i> or a problem with lilo's installation to the boot block
+</I>&gt;&gt;<i> and/or MBR those types of rescues require
+</I>&gt;&gt;<i> an Install/Rescue disk.
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> --
+</I>&gt;<i> KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+</I>&gt;<i> et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> -----------------------------
+</I>&gt;<i> &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001677.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001681.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1679">[ date ]</a>
+              <a href="thread.html#1679">[ thread ]</a>
+              <a href="subject.html#1679">[ subject ]</a>
+              <a href="author.html#1679">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

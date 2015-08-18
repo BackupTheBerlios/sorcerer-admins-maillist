@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20prohibits%20ctrl-alt-F%23%20%3F&In-Reply-To=%3C8596d02a0806180945i3d80a5d7ha710eea8ec1e3581%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000519.html">
+   <LINK REL="Next"  HREF="000522.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gdm%20prohibits%20ctrl-alt-F%23%20%3F&In-Reply-To=%3C8596d02a0806180945i3d80a5d7ha710eea8ec1e3581%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?">d3ck0r at gmail.com
+       </A><BR>
+    <I>Wed Jun 18 18:45:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000519.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+        <LI>Next message: <A HREF="000522.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#520">[ date ]</a>
+              <a href="thread.html#520">[ thread ]</a>
+              <a href="subject.html#520">[ subject ]</a>
+              <a href="author.html#520">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tried running /etc/init.d/xorg.conf start.
+
+Result is - no resolution change and a black screen.
+
+connect with ssh... I don't know what else to grab
+
+ 1749 tty1     S+     0:01 -bash
+ 3556 ?        S      0:00 /usr/libexec/gconfd-2 6
+ 3561 ?        Ss     0:00 dbus-daemon --fork --print-address 18
+--print-pid 20 --session
+ 3582 ?        Ssl    0:00 /usr/libexec/bonobo-activation-server
+--ac-activate --ior-output-fd=16
+ 3602 tty2     S+     0:00 -bash
+ 3783 ?        Ss     0:00 sshd: <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">root at pts</A>/0
+
+nothing in 'top'
+
+killing 3556, 3561, 3582 have no effect.
+
+The main console is still black and dead.
+
+
+On Wed, Jun 18, 2008 at 9:22 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+&gt;<i> Thanks for the report.
+</I>&gt;<i> I will look into the
+</I>&gt;<i> System-&gt;Screen resolution
+</I>&gt;<i> application problem to see if it
+</I>&gt;<i> is also missing for me.
+</I>&gt;<i> I would expect that it may be due
+</I>&gt;<i> to the content of /etc/X11/xorg.conf
+</I>&gt;<i> not having a subsection of Section &quot;Screen&quot;
+</I>&gt;<i> such as:
+</I>&gt;<i>
+</I>&gt;<i>    SubSection     &quot;Display&quot;
+</I>&gt;<i>        Viewport    0 0
+</I>&gt;<i>        Depth       24
+</I>&gt;<i>        Modes      &quot;1024x768&quot; &quot;800x600&quot; &quot;640x480&quot;
+</I>&gt;<i>    EndSubSection
+</I>&gt;<i>
+</I>&gt;<i> Without alternate modes specified in
+</I>&gt;<i> /etc/X11/xorg.conf
+</I>&gt;<i> there may not be any choices for a
+</I>&gt;<i> different resolution than what X
+</I>&gt;<i> decides to start with.
+</I>&gt;<i>
+</I>&gt;<i> Since I like the screen's appearance better in
+</I>&gt;<i> 1024x768 than 1280x1024 I use modes to
+</I>&gt;<i> specify that I do not want 1280x1024 since
+</I>&gt;<i> it might be selected automatically if I let
+</I>&gt;<i> X make the choice.
+</I>&gt;<i> My preference is do to the ancient CRT monitors
+</I>&gt;<i> that I use and not font size.  :)
+</I>&gt;<i>
+</I>&gt;<i> Then again, there may be something missing
+</I>&gt;<i> from the gnome installation on that box
+</I>&gt;<i> which is required to adjust screen resolution?
+</I>&gt;<i> However, I recommend checking
+</I>&gt;<i> /etc/X11/xorg.conf
+</I>&gt;<i> because it fast to check and fast to fix.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Wed, Jun 18, 2008 at 8:49 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> On Tue, Jun 17, 2008 at 4:01 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+</I>&gt;&gt;&gt;<i> Does the problem persist after updating to gdm version 2.20.6, please?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Login successful.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> There's a System-&gt;Screen resolution applicatoin that has no content
+</I>&gt;&gt;<i> (it has a copule controls, combobox thing, buttons...) just no
+</I>&gt;&gt;<i> choices.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> still can't change screens. (hrm...startx doesn't either)
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000519.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+	<LI>Next message: <A HREF="000522.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#520">[ date ]</a>
+              <a href="thread.html#520">[ thread ]</a>
+              <a href="subject.html#520">[ subject ]</a>
+              <a href="author.html#520">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

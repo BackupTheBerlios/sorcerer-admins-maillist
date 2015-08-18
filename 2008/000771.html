@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Initfamfs issues
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Initfamfs%20issues&In-Reply-To=%3C596b75860809091909v2cd89284i34e073025f88d19%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000770.html">
+   <LINK REL="Next"  HREF="000772.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Initfamfs issues</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Initfamfs%20issues&In-Reply-To=%3C596b75860809091909v2cd89284i34e073025f88d19%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Initfamfs issues">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Sep 10 04:09:05 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000770.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+        <LI>Next message: <A HREF="000772.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#771">[ date ]</a>
+              <a href="thread.html#771">[ thread ]</a>
+              <a href="subject.html#771">[ subject ]</a>
+              <a href="author.html#771">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Tue, Sep 9, 2008 at 6:50 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;<i> I was observing it as it was shutting down, and fter the initramfs was
+</I>&gt;<i> updated, lilo did run, and no errors issed.... (maybe it was stuck in
+</I>&gt;<i> driver-cache? like maybe a 'sync' needed to be done... surely lilo
+</I>&gt;<i> includes a sync in itself?
+</I>
+It probably had a sulogin open on a console waiting
+for a specified duration for someone to enter the root password
+to fix the problem.
+If a box appears to hang during shutdown,
+please investigate if it is requesting root login to fix a problem.
+Shutdown problems should not normally occur.
+
+
+&gt;<i> at no time did lilo error :(
+</I>
+Perhaps.
+
+sulogin occurs in:
+
+/etc/init.d/fsck
+/etc/init.d/fstab
+/etc/init.d/initramfs
+/etc/init.d/lilo.conf
+
+
+/etc/int.d/{initramfs,lilo.conf}
+both run during shutdown.
+That is probably when it happened.
+
+In both init-scripts sulogin is executed if the invocation of lilo exits
+with a non 0 return status.
+
+
+&gt;<i> Yeah - I did not 'dd' the disk, I created the parititons, and file
+</I>&gt;<i> systems then copied everything with something like 'cp -ax ...'   So,
+</I>&gt;<i> they do have unique UUIDs....
+</I>&gt;<i>
+</I>&gt;<i> I did modify lilo.conf.head ... a quick question though - shouldn't
+</I>&gt;<i> there be a root= option in lilo.conf somewhere?
+</I>
+root= is not required for initramfs booting.
+The root which is mounted during boot is rootfs
+which is a ramfs which is then populated from the initrfs images.
+
+With a traditional Sorcerer box that boots without initramfs
+and mounts the real root filesystem during booting
+root= could be used, but probably is not.
+root= is passed kernel command line parameter,
+but it has no effect unless processed.
+
+A modern Sorcerer box has /init which executes
+on the initramfs as process 1 and does extract
+boot= from the kernel command line parameters
+and modifies /etc/fstab on the initramfs to use
+the root specified on the kernel command line.
+However, doing this is not recommended.
+
+Specifying root= as a kernel parameter
+or specifying it in the lilo.conf file is not recommended.
+The only use for root= is if you really want to mount a different
+root or if /etc/fstab lacks an entry for the root filesystem.
+
+The image I use to update the x86_64 I/R does not have / specified in /etc/fstab
+However, I select the / to use from a menu that appears during sysinit.
+But if I wanted I could specify root= as a kernel command line parameter
+or add it to /etc/fstab
+
+Having boot= in /etc/lilo.conf on a modern Sorcerer box may not
+cause a problem if the line is indeed correct.
+However,  I do not recommend it.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000770.html">[Sorcerer-admins] Initfamfs issues
+</A></li>
+	<LI>Next message: <A HREF="000772.html">[Sorcerer-admins] /usr/lib explained, please read.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#771">[ date ]</a>
+              <a href="thread.html#771">[ thread ]</a>
+              <a href="subject.html#771">[ subject ]</a>
+              <a href="author.html#771">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

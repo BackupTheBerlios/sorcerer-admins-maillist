@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] I/O performance...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20I/O%20performance...&In-Reply-To=%3CCA%2BT4wDgGdqQG_izNT8PZoYPhB5ne%2Bk1W%2BYdQQq8Nq-FVhe7rMA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002391.html">
+   <LINK REL="Next"  HREF="002393.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] I/O performance...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20I/O%20performance...&In-Reply-To=%3CCA%2BT4wDgGdqQG_izNT8PZoYPhB5ne%2Bk1W%2BYdQQq8Nq-FVhe7rMA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] I/O performance...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Sep  6 22:06:52 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002391.html">[Sorcerer-admins] Help? SSHD version mismatch
+</A></li>
+        <LI>Next message: <A HREF="002393.html">[Sorcerer-admins] role play
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2392">[ date ]</a>
+              <a href="thread.html#2392">[ thread ]</a>
+              <a href="subject.html#2392">[ subject ]</a>
+              <a href="author.html#2392">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Off list discussion exists concerning performance and control groups.
+On list I previously announced my dissatisfaction
+with the cgroup blkio subsystem and CFQ scheduler.
+As a result I modified the cgroup init-script to mount without the
+blkio subsystem
+and reverted the default I/O scheduler to deadline.
+However, this was not the end,
+but only the beginning of the changes.
+
+When I announced the &quot;Sorcerer's familiar,&quot;
+I might have failed to disclose
+that much of the disk I/O done by sorcery was moved.
+Input/Output tasks that could be accomplished in advance
+are accomplished sooner to avoid waiting for I/O.
+I/O tasks that do not require immediate processing are delayed.
+The result was a non intuitive spread of I/O
+which enables &quot;cast&quot; to spend less time waiting.
+However, this also was not the end of changes.
+
+The sorcery tools, arriving concurrently with the KDE 4.9.1 update,
+rate limits disk I/O.
+This implementation is completely independent
+from the blkio.weight from the cgroup blkio subsystem.
+Instead, almost any task involving I/O receives a limit
+that allows boxes plenty of free I/O for user owned processes,
+services, swapping, and basically role uninterrupted performance.
+Nearly all potential causes of I/O lag should be circumvented.
+
+Intuitively, rate limiting I/O should cause slower casting, correct?
+Indeed rate limiting would be costly
+If I had not restructured when I/O happens.
+Consequently, rate limiting causes almost no effect
+when casting a queue with many spells.
+The effect is that I/O is spread more gently
+while cast spends less time waiting for I/O.
+Sorcerer boxes will be able to obtain smooth performance
+during updates even when box lack
+a gigabyte or more of RAM allocated to caching.
+
+Another question in the category of limiting resource consumption
+might be how to allocate less than maximum processors to sorcery.
+If installed RAM is sufficient
+than cast will attempt to use all 4 cores on a quad core box.
+If installed RAM seems less than sufficient
+then cast will reduce processor usage accordingly.
+And if the &quot;min&quot; feature is enabled
+then cast will attempt to use minimal resources while casting.
+However, another method also exists.
+
+All of sorcery runs from sub control groups slow/sorcery
+
+SAs could specify exactly which CPUs to use
+by echoing an appropriate value to
+/sys/fs/cgroup/slow/sorcery/cpuset.cpus
+or
+/sys/fs/cgroup/slow/sorcery/cast/cpuset.cpus
+
+Or by invoking
+
+# /etc/init.d/cgroup configure
+
+a change can be made that is loaded during each boot.
+
+Obviously, optimal update speeds are achieved
+by efficient utilization of all available processors.
+However, if a box is expected to always have
+one role specific process running at near full bore
+then two configuration changes could be prudent.
+First, one processor could be delegated
+to running the role specific task.
+Again this can be accomplished using cpuset.cpus.
+Secondly, sorcery can be assigned utilization
+of the processors not being delegated otherwise.
+Delegation of processors makes task swapping
+more efficient for the linux kernel.
+
+Processes running within the norm and fast hierarchy
+of control groups are allowed to load balance.
+As described from Section 1.7 in
+/usr/src/linux/Documentation/cgroups/cpusets.txt
+&quot;If one CPU is underutilized, kernel code running on that CPU
+will look for tasks on other more overloaded CPUs
+and move those tasks to itself...&quot;
+
+However, processes within the slow and idle hierarchy
+do not receive load balancing.
+This tends to be a good selection because the kernel
+wastes less CPU cycles playing musical chairs with processes and processors
+and therefore, a greater amount of L1 and L2 processor cache hits occur.
+
+Consequently, delegating the use of processors 2, 3 and 4 to sorcery
+ensures that the cache of the 1st processor is not being utilized by sorcery
+and therefore is available to the other processes running on it.
+
+Here is some additional text quoted from the aforementioned document,
+
+&quot;This default load balancing across all CPUs
+is not well suited for the following two situations:
+ 1) On large systems, load balancing across many CPUs is expensive.
+    If the system is managed using cpusets to place independent jobs
+    on separate sets of CPUs, full load balancing is unnecessary.
+ 2) Systems supporting realtime on some CPUs need to minimize
+    system overhead on those CPUs, including avoiding task load
+    balancing if that is not needed.&quot;
+
+Consequently, knowing a bit about when and what to load balance
+and what to delegate is useful for large systems with many processors.
+And of course in a scenario where
+all processors delegated to a task
+are expected to be utilized at 100%
+or has demand that exceeds processors delegated
+then load balancing tends to be undesirable.
+
+Be aware that on CPUs that lack a L3 processor cache
+that spans all processing cores
+then a process being load balanced to a different processor or core
+loses potential cache hits, because the desired memory content
+is in the L1 or L2 cache of the processor where the process was
+previously running.
+
+Therefore, in general the best performance tends to be achieved when a process
+is allowed to remain running on the same processor where it started.
+On Sorcerer this is the default for X when X is started by gdm, kdm, and xdm.
+X and the gdm/kdm/xdm processes are made to run exclusively on the
+first processor.
+And that is beneficial.
+
+The three easy methods for selecting where processes run are:
+the cpuset.cpus within a control group,
+the taskset program,
+and $ cgroup affine $PROCESSOR_NUMBER $PARAMETERS_OR_PIDS
+Obviously, the third method provides the most convenience for the
+least amount of control.
+Even after reading the manual page
+taskset can be somewhat confusing to invoke.
+And if using control groups directly
+then reading
+/usr/src/linux/Documentation/cgroup/cpusets.txt
+provides a sufficient understanding, but it is 37K of reading.
+
+Sorry if that provided too much information.
+I do not want anyone to expect
+that sorcery resource utilization
+is unreasonable or beyond control.
+
+With the aforementioned changes to sorcery;
+the sorcery that updates our boxes during 2013
+should be nearly transparent.
+Even without the &quot;min&quot; feature enabled
+primary role performance should not diminish during updates.
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002391.html">[Sorcerer-admins] Help? SSHD version mismatch
+</A></li>
+	<LI>Next message: <A HREF="002393.html">[Sorcerer-admins] role play
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2392">[ date ]</a>
+              <a href="thread.html#2392">[ thread ]</a>
+              <a href="subject.html#2392">[ subject ]</a>
+              <a href="author.html#2392">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

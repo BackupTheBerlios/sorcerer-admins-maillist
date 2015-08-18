@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] unreliable way of starting/stoping init	processes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTilOXoNXjEkiwdqn639hfmhhWjIeBajvVVFHGnBk%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001655.html">
+   <LINK REL="Next"  HREF="001657.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] unreliable way of starting/stoping init	processes</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20unreliable%20way%20of%20starting/stoping%20init%0A%09processes&In-Reply-To=%3CAANLkTilOXoNXjEkiwdqn639hfmhhWjIeBajvVVFHGnBk%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] unreliable way of starting/stoping init	processes">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Sun Jun 13 10:55:34 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001655.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+        <LI>Next message: <A HREF="001657.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1656">[ date ]</a>
+              <a href="thread.html#1656">[ thread ]</a>
+              <a href="subject.html#1656">[ subject ]</a>
+              <a href="author.html#1656">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Wouldn't it be more secure to modify the way all the init script are
+launched so that every service has it's own group id?
+something like,
+for init_script in ${init_scripts}; do
+    change_group_id();
+    ${init_script} &amp;
+    save_group_id_into_var_file()
+done
+
+and on stop
+kill SIGTERM -$(cat var_group_id_file)
+wait
+kill SIGKILL -$(cat var_group_id_file)
+
+like this we are sure we have fixed all the init scripts not only the gdm
+one (I suspect that there are several ones like this)
+
+thanks and regards
+JLM
+
+
+On Mon, Jun 7, 2010 at 9:34 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> Thanks for the interesting reading.
+</I>&gt;<i> I adjusted the grimoire/gdm.d/init.d.on/gdm to
+</I>&gt;<i> do status and stops using session ID for any
+</I>&gt;<i> running gdm-binary.
+</I>&gt;<i> It will work on the first gdm-binary encountered in the process list.
+</I>&gt;<i> Please let me know if that init-script works better.
+</I>&gt;<i> While far from a perfect solution
+</I>&gt;<i> it might work better than the old init-script for gdm.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Sun, Jun 6, 2010 at 1:34 PM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt; to add more about this topic here is some interesting thread about shell
+</I>&gt;<i> and
+</I>&gt;<i> &gt; process group
+</I>&gt;<i> &gt; <A HREF="http://www.keyongtech.com/4445689-shell-as-process-group">http://www.keyongtech.com/4445689-shell-as-process-group</A>
+</I>&gt;<i> &gt; see the last answer
+</I>&gt;<i> &gt; and
+</I>&gt;<i> &gt;
+</I>&gt;<i> <A HREF="http://stackoverflow.com/questions/523878/how-to-terminate-scripts-process-tree-in-cygwin-bash-from-bash-script">http://stackoverflow.com/questions/523878/how-to-terminate-scripts-process-tree-in-cygwin-bash-from-bash-script</A>
+</I>&gt;<i> &gt; using the kill command (not the built-in bash one) with a negative pid
+</I>&gt;<i> will
+</I>&gt;<i> &gt; kill the whole process group....
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I think this is by far more reliable than a pkill (you can have several
+</I>&gt;<i> gdm
+</I>&gt;<i> &gt; process if you have multiple user X sessions) and more reliable than the
+</I>&gt;<i> PID
+</I>&gt;<i> &gt; file (the original process might have spawned multiple childs and exited)
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Best Regards
+</I>&gt;<i> &gt; JLM
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; On Thu, Jun 3, 2010 at 12:42 AM, jean-luc malet &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; wrote:
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; maybe this shall be the solution?
+</I>&gt;<i> &gt;&gt; <A HREF="http://en.wikipedia.org/wiki/Process_group">http://en.wikipedia.org/wiki/Process_group</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I don't understand exactly what it does but in man bash in jobs command
+</I>&gt;<i> &gt;&gt; details there is
+</I>&gt;<i> &gt;&gt; If the -x option is supplied, jobs replaces any jobspec found in command
+</I>&gt;<i> &gt;&gt; or args with the corresponding process group ID, and executes command
+</I>&gt;<i> &gt;&gt; passing it args, returning its exit  status.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; so instead of storing the pid in a file, I think we should store the
+</I>&gt;<i> &gt;&gt; process group id and SIGTERM all the group then wait a timeout time and
+</I>&gt;<i> &gt;&gt; SIGKILL all the remaining process....
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I use the Process group as the notion of &quot;service&quot; for exemple the
+</I>&gt;<i> xinetd
+</I>&gt;<i> &gt;&gt; service might spawn several process, if xinetd is killed then all thoses
+</I>&gt;<i> &gt;&gt; process are now childs of init, then can't be stoped cleanly.... however
+</I>&gt;<i> if
+</I>&gt;<i> &gt;&gt; we use the Process group, even if the leader is killed, all the
+</I>&gt;<i> subprocess
+</I>&gt;<i> &gt;&gt; can be stoped cleanly because the process group id won't change!
+</I>&gt;<i> &gt;&gt; same for gdm that can spawn several process but won't likely change the
+</I>&gt;<i> &gt;&gt; Process group, then even if gdm itself get killed, all the orfan will
+</I>&gt;<i> keep
+</I>&gt;<i> &gt;&gt; the Process group id.... we can then have a clean situation
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; for me if I do
+</I>&gt;<i> &gt;&gt; ps -A &gt; before
+</I>&gt;<i> &gt;&gt; /etc/init.d/someservice start
+</I>&gt;<i> &gt;&gt; /etc/init.d/someservice stop
+</I>&gt;<i> &gt;&gt; ps -A &gt; after
+</I>&gt;<i> &gt;&gt; diff before after
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; I shall have no difference (assuming no other process have spawed
+</I>&gt;<i> &gt;&gt; something) ie all subprocess launched by someservice shall have leaved
+</I>&gt;<i> after
+</I>&gt;<i> &gt;&gt; a stop (if one of the subprocess remains, it can prevent to start the
+</I>&gt;<i> &gt;&gt; service again, as it's the case for X that will detect that X:0.0 is
+</I>&gt;<i> &gt;&gt; currently running and won't start)
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; best regards
+</I>&gt;<i> &gt;&gt; JLM
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; On Tue, Jun 1, 2010 at 8:25 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; On Tue, Jun 1, 2010 at 6:49 AM, jean-luc malet &lt;
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">jeanluc.malet at gmail.com</A>&gt;
+</I>&gt;<i> &gt;&gt;&gt; wrote:
+</I>&gt;<i> &gt;&gt;&gt; &gt; Hi!
+</I>&gt;<i> &gt;&gt;&gt; &gt; I noticed something while re-installing sorcerer and while trying to
+</I>&gt;<i> &gt;&gt;&gt; &gt; switch
+</I>&gt;<i> &gt;&gt;&gt; &gt; from init(4) to init(3), most of stop command does fails
+</I>&gt;<i> &gt;&gt;&gt; &gt; 1) the pid file might contain a pid that is assigned to a process
+</I>&gt;<i> that
+</I>&gt;<i> &gt;&gt;&gt; &gt; changed it's name (for example /etc/init.d/gdm start stop, the file
+</I>&gt;<i> &gt;&gt;&gt; &gt; containing the pid has the pid number of a process gdm-binary)
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; That might be something strange having to do with gdm.
+</I>&gt;<i> &gt;&gt;&gt; Perhaps after a user logs out gdm quits
+</I>&gt;<i> &gt;&gt;&gt; then restarts with a new PID?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; &gt; 2) the process might have spawned a child and exited (ie the main
+</I>&gt;<i> &gt;&gt;&gt; &gt; executable
+</I>&gt;<i> &gt;&gt;&gt; &gt; is only a wrapper that spawn the real server) (I've no exemple but I
+</I>&gt;<i> &gt;&gt;&gt; &gt; remember something like that)
+</I>&gt;<i> &gt;&gt;&gt; &gt; 3) a service that has crashed but spawned childs (who are then now
+</I>&gt;<i> &gt;&gt;&gt; &gt; attached
+</I>&gt;<i> &gt;&gt;&gt; &gt; to the init process) (exemple if you pkill -9 gdm-binary, then X that
+</I>&gt;<i> &gt;&gt;&gt; &gt; is the
+</I>&gt;<i> &gt;&gt;&gt; &gt; child of gdm-simple-slave remains alive)
+</I>&gt;<i> &gt;&gt;&gt; &gt;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; &gt; I've no solution to propose,
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; We could quit using a PID file for gdm
+</I>&gt;<i> &gt;&gt;&gt; and instead query the PID as needed.
+</I>&gt;<i> &gt;&gt;&gt; That method is only good as long as processes
+</I>&gt;<i> &gt;&gt;&gt; called gdm are really the gdm we expect.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; &gt; but is there a way to kill all a tree? ie kill the process and all
+</I>&gt;<i> it's
+</I>&gt;<i> &gt;&gt;&gt; &gt; childs?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Yes.
+</I>&gt;<i> &gt;&gt;&gt; However, I would not normally do that,
+</I>&gt;<i> &gt;&gt;&gt; especially if the parent PID is already dead.
+</I>&gt;<i> &gt;&gt;&gt; Instead I tend to use pkill.
+</I>&gt;<i> &gt;&gt;&gt; Given a command such as
+</I>&gt;<i> &gt;&gt;&gt; # pkill -u root &quot;^gdm$&quot;
+</I>&gt;<i> &gt;&gt;&gt; That would precisely kill processes that are called exactly gdm.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; &gt; is there a way to assign a group id or something like that that
+</I>&gt;<i> remains
+</I>&gt;<i> &gt;&gt;&gt; &gt; for
+</I>&gt;<i> &gt;&gt;&gt; &gt; all childs of the process? if yes we could set it, and then kill all
+</I>&gt;<i> &gt;&gt;&gt; &gt; the
+</I>&gt;<i> &gt;&gt;&gt; &gt; process of the group....
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Yes, but startup would be somewhat more complex.
+</I>&gt;<i> &gt;&gt;&gt; Something would have to run before gdm
+</I>&gt;<i> &gt;&gt;&gt; to switch the group to a non root group such as gdm.
+</I>&gt;<i> &gt;&gt;&gt; And of course a gdm group must exist.
+</I>&gt;<i> &gt;&gt;&gt; And if a gdm group exists then so should a user gdm
+</I>&gt;<i> &gt;&gt;&gt; just to keep the numbers lined up.
+</I>&gt;<i> &gt;&gt;&gt; Yet gdm could not run as user gdm,
+</I>&gt;<i> &gt;&gt;&gt; because after someone logs in it must switch
+</I>&gt;<i> &gt;&gt;&gt; to the user that logged in.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Hmm, gdm is rather strange for a daemon.
+</I>&gt;<i> &gt;&gt;&gt; It does not background itself.
+</I>&gt;<i> &gt;&gt;&gt; Overall it is almost like a full gnome session
+</I>&gt;<i> &gt;&gt;&gt; when it runs instead of merely a login manager.
+</I>&gt;<i> &gt;&gt;&gt; And it does have it's own user and group.
+</I>&gt;<i> &gt;&gt;&gt; killing /usr/sbin/gdm-binary
+</I>&gt;<i> &gt;&gt;&gt; seems to bring it down okay or not
+</I>&gt;<i> &gt;&gt;&gt; since it did not return to console.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; The gdm-restart shell script is funny.
+</I>&gt;<i> &gt;&gt;&gt; It check for a PID file and errors 1 if it is not found.
+</I>&gt;<i> &gt;&gt;&gt; And if a PID file is found it writes &quot;Not supported&quot;
+</I>&gt;<i> &gt;&gt;&gt; and does not restart gdm.
+</I>&gt;<i> &gt;&gt;&gt; *lol*
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Perhaps the gdm authors are aware that gdm
+</I>&gt;<i> &gt;&gt;&gt; is not a daemon that behaves appropriately?
+</I>&gt;<i> &gt;&gt;&gt; Although gdm does not background itself
+</I>&gt;<i> &gt;&gt;&gt; it does write it's own PID file.
+</I>&gt;<i> &gt;&gt;&gt; If it's PID file is incorrect
+</I>&gt;<i> &gt;&gt;&gt; then that would be because of a bug with gdm.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; The /usr/sbin/gdm-stop provided with gdm
+</I>&gt;<i> &gt;&gt;&gt; basically kills off the the PID specified in gdm's PID file.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Hmm...
+</I>&gt;<i> &gt;&gt;&gt; And of course there are your observations
+</I>&gt;<i> &gt;&gt;&gt; about the remaining child PIDs of gdm
+</I>&gt;<i> &gt;&gt;&gt; that fortunately have the UID of gdm.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I can avoid this problem
+</I>&gt;<i> &gt;&gt;&gt; that is to say make the init-script incorrect
+</I>&gt;<i> &gt;&gt;&gt; and have it kill gdm-binary and every processes
+</I>&gt;<i> &gt;&gt;&gt; owned by gdm and X.
+</I>&gt;<i> &gt;&gt;&gt; But that is a bit messy.
+</I>&gt;<i> &gt;&gt;&gt; Hmm, gdm is a bit tricky to kill off.
+</I>&gt;<i> &gt;&gt;&gt; And using kill -9 does leave that
+</I>&gt;<i> &gt;&gt;&gt; gdm-simple-slave alive.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; How do you want to stop and restart gdm?
+</I>&gt;<i> &gt;&gt;&gt; From the look of it gdm is not intended
+</I>&gt;<i> &gt;&gt;&gt; to be stopped or restarted.
+</I>&gt;<i> &gt;&gt;&gt; It does not behave like a normal daemon.
+</I>&gt;<i> &gt;&gt;&gt; My guess is that it is intended to be started
+</I>&gt;<i> &gt;&gt;&gt; directly by init at runlevel 5 as if gdm were a getty.
+</I>&gt;<i> &gt;&gt;&gt; But that would not be possible on Sorcerer.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; The docs differ a bit from the actual scripts.
+</I>&gt;<i> &gt;&gt;&gt; For example part of the docs for gdm states
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; &quot;          &lt;command&gt;gdm-restart&lt;/command&gt; stops and restarts GDM by
+</I>&gt;<i> &gt;&gt;&gt; sending
+</I>&gt;<i> &gt;&gt;&gt;          the GDM daemon a HUP signal.  This command will immediately
+</I>&gt;<i> &gt;&gt;&gt; terminate
+</I>&gt;<i> &gt;&gt;&gt;          all sessions and log out users currently logged in with GDM.
+</I>&gt;<i> &gt;&gt;&gt; &quot;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Actually, the script does not do that.
+</I>&gt;<i> &gt;&gt;&gt; Nor does the gdm-safe-restart
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; &quot;          &lt;command&gt;gdm-stop&lt;/command&gt; stops GDM by sending the GDM
+</I>&gt;<i> &gt;&gt;&gt; daemon
+</I>&gt;<i> &gt;&gt;&gt;          a TERM signal.&quot;
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; According to the docs
+</I>&gt;<i> &gt;&gt;&gt; the Sorcerer init-script is doing the correct action
+</I>&gt;<i> &gt;&gt;&gt; by trying to send TERM to the PID specified in gdm's PID file.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I was reading gdm-2.30.2/docs/C/gdm.xml
+</I>&gt;<i> &gt;&gt;&gt; After a quick glance I did not notice anything
+</I>&gt;<i> &gt;&gt;&gt; about gdm's configuration on Sorcerer that is
+</I>&gt;<i> &gt;&gt;&gt; incorrect or faulty.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; My best guess is that current gdm is buggy or incomplete.
+</I>&gt;<i> &gt;&gt;&gt; If the Sorcerer's gdm init-script invoked gdm-stop
+</I>&gt;<i> &gt;&gt;&gt; the result would be the same.
+</I>&gt;<i> &gt;&gt;&gt; I guess that sometimes gdm must be manually stopped
+</I>&gt;<i> &gt;&gt;&gt; by the SA by selectively killing associated processes.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; While not a command I normally use
+</I>&gt;<i> &gt;&gt;&gt; see the pstree command for a way to show
+</I>&gt;<i> &gt;&gt;&gt; all spawned children processes.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I am open to suggestions for what you want to do with gdm.
+</I>&gt;<i> &gt;&gt;&gt; _______________________________________________
+</I>&gt;<i> &gt;&gt;&gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt;&gt;&gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; --
+</I>&gt;<i> &gt;&gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> &gt;&gt; (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &gt;&gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> &gt;&gt; simples et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> &gt;&gt; -----------------------------
+</I>&gt;<i> &gt;&gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> &gt;&gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty
+</I>&gt;<i> Reese
+</I>&gt;<i> &gt;&gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; --
+</I>&gt;<i> &gt; KISS! (Keep It Simple, Stupid!)
+</I>&gt;<i> &gt; (garde le simple, imb&#233;cile!)
+</I>&gt;<i> &gt; &quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses
+</I>&gt;<i> simples
+</I>&gt;<i> &gt; et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+</I>&gt;<i> &gt; -----------------------------
+</I>&gt;<i> &gt; &quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+</I>&gt;<i> &gt; essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+</I>&gt;<i> &gt; <A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; _______________________________________________
+</I>&gt;<i> &gt; Sorcerer-admins mailing list
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> &gt; <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100613/4df1658a/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100613/4df1658a/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001655.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+	<LI>Next message: <A HREF="001657.html">[Sorcerer-admins] unreliable way of starting/stoping init	processes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1656">[ date ]</a>
+              <a href="thread.html#1656">[ thread ]</a>
+              <a href="subject.html#1656">[ subject ]</a>
+              <a href="author.html#1656">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

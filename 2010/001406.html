@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer Install
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20Install&In-Reply-To=%3C596b75861002030047w28763e15o9789c4c6ba5baa67%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001405.html">
+   <LINK REL="Next"  HREF="001408.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer Install</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20Install&In-Reply-To=%3C596b75861002030047w28763e15o9789c4c6ba5baa67%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer Install">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Feb  3 09:47:23 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001405.html">[Sorcerer-admins] Sorcerer Install
+</A></li>
+        <LI>Next message: <A HREF="001408.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1406">[ date ]</a>
+              <a href="thread.html#1406">[ thread ]</a>
+              <a href="subject.html#1406">[ subject ]</a>
+              <a href="author.html#1406">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I have been considering feedback from SAs
+who have attempted to install Sorcerer,
+yet did not quite accomplish the task.
+Frequently, there is the report
+that goes something like,
+&quot;It ran out of memory and killed the menu driven installer.&quot;
+
+My best guess about this is that SAs are either not
+specifying a &quot;/&quot; root filesystem in the fstab menu,
+or not mounting it, or not initializing it before mounting.
+If a root filesystem on a physical storage device such as a
+fixed disk or USB memory stick is not mounted on
+/media/root/
+then the install script will attempt to do the installation
+to the initramfs/rootfs filesystem which is memory.
+This is not desirable.
+
+Now I wrote above that a real filesystem must be mounted
+on /media/root
+However, the SA does not have to do this manually.
+The menu driven installer will be able to do this.
+And in most cases the menu driven installer should do this,
+rather than the SA.
+
+For a filesystem to be created on a device
+the device must first have partitions.
+If the fixed disk is not partitioned
+then select partitioning from the menu,
+I prefer fdisk, and carve out at least one partition.
+
+Even a partition exists on a disk
+that partition is not suitable for mounting unless
+a filesystem exists on that partition.
+
+In the sorcery's fstab creation menu
+that partition should be offered as an entry.
+Select it.
+Specify that it should be mounted as /
+because every box must have a / filesystem.
+That is the root filesystem.
+Now specify a filesystem for /
+In the past I tended to use ext3.
+But for testing I use ext4.
+Either ext3 or ext4 are good choices.
+Once those are entered for that partition
+then that is enough information for the menu
+driven installer to handle that partition.
+
+I do not recommend installing Sorcerer onto a
+filesystem that already has something else installed.
+In some cases a SA could manually do this by avoiding
+the filesystem initialization menu.
+A SA would want to do this if the SA wants to manually
+remove everything from that partition except /home/
+and has already done so before using the sorcery
+menu driven installer.
+
+In the past distributions recommended /home/ be kept
+on a separate partition to avoid having to wipe it
+while doing a complete re-install of the operating system
+that was required every year or two.
+However, that has never been a requirement with Sorcerer.
+Sorcerer can be installed once and updated forever
+as long as those updates are no further than 3 months apart.
+Longer jumps run greater risks of encountering
+an unexpected problem that the SA would have to manually solve.
+However, I digressed.
+Sorry.
+
+Please visit the filesystem initialization menu
+and select that new partition for initialization.
+If a partition does not have a filessystem
+then the partition can no be mounted.
+So this is an important step.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001405.html">[Sorcerer-admins] Sorcerer Install
+</A></li>
+	<LI>Next message: <A HREF="001408.html">[Sorcerer-admins] Sorcerer-admins Digest, Vol 44, Issue 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1406">[ date ]</a>
+              <a href="thread.html#1406">[ thread ]</a>
+              <a href="subject.html#1406">[ subject ]</a>
+              <a href="author.html#1406">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20Mesa%20should%0A%09EPROVIDE%09opengl&In-Reply-To=%3C46BBFCC3.1080108%40laposte.net%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000110.html">
+   <LINK REL="Next"  HREF="000155.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl</H1>
+    <B>jlm devel</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20Mesa%20should%0A%09EPROVIDE%09opengl&In-Reply-To=%3C46BBFCC3.1080108%40laposte.net%3E"
+       TITLE="[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl">malet.jean-luc at laposte.net
+       </A><BR>
+    <I>Fri Aug 10 07:50:59 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000110.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+        <LI>Next message: <A HREF="000155.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa	should	EPROVIDE	opengl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#112">[ date ]</a>
+              <a href="thread.html#112">[ thread ]</a>
+              <a href="subject.html#112">[ subject ]</a>
+              <a href="author.html#112">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Kyle Sallee wrote:
+&gt;<i> On 8/9/07, jlm devel &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">malet.jean-luc at laposte.net</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> I think there is no need to have 2 openGL libraries installed on a
+</I>&gt;&gt;<i> system at a time.... so REQ on Mesa should be REQ on openGL and then
+</I>&gt;&gt;<i> have the wanted openGL provider selected... else it leads to trouble
+</I>&gt;&gt;<i> where an update sudenly brake everything (since the symlinks are modified)
+</I>&gt;&gt;<i> Best Regards,
+</I>&gt;&gt;<i>     
+</I>&gt;<i>
+</I>&gt;<i> I can have NVIDIA-Linux-x86 provide MesaLib.
+</I>&gt;<i> I have no idea if it is sufficiently complete.
+</I>&gt;<i> Not sure what will happen if on a non NVIDIA chipset box
+</I>&gt;<i> if NVIDIA-Linux-x86 is installed instead of MesaLib?
+</I>&gt;<i> It might fail or it might provide a slightly faster implementation
+</I>&gt;<i> or it might cause a large amount of installed software to recompile
+</I>&gt;<i> if the SA accidentally selects NVIDIA-Linux-x86 on an existing installation.
+</I>&gt;<i>   
+</I>spells linked against mesa will not recompile when Nvidia is casted 
+because both provide opengl api and link against libGL.so and libglx.so 
+who are standardised by opengl.org... both spell provide that lib and no 
+version information is stored in the elf header which means that simply 
+modifying the symlink make you use one or the other lib.... if a user 
+accidentally select NVIDIA-Linux-x86 then it should compile fine but glx 
+won't load on X11 start.... the user can then select the other 
+implementation without any trouble
+&gt;<i> There may be, in the grimoire, a spell for another somewhat more stripped
+</I>&gt;<i> down Mesa installation that is faster, while being mostly software,
+</I>&gt;<i> but may not allow all OpenGL programs to run correctly.
+</I>&gt;<i> If it is still in the grimoire I do not know.
+</I>&gt;<i> Nor do I recall the name.
+</I>&gt;<i> I made the change to NVIDIA-Linux-x86 to EPROVIDE MesaLib.
+</I>&gt;<i> Hope that helps.
+</I>Thanks althought I prefer to have both EPROVIDE openGL (a virtual spell 
+like x11) which is more correct (don't know about firegl drivers... do 
+they use mesalib? or do they do like nvidia ones and overwrite directly 
+libGL.so and libglx.so?)
+Regards,
+JLM
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070810/36678fa4/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20070810/36678fa4/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000110.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+	<LI>Next message: <A HREF="000155.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa	should	EPROVIDE	opengl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#112">[ date ]</a>
+              <a href="thread.html#112">[ thread ]</a>
+              <a href="subject.html#112">[ subject ]</a>
+              <a href="author.html#112">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

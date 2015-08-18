@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] CPIO Archive Append...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20CPIO%20Archive%20Append...&In-Reply-To=%3C8596d02a0805291122p4cf2648aqe7b7a96408579064%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000476.html">
+   <LINK REL="Next"  HREF="000478.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] CPIO Archive Append...</H1>
+    <B>J Decker</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20CPIO%20Archive%20Append...&In-Reply-To=%3C8596d02a0805291122p4cf2648aqe7b7a96408579064%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] CPIO Archive Append...">d3ck0r at gmail.com
+       </A><BR>
+    <I>Thu May 29 20:22:34 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000476.html">[Sorcerer-admins] CPIO Archive Append...
+</A></li>
+        <LI>Next message: <A HREF="000478.html">[Sorcerer-admins] Missing Files....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#477">[ date ]</a>
+              <a href="thread.html#477">[ thread ]</a>
+              <a href="subject.html#477">[ subject ]</a>
+              <a href="author.html#477">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Nevermind - didn't create the directories before specifying files in
+those directories so they weren't created.  Got it.  Append works.
+(though ... still want to have cpio blobs I can append instead of just
+appending into the same archive...)
+
+On Thu, May 29, 2008 at 9:23 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;<i> I started building bootable images and got isolinux configured to boot
+</I>&gt;<i> successfully...
+</I>&gt;<i>
+</I>&gt;<i> I found that using the list of files in /etc/sorcery/install/* gives
+</I>&gt;<i> me exactly the files I'd need to copy for udev or linux-modular for
+</I>&gt;<i> instance.  So I grab that list, throw out entries that are
+</I>&gt;<i> /etc/sorcery/* and get a list of files to copy.  I feed this to
+</I>&gt;<i> 'cpio'.  and in turn gzip that...
+</I>&gt;<i>
+</I>&gt;<i> but then I wanted to be conservative and use busybox as my binutils
+</I>&gt;<i> sort of thing... the previous files are all specified with '/' names
+</I>&gt;<i> so they are taken exactly in place... busybox is not on the root... so
+</I>&gt;<i> I made a directory, copied the busybox/_install directory there and
+</I>&gt;<i> cpio with related libraries, and made a busybox.cpio.gz with a root
+</I>&gt;<i> bias for it.
+</I>&gt;<i>
+</I>&gt;<i> 1) I thought I could be really clever an just do like 'cat cpio1 cpio2
+</I>&gt;<i> | gzip &gt; cpio_all'  but each cpio arechive has some sort of trailier.
+</I>&gt;<i> 2) there's a --append option which can be used with cpio to append
+</I>&gt;<i> more files to an already existing archive... so I built the first
+</I>&gt;<i> archvie with udev and modular-linux, copy that ot the root of busybox,
+</I>&gt;<i> and append busybox...  However, after booting and getting the image,
+</I>&gt;<i> all I have for directories and files are the files that were appended
+</I>&gt;<i> when adding busybox, nothing from the first part of the cpio
+</I>&gt;<i> archive...
+</I>&gt;<i>
+</I>&gt;<i> Is there any sort of tool to append cpio archives that works?
+</I>&gt;<i>
+</I>&gt;<i> would be fairly handy to have this... then I could have
+</I>&gt;<i> core-linux.cpio, binutil-opt1.cpio, binutil-opt2.cpio,
+</I>&gt;<i> user_application_1.cpio and concatenate them into an appropriate
+</I>&gt;<i> image.
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000476.html">[Sorcerer-admins] CPIO Archive Append...
+</A></li>
+	<LI>Next message: <A HREF="000478.html">[Sorcerer-admins] Missing Files....
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#477">[ date ]</a>
+              <a href="thread.html#477">[ thread ]</a>
+              <a href="subject.html#477">[ subject ]</a>
+              <a href="author.html#477">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

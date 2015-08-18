@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Sorcerer from USB memory stick:
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860808021124m1b247eady9e34b4075e29f714%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000704.html">
+   <LINK REL="Next"  HREF="000708.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Sorcerer from USB memory stick:</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Sorcerer%20from%20USB%20memory%20stick%3A&In-Reply-To=%3C596b75860808021124m1b247eady9e34b4075e29f714%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Sorcerer from USB memory stick:">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Aug  2 20:24:32 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000704.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+        <LI>Next message: <A HREF="000708.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#707">[ date ]</a>
+              <a href="thread.html#707">[ thread ]</a>
+              <a href="subject.html#707">[ subject ]</a>
+              <a href="author.html#707">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Aug 2, 2008 at 2:02 AM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+
+&gt;&gt;<i> syslinux is for booting from M$ file systems.
+</I>&gt;&gt;<i> I used lilo to boot from the flash drive because
+</I>&gt;&gt;<i> the boot filesystem is ext2.
+</I>&gt;<i>
+</I>&gt;<i> all you need is 2 files (linux, initfs, unless you pack it together)
+</I>&gt;<i> and the ext2 filesystem file? any particular reason you're making it
+</I>&gt;<i> windows unfriendly to modify scripts etc ?
+</I>
+The standard boot loader for Sorcerer boxes is lilo.
+Does lilo support FAT?
+A FAT partition for /boot might require syslinux.
+While I do not mind using syslinux for I/R CDs
+I prefer lilo for booting deployed Sorcerer boxes.
+FAT would also allow the average windows user
+to delete your kernel and initramfs files
+in order to make space for their files if
+they acquired your USB flash drive,
+since they would not know how to repartition it.
+Unless ext2 read/write is supported
+the average windows user would probably not
+modify files on an ext2 filesystem.
+
+If transporting files from M$ boxes is necessary
+then having an additional FAT filesystem on the flash drive is possible.
+
+If possible to make the boot partition invulnerable to modification
+except when the encrypted / is mounted and booted
+then I would like that.
+However, at best I could probably only provide something
+like a simple check where md5sums of the kernels
+and initramfs are checked during runlevel execution.
+Naturally, those md5sum would be kept in files on the encrypted /
+so that they can not be modified.
+This type of check could only detect and report that
+files in /boot were modified without authorization.
+However, with the box already booted it may be
+too late to prevent data theft or the intent
+of the person who modified the files on /boot
+because the kernel and initramfs have loaded
+and already run.
+
+I read that non linux compatible encryption is provided on some flash drives.
+
+Are there reasons why having a FAT /boot would be better than an ext2 boot?
+
+
+&gt;&gt;<i> Yes, I had the compact option.
+</I>&gt;&gt;<i> 16 bit BIOS calls are slow.
+</I>&gt;&gt;<i> Also we know the max throughput for reading from
+</I>&gt;&gt;<i> the USB flash drive is also slower than fixed disk.
+</I>&gt;&gt;<i> Therefore, the time required to load the kernel
+</I>&gt;&gt;<i> and initramfs is not entirely unexpected.
+</I>&gt;<i>
+</I>&gt;<i> mine boots as fast as most hard drives  (course I do have fewer things
+</I>&gt;<i> I'm starting up)
+</I>
+Good to know that loading speed
+for initramfs and linux from flash drive by BIOS calls
+varies with the BIOS.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000704.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+	<LI>Next message: <A HREF="000708.html">[Sorcerer-admins] Sorcerer from USB memory stick:
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#707">[ date ]</a>
+              <a href="thread.html#707">[ thread ]</a>
+              <a href="subject.html#707">[ subject ]</a>
+              <a href="author.html#707">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

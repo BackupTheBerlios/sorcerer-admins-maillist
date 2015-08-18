@@ -1,0 +1,498 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] A storm approaches...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2012/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20storm%20approaches...&In-Reply-To=%3CCA%2BT4wDjqdRSwq%2BXJtfF%3D%3DLucdFRSNBxLgY9Sj2poZXWLyGJJQQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002397.html">
+   <LINK REL="Next"  HREF="002399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] A storm approaches...</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20A%20storm%20approaches...&In-Reply-To=%3CCA%2BT4wDjqdRSwq%2BXJtfF%3D%3DLucdFRSNBxLgY9Sj2poZXWLyGJJQQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] A storm approaches...">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Oct 18 01:22:44 CEST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002397.html">[Sorcerer-admins] subtle changes...
+</A></li>
+        <LI>Next message: <A HREF="002399.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2398">[ date ]</a>
+              <a href="thread.html#2398">[ thread ]</a>
+              <a href="subject.html#2398">[ subject ]</a>
+              <a href="author.html#2398">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Any day now I could be unleashing a new sorcery and grimoire
+that greatly differs from the one in use on deployed boxes.
+
+The main goal of this sorcery revision is to make sorcery scalable
+for efficient processor and efficient I/O utilization on large SMP boxes,
+such as where the number of available processors is &gt;= 8.
+
+For this to be accomplished the various tasks performed by sorcery utilities
+have been appropriately delineated, segregated and delegated to
+utilities and queues.
+For simplicity the queues and utility names concur.
+However, the except is cast and dispel.
+The cast and dispel queues still exist, but the utilities do not.
+The queues exist as a staging area and as a useful concept/construct.
+
+This is the list of new utilities and queues:
+load; moil; post; reap; rush; save; till; wane.
+The following describes each queue/utility.
+&quot;Load&quot; supplants the &quot;leech&quot; with the same purpose of downloading files.
+&quot;Moil&quot; mainly executes the build() portion of a spell which is
+frequently compilation.
+&quot;Post&quot; install files to /, creates archives, and creates log files.
+&quot;Reap&quot; removes files that spell previously installed to /
+&quot;Rush&quot; untars a previously generated tarball of ccache generated objects.
+&quot;Save&quot; saves customized configuration files so that they can be used
+again when a spell updates.
+&quot;Till&quot; untars source tarballs, unzips files, and prepares them for use
+by &quot;moil.&quot;
+&quot;Wane&quot; turns ccache directories back into tarballs, and xz compresses
+source, ccache, and archive tarballs.
+
+As usual the SA must only understand the concept of the cast and dispel queue.
+Spells in the cast and dispel queue are acted upon as usual when
+# augur begin
+is executed.
+The other queues load automatically as required.
+
+For the symphony of deployment and updating
+the orchestration is performed by &quot;wand.&quot;
+Wand runs as a daemon while required and has no queue.
+Other utilities can impel wand to act by writing to wand's named pipe.
+
+Yes, the names are all 4 letters long, not because I prefer 4 letter words,
+but because it makes coding easier for me and the each of the names
+has a logical association with the dictionary definition of the word.
+
+The person with a wand conducts an orchestra.
+Tilling prepares land for raising crops,
+however in Sorcerer context for raising compiled software.
+Wane means to make smaller, and that is what it does.
+And the rest should be plainly obvious, but if not
+then a dictionary will provide the clue.
+
+An interesting aspect about this sorcery is that
+with few useful exceptions the utilities tend not
+to process queues concurrently with other utilities.
+In other words with the except of &quot;load&quot; &quot;moil&quot; and &quot;wane&quot;
+which are given liberty to run when possible
+the other queue/utilities such as &quot;post&quot; &quot;reap&quot; &quot;rush&quot; &quot;save&quot; &quot;till&quot;
+run only when another is not running.
+This has the tendency of spreading I/O
+instead of concentrating I/O in bursts.
+
+As mentioned previously, the wane utility runs
+when it's queue is populated.
+However, &quot;wand&quot; throttles &quot;wane's&quot; cpu.shares.
+Therefore, when disk space is ample &quot;wane&quot; is starved for cpu.shares.
+However, when disk space is dire then &quot;wane&quot; receives
+cpu.shares equal to &quot;moil.&quot;
+This effectively allows the utilities to climb out of a situation
+where available disk space is begin depleted rather than replenished.
+And because &quot;wane&quot; runs with such a low cpu.shares value
+&quot;wane&quot; tends to consume mostly idle cycles
+rather than causing &quot;moil&quot; to slow.
+&quot;wane&quot; effectively depreciates and supplants immune-sentinel-space.
+
+I want to commend Evert Vorster for expressing his discontent
+which impelled two very important changes.
+The first change was to allow a tarball compression agent to run
+concurrently within the slow/sorcery cgroup hierarchy
+in order to effectively redirect idle and wait cpu cycles
+to the task of mitigating disk space consumption.
+When first suggested I opposed this idea because
+I did not want the agent to run with as much cpu.shares
+as granted to the hierarchy slow/sorcery.
+However, I later rescinded my objections when
+the new sorcery infrastructure became suitable for this task.
+
+Secondly, Evert and I discussed at great length the benefits
+of having dedicated file systems to handle files
+that posses different levels of volatility.
+Evert expressed the results of running with a dedicated root file system
+and dedicated /var file system and I listened.
+However, I also understand that Sorcerer's use of the file system
+differs from a typical pre-compiled binary based distro.
+And having those differences identified and segregated could be beneficial.
+And I could have made the change long ago,
+but was too lazy to implement it until
+after Evert expressed an interest and was demonstrating
+the use of multiple file systems and dedicated partitions.
+
+Except for the utilities themselves,
+which are still provided within
+the standard locations within the file system,
+almost all sorcery specific things have now
+migrated to within the /aux/ hierarchy.
+
+/aux/ has a somewhat strange but logical hierarchy.
+
+/aux/can/ is a silo or storage area.
+/aux/can/archive/
+/aux/can/ccache/
+/aux/can/git/
+/aux/can/load/
+/aux/can/source/
+The above directories supplant the directories
+that were previously provided under /var/cache/
+The slightly less than obvious
+/aux/can/load/ is basically a downloading area
+where files are checked and sorted before
+transitioning into /aux/can/source/
+
+/aux/fit/
+/aux/fit/lib64/
+/aux/fit/lib/
+Either the lib64 or lib directory will be present within /aux/fit/
+It is a copy of the directory from /
+at a time when it is determined to be fit.
+The reason for /aux/fit/
+is for immune-sentinel-elf
+to be able to recovery from a critical ELF failure situation.
+If /aux/fit/ is ever used
+then /aux/bad/ will contain the directories that were rejected.
+/aux/bad/ can be removed or analyzed
+to determine the cause of the critical ELF failure situation.
+
+/aux/log/
+Contains all the logs that were formerly provided in /etc/sorcery/log/
+Likewise /var/log/sorcery/event/ is now deprecated
+and /aux/log/event/ is used instead.
+The SA can copy over old event logs,
+however the spell immune-exam-transition will not.
+The spell immune-exam-transition will however copy the log files from
+/etc/sorcery/log/ and properly edit them.
+So the next spell to cast after updating to newer sorcery
+should be immune-exam-transition.
+
+/aux/new/
+/aux/new/ enhances and supplants the functionality
+that was previously provided by /etc.ori/
+Pristine new unmodified configuration files from anywhere
+on the file system are provided within /aux/new/
+This can be used for comparing modified configuration files with stock
+or for the purpose of unmodifying a configuration file.
+/aux/new/ might seem a bit hidden,
+but I do prefer to minimize clutter within /
+
+/aux/run/ supplants the tasks of /usr/src/sorcery/ and /var/cache/sorcery/
+So basically, all the action of sorcery happens somewhere within /aux/run/
+/aux/run/tmp/grimoire/ contains the merged grimoire.
+/aux/run/queues/ contains the queue directories.
+And the rest becomes obvious at a glance.
+
+After we finish a resounding chorus of, &quot;I hate it.&quot;
+Let us momentarily dismiss our bias and examine
+the potential usefulness of this.
+
+First of all, /aux/run/ could be it's own 20G file system
+on an unencrypted device.
+If so then defragmentting when not in use is as easy as
+# rm -fr /aux/run/failed/
+Having /aux/run/ on it's own file system on an unencrypted device
+is also a splendid idea when / resides on an encrypted device.
+The /aux/run/ file system might easily be home
+to the most volatile files on a box.
+
+/aux/can/ is a storage area.
+It could be on a dedicated file system.
+The best size remains something of a mystery.
+It must be sufficiently large to handle the flux
+of new files and receiving poorly and uncompressed tarballs.
+So 30G as a minimum or 40G seems sufficient for the immediate future.
+
+The departure from the previous locations is because the
+previous locations were decided by following the recommendations
+of the Linux Filesystem Hierarchy.
+<A HREF="http://refspecs.linuxfoundation.org/FHS_2.3/">http://refspecs.linuxfoundation.org/FHS_2.3/</A>
+&quot;FHS 2.3 was released January 29, 2004.&quot;
+And sorcery was originally designed and initial implementations began in 2000.
+And at that time sorcery was intended to be used
+as a companion tool on a pre-compiled binary based distro
+in order to provide source based administration for some
+but not all installed software.
+Obviously, modern sorcery has no dependency upon a package management system.
+And the aging FHS was designed according to the old paradigm
+that describes pre-compiled binary based distros and
+not a source based distro such as &quot;Sorcerer Modern Magic.&quot;
+
+/aux/ is short for auxiliary.
+Obviously, auxiliary is too difficult to spell and too long to type.
+However, as far as I know /aux has not been assigned a dedicated
+purpose outside of Sorcerer's usage and nomenclature.
+It is part of Sorcerer's own weird file system hierarchy.
+And it is suitable for it's purpose for two reasons.
+First, /aux/ is only necessary for deployment and updating of boxes,
+but otherwise /aux/ is not normally required for a running box.
+That should not imply that rm -fr /aux/ is safe.
+It is not since important log files would be lost.
+Secondly, I have a habit of inventing directories such
+as /etc.ori/ /etc.sav/ and that becomes messy.
+Placing them within /aux/ creates a more tidy file system.
+And such directories are unique to Sorcerer boxes,
+which grants another reason for placing Sorcerer specific
+directories within /aux/
+
+One of the final changes conflicts with the reasoning
+that I gave in the above paragraph.
+However, as the cliche goes,
+&quot;for every rule an exception exists.&quot;
+Boxes will gain
+{,/usr}/lib{,64}/.link/ directories
+These directories contain hard links to the ELF libraries
+and symbolic links to ELF libraries in the directory above.
+Because those are hard links they require no additional disk space.
+However, please do not remove those .../.link/ directories
+because they are cleaned, updated, and populated automatically
+by the sorcery utilities.
+
+The .../.link/ directories have become
+the most recent incarnation of the
+the digital version of the &quot;table cloth trick.&quot;
+The &quot;table cloth trick&quot; is to yank a table cloth from
+a table without destroying and toppling the glasses,
+plates, and dishes that sit upon the table cloth.
+Likewise removing ELF libraries for updating
+requires a trick in order to allow programs
+to continue to be started when the ELF libraries
+that they require are no longer in expected locations.
+And the .../link/ directories are exactly that trick.
+
+The .link/ directories are subdirectories of the library directory
+because this ensures that the hard links will exist on the same
+file system as the original files.
+And the directory's name is to make obvious the content.
+Yes, those are hard linked files.
+And they intentionally exist and not accidentally exist.
+
+Weary of reading?
+The above demystifies the changes made to the tools and file system.
+However, spells have changed also.
+
+All function invocations within spells are now proceeded by with
+
+For example please examine the follow spell which installs the FHS text file.
+
+with version stable 2.3
+with role    documentation
+with trait   archive_off data
+with info    good 20120607
+with info    last 20040129
+with info    home <A HREF="http://refspecs.linuxfoundation.org/FHS_2.3/">http://refspecs.linuxfoundation.org/FHS_2.3/</A>
+with source  <A HREF="http://refspecs.linuxfoundation.org/FHS_2.3/fhs-$VERSION.txt.gz">http://refspecs.linuxfoundation.org/FHS_2.3/fhs-$VERSION.txt.gz</A>
+with info    cite &quot;linux file system hierarchy&quot;
+
+build(){
+ mkdir -pvm 755      $DESTDIR/usr/share
+ gzip  -cd $SOURCE &gt; $DESTDIR/usr/share/fhs.txt
+ chmod 644           $DESTDIR/usr/share/fhs.txt
+}
+
+While it might look redundant it is not without purpose.
+The &quot;with&quot; allows for graceful transition to new spell formats in the future.
+Previous functions can be renamed, obsoleted, deprecated, or translated.
+The with function can inform when a function is no longer present
+or provide translation from an old function name to a new name
+or any sort of magic that eases transitioning.
+
+Here are some of the nomenclature changes:
+
+category -&gt; role
+attribute -&gt; trait
+eprovide -&gt; hold
+provide -&gt; fill
+conflicts -&gt; clash
+opts -&gt; also
+require -&gt; base
+optional -&gt; elect
+volatile -&gt; vary
+
+Please forgive me for the nomenclature changes
+that I failed to describe above.
+The changes mostly replace names that
+required more characters with smaller names.
+If in the future I use a tab instead of spaces
+in order to create the appearance of columns in spells
+then I definitely want all function names to be 7 characters or less.
+
+The new function names are slightly less obvious,
+but easy to remember with some practice.
+And as usual each Sorcerer box comes with
+more than 3000 example spells.  :)
+
+As usual this major change in the grimoire
+will likely cause a significant sized scroll of error messages
+when attempting to index a newer grimoire with an older sorcery.
+Please do not become alarmed nor irritated.
+The use of &quot;with&quot; will provide an ultimately solution to that in the future.
+However, update to newer sorcery might seem bumpy at first.
+
+I have been driving the newer sorcery for over a week and squishing the bugs.
+I hope every last bug is flat.
+I apologize if bugs happen.
+Be aware that newer sorcery will sometimes drive a higher loadavg.
+Although the loadavg should not appear to be like a fork bomb.
+That would be a bug.
+The higher loadavg is because many of the utilities can run concurrently.
+However, the higher loadavg is intentional rather than incidental.
+&quot;load&quot; &quot;post&quot; &quot;reap&quot; &quot;rush&quot; &quot;save&quot; &quot;till&quot; &quot;wane&quot; are allowed to run,
+but at much lower cpu.shares than &quot;moil.&quot;
+This causes a starvation effect where the other utilities have
+a longer duration and raise the loadavg.
+However, this is exactly what is desired.
+
+&quot;load&quot; &quot;post&quot; &quot;reap&quot; &quot;rush&quot; &quot;save&quot; &quot;till&quot; and &quot;wane&quot;
+tend to be I/O intensive utilities or are I/O intensive at times.
+A disk might be able to offer throughput at 70 megabytes per second.
+The file system reduces performance by half or more.
+So the effective maximum throughput to and from disk
+tends to be magnitudes less than RAM performance.
+Therefore, tasks that are I/O intensive should run at a speed
+that is appropriate for disk access and at the same time
+not saturate disk I/O and deprive user process and &quot;moil&quot;
+from fast acquisition of desired content from files.
+The arrangement of cpu.shares and utilization of the cock utility
+to mitigate disk I/O is to allow the utilities other than &quot;moil&quot;
+to defer I/O to &quot;moil&quot; to defer I/O to user owned processes,
+and to defer I/O to system and role specific tasks such as
+web serving, mail serving, and file serving.
+So yes, the utilities drive a higher loadavg,
+but this does not indicate over utilization of resources.
+
+As previously mentioned above,
+&quot;moil&quot; is delegated the task of compilation.
+Therefore, when compilation is complete
+then &quot;moil&quot; loads the &quot;post&quot; &quot;reap&quot; &quot;save&quot; queues.
+Then &quot;moil&quot; becomes available to begin processing
+of the additional spells in it's queue.
+Consequently, the use of additional queues and utilities
+enables &quot;moil&quot; to be almost constantly compiling spells
+while almost never waiting for another utility to complete it's task.
+When &quot;moil&quot; is ready to begin compilation of a software project
+then &quot;till&quot; has already prepared the source tree,
+and &quot;rush&quot; has already prepared the ccache directory.
+That allows &quot;moil&quot; to compile software
+like a belt fed machine gun can fire cartridges.
+
+As a consequence of the division of labor
+instances will occur when the &quot;post&quot; queue
+might have 8 to 20 spells queued
+while &quot;moil&quot; is still merrily compiling.
+This is normal.
+The &quot;post&quot; &quot;reap&quot; &quot;save&quot; &quot;and &quot;wane&quot; queues
+tend to lag behind &quot;moil.&quot;
+And in contrast &quot;rush&quot; &quot;till&quot; and &quot;load&quot; queues
+tend to anticipate &quot;moil.&quot;
+And &quot;wand&quot; is running to help ensure that tasks are
+completed prior to &quot;moil&quot; starting on a spell,
+and to ensure that tasks complete after &quot;moil&quot; runs.
+
+I apologize if I was overly verbose.
+Perhaps my exuberance shows?
+Running the newer sorcery is fun.
+It performs less overhead than current sorcery.
+It runs tasks concurrently rather than linearly with compilation.
+And it is overall faster and more efficient.
+Fewer processor cycles are spent on idle and wait.
+Updating and deployment completes faster.
+
+In a sense this sorcery corrects the mistakes
+of  what I began and completed sloppily and ineffectively with &quot;familiar.&quot;
+These changes allow sorcery to perform adequately
+on single, dual, quad, 8 core and more processor machines.
+Neither RAM nor processor utilization becomes excessive,
+while the benefit of SMP is fully exploited.
+It easily represents over 400 hours of design, implementation and testing.
+Much of it was accomplished with near 16 hour a day labor.
+I wanted it's completion as soon as possible so that
+I can provide it on new I/Rs.
+This change will enhance the speed of deployment of new boxes.
+And it contains many of the changes that I waffled about,
+because I tend to prefer &quot;to not fix what is not broken.&quot;
+However, currently available sorcery has many flaws
+that cause it to perform less than ideal on boxes
+with more than 4 processors.
+However, in contrast newer sorcery scales beautifully.
+
+The codename for the newer sorcery will be sorcery-delegation-.
+That is because the many tasks that were previously performed
+by cast and dispel have been delegated to task specific utilities.
+As a result certain aspects such as the minutes of overhead
+that came after the compilation large software projects such as firefox
+shrank by a magnitude and now run concurrently while &quot;moil&quot;
+has already begun compiling a new spell.
+This is exactly how it should be,
+allowing the utilization of SMP and the assignment
+of processor cycles that might otherwise become idle
+or wait to accomplishing tasks such as installation
+of files, creation of an archive tarball, and creation of log files.
+
+As previously mentioned the newer grimoire and sorcery are exciting.
+However, their arrival might yet remain days away.
+I am pleased to share, but only after adequate testing.
+Already I have had boxes compiling with the newer sorcery non-stop for days.
+However, some tests are not yet complete.
+I have tested the new table cloth trick,
+but the final test for that is
+the casting of ncurses readline
+and of course glibc.
+
+At the rate of progress newer sorcery will probably become available
+during the 4th or perhaps 5th week of October
+if the testing does not complete sooner.
+After that I resume changing and testing the code that is used
+for generating I/Rs and the deploying new boxes from I/Rs.
+The newer sorcery is vastly different from current
+and therefore, many changes and testing will be required
+before new I/Rs are complete.
+Originally, I was expecting to generate 2 more I/Rs for 2012.
+However, now there will be only one more I/R for 2012.
+Sorry for the delay,
+however we will all agree that the wait was worthy
+when we try the newer sorcery and newer I/Rs.
+
+Again I also want to express that we all owe Evert thanks
+for providing feedback, ideas, and testing on his 8 processor box.
+This way we can gain certainty that
+sorcery scales without racing and fork bombing.  :)
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002397.html">[Sorcerer-admins] subtle changes...
+</A></li>
+	<LI>Next message: <A HREF="002399.html">[Sorcerer-admins] transition to sorcery-delegate...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2398">[ date ]</a>
+              <a href="thread.html#2398">[ thread ]</a>
+              <a href="subject.html#2398">[ subject ]</a>
+              <a href="author.html#2398">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

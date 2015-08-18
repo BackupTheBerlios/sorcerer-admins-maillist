@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Poppler &amp; kdegraphics
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3C596b75860708090838v2f1d160cpf7cf9a471049edfb%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000106.html">
+   <LINK REL="Next"  HREF="000124.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Poppler &amp; kdegraphics</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Poppler%20%26%20kdegraphics&In-Reply-To=%3C596b75860708090838v2f1d160cpf7cf9a471049edfb%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Poppler &amp; kdegraphics">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug  9 17:38:16 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000106.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+        <LI>Next message: <A HREF="000124.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#108">[ date ]</a>
+              <a href="thread.html#108">[ thread ]</a>
+              <a href="subject.html#108">[ subject ]</a>
+              <a href="author.html#108">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Actually, the current system does support these types of chains.
+However, I rarely split spells.
+
+Normally, I would request:
+
+# cast -r -c poppler
+And select that you want -enable-poppler-qt-x11-free
+
+However, do not execute the above command.
+I will modify the poppler spell to not ask for optional qt-x11-free support.
+
+The next grimoire release will contain spells:
+poppler and poppler-qt-x11-free
+
+kdegraphcs will have an optional on poppler-qt-x11-free
+That will ensure that poppler compiled with qt-x11-free support
+is installed for kdegraphics and not the poppler without qt-x11-free support.
+
+poppler-qt-x11-free will exclusively provide poppler.
+Therefore, any spell that requires poppler will be
+equally satisfied if poppler-qt-x11-free is installed.
+
+The SA will no longer be prompted if poppler should be
+compiled with support for qt-x11-free.
+If manual installation of poppler is desired
+then the SA should choose between poppler-qt-x11-free and poppler.
+However, if kdegraphics is to be installed
+and the SA selects poppler-qt-x11-free as an optional requirement
+then only poppler-qt-x11-free will be installed and not poppler.
+Consequently, kdegraphics will no longer encounter a compile
+error when poppler is installed without qt-x11-free support.
+
+Thanks for the bug report.
+
+
+On 8/9/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Another problem:
+</I>&gt;<i> kdegraphics wont compile if you have choosed poppler support
+</I>&gt;<i> (--with-poppler) if you havent choosed optional requirement QT-wrapper when
+</I>&gt;<i> you have compiled poppler.
+</I>&gt;<i>
+</I>&gt;<i> Currently sorcerer system does not support these kind of requirement chains.
+</I>&gt;<i> Any ideas, not wanting to make qt--x11-free as REQ to poppler as it can
+</I>&gt;<i> compiled fine without qt-wrapper, you only need if you have kdegraphics and
+</I>&gt;<i> you have chooses poppler optional requirement there.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000106.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+	<LI>Next message: <A HREF="000124.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#108">[ date ]</a>
+              <a href="thread.html#108">[ thread ]</a>
+              <a href="subject.html#108">[ subject ]</a>
+              <a href="author.html#108">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

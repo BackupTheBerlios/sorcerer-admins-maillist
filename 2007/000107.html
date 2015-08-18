@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gcc%20v4.2.x%20update%20and%20net-snmp-config.h&In-Reply-To=%3C596b75860708090813r5a43eaddg8bf5c76fbd6f3a4c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000105.html">
+   <LINK REL="Next"  HREF="000106.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20gcc%20v4.2.x%20update%20and%20net-snmp-config.h&In-Reply-To=%3C596b75860708090813r5a43eaddg8bf5c76fbd6f3a4c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Aug  9 17:13:51 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000105.html">[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h
+</A></li>
+        <LI>Next message: <A HREF="000106.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oddly, I did not encounter that error.
+Perhaps updating the installed net-snmp to version 5.4.1 circumvented the error?
+
+In the past I modified gcc source to not run fixinc.sh
+However, the gcc authors kept modifying the makefile on each release.
+That ensures I must constantly update my solution
+to prevents fixinc.sh from running.
+For a while I quit modifying the gcc source because
+I received no reports of errors about it for a while.
+
+Since fixinc.sh is causing problems again
+I have modified gcc, again.
+After updating to grimoire 2007-222...
+gcc should no longer run fixinc.sh.
+
+You can recast gcc then or maybe it will fix itself.
+Removing
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/
+may be hazardous.
+However, removing
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp/
+aught to be safe.
+
+Thanks for reporting the problem.
+You can thank gcc authors for fixinc.sh
+They provide it and run it and create those
+modified header files.
+
+The file:
+/opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/README
+contains their explanation if you want to read it.
+
+
+
+On 8/9/07, <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A> &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Pekka.Panula at sofor.fi</A>&gt; wrote:
+&gt;<i>
+</I>&gt;<i> Hi
+</I>&gt;<i>
+</I>&gt;<i> Now this is interesting problem, i have updated GCC 4.2.0/1 and it &quot;fixed&quot;
+</I>&gt;<i> some include-headers files, like /usr/include/net-snmp/net-snmp-config.h and
+</I>&gt;<i> copied it to
+</I>&gt;<i> /opt/gcc/4.2.1/lib/gcc/i686-pc-linux-gnu/4.2.1/include/net-snmp,
+</I>&gt;<i> anyway, now that net-snmp is updated some other spells like kdeutils does
+</I>&gt;<i> not compile.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000105.html">[Sorcerer-admins] gcc v4.2.x update and net-snmp-config.h
+</A></li>
+	<LI>Next message: <A HREF="000106.html">[Sorcerer-admins] Poppler &amp; kdegraphics
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#107">[ date ]</a>
+              <a href="thread.html#107">[ thread ]</a>
+              <a href="subject.html#107">[ subject ]</a>
+              <a href="author.html#107">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

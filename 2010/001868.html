@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] auto ignore auto failures?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTik%2BN9vh6kXGWwhScEWz5U%2BJofaMsOXWYo2U%3Dt%2B_%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001866.html">
+   <LINK REL="Next"  HREF="001871.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] auto ignore auto failures?</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20auto%20ignore%20auto%20failures%3F&In-Reply-To=%3CAANLkTik%2BN9vh6kXGWwhScEWz5U%2BJofaMsOXWYo2U%3Dt%2B_%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] auto ignore auto failures?">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Wed Jul 28 11:33:32 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001866.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+        <LI>Next message: <A HREF="001871.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1868">[ date ]</a>
+              <a href="thread.html#1868">[ thread ]</a>
+              <a href="subject.html#1868">[ subject ]</a>
+              <a href="author.html#1868">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>just a question.... what will be the result if a spell requiring a newer
+version of gtk+ is updated?
+autofaillure for me is a boon because I know exactly where is the root
+cause....
+if the spell isn't installed, ok then autofailure remain....
+if the spell is installed but newer version do fails.... with you scenario
+the spells that require it are still casted...
+1) the spell is API compatible with the old version, then everything shall
+compile....  ok
+2) the spell require the new api
+2-1) the configure is updated and detect the wrong version.... ok not so
+much overhead to detect
+2-2) the configure isn't updated and compilation fails in horrible way.....
+might take time to investigate
+
+but anyway this shall work....
+however I think that on start of compile log you should add some info lines
+saying what are the requirements, what is the current requirement version
+installed, and what is the lastest requirement version
+
+example :
+#### requirements info
+requirement     current version     available version
+gtk                                2.4.0                      2.4.0
+libtool                            1.5.6                      2.0.0
+#### end requirement info
+
+&lt;lot of lines&gt;
+&lt;horrible death&gt;
+
+
+like this you know looking at this section that you don't have the lastest
+versions of libtool but you're up to date for gtk and that the compilation
+failure might comes from that....
+
+JLM
+
+
+
+On Mon, Jul 26, 2010 at 11:17 PM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> To be frank about it,
+</I>&gt;<i> I am not a fan of autofailure.
+</I>&gt;<i> Half, the time I remove the spell from
+</I>&gt;<i> the failed queue that is causing the autofailure
+</I>&gt;<i> move the other spells that were autofailed
+</I>&gt;<i> back into the cast queue.
+</I>&gt;<i> I take those steps to nullify the autofailure.
+</I>&gt;<i>
+</I>&gt;<i> Sometimes autofailure is a convenience.
+</I>&gt;<i> It might keep a SA chasing after an error
+</I>&gt;<i> that is caused by a spell that failed before
+</I>&gt;<i> the one they are examining.
+</I>&gt;<i> However, more often auto failure is an inconvenience.
+</I>&gt;<i>
+</I>&gt;<i> On some boxes where SAs are not paying attention
+</I>&gt;<i> to autofailed spells the auto fail method might be
+</I>&gt;<i> preventing the important updates of installed software
+</I>&gt;<i> and therefore permitting some versions of software
+</I>&gt;<i> with known security vulnerabilities to remain installed.
+</I>&gt;<i>
+</I>&gt;<i> I have half a mind to rewrite the rule so that....
+</I>&gt;<i> A spell can autofail only if it failed to compile
+</I>&gt;<i> and an older version of the spell is not already installed.
+</I>&gt;<i> That way if gtk+ fails compilation and gtk+ is not installed
+</I>&gt;<i> then gtk+ will cause autofailures.
+</I>&gt;<i> However, if gtk+ fails compilation and gtk+ is installed
+</I>&gt;<i> then spells that have gtk+ as part of their requirement chains
+</I>&gt;<i> will not autofail and instead will attempt to cast
+</I>&gt;<i> if they are in the cast queue already.
+</I>&gt;<i>
+</I>&gt;<i> Would anyone object to me changing
+</I>&gt;<i> the autofail rules so that they work that way?
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100728/6f87ec1b/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100728/6f87ec1b/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001866.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+	<LI>Next message: <A HREF="001871.html">[Sorcerer-admins] auto ignore auto failures?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1868">[ date ]</a>
+              <a href="thread.html#1868">[ thread ]</a>
+              <a href="subject.html#1868">[ subject ]</a>
+              <a href="author.html#1868">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

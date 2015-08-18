@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2007/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20Mesa%20should%0A%09EPROVIDE%09opengl&In-Reply-To=%3C46CAF134.6070307%40hnp.hu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000157.html">
+   <LINK REL="Next"  HREF="000208.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl</H1>
+    <B>G&#225;sp&#225;r &#193;kos</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20NVIDIA-Linux-x86%20and%20Mesa%20should%0A%09EPROVIDE%09opengl&In-Reply-To=%3C46CAF134.6070307%40hnp.hu%3E"
+       TITLE="[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should	EPROVIDE	opengl">madar at hnp.hu
+       </A><BR>
+    <I>Tue Aug 21 16:05:40 CEST 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000157.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+        <LI>Next message: <A HREF="000208.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#206">[ date ]</a>
+              <a href="thread.html#206">[ thread ]</a>
+              <a href="subject.html#206">[ subject ]</a>
+              <a href="author.html#206">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+MesLib gone but now glut fail and jdk autofail by glut:
+
+make[1]: Leaving directory `/usr/src/sorcery/glut/glut-3.7/progs'
+rm -f glut_8x13.o
+gcc -c -march=athlon-xp -O2 -pipe -ansi -fPIC   -I../../include -I../.. 
+-I/usr/X11R6/include  -Dlinux -D__i386__ -D_POSIX_SOURCE -D_BSD_SOURCE 
+-D_GNU_SOURCE -DX_LOCALE  -DFUNCPROTO=15 -DNARROWPROTO    glut_8x13.c
+In file included from glutbitmap.h:10,
+                 from glut_8x13.c:5:
+../../include/GL/glut.h:59:20: error: GL/glu.h: No such file or directory
+make: *** [glut_8x13.o] Error 1
+! Problem Detected !
+Source moved to /var/tmp/failed/glut-3.7
+Fail:   Tue Aug 21 15:47:00 CEST 2007   glut    3.7     build/compile error
+
+# augur install NVIDIA-Linux-x86
+/etc/sorcery/log/compile/NVIDIA-Linux-x86
+/etc/sorcery/log/id/NVIDIA-Linux-x86
+/etc/sorcery/log/install/NVIDIA-Linux-x86
+/etc/sorcery/log/ldd/NVIDIA-Linux-x86
+/etc/sorcery/log/md5sum/NVIDIA-Linux-x86
+/etc/sorcery/log/snap/NVIDIA-Linux-x86
+/etc/sorcery/log/stat/NVIDIA-Linux-x86
+/etc/sorcery/log/version/NVIDIA-Linux-x86
+/lib
+/lib/modules
+/lib/modules/2.6.22.3
+/lib/modules/2.6.22.3/kernel
+/lib/modules/2.6.22.3/kernel/drivers
+/lib/modules/2.6.22.3/kernel/drivers/video
+/lib/modules/2.6.22.3/kernel/drivers/video/nvidia.ko
+/usr
+/usr/bin/nvidia-bug-report.sh
+/usr/bin/nvidia-settings
+/usr/bin/nvidia-xconfig
+/usr/include/GL
+/usr/include/GL/gl.h
+/usr/include/GL/glext.h
+/usr/include/GL/glx.h
+/usr/include/GL/glxext.h
+/usr/lib
+/usr/lib/libGL.la
+/usr/lib/libGL.so
+/usr/lib/libGL.so.1
+/usr/lib/libGL.so.1.0.9755
+/usr/lib/libGLcore.so
+/usr/lib/libGLcore.so.1
+/usr/lib/libGLcore.so.1.0.9755
+/usr/lib/libXvMCNVIDIA.a
+/usr/lib/libXvMCNVIDIA.so.1.0.9755
+/usr/lib/libXvMCNVIDIA_dynamic.so.1
+/usr/lib/libnvidia-cfg.so.1
+/usr/lib/libnvidia-cfg.so.1.0.9755
+/usr/lib/libnvidia-tls.so.1
+/usr/lib/libnvidia-tls.so.1.0.9755
+/usr/lib/tls
+/usr/lib/tls/libnvidia-tls.so.1
+/usr/lib/tls/libnvidia-tls.so.1.0.9755
+/usr/lib/xorg/modules
+/usr/lib/xorg/modules/drivers
+/usr/lib/xorg/modules/drivers/nvidia_drv.so
+/usr/lib/xorg/modules/extensions
+/usr/lib/xorg/modules/extensions/libglx.so
+/usr/lib/xorg/modules/extensions/libglx.so.1.0.9755
+/usr/lib/xorg/modules/libnvidia-wfb.so.1.0.9755
+/usr/src
+
+On an other box:
+# augur from glu.h
+MesaLib:/usr/include/GL/glu.h
+
+?What is the next step? My only idea bring back MesaLib with a local spell.
+Kyle, sorry but I can not give access to this box.
+
+Thanks
+madar
+
+
+Kyle Sallee wrote:
+&gt;<i> Hmmm....
+</I>&gt;<i> That is odd.
+</I>&gt;<i> Normally, I would say
+</I>&gt;<i> # augur index
+</I>&gt;<i> But perhaps regenerating the index does not help?
+</I>&gt;<i> I would try it first to see if it does.
+</I>&gt;<i>
+</I>&gt;<i> If regenerating the index is insufficient
+</I>&gt;<i> then that would suggest that sorcery is misbehaving.
+</I>&gt;<i> Such a problem could be difficult to debug without access
+</I>&gt;<i> to the box that it is happening on.
+</I>&gt;<i> It could be specific to that box.
+</I>&gt;<i> For the meanwhile I suggest:
+</I>&gt;<i>
+</I>&gt;<i> # augur dispel --unsafe MesaLib
+</I>&gt;<i> # augur forget MesaLib
+</I>&gt;<i> # augur exile MesaLib
+</I>&gt;<i>
+</I>&gt;<i> After that it aught to stay gone.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 8/17/07, G&#225;sp&#225;r &#193;kos &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">madar at hnp.hu</A>&gt; wrote:
+</I>&gt;<i>   
+</I>&gt;&gt;<i> Hello!
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have problems with MesaLib after the changes. I have nvidia vga card
+</I>&gt;&gt;<i> and would like to use NVIDIA-Linux-x86 but whenever I cast something
+</I>&gt;&gt;<i> MesaLib is the first spell is compiled and it dispels NVIDIA-Linux-x86.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> # augur event MesaLib
+</I>&gt;&gt;<i> Cast Reason      123
+</I>&gt;&gt;<i> Compile Failure  4
+</I>&gt;&gt;<i> Compile          96
+</I>&gt;&gt;<i> Dispel           96
+</I>&gt;&gt;<i> Download         3
+</I>&gt;&gt;<i> ELF Failure      6
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Fri Aug 17 08:51:42 CEST 2007   Missing
+</I>&gt;&gt;<i> Fri Aug 17 08:37:17 CEST 2007   Missing
+</I>&gt;&gt;<i> Thu Aug 16 09:34:35 CEST 2007   Missing
+</I>&gt;&gt;<i> Thu Aug 16 08:57:18 CEST 2007   Command Line Parameter to Cast
+</I>&gt;&gt;<i> Thu Aug 16 08:52:58 CEST 2007   Missing
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> And
+</I>&gt;&gt;<i> # augur cur_provider MesaLib
+</I>&gt;&gt;<i> NVIDIA-Linux-x86
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> How can I stop recasting MesaLib?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Thanks
+</I>&gt;&gt;<i> madar
+</I>&gt;&gt;<i>     
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>   
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000157.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+	<LI>Next message: <A HREF="000208.html">[Sorcerer-admins] NVIDIA-Linux-x86 and Mesa should EPROVIDE	opengl
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#206">[ date ]</a>
+              <a href="thread.html#206">[ thread ]</a>
+              <a href="subject.html#206">[ subject ]</a>
+              <a href="author.html#206">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

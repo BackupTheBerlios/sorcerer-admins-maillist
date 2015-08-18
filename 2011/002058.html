@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Binary distro?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Binary%20distro%3F&In-Reply-To=%3CAANLkTinBEp_M4p2pqakXeiJn4cot-jaJfQAO8dpVOf52%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002057.html">
+   <LINK REL="Next"  HREF="002050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Binary distro?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Binary%20distro%3F&In-Reply-To=%3CAANLkTinBEp_M4p2pqakXeiJn4cot-jaJfQAO8dpVOf52%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Binary distro?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Fri Jan  7 11:54:23 CET 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002057.html">[Sorcerer-admins] Binary distro?
+</A></li>
+        <LI>Next message: <A HREF="002050.html">[Sorcerer-admins] Maintenance over - all looking ok
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2058">[ date ]</a>
+              <a href="thread.html#2058">[ thread ]</a>
+              <a href="subject.html#2058">[ subject ]</a>
+              <a href="author.html#2058">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Thu, Jan 6, 2011 at 8:43 PM, J Decker &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">d3ck0r at gmail.com</A>&gt; wrote:
+&gt;&gt;<i>
+</I>&gt;<i> you sure about that? the current install goes pretty smoothly without
+</I>&gt;<i> building a lot of things (like the kernel)... [I mean isn't the
+</I>&gt;<i> current initrd kernel that's running just as valid as the one I would
+</I>&gt;<i> recompile?
+</I>
+The initramfs on the Install/Rescue disk has an /etc/fstab
+that does not specify what device holds a root file system.
+The initramfs on the I/R has lilo.conf that lacks information
+about where to install lilo.
+The I/R initramfs is default runlevel 3.
+The I/R initramfs has installed init-scripts that are specific
+to the task of preparing the initramfs for use for the purpose
+of installation such as unpacking archives and finding the CDROM.
+It is much like a new suit before being tailored to fit.
+
+&gt;<i> I have had versions that grabbed the latest kernel and for
+</I>&gt;<i> some reason that kernel was bad, and I had to boot from the CD
+</I>&gt;<i> anyhow... and if you specify initrd=/bin/sh you can bootstrap a few
+</I>&gt;<i> things (sys,proc,udev) mount root partitiion, bind-mount sys proc and
+</I>&gt;<i> dev, exec chroot /media/root and exec init to get back to where you
+</I>&gt;<i> were]; I often forget some step at the end, and fail to make my boxes
+</I>&gt;<i> bootable - but that has gotten better; maybe I'm just remembering all
+</I>&gt;<i> the old times.
+</I>
+The Sorcerer initramfs is a useful tool for fixing a box.
+It was intended to be so.
+It is not merely a gas station on the road to booting.
+It is more like a 5 star hotel with restaurant, gym, swimming pool,
+and golf course.
+
+
+&gt;<i>&#160;For recovery, it seems like most of the system is
+</I>&gt;<i> there;
+</I>
+When booting the Install/Rescue disk the initramfs is made extra nice.
+It becomes much more full of useful programs and files
+than what is normally used for booting a deployed box.
+This also makes slower to present a login getty.
+
+
+&gt;<i> and the speed of install has greatly increased with the 7z
+</I>&gt;<i> sources.
+</I>
+Not so much the 5 sources,
+but all the tarballs in the archive cache are xz compressed.
+And I set up a single step where cat xz and tar are invoked
+only once or twice each in order to unarchive all the software.
+Therefore, that should create a very smooth and rapid installation.
+First, archives are copied to fixed disk which provides faster access
+and caching if sufficient RAM is available.
+Next archives are unarchived onto the new root file system.
+I gave considerable thought as to how to make the Install/Rescue disks
+small and also fast to install.
+
+
+&gt;<i>&#160;Also fewer things seem to really require building.
+</I>
+In most cases if something might be required then
+having it pre-installed on the I/R is a bit easier than
+compiling the source.
+That is why the I/R has only about 5 source tarballs on it.
+
+
+&gt;<i> Is VLC a default thing installed now?
+</I>
+No.
+
+&gt;<i>&#160;that means a good deal more than X is
+</I>&gt;<i> available if the gtk interface also works.
+</I>&gt;<i>&#160;Maybe some things can be obsoleted like CVS.
+</I>
+cvs and subversion are not provided on the I/R
+And gtk+ is installed on almost every box,
+but is not provided pre-installed on the I/R.
+
+
+&gt;<i> I recently updated libpng to 1.4 version; but I can see this causing
+</I>&gt;<i> portability problems, so I'm expecting spells to break now.
+</I>
+Yes, I am still holding off on updating libpng and zlib.
+The libpng spell has the warning that
+version 1.4.0 is not a drop-in replacement for the 1.2.x libpng.
+
+&gt;<i> Although I appreciate the ability to cast a low level spell like
+</I>&gt;<i> libpng and not have a lot of impact; technically shouldn't all spells
+</I>&gt;<i> depending on the library also get queued to cast?
+</I>
+No.  That is the beauty of a distro that
+relies almost entirely upon ELF shared libraries.
+The ELF libraries have a numbering system where the
+most immediate number after the library name changes
+when the newer library's API is considered binary incompatible
+with previous releases of the library.
+Another way is to say that the so-name of a library changes
+when the newer library is binary incompatible with the older library.
+Installation of a newer binary incompatible library triggers the &quot;Miss
+ELF&quot; event.
+And spells that have the &quot;Miss ELF&quot; event are recompiled and reinstalled.
+
+Only a small percentage of library updates cause &quot;Miss ELF&quot; events.
+That is why updating libraries does not always cause software
+that requires those libraries to also recast.
+
+A distro that uses mostly AR or static link libraries must
+recompile of all the installed software that requires updated libraries.
+That is because the code from the library contained in the ar archive
+is linked directly into the executable files that require the library.
+In contrast linking with dynamic or shared object libraries means that
+the code from the library is not linked directly into executable files.
+Instead the code is read from the library file on disk at run time
+and then it is linked in memory.
+
+The use of dynamic libraries or shared object libraries allows for
+RAM to be conserved and for updates to the library to immediately
+effect all the software that loads those shared libraries
+on the next time such software starts.
+Software already running is not effected by the change
+of an ELF library on disk.
+
+Doing static linking with libraries also makes executable files larger.
+So a distro that uses mostly shared libraries tends to use less disk space.
+However, using shared libraries makes programs start about 3 times slower
+as compared to a program that is entirely statically linked.
+
+Some software projects provide only static link libraries.
+Often that is the situation when the size of the library is very small.
+However, the majority of free software provides both shared and static
+libraries.
+With Sorcerer most spells instruct software projects to not compile
+and not install the static libraries.
+Since static libraries are usually not used
+they merely waste space on disk.
+
+Another advantage of shared libraries is that calls made to shared libraries
+can be intercepted, logged, traced, modified, etc...
+A good example of that was the sorcery-sentinel preloadable library.
+It intercepted calls made to some functions provided in the glibc library
+and then it logged the information.
+That made possible some nice installation logs in the days when
+software was installed directly to / instead of using a $DESTDIR.
+
+As I wrote before Sorcerer uses mostly shared libraries.
+It is not merely a norm for linux boxes, but also my preference.
+Sorcerer/sorcery was designed for shared libraries.
+It was designed not to trace what was statically linked
+and then recompile it as necessary.
+Instead it is designed to quickly detect &quot;Miss ELF&quot; events
+and to recompile software that is linked with dynamic libraries
+that are no longer installed.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002057.html">[Sorcerer-admins] Binary distro?
+</A></li>
+	<LI>Next message: <A HREF="002050.html">[Sorcerer-admins] Maintenance over - all looking ok
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2058">[ date ]</a>
+              <a href="thread.html#2058">[ thread ]</a>
+              <a href="subject.html#2058">[ subject ]</a>
+              <a href="author.html#2058">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Read now or wonder later.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Read%20now%20or%20wonder%20later.&In-Reply-To=%3CBANLkTinOs%2B0XSbxzyGLAr1gVPWS-mEt%3D8A%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002146.html">
+   <LINK REL="Next"  HREF="002151.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Read now or wonder later.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Read%20now%20or%20wonder%20later.&In-Reply-To=%3CBANLkTinOs%2B0XSbxzyGLAr1gVPWS-mEt%3D8A%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Read now or wonder later.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sun May  1 08:40:36 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002146.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+        <LI>Next message: <A HREF="002151.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2147">[ date ]</a>
+              <a href="thread.html#2147">[ thread ]</a>
+              <a href="subject.html#2147">[ subject ]</a>
+              <a href="author.html#2147">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Virtual consoles that are not running a getty
+are eligible for receiving Xorg.
+The tty or virtual console that each agetty runs on
+is specified in /etc/inittab
+However, Xorg, kdm, and gdm can allocate
+an available virtual console automatically.
+
+Many SAs expect that there are 12 virtual consoles.
+However, there are more!
+I know only a few of the nifty keys for navigating virtual consoles.
+Usually, I use right and left arrow keys + alt
+in order to descend and ascend the list of virtual consoles.
+When sysinit and runlevel output
+is directly to virtual consoles
+then those virtual consoles appear when using
+alt-arrow keys to look around,
+although no program nor getty
+is connected to those virtual console.
+That seems both convenient and unexpected.
+
+Both /etc/init.d/{gdm,kdm-v4} can be started during boot.
+The gnome GUI login is available from one virtual console
+and a KDM login is available from another virtual console.
+However, I am uncertain which achieves dominance and appears first.
+
+Running both gdm and kdm concurrently makes possible
+an easy selection of the user's preference
+on library computers and in computer labs.
+The problem however is that the GUI
+or console login prompt might not be authentic
+Nefarious people sometimes create programs that impersonate
+the actual login screen so that someone inputs their credentials.
+The program logs the info, terminates
+and then the real getty or GUI login appears.
+Until we have some method of authenticating a login screen
+then the best method is probably to login using a guest account
+and then su to one's user account or then log out and log back in.
+Oops, sorry, that was a total digression.
+Yet the topic of security was on my mind.
+
+A couple hours earlier I added instructional comments to
+/etc/init.d/{halt,reboot}
+They explain how to use the init-script's configuration file
+in order to disable the count down timer and/or disallow
+rebounding to a runlevel.
+That way security can be tightened when
+untrusted people are expected to be in proximity
+or if the computer is designated for kiosk duty.
+
+I was twitching over the potential for granting a non root person
+the ability to change the runlevel by pressing ctrl-alt-delete.
+I nearly put a root password prompt on it.
+But instead I decided to just add instructions
+that explain how to disable the potentially risky convenience.
+And now I can rest with ease.  :)
+
+P.S.
+
+Remember not to directly login as root
+on a virtual console nor on a graphic login manager
+unless it is a personal computer that nobody else uses.
+Otherwise a box's root credentials could be stolen
+by someone with a user account who previously logged into that box.
+The best way to go root is to execute
+$ su -
+or stay seated at one's own comfortable desk
+and travel by the ssh train on the TCP/IPv4 track.
+And anyone who knows the root password
+should have the their ~/.bash_history symbolic linked to /dev/null
+That way the root password can never accidentally appear in
+their shell command history file.
+
+I am feeling paranoid tonight.
+And since I am polite
+I will bring enough to share with everyone.  :)
+
+
+On Sat, Apr 30, 2011 at 10:23 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+&gt;&gt;<i> Virtual console #7 now runs a getty that allows login to the initramfs.
+</I>&gt;&gt;<i> When logged into the initramfs the real root filesystem is mounted as
+</I>&gt;&gt;<i> /media/root
+</I>&gt;<i>
+</I>&gt;<i> Interesting... #7 is used by kdm. At least, that is what it feels like.
+</I>&gt;<i> When in KDE, Ctrl-Alt-F1 gives one the normal tty1. Alt-F7 returns to
+</I>&gt;<i> the X session. Does this mean that kdm now needs to bind to a new tty?
+</I>&gt;<i>
+</I>&gt;<i> -Evert-
+</I>&gt;<i> P.S. Great job, by the way. I can hardly wait to test it.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002146.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+	<LI>Next message: <A HREF="002151.html">[Sorcerer-admins] Read now or wonder later.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2147">[ date ]</a>
+              <a href="thread.html#2147">[ thread ]</a>
+              <a href="subject.html#2147">[ subject ]</a>
+              <a href="author.html#2147">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

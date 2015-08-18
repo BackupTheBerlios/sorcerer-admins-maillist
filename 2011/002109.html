@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] semi-random discussion about the future sorcery.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20semi-random%20discussion%20about%20the%20future%20sorcery.&In-Reply-To=%3CBANLkTinxT0NoXSvziU_7tZaoNzUQ74xQng%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002108.html">
+   <LINK REL="Next"  HREF="002110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] semi-random discussion about the future sorcery.</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20semi-random%20discussion%20about%20the%20future%20sorcery.&In-Reply-To=%3CBANLkTinxT0NoXSvziU_7tZaoNzUQ74xQng%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] semi-random discussion about the future sorcery.">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Apr 14 23:14:13 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002108.html">[Sorcerer-admins] gnome 3.0.0
+</A></li>
+        <LI>Next message: <A HREF="002110.html">[Sorcerer-admins] :) I love updating boxes that are far out of date
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2109">[ date ]</a>
+              <a href="thread.html#2109">[ thread ]</a>
+              <a href="subject.html#2109">[ subject ]</a>
+              <a href="author.html#2109">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The devel sorcery is nearly ready to become the stable sorcery.
+It has many bug fixes, many changes, many new conveniences
+and some things differ from the traditional sorcery used for years.
+
+The first and foremost change is the least apparent.
+cast dispel and leech have been sliced and diced to the point where
+they run only as daemons, retrieve tasks from their respective queues
+and do not process command line parameters.
+
+Consequently, parameter parsing and dialog screens were moved into
+augur modules.
+This change makes cast, dispel, and leech smaller, more simple, single
+layer programs.
+They run faster, are easier to debug, and require less memory.
+A more simple description is that each program was reduced to it's
+essential parts.
+The non essential parts that either might not run or run once and then
+is no longer required
+were moved into augur modules where they are discarded from memory
+when no longer required.
+Also as augur modules they are a bit easier to maintain.
+
+SAs' concern now is now shifted to preparing the content of the cast,
+dispel, and leech queue
+before starting the action.
+For that task augur is used.
+In that respect it makes augur more like menu driven sorcery.
+However, the main command to prepare the queues is definitely not menu driven.
+
+The command to prepare queues is
+# augur queue
+
+To skip a lengthy description here is the output from
+# augur help queue
+
+The queue command lists adds or removes spells from the queues
+
+Examples:
+
+# augur queue                   lists the content of all queues.
+# augur queue -bash             remove the bash spell from all queues.
+# augur queue -cast/bash        remove the bash spell from the cast queue.
+# augur queue firefox           adds firefox to the cast queue
+
+When a timestamp, as described by man touch, proceeds a spell
+then that spell is added to queue with the timestamp.
+However, the time stamp is only applied
+to the spell that it immediately proceeds.
+spells may be provided as parameters or piped on stdin.
+
+Useful examples to simulate legacy commands
+
+To simulate: # augur clear
+# augur queue | sed &quot;s:^:-:&quot; | augur queue
+
+
+
+Preparing queues differs only slightly from legacy methods.
+Yet the queue command is more flexible in how parameters are processed.
+Also spells to add and remove to queues can be provided on standard input
+instead as parameters for SAs that enjoy connecting programs with pipes.
+
+Running
+# augur queue
+
+Prints the content of the queues.
+Therefore, SAs can easily verify that the queues are proper
+before executing
+
+# augur begin
+
+The begin command begins the invocation of dispel, leech, and cast
+in order to process the queues.
+However, it also first runs
+# augur configure
+and loads the leech queue as required
+so that the spells in the cast queue can
+will have required sources downloaded.
+
+So overall it is not overly complex.
+However, since this is sorcery
+it does anticipate the odd things that SAs might try.
+
+# augur begin firefox
+
+That for example will do very much the same as:
+
+# augur queue firefox
+# augur configure
+# augur begin
+
+Therefore, if parameters are present or standard input is present
+then the &quot;begin&quot; command will first execute the &quot;queue&quot; command.
+I consider this a nice convenience.
+However, Evert suggested that the conveniences are not enough.
+So I compromised and created even more conveniences.
+
+The first compromise which might not be indefinite is
+that /usr/sbin/{cast,dispel,leech} check for the presence of parameters.
+If parameters exist then they properly invoke
+# augur queue
+in order to set up the queue
+So for the moment they function nearly as did their legacy counterpart.
+But nothing other than a spell name can be processed as a parameter.
+And the code for processing parameters still only exists in augur.
+
+However,
+# cast firefox
+
+That command will not invoke a complimentary
+# augur scry
+nor
+# augur scry $SPELL
+
+It will however return to a bash prompt quickly,
+because cast, dispel, and leech run in the background.
+
+To ensure that SAs are fully pleased with devel sorcery
+even further conveniences were added.
+First, there are two new aliases added to root's environment.
+&quot;au&quot; and &quot;aug&quot; can be typed instead of having to type &quot;augur&quot;
+And command completion on &quot;au&quot; and &quot;aug&quot; works exactly
+the same as if &quot;augur&quot; was typed instead.
+
+Yet that is not the pi&#232;ce de r&#233;sistance or the most unconventional convenience.
+
+# augur help a
+
+Root's environment contains three aliases:
+
+&quot;au&quot;  invokes augur.
+&quot;aug&quot; invokes augur.
+&quot;a&quot; is a convenience wrapper for augur.
+
+Examples:
+
+# a c $SPELL    augur begin $SPELL; augur scry $SPELL
+# a d $SPELL    augur queue dispel/$SPELL; dispel
+# a l $SPELL    augur queue leech/$SPELL; leech
+# a r           moves spells from fail to cast queue then runs # augur begin
+# a t $SPELL    augur begin $SPELL; augur check $SPELL
+
+
+That is the help screen for the &quot;a&quot; module.
+
+The following command line is rather lengthy to type
+# augur queue firefox; augur configure; augur begin; augur scry firefox
+and it can also be accomplished by typing
+# augur begin firefox; augur scry firefox
+Yet that is not nearly as fast to type as merely:
+# a c firefox
+
+The &quot;a&quot; alias is added to root's environment.
+And in the future I might add new conveniences to &quot;a&quot;
+that are too terse of an implementation to be worthy
+of having their own module.
+
+An example of that is the transition of the &quot;retry&quot; module to
+# a r
+
+Because &quot;a&quot; &quot;au&quot; and &quot;aug&quot; are implemented as aliases
+they only work provided that root is running an interactive BASH shell.
+They do not exist as scripts or files on disk.
+And &quot;a&quot; &quot;au&quot; and &quot;aug&quot; can not be run from scripts
+since they do not exist as file names.
+
+So as comparison example:
+# cast firefox
+The above line is the legacy method for starting the compilation or
+restoration of firefox as an installed spell.
+It is short enough to be painless to type.
+# a c firefox
+Is the new method.
+With a bit of practice it not only becomes as fast to type as the legacy method.
+Since it requires one less key stroke it might even become faster to type.
+
+Given the way this email began
+did it seem as if the changes to sorcery
+would become a terrible inconvenience for SAs?
+Yet instead through much discussion and compromise
+almost all of the goals were achieved
+while the possibility of even greater convenience
+was implemented with the new augur &quot;a&quot; module.
+Yes it is a win/win/win scenario.
+The changes achieve:
+more speed; less RAM consumption; easier to maintain; more convenience;
+and my favorite is the masterful method of queue manipulation with
+&quot;augur queue.&quot;
+
+Cultivate a habit of using # augur queue; augur begin
+or the &quot;a&quot; conveniences
+and then no tears will be shed when all legacy support is removed
+and /usr/sbin/{cast,dispel,leech} no longer process parameters.
+
+
+Given the above changes a SA might be wondering about changes to:
+# augur easy
+# augur sync
+# augur newer
+# augur update
+
+Those commands still work exactly the same and should be used.
+However, prior to executing # augur update
+SAs can easily display and edit the queues using
+# augur queue
+
+Some SAs might be wondering about additional non spell parameters
+that were accepted by the legacy cast and dispel.
+Many of those parameters were made into features.
+It is the best way to make them act consistently.
+However, the new dispel offers no protection from SA blunder.
+Spells queued for dispelling are removed
+even when required by other installed software.
+
+Output from:
+# augur lone
+# augur uproot
+
+can be used to set the dispel queue.
+However, for SAs that might want greater assurance
+and prevention of blunderful dispelling
+should probably use sorcery's menu driven dispel menu.
+As we already know sorcery's selection of spells for removal
+works exactly with the same logic as used to undress.
+An example of that logic would be,
+&quot;The option to remove socks does not become present
+before shoes have been selected for removal.&quot;
+
+With these changes the command line tools will very much
+do as the SA requests without protest nor refusal.
+
+Thanks for making time to read this summary of changes.
+While it does not cover all the changes
+the above should prevent the sudden onset
+of the feeling of &quot;noobness.&quot;  :)
+
+
+P.S.
+
+While I am at the moment still testing it,
+Evert suggested that the content of event logs
+also be written to the tail of the cast/compile log.
+That way
+# augur log compile $SPELL
+will have at the bottom the reason for an event such as a &quot;Auto Fail.&quot;
+This seems like a fine idea,
+especially since I still have yet to decide how
+# augur event
+should be adjusted to present additional verbose information
+and yet still be easily sed; grepped or viewed on a 80x25 terminal.
+
+Although changes were expected first quarter
+the testing dragged on longer than expected
+to ensure a higher level of quality.
+Therefore, the new multilib I/R and improved sorcery
+are obviously now expected sometime during this second quarter.
+multilib sorcery and the changes to spells in the grimoire
+have achieved a high degree of excellence.
+So hopefully all this good stuff will be headed
+to Sorcerer SAs in the very near future.
+
+SAs eager to see the new sorcery in action
+can change sorcery's progress to &quot;devel&quot; on their developmental box.
+It probably will not cause any bad breaks.
+But if it does then please report the problems.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002108.html">[Sorcerer-admins] gnome 3.0.0
+</A></li>
+	<LI>Next message: <A HREF="002110.html">[Sorcerer-admins] :) I love updating boxes that are far out of date
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2109">[ date ]</a>
+              <a href="thread.html#2109">[ thread ]</a>
+              <a href="subject.html#2109">[ subject ]</a>
+              <a href="author.html#2109">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

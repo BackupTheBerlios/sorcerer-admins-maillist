@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] shishisd hangs out and it stucks your machine	boot
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20shishisd%20hangs%20out%20and%20it%20stucks%20your%20machine%0A%09boot&In-Reply-To=%3C596b75860802130602y62aa65faib28209bdc8e4c5b2%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000396.html">
+   <LINK REL="Next"  HREF="000399.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] shishisd hangs out and it stucks your machine	boot</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20shishisd%20hangs%20out%20and%20it%20stucks%20your%20machine%0A%09boot&In-Reply-To=%3C596b75860802130602y62aa65faib28209bdc8e4c5b2%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] shishisd hangs out and it stucks your machine	boot">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Feb 13 15:02:24 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000396.html">[Sorcerer-admins] shishisd hangs out and it stucks your machine boot
+</A></li>
+        <LI>Next message: <A HREF="000399.html">[Sorcerer-admins] kdelibs-v3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#397">[ date ]</a>
+              <a href="thread.html#397">[ thread ]</a>
+              <a href="subject.html#397">[ subject ]</a>
+              <a href="author.html#397">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>&gt;<i> Another problem with shishisd initscript, /etc/init.d/shishid, it just hangs
+</I>&gt;<i> out and wont go over it, meaning if you reboot your machine, it waits
+</I>&gt;<i> forever shishisd to start up, not good.
+</I>
+Thanks for reporting it.
+I would expect shishid
+to automatically background itself.
+Apparently, it does not.
+Now the init-script will background it.
+
+This type of hang is rare,
+Init-scripts are normally written properly.
+In this case it is serious enough
+to block the startup of sshd.
+Therefore, it would require a local login
+to find and fix the problem.
+
+This impels consideration
+if this type of hang can be handled by
+and/or circumvented by improving the
+init-system.
+Unfortunately, bash is too buggy to handle it.
+
+First, when a background process is started
+a short but unspecified delay is explicitly
+required in order to be able to acquire the
+PID of the most recently started background process.
+Secondly, after issuing the bash wait command
+the bash script will wait forever rather than
+allow a timeout.
+Third, the exit status of a program started in
+the background is not available.
+
+Therefore, the best solution will still be to report
+buggy init-scripts so that they can be fixed.
+Thanks for the report.
+
+shishid should only run on the kerberos 5
+server and backup servers that are issuing tickets.
+Unless using kerberos 5 for network wide
+authentication
+then shishid should probably not be started during boot.
+Although kerberos 5 support and libraries are
+required for several sources shishid need only
+be run on if boxes are configured for
+network wide authentication.
+
+The grimoire offers several different choices
+for authentication:
+
+If the 3 headed hell hound has you down
+you can try padl_ldap for PAM support with
+credentials stored centrally in an LDAP server.
+While not overly easy to set up
+the spells do save time and effort.
+
+For petting the pooch,
+the grimoire supports 2 different breeds:
+shishi, for a 3-headed gnu.
+heimdal, for a Sweedish implementation
+
+To leash them to Linux-PAM try pam_krb5
+Note that this will require customized files
+in /etc/pam.d so that programs will indeed
+authenticate with kerberos 5 rather than
+using Linux-PAM as a bridge to shadow
+passwords.
+
+For another type of authentication try freeradius.
+However, I know of no Sorcerer boxes using it.
+
+Sorcerer, comes with shadow passwords enabled
+by default for local authentication.
+However, for those who require it,
+or the masochists that love the brutal punishment
+that comes with the slightest misconfiguration,
+there is Linux-PAM which provides a
+widely supported API for accessing
+authentication methods.
+PAM provides a layer between programs
+and authentication methods so that an
+application programmer must only implement
+PAM support in order for several different
+authentication methods to be used.
+The concept of PAM is originally
+a contribution by Sun Microsystems.
+
+Likewise Sun Microsystems designed
+NIS and NIS+ which can also be used for
+storing user account information,
+group information, IP address to name mappings,
+and other sorts of information.
+NIS support is complete for linux.
+However, interest in NIS+ has long since died.
+Use of NIS may be somewhat rare except in
+networks that also have Solaris boxes on it.
+
+For all authentication methods that do not
+plug into PAM
+then the configuration usually involve
+modifying /etc/nsswitch.conf
+kerberos 5 is sufficiently acknowledge
+for use enterprise authentication that
+many programs support the use of
+kerberos 5 natively without having to
+use Linux-PAM as a layer.
+However, it is possible to use kerberos 5
+both directly and through Linux-PAM
+concurrently on a box in order to provide
+a uniform authentication method for all
+the installed programs.
+
+For those SAs who were reading along and
+wondering, what is shishid for and what is shishi?
+Now you have the answer.
+It is one of the different authentication methods
+that are supported in the Sorcerer grimoire.
+
+A few years back Sorcerer did support the
+MIT kerberos 5 implementation.
+However, they made it excessively difficult
+to download the source code, with leech.
+Therefore, it was dropped from the grimoire.
+Chances are you will never require that specific
+implementation of kerberos 5.
+But if you do and want it supported in the grimoire
+then you must send us the spells and init-scripts.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000396.html">[Sorcerer-admins] shishisd hangs out and it stucks your machine boot
+</A></li>
+	<LI>Next message: <A HREF="000399.html">[Sorcerer-admins] kdelibs-v3
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#397">[ date ]</a>
+              <a href="thread.html#397">[ thread ]</a>
+              <a href="subject.html#397">[ subject ]</a>
+              <a href="author.html#397">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

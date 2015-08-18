@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Re : can't boot into my box
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Re%20%3A%20can%27t%20boot%20into%20my%20box&In-Reply-To=%3C4C44E4E6.4080008%40NorthTech.US%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001796.html">
+   <LINK REL="Next"  HREF="001802.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Re : can't boot into my box</H1>
+    <B>Bradley D. Thornton</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Re%20%3A%20can%27t%20boot%20into%20my%20box&In-Reply-To=%3C4C44E4E6.4080008%40NorthTech.US%3E"
+       TITLE="[Sorcerer-admins] Re : can't boot into my box">Bradley at NorthTech.US
+       </A><BR>
+    <I>Tue Jul 20 01:51:02 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001796.html">[Sorcerer-admins] Re : can't boot into my box
+</A></li>
+        <LI>Next message: <A HREF="001802.html">[Sorcerer-admins] Re : can't boot into my box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1798">[ date ]</a>
+              <a href="thread.html#1798">[ thread ]</a>
+              <a href="subject.html#1798">[ subject ]</a>
+              <a href="author.html#1798">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>-----BEGIN PGP SIGNED MESSAGE-----
+Hash: RIPEMD160
+
+hm..
+
+should have read this before I posted, but basically, this just confirms
+what I said in my previous email.
+
+One question though Kyle, why a 2GByte /boot?
+
+We used to get by with an 8 or 10 meg /boot - and yes, I do dye my beard
+to keep the gray out ;)
+
+On 7/19/2010 3:23 PM, Kyle Sallee wrote:
+&gt;<i> Okay, now I am getting a clue.
+</I>&gt;<i> 
+</I>&gt;<i> First, I do not know if XFS has reserved space
+</I>&gt;<i> for a boot block.
+</I>&gt;<i> The wikipedia entry does not tell  :)
+</I>&gt;<i> However, the XFS FAQ at
+</I>&gt;<i> <A HREF="http://xfs.org/index.php/XFS_FAQ">http://xfs.org/index.php/XFS_FAQ</A>
+</I>&gt;<i> says:
+</I>&gt;<i> 
+</I>&gt;<i> &quot;Q: Does LILO work with XFS?
+</I>&gt;<i> 
+</I>&gt;<i> This depends on where you install LILO.
+</I>&gt;<i> 
+</I>&gt;<i> Yes, for MBR (Master Boot Record) installations.
+</I>&gt;<i> 
+</I>&gt;<i> No, for root partition installations because the XFS superblock is
+</I>&gt;<i> written at block zero, where LILO would be installed. This is to
+</I>&gt;<i> maintain compatibility with the IRIX on-disk format, and will not be
+</I>&gt;<i> changed. &quot;
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Sorcerer tends to install lilo to the boot block
+</I>&gt;<i> of /boot or if /boot does not exist
+</I>&gt;<i> then to the boot block of /
+</I>&gt;<i> If / is XFS then the cause of the problem is the SA.
+</I>&gt;<i> 
+</I>&gt;<i> Can lilo read an initramfs and kernel from an XFS filesystem?
+</I>&gt;<i> I do not know.
+</I>&gt;<i> But having lilo installed to the boot block
+</I>&gt;<i> of the XFS filesystem is corrupting the XFS filesystem
+</I>&gt;<i> and is the reason why it becomes unable to mount.
+</I>&gt;<i> 
+</I>&gt;<i> Recommended solution:
+</I>&gt;<i> Box with:
+</I>&gt;<i> 2G /boot partition
+</I>&gt;<i> 2G swap partition
+</I>&gt;<i> Remainder / partition
+</I>&gt;<i> 
+</I>&gt;<i> Make the /boot partition ext2
+</I>&gt;<i> Use that for an installation and it will work.
+</I>&gt;<i> Alternately, you could attempt to use
+</I>&gt;<i> lilo installed to the MBR while the kernel
+</I>&gt;<i> and initramfs are stored on the XFS filesystem.
+</I>&gt;<i> This I do not recommend.
+</I>&gt;<i> But if you try it
+</I>&gt;<i> then also edit /etc/lilo/head and add
+</I>&gt;<i> a boot= line where
+</I>&gt;<i> what comes after the =
+</I>&gt;<i> is the device name for the disk
+</I>&gt;<i> where the lilo should be installed such as:
+</I>&gt;<i> boot=/dev/hdc
+</I>&gt;<i> If I remember correctly you were installing Sorcerer
+</I>&gt;<i> to a fixed disk /dev/hdc?
+</I>&gt;<i> 
+</I>&gt;<i> Sorry about the inconvenience.
+</I>&gt;<i> It is not a bug, nor something I can correct.
+</I>&gt;<i> I only use ext2 and ext3 and do not know
+</I>&gt;<i> about the limitations of the other filesystems.
+</I>&gt;<i> I instead assume that SAs that want to use
+</I>&gt;<i> them will install their boxes in a way that will work.
+</I>&gt;<i> Generally, I recommend the use of a dedicated
+</I>&gt;<i> ext2 /boot partition.
+</I>&gt;<i> That makes almost everything work,
+</I>&gt;<i> and avoids complications with RAIDS, LVM2,
+</I>&gt;<i> and a dedicated unencrypted /boot partition
+</I>&gt;<i> is absolutely essential for having a LUKS encrypted /
+</I>&gt;<i> 
+</I>&gt;<i> In retrospect this is entirely obvious.
+</I>&gt;<i> Yet, I was expecting that you were using ext3
+</I>&gt;<i> until you wrote the error message about
+</I>&gt;<i> /sbin/fsck.xfs
+</I>&gt;<i> 
+</I>&gt;<i> I wish this was an easily correctable bug
+</I>&gt;<i> like we have been digging up since the transition
+</I>&gt;<i> to DESTDIR style installation.
+</I>&gt;<i> But a configuration with lilo trying to install
+</I>&gt;<i> to the boot block of an XFS filesystem
+</I>&gt;<i> should fail on every distribution
+</I>&gt;<i> and not just Sorcerer.
+</I>&gt;<i> Just add a 2G ext2 /boot
+</I>&gt;<i> on the next install attempt
+</I>&gt;<i> and this problem goes away  :)
+</I>&gt;<i> 
+</I>&gt;<i> I understand that it can be frustrating
+</I>&gt;<i> to run head-long into this show-stopping error
+</I>&gt;<i> now twice in a row.
+</I>&gt;<i> Had you mentioned the filesystem type for /
+</I>&gt;<i> in an earlier email
+</I>&gt;<i> then I might have guessed the problem faster.
+</I>&gt;<i> 
+</I>&gt;<i> I am adding to the boot_partition_warning message
+</I>&gt;<i> another line to instruct SAs that a dedicate ext2 /boot
+</I>&gt;<i> partition will be required when / is an XFS filesystem.
+</I>&gt;<i> 
+</I>&gt;<i> I have no clue if the same is true for JFS
+</I>&gt;<i> or other filesystems that are supported.
+</I>&gt;<i> Ah, apparently JFS does reserve a boot block.
+</I>&gt;<i> I just looked it up.
+</I>&gt;<i> But I am not going to research it in advance
+</I>&gt;<i> for all the filesystem types supported by linux.
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> On Mon, Jul 19, 2010 at 11:43 AM, Roelof Wobben &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">rwobben at hotmail.com</A>&gt; wrote:
+</I>&gt;&gt;<i> Hello Kyle,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I reinstalled everything again but still one problem.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I have these partitions.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> dev/hdc1  Xfs /
+</I>&gt;&gt;<i> /dev/hdc2 swap.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I let the installer install Lilo on hdc1 so my multi boot programma can find
+</I>&gt;&gt;<i> it.
+</I>&gt;&gt;<i> But it is not found.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Can you help me puzzle this out.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Roelof
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ________________________________
+</I>&gt;&gt;<i> De nieuwste Internet Explorer: snel, eenvoudig en veilig. Download nu!
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>
+- -- 
+Bradley D. Thornton
+Manager Network Services
+NorthTech Computer
+TEL: +1.760.666.2703  (US)
+TEL: +44.702.405.1909 (UK)
+<A HREF="http://NorthTech.US">http://NorthTech.US</A>
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEcBAEBAwAGBQJMROTmAAoJEE1wgkIhr9j3SWEH/3UcwxMEdEq+EjllwaMxosOE
+yZ7y0yajBOnvTLotsajiKdryJaZ5y9Njy1uw8QBVJOXQf0DsOC5A7JwJYJu3xtrp
+JrT2u80eRzF8/c0+1WBUGNC3rdvISlPFeji1IXdd6r0uwgHELrAiAEYsxRdzrOVg
+wK5bE7BNSEUD4rAV/ozasnSFnqEa10XMfXFEAHkz/vm7Cre5eHZcep7SEpxg5m4U
+5tSE9AVnHE0RjdbaDnc6gx9X1rPQzSv1JKiZ9xdN+Vkq+rJCfuXF4ECGY6jxTWAy
+8emvkhIki5DYV4FMYKwl72oDKvLPT9I/YouCiUMELhmJyzx6i0C4+nOLMEVX75g=
+=ZMm/
+-----END PGP SIGNATURE-----
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001796.html">[Sorcerer-admins] Re : can't boot into my box
+</A></li>
+	<LI>Next message: <A HREF="001802.html">[Sorcerer-admins] Re : can't boot into my box
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1798">[ date ]</a>
+              <a href="thread.html#1798">[ thread ]</a>
+              <a href="subject.html#1798">[ subject ]</a>
+              <a href="author.html#1798">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

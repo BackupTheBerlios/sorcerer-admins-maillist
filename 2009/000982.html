@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] installation help
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20installation%20help&In-Reply-To=%3C596b75860901240447j24ac111bo45c74431de25499c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000981.html">
+   <LINK REL="Next"  HREF="000983.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] installation help</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20installation%20help&In-Reply-To=%3C596b75860901240447j24ac111bo45c74431de25499c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] installation help">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Jan 24 13:47:27 CET 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000981.html">[Sorcerer-admins] installation help
+</A></li>
+        <LI>Next message: <A HREF="000983.html">[Sorcerer-admins] ppr and delta patches.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#982">[ date ]</a>
+              <a href="thread.html#982">[ thread ]</a>
+              <a href="subject.html#982">[ subject ]</a>
+              <a href="author.html#982">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Sat, Jan 24, 2009 at 4:32 AM, Antoine Chassagnard
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">tacredips at gmail.com</A>&gt; wrote:
+&gt;<i> First, I'd like to thank everyone for the help you gave me a few weeks ago.
+</I>&gt;<i> Unfortunately, I'm still having trouble with the basic installation. I
+</I>&gt;<i> managed to get Sorcerer to compile a while back, but I haven't managed to
+</I>&gt;<i> get any kind of network, even basic wired ethernet. It all feels very
+</I>&gt;<i> bewildering to me. This leads me to believe I'm doing something stupid while
+</I>&gt;<i> compiling the kernel, but I just can't work out what.
+</I>&gt;<i> If anyone could give me a few hints, which kernel options are good for
+</I>&gt;<i> network support, or any other kind of help, it would be much appreciated.
+</I>
+
+It may come as a surprise be we have no consensus about networking
+configuration.
+Each SAs starts networking differently depending on what they want.
+However, I have tried to provide a potentially useful framework.
+Unfortunately, it may not be thoroughly tested.
+
+/etc/init.d/networks is the script responsible for raising networks during boot.
+It runs once during sysinit and once during the runlevel transition.
+That way if networks can not be set up during sysinit
+then they can be set up during the runlev el after root filesystem
+has transition from initramfs to the real root filesystem.
+
+/etc/init.d/networks is very simple.
+It runs files in /etc/networks.d/
+Each file should describe a network.
+The return status of running the file should
+indicate if the network was set up correctly.
+/etc/init.d/networks.d/ continues to run files in
+/etc/networks.d/ until a network is successfully set up
+or there are no more files in /etc/networks.d/ to run
+
+Files in /etc/networks.d/
+invoke one or more configured interface templates.
+That is because a box on a network may have more
+than one networking interface and might use more
+than one specific network depending upon where it
+is connected when networking starts.
+
+The template file used to have code in it.
+There used to be different template files
+that had different code to execute that
+the SA would select depending on the type
+of network that is desired.
+But that has changed.
+
+The network file is now more like a form.
+Fill out some variables and it is good to go.
+That is because the code for deciding how the network
+should be set up is contained in a separate functions file:
+/etc/networks.d/functions/functions
+
+If you only have one interface to set up
+then you can do something very simple
+# cd /etc/networks.d/
+# cp template/links/generic primary
+# nano primary
+# /etc/init.d/networks start
+
+If there is only one interface
+then merely copy and fill out the generic form
+and comment out unused declared variables.
+
+The actual setting up of networks is handled by
+invoking various tools such as:
+
+net-tools
+iproute2
+dhcpcd
+wireless_tools
+
+and similar software projects.
+
+An experienced SA would simply write files into
+/etc/networks.d/
+that have start() and stop() functions
+that invoke the tools directly.
+That way they will do exactly what the SA wants.
+
+Other distros have a thick layer the separates the SA
+from actually knowing what networking tools are
+and how to invoke them.
+Sorcerer has only a thin convenience layer.
+It allows SAs maximum flexibility for setting up networks.
+However, for lack of a tight constraint is it not obvious
+to newer SAs exactly how and what is proper.
+
+The general rule about setting up networks on a Sorcerer box
+is that if it works and the SA likes it
+then that was the right way.
+
+The best help for setting up networking is to read a HowTo
+from the linux documentation project.
+Distributions may have different convenience layers to
+obfuscate or ease the SA's job of setting up networking.
+However, all distributions have the same core networking
+utilities such as /sbin/ip
+
+I am one of the people who wants a better method,
+perhaps even menu driven method for setting up networks on Sorcerer.
+But due to a lack of consensus and a lack of effort
+it did not happen in 2008.
+But there were other nice improvements to the distro instead.
+
+As far as networking goes I know about average.
+Like most Sorcerer SAs I can invoke the tools and
+set up networking on my boxes and then forget
+about it for nearly the rest of my life.
+Only once have I made the mistake of assigning the same
+IP address to interfaces on different boxes.
+Therefore, to experienced Sorcerer SAs network is already moot point.
+
+But for people new to the distro
+networking, as you pointed out, is a sore point.
+
+Although the basis of the Sorcerer's method for starting networking
+is from the init-script /etc/init.d/networks
+networking could also be started from udev cold plugging.
+Although I know it is possible I would not know how to
+write those rules without reading some documentation first.
+But my point is that there is no one right way to do it.
+
+Even a 3rd party method network management system might
+be a welcome inclusion to Sorcerer.
+However, I am not inclined to just use the same one as provided
+in Debian nor in Redhat.
+
+If someone with good idea of all or most type of networks
+wanted to cooperate with me on this we could write a dialog
+driven wizard that enabled creating network configuration files
+by answering a series of questions and then be able to select
+and group network configuration files into network groups.
+
+However, the closer we move to an abstract layer of setting it up
+automatically the more comprehensive it must be about the
+coverage of network types.
+Otherwise SAs will might think that their network type is not supported
+and then abandon Sorcerer without even trying to run the tools
+such as /sbin/ip directly.
+
+That is why the current process of configuring the network requires the
+SA to copy and edit files in /etc/networks.d/ and subdirs of it
+so that the SA has the complete responsibility and control over
+configuring interfaces and networks on that box.
+
+
+Some useful information:
+
+<A HREF="http://www.tldp.org/HOWTO/html_single/Networking-Overview-HOWTO/">http://www.tldp.org/HOWTO/html_single/Networking-Overview-HOWTO/</A>
+man ip
+/etc/networks.d/templates/README
+
+I was just editing the README.
+And it still seems as if it would be confusing
+to anyone that did not already understand the concept
+
+
+If all of that above seems like too much of a pain.
+Just write to the list what your network should be
+and we can give you a file such as
+/etc/init.d/network to place in /etc/init.d/
+with mode 0700
+that will start and stop that network directly
+without doing all the stuff involving files in /etc/networks.d/
+But that solution is only for a simple single network configuration.
+If the box requires a fancier network solution
+then the way to go is to follow the design of using
+network groups and network links.
+Doing so avoids a creating a very long and complicated init-script
+by instead using separate bash scripts to provide the grouping
+for links/interfaces into distinct network configurations.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000981.html">[Sorcerer-admins] installation help
+</A></li>
+	<LI>Next message: <A HREF="000983.html">[Sorcerer-admins] ppr and delta patches.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#982">[ date ]</a>
+              <a href="thread.html#982">[ thread ]</a>
+              <a href="subject.html#982">[ subject ]</a>
+              <a href="author.html#982">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Please be aware that booting is receiving another revision.
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCAMjKNNOO4hfdZM9hPkd%3Dw0mLSAWHkvPSA8-f04%3DS%3DhcbxpzowA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002211.html">
+   <LINK REL="Next"  HREF="002230.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Please be aware that booting is receiving another revision.</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Please%20be%20aware%20that%20booting%20is%20receiving%0A%20another%20revision.&In-Reply-To=%3CCAMjKNNOO4hfdZM9hPkd%3Dw0mLSAWHkvPSA8-f04%3DS%3DhcbxpzowA%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Please be aware that booting is receiving another revision.">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Wed Aug  3 18:30:19 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002211.html">[Sorcerer-admins] Please be aware that booting is receiving another	revision.
+</A></li>
+        <LI>Next message: <A HREF="002230.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2229">[ date ]</a>
+              <a href="thread.html#2229">[ thread ]</a>
+              <a href="subject.html#2229">[ subject ]</a>
+              <a href="author.html#2229">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi
+I followed the instruction and I now can't boot the server.... I always get
+&quot;Boot error&quot; at start....
+rebooted several time trying to update syslinux, initrd.... no success
+any idea?
+thanks and regards
+JLM
+
+On Sun, Jul 3, 2011 at 1:04 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> # find /boot/initrf/ /boot/*/modules -type f
+</I>&gt;<i> /boot/initrf/bin
+</I>&gt;<i> /boot/initrf/etc
+</I>&gt;<i> /boot/initrf/lib
+</I>&gt;<i> /boot/initrf/lib64
+</I>&gt;<i> /boot/initrf/sbin
+</I>&gt;<i> /boot/initrf/usr
+</I>&gt;<i> /boot/2.6.39.1/modules
+</I>&gt;<i> /boot/2.6.39.2/modules
+</I>&gt;<i>
+</I>&gt;<i> In a couple of days files such as those will appear on boxes that update.
+</I>&gt;<i> The initramfs is no longer a concatenation of 2 large cpio files.
+</I>&gt;<i> Rather it is the concatenation of several small files.
+</I>&gt;<i>
+</I>&gt;<i> Boxes that boot with lilo will have initramfs files concatenated into
+</I>&gt;<i> /boot/$VERSION/initrf
+</I>&gt;<i>
+</I>&gt;<i> Boxes that boot with extlinux will references
+</I>&gt;<i> each compressed cpio file
+</I>&gt;<i> individually in the extlinux.conf
+</I>&gt;<i> Consequently, boxes booting with extlinux will save some space on /boot/
+</I>&gt;<i> while boxes booting with lilo must have the individual files cpio files
+</I>&gt;<i> concatenated into a single file.
+</I>&gt;<i>
+</I>&gt;<i> Segregating the initramfs into several cpio files
+</I>&gt;<i> allows for individual checking
+</I>&gt;<i> to discern which cpio file must be updated.
+</I>&gt;<i> Regenerating only some of the cpio files
+</I>&gt;<i> is faster than regenerating all of them.
+</I>&gt;<i> Therefore, 7 cpio files seems to be
+</I>&gt;<i> a reasonable division along directory boundaries.
+</I>&gt;<i>
+</I>&gt;<i> Boxes that boot with lilo
+</I>&gt;<i> require no special adjustment.
+</I>&gt;<i> It is already tested.
+</I>&gt;<i>
+</I>&gt;<i> However, boxes booting with extlinux
+</I>&gt;<i> will require a newer extlinux.conf.
+</I>&gt;<i> Therefore, run
+</I>&gt;<i> # /etc/init.d/extlinux force
+</I>&gt;<i> on those boxes to ensure that the configuration files update.
+</I>&gt;<i>
+</I>&gt;<i> Basically, until the next I/R release
+</I>&gt;<i> there should be no Sorcerer boxes that are booting with extlinux.
+</I>&gt;<i> However, for SAs that manually switched
+</I>&gt;<i> please also manually regenerate extlinux.conf
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110803/56d98763/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20110803/56d98763/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002211.html">[Sorcerer-admins] Please be aware that booting is receiving another	revision.
+</A></li>
+	<LI>Next message: <A HREF="002230.html">[Sorcerer-admins] Please be aware that booting is receiving another revision.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2229">[ date ]</a>
+              <a href="thread.html#2229">[ thread ]</a>
+              <a href="subject.html#2229">[ subject ]</a>
+              <a href="author.html#2229">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

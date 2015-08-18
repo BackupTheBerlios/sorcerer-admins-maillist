@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] rmdir //dev?
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20rmdir%20//dev%3F&In-Reply-To=%3C596b75860811251139ifa402cdi2486beb8f9d90dd5%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000854.html">
+   <LINK REL="Next"  HREF="000856.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] rmdir //dev?</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20rmdir%20//dev%3F&In-Reply-To=%3C596b75860811251139ifa402cdi2486beb8f9d90dd5%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] rmdir //dev?">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Tue Nov 25 20:39:07 CET 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000854.html">[Sorcerer-admins] rmdir //dev?
+</A></li>
+        <LI>Next message: <A HREF="000856.html">[Sorcerer-admins] BinUtils and gcc 4.3.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#855">[ date ]</a>
+              <a href="thread.html#855">[ thread ]</a>
+              <a href="subject.html#855">[ subject ]</a>
+              <a href="author.html#855">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The tmpfs /dev on the initramfs is not deleted.
+It is moved from the initramfs to /media/root/dev before
+the permanent chroot into /media/root
+Since it is a move, if udevd happens to have /dev as it's
+current working directly then it will still be in the proper /dev
+after it was moved to /media/root/dev and even after the chroot.
+However, to be absolutely certain that udev continues working properly
+during the runlevel 1 2 3 4 5 udevd is restarted
+That ensures that udevd is also started on the root of the real
+root filessytem and will use the tmpfs /dev and not use an empty and/or
+non existent /dev on the initramfs
+
+The messages about the rmdir thing may be something that crept in
+with newer udev because it is not something I remember as always being.
+
+Vincent Penquerc'h is correct.
+Eventually whatever is left on the tmpfs filesystem is removed.
+I used to have that delay set to 600 seconds after the chroot to the
+real root filesystem.
+However, now it is at a mere 60 seconds.
+It might still be possible for it to be faster without any adverse effect.
+Basically, after chrooting to /media/root there is no way back to the
+initramfs /.  Since /init is forked into the background before
+that chroot it remains able to clean the initramfs of files and directories
+before finally exiting.  I would not expect udev would do the same,
+especially since it would cause a problem for using the I/R in installation
+mode where the boot initramfs remains /
+
+Whether the purging of the initramfs from memory is related to the udev
+message I am uncertain.
+When sysinit finishes running it is completely complete.
+All programs to be started during sysinit are started.
+And the real root filesystem is mounted as /
+Then, in the first stage of runlevels usually the S00 level
+udevd is restarted.
+That happens before other programs are started.
+It looks as if that is a good time to restart udevd so that
+the new udevd will not miss any events during that tiny interval.
+
+That covers the topics of udevd startup and restart during boot
+and also the final disposition of the initramfs during boot.
+It is a little bit tricky to understand at first,
+but overall is a very easy and straight forward approach
+by using sysinit from the initramfs and runlevels from the real root filesystem.
+That way there is practically no additional complexity added in order
+to boot using the initramfs, except the code in /init
+/init is not long nor a difficult script.
+The most complicated task it can do is
+to create a precise initramfs for fast booting.
+That finishes the summary of information
+that I know which may be relevant to booting
+and the udev message during boot about rmdir.
+
+If udev someday gains a rule that causes it to wipe
+the real root filesystem then that will be most upsetting.
+Removing the content of the initramfs is best left to /init
+Vincent Penquerc'h, do any of the udev rules appear to be
+designed for removing the initramfs or most of the contents
+of any filesystem?
+A grep for rm in /lib/udev/rules.d/ shows nothing suspicious.
+
+
+On Tue, Nov 25, 2008 at 2:58 AM, Vincent Penquerc'h
+&lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">vincent.penquerch at cohortstudios.com</A>&gt; wrote:
+&gt;&gt;<i> I saw that also, but have not made time to investigate it.
+</I>&gt;&gt;<i> Please let me know what you discover.
+</I>&gt;<i>
+</I>&gt;<i> If it's the same as my setup, it's the bootstrap filesystem
+</I>&gt;<i> that's going away after chrooting to the &quot;real&quot; OS. After
+</I>&gt;<i> 600 seconds, there's a rm -fr of pretty much every directory
+</I>&gt;<i> on the bootstrap root.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000854.html">[Sorcerer-admins] rmdir //dev?
+</A></li>
+	<LI>Next message: <A HREF="000856.html">[Sorcerer-admins] BinUtils and gcc 4.3.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#855">[ date ]</a>
+              <a href="thread.html#855">[ thread ]</a>
+              <a href="subject.html#855">[ subject ]</a>
+              <a href="author.html#855">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

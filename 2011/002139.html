@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] We should be using linux-firmware
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2011/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20We%20should%20be%20using%20linux-firmware&In-Reply-To=%3CBANLkTi%3D0Gg_2JGwaUqLVMwXUL_ckHN6BoQ%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="002138.html">
+   <LINK REL="Next"  HREF="002140.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] We should be using linux-firmware</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20We%20should%20be%20using%20linux-firmware&In-Reply-To=%3CBANLkTi%3D0Gg_2JGwaUqLVMwXUL_ckHN6BoQ%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] We should be using linux-firmware">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Thu Apr 28 03:22:24 CEST 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="002138.html">[Sorcerer-admins] upstart anyone?
+</A></li>
+        <LI>Next message: <A HREF="002140.html">[Sorcerer-admins] We should be using linux-firmware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2139">[ date ]</a>
+              <a href="thread.html#2139">[ thread ]</a>
+              <a href="subject.html#2139">[ subject ]</a>
+              <a href="author.html#2139">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>While helping Nathan Jeffrey Allen
+set up wireless networking
+I was was searching for firmware for a wireless adapter
+and stumbled across something I wish I knew about a couple years ago.
+
+<A HREF="http://kernel.org/pub/linux/kernel/people/dwmw2/firmware/">http://kernel.org/pub/linux/kernel/people/dwmw2/firmware/</A>
+
+Someone is finding free and non-free firmware required by linux kernel drivers
+and tossing it into a git repository and rolling it into a tar.bz2.
+Excellent!
+
+I am creating a spell for it called linux-firmware.
+It will come pre-installed on the next set of Install/Rescue disks.
+This should further minimize or eliminate the possibility of a new
+installation lacking required firmware for necessary drivers.
+And it also allows me to cross off my partially complete audit of
+linux's Kconfig files while looking for required firmware and websites.
+
+The drawback is the initial spell's implementation is no file shaving.
+So each initramfs and the amount of RAM required for booting
+will increase by about 30M.
+The bane is a 30M larger initramfs and larger I/Rs,
+but the boon is less of a problem with missing firmware.
+This makes the boon to bane an even decision.
+
+However, I am going to favor the new spell,
+because in this situation I was searching for firmware
+for the brcm80211 module and nothing in the Kconfig file
+suggested that firmware was required.
+Also I failed to discover a homepage for the firmware by using a google search.
+However, the firmware is included in the linux-firmware tarball.
+And the tarball contains plenty more firmware
+for devices that I know nothing about.
+So linux-firmware seems like the best bet for a firmware availability solution.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="002138.html">[Sorcerer-admins] upstart anyone?
+</A></li>
+	<LI>Next message: <A HREF="002140.html">[Sorcerer-admins] We should be using linux-firmware
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2139">[ date ]</a>
+              <a href="thread.html#2139">[ thread ]</a>
+              <a href="subject.html#2139">[ subject ]</a>
+              <a href="author.html#2139">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

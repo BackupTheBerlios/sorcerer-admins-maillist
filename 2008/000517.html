@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Changes to augur!
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2008/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Changes%20to%20augur%21&In-Reply-To=%3C596b75860806171635u15998514r614ba6a31de06b9%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000523.html">
+   <LINK REL="Next"  HREF="000521.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Changes to augur!</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Changes%20to%20augur%21&In-Reply-To=%3C596b75860806171635u15998514r614ba6a31de06b9%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Changes to augur!">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Wed Jun 18 01:35:21 CEST 2008</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000523.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+        <LI>Next message: <A HREF="000521.html">[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#517">[ date ]</a>
+              <a href="thread.html#517">[ thread ]</a>
+              <a href="subject.html#517">[ subject ]</a>
+              <a href="author.html#517">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>augur is becoming more modular like cast + grimore + spells.
+
+In a few updates from now boxes will receive an augur
+that has many files within /usr/libexec/sorcery/augur.d/ :
+
+abort      category  elfof     history    lone     provider  sold
+activity   check     elfon     hold       long     resume    sources
+always     clear     estimate  homepage   merge    retry     src
+arch       compile   event     index      newer    scry      static
+arof       cpref     exile     install    older    search    suspend
+arofni     custom    forget    installed  opt.off  shared    sync
+aron       delay     from      iron       opt.on   short     update
+attribute  details   go        lclof      order    size      version
+available  easy      grimoire  leech      prefer   snapshot
+
+
+Those filenames represent augur commands.
+Most of them contain
+most of the code required to execute.
+
+Here is a sample:
+# cat /usr/libexec/sorcery/augur.d/shared
+HELP=$&quot;
+shared  none    Display installed files owned by more than one spell&quot;
+
+param(){ :;}
+
+run(){
+ find $INSTALL_LOGS -type f |
+ xargs --max-lines=1024 cat |
+ LC_ALL=C sort | uniq -d | files
+}
+
+
+Each augur command module
+has a HELP variable that becomes part of the
+# augur --help
+summary
+Each contain a param() function for providing command line parameter completion,
+however the augur shared command does not support command line completion.
+Each contains a run() function that executes the command.
+
+This command will display files installed by more than one spell.
+To learn what spells these files come from
+then execute:
+
+# augur shared | augur from
+
+Some of the less frequently used commands are gone.
+Some commands have new names.
+Many have enhanced functionality.
+Where with older augur one would have to write either:
+
+# augur shared_spells
+# augur shared | xargs augur from
+
+Now the augur from command accepts either
+command line parameters or stdin for input.
+Several commands accept stdin input.
+
+Bored yet?
+Here is where the discussion becomes interesting.
+Why have a modular augur?
+
+So, SAs can write modules for augur, of course!
+
+augur modules that SAs write go into
+/usr/local/libexec/sorcery/augur.d/  instead of
+/usr/libexec/sorcery/augur.d/
+
+Just squeeze that /local/ in between /usr and /libexec
+And that is where they go.
+
+Speed is one benefit of modular augur.
+However, another benefit is that bugs are localized
+to the modular they exist in.
+If a newly created module has a bug
+then that bug will not adversely effect running
+
+# augur easy
+# augur newer
+# augur sync
+# augur update
+# augur merge
+# augur index
+
+nor any of the other important augur commands.
+
+For myself this keeps me from having to search through 64K
+of source code looking for an unmatched '&quot;'
+or other silly mistakes that I might mistake.
+
+I am currently testing the improved modular augur.
+The transition is about 90% complete.
+Some of the larger functions still retain their
+code in /usr/libexec/sorcery/augur instead of
+having it exported to the augur module:
+scry newer update sync are examples where
+I will be taking much more time to export the
+code to be absolutely certain that it does not break.
+
+More than 50% of the requested sorcery modifications involve augur.
+A modular augur will enable SAs to more quickly
+obtain the exact augur commands that they desire
+while without the risk of entirely breaking augur.
+The most popular augur command modules can be
+contributed back into sorcery
+so that all Sorcerer SAs can use them.
+
+In this way augur works much more like the cast + grimoire + spells
+since a broken spell will not usually cause the sorcery tools to break.
+
+So in summary this change grants the following boons:
+more speed;
+more SA configure-ability;
+greater stability;
+easier debug-ability.
+
+Banes: none.
+
+With more than 62 very functional augur command modules to start with
+there will be a perfect example to copy and edit in order
+to create the new augur command modules that SAs desire most.
+
+Excited to write your first augur command module?
+Expect the new modular augur to be ready for use
+in the fourth week of June.
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000523.html">[Sorcerer-admins] gdm prohibits ctrl-alt-F# ?
+</A></li>
+	<LI>Next message: <A HREF="000521.html">[Sorcerer-admins] Sorry Red herring ctrl-alt-F# just don't work.
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#517">[ date ]</a>
+              <a href="thread.html#517">[ thread ]</a>
+              <a href="subject.html#517">[ subject ]</a>
+              <a href="author.html#517">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

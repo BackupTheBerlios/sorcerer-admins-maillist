@@ -1,0 +1,298 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] init...
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTimjDP3uXAcXqJ8yfLxD-2%3DN3%2Bio5rKXkNXFLHDe%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001852.html">
+   <LINK REL="Next"  HREF="001855.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] init...</H1>
+    <B>jean-luc malet</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20init...&In-Reply-To=%3CAANLkTimjDP3uXAcXqJ8yfLxD-2%3DN3%2Bio5rKXkNXFLHDe%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] init...">jeanluc.malet at gmail.com
+       </A><BR>
+    <I>Mon Jul 26 11:22:58 CEST 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001852.html">[Sorcerer-admins] init...
+</A></li>
+        <LI>Next message: <A HREF="001855.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1853">[ date ]</a>
+              <a href="thread.html#1853">[ thread ]</a>
+              <a href="subject.html#1853">[ subject ]</a>
+              <a href="author.html#1853">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi!
+well here is my point of view (I'm the root cause of this request)
+- what is the aim of trying to continue starting a box that will fail? loss
+of data?
+   I means : a box relying on udev shall not even go further if this service
+hasn't started, what might happens if other services try to do things on
+/dev/* devices while  theses entries are false? what is the point of trying
+to launch anyway the cryptsetup service knowing that it will lock the box if
+mdadm service hasn't started?
+
+- what the aim of continue to have a service continue to run if a
+requirement exit without notice?
+- what the aim of trying to stop a service that hasn't started and print
+error lines confusing the SA?
+
+services are dangerous because they can have sides effect much more later
+than expected, some bug in a service can have side effect causing possible
+loss of data, or un-startable box.... they then require special safety
+solution. When you launch you favorite application, you assume that the
+whole box is in order to work, NO? I can't make that assumption right now
+with current design
+
+regarding speed... I still believe that the overhead isn't that much as kyle
+is saying.... what will we loss? 1? 2s? on a netbook? anyway using a &quot;super
+service&quot; process written in C/C++ using a client/server model and then only
+communication through unix sockets, I'm confident that the cost won't be
+ever noticeable...
+
+another point regarding speed :
+say you have 5 starting services :
+S00_1 : 10s
+S00_2 : 50s
+S01_3 : require S00_1, 1s
+S01_4 : require S00_1, 30s
+
+with current design using parallel start : S00 time : 50s, S01 time : 30s,
+whole time 80s
+with a start/stop controled on requirements : S01_4 total start (most time
+consuming on the S00_1 branch) 10+30s = 40s,  S00_2 total time : 50s, whole
+start time 50s......
+=&gt; 80s versus 50s, who is winner?
+
+another point regarding speed :
+S00_1 : no requirement, might take 3s to fail
+S01_2 : require S00_1, might take 40s to fail
+S02_3 : require S01_2, might take 1s to fail
+imagine now that S00_1 fails, in controled start way, S01_2, S02_3 won't
+start and then won't consume resources, won't make the other S01* and S02*
+wait (since the are waiting on their branches and not on a runlevel start
+step), overall cost of the failure : 3s
+now with the current design, S00_1 fails, cost 3s, we're moving to the S01
+layer, S01_2 fails (because of S00_1) on integrated time out of 40s, cost :
+40s, moving to the S02 layer, S02_3 is started, fail, cost 1s.  OVERALL
+start time 3+40+1 = 43s
+=&gt; 3s versus 43s.... wo is winner?
+
+controled start service is winner in both failure and success scenario....
+
+from my point of view service can look like the public swimming pool analogy
+:<i>
+</I>services are childs, fun, fast and running in a non controled manner across
+the pool, you can take the assumption that all child behave well and then
+just open the pool and let the childes play (this is current sorcerer init)
+you don't have any overhead....
+in real life, childes collides, some migth dye in the pool.... first try is
+the automatic alarm (the red lines in the startup log) but as you might
+know, if nobody listen to the alarm..... if you don't look each start/stop
+time the logs, you might not notice something is going to be wrong.... it
+might work 1 boot, 1 month, 1 year, you don't know....
+
+that's why in all pools there are safety gards, if they see a dangerous
+thing they will stop the childs before irremediable damage occurs, they
+might also save some child from drawing... if some service aren't started
+(say the service &quot;fill the high jump pool with water&quot;) the safety team won't
+let the childes access to the high jump service.... because some childes are
+clever and won't try to jump and others are dumb or not careful and  will
+assume that there is water....
+
+now let look at the case the high jump is open, for some reason, the &quot;fill
+the high jump pool with water&quot; trigger an emergency.... the safety team
+shall take all the childes using the high jump and ask them to stop using
+that service.... in current sorcerer, the childes will continue to jump.....
+it might or not work... who knows?
+
+the only way to have the alarm be meaningful is to always have the lines
+green.... a red line shall stop the process and ask for fixe.... and at
+least prevent users to start....
+the only way to have the service not try to jump from the high jump in an
+empty pool is the safety team ie that lock controlled startup process....
+
+controlled startup process will have both gain in term of startup speed and
+service reliability....
+JLM
+
+
+
+
+
+On Mon, Jul 26, 2010 at 6:21 AM, Kyle Sallee &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">kyle.sallee at gmail.com</A>&gt; wrote:
+
+&gt;<i> On Sun, Jul 25, 2010 at 4:44 PM, Evert Vorster &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">evorster at gmail.com</A>&gt; wrote:
+</I>&gt;<i> &gt; Booting speed is important for me, as I run linux on my laptop which gets
+</I>&gt;<i> &gt; booted often.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; There is no reason why we can't have our cake and eat it too, though.
+</I>&gt;<i> &gt; In the Debian world, they have runlevels 2 and 4 as serial init, and
+</I>&gt;<i> &gt; runlevels 3 and 5 for parallel init. We could use  runlevels 2 and 4 for
+</I>&gt;<i> the
+</I>&gt;<i> &gt; locking everything-will-fail-on-any-error init, and 3 and 5 like we have
+</I>&gt;<i> &gt; them now.
+</I>&gt;<i>
+</I>&gt;<i> That seems bold.
+</I>&gt;<i> There was no parallel init-script execution when I used Debian.
+</I>&gt;<i> I would not have guessed that they would have decided
+</I>&gt;<i> to try to make it default.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> &gt; Having a serial init is very useful for fine-tuning the boot process,
+</I>&gt;<i> &gt; though. It is definitely something that should be available, just not
+</I>&gt;<i> &gt; default.
+</I>&gt;<i>
+</I>&gt;<i> I only use the serial init-script execution runlevels.
+</I>&gt;<i> The chaos is not worth the extra measure of speed.
+</I>&gt;<i> When I re-designed init-scripts to be LSB compliant
+</I>&gt;<i> by coincidence more than design I realized that
+</I>&gt;<i> the introduction of runlevel steps allowed for
+</I>&gt;<i> some easy parallel execution of init-scripts.
+</I>&gt;<i>
+</I>&gt;<i> Of course first attempts at using it turned out sloppy.
+</I>&gt;<i> Lines were not being printed entirely at once and therefore
+</I>&gt;<i> separate lines from different init-scripts could chop
+</I>&gt;<i> each other apart and look weird.
+</I>&gt;<i> That aside it worked.
+</I>&gt;<i> And the problem with chopped up lines was solved years ago.
+</I>&gt;<i>
+</I>&gt;<i> Back in my Debian days,
+</I>&gt;<i> debian used init-scripts written in perl.
+</I>&gt;<i> I am uncertain if I would describe booting
+</I>&gt;<i> as slow or as entertaining.
+</I>&gt;<i> However, these days probably both Debian and Sorcerer
+</I>&gt;<i> use the DASH shell for executing most init-scripts.
+</I>&gt;<i> DASH is like BASH, but lighter and therefore bit faster to start.
+</I>&gt;<i> There are limitations and differences between DASH and BASH.
+</I>&gt;<i> And there are differences between Sorcerer and Debian.
+</I>&gt;<i> But overall if both distros are sticking to a light alternative
+</I>&gt;<i> to running init-scripts
+</I>&gt;<i> then I expect boot speed should be similar.
+</I>&gt;<i> At the runlevels 3 5 Debian will probably boot faster
+</I>&gt;<i> just for having reversed definition for those run levels.
+</I>&gt;<i> Likweise 2 and 4 will probably be faster for Sorcerer.
+</I>&gt;<i> Yet overall I do not have much concern about it.
+</I>&gt;<i> Someone can always come up with a faster booting method
+</I>&gt;<i> if they are willing to make some sacrifices.
+</I>&gt;<i>
+</I>&gt;<i> Considering how init-scripts during
+</I>&gt;<i> sysinit are not executed in parallel
+</I>&gt;<i> and how parallel execution of init-scripts
+</I>&gt;<i> during runlevels can be improved
+</I>&gt;<i> I am impelled to say that Sorcerer init design
+</I>&gt;<i> is about providing robustness rather than speed.
+</I>&gt;<i> However, the decision to not use lockfiles
+</I>&gt;<i> during init-script execution
+</I>&gt;<i> has become reason for some people
+</I>&gt;<i> to conjecture that Sorcerer's init is
+</I>&gt;<i> focused upon speed.
+</I>&gt;<i> Yet looking at the 40 line script
+</I>&gt;<i> /etc/init.d/prc
+</I>&gt;<i> that controls the execution of init-scripts
+</I>&gt;<i> during runlevel demonstrates that the Sorcerer
+</I>&gt;<i> design emphasizes simplicity.
+</I>&gt;<i> Perhaps the a more true perspective
+</I>&gt;<i> that acknowledges all these facts
+</I>&gt;<i> is that Sorcerer's init-design is
+</I>&gt;<i> an attempt to make an adequate
+</I>&gt;<i> compromise between
+</I>&gt;<i> robustness, speed, and simplicity?
+</I>&gt;<i> It might lack complexity and control
+</I>&gt;<i> it certainly does not lack the ability to boot our boxes.
+</I>&gt;<i>
+</I>&gt;<i> If not for the code for parallel execution of init-scripts
+</I>&gt;<i> then /etc/init.d/prc could be 25 lines or less
+</I>&gt;<i> which makes for much easier reading on a console.
+</I>&gt;<i> To me those extra 25 lines are already a compromise
+</I>&gt;<i> of simplicity for added speed.
+</I>&gt;<i>
+</I>&gt;<i> Perhaps simplicity above all is most important during booting.
+</I>&gt;<i> If booting does require debugging
+</I>&gt;<i> then not having to have a PhD. in CS
+</I>&gt;<i> and a day to look at sources is a greater boon
+</I>&gt;<i> than having a wickedly fast C program
+</I>&gt;<i> which controls init-script execution
+</I>&gt;<i> yet is bugged up while reading
+</I>&gt;<i> something unexpected in an init-script.
+</I>&gt;<i>
+</I>&gt;<i> Sorcerer SAs are more skilled than an average simian
+</I>&gt;<i> but that is no reason why the method of init-script
+</I>&gt;<i> execution should be so complex that
+</I>&gt;<i> an educated ape could not understand.
+</I>&gt;<i> If we monkey around with the init-script execution method
+</I>&gt;<i> then we might go bananas trying to figure out
+</I>&gt;<i> why it became bugged.
+</I>&gt;<i> Sorcerer SAs will be scratching their heads in confusion
+</I>&gt;<i> and flinging flaming feces at Sorcerer developers for
+</I>&gt;<i> allowing a simple single 40 line BASH script method
+</I>&gt;<i> to be replaced by a 2000+ line C program
+</I>&gt;<i> and assortment of other shell scripts.
+</I>&gt;<i> Emails will read lines such as,
+</I>&gt;<i> &#8220;It&#8217;s a madhouse! &#8230; a madhouse!&#8221;
+</I>&gt;<i> &quot;You maniacs! You blew it up!&quot;
+</I>&gt;<i>
+</I>&gt;<i> The two lines are movie quotes acted by Charlton Heston,
+</I>&gt;<i> died on April 5, 2008.
+</I>&gt;<i> Anyone in the mood to watch original
+</I>&gt;<i> &quot;Planet of the Apes,&quot; movies?
+</I>&gt;<i> Yes, I quote old movies in my email jokes,
+</I>&gt;<i> and I know I am the only person who thinks it is funny.
+</I>&gt;<i> But this time the joke makes a good conjecture
+</I>&gt;<i> for the value of simplicity.
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>
+
+
+-- 
+KISS! (Keep It Simple, Stupid!)
+(garde le simple, imb&#233;cile!)
+&quot;mais qu'est-ce que tu m'as pondu comme usine &#224; gaz? fait des choses simples
+et qui marchent, esp&#232;ce d'imb&#233;cile!&quot;
+-----------------------------
+&quot;Si vous pensez que vous &#234;tes trop petit pour changer quoique ce soit,
+essayez donc de dormir avec un moustique dans votre chambre.&quot; Betty Reese
+<A HREF="http://www.grainesdechangement.com/citations.htm">http://www.grainesdechangement.com/citations.htm</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100726/342b0b29/attachment.html">https://lists.berlios.de/pipermail/sorcerer-admins/attachments/20100726/342b0b29/attachment.html</A>&gt;
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001852.html">[Sorcerer-admins] init...
+</A></li>
+	<LI>Next message: <A HREF="001855.html">[Sorcerer-admins] init...
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1853">[ date ]</a>
+              <a href="thread.html#1853">[ thread ]</a>
+              <a href="subject.html#1853">[ subject ]</a>
+              <a href="author.html#1853">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

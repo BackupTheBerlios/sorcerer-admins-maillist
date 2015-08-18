@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] Installation Manual w/screenshots
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2010/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Installation%20Manual%20w/screenshots&In-Reply-To=%3C596b75861003151157q5068e12bk770928c46b40cc3c%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001523.html">
+   <LINK REL="Next"  HREF="001524.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] Installation Manual w/screenshots</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20Installation%20Manual%20w/screenshots&In-Reply-To=%3C596b75861003151157q5068e12bk770928c46b40cc3c%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] Installation Manual w/screenshots">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Mon Mar 15 19:57:23 CET 2010</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001523.html">[Sorcerer-admins] Installation Manual w/screenshots
+</A></li>
+        <LI>Next message: <A HREF="001524.html">[Sorcerer-admins] Installation Manual w/screenshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1534">[ date ]</a>
+              <a href="thread.html#1534">[ thread ]</a>
+              <a href="subject.html#1534">[ subject ]</a>
+              <a href="author.html#1534">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Swapfiles provide the convenience of additional swap space,
+however have the overhead of backing it on a filesystem.
+swap partitions use less memory and are more efficient
+than swap files.
+However, I have the menu driven installer create
+a minimal size legacy swapfile to ensure that
+installation can proceed even if the SA did not
+specify a swap partition.
+After installation the SA can chose to remove the swapfile
+and remove the entry for it from /etc/fstab
+Also during the menu driven installation
+the SA can select to not have a swapfile
+by removing that entry from the fstab menu.
+
+Being able to select device in the fstab menu
+allows the SA to create an entry for a device that
+might not be listed in /dev/ or perhaps not detected
+as a good possible location for a filesystem.
+Usually trying to filesystems partitions on a device that
+is not listed in /dev/ will fail.
+But the SA might do something about that.
+
+Normally, a SA will modify the entries that are already
+presented in the fstab menu rather than selecting device
+and creating a new entry.
+
+Most Sorcerer SAs create a 2G swap partition.
+Excessive swap space does drain RAM resources.
+So if additional swap space is required later
+then the SA might add that in the form of swap files.
+
+In order for a Sorcerer box to be bootable
+all the important and required steps must be completed.
+A bootable MBR must be installed.
+lilo must be installed to the boot block of /boot/ or /
+The partition that contains lilo in the boot block
+must be specified as bootable using fstab.
+
+If the installation was complete yet remains non-bootable
+then I recommend booting using the I/R and mounting
+the fixed disks's / as the / filesystem.
+Then login, edit /etc/fstab and /etc/lilo.head
+Run fdisk and check that the partition that contains lilo
+in the boot block is marked as bootable.
+re-run ms-sys to install a bootable MBR if necessary.
+Then, issue the shutdown -r command.
+After that it should probably be able to boot from the fixed disk.
+
+For over a decade SAs become confused
+over what is required to boot.
+1: A bootable MBR.
+2: Installed LILO
+If LILO is installed to the MBR that makes the MBR bootable
+However, I do not recommend installing LILO to the MBR
+because BIOS might prevent writes to the fixed disks's MBR
+if MBR anti-virus protection is enabled.
+3. a linux kernel
+4. an initramfs image
+
+A Sorcerer box will automatically create initramfs images.
+It will automatically update /etc/lilo.conf
+and /etc/lilo.conf.fast
+It will do many things automatically as needed.
+One might say that a Sorcerer box wants
+to be bootable from fixed disk or mass storage device.
+
+The menu driven installer will normally mark the partition
+containing lilo as bootable automatically.
+Hurray for that.
+SAs might forget to do that.
+When the compile portion of the menu driven installation is complete
+then sysvinit init-script symbolic links are updated,
+initramfs are generated, and lilo is re-installed to the boot block.
+That happens automatically.
+So probably the most likely reason that a Sorcerer box
+will not boot is because the SA decided not to install ms-sys
+to the MBR even when prompted to do so.
+
+However, having something else installed in the MBR is possible.
+The SA might want grub or some other boot loader installed in the MBR.
+Or the SA might desire a different lilo installed in the MBR that
+can chain to the Sorcerer's lilo or some other operating system's
+boot loader.
+
+The sorcerer installation process will try to save the SA
+from wasting time due to forgetting simple things like
+marking a partition as bootable.
+However, it does not force the creation of a perfect install.
+Simply having some old lilo or some old code from a different
+operating system in the MBR will cause a newly installed
+Sorcerer box to fail to boot.
+That might not be the only reason.
+But is among the most likely reasons.
+
+
+
+On Sat, Mar 13, 2010 at 8:22 AM,  &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">bradley at northtech.us</A>&gt; wrote:
+&gt;<i> I've come across a point in the installation that I really don't understand.
+</I>&gt;<i>
+</I>&gt;<i> I've included the screenshot. Basically, there are three entries in
+</I>&gt;<i> setting up /etc/fstab (disregard /dev/hda2 in this case, as I was creating
+</I>&gt;<i> a large swap partition, and I see now that it is desired to create a
+</I>&gt;<i> swapfile instead on /dev/hda1.
+</I>&gt;<i>
+</I>&gt;<i> So the entries are
+</I>&gt;<i>
+</I>&gt;<i> 1.) Device
+</I>&gt;<i>
+</I>&gt;<i> 2.) /dev/hda1 (No problem understanding this.
+</I>&gt;<i>
+</I>&gt;<i> 3.) /swap (I understand now that this is a swap file, no partition required)
+</I>&gt;<i>
+</I>&gt;<i> What is #1, Device????? Should I mount a &quot;/&quot; on it? when I enter the
+</I>&gt;<i> submenu, it appears that I need to fill something out but if I select
+</I>&gt;<i> &quot;Device&quot; from that sub-menu, nothing happens, except that something
+</I>&gt;<i> whizzes by and I can't read it.
+</I>&gt;<i>
+</I>&gt;<i> Perhaps this is &quot;/&quot; on the CDROM? And I don't need to fill out anything?
+</I>&gt;<i> I've even tried deleting that entry.
+</I>&gt;<i>
+</I>&gt;<i> All files seem to copy over from the CDROM onto /dev/hda1 (&quot;/&quot;), but still
+</I>&gt;<i> no reboot when everything is complete. I also discovered not to install
+</I>&gt;<i> the final packages for ISDN/WLAN/dialup/etc., networking, as it kicks me
+</I>&gt;<i> into a blank file in pico. If I just skip those files and let the
+</I>&gt;<i> compile/lilo/MBR get written all looks good, except still, no boot after
+</I>&gt;<i> reboot.
+</I>&gt;<i>
+</I>&gt;<i> I noticed from Evert's email that he says to umount at the very end, which
+</I>&gt;<i> I haven't put in the steps yet. Although a pretty detailed install manual
+</I>&gt;<i> is developing out of this experience LOL!
+</I>&gt;<i>
+</I>&gt;<i> We don't need a /boot partition do we? This version of lilo and the kernel
+</I>&gt;<i> shouldn't have a problem with big HDDs.
+</I>&gt;<i>
+</I>&gt;<i> Once I figure out what I'm doing wrong, I'm going to experiment with
+</I>&gt;<i> deleting the swapfile entry in /etc/fstab during install and just create a
+</I>&gt;<i> swap partition. I think that's a better way to go, although I know that
+</I>&gt;<i> nowadays many people are just desiring to have swapfiles in their /
+</I>&gt;<i> partition.
+</I>&gt;<i>
+</I>&gt;<i> hm...
+</I>&gt;<i>
+</I>&gt;<i> Your thoughts? Comments?
+</I>&gt;<i>
+</I>&gt;<i> Kindest regards,
+</I>&gt;<i>
+</I>&gt;<i> Bradley.
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;&gt;<i> If you work VERY quickly, you can snap a pic of the screen as it's
+</I>&gt;&gt;<i> supposed to be. I've included a screenshot of the screen as it is when
+</I>&gt;&gt;<i> you wait for than one or two seconds, and receive the console output
+</I>&gt;&gt;<i> which will confuse someone who hasn't been through the install process
+</I>&gt;&gt;<i> before.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I've also included a shot of the rpcbind errors that are received once
+</I>&gt;&gt;<i> the user selects the keyboard mapping for their locale. This shows the
+</I>&gt;&gt;<i> errors, early on I believe, that were being experienced with nfsd and
+</I>&gt;&gt;<i> subsequently corrected by commenting out the /etc/rc.* entries discussed
+</I>&gt;&gt;<i> the earlier emails by Evert and Jan.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> I'm currently in the process of building a detailed installation manual,
+</I>&gt;&gt;<i> and I could use some help critiquing it, of course, I'm going to do my
+</I>&gt;&gt;<i> best NOT to show the errors that are currently showing up in the process
+</I>&gt;&gt;<i> of my own installs :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hopefully, by the time I'm finished those issues will be resolved ;)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> A detailed, installation manual with images will go a long way towards
+</I>&gt;&gt;<i> increasing usership of this wonderful distro :)
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> --
+</I>&gt;&gt;<i> Kindest regards,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Bradley D. Thornton
+</I>&gt;&gt;<i> Manager Network Services
+</I>&gt;&gt;<i> NorthTech Computer
+</I>&gt;&gt;<i> TEL: +1.760.666.2703
+</I>&gt;&gt;<i> <A HREF="http://NorthTech.US">http://NorthTech.US</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Sorcerer-admins mailing list
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Sorcerer-admins mailing list
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">Sorcerer-admins at lists.berlios.de</A>
+</I>&gt;<i> <A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">https://lists.berlios.de/mailman/listinfo/sorcerer-admins</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001523.html">[Sorcerer-admins] Installation Manual w/screenshots
+</A></li>
+	<LI>Next message: <A HREF="001524.html">[Sorcerer-admins] Installation Manual w/screenshots
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1534">[ date ]</a>
+              <a href="thread.html#1534">[ thread ]</a>
+              <a href="subject.html#1534">[ subject ]</a>
+              <a href="author.html#1534">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>

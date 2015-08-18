@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Sorcerer-admins] poppler-qt-x11-opensource
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/sorcerer-admins/2009/index.html" >
+   <LINK REL="made" HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20poppler-qt-x11-opensource&In-Reply-To=%3C596b75860909251738t39c10e43vcf3b2d019a85b806%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="001321.html">
+   <LINK REL="Next"  HREF="001323.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Sorcerer-admins] poppler-qt-x11-opensource</H1>
+    <B>Kyle Sallee</B> 
+    <A HREF="mailto:sorcerer-admins%40lists.berlios.de?Subject=Re%3A%20%5BSorcerer-admins%5D%20poppler-qt-x11-opensource&In-Reply-To=%3C596b75860909251738t39c10e43vcf3b2d019a85b806%40mail.gmail.com%3E"
+       TITLE="[Sorcerer-admins] poppler-qt-x11-opensource">kyle.sallee at gmail.com
+       </A><BR>
+    <I>Sat Sep 26 02:38:41 CEST 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="001321.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+        <LI>Next message: <A HREF="001323.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1322">[ date ]</a>
+              <a href="thread.html#1322">[ thread ]</a>
+              <a href="subject.html#1322">[ subject ]</a>
+              <a href="author.html#1322">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Two poppler libraries should be installed
+one is in /opt/kde4/
+the other is in /usr/
+
+Generally, KDE programs know where to find their libraries.
+Generally, I would not expect a problem from a KDE
+program linking with the poppler in /usr/
+instead of the one in /opt/kde4/
+That is because almost all KDE4 executables
+and libraries should contain an RPATH to /opt/kde4/lib/
+
+Adding /opt/kde4/lib to /etc/ld.so.conf
+should not be required.
+There is a slim chance that it could cause problems,
+but that is extremely unlikely.
+At worst it should slow down dynamic linking and
+updating of /etc/ld.so.conf slightly.
+
+The problem you saw might also be because
+I recently rolled back the version of poppler.
+The newer stable version of poppler has a problem
+It failed to install poppler-layer.h
+and it includes that in poppler.h
+That is a serious omission.
+I expect that the software authors missed it,
+because the newer poppler included a cmake build method.
+The cmake build and install methods is probably not
+properly tested as is often the case when a software project
+introduces cmake support into the source tree.
+Consequently, the software authors probably only tested
+the autotools method of compilation and installation
+and decided that the new poppler was good to go.
+Yet perhaps the problem with the cmake build method
+will be fixed in the near future.
+For the time being I have no problem sitting on it
+and using the old version rather than write a custom
+build for poppler spells.
+
+As far as I am concerned the newer stable version of poppler
+is not yet suitable for use.
+However, having several other installed software projects
+re-install to deal with the change in the poppler library
+is a bit of a waste.
+But I did not design it that way.
+sorcery only does what sorcery must do.
+
+
+On Fri, Sep 25, 2009 at 2:10 PM, Jan Merka &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">merka at highsphere.net</A>&gt; wrote:
+&gt;<i> pdftools from kde v4 did not work for me because they could not find necessary
+</I>&gt;<i> libraries:
+</I>&gt;<i> $ pdfinfo ~/fartlek.pdf
+</I>&gt;<i> pdfinfo: error while loading shared libraries: libpoppler.so.5: cannot open
+</I>&gt;<i> shared object file: No such file or directory
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> $ ldd /opt/kde4/bin/pdfinfo
+</I>&gt;<i> &#160; &#160; &#160; &#160;linux-gate.so.1 =&gt; &#160;(0xb7fe0000)
+</I>&gt;<i> &#160; &#160; &#160; &#160;libpoppler.so.5 =&gt; not found
+</I>&gt;<i> &#160; &#160; &#160; &#160;libfontconfig.so.1 =&gt; /usr/lib/libfontconfig.so.1 (0xb7f81000)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I have solved the problem by adding /opt/kde4/lib to /etc/ld.so.conf and
+</I>&gt;<i> running ldconfig but is this the right solution?
+</I>&gt;<i>
+</I>&gt;<i> J.
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="001321.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+	<LI>Next message: <A HREF="001323.html">[Sorcerer-admins] poppler-qt-x11-opensource
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1322">[ date ]</a>
+              <a href="thread.html#1322">[ thread ]</a>
+              <a href="subject.html#1322">[ subject ]</a>
+              <a href="author.html#1322">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/sorcerer-admins">More information about the Sorcerer-admins
+mailing list</a><br>
+</body></html>
